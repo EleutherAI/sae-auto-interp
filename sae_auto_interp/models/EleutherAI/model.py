@@ -8,8 +8,8 @@ from jaxtyping import Float, Int64
 from safetensors.torch import load_model, save_model
 from torch import nn, Tensor
 
-from sae_auto_interp.models.nora_config import SaeConfig
-from sae_auto_interp.models.nora_kernels import TritonDecoder
+from sae_auto_interp.models.EleutherAI.config import SaeConfig
+from sae_auto_interp.models.EleutherAI.kernels import TritonDecoder
 
 
 class ForwardOutput(NamedTuple):
