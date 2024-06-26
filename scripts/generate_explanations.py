@@ -1,5 +1,5 @@
 import torch
-from transformer_lens import utils, HookedTransformer
+from transformer_lens import HookedTransformer
 
 from llama_cpp import Llama
 import time as time

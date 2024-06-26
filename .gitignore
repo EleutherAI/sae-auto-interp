@@ -1,6 +1,8 @@
 saved_features
-saved_explanations
-saved_evaluations
+#saved_explanations
+#saved_evaluations
 saved_autoencoders
 *.egg-info
 *__pycache__
+.gitignore
+extras
