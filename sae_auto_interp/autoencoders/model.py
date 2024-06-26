@@ -6,8 +6,6 @@ import torch.nn as nn
 
 from sae_auto_interp.autoencoders.OpenAI.model import TopK,ACTIVATIONS_CLASSES
 
-from sae_auto_interp import get_config
-
 class AutoencoderWrapper(nn.Module):
     """Sparse autoencoder from either OAI or EAI
     """

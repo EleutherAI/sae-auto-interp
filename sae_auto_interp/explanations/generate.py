@@ -1,5 +1,4 @@
 import torch
-from torch import Tensor
 
 from sae_auto_interp.explanations.base_prompts import EXPLANATION_SYSTEM, FEW_SHOT_EXAMPLES
 from typing import List
