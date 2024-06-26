@@ -4,6 +4,19 @@ from typing import List
 from transformer_lens import utils
 
 def get_batches(config: dict[str,str],tokenizer):
+    
+    all_tokens = get_all_tokens(config,tokenizer)
+    batch_size = config["batch_size"]
+    mini_batches = all_tokens.split(batch_size)
+    mini_batches = [batch for batch in mini_batches]
+    mini_batches = mini_batches[:-1]
+
+    number_of_tokens= mini_batches.shape[0] * mini_batches.shape[1]
+    print("Collecting features over {} tokens".format(number_of_tokens))
+
+    return mini_batches
+
+def get_all_tokens(config: dict[str,str],tokenizer):
     print("Loading dataset")
     ## This is hardcoded for now but I should make a dataset loader
     dataset = datasets.load_dataset(
@@ -16,16 +29,8 @@ def get_batches(config: dict[str,str],tokenizer):
         dataset, tokenizer, max_length=256
     )
     all_tokens = tokenized_data["tokens"]
+    return all_tokens
 
-    batch_size = config["batch_size"]
-    mini_batches = all_tokens.split(batch_size)
-    mini_batches = [batch for batch in mini_batches]
-    mini_batches = mini_batches[:-1]
-
-    number_of_tokens= mini_batches.shape[0] * mini_batches.shape[1]
-    print("Collecting features over {} tokens".format(number_of_tokens))
-
-    return mini_batches
 
 def get_available_configs()->List[str]:
     with open("config.json") as f:
