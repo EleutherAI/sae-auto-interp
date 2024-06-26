@@ -29,29 +29,27 @@ class AutoencoderWrapper(nn.Module):
             return topk(encoded)
         
     
-def get_autoencoder(model_name:str,layer: int,device:str) -> AutoencoderWrapper:
-    config = get_config()
+def get_autoencoder(model_name:str,layer: int,device:str,path:str) -> AutoencoderWrapper:
+    
     if "gpt2" in model_name:
-        autoencoder = load_oai_autoencoder(layer,config)
+        autoencoder = load_oai_autoencoder(layer,path)
         autoencoder.to(device)
         wrapped = AutoencoderWrapper(autoencoder,"oai")
     elif "llama" in model_name: 
-        autoencoder = load_eai_autoencoder(layer,device,config)
+        autoencoder = load_eai_autoencoder(layer,device,path)
         wrapped = AutoencoderWrapper(autoencoder,"eai")
     else:
         raise NotImplementedError(f"Model {model_name} not implemented")
     return wrapped
 
 
-def load_eai_autoencoder(layer: int, device:str, config:dict[str,str]) -> Sae:
-    sae_path = config["path_to_autoencoders"]
-    path = f"{sae_path}/Meta-LLama-3-8B/layer_{layer}"
+def load_eai_autoencoder(layer: int, device:str, config:dict[str,str],path:str) -> Sae:
+    path = f"{path}/Meta-LLama-3-8B/layer_{layer}"
     sae = Sae.load_from_disk(path,device)
     return sae
 
-def load_oai_autoencoder(layer: int, config:dict[str,str]) -> Autoencoder:
-    sae_path = config["path_to_autoencoders"]
-    filename = f"{sae_path}/gpt2/resid_post_mlp_autoencoder_{layer}.pt"
+def load_oai_autoencoder(layer: int, config:dict[str,str],path:str) -> Autoencoder:
+    filename = f"{path}/gpt2/resid_post_mlp_autoencoder_{layer}.pt"
     with open(filename, mode="rb") as f:
         state_dict = torch.load(f)
         autoencoder = Autoencoder.from_state_dict(state_dict)
