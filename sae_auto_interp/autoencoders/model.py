@@ -1,18 +1,12 @@
-from typing import Callable, Any
-
-
-from sae_auto_interp.models.OpenAI.model import Autoencoder
-from sae_auto_interp.models.EleutherAI.model import Sae
+from sae_auto_interp.autoencoders.OpenAI.model import Autoencoder
+from sae_auto_interp.autoencoders.EleutherAI.model import Sae
 import torch
 
-
-
-import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
-from sae_auto_interp.models.OpenAI.model import TopK,ACTIVATIONS_CLASSES
+from sae_auto_interp.autoencoders.OpenAI.model import TopK,ACTIVATIONS_CLASSES
 
+from sae_auto_interp import get_config
 
 class AutoencoderWrapper(nn.Module):
     """Sparse autoencoder from either OAI or EAI
@@ -25,8 +19,10 @@ class AutoencoderWrapper(nn.Module):
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         if self.type == "oai":
+            # The OAI autoencoder returns a tuple with the encoded values and statistics, which we don't need
             return self.autoencoder.encode(x)[0]
         elif self.type == "eai":
+            # The EAI autoencoder returns the encoded values before topk, and we use OAI TopK class.
             encoded = self.autoencoder.encode(x)
             trained_k = self.autoencoder.cfg.k
             topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
@@ -34,35 +30,33 @@ class AutoencoderWrapper(nn.Module):
         
     
 def get_autoencoder(model_name:str,layer: int,device:str) -> AutoencoderWrapper:
+    config = get_config()
     if "gpt2" in model_name:
-        autoencoder = load_oai_autoencoder(layer)
+        autoencoder = load_oai_autoencoder(layer,config)
         autoencoder.to(device)
         wrapped = AutoencoderWrapper(autoencoder,"oai")
     elif "llama" in model_name: 
-        autoencoder = load_eai_autoencoder(layer,device)
+        autoencoder = load_eai_autoencoder(layer,device,config)
         wrapped = AutoencoderWrapper(autoencoder,"eai")
     else:
         raise NotImplementedError(f"Model {model_name} not implemented")
     return wrapped
 
 
-def load_eai_autoencoder(layer: int,device:str) -> Sae:
-    path = f"saved_autoencoders/Meta-LLama-3-8B/layer_{layer}"
+def load_eai_autoencoder(layer: int, device:str, config:dict[str,str]) -> Sae:
+    sae_path = config["path_to_autoencoders"]
+    path = f"{sae_path}/Meta-LLama-3-8B/layer_{layer}"
     sae = Sae.load_from_disk(path,device)
     return sae
 
-def load_oai_autoencoder(layer: int) -> Autoencoder:
-    try:
-        # Load the sparse autoencoder
-        filename = f"saved_autoencoders/gpt2/resid_post_mlp_autoencoder_{layer}.pt"
-        with open(filename, mode="rb") as f:
-            state_dict = torch.load(f)
-            autoencoder = Autoencoder.from_state_dict(state_dict)
-        return autoencoder
-    except FileNotFoundError:
-        print(f"Autoencoder for layer {layer} not found")
-        return None
-
+def load_oai_autoencoder(layer: int, config:dict[str,str]) -> Autoencoder:
+    sae_path = config["path_to_autoencoders"]
+    filename = f"{sae_path}/gpt2/resid_post_mlp_autoencoder_{layer}.pt"
+    with open(filename, mode="rb") as f:
+        state_dict = torch.load(f)
+        autoencoder = Autoencoder.from_state_dict(state_dict)
+    return autoencoder
+    
     
 
 

@@ -8,9 +8,14 @@ from jaxtyping import Float, Int64
 from safetensors.torch import load_model, save_model
 from torch import nn, Tensor
 
-from sae_auto_interp.models.EleutherAI.config import SaeConfig
-from sae_auto_interp.models.EleutherAI.kernels import TritonDecoder
+from sae_auto_interp.autoencoders.EleutherAI.config import SaeConfig
+from sae_auto_interp.autoencoders.EleutherAI.kernels import TritonDecoder
 
+
+"""
+This code is originally from the EleutherAI repository:
+https://github.com/EleutherAI/sae
+"""
 
 class ForwardOutput(NamedTuple):
     sae_out: Tensor
