@@ -22,6 +22,13 @@ Generating the explanations is as easy as running the script `scripts/generate_e
 
 # Score the explanations
 
-Todo.
+To evaluate the explanations, we use two different techniques:
+- Recal: we ask the model to select between a number of sentences which of them activate the feature. The model is scored based on the number of correct answers. You can set the number of positive and negative examples to be used.
+- Generation: we ask the model to generate a sentence that activates the feature. We score the model based on the number of generated sentences that activate the feature.
+
+## Example usage
+
+```python scripts/score_explanations.py --layer 0 --model gpt2  --mode recal```
+
 
 
