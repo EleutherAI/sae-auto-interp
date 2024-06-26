@@ -73,7 +73,11 @@ if __name__ == "__main__":
     model_name = args.model
     explainer_name = args.explainer
     feature_prefix = args.feature_prefix
+    if feature_prefix != "":
+        feature_prefix += "_"
     explanation_prefix = args.explanation_prefix
+    if explanation_prefix != "":
+        explanation_prefix += "_"
     number_features = args.number_features
     max_selection = args.max_selection
     number_examples = args.number_examples
