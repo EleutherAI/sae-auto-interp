@@ -9,28 +9,36 @@ import numpy as np
 
 
 def template_explanation(top_sentences,top_activations,top_indices,tokenizer,number_examples=10):
+    
+    max_activation = top_activations.max().item()
+    
     selection_indices = np.random.choice(top_sentences.shape[0],number_examples,replace=False)
     sentences = []
     token_score_pairs = []
     for i in selection_indices:
         sentence = top_sentences[i]
-        decoded = tokenizer.decode(sentence,skip_special_tokens=True)
-        sentences.append(decoded)
         activated = torch.nonzero(top_indices[:,0] == i)
         activated_indices = top_indices[activated]
-        activated_tokens = []
-        scores = []
+        scores = torch.zeros(sentence.shape[0])
+    
         for j in range(activated.shape[0]):
             
-            activating_token = activated_indices[j,:,1]
-
-            activating_token = tokenizer.decode(sentence[activating_token.int()],skip_special_tokens=True)
+            activating_token = activated_indices[j,:,1].int()
             score = top_activations[activated[j]].item()
-            score = int(round(score,0))
-            activated_tokens.append(activating_token)
-            scores.append(score)
-            
-        token_score_pairs.append((activated_tokens,scores))
+            score = score/max_activation*10
+            scores[activating_token] = score
+        max_score_index = scores.argmax()
+        start = max(max_score_index-20,0)
+        end = min(max_score_index+10,sentence.shape[0])
+        tokens = []
+        for token in sentence[start:end]:
+            tokens.append(tokenizer.decode(token))
+
+        token_score_pairs.append((tokens,scores[start:end]))
+        sentences.append(tokenizer.decode(sentence[start:end]))
+
+    max_activation = top_activations.max().item()
+    
     return sentences,token_score_pairs
     
     
@@ -46,9 +54,6 @@ def generate_explanation(explainer_model,sentences,token_score_pairs):
     return answer
     
 
-
-
-
 def formulate_question(index:int,document:str,activating_tokens:List[str],activations:List[int]) -> str:
     if index == 1:
         question = "Neuron\n"
@@ -57,7 +62,8 @@ def formulate_question(index:int,document:str,activating_tokens:List[str],activa
     question += f"Document {index}:\n{document}\n"
     question += "Activating tokens:"
     for token,score in zip(activating_tokens,activations):
-        question += f" {token} ({score}),"
+        if score > 0:
+            question += f" {token} ({score}),"
     # Remove the last comma
     question = question[:-1] + ".\n\n"
     return question
