@@ -41,10 +41,16 @@ if __name__ == "__main__":
         choices=get_available_configs(),
     )
     parser.add_argument(
-        "--file_suffix",
+        "--file_prefix",
         type=str,
         default="",
-        help="Suffix to add to the file name",
+        help="Prefix to add to the file name",
+    )
+    parser.add_argument(
+        "--path_autoencoder",
+        type=str,
+        default="/mnt/ssd-1/gpaulo/SAE-Zoology/saved_autoencoders",
+        help="Path to the autoencoder files",
     )
 
     args = parser.parse_args()
@@ -56,24 +62,27 @@ if __name__ == "__main__":
     config = args.dataset_configuration
     config = get_config(config)
     prefix = args.prefix
-
+    if prefix != "":
+        prefix = prefix + "_"
+    autoencoder_path= args.path_autoencoder
 
     print("Loading the model")
     model = HookedTransformer.from_pretrained(
         model_name, center_writing_weights=False, device=device, dtype="bfloat16"
     )
+    tokenizer = model.tokenizer
 
     print("Loading the autoencoders")
     if layer == -1:
         layers = list(range(12))
         autoencoders = {
-            layer: get_autoencoder(model_name, layer, device) for layer in layers
+            layer: get_autoencoder(model_name, layer, device,autoencoder_path) for layer in layers
         }
     else:
         layers = [layer]
-        autoencoders = {layer: get_autoencoder(model_name, layer, device)}
+        autoencoders = {layer: get_autoencoder(model_name, layer, device,autoencoder_path)}
 
-    mini_batches = get_batches(config)
+    mini_batches = get_batches(config,tokenizer)
     batch_size = config["batch_size"]
     ## I think we always want all the features, this is more of a debug option
     number_features = number_features
@@ -137,12 +146,12 @@ if __name__ == "__main__":
                 i * indice_layers.shape[1] : (i + 1) * indice_layers.shape[1]
             ] = old_indices
 
-        filename = feature_path / f"{prefix}_layer_{layer}_features.pt"
+        filename = feature_path / f"{prefix}layer_{layer}_features.pt"
         with open(filename, mode="wb") as f:
             torch.save(feature_layers, f)
-        filename = feature_path / f"{prefix}_layer_{layer}_indices.pt"
+        filename = feature_path / f"{prefix}layer_{layer}_indices.pt"
         with open(filename, mode="wb") as f:
             torch.save(new_indices, f)
-        filename = feature_path / f"{prefix}_layer_{layer}_config.json"
+        filename = feature_path / f"{prefix}layer_{layer}_config.json"
         with open(filename, mode="w") as f:
             json.dump(config, f)
