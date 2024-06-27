@@ -1,4 +1,5 @@
 import torch
+from torch import Tensor
 
 from sae_auto_interp.explanations.base_prompts import EXPLANATION_SYSTEM, FEW_SHOT_EXAMPLES
 from typing import List
@@ -42,15 +43,16 @@ def template_explanation(top_sentences,top_activations,top_indices,tokenizer,num
     
     
 
-def generate_explanation(explainer_model,sentences,token_score_pairs):
+def get_prompts(sentences:List[str],token_score_pairs:List[Tensor],tokenizer):
     
     undiscovered_feature = ""
     for i in range(len(sentences)):
         decoded = sentences[i]
         activated_tokens,scores = token_score_pairs[i]
         undiscovered_feature += formulate_question(i+1,decoded,activated_tokens,scores)
-    answer = prompt_model(undiscovered_feature,explainer_model)
-    return answer
+    prompt = make_prompt(undiscovered_feature)
+    spelled_out = tokenizer.apply_chat_template(prompt,add_generation_prompt=True,tokenize=False)
+    return spelled_out
     
 
 def formulate_question(index:int,document:str,activating_tokens:List[str],activations:List[int]) -> str:
@@ -67,7 +69,7 @@ def formulate_question(index:int,document:str,activating_tokens:List[str],activa
     question = question[:-1] + ".\n\n"
     return question
 
-def prompt_model(question:str,llm:Llama) -> str:
+def make_prompt(question:str) -> str:
 
     msg = []
     msg.append({"role":"system","content":EXPLANATION_SYSTEM})
@@ -76,8 +78,7 @@ def prompt_model(question:str,llm:Llama) -> str:
         msg.append({"role":"user","content":example["user"]})
         msg.append({"role":"assistant","content":example["assistant"]})
     msg.append({"role":"user","content":question})
-    answer = llm.create_chat_completion(msg,stop=".",max_tokens=100)["choices"][0]["message"]["content"]
-    return answer
+    return msg
 
                 
     

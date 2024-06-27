@@ -2,6 +2,7 @@ import datasets
 import json
 from typing import List
 from transformer_lens import utils
+import os
 
 def get_batches(config: dict[str,str],tokenizer):
     
@@ -11,8 +12,8 @@ def get_batches(config: dict[str,str],tokenizer):
     mini_batches = [batch for batch in mini_batches]
     mini_batches = mini_batches[:-1]
 
-    number_of_tokens= mini_batches.shape[0] * mini_batches.shape[1]
-    print("Collecting features over {} tokens".format(number_of_tokens))
+    #number_of_tokens= len(mini_batches) * mini_batches.shape[1]
+    #print("Collecting features over {} tokens".format(number_of_tokens))
 
     return mini_batches
 
@@ -26,20 +27,26 @@ def get_all_tokens(config: dict[str,str],tokenizer):
     keep_examples = config["number_examples"]
     dataset = dataset.select(range(keep_examples))
     tokenized_data = utils.tokenize_and_concatenate(
-        dataset, tokenizer, max_length=256
+        dataset, tokenizer, max_length=config["max_lenght"]
     )
     all_tokens = tokenized_data["tokens"]
     return all_tokens
 
 
 def get_available_configs()->List[str]:
-    with open("config.json") as f:
+    #Get current path
+    path = os.path.dirname(__file__)
+    
+    with open(path+"/configs.json") as f:
         config = json.load(f)
     config_names = list(config.keys())
     return config_names
 
 def get_config(config_name:str)->dict[str,str]:
-    with open("config.json") as f:
+    #Get current path
+    path = os.path.dirname(__file__)
+    
+    with open(path+"/configs.json") as f:
         config = json.load(f)
     return config[config_name]
 

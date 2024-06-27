@@ -2,7 +2,7 @@
 from typing import List
 from llama_cpp import Llama
 from sae_auto_interp.evaluations.choose.base_prompts import EXPLANATION_SYSTEM, FEW_SHOT_EXAMPLES
-
+from clients import client
 
 def formulate_question(explanation:str,document:str) -> str:
     question = f"Explanation: {explanation}\n"
@@ -10,7 +10,7 @@ def formulate_question(explanation:str,document:str) -> str:
     return question
 
 
-def prompt_model(question:str,llm:Llama) -> str:
+def prompt_model(question:str) -> str:
 
     msg = []
     msg.append({"role":"system","content":EXPLANATION_SYSTEM})
@@ -19,20 +19,26 @@ def prompt_model(question:str,llm:Llama) -> str:
         msg.append({"role":"user","content":example["user"]})
         msg.append({"role":"assistant","content":example["assistant"]})
     msg.append({"role":"user","content":question})
-    answer = llm.create_chat_completion(msg,stop=".",max_tokens=5)["choices"][0]["message"]["content"]
-    return answer
+    return msg
+
+def recall_prompts(sentences:List[str],explanation:str,tokenizer) -> List[str]:
+    prompts = []
+    for sentence in sentences:
+        question = formulate_question(explanation,sentence)
+        msg = prompt_model(question)
+        prompt = tokenizer.apply_chat_template(msg,tokenize=False)
+        prompts.append(prompt)
+    return prompts
 
 
-def recall_evaluations(simulator,sentences,explanation):
+def recall_evaluations(answers:List[str],number_true:int) -> int:
 
     #TODO: This could be more general
     correct = 0
-    for i,sentence in enumerate(sentences):
-        question = formulate_question(explanation,sentence)
-        answer = prompt_model(question,simulator)
-        if "Yes" in answer and i < 5:
+    for i,answer in enumerate(answers):
+        if "Yes" in answer and i < number_true:
             correct += 1
-        elif "No" in answer and i >= 5:
+        elif "No" in answer and i >= number_true:
             correct += 1
     return correct
         

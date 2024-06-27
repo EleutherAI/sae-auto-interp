@@ -41,12 +41,12 @@ def get_autoencoder(model_name:str,layer: int,device:str,path:str) -> Autoencode
     return wrapped
 
 
-def load_eai_autoencoder(layer: int, device:str, config:dict[str,str],path:str) -> Sae:
+def load_eai_autoencoder(layer: int, device:str, path:str) -> Sae:
     path = f"{path}/Meta-LLama-3-8B/layer_{layer}"
     sae = Sae.load_from_disk(path,device)
     return sae
 
-def load_oai_autoencoder(layer: int, config:dict[str,str],path:str) -> Autoencoder:
+def load_oai_autoencoder(layer: int, path:str) -> Autoencoder:
     filename = f"{path}/gpt2/resid_post_mlp_autoencoder_{layer}.pt"
     with open(filename, mode="rb") as f:
         state_dict = torch.load(f)
