@@ -22,7 +22,7 @@ if __name__ == "__main__":
         "--model",
         type=str,
         default="gpt2",
-        choices="gpt2,meta-llama/Meta-Llama-3-8B"
+        choices=["gpt2","meta-llama/Meta-Llama-3-8B"]
     )
     parser.add_argument(
         "--device",
@@ -41,7 +41,7 @@ if __name__ == "__main__":
         choices=get_available_configs(),
     )
     parser.add_argument(
-        "--file_prefix",
+        "--feature_prefix",
         type=str,
         default="",
         help="Prefix to add to the file name",
@@ -58,10 +58,9 @@ if __name__ == "__main__":
     device = args.device
     layer = args.layer
     number_features = args.number_features
-    number_examples = args.number_examples
     config = args.dataset_configuration
     config = get_config(config)
-    prefix = args.prefix
+    prefix = args.feature_prefix
     if prefix != "":
         prefix = prefix + "_"
     autoencoder_path= args.path_autoencoder

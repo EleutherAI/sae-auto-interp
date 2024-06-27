@@ -1,16 +1,17 @@
 import torch
 from transformer_lens import HookedTransformer
-
-from llama_cpp import Llama
+from transformers import AutoTokenizer
 import time as time
 from argparse import ArgumentParser
 import json
 import tqdm
 from sae_auto_interp.features.dataset import get_all_tokens
 from sae_auto_interp.features.utils import get_activated_sentences
+from sae_auto_interp.clients.local import Local
+
 from sae_auto_interp.explanations.generate import (
     template_explanation,
-    generate_explanation,
+    get_prompts,
 )
 
 
@@ -19,8 +20,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--layer",
         type=int,
-        default=-1,
-        help="Layer to collect features from, if -1 will collect from all layers",
+        help="Layer to generate explanations features from",
     )
     parser.add_argument(
         "--model",
@@ -71,7 +71,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     layer = args.layer
     model_name = args.model
+    #This actually does nothing at the moment
     explainer_name = args.explainer
+
     feature_prefix = args.feature_prefix
     if feature_prefix != "":
         feature_prefix += "_"
@@ -90,8 +92,15 @@ if __name__ == "__main__":
 
     features = torch.load(f"saved_features/{load_name}/{feature_prefix}layer_{layer}_features.pt")
     indices = torch.load(f"saved_features/{load_name}/{feature_prefix}layer_{layer}_indices.pt")
-    config = torch.load(f"saved_features/{load_name}/{feature_prefix}layer_{layer}_config.json")
-
+    #config = torch.load(f"saved_features/{load_name}/{feature_prefix}layer_{layer}_config.json")
+    config={
+        "dataset_repo": "HuggingFaceFW/fineweb",
+        "dataset_name": "sample-10BT",
+        "split": "train",
+        "number_examples": 50000,
+        "max_lenght":256,
+        "batch_size": 8
+    }
     
     print("Loading model")
     model = HookedTransformer.from_pretrained(
@@ -101,37 +110,57 @@ if __name__ == "__main__":
 
     all_tokens = get_all_tokens(config,tokenizer)
     
-    
-    print("Loading explainer")
-    explainer = Llama.from_pretrained(
-        repo_id="MaziyarPanahi/Meta-Llama-3-70B-Instruct-GGUF",
-        filename="Meta-Llama-3-70B-Instruct.Q4_K_M.gguf",
-        n_gpu_layers=-1,
-        n_ctx=8192,
-        verbose=False,
-    )
+    tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
 
+    
+    
     existing_features = torch.unique(indices[:, 2])
     explanations_dict = {}
     
     if number_features == -1:
         number_features = existing_features.shape[0]
     
-    for i in tqdm.tqdm(range(number_features)):
+    prompts=[]
+
+    for i in tqdm.tqdm(range(number_features),desc="Generating prompts"):
         top_sentences, top_activations, top_indices = get_activated_sentences(
             features, indices, existing_features[i], all_tokens, max_selection
         )
 
         # If there are less than 10 sentences, we skip this feature
-        if top_sentences.shape[0] < 20:
+        if top_sentences.shape[0] < number_examples:
             continue
         sentences, token_score_pairs = template_explanation(
             top_sentences, top_activations, top_indices, tokenizer, number_examples
         )
-        # print(sentences,token_score_pairs)
-        answer = generate_explanation(explainer, sentences, token_score_pairs)
-        if answer is None:
-            continue
+
+        prompt = get_prompts(sentences, token_score_pairs, tokenizer)
+        prompts.append(prompt)
+
+    print("Loading explainer")
+    explainer_config = {
+        "backend": "vllm",
+        "model": "casperhansen/llama-3-70b-instruct-awq",
+        "quantization": "awq"
+    }
+    
+
+    explainer = Local(explainer_config["model"],explainer_config)
+
+    if explainer_config["backend"]=="vllm":
+        sampling = {"max_tokens": 100}
+        # Batch the prompts just to have an estimate of the time
+        number_answers = len(prompts)
+        batch_size = 10
+        answers = []
+        pbar = tqdm.tqdm(total=number_answers, desc="Generating explanations")
+        for i in range(0, number_answers, batch_size):
+            answers += explainer.generate_batch(prompts[i : i + batch_size], sampling)
+            pbar.update(batch_size)
+
+    print("Saving explanations")
+    for i in range(len(answers)):
+        answer = answers[i]
         explanations_dict[int(existing_features[i].item())] = answer
 
     with open(
