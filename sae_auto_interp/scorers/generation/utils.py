@@ -1,7 +1,7 @@
 
 from typing import List
 from llama_cpp import Llama
-from sae_auto_interp.evaluations.enumerate.base_prompts import FEW_SHOT_EXAMPLES_POS,EXPLANATION_SYSTEM_POS,EXPLANATION_SYSTEM_NEG,FEW_SHOT_EXAMPLES_NEG
+from sae_auto_interp.scorers.generation.base_prompts import FEW_SHOT_EXAMPLES_POS,EXPLANATION_SYSTEM_POS,EXPLANATION_SYSTEM_NEG,FEW_SHOT_EXAMPLES_NEG
 import torch
 
 def formulate_question(explanation:str) -> str:

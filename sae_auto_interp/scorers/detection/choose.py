@@ -1,8 +1,7 @@
 
 from typing import List
 from llama_cpp import Llama
-from sae_auto_interp.evaluations.choose.base_prompts import EXPLANATION_SYSTEM, FEW_SHOT_EXAMPLES
-from clients import client
+from sae_auto_interp.scorers.detection.base_prompts import EXPLANATION_SYSTEM, FEW_SHOT_EXAMPLES
 
 def formulate_question(explanation:str,document:str) -> str:
     question = f"Explanation: {explanation}\n"

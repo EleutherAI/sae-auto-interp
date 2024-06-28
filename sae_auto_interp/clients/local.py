@@ -2,9 +2,13 @@ from .client import Client
 from typing import List
 
 class Local(Client):
-    def __init__(self, model: str,config:dict[str,str]):
+    def __init__(self, model: str):
         super().__init__(model)
-        
+        config = {
+        "backend": "vllm",
+        "model": "casperhansen/llama-3-70b-instruct-awq",
+        "quantization": "awq"
+        }
         self.initialize_backend(config)
 
     def initialize_backend(self,config:dict[str,str]):
