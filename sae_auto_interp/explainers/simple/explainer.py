@@ -10,7 +10,7 @@ import re
 
 
 from ..explainer import Explainer, ExplainerInput, ExplainerResult
-from ...clients import get_client
+from ...clients.api import get_client
 from ... import simple_cfg
 
 class SimpleExplainer(Explainer):
@@ -31,7 +31,6 @@ class SimpleExplainer(Explainer):
         simplified, user_prompt = self.build_prompt(
             explainer_in.train_examples, 
             explainer_in.record.max_activation, 
-            explainer_in.record.top_logits
         )
 
         prompt = [

@@ -8,7 +8,7 @@ import re
 from ... import example_cfg as cfg
 from ... import cot_cfg
 
-from ...clients import get_client
+from ...clients.api import get_client
 
 
 class ChainOfThought(Explainer):

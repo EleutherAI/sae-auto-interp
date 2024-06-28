@@ -14,6 +14,7 @@ class Local(Client):
     def initialize_backend(self,config:dict[str,str]):
         backend = config["backend"]
         self.backend = backend
+        self.model = config["model"]
         if backend=="vllm":
             from vllm import LLM
             quantization = config["quantization"]

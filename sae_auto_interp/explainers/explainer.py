@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ..autoencoders.features import Example, FeatureRecord  
+from ..features.features import Example, FeatureRecord  
 from typing import List
 import time
 

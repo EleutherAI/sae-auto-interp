@@ -2,7 +2,7 @@ cache:
     dataset_repo: "togethercomputer/RedPajama-Data-1T-Sample"
     dataset_name: ""
     dataset_split: "train[:3%]"
-    num_batches: 800
+    num_batches: 100
     minibatch_size: 128
     batch_len: 64
     n_features: 131072
