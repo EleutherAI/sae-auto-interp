@@ -67,14 +67,34 @@ def sort_features(features):
     return layer_sorted_features
 
 
-def load_record(feature, tokens, tokenizer):
+def load_record(feature, tokens, tokenizer,offline=False):
 
-    path = (
+   
+
+    if offline:
+        path = (f"saved_features_json/layer{feature.layer_index}_feature{feature.feature_index}.json")
+        with open(path, "r") as f:
+            record = orjson.loads(f.read())
+            locations = record[0]
+            activations = record[1]
+
+    else:
+        path = (
         f"gs://gpt2-oai-all/layer{feature.layer_index}_feature{feature.feature_index}"
-    )
-
-    with bf.BlobFile(path, "rb") as f:
-        locations, activations = orjson.loads(f.read())
+        )
+        with bf.BlobFile(path, "rb") as f:
+            locations, activations = orjson.loads(f.read())
+    
+    #TODO: We need a way to deal with empty features
+    if len(locations) == 0:
+        empty_example = Example(
+            tokens=[],
+            activations=[],
+            str_toks=[],
+            text="",
+            max_activation=0.0,
+        )
+        return FeatureRecord(feature, [empty_example])
 
     example_tokens, example_activations = get_activating_examples(
         tokens, locations, activations, 15, 4
@@ -101,12 +121,13 @@ def feature_loader(
     features: List,
     model,
     ae_dict,
+    offline=False
 ):
     layer_sorted_features = sort_features(features)
     for layer, features in layer_sorted_features.items():
 
         records = [
-            load_record(feature, tokens, model.tokenizer) for feature in features
+            load_record(feature, tokens, model.tokenizer,offline) for feature in features
         ]
 
         yield ae_dict[layer], records
