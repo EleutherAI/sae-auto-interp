@@ -172,7 +172,8 @@ class FeatureCache:
             for feature_index in tqdm(features):
                 data = self.buffer.get_feature_occurances(feature_index, layer_index)
                 
-                self.upload(feature_index, layer_index, data)
+                #self.upload(feature_index, layer_index, data)
+                self.save_local(feature_index, layer_index, data)
 
     #TODO: I think we want a slightly different save function. 
     def save_features(self):
@@ -191,5 +192,10 @@ class FeatureCache:
             f.write(
                 orjson.dumps(data)
             )
-    
+
+    def save_local(self, feature_index, layer_index, data):
+        with open(f"layer{layer_index}_feature{feature_index}.json", 'wb') as f:
+            f.write(
+                orjson.dumps(data)
+            )
    

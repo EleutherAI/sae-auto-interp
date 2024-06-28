@@ -95,7 +95,7 @@ def load_record(feature, tokens, tokenizer):
 
     return FeatureRecord(feature, examples)
 
-
+#TODO: We should have a way to load torch tensors 
 def feature_loader(
     tokens: List[int],
     features: List,
@@ -111,7 +111,7 @@ def feature_loader(
 
         yield ae_dict[layer], records
 
-
+#TODO: Should this be somewhere else? Its ok to be here if you think its were it makes more sense but maybe we should have it in some prompt utils.
 def prepare_example(example, max_activation=0.0):
     delimited_string = ""
     activation_threshold = max_activation
@@ -145,9 +145,11 @@ def prepare_example(example, max_activation=0.0):
 
     return delimited_string
 
-
+# We need this when the features are not saved individually
 def select_features(features:Tensor, indices:Tensor, feature_index:Tensor) -> tuple[Tensor,Tensor]:
     return features[indices[:,2] == feature_index], indices[indices[:,2] == feature_index]
+
+
 
 def cluster_features(selected_features,selected_indices):
     ## Thanks magic copilot for making this 10x faster
@@ -169,6 +171,8 @@ def cluster_features(selected_features,selected_indices):
     sum = torch.cat((cum_sum[0].unsqueeze(0),sum.diff()))
     return grouped_features,sum,grouped_indices
 
+
+# The function below is basically the same as this one and I think we should use this one.
 def get_activated_sentences(features:Tensor, indices:Tensor, feature_index:Tensor, all_tokens:List[Tensor],max_selection:int=50) -> tuple[Tensor,Tensor,Tensor]:
     selected_features, selected_indices = select_features(features, indices, feature_index)
     selected_features = selected_features
@@ -187,12 +191,11 @@ def get_activated_sentences(features:Tensor, indices:Tensor, feature_index:Tenso
         top_activations = sum.topk(max_selection)
         top_activation_indices = top_activations.indices
         
-    #These are the top activations, but we want to also get other activations in the same sentences
-    
     all_activations = torch.tensor([])
     all_indices = torch.tensor([])
     sentences = torch.tensor([],dtype=torch.int64)
-    #Get all activations in the same sentences
+
+    #TODO: This look can be slow if max_selection is big, but not sure how to go around it. 
     for counter,idx in enumerate(top_activation_indices):
         t_features = sentence_features[idx]
         t_indices = sentence_indices[idx].clone()
@@ -205,7 +208,7 @@ def get_activated_sentences(features:Tensor, indices:Tensor, feature_index:Tenso
 
     return sentences, all_activations, all_indices
 
-
+#TODO: #3 This is going to be a bottleneck
 # From Claude 3.5!
 def get_activating_examples(
     tokens: torch.Tensor, locations, activations, l_ctx: int, r_ctx: int
