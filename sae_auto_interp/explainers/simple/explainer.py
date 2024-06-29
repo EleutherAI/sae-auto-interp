@@ -23,7 +23,7 @@ class SimpleExplainer(Explainer):
         self.name = "simple"
         self.client = get_client(provider, model)
         #TODO: Monkeypatch
-        #self.tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
+        self.tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
 
     def __call__(
         self,
@@ -32,6 +32,7 @@ class SimpleExplainer(Explainer):
     ) -> ExplainerResult:
         simplified, user_prompt = self.build_prompt(
             explainer_in.train_examples,
+            self.tokenizer
         )
 
         # prompt = [
@@ -72,18 +73,18 @@ class SimpleExplainer(Explainer):
     def build_prompt(self,examples,tokenizer):
 
         #I think this can be prettier
-        tokens = []
+        str_tokens = []
         activations = []
         sentences= []
         for example in examples:
-            tokens.append(example.tokens)
+            str_tokens.append(example.str_toks)
             activations.append(example.activations)
             sentences.append(example.text)
         max_activation = max([max(activation) for activation in activations])
         undiscovered_feature = ""
         for i in range(len(sentences)):
             decoded = sentences[i]
-            activated_tokens,scores = tokens[i],activations[i]
+            activated_tokens,scores = str_tokens[i],activations[i]
             undiscovered_feature += self.formulate_question(i+1,decoded,activated_tokens,scores,max_activation)
         prompt,question = self.make_prompt(undiscovered_feature)
         spelled_out = tokenizer.apply_chat_template(prompt,add_generation_prompt=True,tokenize=False)
