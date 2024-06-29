@@ -23,7 +23,7 @@ class SimpleExplainer(Explainer):
         self.name = "simple"
         self.client = get_client(provider, model)
         #TODO: Monkeypatch
-        self.tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
+        #self.tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
 
     def __call__(
         self,
@@ -31,8 +31,7 @@ class SimpleExplainer(Explainer):
         echo=False
     ) -> ExplainerResult:
         simplified, user_prompt = self.build_prompt(
-            explainer_in.train_examples, 
-            self.tokenizer
+            explainer_in.train_examples,
         )
 
         # prompt = [
@@ -72,23 +71,25 @@ class SimpleExplainer(Explainer):
     
     def build_prompt(self,examples,tokenizer):
 
+        #I think this can be prettier
         tokens = []
         activations = []
+        sentences= []
         for example in examples:
             tokens.append(example.tokens)
             activations.append(example.activations)
-        
-        sentences,token_score_pairs = self.template_explanation(tokens,activations,tokenizer)
+            sentences.append(example.text)
+        max_activation = max([max(activation) for activation in activations])
         undiscovered_feature = ""
         for i in range(len(sentences)):
             decoded = sentences[i]
-            activated_tokens,scores = token_score_pairs[i]
-            undiscovered_feature += self.formulate_question(i+1,decoded,activated_tokens,scores)
-        prompt = self.make_prompt(undiscovered_feature)
+            activated_tokens,scores = tokens[i],activations[i]
+            undiscovered_feature += self.formulate_question(i+1,decoded,activated_tokens,scores,max_activation)
+        prompt,question = self.make_prompt(undiscovered_feature)
         spelled_out = tokenizer.apply_chat_template(prompt,add_generation_prompt=True,tokenize=False)
-        return prompt,spelled_out
+        return question,spelled_out
     
-    def formulate_question(self,index:int,document:str,activating_tokens:List[str],activations:List[int]) -> str:
+    def formulate_question(self,index:int,document:str,activating_tokens:List[str],activations:List[int],max_activation:float) -> str:
         if index == 1:
             question = "Neuron\n"
         else:
@@ -97,6 +98,7 @@ class SimpleExplainer(Explainer):
         question += "Activating tokens:"
         for token,score in zip(activating_tokens,activations):
             if score > 0:
+                score = round(score/max_activation*10,0)
                 question += f" {token} ({score}),"
         # Remove the last comma
         question = question[:-1] + ".\n\n"
@@ -111,61 +113,9 @@ class SimpleExplainer(Explainer):
             msg.append({"role":"user","content":example["user"]})
             msg.append({"role":"assistant","content":example["assistant"]})
         msg.append({"role":"user","content":question})
-        return msg
+        return msg,question
 
-    def template_explanation(self,tokens,activations,tokenizer):
     
-        max_activation = max([max(activation) for activation in activations])
-        token_score_pairs = []
-        sentences = []
-        for i,sentence in enumerate(tokens):
-            temp_activations = np.array(activations[i])
-            score = temp_activations/max_activation*10
-            score = np.round(score,0)
-            max_score_index = score.argmax()
-            #This does nothing at the moment
-            start = max(max_score_index-20,0)
-            end = min(max_score_index+10,len(sentence))
-            tokens = []
-            for token in sentence[start:end]:
-                tokens.append(tokenizer.decode(token))
-
-            token_score_pairs.append((tokens,score[start:end]))
-            sentences.append(tokenizer.decode(sentence[start:end]))
-        
-        return sentences,token_score_pairs
-    # def template_explanation(self,top_sentences,top_activations,top_indices,tokenizer,number_examples=10):
-        
-    #     max_activation = top_activations.max().item()
-        
-    #     selection_indices = np.random.choice(top_sentences.shape[0],number_examples,replace=False)
-    #     sentences = []
-    #     token_score_pairs = []
-    #     for i in selection_indices:
-    #         sentence = top_sentences[i]
-    #         activated = torch.nonzero(top_indices[:,0] == i)
-    #         activated_indices = top_indices[activated]
-    #         scores = torch.zeros(sentence.shape[0])
-        
-    #         for j in range(activated.shape[0]):
-                
-    #             activating_token = activated_indices[j,:,1].int()
-    #             score = top_activations[activated[j]].item()
-    #             score = score/max_activation*10
-    #             scores[activating_token] = score
-    #         max_score_index = scores.argmax()
-    #         start = max(max_score_index-20,0)
-    #         end = min(max_score_index+10,sentence.shape[0])
-    #         tokens = []
-    #         for token in sentence[start:end]:
-    #             tokens.append(tokenizer.decode(token))
-
-    #         token_score_pairs.append((tokens,scores[start:end]))
-    #         sentences.append(tokenizer.decode(sentence[start:end]))
-
-    #     max_activation = top_activations.max().item()
-        
-    #     return sentences,token_score_pairs
 
     
 
