@@ -12,6 +12,8 @@ from transformer_lens import HookedTransformer
 
 from transformer_lens import utils
 
+from sae_auto_interp.features.stats import CombinedStat, Logits
+
 from sae_auto_interp.explainers import (
     ExplainerInput, 
     ExplainerResult, 
@@ -96,7 +98,8 @@ def load_samples(n_per_layer=50):
     
 def run(feature_records, test_model, ae_dict):
 
-    explainers = [SimpleExplainer(**model_init_kwargs)]
+    #explainers = [SimpleExplainer(**model_init_kwargs)]
+    explainers = [ChainOfThought(**model_init_kwargs)]
 
     explainer_results = []
     
@@ -161,12 +164,12 @@ if __name__ == "__main__":
     features = load_samples(n_per_layer=50)
     tokens = load_tokens(test_model.tokenizer)
 
-    # stats = CombinedStat(
-    #     logits = Logits(
-    #         model=test_model,
-    #         top_k_logits=10
-    #     ),
-    # )    
+    stats = CombinedStat(
+        logits = Logits(
+            model=test_model,
+            top_k_logits=10
+        ),
+    )    
 
     all_records = []
 
