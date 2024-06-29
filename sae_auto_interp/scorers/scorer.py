@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from ..autoencoders.features import FeatureRecord, Example
+from ..features import FeatureRecord, Example
 from abc import ABC, abstractmethod
 from typing import List, Any
 import time

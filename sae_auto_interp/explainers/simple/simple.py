@@ -21,7 +21,7 @@ class SimpleExplainer(Explainer):
         self.name = "simple"
         self.client = client
 
-    def __call__(
+    async def __call__(
         self,
         explainer_in: ExplainerInput,
     ) -> ExplainerResult:
@@ -42,7 +42,7 @@ class SimpleExplainer(Explainer):
             "temperature" : simple_cfg.temperature,
         }
 
-        response = self.client.generate(prompt, generation_args)
+        response = await self.client.generate(prompt, **generation_args)
         explanation = self.parse_explanation(response)
 
         return ExplainerResult(

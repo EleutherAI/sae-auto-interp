@@ -9,7 +9,6 @@ import spacy
 from tqdm import tqdm
 import torch
 
-NLP = spacy.load("en_core_web_sm")
 class Stat:
 
     def __init__(self):
@@ -113,6 +112,7 @@ class Activations(Stat):
     def __init__(self, get_lemmas=False, top_activating_k=100):
         self.get_lemmas = get_lemmas
         self.top_activating_k = top_activating_k
+        self.nlp = spacy.load("en_core_web_sm")
 
     def get_top_activating_tokens(
         self,
@@ -158,7 +158,7 @@ class Activations(Stat):
         # Step 4: Join into a single string
         text_for_spacy = " ".join(alpha_tokens)
 
-        doc = NLP(text_for_spacy)
+        doc = self.nlp(text_for_spacy)
 
         lemmatized_tokens = [token.lemma_ for token in doc]
         return lemmatized_tokens

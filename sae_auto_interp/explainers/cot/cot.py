@@ -5,8 +5,7 @@ from .prompts import create_prompt
 
 import re
 
-from ... import example_cfg as cfg
-from ... import cot_cfg
+from ... import cot_explainer_config as CONFIG 
 
 class ChainOfThought(Explainer):
 
@@ -79,7 +78,7 @@ class ChainOfThought(Explainer):
                 previous.append(example.str_toks[pos])
                 pos += 1
             elif example.activations[pos] > activation_threshold:
-                delimited_string += cfg.l
+                delimited_string += CONFIG.l
 
                 seq = ""
                 while pos < len(example.tokens) and example.activations[pos] > activation_threshold:
@@ -92,7 +91,7 @@ class ChainOfThought(Explainer):
                 if pos < len(example.tokens):
                     following.append(example.str_toks[pos])
 
-                delimited_string += cfg.r
+                delimited_string += CONFIG.r
             else:
                 delimited_string += example.str_toks[pos]
                 pos += 1
@@ -128,8 +127,8 @@ class ChainOfThought(Explainer):
         following = self.flatten_and_join_with_quotes(following)
 
         simplified, user_prompt = create_prompt(
-            l=cfg.l, 
-            r=cfg.r, 
+            l=CONFIG.l, 
+            r=CONFIG.r, 
             examples=top_examples, 
             top_logits=top_logits,
             activating=activating,

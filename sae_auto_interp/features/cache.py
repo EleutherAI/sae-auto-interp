@@ -1,20 +1,13 @@
 import torch
 from typing import Tuple, List, Dict
 from tqdm import tqdm
-
 from datasets import load_dataset, Dataset
 from transformer_lens import utils
-
-from .. import cache_cfg
-
 import psutil
 import orjson
-
-
-
 from collections import defaultdict
 
-N_FEATURES = 32_768
+from .. import cache_config as CONFIG
 
 class Buffer:
     def __init__(
@@ -34,7 +27,7 @@ class Buffer:
         feature_locations = feature_locations.cpu()
         feature_activations = feature_activations.cpu()
 
-        feature_locations[:,0] += batch_number * cache_cfg.minibatch_size
+        feature_locations[:,0] += batch_number * CONFIG.minibatch_size
         self.feature_locations[layer].append(feature_locations)
         self.feature_activations[layer].append(feature_activations)
         
@@ -89,17 +82,16 @@ class FeatureCache:
 
 
     def load_token_batches(self, minibatch_size=20) -> Tuple[Dataset, List[Tuple[int, int]]]:
-        # data = load_dataset("togethercomputer/RedPajama-Data-1T-Sample", split="train[:3%]")
-        data = load_dataset("stas/openwebtext-10k", split="train")
+        data = load_dataset(CONFIG.dataset_repo, split=CONFIG.dataset_split)
 
         tokens = utils.tokenize_and_concatenate(
             data, 
             self.model.tokenizer, 
-            max_length=cache_cfg.batch_len
+            max_length=CONFIG.batch_len
         )   
 
-        tokens = tokens.shuffle(cache_cfg.seed)['tokens']
-        max_batches = cache_cfg.n_tokens // cache_cfg.batch_len
+        tokens = tokens.shuffle(CONFIG.seed)['tokens']
+        max_batches = CONFIG.n_tokens // CONFIG.batch_len
         tokens = tokens[:max_batches]
         
         n_mini_batches = len(tokens) // minibatch_size
@@ -115,7 +107,7 @@ class FeatureCache:
     
     
     def run(self):
-        token_batches = self.load_token_batches(cache_cfg.minibatch_size)
+        token_batches = self.load_token_batches(CONFIG.minibatch_size)
 
         total_tokens = 0
         total_batches = len(token_batches)

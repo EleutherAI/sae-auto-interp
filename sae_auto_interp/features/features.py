@@ -32,8 +32,6 @@ class Example:
     max_activation: float = 0.0
 
 
-TARGET_NUMBER = 300
-
 
 class FeatureRecord:
 
@@ -98,16 +96,26 @@ def feature_loader(
     features: List,
     model,
     ae_dict,
-    feature_dir
+    feature_dir,
+    pipe=False
 ):
+    all_records = []
+    
     layer_sorted_features = sort_features(features)
+
     for layer, features in layer_sorted_features.items():
 
         records = [
             load_record(feature, tokens, model.tokenizer, feature_dir) for feature in features
         ]
 
-        yield ae_dict[layer], records
+        if pipe:
+            yield ae_dict[layer], records
+        else:
+            all_records.append(records)
+
+
+    return all_records
 
 #TODO: #3 This is going to be a bottleneck
 # From Claude 3.5!

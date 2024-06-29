@@ -1,16 +1,14 @@
 cache:
-    dataset_repo: "togethercomputer/RedPajama-Data-1T-Sample"
-    dataset_name: ""
-    dataset_split: "train[:3%]"
+    # dataset_repo: "togethercomputer/RedPajama-Data-1T-Sample"
+    # dataset_split: "train[:3%]"
+    dataset_repo: "stas/openwebtext-10k"
+    dataset_split: "train"
     num_batches: 100
     minibatch_size: 128
     batch_len: 64
-    n_features: 131072
+    n_features: 32768
     n_tokens: 5_120_000
-    n_splits: 16
-    n_neighbors: 10
     seed: 22
-
 
 
 example:

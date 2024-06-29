@@ -1,8 +1,3 @@
-import torch
-
-
-
-
 def prepare_example(example, max_activation=0.0):
     delimited_string = ""
     activation_threshold = max_activation
