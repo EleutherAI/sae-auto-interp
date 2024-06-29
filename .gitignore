@@ -6,3 +6,4 @@ saved_autoencoders
 *__pycache__
 .gitignore
 extras
+*.pt

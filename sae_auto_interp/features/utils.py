@@ -3,24 +3,38 @@ import torch
 
 
 
-def unravel_index(flat_index, shape):
+def prepare_example(example, max_activation=0.0):
+    delimited_string = ""
+    activation_threshold = max_activation
 
-    indices = []
-    for dim_size in reversed(shape):
-        indices.append(flat_index % dim_size)
-        flat_index = flat_index // dim_size
-    return tuple(reversed(indices))
+    pos = 0
+    while pos < len(example.tokens):
+        if (
+            pos + 1 < len(example.tokens)
+            and example.activations[pos + 1] > activation_threshold
+        ):
+            delimited_string += example.str_toks[pos]
+            pos += 1
+        elif example.activations[pos] > activation_threshold:
+            delimited_string += "<<"
 
+            seq = ""
+            while (
+                pos < len(example.tokens)
+                and example.activations[pos] > activation_threshold
+            ):
 
-def topk(tensor, k):
+                delimited_string += example.str_toks[pos]
+                seq += example.str_toks[pos]
+                pos += 1
 
-    flat_tensor = tensor.flatten()
+            delimited_string += ">>"
 
-    top_values, flat_indices = torch.topk(flat_tensor, k)
+        else:
+            delimited_string += example.str_toks[pos]
+            pos += 1
 
-    original_indices = [unravel_index(idx.item(), tensor.size()) for idx in flat_indices]
-
-    return top_values.tolist(), original_indices
+    return delimited_string
 
 def find_smallest_index_above_zero(arr):
     left, right = 0, len(arr) - 1

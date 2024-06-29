@@ -3,9 +3,20 @@ from dataclasses import dataclass
 from ..features.features import Example, FeatureRecord  
 from typing import List
 import time
-
+import asyncio
 
 from abc import ABC, abstractmethod
+
+import asyncio
+import orjson
+import os
+import aiofiles
+from typing import List, Callable, Awaitable
+from datetime import datetime
+
+
+
+BATCH_SIZE = 10
 
 @dataclass
 class ExplainerInput:
@@ -28,28 +39,42 @@ class Explainer(ABC):
     ) -> ExplainerResult:
         pass
         
-def run_explainers(
-    explainers: List[Explainer],
-    explainer_in: ExplainerInput,
-    logging = None
+
+async def run_explainers(
+    explainer: Callable[[ExplainerInput], Awaitable[str]],
+    explainer_inputs: List[ExplainerInput],
+    output_dir: str,
+    logging = None,
+    batch_size: int = BATCH_SIZE
 ):
     logger = logging.info if logging else print
-    for explainer in explainers:
-        
-        def run():
-            name = explainer.name
 
-            logger(f"Running explainer {name}")
+    # Ensure output directory exists
+    os.makedirs(output_dir, exist_ok=True)
 
-            start = time.time()
-            result = explainer(explainer_in)
-            end = time.time()
+    async def process_and_save(explainer_in, index):
+        result = await explainer(explainer_in)
+        filename = f"result_{index}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+        filepath = os.path.join(output_dir, filename)
+        async with aiofiles.open(filepath, mode='wb') as f:
+            await f.write(orjson.dumps(result))
+        logger(f"Saved result to {filepath}")
+        return result
 
-            logger(f"Finished explainer {name}")
+    async def process_batch(batch, start_index):
+        tasks = [process_and_save(explainer_in, i) 
+                 for i, explainer_in in enumerate(batch, start=start_index)]
+        return await asyncio.gather(*tasks)
 
-            runtime = end - start
+    # Split inputs into batches
+    explainer_input_batches = [
+        explainer_inputs[i:i+batch_size]
+        for i in range(0, len(explainer_inputs), batch_size)
+    ]
 
-            return runtime, result 
-
-        yield explainer.name, run
-            
+    # Process all batches
+    for i, batch in enumerate(explainer_input_batches):
+        start_index = i * batch_size
+        results = await process_batch(batch, start_index)
+        for result in results:
+            logger(result)
