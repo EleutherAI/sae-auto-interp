@@ -3,8 +3,7 @@ log_path: "/share/u/caden/sae-auto-interp/scripts/run.log"
 cache:
     dataset_repo: "stas/openwebtext-10k"
     dataset_split: "train"
-    num_batches: 100
-    minibatch_size: 128
+    minibatch_size: 300
     batch_len: 64
     n_features: 32768
     n_tokens: 5_120_000

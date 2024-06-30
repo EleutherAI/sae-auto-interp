@@ -50,7 +50,7 @@ class ChainOfThought(Explainer):
 
         return ExplainerResult(
             explainer_type=self.name,
-            input=simplified,
+            prompt=simplified,
             response=response,
             explanation=explanation
         )
@@ -149,8 +149,7 @@ class ChainOfThought(Explainer):
         for example in examples:
             delimited_string, act, prev, follow = \
                 self.prepare_example(
-                    example, 
-                    max_act,
+                    example
                 )
             
             activating.append(act)

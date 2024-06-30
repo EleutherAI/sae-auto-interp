@@ -2,7 +2,7 @@ DSCORER_SYSTEM_PROMPT = """You are an intelligent and meticulous linguistics res
 
 You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment".
 
-You will then be given several text examples. Your task is to determine which examples possess the feature.
+You will then be given several text examples. Activating examples are formatted between tokens like <<this>>.
 
 The answer must be returned in JSON format. Mark correct exampels with 1 and incorrect examples with 0.
 """

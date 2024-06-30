@@ -21,7 +21,7 @@ with model.alter(" ", edits=edits):
 # Get and sort samples
 samples = get_samples()
 samples = {
-    int(layer) : features[:10] 
+    int(layer) : features
     for layer, features in samples.items() 
     if int(layer) in ae_dict.keys()
 }
@@ -29,4 +29,4 @@ samples = {
 # Cache and save features
 cache = FeatureCache(model, submodule_dict)
 cache.run()
-cache.save_some_features(samples, save_dir="/share/u/caden/sae-auto-interp/saved_features")
+cache.save_some_features(samples, save_dir="/share/u/caden/sae-auto-interp/raw_features")

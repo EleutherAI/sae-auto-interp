@@ -6,7 +6,7 @@ from sae_auto_interp.explainers import ChainOfThought, ExplainerInput
 from sae_auto_interp.clients import get_client
 from sae_auto_interp.utils import execute_model, load_tokenized_data, get_samples
 from sae_auto_interp.autoencoders.ae import load_autoencoders
-from sae_auto_interp.features import CombinedStat, Logits, feature_loader, Feature
+from sae_auto_interp.features import CombinedStat, Logits, feature_loader, Feature, FeatureRecord
 
 # Load model and autoencoders
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
@@ -23,35 +23,19 @@ samples = get_samples(features_per_layer=10)
 samples = {layer : samples[layer] for layer in samples if int(layer) in [0]}
 features = Feature.from_dict(samples)
 
-features_path = "/share/u/caden/sae-auto-interp/saved_features"
-
-stats = CombinedStat(
-    logits = Logits(
-        model=model,
-        top_k_logits=10
-    )
-)    
+raw_features_path = "/share/u/caden/sae-auto-interp/raw_features"
+processed_features_path = "/share/u/caden/sae-auto-interp/processed_features"
 
 explainer_inputs = []
 
-for ae, records in feature_loader(
-    tokens, 
-    features,
-    model,
-    ae_dict,
-    features_path,
-    pipe=True
-):
-    stats.refresh(W_dec=ae.decoder.weight)
-    stats.compute(records)
-
-    for record in records:
-        explainer_inputs.append(
-            ExplainerInput(
-                record.examples[:10],
-                record
-            )
+for feature in features:
+    record = FeatureRecord.load_record(feature, tokens, model.tokenizer, raw_features_path, processed_features_path)
+    explainer_inputs.append(
+        ExplainerInput(
+            train_examples=record.examples[:10],
+            record=record
         )
+    )
 
 client = get_client("local", "astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit")
 explainer = ChainOfThought(client)

@@ -78,10 +78,5 @@ async def execute_model(
 
         logger.info(f"Saved result to {filepath}")
 
-        return result
-
     tasks = [process_and_save(query) for query in queries]
-    results = await asyncio.gather(*tasks)
-
-    for result in results:
-        logger.info(result)
+    await asyncio.gather(*tasks)

@@ -43,6 +43,41 @@ class FeatureRecord:
     def max_activation(self):
         return self.examples[0].max_activation
     
+    @staticmethod
+    def load_record(feature, tokens, tokenizer, feature_dir, processed_dir=None):
+
+        if processed_dir:
+            path = f"{processed_dir}/layer{feature.layer_index}_feature{feature.feature_index}.json"
+            with bf.BlobFile(path, "rb") as f:
+                processed_data = orjson.loads(f.read())
+
+        path = f"{feature_dir}/layer{feature.layer_index}_feature{feature.feature_index}.json"
+
+        with open(path, "rb") as f:
+            locations, activations = orjson.loads(f.read())
+        
+        example_tokens, example_activations = get_activating_examples(
+            tokens, locations, activations
+        )
+
+        examples = [
+            Example(
+                tokens=toks,
+                activations=acts,
+                str_toks=[tokenizer.decode(t) for t in toks],
+                text=tokenizer.decode(toks),
+                max_activation=max(acts),
+            )
+            for toks, acts in zip(example_tokens, example_activations)
+        ]
+
+        examples.sort(key=lambda x: x.max_activation, reverse=True)
+
+        record = FeatureRecord(feature, examples)
+        record.__dict__.update(processed_data)
+
+        return record
+    
     def save(self, directory: str):
         path = f"{directory}/layer{self.feature.layer_index}_feature{self.feature.feature_index}.json"
         print(self.__dict__)
@@ -61,32 +96,6 @@ def sort_features(features):
     return layer_sorted_features
 
 
-def load_record(feature, tokens, tokenizer, feature_dir):
-
-    path = f"{feature_dir}/layer{feature.layer_index}_feature{feature.feature_index}.json"
-
-    with open(path, "rb") as f:
-        locations, activations = orjson.loads(f.read())
-       
-    example_tokens, example_activations = get_activating_examples(
-        tokens, locations, activations
-    )
-
-    examples = [
-        Example(
-            tokens=toks,
-            activations=acts,
-            str_toks=[tokenizer.decode(t) for t in toks],
-            text=tokenizer.decode(toks),
-            max_activation=max(acts),
-        )
-        for toks, acts in zip(example_tokens, example_activations)
-    ]
-
-    examples.sort(key=lambda x: x.max_activation, reverse=True)
-
-    return FeatureRecord(feature, examples)
-
 #TODO: We should have a way to load torch tensors 
 def feature_loader(
     tokens: List[int],
@@ -103,14 +112,13 @@ def feature_loader(
     for layer, features in layer_sorted_features.items():
 
         records = [
-            load_record(feature, tokens, model.tokenizer, feature_dir) for feature in features
+            FeatureRecord.load_record(feature, tokens, model.tokenizer, feature_dir) for feature in features
         ]
 
         if pipe:
             yield ae_dict[layer], records
         else:
             all_records.append(records)
-
 
     return all_records
 
