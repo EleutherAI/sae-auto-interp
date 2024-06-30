@@ -1,20 +1,10 @@
 from dataclasses import dataclass
 from typing import List, Tuple
-import random
-
 import torch
 import orjson
 import blobfile as bf
-from tqdm import tqdm
 from collections import defaultdict
-from .. import cache_config
-from .. import example_config
-import umap
-import logging
-from sklearn.neighbors import NearestNeighbors
-
-from typing import List, Optional,Dict
-from torch import Tensor
+from typing import List
 
 
 @dataclass

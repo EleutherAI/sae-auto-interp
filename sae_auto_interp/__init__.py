@@ -14,14 +14,6 @@ class CacheConfig:
     seed: int
 
 @dataclass
-class ExampleConfig:
-    activation_threshold: float
-    l: str
-    r: str
-    l_ctx: int
-    r_ctx: int
-
-@dataclass
 class ChainOfThoughtExplainerConfig:
     temperature: float
     max_tokens: int
@@ -50,8 +42,8 @@ with open(os.path.join(os.path.dirname(__file__), 'config.yaml'), 'r') as f:
     CONFIG = yaml.safe_load(f)
 
 cache_config = CacheConfig(**CONFIG["cache"])
-example_config = ExampleConfig(**CONFIG["example"])
 cot_explainer_config = ChainOfThoughtExplainerConfig(**CONFIG["cot_explainer"])
 simple_config = SimpleExplainerConfig(**CONFIG["simple_explainer"])
 det_config = DetectionScorerConfig(**CONFIG["detection"])
 gen_config = GenScorerConfig(**CONFIG["generation"])
+log_path = CONFIG["log_path"]

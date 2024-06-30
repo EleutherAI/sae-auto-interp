@@ -1,12 +1,10 @@
 import torch
 from typing import Tuple, List, Dict
 from tqdm import tqdm
-from datasets import load_dataset, Dataset
-from transformer_lens import utils
 import psutil
 import orjson
 from collections import defaultdict
-from .tokens import load_tokenized_data
+from ..utils import load_tokenized_data
 
 from .. import cache_config as CONFIG
 
@@ -68,10 +66,10 @@ class FeatureCache:
     def __init__(
         self,
         model, 
-        ae_dict
+        submodule_dict
     ):  
         self.model = model
-        self.ae_dict = ae_dict
+        self.submodule_dict = submodule_dict
         self.buffer = Buffer()
 
 
@@ -81,7 +79,7 @@ class FeatureCache:
         return memory_usage > threshold
 
 
-    def load_token_batches(self, minibatch_size=20) -> Tuple[Dataset, List[Tuple[int, int]]]:
+    def load_token_batches(self, minibatch_size=20):
         tokens = load_tokenized_data(self.model.tokenizer)
 
         max_batches = CONFIG.n_tokens // CONFIG.batch_len
@@ -118,7 +116,7 @@ class FeatureCache:
                     buffer = {}
 
                     with self.model.trace(batch, scan=False, validate=False):
-                        for layer, submodule in self.ae_dict.items():
+                        for layer, submodule in self.submodule_dict.items():
                             buffer[layer] = submodule.ae.output.save()
 
                     for layer, latents in buffer.items():

@@ -46,20 +46,12 @@ for ae, records in feature_loader(
 
 client = get_client("local", "astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit")
 scorer = FuzzingScorer(client)
-results = scorer(scorer_inputs[0])
 
-# save result to file
-with open("results.txt", "w") as file:
-    file.write(str(results))
-
-# client = get_client("local", "astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit")
-# scorer = ChainOfThought(client)
-# scorer_out_dir = "/share/u/caden/sae-auto-interp/scripts"
-
-# asyncio.run(
-#     run_scorers(
-#         scorer, 
-#         scorer_inputs,
-#         output_dir=scorer_out_dir,
-#     )
-# )
+scorer_out_dir = "/share/u/caden/sae-auto-interp/saved_scores"
+asyncio.run(
+    execute_model(
+        scorer, 
+        scorer_inputs,
+        output_dir=scorer_out_dir,
+    )
+)

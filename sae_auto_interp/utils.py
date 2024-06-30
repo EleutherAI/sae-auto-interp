@@ -11,7 +11,7 @@ from transformer_lens import utils
 from datasets import load_dataset
 from transformers import AutoTokenizer
 
-from ..import cache_config as CONFIG
+from . import cache_config as CONFIG
 import random
 
 def get_samples(features_per_layer=None):
@@ -53,18 +53,22 @@ def load_tokenized_data(
 async def execute_model(
     model: Callable[[ScorerInput], Awaitable[str]] | Callable[[ExplainerInput], Awaitable[str]],
     queries: List[ScorerInput] | List[ExplainerInput],
-    output_dir: str,
-    logging = None
+    output_dir: str
 ):
-    logger = logging.info if logging else print
+    """
+    Executes a model on a list of queries and saves the results to the output directory.
+    """
+    from .logger import logger
 
-    # Ensure output directory exists
     os.makedirs(output_dir, exist_ok=True)
 
-    async def process_and_save(query, index):
-        result = await model(query)
+    async def process_and_save(query):
         layer_index = query.record.feature.layer_index
         feature_index = query.record.feature.feature_index
+
+        logger.info(f"Executing {model.name} on feature layer {layer_index}, feature {feature_index}")
+
+        result = await model(query)
 
         filename = f"layer{layer_index}_feature{feature_index}.txt"
         filepath = os.path.join(output_dir, filename)
@@ -72,13 +76,12 @@ async def execute_model(
         async with aiofiles.open(filepath, mode='wb') as f:
             await f.write(orjson.dumps(result))
 
-        logger(f"Saved result to {filepath}")
+        logger.info(f"Saved result to {filepath}")
 
         return result
 
-
-    tasks = [process_and_save(query, i) for i, query in enumerate(queries)]
+    tasks = [process_and_save(query) for query in queries]
     results = await asyncio.gather(*tasks)
 
     for result in results:
-        logger(result)
+        logger.info(result)

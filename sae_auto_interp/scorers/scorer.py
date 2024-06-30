@@ -2,14 +2,7 @@ from dataclasses import dataclass
 from ..features.features import FeatureRecord, Example
 from abc import ABC, abstractmethod
 from typing import List, Any
-import time
-
-import asyncio
-import orjson
-import os
-import aiofiles
-from typing import List, Callable, Awaitable
-from datetime import datetime
+from typing import List
 
 @dataclass
 class ScorerInput():

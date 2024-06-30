@@ -6,7 +6,7 @@ from sae_auto_interp.explainers import ChainOfThought, ExplainerInput
 from sae_auto_interp.clients import get_client
 from sae_auto_interp.utils import execute_model, load_tokenized_data, get_samples
 from sae_auto_interp.autoencoders.ae import load_autoencoders
-from sae_auto_interp.features.stats import CombinedStat, Logits, feature_loader, Feature
+from sae_auto_interp.features import CombinedStat, Logits, feature_loader, Feature
 
 # Load model and autoencoders
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
@@ -55,13 +55,12 @@ for ae, records in feature_loader(
 
 client = get_client("local", "astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit")
 explainer = ChainOfThought(client)
-explainer_out_dir = "/share/u/caden/sae-auto-interp/scripts"
+explainer_out_dir = "/share/u/caden/sae-auto-interp/saved_explanations/caden"
 
-async def run():
-    await execute_model(
+asyncio.run(
+    execute_model(
         explainer, 
         explainer_inputs,
         output_dir=explainer_out_dir,
     )
-
-asyncio.run(run())
+)

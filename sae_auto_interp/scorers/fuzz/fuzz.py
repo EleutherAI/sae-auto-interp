@@ -9,7 +9,7 @@ import numpy as np
 from .prompts import get_detection_template
 from ... import det_config as CONFIG
 from ..scorer import Scorer, ScorerResult, ScorerInput
-from ...features.features import Feature, FeatureRecord
+from ...features.features import FeatureRecord
 from pydantic import BaseModel
 
 @dataclass
@@ -134,7 +134,7 @@ class FuzzingScorer(Scorer):
 
         return batch
 
-    def __call__(self, scorer_in: ScorerInput) -> ScorerResult:
+    async def __call__(self, scorer_in: ScorerInput) -> ScorerResult:
         random.seed(CONFIG.seed)
         
         sample_batches = []
@@ -143,6 +143,6 @@ class FuzzingScorer(Scorer):
             distance_scores = self._calculate_distance_scores(normalized_activations)
             sample_batches.append(self.create_samples(example, distance_scores))
 
-        results = asyncio.run(self.process_batches(sample_batches, scorer_in.explanation))
+        results = await self.process_batches(sample_batches, scorer_in.explanation)
 
         return ScorerResult(input="", response="", score=results)

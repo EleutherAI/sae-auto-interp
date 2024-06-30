@@ -1,9 +1,7 @@
 from .client import Client
-from openai import AsyncOpenAI, OpenAI
 import httpx
 from transformers import AutoTokenizer
 
-# NOTE: Currently only uses the async client
 class Local(Client):
     def __init__(self, model: str):
         super().__init__(model)

@@ -11,7 +11,6 @@ ae_dict, submodule_dict, edits = load_autoencoders(
     "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2"
 )
 
-
 # Set a default alteration on the model
 with model.alter(" ", edits=edits):
     for layer_idx, _ in ae_dict.items():

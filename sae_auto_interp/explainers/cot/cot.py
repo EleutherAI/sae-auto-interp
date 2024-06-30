@@ -1,35 +1,51 @@
-
-
-from ..explainer import Explainer, ExplainerInput, ExplainerResult
-from .prompts import create_prompt
-
 import re
+from typing import List
 
+from .prompts import create_prompt
+from ..explainer import (
+    Explainer, 
+    ExplainerInput, 
+    ExplainerResult
+)
 from ... import cot_explainer_config as CONFIG 
 
 class ChainOfThought(Explainer):
+    """
+    The Chain of Thought explainer generates an explanation
+    using a few shot examples to guide the model in its forming an explanation.
+    """
+
+    name = "cot"
 
     def __init__(
         self,
         client
     ):
-        self.name = "cot"
         self.client = client
 
     async def __call__(
         self,
         explainer_in: ExplainerInput
     ) -> ExplainerResult:
-        simplified, user_prompt = self.build_prompt(
+        """
+        Generate an explanation using the Chain of Thought model.
+
+        Args:
+            explainer_in (ExplainerInput): Input to the explainer.
+        """
+
+        simplified, messages = self.build_prompt(
             explainer_in.train_examples, 
             explainer_in.record.max_activation, 
             explainer_in.record.top_logits
         )
 
         response = await self.client.async_generate(
-            user_prompt, 
-            max_tokens=100
+            messages, 
+            max_tokens=CONFIG.max_tokens,
+            temperature=CONFIG.temperature
         )
+
         explanation = self.parse_explanation(response)
 
         return ExplainerResult(
@@ -39,7 +55,10 @@ class ChainOfThought(Explainer):
             explanation=explanation
         )
     
-    def parse_explanation(self, text):
+    def parse_explanation(self, text: str) -> str:
+        """
+        Parses the explanation from the response text.
+        """
         pattern = r'\[EXPLANATION\]:\s*(.*)'
 
         match = re.search(pattern, text, re.DOTALL)
@@ -50,7 +69,17 @@ class ChainOfThought(Explainer):
         else:
             return "EXPLANATION"
     
-    def flatten_and_join_with_quotes(self, array):
+    def flatten(self, array: List[List[str]]) -> str:
+        """
+        Flatten a nested list of strings and add quotes around each word.
+
+        Args:
+            array (List[List[str]]): Nested list of strings.
+
+        Returns:
+            str: Flattened string with quotes around each word.
+        """
+
         # Flatten the nested array
         flattened_list = [item for sublist in array for item in sublist]
         
@@ -62,9 +91,21 @@ class ChainOfThought(Explainer):
         
         return result_string
     
-    def prepare_example(self, example, max_act=0.0):
+    def prepare_example(self, example: str) -> str:
+        """
+        Prepares a set of examples for the Chain of Thought model.
+        Extracts contextual tokens for the model to attend to.
+
+        Args:
+            example (Example): Example to prepare.
+
+        Returns:
+            str: Delimited string with activating tokens.
+            List[str]: List of activating tokens.
+            List[str]: List of previous tokens.
+            List[str]: List of following tokens.
+        """
         delimited_string = ""
-        activation_threshold = 0.0
 
         activating = []
         previous = []
@@ -73,15 +114,15 @@ class ChainOfThought(Explainer):
         pos = 0
 
         while pos < len(example.tokens):
-            if pos + 1 < len(example.tokens) and example.activations[pos + 1] > activation_threshold:
+            if pos + 1 < len(example.tokens) and example.activations[pos + 1] > 0.0:
                 delimited_string += example.str_toks[pos]
                 previous.append(example.str_toks[pos])
                 pos += 1
-            elif example.activations[pos] > activation_threshold:
+            elif example.activations[pos] > 0.0:
                 delimited_string += CONFIG.l
 
                 seq = ""
-                while pos < len(example.tokens) and example.activations[pos] > activation_threshold:
+                while pos < len(example.tokens) and example.activations[pos] > 0.0:
                     
                     delimited_string += example.str_toks[pos]
                     seq += example.str_toks[pos]
@@ -122,11 +163,11 @@ class ChainOfThought(Explainer):
         for i, example in enumerate(top_examples):
             top_examples_str += f"Example {i}: {example}\n"
 
-        activating = self.flatten_and_join_with_quotes(activating)
-        previous = self.flatten_and_join_with_quotes(previous)
-        following = self.flatten_and_join_with_quotes(following)
+        activating = self.flatten(activating)
+        previous = self.flatten(previous)
+        following = self.flatten(following)
 
-        simplified, user_prompt = create_prompt(
+        simplified, prompt = create_prompt(
             l=CONFIG.l, 
             r=CONFIG.r, 
             examples=top_examples, 
@@ -137,10 +178,11 @@ class ChainOfThought(Explainer):
             simplifiy=True
         )
 
-        user_prompt = {
-            "role" : "user",
-            "content" : user_prompt, 
-        }
+        messages = [
+            {
+                "role" : "user",
+                "content" : prompt, 
+            }
+        ]
 
-
-        return simplified, [user_prompt]
+        return simplified, messages
