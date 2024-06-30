@@ -6,6 +6,9 @@ from nnsight import LanguageModel
 # Load model and autoencoders
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 
+# Load autoencoders, submodule dict, and edits.
+# Submodule dict is used in caching to save ae latents
+# Edits are applied to the model
 ae_dict, submodule_dict, edits = load_autoencoders(
     model, 
     "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2"

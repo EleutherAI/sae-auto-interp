@@ -7,3 +7,5 @@ saved_autoencoders
 .gitignore
 extras
 *.pt
+*.log
+raw_features

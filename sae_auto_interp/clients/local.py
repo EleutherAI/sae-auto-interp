@@ -9,7 +9,7 @@ class Local(Client):
         self.tokenizer = AutoTokenizer.from_pretrained(model)
         self.client =httpx.AsyncClient(
             base_url="http://127.0.0.1:8000",
-            timeout=30.0
+            timeout=None
         )
 
     def generate(self):
