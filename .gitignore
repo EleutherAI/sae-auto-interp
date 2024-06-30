@@ -11,3 +11,4 @@ extras
 raw_features
 saved_features_json
 results
+.gitignore
