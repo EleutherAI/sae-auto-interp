@@ -1,21 +1,37 @@
-from dataclasses import dataclass
-
-from ..features.features import Example, FeatureRecord  
-from typing import List
-import time
-
-
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from typing import List
+
+from ..features.features import Example, FeatureRecord
+
 
 @dataclass
 class ExplainerInput:
+    """
+    Input to the explainer. Contains the training 
+    examples and the FeatureRecord to explain.
+
+    Args:
+        train_examples (List[Example]): List of training examples.
+        record (FeatureRecord): FeatureRecord to explain.
+    """
     train_examples: List[Example]
     record: FeatureRecord 
 
 @dataclass
 class ExplainerResult:
+    """
+    Result of the explainer. Contains the explainer type, 
+    prompt, response, and explanation.
+
+    Args:
+        explainer_type (str): Type of explainer.
+        prompt (str): Prompt for the explainer.
+        response (str): Response from the explainer.
+        explanation (str): Explanation from the explainer.
+    """
     explainer_type: str = ""
-    input: str = ""
+    prompt: str = ""
     response: str = ""
     explanation: str = ""
 
@@ -27,29 +43,3 @@ class Explainer(ABC):
         explainer_in: ExplainerInput
     ) -> ExplainerResult:
         pass
-        
-def run_explainers(
-    explainers: List[Explainer],
-    explainer_in: ExplainerInput,
-    logging = None
-):
-    logger = logging.info if logging else print
-    for explainer in explainers:
-        
-        def run():
-            name = explainer.name
-
-            logger(f"Running explainer {name}")
-
-            start = time.time()
-            result = explainer(explainer_in)
-            end = time.time()
-
-            logger(f"Finished explainer {name}")
-
-            runtime = end - start
-
-            return runtime, result 
-
-        yield explainer.name, run
-            

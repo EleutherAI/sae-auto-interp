@@ -6,3 +6,8 @@ saved_autoencoders
 *__pycache__
 .gitignore
 extras
+*.pt
+*.log
+raw_features
+saved_features_json
+results

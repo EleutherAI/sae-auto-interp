@@ -2,14 +2,12 @@ from typing import List
 from collections import defaultdict
 import umap
 from sklearn.neighbors import NearestNeighbors
-from .utils import find_smallest_index_above_zero
 import numpy as np
 from scipy.stats import skew, kurtosis
 import spacy
 from tqdm import tqdm
 import torch
 
-NLP = spacy.load("en_core_web_sm")
 class Stat:
 
     def __init__(self):
@@ -102,10 +100,9 @@ class Logits(Stat):
 
         if self.top_k_logits is not None:
             top_logits = torch.topk(logits, self.top_k_logits)
-            positive_top_logits = find_smallest_index_above_zero(top_logits.values)
             record.top_logits = [
                 self.model.tokenizer.decode([token]) 
-                for token in top_logits.indices[:positive_top_logits]
+                for token in top_logits.indices
             ]
 
 
@@ -113,6 +110,7 @@ class Activations(Stat):
     def __init__(self, get_lemmas=False, top_activating_k=100):
         self.get_lemmas = get_lemmas
         self.top_activating_k = top_activating_k
+        self.nlp = spacy.load("en_core_web_sm")
 
     def get_top_activating_tokens(
         self,
@@ -158,7 +156,7 @@ class Activations(Stat):
         # Step 4: Join into a single string
         text_for_spacy = " ".join(alpha_tokens)
 
-        doc = NLP(text_for_spacy)
+        doc = self.nlp(text_for_spacy)
 
         lemmatized_tokens = [token.lemma_ for token in doc]
         return lemmatized_tokens

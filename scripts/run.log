@@ -1,0 +1,376 @@
+2024-06-30 02:03:01,382 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 9199
+2024-06-30 02:03:01,393 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15900
+2024-06-30 02:03:01,395 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1547
+2024-06-30 02:03:01,398 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 29303
+2024-06-30 02:03:01,401 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12075
+2024-06-30 02:03:01,403 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 7903
+2024-06-30 02:03:01,405 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 22652
+2024-06-30 02:03:01,408 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 5220
+2024-06-30 02:03:01,411 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15187
+2024-06-30 02:03:01,413 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17646
+2024-06-30 02:03:01,416 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3254
+2024-06-30 02:03:01,418 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20935
+2024-06-30 02:03:01,421 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 11739
+2024-06-30 02:03:01,424 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 28181
+2024-06-30 02:03:01,426 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3174
+2024-06-30 02:03:01,429 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1397
+2024-06-30 02:03:01,431 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17299
+2024-06-30 02:03:01,434 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20360
+2024-06-30 02:03:01,437 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 27624
+2024-06-30 02:03:01,439 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12460
+2024-06-30 02:04:36,928 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 9199
+2024-06-30 02:04:36,938 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15900
+2024-06-30 02:04:36,941 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1547
+2024-06-30 02:04:36,943 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 29303
+2024-06-30 02:04:36,946 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12075
+2024-06-30 02:04:36,948 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 7903
+2024-06-30 02:04:36,950 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 22652
+2024-06-30 02:04:36,953 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 5220
+2024-06-30 02:04:36,955 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15187
+2024-06-30 02:04:36,958 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17646
+2024-06-30 02:04:36,960 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3254
+2024-06-30 02:04:36,963 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20935
+2024-06-30 02:04:36,965 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 11739
+2024-06-30 02:04:36,967 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 28181
+2024-06-30 02:04:36,970 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3174
+2024-06-30 02:04:36,973 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1397
+2024-06-30 02:04:36,975 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17299
+2024-06-30 02:04:36,978 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20360
+2024-06-30 02:04:36,980 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 27624
+2024-06-30 02:04:36,983 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12460
+2024-06-30 02:04:59,393 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature5220.txt
+2024-06-30 02:04:59,950 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature27624.txt
+2024-06-30 02:05:00,222 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature12075.txt
+2024-06-30 02:05:00,956 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature9199.txt
+2024-06-30 02:05:01,701 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature28181.txt
+2024-06-30 02:05:04,111 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature20360.txt
+2024-06-30 02:05:04,365 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature3254.txt
+2024-06-30 02:05:04,722 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature3174.txt
+2024-06-30 02:05:04,722 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature15187.txt
+2024-06-30 02:05:04,722 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature1547.txt
+2024-06-30 02:05:04,855 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature17646.txt
+2024-06-30 02:05:04,855 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature17299.txt
+2024-06-30 02:05:04,856 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature20935.txt
+2024-06-30 02:05:05,033 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature15900.txt
+2024-06-30 02:05:05,113 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature12460.txt
+2024-06-30 02:05:05,150 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature22652.txt
+2024-06-30 02:07:28,449 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 9199
+2024-06-30 02:07:28,459 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15900
+2024-06-30 02:07:28,461 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1547
+2024-06-30 02:07:28,464 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 29303
+2024-06-30 02:07:28,466 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12075
+2024-06-30 02:07:28,468 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 7903
+2024-06-30 02:07:28,471 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 22652
+2024-06-30 02:07:28,473 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 5220
+2024-06-30 02:07:28,475 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15187
+2024-06-30 02:07:28,478 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17646
+2024-06-30 02:07:28,480 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3254
+2024-06-30 02:07:28,483 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20935
+2024-06-30 02:07:28,485 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 11739
+2024-06-30 02:07:28,488 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 28181
+2024-06-30 02:07:28,490 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3174
+2024-06-30 02:07:28,493 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1397
+2024-06-30 02:07:28,495 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17299
+2024-06-30 02:07:28,497 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20360
+2024-06-30 02:07:28,500 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 27624
+2024-06-30 02:07:28,502 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12460
+2024-06-30 02:07:51,157 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature5220.txt
+2024-06-30 02:07:51,994 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature12075.txt
+2024-06-30 02:07:52,736 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature9199.txt
+2024-06-30 02:07:55,781 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature27624.txt
+2024-06-30 02:07:56,627 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature15187.txt
+2024-06-30 02:07:56,627 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature28181.txt
+2024-06-30 02:07:56,627 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature3174.txt
+2024-06-30 02:07:56,627 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature1547.txt
+2024-06-30 02:07:56,758 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature17646.txt
+2024-06-30 02:07:56,909 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature20360.txt
+2024-06-30 02:07:56,994 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature12460.txt
+2024-06-30 02:07:57,078 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature1397.txt
+2024-06-30 02:07:57,078 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature22652.txt
+2024-06-30 02:07:57,269 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature7903.txt
+2024-06-30 02:07:57,513 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature11739.txt
+2024-06-30 02:08:00,260 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature15900.txt
+2024-06-30 02:08:00,761 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature3254.txt
+2024-06-30 02:08:00,761 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature29303.txt
+2024-06-30 02:08:00,762 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature17299.txt
+2024-06-30 02:08:00,762 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature20935.txt
+2024-06-30 02:08:52,978 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 9199
+2024-06-30 02:08:52,989 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15900
+2024-06-30 02:08:52,991 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1547
+2024-06-30 02:08:52,994 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 29303
+2024-06-30 02:08:52,996 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12075
+2024-06-30 02:08:52,999 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 7903
+2024-06-30 02:08:53,001 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 22652
+2024-06-30 02:08:53,004 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 5220
+2024-06-30 02:08:53,006 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15187
+2024-06-30 02:08:53,008 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17646
+2024-06-30 02:08:53,011 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3254
+2024-06-30 02:08:53,013 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20935
+2024-06-30 02:08:53,016 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 11739
+2024-06-30 02:08:53,018 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 28181
+2024-06-30 02:08:53,021 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3174
+2024-06-30 02:08:53,024 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1397
+2024-06-30 02:08:53,026 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17299
+2024-06-30 02:08:53,029 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20360
+2024-06-30 02:08:53,031 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 27624
+2024-06-30 02:08:53,034 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12460
+2024-06-30 02:12:30,451 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 9199
+2024-06-30 02:12:30,466 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15900
+2024-06-30 02:12:30,473 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1547
+2024-06-30 02:12:30,479 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 29303
+2024-06-30 02:12:30,486 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12075
+2024-06-30 02:12:30,492 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 7903
+2024-06-30 02:12:30,499 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 22652
+2024-06-30 02:12:30,505 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 5220
+2024-06-30 02:12:30,512 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15187
+2024-06-30 02:12:30,518 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17646
+2024-06-30 02:12:30,525 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3254
+2024-06-30 02:12:30,532 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20935
+2024-06-30 02:12:30,538 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 11739
+2024-06-30 02:12:30,545 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 28181
+2024-06-30 02:12:30,551 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3174
+2024-06-30 02:12:30,558 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1397
+2024-06-30 02:12:30,565 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17299
+2024-06-30 02:12:30,571 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20360
+2024-06-30 02:12:30,578 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 27624
+2024-06-30 02:12:30,584 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12460
+2024-06-30 02:14:29,119 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 9199
+2024-06-30 02:14:29,129 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15900
+2024-06-30 02:14:29,132 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1547
+2024-06-30 02:14:29,134 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 29303
+2024-06-30 02:14:29,137 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12075
+2024-06-30 02:14:29,139 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 7903
+2024-06-30 02:14:29,142 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 22652
+2024-06-30 02:14:29,144 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 5220
+2024-06-30 02:14:29,147 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 15187
+2024-06-30 02:14:29,149 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17646
+2024-06-30 02:14:29,151 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3254
+2024-06-30 02:14:29,154 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20935
+2024-06-30 02:14:29,157 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 11739
+2024-06-30 02:14:29,159 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 28181
+2024-06-30 02:14:29,162 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 3174
+2024-06-30 02:14:29,164 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 1397
+2024-06-30 02:14:29,167 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 17299
+2024-06-30 02:14:29,169 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 20360
+2024-06-30 02:14:29,172 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 27624
+2024-06-30 02:14:29,174 - sae_auto_interp - INFO - Executing cot on feature layer 0, feature 12460
+2024-06-30 02:14:29,177 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 26822
+2024-06-30 02:14:29,179 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 2125
+2024-06-30 02:14:29,182 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 31427
+2024-06-30 02:14:29,184 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 5559
+2024-06-30 02:14:29,187 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 20753
+2024-06-30 02:14:29,189 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 26870
+2024-06-30 02:14:29,191 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 27598
+2024-06-30 02:14:29,194 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 19343
+2024-06-30 02:14:29,196 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 25655
+2024-06-30 02:14:29,198 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 30584
+2024-06-30 02:14:29,200 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 16719
+2024-06-30 02:14:29,203 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 2626
+2024-06-30 02:14:29,205 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 6371
+2024-06-30 02:14:29,207 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 17853
+2024-06-30 02:14:29,209 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 18258
+2024-06-30 02:14:29,212 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 13731
+2024-06-30 02:14:29,215 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 14833
+2024-06-30 02:14:29,217 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 28164
+2024-06-30 02:14:29,219 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 26349
+2024-06-30 02:14:29,221 - sae_auto_interp - INFO - Executing cot on feature layer 2, feature 31693
+2024-06-30 02:14:29,224 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 4879
+2024-06-30 02:14:29,226 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 21003
+2024-06-30 02:14:29,228 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 14020
+2024-06-30 02:14:29,231 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 1272
+2024-06-30 02:14:29,233 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 5151
+2024-06-30 02:14:29,235 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 5592
+2024-06-30 02:14:29,238 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 3801
+2024-06-30 02:14:29,241 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 13569
+2024-06-30 02:14:29,243 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 21129
+2024-06-30 02:14:29,245 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 19935
+2024-06-30 02:14:29,248 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 3369
+2024-06-30 02:14:29,250 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 7823
+2024-06-30 02:14:29,253 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 13912
+2024-06-30 02:14:29,255 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 11694
+2024-06-30 02:14:29,258 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 5452
+2024-06-30 02:14:29,260 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 6955
+2024-06-30 02:14:29,263 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 31386
+2024-06-30 02:14:29,265 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 10441
+2024-06-30 02:14:29,267 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 26612
+2024-06-30 02:14:29,269 - sae_auto_interp - INFO - Executing cot on feature layer 4, feature 442
+2024-06-30 02:14:29,272 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 11372
+2024-06-30 02:14:29,274 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 8708
+2024-06-30 02:14:29,276 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 6383
+2024-06-30 02:14:29,279 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 26122
+2024-06-30 02:14:29,281 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 26727
+2024-06-30 02:14:29,284 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 11844
+2024-06-30 02:14:29,286 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 14812
+2024-06-30 02:14:29,289 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 16567
+2024-06-30 02:14:29,291 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 13452
+2024-06-30 02:14:29,293 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 10829
+2024-06-30 02:14:29,295 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 12799
+2024-06-30 02:14:29,298 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 30921
+2024-06-30 02:14:29,300 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 11546
+2024-06-30 02:14:29,303 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 10496
+2024-06-30 02:14:29,305 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 15437
+2024-06-30 02:14:29,308 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 26219
+2024-06-30 02:14:29,310 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 24055
+2024-06-30 02:14:29,313 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 1195
+2024-06-30 02:14:29,315 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 24858
+2024-06-30 02:14:29,318 - sae_auto_interp - INFO - Executing cot on feature layer 6, feature 4710
+2024-06-30 02:14:29,320 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 2526
+2024-06-30 02:14:29,323 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 32343
+2024-06-30 02:14:29,325 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 17175
+2024-06-30 02:14:29,327 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 5024
+2024-06-30 02:14:29,330 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 27875
+2024-06-30 02:14:29,332 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 26783
+2024-06-30 02:14:29,335 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 32415
+2024-06-30 02:14:29,337 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 14766
+2024-06-30 02:14:29,340 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 1616
+2024-06-30 02:14:29,342 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 29415
+2024-06-30 02:14:29,345 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 587
+2024-06-30 02:14:29,347 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 11242
+2024-06-30 02:14:29,350 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 15519
+2024-06-30 02:14:29,352 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 6668
+2024-06-30 02:14:29,355 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 11883
+2024-06-30 02:14:29,357 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 3594
+2024-06-30 02:14:29,359 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 1606
+2024-06-30 02:14:29,362 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 13468
+2024-06-30 02:14:29,365 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 1170
+2024-06-30 02:14:29,367 - sae_auto_interp - INFO - Executing cot on feature layer 8, feature 24484
+2024-06-30 02:14:29,369 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 15911
+2024-06-30 02:14:29,371 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 12852
+2024-06-30 02:14:29,374 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 27128
+2024-06-30 02:14:29,376 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 31372
+2024-06-30 02:14:29,378 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 32096
+2024-06-30 02:14:29,381 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 25273
+2024-06-30 02:14:29,384 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 13560
+2024-06-30 02:14:29,386 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 17229
+2024-06-30 02:14:29,389 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 29551
+2024-06-30 02:14:29,392 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 27123
+2024-06-30 02:14:29,394 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 100
+2024-06-30 02:14:29,397 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 23267
+2024-06-30 02:14:29,400 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 13557
+2024-06-30 02:14:29,403 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 24370
+2024-06-30 02:14:29,406 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 582
+2024-06-30 02:14:29,409 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 19451
+2024-06-30 02:14:29,412 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 5244
+2024-06-30 02:14:29,414 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 8283
+2024-06-30 02:14:29,417 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 29677
+2024-06-30 02:14:29,420 - sae_auto_interp - INFO - Executing cot on feature layer 10, feature 19330
+2024-06-30 02:15:28,143 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature26727.txt
+2024-06-30 02:15:57,545 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature24484.txt
+2024-06-30 02:15:58,762 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature442.txt
+2024-06-30 02:15:58,845 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature5151.txt
+2024-06-30 02:16:00,437 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature32343.txt
+2024-06-30 02:16:01,071 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature11546.txt
+2024-06-30 02:16:01,071 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature6955.txt
+2024-06-30 02:16:01,071 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature30921.txt
+2024-06-30 02:16:01,071 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature5220.txt
+2024-06-30 02:16:05,144 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature5592.txt
+2024-06-30 02:16:05,865 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature3369.txt
+2024-06-30 02:16:05,865 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature26122.txt
+2024-06-30 02:16:05,865 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature2526.txt
+2024-06-30 02:16:07,607 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature31693.txt
+2024-06-30 02:16:08,266 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature27875.txt
+2024-06-30 02:16:08,266 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature14766.txt
+2024-06-30 02:16:08,266 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature4710.txt
+2024-06-30 02:16:08,266 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature17299.txt
+2024-06-30 02:16:08,267 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature3594.txt
+2024-06-30 02:16:11,275 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature12799.txt
+2024-06-30 02:16:11,275 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature13912.txt
+2024-06-30 02:16:11,275 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature26822.txt
+2024-06-30 02:16:13,606 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature27624.txt
+2024-06-30 02:16:13,692 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature9199.txt
+2024-06-30 02:16:14,114 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature12075.txt
+2024-06-30 02:16:15,106 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature6371.txt
+2024-06-30 02:16:15,843 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature19343.txt
+2024-06-30 02:16:22,659 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature15519.txt
+2024-06-30 02:16:23,303 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature7823.txt
+2024-06-30 02:16:24,027 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature32415.txt
+2024-06-30 02:16:24,027 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature3254.txt
+2024-06-30 02:16:24,027 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature1195.txt
+2024-06-30 02:16:24,575 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature14833.txt
+2024-06-30 02:16:25,203 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature11242.txt
+2024-06-30 02:16:25,203 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature6383.txt
+2024-06-30 02:16:25,741 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature16567.txt
+2024-06-30 02:16:26,199 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature20360.txt
+2024-06-30 02:16:26,200 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature20753.txt
+2024-06-30 02:16:26,499 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature21003.txt
+2024-06-30 02:16:26,727 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature19935.txt
+2024-06-30 02:16:26,727 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature24858.txt
+2024-06-30 02:16:26,812 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature15187.txt
+2024-06-30 02:16:26,813 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature1547.txt
+2024-06-30 02:16:26,813 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature26219.txt
+2024-06-30 02:16:26,813 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature24055.txt
+2024-06-30 02:16:26,813 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature26349.txt
+2024-06-30 02:16:26,814 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature28181.txt
+2024-06-30 02:16:26,814 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature10441.txt
+2024-06-30 02:16:26,814 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature3174.txt
+2024-06-30 02:16:26,814 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature25655.txt
+2024-06-30 02:16:26,814 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature1606.txt
+2024-06-30 02:16:26,814 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature17175.txt
+2024-06-30 02:16:27,213 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature3801.txt
+2024-06-30 02:16:27,213 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature14020.txt
+2024-06-30 02:16:27,214 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature16719.txt
+2024-06-30 02:16:27,215 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature20935.txt
+2024-06-30 02:16:27,215 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature1272.txt
+2024-06-30 02:16:27,216 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature17646.txt
+2024-06-30 02:16:27,216 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature10829.txt
+2024-06-30 02:16:27,216 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature15437.txt
+2024-06-30 02:16:27,364 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature21129.txt
+2024-06-30 02:16:27,415 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature13731.txt
+2024-06-30 02:16:27,615 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature11844.txt
+2024-06-30 02:16:27,615 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature2125.txt
+2024-06-30 02:16:27,761 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature28164.txt
+2024-06-30 02:16:27,761 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature31386.txt
+2024-06-30 02:16:27,956 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature587.txt
+2024-06-30 02:16:27,957 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature11883.txt
+2024-06-30 02:16:27,957 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature22652.txt
+2024-06-30 02:16:27,959 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature18258.txt
+2024-06-30 02:16:28,356 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature26870.txt
+2024-06-30 02:16:28,401 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature2626.txt
+2024-06-30 02:16:28,402 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature7903.txt
+2024-06-30 02:16:28,446 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature1616.txt
+2024-06-30 02:16:28,533 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature10496.txt
+2024-06-30 02:16:28,534 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature30584.txt
+2024-06-30 02:16:28,783 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature13569.txt
+2024-06-30 02:16:29,561 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature4879.txt
+2024-06-30 02:16:32,456 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature5024.txt
+2024-06-30 02:16:32,616 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature1397.txt
+2024-06-30 02:16:33,633 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature14812.txt
+2024-06-30 02:16:34,528 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature11694.txt
+2024-06-30 02:16:35,945 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature1170.txt
+2024-06-30 02:16:36,235 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature11739.txt
+2024-06-30 02:16:36,235 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature17853.txt
+2024-06-30 02:16:36,235 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature12460.txt
+2024-06-30 02:16:36,236 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature26783.txt
+2024-06-30 02:16:36,236 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature8708.txt
+2024-06-30 02:16:36,236 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature13468.txt
+2024-06-30 02:16:36,236 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature6668.txt
+2024-06-30 02:16:36,236 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature13452.txt
+2024-06-30 02:16:36,237 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature26612.txt
+2024-06-30 02:16:36,237 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature29303.txt
+2024-06-30 02:16:36,237 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer0_feature15900.txt
+2024-06-30 02:16:36,237 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer8_feature29415.txt
+2024-06-30 02:16:36,237 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer4_feature5452.txt
+2024-06-30 02:16:36,237 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature27598.txt
+2024-06-30 02:16:36,238 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature31427.txt
+2024-06-30 02:16:36,238 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer6_feature11372.txt
+2024-06-30 02:16:36,238 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer2_feature5559.txt
+2024-06-30 02:16:38,345 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature17229.txt
+2024-06-30 02:16:38,660 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature32096.txt
+2024-06-30 02:16:39,018 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature13557.txt
+2024-06-30 02:16:39,394 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature582.txt
+2024-06-30 02:16:40,377 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature24370.txt
+2024-06-30 02:16:40,401 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature29677.txt
+2024-06-30 02:16:40,472 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature19451.txt
+2024-06-30 02:16:40,566 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature5244.txt
+2024-06-30 02:16:40,611 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature15911.txt
+2024-06-30 02:16:40,916 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature23267.txt
+2024-06-30 02:16:41,022 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature8283.txt
+2024-06-30 02:16:42,520 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature27128.txt
+2024-06-30 02:16:44,362 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature27123.txt
+2024-06-30 02:16:44,401 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature13560.txt
+2024-06-30 02:16:45,744 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature29551.txt
+2024-06-30 02:16:46,246 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature12852.txt
+2024-06-30 02:16:47,845 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature31372.txt
+2024-06-30 02:16:47,996 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature25273.txt
+2024-06-30 02:16:48,416 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature100.txt
+2024-06-30 02:16:48,632 - sae_auto_interp - INFO - Saved result to /share/u/caden/sae-auto-interp/saved_explanations/caden/layer10_feature19330.txt
