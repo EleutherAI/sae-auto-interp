@@ -184,12 +184,12 @@ if __name__ == "__main__":
     features = load_samples(n_per_layer=50)
     tokens = load_tokens(test_model.tokenizer)
 
-    # stats = CombinedStat(
-    #     logits = Logits(
-    #         model=test_model,
-    #         top_k_logits=10
-    #     ),
-    # )    
+    stats = CombinedStat(
+        logits = Logits(
+            model=test_model,
+            top_k_logits=10
+        ),
+    )    
 
     all_records = []
 
