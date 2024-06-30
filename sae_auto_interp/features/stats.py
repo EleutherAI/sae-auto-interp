@@ -2,7 +2,6 @@ from typing import List
 from collections import defaultdict
 import umap
 from sklearn.neighbors import NearestNeighbors
-from .utils import find_smallest_index_above_zero
 import numpy as np
 from scipy.stats import skew, kurtosis
 import spacy
@@ -101,10 +100,9 @@ class Logits(Stat):
 
         if self.top_k_logits is not None:
             top_logits = torch.topk(logits, self.top_k_logits)
-            positive_top_logits = find_smallest_index_above_zero(top_logits.values)
             record.top_logits = [
                 self.model.tokenizer.decode([token]) 
-                for token in top_logits.indices[:positive_top_logits]
+                for token in top_logits.indices
             ]
 
 

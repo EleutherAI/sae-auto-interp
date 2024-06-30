@@ -7,8 +7,8 @@ import orjson
 import blobfile as bf
 from tqdm import tqdm
 from collections import defaultdict
-from .. import cache_cfg
-from .. import example_cfg
+from .. import cache_config
+from .. import example_config
 import umap
 import logging
 from sklearn.neighbors import NearestNeighbors
@@ -22,7 +22,14 @@ class Feature:
     layer_index: int
     feature_index: int
 
+    @staticmethod
+    def from_dict(layer_feature_dictionary):
+        features = []
+        for layer, layer_features in layer_feature_dictionary.items():
+            features.extend([Feature(int(layer), feature) for feature in layer_features])
 
+        return features
+    
 @dataclass
 class Example:
     tokens: List[int]

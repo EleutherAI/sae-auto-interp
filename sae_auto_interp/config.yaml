@@ -1,6 +1,4 @@
 cache:
-    # dataset_repo: "togethercomputer/RedPajama-Data-1T-Sample"
-    # dataset_split: "train[:3%]"
     dataset_repo: "stas/openwebtext-10k"
     dataset_split: "train"
     num_batches: 100
@@ -10,7 +8,6 @@ cache:
     n_tokens: 5_120_000
     seed: 22
 
-
 example:
     activation_threshold: 0.5
     l: "<<"
@@ -18,19 +15,15 @@ example:
     l_ctx: 15
     r_ctx: 4
 
-
-
 cot_explainer: 
     temperature: 0.0
     max_tokens: 1500
-
-
+    l: "<<"
+    r: ">>"
 
 simple_explainer:
     temperature: 0.0
     max_tokens: 100
-
-
 
 detection:
     max_tokens: 1000
@@ -38,8 +31,6 @@ detection:
     n_examples: 10
     seed: 22
     batch_size: 10
-
-
 
 generation: 
     n_tests: 10

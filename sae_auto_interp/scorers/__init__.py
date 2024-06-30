@@ -1,2 +1,1 @@
-# from .rubric.rubric import RubricScorer
-# from .detection.detector import DetectionScorer
+from .fuzz.fuzz import FuzzingScorer

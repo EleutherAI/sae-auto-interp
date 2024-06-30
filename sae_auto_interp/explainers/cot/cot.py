@@ -20,7 +20,6 @@ class ChainOfThought(Explainer):
         self,
         explainer_in: ExplainerInput
     ) -> ExplainerResult:
-        
         simplified, user_prompt = self.build_prompt(
             explainer_in.train_examples, 
             explainer_in.record.max_activation, 
@@ -29,6 +28,7 @@ class ChainOfThought(Explainer):
 
         response = await self.client.async_generate(
             user_prompt, 
+            max_tokens=100
         )
         explanation = self.parse_explanation(response)
 

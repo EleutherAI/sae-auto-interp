@@ -6,6 +6,7 @@ from transformer_lens import utils
 import psutil
 import orjson
 from collections import defaultdict
+from .tokens import load_tokenized_data
 
 from .. import cache_config as CONFIG
 
@@ -71,7 +72,6 @@ class FeatureCache:
     ):  
         self.model = model
         self.ae_dict = ae_dict
-        
         self.buffer = Buffer()
 
 
@@ -82,15 +82,8 @@ class FeatureCache:
 
 
     def load_token_batches(self, minibatch_size=20) -> Tuple[Dataset, List[Tuple[int, int]]]:
-        data = load_dataset(CONFIG.dataset_repo, split=CONFIG.dataset_split)
+        tokens = load_tokenized_data(self.model.tokenizer)
 
-        tokens = utils.tokenize_and_concatenate(
-            data, 
-            self.model.tokenizer, 
-            max_length=CONFIG.batch_len
-        )   
-
-        tokens = tokens.shuffle(CONFIG.seed)['tokens']
         max_batches = CONFIG.n_tokens // CONFIG.batch_len
         tokens = tokens[:max_batches]
         
@@ -101,9 +94,7 @@ class FeatureCache:
             for i in range(n_mini_batches)
         ]
 
-        self.tokens = tokens
-
-        return token_batches[:2]
+        return token_batches
     
     
     def run(self):

@@ -25,6 +25,8 @@ class ExampleConfig:
 class ChainOfThoughtExplainerConfig:
     temperature: float
     max_tokens: int
+    l: str
+    r: str
 
 @dataclass
 class SimpleExplainerConfig:

@@ -1,8 +1,15 @@
 from dataclasses import dataclass
-from ..features import FeatureRecord, Example
+from ..features.features import FeatureRecord, Example
 from abc import ABC, abstractmethod
 from typing import List, Any
 import time
+
+import asyncio
+import orjson
+import os
+import aiofiles
+from typing import List, Callable, Awaitable
+from datetime import datetime
 
 @dataclass
 class ScorerInput():
@@ -29,29 +36,3 @@ class Scorer(ABC):
         scorer_in: ScorerInput,
     ) -> ScorerResult:
         pass
-    
-def run_scorers(
-    scorers: List[Scorer],
-    scorer_in: ScorerInput,
-    logging = None
-):
-    logger = logging.info if logging else print
-    for scorer in scorers:
-
-        def run():
-            name = scorer.name
-
-            logger(f"Running scorer {name}")
-
-            start = time.time()
-            result = scorer(scorer_in)
-            end = time.time()
-
-            logger(f"Finished scorer {name}")
-
-            runtime = end - start
-
-            return runtime, result
-        
-        yield scorer.name, run
-
