@@ -3,6 +3,7 @@ from typing import Tuple, List, Dict
 from tqdm import tqdm
 import psutil
 import orjson
+import os
 from collections import defaultdict
 from ..utils import load_tokenized_data
 
@@ -92,7 +93,7 @@ class FeatureCache:
             for i in range(n_mini_batches)
         ]
 
-        return token_batches
+        return token_batches[:5]
     
     
     def run(self):
@@ -132,6 +133,61 @@ class FeatureCache:
         print(f"Total tokens processed: {total_tokens:,}")
 
 
+    def _generate_split_indices(self, n_splits):
+        return torch.arange(0, CONFIG.n_features).chunk(n_splits)
+
+    def save_splits(self, n_splits, layer, save_dir):
+        self.buffer.save()
+
+        split_indices = self._generate_split_indices(n_splits)
+        feature_locations = self.buffer.feature_locations[layer]
+        feature_activations = self.buffer.feature_activations[layer]
+
+        # Extract third elements
+        third_elements = feature_locations[:, 2]
+
+        for split_index, split in enumerate(split_indices):
+            # Create mask for this split
+            mask = torch.isin(third_elements, split)
+            
+            # Mask and save feature locations
+            masked_locations = feature_locations[mask]
+            location_output_file = os.path.join(save_dir, f"layer{layer}_split_{split_index}_locations.pt")
+            torch.save(masked_locations, location_output_file)
+
+            # Mask and save feature activations
+            masked_activations = feature_activations[mask]
+            activation_output_file = os.path.join(save_dir, f"layer{layer}_split_{split_index}_activations.pt")
+            torch.save(masked_activations, activation_output_file)
+
+    def save_selected_features(
+        self, 
+        feature_list, 
+        layer, 
+        save_dir
+    ):
+        self.buffer.save()
+
+        feature_locations = self.buffer.feature_locations[layer]
+        feature_activations = self.buffer.feature_activations[layer]
+
+        # Extract third elements
+        third_elements = feature_locations[:, 2]
+
+        # Create mask for this split
+        mask = torch.isin(third_elements, feature_list)
+        
+        # Mask and save feature locations
+        masked_locations = feature_locations[mask]
+        location_output_file = os.path.join(save_dir, f"layer{layer}_locations.pt")
+        torch.save(masked_locations, location_output_file)
+
+        # Mask and save feature activations
+        masked_activations = feature_activations[mask]
+        activation_output_file = os.path.join(save_dir, f"layer{layer}_activations.pt")
+        torch.save(masked_activations, activation_output_file)
+    
+    
     def save_some_features(self, feature_dict, save_dir):
 
         self.buffer.save()

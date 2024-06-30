@@ -7,6 +7,7 @@ import blobfile as bf
 from collections import defaultdict
 from typing import List
 from ..logger import logger
+from torch import Tensor
 
 @dataclass
 class Feature:
@@ -44,17 +45,106 @@ class FeatureRecord:
     def max_activation(self):
         return self.examples[0].max_activation
     
+    def display(
+        self, 
+        n_examples: int = 5
+    ) -> str:
+        from IPython.core.display import display, HTML
+
+        def _to_string(tokens, activations):
+            result = []
+            i = 0
+            while i < len(tokens):
+                if activations[i] > 0:
+                    result.append("<mark>")
+                    while i < len(tokens) and activations[i] > 0:
+                        result.append(tokens[i])
+                        i += 1
+                    result.append("</mark>")
+                else:
+                    result.append(tokens[i])
+                    i += 1
+            return "".join(result)
+        
+        strings = [
+            _to_string(
+                example.str_toks, 
+                example.activations
+            ) 
+            for example in self.examples[:n_examples]
+        ]
+
+        display(HTML("<br><br>".join(strings)))
+    
     @staticmethod
-    def load_record(feature, tokens, tokenizer, feature_dir, processed_dir=None, max_examples=2000):
+    def from_tensor(
+        tokens: Tensor, 
+        tokenizer,
+        layer: int,
+        locations_path: str, 
+        activations_path: str, 
+        processed_dir: str = None, 
+        max_examples: int = 2000
+    ) -> List["FeatureRecord"]:
+        """
+        Loads a list of records from a tensor of locations and activations. Pass
+        in a proccessed_dir to load a feature's processed data.
 
-        path = f"{feature_dir}/layer{feature.layer_index}_feature{feature.feature_index}.json"
+        Args:
+            tokens: Tokenized data from caching
+            tokenizer: Tokenizer from the model
+            layer: Layer index
+            locations_path: Path to the locations tensor
+            activations_path: Path to the activations tensor
+            processed_dir: Path to the processed data
+            max_examples: Maximum number of examples to load per record
 
-        with open(path, "rb") as f:
-            locations, activations = orjson.loads(f.read())
+        Returns:
+            List of FeatureRecords
+        """
+        locations = torch.load(locations_path)
+        activations = torch.load(activations_path)
 
+        features = torch.unique(locations[:, 2])
+
+        records = []
+        for feature_index in tqdm(features):
+            feature = Feature(
+                layer_index=layer, 
+                feature_index=feature_index.item()
+            )
+
+            mask = locations[:, 2] == feature_index
+            feature_locations = locations[mask]
+            feature_activations = activations[mask]
+
+            record = FeatureRecord.load_record(
+                feature,
+                tokens,
+                tokenizer,
+                feature_locations,
+                feature_activations,
+                processed_dir=processed_dir,
+                max_examples=max_examples,
+            )
+
+            records.append(record)
+
+        return records
+    
+    @staticmethod
+    def load_record(
+        feature, 
+        tokens, 
+        tokenizer, 
+        locations,
+        activations,
+        processed_dir=None, 
+        max_examples=2000
+    ):
         if len(locations) == 0:
             logger.info(f"Feature {feature.feature_index} in layer {feature.layer_index} has no activations.")
-            return FeatureRecord(feature, None)
+            return f"{feature.layer_index}_{feature.feature_index} EMPTY"
         
         example_tokens, example_activations = get_activating_examples(
             tokens, locations, activations

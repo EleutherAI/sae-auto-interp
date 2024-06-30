@@ -2,6 +2,7 @@ from sae_auto_interp.autoencoders.ae import load_autoencoders
 from sae_auto_interp.features.cache import FeatureCache
 from sae_auto_interp.utils import get_samples
 from nnsight import LanguageModel
+import torch
 
 # Load model and autoencoders
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
@@ -32,4 +33,6 @@ samples = {
 # Cache and save features
 cache = FeatureCache(model, submodule_dict)
 cache.run()
-cache.save_some_features(samples, save_dir="/share/u/caden/sae-auto-interp/raw_features")
+feature_range = torch.arange(100, 300)
+cache.save_selected_features(feature_range, 0, save_dir="/share/u/caden/sae-auto-interp/raw_features")
+# cache.save_some_features(samples, save_dir="/share/u/caden/sae-auto-interp/raw_features")

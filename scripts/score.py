@@ -6,7 +6,7 @@ from sae_auto_interp.clients import get_client
 from sae_auto_interp.scorers.scorer import ScorerInput, FuzzingScorer
 from sae_auto_interp.autoencoders.ae import load_autoencoders
 from sae_auto_interp.utils import get_samples, load_tokenized_data, execute_model
-from sae_auto_interp.features import feature_loader, Feature, FeatureRecord
+from sae_auto_interp.features import Feature, FeatureRecord
 
 # Load model and autoencoders
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
@@ -33,12 +33,19 @@ processed_features_path = "/share/u/caden/sae-auto-interp/processed_features"
 
 scorer_inputs = []
 
-for feature in features:
-    record = FeatureRecord.load_record(feature, tokens, model.tokenizer, raw_features_path, processed_features_path)
+for feature in tqdm(features):
+    record = FeatureRecord.load_record(
+        feature, 
+        tokens, 
+        model.tokenizer, 
+        raw_features_path, 
+        processed_features_path
+    )
 
     # Skip features with no activations
     if record.examples is None:
         continue
+
     scorer_inputs.append(
         ScorerInput(
             explanation="NONE",
@@ -49,10 +56,10 @@ for feature in features:
 
 client = get_client("local", "astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit")
 scorer = FuzzingScorer(client)
+scorer_out_dir = "/share/u/caden/sae-auto-interp/saved_scores"
 
 # Run the scorer. Execute model should automatically async 
 # and batch a bunch of requests to the server.
-scorer_out_dir = "/share/u/caden/sae-auto-interp/saved_scores"
 asyncio.run(
     execute_model(
         scorer, 
