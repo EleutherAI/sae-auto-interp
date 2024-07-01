@@ -5,7 +5,7 @@ from nnsight import LanguageModel
 import torch
 
 # Load model and autoencoders
-model = LanguageModel("meta-llama/Meta-Llama-3-8b", device_map="auto", dispatch=True,dtype=torch.bfloat16)
+model = LanguageModel("meta-llama/Meta-Llama-3-8b", device_map="auto", dispatch=True,torch_dtype =torch.bfloat16)
 print("Model loaded")
 # Load autoencoders, submodule dict, and edits.
 # Submodule dict is used in caching to save ae latents
