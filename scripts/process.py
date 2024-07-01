@@ -9,6 +9,7 @@ from sae_auto_interp.features import CombinedStat, TopLogits, Feature, FeatureRe
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 ae_dict, submodule_dict, edits = load_autoencoders(
     model, 
+    list(range(12)),
     "saved_autoencoders/gpt2"
 )
 
@@ -19,8 +20,8 @@ tokens = load_tokenized_data(model.tokenizer)
 samples = get_samples(features_per_layer=500)
 features = Feature.from_dict(samples)
 
-raw_features_path = "raw_features"
-processed_features_path = "processed_features"
+raw_features_path = "raw_features_fine"
+processed_features_path = "processed_features_fine"
 
 # You can add any object that inherits from Stat
 # to combined stats. This info is added to the record
