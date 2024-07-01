@@ -37,7 +37,7 @@ def load_eai_autoencoders(model,ae_layers: List[int], weight_dir:str):
         path = f"{weight_dir}/layer_{layer}"
         sae = Sae.load_from_disk(path,"cuda:0")
 
-        submodule = model.transformer.h[layer]
+        submodule = model.model.layers[layer]
         passthrough_ae = AutoencoderLatents(sae, "eai")
         edit = Edit(submodule, "ae", passthrough_ae)
 
