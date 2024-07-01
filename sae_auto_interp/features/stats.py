@@ -103,8 +103,9 @@ class Kurtosis(Stat):
 class TopLogits(Stat):
     backend = LogitBackend
 
-    def __init__(self, k=10):
+    def __init__(self,model, k=10):
         self.set_backend("logit", self.backend())
+        self.model = model
         self.k = k
 
     def refresh(self, W_U=None, W_dec=None):
