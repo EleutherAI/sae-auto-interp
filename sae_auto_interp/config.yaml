@@ -2,7 +2,8 @@
 log_path: "scripts/run.log"
 
 cache:
-    dataset_repo: "stas/openwebtext-10k"
+    dataset_repo: "HuggingFaceFW/fineweb"
+    dataset_name: "sample-10BT"
     dataset_split: "train"
 
     # tokens_per_batch per batch is minibatch_size * batch_len. n_batches is n_tokens // tokens_per_batch
