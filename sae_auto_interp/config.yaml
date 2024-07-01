@@ -1,5 +1,5 @@
 # logger output path
-log_path: "/share/u/caden/sae-auto-interp/scripts/run.log"
+log_path: "scripts/run.log"
 
 cache:
     dataset_repo: "stas/openwebtext-10k"

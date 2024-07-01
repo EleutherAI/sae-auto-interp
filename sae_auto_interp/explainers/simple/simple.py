@@ -1,24 +1,28 @@
-import torch
-from torch import Tensor
-from sae_auto_interp.explainers.simple.prompts import EXPLANATION_SYSTEM, FEW_SHOT_EXAMPLES
+import re
 from typing import List
 
+from .prompts import create_prompt
+from ..explainer import (
+    Explainer, 
+    ExplainerInput, 
+    ExplainerResult
+ )
+from ... import simple_explainer_config as CONFIG
+
 from transformers import AutoTokenizer
-import numpy as np
-
-import re
-
-
-from ..explainer import Explainer, ExplainerInput, ExplainerResult
-from ... import simple_cfg
 
 class SimpleExplainer(Explainer):
-    
+    """
+    The Simple explainer generates an explanation using few shot examples
+    using just the tokens that are activated in the sequence.
+    """
+
+    name = "simple"
+
     def __init__(
         self,
         client
     ):
-        self.name = "simple"
         self.client = client
         #TODO: Monkeypatch
         self.tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
@@ -27,32 +31,22 @@ class SimpleExplainer(Explainer):
         self,
         explainer_in: ExplainerInput,
     ) -> ExplainerResult:
-        simplified, user_prompt = self.build_prompt(
+
+
+        simplified, messages = self.build_prompt(
             explainer_in.train_examples,
             self.tokenizer
         )
+        
+        response = await self.client.async_generate(
+            messages,
+            max_tokens=CONFIG.max_tokens,
+            temperature=CONFIG.temperature
+        )
 
-        # prompt = [
-        #     {
-        #         "role" : "user",
-        #         "content" : user_prompt, 
-        #     }
-        # ]
-
-        generation_args = {
-            "max_tokens" : simple_cfg.max_tokens,
-            "temperature" : simple_cfg.temperature,
-        }
-
-        response = await self.client.generate(prompt, **generation_args)
         explanation = self.parse_explanation(response)
 
-        return ExplainerResult(
-            explainer_type=self.name,
-            input=simplified,
-            response=response,
-            explanation=explanation
-        )
+        return explanation
     
     def parse_explanation(self, text:str):
         pattern = r'Explanation:\s*(.*)'
@@ -60,8 +54,6 @@ class SimpleExplainer(Explainer):
         match = re.search(pattern, text, re.DOTALL)
         
         if match:
-            # Get the explanation from the Regex object and strip
-            # Surrounding whitespace
             explanation = match.group(1).strip()
             return explanation
         else:
@@ -83,9 +75,8 @@ class SimpleExplainer(Explainer):
             decoded = sentences[i]
             activated_tokens,scores = str_tokens[i],activations[i]
             undiscovered_feature += self.formulate_question(i+1,decoded,activated_tokens,scores,max_activation)
-        prompt,question = self.make_prompt(undiscovered_feature)
-        spelled_out = tokenizer.apply_chat_template(prompt,add_generation_prompt=True,tokenize=False)
-        return question,spelled_out
+        msg,question = create_prompt(undiscovered_feature)
+        return question,msg
     
     def formulate_question(self,index:int,document:str,activating_tokens:List[str],activations:List[int],max_activation:float) -> str:
         if index == 1:
@@ -102,16 +93,7 @@ class SimpleExplainer(Explainer):
         question = question[:-1] + ".\n\n"
         return question
 
-    def make_prompt(self,question:str) -> str:
-
-        msg = []
-        msg.append({"role":"system","content":EXPLANATION_SYSTEM})
-        for key in FEW_SHOT_EXAMPLES:
-            example = FEW_SHOT_EXAMPLES[key]
-            msg.append({"role":"user","content":example["user"]})
-            msg.append({"role":"assistant","content":example["assistant"]})
-        msg.append({"role":"user","content":question})
-        return msg,question
+    
 
     
 
