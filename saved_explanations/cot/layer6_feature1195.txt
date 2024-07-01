@@ -1,1 +1,0 @@
-"The token \"title\" in a JSON or XML data structure."

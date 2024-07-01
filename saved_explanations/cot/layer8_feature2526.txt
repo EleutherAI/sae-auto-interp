@@ -1,1 +1,0 @@
-"The neuron activates on medical terms related to the heart and cardiovascular system, particularly cardiac-related words."

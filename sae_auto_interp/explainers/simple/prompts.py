@@ -55,3 +55,13 @@ second_neuron_assistant="Explanation: The neuron is looking for pronouns that ar
 
 FEW_SHOT_EXAMPLES = {"example1":{"user": first_neuron_user, "assistant": first_neuron_assistant},"example2":{"user": second_neuron_user, "assistant": second_neuron_assistant}}
 
+def create_prompt(question:str) -> str:
+
+        msg = []
+        msg.append({"role":"system","content":EXPLANATION_SYSTEM})
+        for key in FEW_SHOT_EXAMPLES:
+            example = FEW_SHOT_EXAMPLES[key]
+            msg.append({"role":"user","content":example["user"]})
+            msg.append({"role":"assistant","content":example["assistant"]})
+        msg.append({"role":"user","content":question})
+        return msg,question

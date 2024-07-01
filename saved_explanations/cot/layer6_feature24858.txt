@@ -1,1 +1,0 @@
-"Numbers and special characters in text, often followed by punctuation marks."

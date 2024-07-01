@@ -1,19 +1,19 @@
 # logger output path
-log_path: "/share/u/caden/sae-auto-interp/scripts/run.log"
+log_path: "scripts/run.log"
 
 cache:
     dataset_repo: "stas/openwebtext-10k"
     dataset_split: "train"
 
     # tokens_per_batch per batch is minibatch_size * batch_len. n_batches is n_tokens // tokens_per_batch
-    minibatch_size: 300
-    batch_len: 64
+    minibatch_size: 32
+    batch_len: 256
 
     # width of the autoencoder
-    n_features: 32768
+    n_features: 131072
 
     # n_tokens we'd like to process
-    n_tokens: 5_120_000
+    n_tokens: 10_240_000
 
     # shuffle token seed for reproducibility
     seed: 22

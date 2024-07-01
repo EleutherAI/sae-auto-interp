@@ -1,1 +1,0 @@
-"The neuron activates on country names, specifically \"Iran\", and related terms, often in the context of comparisons, descriptions, or quotations, suggesting it plays a role in identifying and processing information about Iran and its government."

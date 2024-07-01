@@ -1,1 +1,0 @@
-"The neuron activates on special characters and syntax tokens in programming languages, suggesting it plays a role in parsing and understanding the structure of code."

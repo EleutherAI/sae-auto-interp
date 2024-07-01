@@ -1,1 +1,0 @@
-"The neuron activates on prepositions \"to\" and \"for\" in requests or invitations related to comments, statements, or reactions."
