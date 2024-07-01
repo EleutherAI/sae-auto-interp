@@ -6,7 +6,7 @@ cache:
     dataset_split: "train"
 
     # tokens_per_batch per batch is minibatch_size * batch_len. n_batches is n_tokens // tokens_per_batch
-    minibatch_size: 64
+    minibatch_size: 32
     batch_len: 256
 
     # width of the autoencoder

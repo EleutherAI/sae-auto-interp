@@ -3,6 +3,12 @@ from sae_auto_interp.features.cache import FeatureCache
 from sae_auto_interp.utils import get_samples
 from nnsight import LanguageModel
 import torch
+import argparse
+
+argparser = argparse.ArgumentParser()
+argparser.add_argument("--layers", type=str, default="12,14")
+args = argparser.parse_args()
+layers = [int(layer) for layer in args.layers.split(",") if layer.isdigit()]
 
 # Load model and autoencoders
 model = LanguageModel("meta-llama/Meta-Llama-3-8b", device_map="auto", dispatch=True,torch_dtype =torch.bfloat16)
@@ -12,7 +18,7 @@ print("Model loaded")
 # Edits are applied to the model
 ae_dict, submodule_dict, edits = load_autoencoders(
     model, 
-    [0,2,4,6],
+    layers,
     "saved_autoencoders/Meta-Llama-3-8B/"
 )
 print("Autoencoders loaded")
@@ -35,7 +41,7 @@ print("Samples loaded")
 cache = FeatureCache(model, submodule_dict)
 cache.run()
 print("Caching complete")
-for layer in [0,2,4,6]:
+for layer in layers:
     feature_range = torch.tensor(samples[layer])
-    cache.save_selected_features(feature_range, layer, save_dir="raw_features")
+    cache.save_selected_features(feature_range, layer, save_dir="raw_features_llama")
 print("Selected features saved")
