@@ -9,18 +9,18 @@ from sae_auto_interp.features import CombinedStat, Logits, Feature, FeatureRecor
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 ae_dict, submodule_dict, edits = load_autoencoders(
     model, 
-    "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2"
+    "saved_autoencoders/gpt2"
 )
 
 # Load tokenized data
 tokens = load_tokenized_data(model.tokenizer)
 
 # Load features I want to explain
-samples = get_samples(features_per_layer=100)
+samples = get_samples(features_per_layer=500)
 features = Feature.from_dict(samples)
 
-raw_features_path = "/share/u/caden/sae-auto-interp/raw_features"
-processed_features_path = "/share/u/caden/sae-auto-interp/processed_features"
+raw_features_path = "raw_features"
+processed_features_path = "processed_features"
 
 # You can add any object that inherits from Stat
 # to combined stats. This info is added to the record
@@ -39,8 +39,8 @@ for layer, ae in ae_dict.items():
         tokens,
         model.tokenizer,
         layer,
-        f"/share/u/caden/sae-auto-interp/raw_features/layer{layer}_locations.pt",
-        f"/share/u/caden/sae-auto-interp/raw_features/layer{layer}_activations.pt",
+        f"raw_features/layer{layer}_locations.pt",
+        f"raw_features/layer{layer}_activations.pt",
         max_examples=2000
     )
     # Refresh updates a memory intensive caches for stuff like
