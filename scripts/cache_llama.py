@@ -19,7 +19,7 @@ print("Autoencoders loaded")
 # Set a default alteration on the model
 with model.alter(" ", edits=edits):
     for layer_idx, _ in ae_dict.items():
-        layer = model.transformer.h[layer_idx]
+        layer = model.model.layers[layer_idx]
         acts = layer.output[0]
         layer.ae(acts, hook=True)
 
