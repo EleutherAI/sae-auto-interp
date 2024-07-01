@@ -5,7 +5,6 @@ from dataclasses import dataclass, field
 @dataclass
 class CacheConfig:
     dataset_repo: str
-    dataset_name: str
     dataset_split: str
     minibatch_size: int
     batch_len: int

@@ -18,7 +18,7 @@ def get_samples(features_per_layer=None):
     random.seed(22)
 
     N_LAYERS = 12
-    N_FEATURES = 32_768
+    N_FEATURES = 131072
     N_SAMPLES = 1000
 
     samples = {}
@@ -38,7 +38,7 @@ def get_samples(features_per_layer=None):
 def load_tokenized_data(
     tokenizer: AutoTokenizer
 ):
-    data = load_dataset(CONFIG.dataset_repo,name=CONFIG.dataset_name, split=CONFIG.dataset_split)
+    data = load_dataset(CONFIG.dataset_repo, split=CONFIG.dataset_split)
 
     tokens = utils.tokenize_and_concatenate(
         data, 
