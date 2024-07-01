@@ -4,7 +4,7 @@ import torch
 
 import torch.nn as nn
 
-from sae_auto_interp.autoencoders.OpenAI.model import TopK,ACTIVATIONS_CLASSES
+from sae_auto_interp.autoencoders.OpenAI.model import TopK, ACTIVATIONS_CLASSES
 
 class AutoencoderWrapper(nn.Module):
     """Sparse autoencoder from either OAI or EAI
@@ -26,6 +26,9 @@ class AutoencoderWrapper(nn.Module):
             topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
             return topk(encoded)
         
+    
+
+
     
 def get_autoencoder(model_name:str,layer: int,device:str,path:str) -> AutoencoderWrapper:
     
