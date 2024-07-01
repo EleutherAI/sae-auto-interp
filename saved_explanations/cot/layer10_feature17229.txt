@@ -1,1 +1,0 @@
-"Quotation marks in code snippets, often used to delimit strings in programming languages."

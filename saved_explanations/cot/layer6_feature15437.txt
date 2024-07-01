@@ -1,1 +1,0 @@
-"The neuron activates on words ending in \"-ence\" or \"-ent\", often indicating a state or action, and is likely involved in processing grammatical suffixes and word endings."

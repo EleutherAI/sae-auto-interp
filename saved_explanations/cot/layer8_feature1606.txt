@@ -1,1 +1,0 @@
-"The neuron is sensitive to Cyrillic characters, possibly indicating a specialization for processing non-English text."
