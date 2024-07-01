@@ -9,6 +9,8 @@ from typing import List
 from ..logger import logger
 from torch import Tensor
 
+from .. import example_config as CONFIG
+
 @dataclass
 class Feature:
     layer_index: int
@@ -81,8 +83,8 @@ class FeatureRecord:
         tokens: Tensor, 
         tokenizer,
         layer: int,
-        locations_path: str, 
-        activations_path: str, 
+        raw_dir: str,
+        selected_features: List[int] = None,
         processed_dir: str = None, 
         max_examples: int = 2000
     ) -> List["FeatureRecord"]:
@@ -102,13 +104,21 @@ class FeatureRecord:
         Returns:
             List of FeatureRecords
         """
+
+        locations_path = f"{raw_dir}/layer{layer}_locations.pt"
+        activations_path = f"{raw_dir}/layer{layer}_activations.pt"
+        
         locations = torch.load(locations_path)
         activations = torch.load(activations_path)
 
         features = torch.unique(locations[:, 2])
 
         records = []
-        for feature_index in tqdm(features):
+        for feature_index in tqdm(features, desc=f"Loading features from tensor for layer {layer}"):
+            if feature_index.item() not in selected_features \
+                and selected_features is not None:
+                continue
+            
             feature = Feature(
                 layer_index=layer, 
                 feature_index=feature_index.item()
@@ -197,32 +207,6 @@ def sort_features(features):
     return layer_sorted_features
 
 
-#TODO: We should have a way to load torch tensors 
-def feature_loader(
-    tokens: List[int],
-    features: List,
-    model,
-    ae_dict,
-    feature_dir,
-    pipe=False
-):
-    all_records = []
-    
-    layer_sorted_features = sort_features(features)
-
-    for layer, features in tqdm(layer_sorted_features.items()):
-
-        records = [
-            FeatureRecord.load_record(feature, tokens, model.tokenizer, feature_dir) for feature in features
-        ]
-
-        if pipe:
-            yield ae_dict[layer], records
-        else:
-            all_records.append(records)
-
-    return all_records
-
 import torch
 
 def get_activating_examples(tokens: torch.Tensor, locations: torch.Tensor, activations: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -254,7 +238,7 @@ def get_activating_examples(tokens: torch.Tensor, locations: torch.Tensor, activ
     
     return tokens[active_sentences], all_activations[active_sentences]
 
-def extract_activation_windows(tokens: torch.Tensor, activations: torch.Tensor, l_ctx: int = 15, r_ctx: int = 4) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
+def extract_activation_windows(tokens: torch.Tensor, activations: torch.Tensor, l_ctx: int = CONFIG.l_ctx, r_ctx: int = CONFIG.r_ctx) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
     """
     Extracts windows around the maximum activation for each sentence.
     

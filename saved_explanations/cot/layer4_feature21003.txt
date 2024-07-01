@@ -1,0 +1,1 @@
+"The word \"there\" in various contexts, often indicating a location, direction, or scattering.\n\nNote: The explanation is concise and focuses on the common feature of the activating tokens, which is the word \"there\" in different contexts. The role of the neuron might be to recognize and respond to this word in various situations."

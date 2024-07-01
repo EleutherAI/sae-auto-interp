@@ -7,26 +7,71 @@ from scipy.stats import skew, kurtosis
 import spacy
 from tqdm import tqdm
 import torch
+from typing import Dict, Any, ClassVar
+
+
+def load_umap(W_dec):
+    def _umap_backend():
+        umap_model = umap.UMAP(
+            n_neighbors=15, 
+            metric='cosine', 
+            min_dist=0.05, 
+            n_components=2, 
+            random_state=42
+        )
+
+        
+        
+    return _umap_backend
+
+
+def load_logits():
+    def _logits_backend(W_U=None, W_dec=None):
+        logits = torch.matmul(W_U, W_dec).detach().cpu()
+        return logits
+    return _logits_backend
+
+def load_backend(backend_name: str):
+    if backend_name == "umap":
+        return load_umap
+    elif backend_name == "logits":
+        return load_logits
+    else:
+        return None
+
 
 class Stat:
+    _backends = {}
 
-    def __init__(self):
+    @classmethod
+    def get_backend(cls, backend_name: str):
+        return cls._backends.get(backend_name)
+
+    @classmethod
+    def set_backend(cls, backend_name: str, backend):
+        cls._backends[backend_name] = backend
+
+    def compute(self, record, *args, **kwargs):
         pass
 
-    def refresh(self, **kwargs):
-        pass
-    
-    def compute(self):
-        pass
 
 class CombinedStat(Stat):
-
     def __init__(self, **kwargs):
-        self._objs = kwargs
+        self._objs: Dict[str, Stat] = kwargs
+        self._load_backends()
+
+    def _load_backends(self):
+        names = [obj.backend_name for obj in self._objs.values()]
+        self._backend_names = set(names)
+
+        for backend_name in self._backend_names:
+            
 
     def refresh(self, **kwargs):
-        for obj in self._objs.values():
-            obj.refresh(**kwargs)
+        for backend_name in self._backend_names:
+            backend = self.get_backend(backend_name)
+            if backend and callable(backend):
+                backend(**kwargs)
 
     def compute(self, records, *args, **kwargs):
         for record in tqdm(records):
@@ -35,36 +80,47 @@ class CombinedStat(Stat):
 
 
 class Neighbors(Stat):
+    def __init__(self, W_dec):
+        self.backend_name = "umap"
+        self.W_dec = W_dec
 
-    def fit_umap(self, W_dec):
-        umap_model = umap.UMAP(
-            n_neighbors=15, 
-            metric='cosine', 
-            min_dist=0.05, 
-            n_components=2, 
-            random_state=42
-        )
-        self.embedding = umap_model.fit_transform(W_dec)
+    def compute(self, record, *args, **kwargs):
+        backend = self.get_backend(self.backend_name)
+        if backend:
+            # Use the backend to compute
+            pass
 
-    def refresh(self, W_dec=None):
-        self.fit_umap(W_dec)
 
-    def compute(self, record, n_neighbors=10):        
-        # Increment n_neighbors to account for query
-        n_neighbors = n_neighbors + 1
-        feature_index = record.feature.feature_index
-        query = self.embedding[feature_index]
-        nn_model = NearestNeighbors(n_neighbors=n_neighbors)
-        nn_model.fit(self.embedding)
+class Neighbors(Stat):
+    backend_name = "umap"
 
-        distances, indices = nn_model.kneighbors([query])
+    def __init__(self, W_dec):
+        self.W_dec = W_dec
+        self.backend = None
 
-        neighbors = {
-            'distances': distances[0,1:].tolist(),
-            'indices': indices[0,1:].tolist()
-        }
+    def refresh(self, **kwargs):
+        self.backend = self.get_backend(self.backend_name, W_dec=self.W_dec)
 
-        record.neighbors = neighbors
+    def compute(self, records, n_neighbors=10):
+        embedding = self.backend()
+
+        for record in records:
+            # Increment n_neighbors to account for query
+            n_neighbors = n_neighbors + 1
+            feature_index = record.feature.feature_index
+            query = self.embedding[feature_index]
+            nn_model = NearestNeighbors(n_neighbors=n_neighbors)
+            nn_model.fit(self.embedding)
+
+            distances, indices = nn_model.kneighbors([query])
+
+            neighbors = {
+                'distances': distances[0,1:].tolist(),
+                'indices': indices[0,1:].tolist()
+            }
+
+            record.neighbors = neighbors
+
         
     
 class Logits(Stat):
@@ -104,6 +160,7 @@ class Logits(Stat):
                 self.model.tokenizer.decode([token]) 
                 for token in top_logits.indices
             ]
+
 
 
 class Activations(Stat):

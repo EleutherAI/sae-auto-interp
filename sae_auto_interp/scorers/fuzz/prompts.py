@@ -1,43 +1,62 @@
 DSCORER_SYSTEM_PROMPT = """You are an intelligent and meticulous linguistics researcher.
 
-You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment".
+You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment". You will be given a few examples of text that contain this feature. Portions of the sentence which strongly represent this feature are between tokens << and >>. 
 
-You will then be given several text examples. Activating examples are formatted between tokens like <<this>>.
+Some examples might be mislabeled. Your task is to determine if every single token within << and >> is correctly labeled. Consider that all provided examples could be correct, none of the examples could be correct, or a mix.
 
-The answer must be returned in JSON format. Mark correct exampels with 1 and incorrect examples with 0.
+For each example in turn, return 1 if the sentence is correct or 0 if the tokens are mislabeled. Then, provide the probability that your answer is correct (0.0 to 1.0).
+
+Your response should be in JSON format and should look like this:
+
+{
+  "example_1": 0,
+  "prob_1": 0.5,
+  "example_2": 1,
+  "prob_2": 0.3,
+  "example_3": 1,
+  "prob_3": 0.1,
+  ...
+  "example_n": 1,
+  "prob_n": 0.2
+}
 """
 
-DSCORER_EXAMPLE_ONE = """Feature explanation: The word "of" immediately before a capitalised word.
+# https://www.neuronpedia.org/gpt2-small/6-res-jb/6048
+DSCORER_EXAMPLE_ONE = """Feature explanation: Words related to American football positions, specifically the tight end position.
 
 Text examples:
 
-Example 1: climate, TomblinâĢĻs Chief of Staff Charlie Lorensen said.Ċ
-Example 2: UMK, could be considered by Head of Delegation Guy Freeman and the BBC
-Example 3:.ĊĊIn a statement, Director of National Intelligence James R. Clapper Jr.,
-Example 4:, the CEO of giant asset manager BlackRock Inc, in an interview on Wednesday.
-Example 5:andyburnhammp is running for Leader of the Labour Party https://t.co
+Example 1:<|endoftext|>Getty ImagesĊĊPatriots<< tight end>> Rob Gronkowski had his bossâĢĻ
+Example 2: posted<|endoftext|>You should know this about offensive<< line coaches>>: they are large, demanding men
+Example 3: Media Day 2015ĊĊLSU <<defensive end>> Isaiah Washington (94) speaks<< to the>>
+Example 4:<< running backs>>," he said. .. Defensive<< end>> Carroll Phillips is improving and his injury is
+Example 5:<< line>>, with the left side âĢĶ namely<< tackle>> Byron Bell at<< tackle>> and<< guard>> Amini
 """
 
 
 DSCORER_RESPONSE_ONE = """{
   "example_1": 1,
-  "example_2": 1,
-  "example_3": 1,
-  "example_4": 0,
-  "example_5": 0
+  "prob_1": 0.9,
+  "example_2": 0,
+  "prob_2": 0.8,
+  "example_3": 0,
+  "prob_3": 0.7,
+  "example_4": 1,
+  "prob_4": 0.85,
+  "example_5": 1,
+  "prob_5": 0.9
 }"""
 
-DSCORER_EXAMPLE_TWO = """Feature explanation: male pronouns and names.
+# https://www.neuronpedia.org/gpt2-small/6-res-jb/9396
+DSCORER_EXAMPLE_TWO = """Feature explanation: The word "guys" in the phrase "you guys".
 
 Text examples:
 
-Example 1: "unfortunately", but we knew that later, a great deal of money would
-Example 2: of the president, but after the process had stopped, she stated that
-Example 3: Reuters (2017) 27th March 2018
-
----- CORRESPONDENT Jane Elizabeth
-Example 4: every day for hours and hours, Sarah tried her hardest to
-Example 5: (FOI) requests made in a bid to find out exactly who has the power
+Example 1: if you are<< comfortable>> with it. You<< guys>> support me in many other ways already and
+Example 2: birth control access<|endoftext|> but I assure you<< women>> in Kentucky aren't laughing as they struggle
+Example 3:âĢĻs gig! I hope you<< guys>> LOVE her, and<< please>> be nice,
+Example 4:American, told Hannity that âĢľyou<< guys are playing the race card>>.âĢĿ
+Example 5:<< the>><|endoftext|>ľI want to<< remind>> you all that 10 days ago (director Massimil
 """
 
 
@@ -49,21 +68,22 @@ DSCORER_RESPONSE_TWO = """{
   "example_5": 0
 }"""
 
-DSCORER_EXAMPLE_THREE = """Feature explanation: The word “care” in the context of health care policies and reform.
+# https://www.neuronpedia.org/gpt2-small/8-res-jb/12654
+DSCORER_EXAMPLE_THREE = """Feature explanation: "of" before words that start with a capital letter.
 
 Text examples:
 
-Example 1:. Does President Obama deserve credit for health care and other accomplishments?ĊĊA.
-Example 2:delete any reference to 'C/- [Care of] Lippo".ĊĊ
-Example 3: in both chambers agree on establishing nonprofit health care cooperatives and stripping insurance companies of an
-Example 4: will delay a vote on their proposed health care legislation on June 27 at the Capitol.
-Example 5: arguing for spending $36 million on health care for undocumented Oregon children during a Monday session
+Example 1: climate, TomblinâĢĻs Chief<< of>> Staff Charlie Lorensen said.Ċ
+Example 2: no wonderworking relics, no true Body and Blood<< of>> Christ, no true Baptism
+Example 3:ĊĊDeborah Sathe, Head<< of>> Talent Development and Production at Film London,
+Example 4:ĊĊIt has been devised by Director<< of>> Public Prosecutions (DPP)
+Example 5: and fair investigation not even include the Director<< of>> Athletics? Â· Finally, we believe the
 """
 
 
 DSCORER_RESPONSE_THREE = """{
   "example_1": 1,
-  "example_2": 0,
+  "example_2": 1,
   "example_3": 1,
   "example_4": 1,
   "example_5": 1
@@ -84,10 +104,10 @@ def get_detection_template(examples, explanation):
     {"role": "system", "content": DSCORER_SYSTEM_PROMPT},
     {"role": "user", "content": DSCORER_EXAMPLE_ONE},
     {"role": "assistant", "content": DSCORER_RESPONSE_ONE},
-    {"role": "user", "content": DSCORER_EXAMPLE_TWO},
-    {"role": "assistant", "content": DSCORER_RESPONSE_TWO},
-    {"role": "user", "content": DSCORER_EXAMPLE_THREE},
-    {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
+    # {"role": "user", "content": DSCORER_EXAMPLE_TWO},
+    # {"role": "assistant", "content": DSCORER_RESPONSE_TWO},
+    # {"role": "user", "content": DSCORER_EXAMPLE_THREE},
+    # {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
     {"role": "user", "content": user_prompt}
   ]
 

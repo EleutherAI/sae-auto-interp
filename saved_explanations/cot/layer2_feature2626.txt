@@ -1,0 +1,1 @@
+"Special characters used to separate or conclude a loading process or a mode in exit messages or loading screens."

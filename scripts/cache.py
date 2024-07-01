@@ -33,6 +33,7 @@ samples = {
 # Cache and save features
 cache = FeatureCache(model, submodule_dict)
 cache.run()
-feature_range = torch.arange(100, 300)
-cache.save_selected_features(feature_range, 0, save_dir="/share/u/caden/sae-auto-interp/raw_features")
-# cache.save_some_features(samples, save_dir="/share/u/caden/sae-auto-interp/raw_features")
+
+for layer in [0,2,4,6,8,10]:
+    feature_range = torch.tensor(samples[layer])
+    cache.save_selected_features(feature_range, layer, save_dir="/share/u/caden/sae-auto-interp/raw_features")

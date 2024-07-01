@@ -1,0 +1,1 @@
+"Dates in the format \"month<<year>>\"."

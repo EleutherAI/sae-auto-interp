@@ -48,12 +48,14 @@ class ChainOfThought(Explainer):
 
         explanation = self.parse_explanation(response)
 
-        return ExplainerResult(
-            explainer_type=self.name,
-            prompt=simplified,
-            response=response,
-            explanation=explanation
-        )
+        return explanation
+
+        # return ExplainerResult(
+        #     explainer_type=self.name,
+        #     prompt=simplified,
+        #     response=response,
+        #     explanation=explanation
+        # )
     
     def parse_explanation(self, text: str) -> str:
         """

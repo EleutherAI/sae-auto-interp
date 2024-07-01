@@ -32,6 +32,10 @@ class Buffer:
         self.feature_activations[layer].append(feature_activations)
         
     def save(self):
+
+        if self.saved:
+            return
+
         for layer in self.feature_locations.keys():
             self.feature_locations[layer] = torch.cat(self.feature_locations[layer], dim=0)
             self.feature_activations[layer] = torch.cat(self.feature_activations[layer], dim=0)
@@ -93,7 +97,7 @@ class FeatureCache:
             for i in range(n_mini_batches)
         ]
 
-        return token_batches[:5]
+        return token_batches
     
     
     def run(self):

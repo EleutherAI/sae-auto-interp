@@ -1,0 +1,1 @@
+"Names, proper nouns, and words related to philosophy and science, often part of a concept being referred to or discussed.\n\nNote: The top logits list does not provide much insight into the behavior of the neuron, so the explanation is mainly based on the patterns found in the activating tokens and previous tokens."

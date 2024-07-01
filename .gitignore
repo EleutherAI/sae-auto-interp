@@ -9,6 +9,7 @@ extras
 *.pt
 *.log
 raw_features
+processed_features
 saved_features_json
 results
 .gitignore

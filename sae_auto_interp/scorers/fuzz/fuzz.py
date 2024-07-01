@@ -5,6 +5,7 @@ import json
 import logging
 from typing import List, Tuple
 import numpy as np
+import torch
 
 from .prompts import get_detection_template
 from ... import det_config as CONFIG
@@ -16,15 +17,23 @@ from pydantic import BaseModel
 class Sample:
     text: str
     score: float
+    quantile: int
     is_correct: bool = False
     marked: bool = False
+    probability: float = -1.0
 
 class ResponseModel(BaseModel):
     example_1: int
+    prob_1: float
     example_2: int
+    prob_2: float
     example_3: int
+    prob_3: float
     example_4: int
+    prob_4: float
     example_5: int
+    prob_5: float
+
 
 class FuzzingScorer(Scorer):
     def __init__(self, client, decay_factor=0.5):
@@ -33,25 +42,27 @@ class FuzzingScorer(Scorer):
         self.client = client
         self.decay_factor = decay_factor
 
-    def _calculate_distance_scores(self, normalized_activations: List[float]) -> List[float]:
-        n = len(normalized_activations)
-        scores = np.zeros(n)
-        last_active = -1
+    def _calculate_distance_scores(self, activations: torch.Tensor, decay_factor: float = 0.5) -> List[float]:
+        # Create indices tensor
+        indices = torch.arange(len(activations)).float()
         
-        for i in range(n):
-            if normalized_activations[i] > 0:
-                scores[i] = normalized_activations[i]
-                last_active = i
-            elif last_active != -1:
-                scores[i] = np.exp(-self.decay_factor * (i - last_active))
+        # Create mask for active tokens
+        mask = activations > 0
         
-        # Handle right-to-left pass
-        last_active = -1
-        for i in range(n - 1, -1, -1):
-            if normalized_activations[i] > 0:
-                last_active = i
-            elif last_active != -1:
-                scores[i] = max(scores[i], np.exp(-self.decay_factor * (last_active - i)))
+        # Find indices of active tokens
+        active_indices = indices[mask]
+        
+        # Calculate distances to all active tokens
+        distances = torch.abs(indices.unsqueeze(1) - active_indices.unsqueeze(0))
+        
+        # Find minimum distance for each token
+        min_distances, _ = distances.min(dim=1)
+        
+        # Apply exponential decay
+        scores = torch.exp(-decay_factor * min_distances)
+        
+        # Set scores for active tokens to their activation values
+        scores[mask] = activations[mask]
         
         return scores.tolist()
 
@@ -69,26 +80,36 @@ class FuzzingScorer(Scorer):
                 result.append(tokens[i])
                 i += 1
         return "".join(result)
+    
+    def _preprocess_sample(self, example, max_activation: float ):
+        normalized_activations = example.activations/max_activation
+        distance_scores = self._calculate_distance_scores(normalized_activations)
+        return distance_scores
 
-    def create_samples(self, example: FeatureRecord, distance_scores: List[float]) -> List[Sample]:
-        correct = self.prepare_example(example.str_toks, example.activations)
-        correct_score = sum(score for score, is_active in zip(distance_scores, example.activations) if is_active > 0)
-        samples = [Sample(text=correct, score=correct_score, is_correct=True)]
+    def create_samples(self, batch, max_activation, quantile) -> List[Sample]:
+        samples = []
+        for i, example in enumerate(batch):
 
-        for _ in range(4):
-            incorrect, incorrect_score = self._create_incorrect_sample(example.str_toks, distance_scores )
-            samples.append(Sample(text=incorrect, score=incorrect_score, is_correct=False))
+            if i < 5:
+                distance_scores = self._preprocess_sample(example, max_activation)
+                correct = self.prepare_example(example.str_toks, example.activations)
+                correct_score = sum(score for score, is_active in zip(distance_scores, example.activations) if is_active > 0)
+                samples.append(Sample(text=correct, quantile=quantile, score=correct_score, is_correct=True))
 
-        random.shuffle(samples)
+            else:
+                distance_scores = self._preprocess_sample(example, max_activation)
+                incorrect, incorrect_score = self._create_incorrect_sample(example.str_toks, distance_scores)
+                samples.append(Sample(text=incorrect, score=incorrect_score, is_correct=False, quantile=quantile))
+
         return samples
 
-    def _create_incorrect_sample(self, tokens: List[str], distance_scores) -> str:
+    def _create_incorrect_sample(self, tokens: List[str], distance_scores) -> Tuple[str, float]:
         num_to_highlight = random.randint(1, max(1, len(tokens) // 3))
         incorrect_highlights = set(random.sample(range(len(tokens)), num_to_highlight))
         
         result = []
         score = 0
-        i  = 0
+        i = 0
         while i < len(tokens):
             if i in incorrect_highlights:
                 result.append("<<")
@@ -129,20 +150,30 @@ class FuzzingScorer(Scorer):
                     raise
                 await asyncio.sleep(1)
 
-        for sample, (_, mark) in zip(batch, selections.items()):
-            sample.marked = (mark == 1)
-
+        for i, sample in enumerate(batch):
+            sample.marked = selections[f"example_{i+1}"] == 1
+            sample.probability = selections[f"prob_{i+1}"]
+        
+        print(selections)
         return batch
 
     async def __call__(self, scorer_in: ScorerInput) -> ScorerResult:
         random.seed(CONFIG.seed)
-        
-        sample_batches = []
-        for example in scorer_in.test_examples:
-            normalized_activations = [act / example.max_activation for act in example.activations]
-            distance_scores = self._calculate_distance_scores(normalized_activations)
-            sample_batches.append(self.create_samples(example, distance_scores))
+
+        samples = []
+        for quantile, batch in enumerate(scorer_in.test_examples):
+            samples.extend(
+                self.create_samples(
+                    max_activation=scorer_in.record.max_activation(), 
+                    batch=batch, 
+                    quantile=quantile
+                )
+            )
+
+        random.shuffle(samples)
+        sample_batches = [samples[i:i + 5] for i in range(0, len(samples), 5)]
 
         results = await self.process_batches(sample_batches, scorer_in.explanation)
 
-        return ScorerResult(input="", response="", score=results)
+        return results
+        # return ScorerResult(input="", response="", score=results)
