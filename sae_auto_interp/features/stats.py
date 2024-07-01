@@ -1,10 +1,8 @@
 from typing import List
 from collections import defaultdict
-import umap
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
 from scipy.stats import skew, kurtosis
-import spacy
 from tqdm import tqdm
 import torch
 from typing import Dict
