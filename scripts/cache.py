@@ -36,5 +36,6 @@ cache.run()
 print("Caching complete")
 for layer in [0,1,2,3,4,5,6,7,8,9,10,11]:
     feature_range = torch.tensor(samples[layer])
+
     cache.save_selected_features(feature_range, layer, save_dir="raw_features_fine")
 print("Selected features saved")
