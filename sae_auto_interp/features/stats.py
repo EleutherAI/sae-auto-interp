@@ -7,38 +7,8 @@ from scipy.stats import skew, kurtosis
 import spacy
 from tqdm import tqdm
 import torch
-from typing import Dict, Any, ClassVar
-
-
-def load_umap(W_dec):
-    def _umap_backend():
-        umap_model = umap.UMAP(
-            n_neighbors=15, 
-            metric='cosine', 
-            min_dist=0.05, 
-            n_components=2, 
-            random_state=42
-        )
-
-        
-        
-    return _umap_backend
-
-
-def load_logits():
-    def _logits_backend(W_U=None, W_dec=None):
-        logits = torch.matmul(W_U, W_dec).detach().cpu()
-        return logits
-    return _logits_backend
-
-def load_backend(backend_name: str):
-    if backend_name == "umap":
-        return load_umap
-    elif backend_name == "logits":
-        return load_logits
-    else:
-        return None
-
+from typing import Dict
+from .backends import UmapBackend, LogitBackend
 
 class Stat:
     _backends = {}
@@ -58,20 +28,10 @@ class Stat:
 class CombinedStat(Stat):
     def __init__(self, **kwargs):
         self._objs: Dict[str, Stat] = kwargs
-        self._load_backends()
-
-    def _load_backends(self):
-        names = [obj.backend_name for obj in self._objs.values()]
-        self._backend_names = set(names)
-
-        for backend_name in self._backend_names:
-            
 
     def refresh(self, **kwargs):
-        for backend_name in self._backend_names:
-            backend = self.get_backend(backend_name)
-            if backend and callable(backend):
-                backend(**kwargs)
+        for _, backend in self._backends.items():
+            backend.refresh(**kwargs)
 
     def compute(self, records, *args, **kwargs):
         for record in tqdm(records):
@@ -80,137 +40,137 @@ class CombinedStat(Stat):
 
 
 class Neighbors(Stat):
-    def __init__(self, W_dec):
-        self.backend_name = "umap"
-        self.W_dec = W_dec
+    backend = UmapBackend
 
-    def compute(self, record, *args, **kwargs):
-        backend = self.get_backend(self.backend_name)
-        if backend:
-            # Use the backend to compute
-            pass
-
-
-class Neighbors(Stat):
-    backend_name = "umap"
-
-    def __init__(self, W_dec):
-        self.W_dec = W_dec
-        self.backend = None
-
-    def refresh(self, **kwargs):
-        self.backend = self.get_backend(self.backend_name, W_dec=self.W_dec)
-
-    def compute(self, records, n_neighbors=10):
-        embedding = self.backend()
-
-        for record in records:
-            # Increment n_neighbors to account for query
-            n_neighbors = n_neighbors + 1
-            feature_index = record.feature.feature_index
-            query = self.embedding[feature_index]
-            nn_model = NearestNeighbors(n_neighbors=n_neighbors)
-            nn_model.fit(self.embedding)
-
-            distances, indices = nn_model.kneighbors([query])
-
-            neighbors = {
-                'distances': distances[0,1:].tolist(),
-                'indices': indices[0,1:].tolist()
-            }
-
-            record.neighbors = neighbors
-
-        
-    
-class Logits(Stat):
-
-    def __init__(
-        self, 
-        model,
-        get_skewness=False,
-        get_kurtosis=False,
-        top_k_logits=None
-    ):
-        self.model = model
-        self.get_skewness = get_skewness
-        self.get_kurtosis = get_kurtosis
-        self.top_k_logits = top_k_logits
+    def __init__(self):
+        # Sets class backend
+        self.set_backend("umap", self.backend())
 
     def refresh(self, W_dec=None):
-        self.load_top_logits(W_dec)
+        backend = self.get_backend("umap")
+        backend.refresh(W_dec)
 
-    def load_top_logits(self, W_dec):
-        W_U = self.model.transformer.ln_f.weight * self.model.lm_head.weight
-        self.logits = torch.matmul(W_dec.T, W_U.T).detach().cpu()
-        
-    def compute(self, record):
+    def compute(self, record, *args, **kwargs):
+        # Increment n_neighbors to account for query
+        n_neighbors = n_neighbors + 1
         feature_index = record.feature.feature_index
-        logits = self.logits[feature_index, :]
+        query = self.embedding[feature_index]
+        nn_model = NearestNeighbors(n_neighbors=n_neighbors)
+        embedding = self.get_backend("umap").embedding
+        nn_model.fit(embedding)
 
-        if self.get_skewness:
-            record.skewness = float( skew(logits))
+        distances, indices = nn_model.kneighbors([query])
 
-        if self.get_kurtosis:
-            record.kurtosis = float(kurtosis(logits))
+        neighbors = {
+            'distances': distances[0,1:].tolist(),
+            'indices': indices[0,1:].tolist()
+        }
 
-        if self.top_k_logits is not None:
-            top_logits = torch.topk(logits, self.top_k_logits)
-            record.top_logits = [
-                self.model.tokenizer.decode([token]) 
-                for token in top_logits.indices
-            ]
+        record.neighbors = neighbors
 
+
+class Skew(Stat):
+    backend = LogitBackend
+
+    def __init__(self):
+        self.set_backend("logit", self.backend())
+
+    def refresh(self, W_U=None, W_dec=None):
+        backend = self.get_backend("logit")
+        backend.refresh(W_U, W_dec)
+
+    def compute(self, record, *args, **kwargs):
+        backend = self.get_backend("logit")
+        logits = backend.logits[record.feature.feature_index, :]
+        record.skewness = float(skew(logits))
+
+
+class Kurtosis(Stat):
+    backend = LogitBackend
+
+    def __init__(self):
+        self.set_backend("logit", self.backend())
+
+    def refresh(self, W_U=None, W_dec=None):
+        backend = self.get_backend("logit")
+        backend.refresh(W_U, W_dec)
+
+    def compute(self, record, *args, **kwargs):
+        backend = self.get_backend("logit")
+        logits = backend.logits[record.feature.feature_index, :]
+        record.kurtosis = float(kurtosis(logits))
+    
+class TopLogits(Stat):
+    backend = LogitBackend
+
+    def __init__(self, k=10):
+        self.set_backend("logit", self.backend())
+        self.k = k
+
+    def refresh(self, W_U=None, W_dec=None):
+        backend = self.get_backend("logit")
+        backend.refresh(W_U, W_dec)
+
+    def compute(self, record, *args, **kwargs):
+        backend = self.get_backend("logit")
+        logits = backend.logits[record.feature.feature_index, :]
+        top_logits = torch.topk(logits, self.k)
+        record.top_logits = [
+            self.model.tokenizer.decode([token]) 
+            for token in top_logits.indices
+        ]
 
 
 class Activations(Stat):
-    def __init__(self, get_lemmas=False, top_activating_k=100):
-        self.get_lemmas = get_lemmas
+    def __init__(self, lemmatize=False, top_activating_k=100):
+        self.lemmatize = lemmatize
         self.top_activating_k = top_activating_k
+        
+        import spacy
         self.nlp = spacy.load("en_core_web_sm")
 
     def get_top_activating_tokens(
         self,
-        record,
+        examples,
         k
     ):
-        examples = record.examples
-
-        # Examples are sorted, so get top k
+        """
+        Get the top token for the top k examples
+        """
         top_k = examples[:k]
-
-        # Get highest activation
         top_indices = [
             np.argmax(example.activations)
             for example in top_k
         ]
-
-        # Get the respective highest token
         top_tokens = [
             example.str_toks[index]
-            for example, index in zip(top_k, top_indices)
+            for example, index 
+            in zip(top_k, top_indices)
         ]
 
         return top_tokens
     
     def n_above_zero(self, examples):
+        """
+        Get number of positive activations for each example
+        """
         return [
             int(sum(np.array(example.activations) > 0))
             for example in examples
         ]
     
-    def lemmatize(self, words):
+    def _lemmatize(self, words):
 
-        # Step 1: Remove duplicates
         unique_tokens = list(set(words))
-
-        # Step 2: Convert to lowercase
-        lowercase_tokens = [token.lower().strip() for token in unique_tokens]
-
-        # Step 3: Remove non-alphabetic tokens
-        alpha_tokens = [token for token in lowercase_tokens if token.isalpha()]
-
-        # Step 4: Join into a single string
+        lowercase_tokens = [
+            token.lower().strip() 
+            for token in unique_tokens
+        ]
+        alpha_tokens = [
+            token for token 
+            in lowercase_tokens 
+            if token.isalpha()
+        ]
         text_for_spacy = " ".join(alpha_tokens)
 
         doc = self.nlp(text_for_spacy)
@@ -219,10 +179,12 @@ class Activations(Stat):
         return lemmatized_tokens
 
     def compute(self, record):
-        top_tokens = self.get_top_activating_tokens(record, self.top_activating_k)
+        top_tokens = self.get_top_activating_tokens(
+            record.examples, self.top_activating_k
+        )
         n_above_zero = self.n_above_zero(record.examples)
         
         record.mean_n_activations = float(np.average(n_above_zero))
 
-        if self.get_lemmas:
-            record.lemmas = self.lemmatize(top_tokens)
+        if self.lemmatize:
+            record.lemmas = self._lemmatize(top_tokens)
