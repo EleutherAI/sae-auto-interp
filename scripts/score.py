@@ -13,21 +13,22 @@ from sae_auto_interp.logger import logger
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 ae_dict, submodule_dict, edits = load_autoencoders(
     model, 
-    "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2"
+    list(range(12)),
+    "saved_autoencoders/gpt2"
 )
 
 # Load tokenized data
 tokens = load_tokenized_data(model.tokenizer)
 
 # Load features to explain
-samples = get_samples(features_per_layer=5)
+samples = get_samples(features_per_layer=500)
 
 # Raw features contains locations
-raw_features_path = "/share/u/caden/sae-auto-interp/raw_features"
+raw_features_path = "raw_features"
 # Processed features contains extra information like logits, etc.
-processed_features_path = "/share/u/caden/sae-auto-interp/processed_features"
+processed_features_path = "processed_features"
 
-explanations_dir = "/share/u/caden/sae-auto-interp/saved_explanations/cot"
+explanations_dir = "saved_explanations/cot"
 
 
 
@@ -72,9 +73,9 @@ for layer in [0]:
             )
         )
 
-client = get_client("local", "casperhansen/llama-3-70b-instruct-awq")
+client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct")
 scorer = FuzzingScorer(client)
-scorer_out_dir = "/share/u/caden/sae-auto-interp/saved_scores"
+scorer_out_dir = "saved_scores"
 
 # Run the scorer. Execute model should automatically async 
 # and batch a bunch of requests to the server.
