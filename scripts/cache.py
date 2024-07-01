@@ -6,15 +6,15 @@ import torch
 
 # Load model and autoencoders
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
-
+print("Model loaded")
 # Load autoencoders, submodule dict, and edits.
 # Submodule dict is used in caching to save ae latents
 # Edits are applied to the model
 ae_dict, submodule_dict, edits = load_autoencoders(
     model, 
-    "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2"
+    "saved_autoencoders/gpt2"
 )
-
+print("Autoencoders loaded")
 # Set a default alteration on the model
 with model.alter(" ", edits=edits):
     for layer_idx, _ in ae_dict.items():
@@ -29,11 +29,12 @@ samples = {
     for layer, features in samples.items() 
     if int(layer) in ae_dict.keys()
 }
-
+print("Samples loaded")
 # Cache and save features
 cache = FeatureCache(model, submodule_dict)
 cache.run()
-
-for layer in [0,2,4,6,8,10]:
+print("Caching complete")
+for layer in [0,1,2,3,4,5,6,7,8,9,10,11]:
     feature_range = torch.tensor(samples[layer])
-    cache.save_selected_features(feature_range, layer, save_dir="/share/u/caden/sae-auto-interp/raw_features")
+    cache.save_selected_features(feature_range, layer, save_dir="raw_features")
+print("Selected features saved")
