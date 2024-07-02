@@ -14,6 +14,7 @@ raw_features_fine
 processed_features_fine
 results
 .gitignore
+new_processed_features
 saved_explanations
 saved_features_json
 results
