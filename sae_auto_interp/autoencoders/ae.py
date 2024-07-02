@@ -52,7 +52,9 @@ def load_oai_autoencoders(model,ae_layers: List[int], weight_dir:str):
     submodule_dict = {}
     edits = []
     for layer in ae_layers:
-        path = f"{weight_dir}/resid_post_mlp_autoencoder_{layer}.pt"
+        # Tweaked this to work w how I save my autoencoders locally
+        path = f"{weight_dir}/resid_post_mlp_layer{layer}/ae.pt"
+        # path = f"{weight_dir}/resid_post_mlp_{layer}.pt"
         state_dict = torch.load(path)
         ae = Autoencoder.from_state_dict(state_dict=state_dict)
         ae.to("cuda:0")
@@ -74,8 +76,8 @@ def load_autoencoders(model,ae_layers, weight_dir) -> Dict[int, Autoencoder]:
     if "gpt2" in weight_dir:
         ae_dict, submodule_dict, edits = load_oai_autoencoders(model,ae_layers, weight_dir)
        
-    if "Llama" in weight_dir:
-        ae_dict, submodule_dict, edits = load_eai_autoencoders(model,ae_layers, weight_dir)
+    # if "Llama" in weight_dir:
+    #     ae_dict, submodule_dict, edits = load_eai_autoencoders(model,ae_layers, weight_dir)
     
 
     return ae_dict, submodule_dict,  edits

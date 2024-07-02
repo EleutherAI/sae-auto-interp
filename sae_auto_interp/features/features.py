@@ -24,12 +24,15 @@ class Feature:
 
         return features
     
+    def __repr__(self) -> str:
+        return f"L{self.layer_index}_F{self.feature_index}"
+    
 @dataclass
 class Example:
     tokens: List[int]
     activations: List[float]
-    str_toks: List[str]
     text: str
+    str_toks: List[str] = None
     max_activation: float = 0.0
 
 
@@ -44,6 +47,7 @@ class FeatureRecord:
         self.feature = feature
         self.examples = examples
 
+    @property
     def max_activation(self):
         return self.examples[0].max_activation
     
@@ -51,6 +55,9 @@ class FeatureRecord:
         self, 
         n_examples: int = 5
     ) -> str:
+        assert hasattr(self.examples[0], "str_toks"), \
+            "Examples must have be detokenized to display."
+
         from IPython.core.display import display, HTML
 
         def _to_string(tokens, activations):
@@ -81,12 +88,13 @@ class FeatureRecord:
     @staticmethod
     def from_tensor(
         tokens: Tensor, 
-        tokenizer,
-        layer: int,
+        layer_index: int,
         raw_dir: str,
+        tokenizer=None,
         selected_features: List[int] = None,
         processed_dir: str = None, 
-        max_examples: int = 2000
+        min_examples: int = 300,
+        max_examples: int = 500
     ) -> List["FeatureRecord"]:
         """
         Loads a list of records from a tensor of locations and activations. Pass
@@ -104,23 +112,28 @@ class FeatureRecord:
         Returns:
             List of FeatureRecords
         """
-
-        locations_path = f"{raw_dir}/layer{layer}_locations.pt"
-        activations_path = f"{raw_dir}/layer{layer}_activations.pt"
         
+        # Build location paths
+        locations_path = f"{raw_dir}/layer{layer_index}_locations.pt"
+        activations_path = f"{raw_dir}/layer{layer_index}_activations.pt"
+        
+        # Load tensor
         locations = torch.load(locations_path)
         activations = torch.load(activations_path)
 
+        # Get unique features to load into records
         features = torch.unique(locations[:, 2])
 
+        # Filter the features if a selection is provided
+        if selected_features is not None:
+            selected_features_tensor = torch.tensor(selected_features)
+            features = features[torch.isin(features, selected_features_tensor)]
+        
         records = []
-        for feature_index in tqdm(features, desc=f"Loading features from tensor for layer {layer}"):
-            if feature_index.item() not in selected_features \
-                and selected_features is not None:
-                continue
-            
+        for feature_index in tqdm(features, desc=f"Loading features from tensor for layer {layer_index}"):
+    
             feature = Feature(
-                layer_index=layer, 
+                layer_index=layer_index, 
                 feature_index=feature_index.item()
             )
 
@@ -131,10 +144,11 @@ class FeatureRecord:
             record = FeatureRecord.load_record(
                 feature,
                 tokens,
-                tokenizer,
                 feature_locations,
                 feature_activations,
+                tokenizer=tokenizer,
                 processed_dir=processed_dir,
+                min_examples=min_examples,
                 max_examples=max_examples,
             )
 
@@ -144,17 +158,25 @@ class FeatureRecord:
     
     @staticmethod
     def load_record(
-        feature, 
-        tokens, 
-        tokenizer, 
-        locations,
-        activations,
-        processed_dir=None, 
-        max_examples=2000
+        feature: Feature, 
+        tokens: Tensor, 
+        locations: Tensor,
+        activations: Tensor,
+        tokenizer = None, 
+        processed_dir:str = None, 
+        min_examples: int = 300,
+        max_examples: int = 500
     ):
+        """
+        Loads a single record from a tensor of locations and activations.
+        """
         if len(locations) == 0:
-            logger.info(f"Feature {feature.feature_index} in layer {feature.layer_index} has no activations.")
-            return f"{feature.layer_index}_{feature.feature_index} EMPTY"
+            logger.info(f"{feature} has no activations.")
+            return f"{feature} EMPTY"
+        
+        if len(locations) < min_examples:
+            logger.info(f"{feature} has fewer than {min_examples} activations.")
+            return f"{feature} TOO FEW"
         
         example_tokens, example_activations = get_activating_examples(
             tokens, locations, activations
@@ -165,35 +187,44 @@ class FeatureRecord:
             example_activations[:max_examples]
         )
 
+        text_tokens = tokenizer.batch_decode(processed_tokens)
+
         examples = [
             Example(
                 tokens=toks,
                 activations=acts,
-                str_toks=[tokenizer.decode(t) for t in toks],
-                text=tokenizer.decode(toks),
+                # str_toks=[tokenizer.decode(t) for t in toks],
+                text=toks,
                 max_activation=max(acts),
             )
-            for toks, acts in zip(processed_tokens, processed_activations)
+            for toks, acts in zip(text_tokens, processed_activations)
         ]
 
         examples.sort(key=lambda x: x.max_activation, reverse=True)
 
         record = FeatureRecord(feature, examples)
 
+        # Load processed data if a directory is provided
         if processed_dir:
-            path = f"{processed_dir}/layer{feature.layer_index}_feature{feature.feature_index}.json"
-            with bf.BlobFile(path, "rb") as f:
-                processed_data = orjson.loads(f.read())
-                feature_dict = processed_data.pop("feature")
-                record.feature = Feature(**feature_dict)
-                record.__dict__.update(processed_data)
+            record.load_processed(processed_dir)
 
         return record
     
-    def save(self, directory: str):
+    def load_processed(self, directory: str):
+        path = f"{directory}/layer{self.feature.layer_index}_feature{self.feature.feature_index}.json"
+        with bf.BlobFile(path, "rb") as f:
+            processed_data = orjson.loads(f.read())
+            feature_dict = processed_data.pop("feature")
+            self.feature = Feature(**feature_dict)
+            self.__dict__.update(processed_data)
+    
+    def save(self, directory: str, save_examples=False):
         path = f"{directory}/layer{self.feature.layer_index}_feature{self.feature.feature_index}.json"
         serializable = self.__dict__
-        serializable.pop("examples")
+
+        if not save_examples:
+            serializable.pop("examples")
+
         with bf.BlobFile(path, "wb") as f:
             f.write(orjson.dumps(serializable))
 
@@ -207,64 +238,40 @@ def sort_features(features):
     return layer_sorted_features
 
 
-import torch
 
 def get_activating_examples(tokens: torch.Tensor, locations: torch.Tensor, activations: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-    """
-    Gets all rows where the feature activates.
-    
-    Args:
-        tokens: List of tokens for each sentence in the batch
-        locations: Tensor of feature locations
-        activations: Tensor of feature activations
-    
-    Returns:
-        Tensor of activating sentences and their corresponding activations
-    """
-    # Ensure inputs are tensors
-    locations = torch.as_tensor(locations)
-    activations = torch.as_tensor(activations)
+    device = tokens.device
+    locations = locations.to(device)
+    activations = activations.to(device)
 
-    # Create a tensor to hold all sentence activations
-    max_sentence_length = tokens.shape[1]
-    num_sentences = tokens.shape[0]
-    all_activations = torch.zeros((num_sentences, max_sentence_length), dtype=torch.float)
-
-    # Use advanced indexing to fill in the activation values
-    all_activations[locations[:, 0].long(), locations[:, 1].long()] = activations
-
-    # Find sentences with non-zero activations
-    active_sentences = torch.any(all_activations != 0, dim=1)
+    # Create a sparse tensor for activations
+    num_sentences, max_sentence_length = tokens.shape
+    indices = torch.stack((locations[:, 0].long(), locations[:, 1].long()))
+    sparse_activations = torch.sparse_coo_tensor(indices, activations, (num_sentences, max_sentence_length))
     
-    return tokens[active_sentences], all_activations[active_sentences]
+    # Convert to dense and find active sentences
+    dense_activations = sparse_activations.to_dense()
+    active_sentences = torch.any(dense_activations != 0, dim=1)
+    
+    return tokens[active_sentences], dense_activations[active_sentences]
 
 def extract_activation_windows(tokens: torch.Tensor, activations: torch.Tensor, l_ctx: int = CONFIG.l_ctx, r_ctx: int = CONFIG.r_ctx) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
-    """
-    Extracts windows around the maximum activation for each sentence.
-    
-    Args:
-        tokens: Tensor of tokens for activating sentences
-        activations: Tensor of activations for activating sentences
-        l_ctx: Number of tokens to the left
-        r_ctx: Number of tokens to the right
-    
-    Returns:
-        List of token windows and activation windows
-    """
+    batch_size, max_length = tokens.shape
+    device = tokens.device
+
     # Find the token with max activation for each sentence
     max_activation_indices = torch.argmax(activations, dim=1)
 
     # Calculate start and end indices for the windows
     start_indices = torch.clamp(max_activation_indices - l_ctx, min=0)
-    end_indices = torch.clamp(max_activation_indices + r_ctx + 1, max=tokens.shape[1])
+    end_indices = torch.clamp(max_activation_indices + r_ctx + 1, max=max_length)
 
-    # Initialize lists to store results
-    token_windows = []
-    activation_windows = []
+    # Create masks for valid indices
+    row_indices = torch.arange(max_length, device=device).unsqueeze(0)
+    masks = (row_indices >= start_indices.unsqueeze(1)) & (row_indices < end_indices.unsqueeze(1))
 
-    # Extract windows (this part is hard to vectorize due to variable window sizes)
-    for i, (start, end) in enumerate(zip(start_indices, end_indices)):
-        token_windows.append(tokens[i, start:end])
-        activation_windows.append(activations[i, start:end])
+    # Use masks to get windows
+    token_windows = tokens.masked_select(masks).split((end_indices - start_indices).tolist())
+    activation_windows = activations.masked_select(masks).split((end_indices - start_indices).tolist())
 
-    return token_windows, activation_windows
+    return list(token_windows), list(activation_windows)

@@ -4,58 +4,59 @@ from sklearn.neighbors import NearestNeighbors
 import numpy as np
 from scipy.stats import skew, kurtosis
 from tqdm import tqdm
+from scipy.signal import find_peaks
 import torch
 from typing import Dict
-from .backends import UmapBackend, LogitBackend
+import torch.nn.functional as F
+
+import umap
+
 
 class Stat:
-    _backends = {}
 
-    @classmethod
-    def get_backend(cls, backend_name: str):
-        return cls._backends.get(backend_name)
-
-    @classmethod
-    def set_backend(cls, backend_name: str, backend):
-        cls._backends[backend_name] = backend
+    def refresh(self, **kwargs):
+        pass
 
     def compute(self, record, *args, **kwargs):
         pass
-
 
 class CombinedStat(Stat):
     def __init__(self, **kwargs):
         self._objs: Dict[str, Stat] = kwargs
 
     def refresh(self, **kwargs):
-        for _, backend in self._backends.items():
-            backend.refresh(**kwargs)
+        for obj in self._objs.values():
+            obj.refresh(**kwargs)
 
     def compute(self, records, *args, **kwargs):
         for record in tqdm(records):
+            if type(record) == str:
+                continue
             for obj in self._objs.values():
                 obj.compute(record, *args, **kwargs)
 
 
 class Neighbors(Stat):
-    backend = UmapBackend
 
-    def __init__(self):
-        # Sets class backend
-        self.set_backend("umap", self.backend())
-
-    def refresh(self, W_dec=None):
-        backend = self.get_backend("umap")
-        backend.refresh(W_dec)
+    def refresh(self, W_dec=None, **kwargs):
+        umap_model = umap.UMAP(
+            n_neighbors=15, 
+            metric='cosine', 
+            min_dist=0.05, 
+            n_components=2, 
+            random_state=42
+        )
+        self.embedding = umap_model.fit_transform(W_dec)
 
     def compute(self, record, *args, **kwargs):
+
         # Increment n_neighbors to account for query
         n_neighbors = n_neighbors + 1
         feature_index = record.feature.feature_index
         query = self.embedding[feature_index]
+
         nn_model = NearestNeighbors(n_neighbors=n_neighbors)
-        embedding = self.get_backend("umap").embedding
-        nn_model.fit(embedding)
+        nn_model.fit(self.embedding)
 
         distances, indices = nn_model.kneighbors([query])
 
@@ -67,100 +68,123 @@ class Neighbors(Stat):
         record.neighbors = neighbors
 
 
-class Skew(Stat):
-    backend = LogitBackend
+class Logits(Stat):
 
-    def __init__(self):
-        self.set_backend("logit", self.backend())
-
-    def refresh(self, W_U=None, W_dec=None):
-        backend = self.get_backend("logit")
-        backend.refresh(W_U, W_dec)
-
-    def compute(self, record, *args, **kwargs):
-        backend = self.get_backend("logit")
-        logits = backend.logits[record.feature.feature_index, :]
-        record.skewness = float(skew(logits))
-
-
-class Kurtosis(Stat):
-    backend = LogitBackend
-
-    def __init__(self):
-        self.set_backend("logit", self.backend())
-
-    def refresh(self, W_U=None, W_dec=None):
-        backend = self.get_backend("logit")
-        backend.refresh(W_U, W_dec)
-
-    def compute(self, record, *args, **kwargs):
-        backend = self.get_backend("logit")
-        logits = backend.logits[record.feature.feature_index, :]
-        record.kurtosis = float(kurtosis(logits))
-    
-class TopLogits(Stat):
-    backend = LogitBackend
-
-    def __init__(self,model, k=10):
-        self.set_backend("logit", self.backend())
+    def __init__(self, 
+        model, 
+        get_top_logits=False,
+        k=10,
+        get_skew=False,
+        get_kurtosis=False,
+        get_entropy=False,
+        get_perplexity=False
+    ):
         self.model = model
+        self.get_top_logits = get_top_logits
         self.k = k
+        self.get_skew = get_skew
+        self.get_kurtosis = get_kurtosis
+        self.get_entropy = get_entropy
+        self.get_perplexity = get_perplexity
 
-    def refresh(self, W_U=None, W_dec=None):
-        backend = self.get_backend("logit")
-        backend.refresh(W_U, W_dec)
+    def refresh(self, W_dec=None, **kwargs):
+        W_U = self.model.transformer.ln_f.weight \
+            * self.model.lm_head.weight
+        self.logits = torch.matmul(W_U, W_dec).detach().cpu()
 
-    def compute(self, record, *args, **kwargs):
-        backend = self.get_backend("logit")
-        logits = backend.logits[record.feature.feature_index, :]
+    def top_logits(self, logits):
         top_logits = torch.topk(logits, self.k)
-        record.top_logits = [
+        return [
             self.model.tokenizer.decode([token]) 
             for token in top_logits.indices
         ]
+    
+    def kurtosis(self, logits):
+        return float(kurtosis(logits))
+    
+    def skew(self, logits):
+        return float(skew(logits))
+
+    def entropy(self, logits):
+        probs = F.softmax(logits, dim=-1)
+        return -torch.sum(probs * torch.log(probs)).item()
+
+    def perplexity(self, logits, targets):
+        loss = F.cross_entropy(logits.unsqueeze(0), targets.unsqueeze(0), reduction='mean')
+        return torch.exp(loss).item()
+
+    def compute(self, record, *args, **kwargs):
+        feature_index = record.feature.feature_index
+        narrowed_logits = self.logits[feature_index, :]
+
+        if self.get_top_logits:
+            record.top_logits = self.top_logits(narrowed_logits)
+        if self.get_skew:
+            record.logit_skew = self.skew(narrowed_logits)
+        if self.get_kurtosis:
+            record.logit_kurtosis = self.kurtosis(narrowed_logits)
+        if self.get_entropy:
+            record.logit_entropy = self.entropy(narrowed_logits)
+        if self.get_perplexity:
+            # Assuming the target is the token with the highest probability
+            target = torch.argmax(narrowed_logits)
+            record.logit_perplexity = self.perplexity(narrowed_logits, target)
 
 
-class Activations(Stat):
-    def __init__(self, lemmatize=False, top_activating_k=100):
-        self.lemmatize = lemmatize
-        self.top_activating_k = top_activating_k
-        
-        import spacy
-        self.nlp = spacy.load("en_core_web_sm")
+class Activation(Stat):
 
-    def get_top_activating_tokens(
+    def __init__(
         self,
-        examples,
-        k
+        k=10,
+        get_lemmas = False,
+        get_skew=False,
+        get_kurtosis=False,
+        get_similarity=False,
+        n_similar=500
     ):
-        """
-        Get the top token for the top k examples
-        """
-        top_k = examples[:k]
-        top_indices = [
-            np.argmax(example.activations)
-            for example in top_k
-        ]
-        top_tokens = [
-            example.str_toks[index]
-            for example, index 
-            in zip(top_k, top_indices)
-        ]
+        self.k = k
+        self.get_lemmas = get_lemmas
+        self.get_skew = get_skew
+        self.get_kurtosis = get_kurtosis
+        self.get_similarity = get_similarity
+        self.n_similar = n_similar
 
-        return top_tokens
-    
-    def n_above_zero(self, examples):
-        """
-        Get number of positive activations for each example
-        """
-        return [
-            int(sum(np.array(example.activations) > 0))
-            for example in examples
-        ]
-    
-    def _lemmatize(self, words):
+        if self.get_similarity:
+            from sentence_transformers import SentenceTransformer
+            self.sentence_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
 
-        unique_tokens = list(set(words))
+    def top(self, examples):
+        top_k = examples[:self.k]
+        top_activations = []
+        top_tokens = []
+        n_activations = []
+        
+        for example in top_k:
+            # Get top activating token for each example
+            max_index = np.argmax(example.activations)
+
+            # Append top activation and token
+            top_activations.append(example.activations[max_index].item())
+            # top_tokens.append(example.str_toks[max_index])
+            
+            # Count number of activations
+            # nonzero = np.count_nonzero(example.activations)
+            # n_activations.append(nonzero)
+        
+        return top_activations, top_tokens, n_activations
+    
+    def kurtosis(self, top_activations):
+        return float(kurtosis(top_activations))
+    
+    def skew(self, top_activations):
+        return float(skew(top_activations))
+    
+    def lemmatize(self, tokens):
+        import spacy
+        
+        nlp = spacy.load("en_core_web_sm")
+
+        unique_tokens = list(set(tokens))
         lowercase_tokens = [
             token.lower().strip() 
             for token in unique_tokens
@@ -172,18 +196,51 @@ class Activations(Stat):
         ]
         text_for_spacy = " ".join(alpha_tokens)
 
-        doc = self.nlp(text_for_spacy)
+        doc = nlp(text_for_spacy)
 
         lemmatized_tokens = [token.lemma_ for token in doc]
         return lemmatized_tokens
 
-    def compute(self, record):
-        top_tokens = self.get_top_activating_tokens(
-            record.examples, self.top_activating_k
-        )
-        n_above_zero = self.n_above_zero(record.examples)
-        
-        record.mean_n_activations = float(np.average(n_above_zero))
+    def similarity(self, examples):
+        sentences = [s.text for s in examples]
+        embeddings = self.sentence_model.encode(sentences, convert_to_tensor=True)
 
-        if self.lemmatize:
-            record.lemmas = self._lemmatize(top_tokens)
+        # Compute the cosine similarity matrix
+        cos_sim = torch.nn.functional.cosine_similarity(
+            embeddings.unsqueeze(1), 
+            embeddings.unsqueeze(0), 
+            dim=2
+        )
+
+        # Calculate the average similarity excluding the diagonal
+        n = cos_sim.size(0)
+        total_similarity = cos_sim.sum() - cos_sim.trace()  # exclude self-similarity
+        average_similarity = total_similarity / (n * (n - 1))
+
+        return average_similarity
+    
+    def compute(self, record, *args, **kwargs):
+        top_activations, top_tokens, n_activations =\
+            self.top(record.examples)
+        
+
+        # record.top_activations = top_activations
+        # record.top_tokens = top_tokens
+        # record.n_activations = n_activations
+
+        log_activations = np.log(top_activations)
+
+        record.activation_mean = float(np.mean(log_activations))
+        record.activation_std = float(np.std(log_activations))
+
+        if self.get_lemmas:
+            lemmas = self.lemmatize(top_tokens)
+            record.lemmas = lemmas
+        if self.get_skew:
+            record.activation_skew = self.skew(top_activations)
+        if self.get_kurtosis:
+            record.activation_kurtosis = self.kurtosis(top_activations)
+        if self.get_similarity:
+            record.activation_similarity = self.similarity(
+                record.examples[:self.n_similar]
+            ).item()
