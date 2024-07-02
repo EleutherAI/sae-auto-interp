@@ -10,7 +10,7 @@ cache:
     batch_len: 64
 
     # width of the autoencoder
-    n_features: 131072
+    n_features: 32768
 
     # n_tokens we'd like to process
     n_tokens: 10_240_000

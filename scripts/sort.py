@@ -1,44 +1,71 @@
-# %%
-from sae_auto_interp.features import FeatureRecord
-from sae_auto_interp.utils import load_tokenized_data
-from nnsight import LanguageModel
+from nnsight import LanguageModel 
+from tqdm import tqdm
+
 from sae_auto_interp.utils import load_tokenized_data, get_samples
-
-model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
-
-tokens = load_tokenized_data(
-    model.tokenizer
-)
-
-samples = get_samples(features_per_layer=20)
-
-# %%
-records = FeatureRecord.from_tensor(
-    tokens,
-    model.tokenizer,
-    0,
-    raw_dir="/share/u/caden/sae-auto-interp/raw_features/",
-    selected_features=samples[0],
-    processed_dir="/share/u/caden/sae-auto-interp/processed_features",
-    max_examples=1000
-)
-
-# %%
-
-from sae_auto_interp.features.stats import CombinedStat, Activations, Skew, Neighbors, Kurtosis
 from sae_auto_interp.autoencoders.ae import load_autoencoders
+from sae_auto_interp.features import (
+    CombinedStat, TopLogits, Feature, FeatureRecord, Lemmatize
+)
+from sae_auto_interp.features.stats import Peaks
 
-ae_dict, _, _ = load_autoencoders(model, "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2")
 
-stat = CombinedStat(
-    skew=Skew(),
-    kurtosis=Kurtosis(),
-    # neighbors=Neighbors(),
-    acts=Activations(
-        lemmatize=True
-    )
+# Load model and autoencoders
+model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
+ae_dict, submodule_dict, edits = load_autoencoders(
+    model, 
+    list(range(0,12,2)),
+    "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2"
 )
 
+# Load tokenized data
+tokens = load_tokenized_data(model.tokenizer)
 
-stat.refresh(W_U=model.lm_head.weight, W_dec=ae_dict[0].decoder.weight)
-stat.compute(records)
+# Load features I want to explain
+samples = get_samples(features_per_layer=10)
+features = Feature.from_dict(samples)
+
+raw_features_path = "/share/u/caden/sae-auto-interp/raw_features"
+processed_features_path = "/share/u/caden/sae-auto-interp/new_processed_features"
+
+# You can add any object that inherits from Stat
+# to combined stats. This info is added to the record
+stats = CombinedStat(
+    logits = TopLogits(
+        model=model,
+        k=10
+    ),
+    lemmas=Lemmatize(),
+)    
+
+
+for layer, ae in ae_dict.items():
+
+    selected_features = samples[layer]
+
+    records = FeatureRecord.from_tensor(
+        tokens,
+        model.tokenizer,
+        layer,
+        raw_dir=raw_features_path,
+        selected_features=selected_features,
+        max_examples=2000
+    )
+    # Refresh updates a memory intensive caches for stuff like
+    # umap locations or logit matrices
+    stats.refresh(
+        W_dec=ae.decoder.weight,
+        # Fold final layer norm into the lm_head
+        W_U=model.transformer.ln_f.weight * model.lm_head.weight,
+        k=1000
+    
+    )
+    # Compute updates records with stat information
+    stats.compute(records)
+
+    
+
+    # Save the processed information to the processed feature dir
+    # for record in records:
+    #     record.save(processed_features_path)
+
+    # break

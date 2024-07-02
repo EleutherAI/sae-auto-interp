@@ -46,7 +46,12 @@ for layer, ae in ae_dict.items():
     )
     # Refresh updates a memory intensive caches for stuff like
     # umap locations or logit matrices
-    stats.refresh(W_dec=ae.decoder.weight,W_U=model.transformer.ln_f.weight * model.lm_head.weight)
+    stats.refresh(
+        W_dec=ae.decoder.weight,
+        # Fold final layer norm into the lm_head
+        W_U=model.transformer.ln_f.weight * model.lm_head.weight
+    
+    )
     # Compute updates records with stat information
     stats.compute(records)
 

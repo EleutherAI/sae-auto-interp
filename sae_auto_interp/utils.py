@@ -18,7 +18,7 @@ def get_samples(features_per_layer=None):
     random.seed(22)
 
     N_LAYERS = 32
-    N_FEATURES = 131072
+    N_FEATURES = CONFIG.n_features
     N_SAMPLES = 1000
 
     samples = {}
