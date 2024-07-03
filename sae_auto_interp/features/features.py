@@ -95,6 +95,7 @@ class FeatureRecord:
         tokenizer=None,
         selected_features: List[int] = None,
         processed_dir: str = None, 
+        n_random: int = 0,
         min_examples: int = 300,
         max_examples: int = 500
     ) -> List["FeatureRecord"]:
@@ -150,6 +151,7 @@ class FeatureRecord:
                 feature_activations,
                 tokenizer=tokenizer,
                 processed_dir=processed_dir,
+                n_random=n_random,
                 min_examples=min_examples,
                 max_examples=max_examples,
             )
@@ -167,6 +169,7 @@ class FeatureRecord:
         activations: Tensor,
         tokenizer = None, 
         processed_dir:str = None, 
+        n_random: int = 0,
         min_examples: int = 300,
         max_examples: int = 500
     ):
