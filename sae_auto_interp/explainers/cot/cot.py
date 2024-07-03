@@ -5,7 +5,6 @@ from .prompts import create_prompt
 from ..explainer import (
     Explainer, 
     ExplainerInput, 
-    ExplainerResult
 )
 from ... import cot_explainer_config as CONFIG 
 
@@ -26,7 +25,7 @@ class ChainOfThought(Explainer):
     async def __call__(
         self,
         explainer_in: ExplainerInput
-    ) -> ExplainerResult:
+    ):
         """
         Generate an explanation using the Chain of Thought model.
 

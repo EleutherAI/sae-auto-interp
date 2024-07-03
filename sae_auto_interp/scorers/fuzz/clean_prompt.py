@@ -1,0 +1,95 @@
+DSCORER_SYSTEM_PROMPT = """You are an intelligent and meticulous linguistics researcher.
+
+You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment".
+
+You will then be given several text examples. Your task is to determine which examples possess the feature.
+
+The answer must be returned in JSON format. Mark correct exampels with 1 and incorrect examples with 0.
+"""
+
+# https://www.neuronpedia.org/gpt2-small/6-res-jb/6048
+DSCORER_EXAMPLE_ONE = """Feature explanation: Words related to American football positions, specifically the tight end position.
+
+Text examples:
+
+Example 1:<|endoftext|>Getty ImagesĊĊPatriots tight end Rob Gronkowski had his bossâĢĻ
+Example 2: names of months used in The Lord of the Rings:ĊĊâĢľâĢ¦the
+Example 3: Media Day 2015ĊĊLSU defensive end Isaiah Washington (94) speaks to the
+Example 4: shown, is generally not eligible for ads. For example, videos about recent tragedies,
+Example 5: line, with the left side âĢĶ namely tackle Byron Bell at tackle and guard Amini
+"""
+
+
+DSCORER_RESPONSE_ONE = """{
+  "example_1": 1,
+  "example_2": 0,
+  "example_3": 1,
+  "example_4": 0,
+  "example_5": 1,
+}"""
+
+# https://www.neuronpedia.org/gpt2-small/6-res-jb/9396
+DSCORER_EXAMPLE_TWO = """Feature explanation: The word "guys" in the phrase "you guys".
+
+Text examples:
+
+Example 1: enact an individual health insurance mandate?âĢĿ, Pelosi's response was to dismiss both
+Example 2: birth control access<|endoftext|> but I assure you women in Kentucky aren't laughing as they struggle
+Example 3: du Soleil Fall Protection Program with construction requirements that do not apply to theater settings because
+Example 4:Ċ<|endoftext|> distasteful. Amidst the slime lurk bits of Schadenfre
+Example 5: the<|endoftext|>ľI want to remind you all that 10 days ago (director Massimil
+"""
+
+
+DSCORER_RESPONSE_TWO = """{
+  "example_1": 0,
+  "example_2": 0,
+  "example_3": 0,
+  "example_4": 0,
+  "example_5": 0
+}"""
+
+# https://www.neuronpedia.org/gpt2-small/8-res-jb/12654
+DSCORER_EXAMPLE_THREE = """Feature explanation: "of" before words that start with a capital letter.
+
+Text examples:
+
+Example 1: climate, TomblinâĢĻs Chief of Staff Charlie Lorensen said.Ċ
+Example 2: no wonderworking relics, no true Body and Blood of Christ, no true Baptism
+Example 3:ĊĊDeborah Sathe, Head of Talent Development and Production at Film London,
+Example 4:ĊĊIt has been devised by Director of Public Prosecutions (DPP)
+Example 5: and fair investigation not even include the Director of Athletics? Â· Finally, we believe the
+"""
+
+
+DSCORER_RESPONSE_THREE = """{
+  "example_1": 1,
+  "example_2": 1,
+  "example_3": 1,
+  "example_4": 1,
+  "example_5": 1
+}"""
+
+GENERATION_PROMPT = """Feature explanation: {explanation}
+
+Text examples:
+
+{examples}
+"""
+
+
+def prompt(examples, explanation):
+  generation_prompt = GENERATION_PROMPT.format(explanation=explanation, examples=examples)
+
+  prompt = [
+    {"role": "system", "content": DSCORER_SYSTEM_PROMPT},
+    {"role": "user", "content": DSCORER_EXAMPLE_ONE},
+    {"role": "assistant", "content": DSCORER_RESPONSE_ONE},
+    {"role": "user", "content": DSCORER_EXAMPLE_TWO},
+    {"role": "assistant", "content": DSCORER_RESPONSE_TWO},
+    {"role": "user", "content": DSCORER_EXAMPLE_THREE},
+    {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
+    {"role": "user", "content": generation_prompt}
+  ]
+
+  return prompt

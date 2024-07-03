@@ -9,7 +9,8 @@ import numpy as np
 import torch
 from torch import Tensor
 
-from .prompts import get_detection_template
+from .fuzz_prompt import prompt as fuzz_prompt
+from .clean_prompt import prompt as clean_prompt
 from ... import det_config as CONFIG
 from ..scorer import Scorer, ScorerInput
 from pydantic import BaseModel
@@ -18,7 +19,7 @@ from pydantic import BaseModel
 class Sample:
     text: str
     quantile: int
-    n_incorrect: int
+    clean: bool
     is_correct: bool = False
     marked: bool = False
 
@@ -34,18 +35,18 @@ class ResponseModel(BaseModel):
     example_9: int
     example_10: int
 
-
 class FuzzingScorer(Scorer):
     def __init__(self, client):
         self.name = "fuzzing"
         self.client = client
 
-    def highlight_example(
+    def create_example(
         self, 
         tokens: List[str], 
-        activations: Tensor[float],
+        activations,
         n_incorrect=0,
-        threshold=0.0
+        threshold=0.0,
+        highlight=False
     ) -> str:
         threshold = threshold * activations.max()
         below_threshold = torch.nonzero(
@@ -62,12 +63,23 @@ class FuzzingScorer(Scorer):
             )
         )
         
-        result = []
-        i = 0
-        
         check = lambda i: activations[i] > threshold \
             or i in random_indices
+    
+        return self.prepare(
+            tokens, 
+            check, 
+            highlight=highlight
+        )
+    
+    def prepare(self, tokens, check, highlight=False):
 
+        if not highlight:
+            return "".join(tokens)
+
+        result = []
+
+        i = 0
         while i < len(tokens):
             if check(i):
                 result.append("<<")
@@ -88,39 +100,35 @@ class FuzzingScorer(Scorer):
     
     def create_samples(
         self, 
-        batch: List[Example], 
-        max_activation: float, 
-        quantile: int
+        batch: List[Example],
+        quantile: int,
+        highlight: bool = False
     ) -> List[Sample]:
         
         samples = []
 
-        for n_incorrect in [0,3]:
-            mini_batch = []
-            for example in batch:
-                normalized_activations = example.activations / max_activation
+        for example in batch:
 
-                correct = self.highlight_example(
-                    example.str_toks, 
-                    normalized_activations,
-                    n_incorrect=n_incorrect,
-                    threshold=CONFIG.threshold
+            n_incorrect = 2 if quantile == -1 else 0
+            correct = self.create_example(
+                example.str_toks, 
+                example.activations,
+                n_incorrect=n_incorrect,
+                threshold=CONFIG.threshold,
+                highlight=highlight
+            )
+
+            samples.append(
+                Sample(
+                    text=correct, 
+                    quantile=quantile, 
+                    clean=highlight,
+                    is_correct=True
                 )
+            )
 
-                is_correct = n_incorrect == 0
-                
-                mini_batch.append(
-                    Sample(
-                        text=correct, 
-                        quantile=quantile, 
-                        n_incorrect=n_incorrect,
-                        is_correct=is_correct
-                    )
-                )
-
-            samples.append(mini_batch)
-
-
+        return samples
+    
     async def process_batches(
         self, 
         batches: List[List[Sample]], 
@@ -154,7 +162,7 @@ class FuzzingScorer(Scorer):
             for i, sample in enumerate(batch)
         )
 
-        return get_detection_template(
+        return fuzz_prompt(
             examples, 
             explanation
         )
@@ -165,7 +173,12 @@ class FuzzingScorer(Scorer):
         explanation: str, 
         max_retries: int = 3
     ) -> List[Sample]:
-        prompt = self.build_prompt(batch, explanation)
+        prompt_type = batch[0].clean
+
+        if prompt_type == True:
+            prompt = clean_prompt(batch, explanation)
+        else:
+            prompt = self.build_prompt(batch, explanation)
 
         for attempt in range(max_retries):
             try:
@@ -189,7 +202,6 @@ class FuzzingScorer(Scorer):
         
         return batch
     
-
     async def __call__(
         self, 
         scorer_in: ScorerInput
@@ -197,19 +209,43 @@ class FuzzingScorer(Scorer):
 
         random.seed(CONFIG.seed)
 
-        samples = []
-        for quantile, batch in enumerate(scorer_in.test_examples):
-            samples.extend(
-                self.create_samples(
-                    max_activation=scorer_in.record.max_activation, 
-                    batch=batch, 
-                    quantile=quantile
+        clean = []
+        fuzzed = []
+
+        for highlight in [False, True]:
+            
+            for quantile, batch in enumerate(scorer_in.test_examples):
+                samples = self.create_samples(
+                    batch, 
+                    quantile=quantile, 
+                    highlight=highlight
                 )
+
+                if highlight:
+                    fuzzed.extend(samples)
+                else:
+                    clean.extend(samples)
+
+            random_samples = self.create_samples(
+                scorer_in.record.random, 
+                quantile=-1, 
+                highlight=highlight
             )
+            
+            if highlight:
+                fuzzed.extend(random_samples)
+            else:
+                clean.extend(random_samples)
 
-        random.shuffle(samples)
-        sample_batches = [samples[i:i + 5] for i in range(0, len(samples), 5)]
+        random.shuffle(clean)
+        random.shuffle(fuzzed)
 
-        results = await self.process_batches(sample_batches, scorer_in.explanation)
+        clean_batches = [clean[i:i + 10] for i in range(0, len(clean), 10)]
+        fuzzed_batches = [fuzzed[i:i + 10] for i in range(0, len(fuzzed), 10)]
+
+        results = await self.process_batches(
+            clean_batches + fuzzed_batches, 
+            scorer_in.explanation
+        )
 
         return results

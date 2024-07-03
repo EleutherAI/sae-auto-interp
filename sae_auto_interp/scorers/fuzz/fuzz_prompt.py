@@ -7,38 +7,14 @@ Some examples might be mislabeled. Your task is to determine if every single tok
 For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. Your response should be in JSON format.
 """
 
-
-DSCORER_SYSTEM_PROMPT_NO_FEW_SHOT = """You are an intelligent and meticulous linguistics researcher.
-
-You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment". You will be given a few examples of text that contain this feature. Portions of the sentence which strongly represent this feature are between tokens <b> and </b>. 
-
-Some examples might be mislabeled. Your task is to determine if every single token within <b> and </b> is correctly labeled. Consider that all provided examples could be correct, none of the examples could be correct, or a mix. An example is only correct if every marked token is representative of the feature.
-
-For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. Your response should be in JSON format like so:
-
-{
-  "example_1": ?,
-  "example_2": ?,
-  "example_3": ?,
-  "example_4": ?,
-  "example_5": ?,
-  "example_6": ?,
-  "example_7": ?,
-  "example_8": ?,
-  "example_9": ?,
-  "example_10": ?
-}
-"""
-
-
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/6048
 DSCORER_EXAMPLE_ONE = """Feature explanation: Words related to American football positions, specifically the tight end position.
 
 Text examples:
 
 Example 1:<|endoftext|>Getty ImagesĊĊPatriots<< tight end>> Rob Gronkowski had his bossâĢĻ
-Example 2: posted<|endoftext|>You should know this about offensive<< line coaches>>: they are large,<< demanding>> men
-Example 3: Media Day 2015ĊĊLSU <<defensive end>> Isaiah Washington (94) speaks<< to the>>
+Example 2: posted<|endoftext|>You should know this<< about>> offensive line coaches: they are large, demanding<< men>>
+Example 3: Media Day 2015ĊĊLSU<< defensive>> end Isaiah Washington (94) speaks<< to the>>
 Example 4:<< running backs>>," he said. .. Defensive<< end>> Carroll Phillips is improving and his injury is
 Example 5:<< line>>, with the left side âĢĶ namely<< tackle>> Byron Bell at<< tackle>> and<< guard>> Amini
 """
@@ -59,8 +35,8 @@ Text examples:
 
 Example 1: if you are<< comfortable>> with it. You<< guys>> support me in many other ways already and
 Example 2: birth control access<|endoftext|> but I assure you<< women>> in Kentucky aren't laughing as they struggle
-Example 3:âĢĻs gig! I hope you<< guys>> LOVE her, and<< please>> be nice,
-Example 4:American, told Hannity that âĢľyou<< guys are playing the race card>>.âĢĿ
+Example 3:âĢĻs gig! I hope you guys<< LOVE>> her, and<< please>> be nice,
+Example 4:American, told<< Hannity>> that âĢľyou<< guys>> are playing the race card.âĢĿ
 Example 5:<< the>><|endoftext|>ľI want to<< remind>> you all that 10 days ago (director Massimil
 """
 
@@ -94,7 +70,7 @@ DSCORER_RESPONSE_THREE = """{
   "example_5": 1
 }"""
 
-USER_PROMPT = """Feature explanation: {explanation}
+GENERATION_PROMPT = """Feature explanation: {explanation}
 
 Text examples:
 
@@ -102,18 +78,18 @@ Text examples:
 """
 
 
-def get_detection_template(examples, explanation):
-  user_prompt = USER_PROMPT.format(explanation=explanation, examples=examples)
+def prompt(examples, explanation):
+  generation_prompt = GENERATION_PROMPT.format(explanation=explanation, examples=examples)
 
   prompt = [
-    {"role": "system", "content": DSCORER_SYSTEM_PROMPT_NO_FEW_SHOT},
-    # {"role": "user", "content": DSCORER_EXAMPLE_ONE},
-    # {"role": "assistant", "content": DSCORER_RESPONSE_ONE},
-    # {"role": "user", "content": DSCORER_EXAMPLE_TWO},
-    # {"role": "assistant", "content": DSCORER_RESPONSE_TWO},
-    # {"role": "user", "content": DSCORER_EXAMPLE_THREE},
-    # {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
-    {"role": "user", "content": user_prompt}
+    {"role": "system", "content": DSCORER_SYSTEM_PROMPT},
+    {"role": "user", "content": DSCORER_EXAMPLE_ONE},
+    {"role": "assistant", "content": DSCORER_RESPONSE_ONE},
+    {"role": "user", "content": DSCORER_EXAMPLE_TWO},
+    {"role": "assistant", "content": DSCORER_RESPONSE_TWO},
+    {"role": "user", "content": DSCORER_EXAMPLE_THREE},
+    {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
+    {"role": "user", "content": generation_prompt}
   ]
 
   return prompt

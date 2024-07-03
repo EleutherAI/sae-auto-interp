@@ -4,8 +4,7 @@ from typing import List
 from .prompts import create_prompt
 from ..explainer import (
     Explainer, 
-    ExplainerInput, 
-    ExplainerResult
+    ExplainerInput,
  )
 from ... import simple_explainer_config as CONFIG
 
@@ -30,7 +29,7 @@ class SimpleExplainer(Explainer):
     async def __call__(
         self,
         explainer_in: ExplainerInput,
-    ) -> ExplainerResult:
+    ):
 
 
         simplified, messages = self.build_prompt(

@@ -1,3 +1,5 @@
+# %%
+
 import asyncio
 
 from sae_auto_interp.clients import get_client
@@ -40,28 +42,16 @@ for layer in [0]:
         min_examples=300,
         max_examples=2000
     )
-    
-    for record in records:
 
-        explanation = load_explanation(record.feature)
-        try:
-            _, test = sample_quantiles(
-                record=record,
-                n_train=10,
-                n_test=5,
-                n_quantiles=5,
-                seed=22,
-            )
-        except ValueError:
-            continue
+# %%
 
-        scorer_inputs.append(
-            ScorerInput(
-                record=record,
-                test_examples=test,
-                explanation=explanation
-            )
-        )
+records[0].display()
+
+# %%
+
+tokenizer.batch_decode(records[0].non_activating)
+
+# %%
 
 client = get_client("local", "casperhansen/llama-3-70b-instruct-awq")
 scorer = FuzzingScorer(client)
