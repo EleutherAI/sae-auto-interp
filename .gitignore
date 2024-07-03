@@ -16,5 +16,8 @@ results
 .gitignore
 new_processed_features
 saved_explanations
+saved_scores
 saved_features_json
 results
+processed_features
+feature_statistics

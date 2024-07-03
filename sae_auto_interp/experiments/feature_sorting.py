@@ -1,63 +1,60 @@
-import sys
+from nnsight import LanguageModel 
+from tqdm import tqdm
+from sae_auto_interp.utils import load_tokenized_data, get_samples
+from sae_auto_interp.autoencoders.ae import load_autoencoders
+from sae_auto_interp.features import (
+    CombinedStat, Feature, FeatureRecord
+)
+from sae_auto_interp.features.stats import Activation, Logits
 
-sys.path.append('..')
+model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
+ae_dict, submodule_dict, edits = load_autoencoders(
+    model, 
+    list(range(0,12,2)),
+    "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2"
+)
 
-from sae_auto_interp.features.features import Feature, feature_loader
-from sae_auto_interp.autoencoders.model import get_autoencoder
-from sae_auto_interp.features.stats import CombinedStat, Logits, Activations
+tokens = load_tokenized_data(model.tokenizer)
+samples = get_samples()
 
-from nnsight import LanguageModel
-from datasets import load_dataset
+raw_features_path = "/share/u/caden/sae-auto-interp/raw_features"
+processed_features_path = "/share/u/caden/sae-auto-interp/feature_statistics"
 
-from transformer_lens import utils
-
-import torch
-import json
-
-model = LanguageModel("gpt2", device_map="auto", dispatch=True)
-data = load_dataset("stas/openwebtext-10k", split="train")
-
-tokens = utils.tokenize_and_concatenate(
-    data, 
-    model.tokenizer, 
-    max_length=64
-)   
-
-tokens = tokens.shuffle(22)['tokens']
-
-with open("/share/u/caden/scoring/autointerp/scripts/samples.json", 'r') as f:
-    samples = json.load(f)
-
-autoencoders = {layer: get_autoencoder("gpt2", layer, "cuda", "/mnt/ssd-1/gpaulo/SAE-Zoology/saved_autoencoders/") for layer in [0,2,4,6,8,10]}
-
-features = [
-    Feature(
-        layer_index=0,
-        feature_index=sample,
-    )
-    for sample in samples["0"][:10]
-]
-
-
-
-
-stats = CombinedStat(
-    logits = Logits(
-        model=model,
+stat = CombinedStat(
+    activation = Activation(
+        k=1000,
         get_kurtosis=True,
-        get_skewness=True,
-        top_k_logits=10
+        get_skew=True,
+        get_similarity=True,
     ),
-    activations = Activations(
-        get_lemmas=True,
-        top_activating_k=100
-    ),
-)    
+    logits = Logits(
+        model, 
+        get_skew=True,
+        get_kurtosis=True,
+        get_entropy=True,
+        get_perplexity=True
+    )
+)
 
-all_records = []
-for ae, records in feature_loader(tokens, features, model, autoencoders):
-    stats.refresh(W_dec=ae.decoder.weight)
-    stats.add(records)
-    all_records.extend(records)
 
-stats.load(all_records)
+for layer, ae in ae_dict.items():
+    selected_features = samples[layer]
+
+    records = FeatureRecord.from_tensor(
+        tokens,
+        layer_index=layer,
+        tokenizer=model.tokenizer,
+        raw_dir=raw_features_path,
+        selected_features=selected_features,
+        min_examples=300,
+        max_examples=1000,
+    )
+
+    stat.refresh(
+        W_dec = ae.decoder.weight
+    )
+
+    stat.compute(records)
+    
+    for record in records:
+        record.save(processed_features_path)

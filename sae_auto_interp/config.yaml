@@ -38,6 +38,7 @@ detection:
     n_batches: 5
     seed: 22
     batch_size: 10
+    threshold: 0.3
 
 generation: 
     n_tests: 10

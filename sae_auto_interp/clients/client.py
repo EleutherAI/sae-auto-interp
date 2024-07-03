@@ -5,5 +5,9 @@ class Client(ABC):
         self.model = model
 
     @abstractmethod
-    def generate(self, prompt: str, generation_args: dict) -> str:
-        pass
+    def generate(
+        self, 
+        prompt: str, 
+        **kwargs
+    ) -> str:
+        raise NotImplementedError

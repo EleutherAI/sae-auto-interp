@@ -153,6 +153,10 @@ class Activation(Stat):
             from sentence_transformers import SentenceTransformer
             self.sentence_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
 
+        if self.get_lemmas:
+            import spacy
+            self.nlp = spacy.load("en_core_web_sm")
+
     def top(self, examples):
         top_k = examples[:self.k]
         top_activations = []
@@ -165,11 +169,11 @@ class Activation(Stat):
 
             # Append top activation and token
             top_activations.append(example.activations[max_index].item())
-            # top_tokens.append(example.str_toks[max_index])
+            top_tokens.append(example.tokens[max_index].item())
             
             # Count number of activations
-            # nonzero = np.count_nonzero(example.activations)
-            # n_activations.append(nonzero)
+            nonzero = np.count_nonzero(example.activations)
+            n_activations.append(nonzero)
         
         return top_activations, top_tokens, n_activations
     
@@ -179,24 +183,25 @@ class Activation(Stat):
     def skew(self, top_activations):
         return float(skew(top_activations))
     
-    def lemmatize(self, tokens):
-        import spacy
-        
-        nlp = spacy.load("en_core_web_sm")
-
-        unique_tokens = list(set(tokens))
+    def clean(self, tokens):
         lowercase_tokens = [
             token.lower().strip() 
-            for token in unique_tokens
+            for token in tokens
         ]
         alpha_tokens = [
             token for token 
             in lowercase_tokens 
             if token.isalpha()
         ]
-        text_for_spacy = " ".join(alpha_tokens)
+        unique_tokens = list(set(alpha_tokens))
+        return unique_tokens
 
-        doc = nlp(text_for_spacy)
+    def lemmatize(self, tokens):
+        unique_tokens = self.clean(tokens)
+
+        text_for_spacy = " ".join(unique_tokens)
+
+        doc = self.nlp(text_for_spacy)
 
         lemmatized_tokens = [token.lemma_ for token in doc]
         return lemmatized_tokens
@@ -223,16 +228,11 @@ class Activation(Stat):
         top_activations, top_tokens, n_activations =\
             self.top(record.examples)
         
-
-        # record.top_activations = top_activations
-        # record.top_tokens = top_tokens
-        # record.n_activations = n_activations
-
-        log_activations = np.log(top_activations)
-
-        record.activation_mean = float(np.mean(log_activations))
-        record.activation_std = float(np.std(log_activations))
-
+        record.top_activations = top_activations
+        record.top_tokens = top_tokens
+        record.n_activations = n_activations
+        record.unique_tokens = len(set(top_tokens))
+        
         if self.get_lemmas:
             lemmas = self.lemmatize(top_tokens)
             record.lemmas = lemmas

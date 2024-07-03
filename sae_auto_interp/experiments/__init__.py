@@ -1,1 +1,1 @@
-from .sampling import sample_top_and_quantiles_single
+from .sampling import sample_top_and_quantiles

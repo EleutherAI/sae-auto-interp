@@ -25,15 +25,17 @@ class Feature:
         return features
     
     def __repr__(self) -> str:
-        return f"L{self.layer_index}_F{self.feature_index}"
+        return f"layer{self.layer_index}_feature{self.feature_index}"
     
 @dataclass
 class Example:
     tokens: List[int]
     activations: List[float]
-    text: str
     str_toks: List[str] = None
     max_activation: float = 0.0
+
+    def text(self):
+        return "".join(self.str_toks)
 
 
 
@@ -152,7 +154,8 @@ class FeatureRecord:
                 max_examples=max_examples,
             )
 
-            records.append(record)
+            if record:
+                records.append(record)
 
         return records
     
@@ -172,11 +175,11 @@ class FeatureRecord:
         """
         if len(locations) == 0:
             logger.info(f"{feature} has no activations.")
-            return f"{feature} EMPTY"
+            return None
         
         if len(locations) < min_examples:
             logger.info(f"{feature} has fewer than {min_examples} activations.")
-            return f"{feature} TOO FEW"
+            return None
         
         example_tokens, example_activations = get_activating_examples(
             tokens, locations, activations
@@ -187,17 +190,20 @@ class FeatureRecord:
             example_activations[:max_examples]
         )
 
-        text_tokens = tokenizer.batch_decode(processed_tokens)
-
         examples = [
             Example(
                 tokens=toks,
                 activations=acts,
-                # str_toks=[tokenizer.decode(t) for t in toks],
-                text=toks,
+                str_toks=tokenizer.batch_decode(
+                    toks, 
+                    clean_up_tokenization_spaces=False
+                ),
                 max_activation=max(acts),
             )
-            for toks, acts in zip(text_tokens, processed_activations)
+            for toks, acts in zip(
+                processed_tokens, 
+                processed_activations
+            )
         ]
 
         examples.sort(key=lambda x: x.max_activation, reverse=True)
@@ -229,15 +235,7 @@ class FeatureRecord:
             f.write(orjson.dumps(serializable))
 
 
-
-def sort_features(features):
-    layer_sorted_features = defaultdict(list)
-    for feature in features:
-        layer_sorted_features[feature.layer_index].append(feature)
-
-    return layer_sorted_features
-
-
+# These are some terrible implementations from claude we should probably fix.
 
 def get_activating_examples(tokens: torch.Tensor, locations: torch.Tensor, activations: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
     device = tokens.device
@@ -254,6 +252,7 @@ def get_activating_examples(tokens: torch.Tensor, locations: torch.Tensor, activ
     active_sentences = torch.any(dense_activations != 0, dim=1)
     
     return tokens[active_sentences], dense_activations[active_sentences]
+
 
 def extract_activation_windows(tokens: torch.Tensor, activations: torch.Tensor, l_ctx: int = CONFIG.l_ctx, r_ctx: int = CONFIG.r_ctx) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
     batch_size, max_length = tokens.shape
