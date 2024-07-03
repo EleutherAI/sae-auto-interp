@@ -1,0 +1,1 @@
+"Tokens related to referencing or citing sources, such as \"Myth\" for mythology, \"NRS\" for a specific version, and \"Footnote\" and \"endix\" for appendices and footnotes."
