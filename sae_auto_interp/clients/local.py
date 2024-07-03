@@ -12,15 +12,22 @@ class Local(Client):
             timeout=None
         )
 
-    def generate(self):
-        pass
-
     def postprocess(self, prompt, response):
         response_text = response.json()["text"][0]
         return response_text[len(prompt) : ]
 
+    async def generate(
+        self, 
+        prompt: str, 
+        tokenize: bool =True, 
+        raw: bool =False, 
+        echo: bool =False, 
+        **kwargs
+    ) -> str:
+        """
+        Wrapper method for Outlines/vLLM post requests.
+        """
 
-    async def async_generate(self, prompt: str, tokenize=True, raw=False, echo=False, **kwargs) -> str:
         if tokenize:
             prompt = self.tokenizer.apply_chat_template(
                 prompt,

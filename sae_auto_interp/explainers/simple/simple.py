@@ -38,7 +38,7 @@ class SimpleExplainer(Explainer):
             self.tokenizer
         )
         
-        response = await self.client.async_generate(
+        response = await self.client.generate(
             messages,
             max_tokens=CONFIG.max_tokens,
             temperature=CONFIG.temperature

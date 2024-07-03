@@ -3,5 +3,6 @@ from .stats import (
     Activation,
     CombinedStat,
     Neighbors,
-    Stat
+    Stat,
+    Logits
 )
