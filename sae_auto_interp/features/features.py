@@ -212,6 +212,28 @@ class FeatureRecord:
         examples.sort(key=lambda x: x.max_activation, reverse=True)
 
         record = FeatureRecord(feature, examples)
+        
+        # POSTPROCESSING
+
+        if n_random > 0:
+            random = get_non_activating_windows(
+                example_tokens, example_activations, 
+                window_size=CONFIG.l_ctx + CONFIG.r_ctx + 1, 
+                n_random=n_random
+            )
+
+            record.random = [
+                Example(
+                    tokens=toks,
+                    activations=torch.zeros_like(toks),
+                    str_toks=tokenizer.batch_decode(
+                        toks, 
+                        clean_up_tokenization_spaces=False
+                    ),
+                    max_activation=0.0,
+                )
+                for toks in random
+            ]
 
         # Load processed data if a directory is provided
         if processed_dir:
@@ -240,15 +262,23 @@ class FeatureRecord:
 
 # These are some terrible implementations from claude we should probably fix.
 
-def get_activating_examples(tokens: torch.Tensor, locations: torch.Tensor, activations: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-    device = tokens.device
-    locations = locations.to(device)
-    activations = activations.to(device)
-
+def get_activating_examples(
+    tokens: torch.Tensor, 
+    locations: torch.Tensor, 
+    activations: torch.Tensor
+) -> Tuple[torch.Tensor, torch.Tensor]:
     # Create a sparse tensor for activations
-    num_sentences, max_sentence_length = tokens.shape
-    indices = torch.stack((locations[:, 0].long(), locations[:, 1].long()))
-    sparse_activations = torch.sparse_coo_tensor(indices, activations, (num_sentences, max_sentence_length))
+    num_sentences, sentence_length = tokens.shape
+    indices = torch.stack((
+        locations[:, 0].long(), 
+        locations[:, 1].long()
+    ))
+    
+    sparse_activations = torch.sparse_coo_tensor(
+        indices, 
+        activations, 
+        (num_sentences, sentence_length)
+    )
     
     # Convert to dense and find active sentences
     dense_activations = sparse_activations.to_dense()
@@ -257,23 +287,74 @@ def get_activating_examples(tokens: torch.Tensor, locations: torch.Tensor, activ
     return tokens[active_sentences], dense_activations[active_sentences]
 
 
-def extract_activation_windows(tokens: torch.Tensor, activations: torch.Tensor, l_ctx: int = CONFIG.l_ctx, r_ctx: int = CONFIG.r_ctx) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
-    batch_size, max_length = tokens.shape
-    device = tokens.device
+def get_non_activating_windows(
+    tokens: torch.Tensor,
+    activations: torch.Tensor,
+    window_size: int,
+    n_random: int = 10,
+    search_size: int = 10, 
+):
+    """
+    Get windows of tokens that do not activate a feature.
 
+    Args:
+        tokens: The tokenized data
+        activations: The activations for each token
+        window_size: The size of the windows to extract
+        n_random: The number of windows to extract
+        search_size: The number of sentences to search for windows at once
+
+    Returns:
+        List of windows
+    """
+    batch, pos = tokens.shape
+    search_size = min(search_size, batch)
+    windows = []
+
+    for batch_idx in range(batch):
+        start_pos = 0
+        while start_pos + window_size <= pos:
+            end_pos = start_pos + window_size
+            window_tokens = tokens[batch_idx, start_pos:end_pos]
+            window_activations = activations[batch_idx, start_pos:end_pos]
+
+            if window_activations.sum() == 0:
+                windows.append(window_tokens)
+
+                if len(windows) >= n_random:
+                    return windows
+                
+            start_pos += window_size
+
+    return windows
+
+def extract_activation_windows(tokens: torch.Tensor, activations: torch.Tensor, l_ctx: int = CONFIG.l_ctx, r_ctx: int = CONFIG.r_ctx) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
+    """
+    Extracts windows around the maximum activation for each sentence.
+    
+    Args:
+        tokens: Tensor of tokens for activating sentences
+        activations: Tensor of activations for activating sentences
+        l_ctx: Number of tokens to the left
+        r_ctx: Number of tokens to the right
+    
+    Returns:
+        List of token windows and activation windows
+    """
     # Find the token with max activation for each sentence
     max_activation_indices = torch.argmax(activations, dim=1)
 
     # Calculate start and end indices for the windows
     start_indices = torch.clamp(max_activation_indices - l_ctx, min=0)
-    end_indices = torch.clamp(max_activation_indices + r_ctx + 1, max=max_length)
+    end_indices = torch.clamp(max_activation_indices + r_ctx + 1, max=tokens.shape[1])
 
-    # Create masks for valid indices
-    row_indices = torch.arange(max_length, device=device).unsqueeze(0)
-    masks = (row_indices >= start_indices.unsqueeze(1)) & (row_indices < end_indices.unsqueeze(1))
+    # Initialize lists to store results
+    token_windows = []
+    activation_windows = []
 
-    # Use masks to get windows
-    token_windows = tokens.masked_select(masks).split((end_indices - start_indices).tolist())
-    activation_windows = activations.masked_select(masks).split((end_indices - start_indices).tolist())
+    # Extract windows (this part is hard to vectorize due to variable window sizes)
+    for i, (start, end) in enumerate(zip(start_indices, end_indices)):
+        token_windows.append(tokens[i, start:end])
+        activation_windows.append(activations[i, start:end])
 
-    return list(token_windows), list(activation_windows)
+    return token_windows, activation_windows
