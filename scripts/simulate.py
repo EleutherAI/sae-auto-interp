@@ -15,7 +15,7 @@ tokens = load_tokenized_data(model.tokenizer)
 raw_features_path = "raw_features"
 processed_features_path = "processed_features"
 explanations_dir = "explanations/cot"
-scorer_out_dir = "scores/cot"
+scorer_out_dir = "scores/oai"
 
 def load_explanation(feature):
     explanations_path = f"{explanations_dir}/layer{feature.layer_index}_feature{feature.feature_index}.txt"
