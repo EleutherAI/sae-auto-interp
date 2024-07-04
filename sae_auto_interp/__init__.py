@@ -37,6 +37,7 @@ class DetectionScorerConfig:
     seed: int
     batch_size: int
     threshold: float
+    n_incorrect: int
     
 @dataclass
 class GenScorerConfig:

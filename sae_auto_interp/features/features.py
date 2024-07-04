@@ -242,7 +242,7 @@ class FeatureRecord:
         return record
     
     def load_processed(self, directory: str):
-        path = f"{directory}/layer{self.feature.layer_index}_feature{self.feature.feature_index}.json"
+        path = f"{directory}/{self.feature}.json"
         with bf.BlobFile(path, "rb") as f:
             processed_data = orjson.loads(f.read())
             feature_dict = processed_data.pop("feature")
@@ -250,7 +250,7 @@ class FeatureRecord:
             self.__dict__.update(processed_data)
     
     def save(self, directory: str, save_examples=False):
-        path = f"{directory}/layer{self.feature.layer_index}_feature{self.feature.feature_index}.json"
+        path = f"{directory}/{self.feature}.json"
         serializable = self.__dict__
 
         if not save_examples:
