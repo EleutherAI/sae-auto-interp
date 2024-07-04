@@ -14,26 +14,6 @@ from transformers import AutoTokenizer
 from . import cache_config as CONFIG
 import random
 
-def get_samples(features_per_layer=None):
-    random.seed(22)
-
-    N_LAYERS = 32
-    N_FEATURES = CONFIG.n_features
-    N_SAMPLES = 1000
-
-    samples = {}
-
-    for layer in range(N_LAYERS):
-
-        samples[layer] = random.sample(range(N_FEATURES), N_SAMPLES)
-
-    if features_per_layer:
-        samples = {
-            layer: features[:features_per_layer]
-            for layer, features in samples.items()
-        }
-
-    return samples
 
 def load_tokenized_data(
     tokenizer: AutoTokenizer

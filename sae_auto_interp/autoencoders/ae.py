@@ -1,6 +1,5 @@
 from typing import Dict, List
 import torch
-from nnsight.editing import Edit
 
 from .OpenAI.model import (
     Autoencoder,
@@ -32,25 +31,29 @@ def load_eai_autoencoders(model,ae_layers: List[int], weight_dir:str):
     
     ae_dict = {}
     submodule_dict = {}
-    edits = []
+
     for layer in ae_layers:
         path = f"{weight_dir}/layer_{layer}"
         sae = Sae.load_from_disk(path,"cuda:0")
 
         submodule = model.model.layers[layer]
         passthrough_ae = AutoencoderLatents(sae, "eai")
-        edit = Edit(submodule, "ae", passthrough_ae)
+        submodule.ae = passthrough_ae
 
         ae_dict[layer] = sae
         submodule_dict[layer] = submodule
-        edits.append(edit)
 
-    return ae_dict, submodule_dict, edits	
+    with model.alter(" "):
+        for layer_idx, _ in ae_dict.items():
+            layer = model.transformer.h[layer_idx]
+            acts = layer.output[0]
+            layer.ae(acts, hook=True)
+
+    return ae_dict, submodule_dict	
 
 def load_oai_autoencoders(model,ae_layers: List[int], weight_dir:str):
     ae_dict = {}
     submodule_dict = {}
-    edits = []
     for layer in ae_layers:
         # Tweaked this to work w how I save my autoencoders locally
         path = f"{weight_dir}/resid_post_mlp_layer{layer}/ae.pt"
@@ -61,23 +64,27 @@ def load_oai_autoencoders(model,ae_layers: List[int], weight_dir:str):
 
         submodule = model.transformer.h[layer]
         passthrough_ae = AutoencoderLatents(ae, "oai")
-        edit = Edit(submodule, "ae", passthrough_ae)
+        submodule.ae = passthrough_ae
 
         ae_dict[layer] = ae
         submodule_dict[layer] = submodule
-        edits.append(edit)
 
-    return ae_dict, submodule_dict, edits
+    with model.alter(" "):
+        for layer_idx, _ in ae_dict.items():
+            layer = model.transformer.h[layer_idx]
+            acts = layer.output[0]
+            layer.ae(acts, hook=True)
+
+    return ae_dict, submodule_dict
 
 
 def load_autoencoders(model,ae_layers, weight_dir) -> Dict[int, Autoencoder]:
     
     #TODO: We need to make this a little bit differently in the future
     if "gpt2" in weight_dir:
-        ae_dict, submodule_dict, edits = load_oai_autoencoders(model,ae_layers, weight_dir)
+        ae_dict, submodule_dict = load_oai_autoencoders(model,ae_layers, weight_dir)
        
-    # if "Llama" in weight_dir:
-    #     ae_dict, submodule_dict, edits = load_eai_autoencoders(model,ae_layers, weight_dir)
+    if "Llama" in weight_dir:
+        ae_dict, submodule_dict = load_eai_autoencoders(model,ae_layers, weight_dir)
     
-
-    return ae_dict, submodule_dict,  edits
+    return ae_dict, submodule_dict

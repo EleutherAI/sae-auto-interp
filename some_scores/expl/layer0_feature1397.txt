@@ -1,1 +1,0 @@
-"The neuron activates on tokens related to change or movement from one state to another, particularly the word \"transition\" and its surrounding context, which often involves a process or period of change."
