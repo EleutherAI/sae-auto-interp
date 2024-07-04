@@ -57,6 +57,6 @@ async def execute_model(
             await f.write(orjson.dumps(result))
 
         logger.info(f"Saved result to {filepath}")
-
+    
     tasks = [process_and_save(query) for query in queries]
     await asyncio.gather(*tasks)
