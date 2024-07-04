@@ -23,6 +23,7 @@ class ChainOfThoughtExplainerConfig:
     max_tokens: int
     l: str
     r: str
+    threshold: float
 
 @dataclass
 class SimpleExplainerConfig:

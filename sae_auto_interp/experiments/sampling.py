@@ -33,8 +33,8 @@ def sample_quantiles(
     torch.manual_seed(seed)  # Also set torch seed for reproducibility
 
     if len(record.examples) < n_train + (n_test * (n_quantiles - 1)) + n_extra:
-        logger.error(f"Not enough examples in record {record} for the requested sampling")
-        raise ValueError(f"Not enough examples in record {record} for the requested sampling")
+        logger.error(f"Not enough examples in {record.feature} for the requested sampling")
+        raise ValueError(f"Not enough examples in {record.feature} for the requested sampling")
 
     # Extract max activations from examples
     max_activations = torch.tensor([example.max_activation for example in record.examples])
@@ -55,8 +55,8 @@ def sample_quantiles(
         n_samples = n_train if i == 0 else n_test
 
         if len(quantile_examples) < n_samples:
-            logger.error(f"Quantile {i} has too few examples in record {record}")
-            raise ValueError(f"Quantile {i} has too few examples in record {record}")
+            logger.error(f"Quantile {i} has too few examples in {record.feature}")
+            raise ValueError(f"Quantile {i} has too few examples in {record.feature}")
         
         quantile_sample = random.sample(quantile_examples, n_samples)
         quantiles.append(quantile_sample)
@@ -73,10 +73,10 @@ def sample_quantiles(
     
     if n_extra > 0:
         # Create a set of all examples in train and test sets
-        used_examples = set(example for quantile in quantiles for example in quantile)
+        used_examples = set(example.text for quantile in quantiles for example in quantile)
         
         # Sample n_extra examples from the remaining examples
-        remaining_examples = [example for example in record.examples if example not in used_examples]
+        remaining_examples = [example for example in record.examples if example.text not in used_examples]
         extra_examples = random.sample(remaining_examples, min(n_extra, len(remaining_examples)))
 
         return quantiles[0], quantiles[1:], extra_examples
@@ -110,8 +110,8 @@ def sample_random_and_quantiles(
     torch.manual_seed(seed)  # Also set torch seed for reproducibility
 
     if len(record.examples) < n_train + (n_test * n_quantiles):
-        logger.error(f"Not enough examples in record {record} for the requested sampling")
-        raise ValueError(f"Not enough examples in record {record} for the requested sampling")
+        logger.error(f"Not enough examples in {record.feature} for the requested sampling")
+        raise ValueError(f"Not enough examples in {record.feature} for the requested sampling")
 
     # Randomly sample n_train examples for training and remove
     train_examples = random.sample(record.examples, n_train)
@@ -134,8 +134,8 @@ def sample_random_and_quantiles(
         ]
         
         if len(quantile_examples) < n_test:
-            logger.error(f"Quantile {i} has too few examples in record {record}")
-            raise ValueError(f"Quantile {i} has too few examples in record {record}")
+            logger.error(f"Quantile {i} has too few examples in {record.feature}")
+            raise ValueError(f"Quantile {i} has too few examples in {record.feature}")
         
         quantile_sample = random.sample(quantile_examples, n_test)
         quantiles.append(quantile_sample)
@@ -149,8 +149,91 @@ def sample_random_and_quantiles(
     ]
 
     if len(last_quantile) < n_test:
-        logger.error(f"Last quantile has too few examples in record {record}")
-        raise ValueError(f"Last quantile has too few examples in record {record}")
+        logger.error(f"Last quantile has too few examples in {record.feature}")
+        raise ValueError(f"Last quantile has too few examples in {record.feature}")
     quantiles.append(random.sample(last_quantile, n_test))
     
     return train_examples, quantiles
+
+
+def sample_top_and_quantiles(
+    record,
+    n_train=10,
+    n_test=5,
+    n_quantiles=2,
+    n_extra=0,
+    seed=22,
+):
+    """
+    Train examples are the top n_train examples, then split the rest into
+    quantiles based on fractions of the max activation and sample from each quantile for testing.
+
+    Args:
+        record (FeatureRecord): The record to sample from.
+        n_train (int): The number of examples to sample for training.
+        n_test (int): The number of examples to sample for testing from each quantile.
+        n_quantiles (int): The number of quantiles to split the remaining examples into.
+        seed (int): The random seed to use for reproducibility.
+
+    Returns:
+        Tuple[List[Example], List[List[Example]]]: A tuple containing the training examples
+        and a list of test examples for each quantile.
+    """
+    random.seed(seed)
+    torch.manual_seed(seed)  # Also set torch seed for reproducibility
+
+    if len(record.examples) < n_train + (n_test * n_quantiles):
+        logger.error(f"Not enough examples in {record.feature} for the requested sampling")
+        raise ValueError(f"Not enough examples in {record.feature} for the requested sampling")
+
+    # Randomly sample n_train examples for training and remove
+    train_examples = record.examples[:n_train]
+    remaining_examples = record.examples[n_train:]
+
+    # Extract max activations from remaining examples
+    max_activations = torch.tensor([example.max_activation for example in remaining_examples])
+
+    # Calculate thresholds based on fractions of the overall maximum activation
+    overall_max = max_activations.max().item()
+    thresholds = [overall_max * (i + 1) / n_quantiles for i in range(n_quantiles - 1)]
+    
+    quantiles = []
+    start = 0
+    for i, end in enumerate(thresholds):
+        # Filter examples in this quantile
+        quantile_examples = [
+            example for example in remaining_examples
+            if start <= example.max_activation < end
+        ]
+        
+        if len(quantile_examples) < n_test:
+            logger.error(f"Quantile {i} has too few examples in {record.feature}")
+            raise ValueError(f"Quantile {i} has too few examples in {record.feature}")
+        
+        quantile_sample = random.sample(quantile_examples, n_test)
+        quantiles.append(quantile_sample)
+        
+        start = end
+    
+    # Add the last quantile
+    last_quantile = [
+        example for example in remaining_examples
+        if example.max_activation >= start
+    ]
+
+    if len(last_quantile) < n_test:
+        logger.error(f"Last quantile has too few examples in {record.feature}")
+        raise ValueError(f"Last quantile has too few examples in {record.feature}")
+    quantiles.append(random.sample(last_quantile, n_test))
+
+    if n_extra > 0:
+        # Create a set of all examples in train and test sets
+        used_examples = set(example.text for quantile in quantiles for example in quantile)
+        
+        # Sample n_extra examples from the remaining examples
+        remaining_examples = [example for example in record.examples if example.text not in used_examples]
+        extra_examples = random.sample(remaining_examples, min(n_extra, len(remaining_examples)))
+
+        return train_examples, quantiles, extra_examples
+    else:
+        return train_examples, quantiles

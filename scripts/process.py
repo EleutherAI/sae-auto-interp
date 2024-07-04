@@ -6,10 +6,10 @@ from sae_auto_interp.autoencoders.ae import load_autoencoders
 from sae_auto_interp.features import CombinedStat, FeatureRecord, Logits
 
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
-ae_dict, submodule_dict, edits = load_autoencoders(
+ae_dict, submodule_dict = load_autoencoders(
     model, 
     list(range(0,12,2)),
-    "sae_auto_interp/autoencoders/oai"
+    "sae_auto_interp/autoencoders/oai/gpt2"
 )
 
 tokens = load_tokenized_data(model.tokenizer)
@@ -29,10 +29,11 @@ for layer, ae in ae_dict.items():
 
     records = FeatureRecord.from_tensor(
         tokens,
-        model.tokenizer,
         layer,
+        tokenizer=model.tokenizer,
         raw_dir=raw_features_path,
-        selected_features=list(range(0,1000)),
+        selected_features=list(range(0,50)),
+        min_examples=200,
         max_examples=2000
     )
     

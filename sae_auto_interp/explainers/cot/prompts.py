@@ -4,7 +4,7 @@ SYSTEM_PROMPT = """You are a meticulous AI researcher conducting an important in
 
 You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like {l}this{r}. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters {l}just like this{r}.
 
-Step 1: The activating tokens, tokens before those tokens, and following tokens will be listed. Look for patterns in these tokens.
+Step 1: The activating tokens and prior tokens will be listed. Look for patterns in these tokens.
 Step 2: Write down several general shared features of the text examples.
 
 (Part 2) Tokens that the neuron boosts in the next token prediction 
@@ -31,8 +31,7 @@ Example 3:  thought Scotland was boring, but really there's more {l}than meets t
 Top_logits: ["elated", "joyful", "story", "thrilled", "spider"]
 
 ACTIVATING TOKENS: "over the moon", "till the cows come home", "than meets the eye".
-PREVIOUS TOKENS: "was", "laughing", "more".
-NEXT TOKENS: "to", "!", "I'd", "!"."""
+PREVIOUS TOKENS: "was", "laughing", "more"."""
 
 
 RESPONSE_1 = """
@@ -40,7 +39,6 @@ RESPONSE_1 = """
 Step 1.
 The activating tokens are all parts of common idioms.
 The previous tokens have nothing in common.
-The next tokens are sometimes exclamation marks.
 
 Step 2.
 - The examples contain common idioms.
@@ -67,8 +65,7 @@ Example 3:  the hole was small{l}er{r} but deep{l}er{r} than the
 Top_logits: ["apple", "running", "book", "wider", "quickly"]
 
 ACTIVATING TOKENS: ". ", "er", "er", "er".
-PREVIOUS TOKENS: "er", "tall", "small", "deep".
-NEXT TOKENS: "The", ",", " but", "than"."""
+PREVIOUS TOKENS: "er", "tall", "small", "deep"."""
 
 
 RESPONSE_2 = """
@@ -76,7 +73,6 @@ RESPONSE_2 = """
 Step 1.
 The activating tokens are mostly "er".
 The previous tokens are mostly adjectives, or parts of adjectives, describing size.
-The next tokens have nothing in common.
 The neuron seems to activate on, or near, the token "er" in comparative adjectives describing size.
 
 Step 2.
@@ -105,8 +101,7 @@ Example 4:  Patrick: "why are you getting in the {l} way?{l}" Later,
 Top_logits: ["room", "end", "container, "space", "plane"]
 
 ACTIVATING TOKENS: "house", "a box", "smoking area", " way?".
-PREVIOUS TOKENS: "my", "in", "the", "the".
-NEXT TOKENS: all quotation marks."""
+PREVIOUS TOKENS: "my", "in", "the", "the"."""
 
 
 RESPONSE_3 = """
@@ -114,7 +109,6 @@ RESPONSE_3 = """
 Step 1.
 The activating tokens are all things that one can be in.
 The previous tokens have nothing in common.
-The next tokens are all quotation marks.
 
 Step 2.
 - The examples involve being inside something, sometimes figuratively.
@@ -138,27 +132,25 @@ Top_logits: {top_logits}
 
 ACTIVATING TOKENS: {activating}.
 PREVIOUS TOKENS: {previous}.
-NEXT TOKENS: {following}."""
+"""
 
 opening_prompt = f"{SYSTEM_PROMPT}\n{EXAMPLE_1}\n{RESPONSE_1}\n{EXAMPLE_2}\n{RESPONSE_2}\n{EXAMPLE_3}\n{RESPONSE_3}\n{USER_START}"
 
-def create_prompt(l, r, examples, top_logits, activating, previous, following, simplifiy=False):
+def create_prompt(l, r, examples, top_logits, activating, previous, simplifiy=False):
     user_prompt = opening_prompt.format(
         l=l,
         r=r,
         examples=examples,
         top_logits=top_logits,
         activating=activating,
-        previous=previous,
-        following=following
+        previous=previous
     )
 
     simplified_user_prompt = USER_START.format(
         examples=examples,
         top_logits=top_logits,
         activating=activating,
-        previous=previous,
-        following=following
+        previous=previous
     )
 
     if simplifiy:

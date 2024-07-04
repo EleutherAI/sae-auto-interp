@@ -53,11 +53,11 @@ class FeatureRecord:
     def max_activation(self):
         return self.examples[0].max_activation
     
+    @staticmethod
     def display(
-        self, 
-        n_examples: int = 5
+        examples=None
     ) -> str:
-        assert hasattr(self.examples[0], "str_toks"), \
+        assert hasattr(examples[0], "str_toks"), \
             "Examples must have be detokenized to display."
 
         from IPython.core.display import display, HTML
@@ -82,7 +82,7 @@ class FeatureRecord:
                 example.str_toks, 
                 example.activations
             ) 
-            for example in self.examples[:n_examples]
+            for example in examples
         ]
 
         display(HTML("<br><br>".join(strings)))
@@ -216,7 +216,7 @@ class FeatureRecord:
         # POSTPROCESSING
 
         if n_random > 0:
-            random = get_non_activating_windows(
+            random_tokens, random_activations = get_non_activating_windows(
                 example_tokens, example_activations, 
                 window_size=CONFIG.l_ctx + CONFIG.r_ctx + 1, 
                 n_random=n_random
@@ -225,14 +225,14 @@ class FeatureRecord:
             record.random = [
                 Example(
                     tokens=toks,
-                    activations=torch.zeros_like(toks),
+                    activations=acts,
                     str_toks=tokenizer.batch_decode(
                         toks, 
                         clean_up_tokenization_spaces=False
                     ),
                     max_activation=0.0,
                 )
-                for toks in random
+                for toks, acts in zip(random_tokens,random_activations)
             ]
 
         # Load processed data if a directory is provided
@@ -309,7 +309,8 @@ def get_non_activating_windows(
     """
     batch, pos = tokens.shape
     search_size = min(search_size, batch)
-    windows = []
+    all_window_tokens = []
+    all_window_activations = []
 
     for batch_idx in range(batch):
         start_pos = 0
@@ -319,14 +320,15 @@ def get_non_activating_windows(
             window_activations = activations[batch_idx, start_pos:end_pos]
 
             if window_activations.sum() == 0:
-                windows.append(window_tokens)
+                all_window_tokens.append(window_tokens)
+                all_window_activations.append(window_activations)
 
-                if len(windows) >= n_random:
-                    return windows
+                if len(all_window_tokens) >= n_random:
+                    return all_window_tokens, all_window_activations
                 
             start_pos += window_size
 
-    return windows
+    return all_window_tokens, all_window_activations
 
 def extract_activation_windows(tokens: torch.Tensor, activations: torch.Tensor, l_ctx: int = CONFIG.l_ctx, r_ctx: int = CONFIG.r_ctx) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
     """

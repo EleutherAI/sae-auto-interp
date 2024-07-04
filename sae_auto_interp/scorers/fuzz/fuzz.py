@@ -1,6 +1,8 @@
 import random
 import asyncio
 from typing import List, Tuple
+import torch
+from math import ceil
 
 from .sample import Sample
 from .fuzz_prompt import prompt as fuzz_prompt
@@ -20,6 +22,8 @@ class FuzzingScorer(Scorer):
         scorer_in: ScorerInput
     ) -> List[Sample]:
         
+        self.avg_acts = self.average_n_acts(scorer_in.record.examples[:150])
+        
         # Build clean and fuzzed batches
         clean_batches, fuzzed_batches = self._prepare(
             test_batches=scorer_in.test_examples, 
@@ -35,6 +39,12 @@ class FuzzingScorer(Scorer):
 
         return results
     
+    def average_n_acts(self, examples):
+        return sum(
+            torch.count_nonzero(example.activations)
+            for example in examples
+        ) / len(examples)
+
     def _prepare(
         self, 
         test_batches,
@@ -46,6 +56,10 @@ class FuzzingScorer(Scorer):
             if batch[0].max_activation == 0.0:
                 quantile = -1
 
+            n_incorrect = 0
+            if quantile == -1 and highlight:
+                n_incorrect = ceil(self.avg_acts.item())
+            
             # Append to a respective list
             for example in batch:
                 arr.append(
@@ -53,7 +67,8 @@ class FuzzingScorer(Scorer):
                         example=example,
                         quantile=quantile,
                         highlighted=highlight,
-                        activates=activates
+                        activates=activates,
+                        n_incorrect=n_incorrect
                     )
                 )
 

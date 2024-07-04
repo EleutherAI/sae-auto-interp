@@ -27,6 +27,7 @@ cot_explainer:
     max_tokens: 1000
     l: "<<"
     r: ">>"
+    threshold: 0.4
 
 simple_explainer:
     temperature: 0.0
