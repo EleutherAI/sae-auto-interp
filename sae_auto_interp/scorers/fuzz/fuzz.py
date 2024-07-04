@@ -80,7 +80,7 @@ class FuzzingScorer(Scorer):
             _prepare_batch(fuzzed, batch, quantile, highlight=True)
 
         _prepare_batch(clean, random_examples, -1, highlight=False, activates=False)
-        _prepare_batch(fuzzed, incorrect_examples, -1, highlight=True)
+        _prepare_batch(fuzzed, incorrect_examples, -1, highlight=True, activates=False)
 
         random.shuffle(clean)
         random.shuffle(fuzzed)
