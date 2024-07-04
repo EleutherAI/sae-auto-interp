@@ -7,13 +7,13 @@ import numpy as np
 from collections import defaultdict
 
 # Directory containing the JSON files
-directory = '/share/u/caden/sae-auto-interp/saved_scores/cot'
+directory = '/share/u/caden/sae-auto-interp/scores/cot'
 
 # Function to calculate true positives, false positives, true negatives, and false negatives
 def calculate_metrics(data):
     tp = fp = tn = fn = 0
     for item in data:
-        if item['is_correct']:
+        if item['activates']:
             if item['marked']:
                 tp += 1
             else:

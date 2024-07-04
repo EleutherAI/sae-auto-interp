@@ -70,3 +70,7 @@ import torch
 a = torch.tensor(0)
 
 a.dim()
+
+# %%
+
+import oai_stuff
