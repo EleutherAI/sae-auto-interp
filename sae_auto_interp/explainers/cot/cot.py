@@ -102,31 +102,31 @@ class ChainOfThought(Explainer):
         activating = []
         previous = []
 
+        threshold = example.max_activation * CONFIG.threshold
+
         pos = 0
 
         while pos < len(example.tokens):
             
-            current_tok = example.str_toks[pos]
-            current_act = example.activations[pos]
 
             # Check if next token will activate
             if (pos + 1 < len(example.tokens) 
-                and example.activations[pos + 1] > 0.0
+                and example.activations[pos + 1] > threshold
             ):
-                delimited_string += current_tok
-                previous.append(current_tok)
+                delimited_string += example.str_toks[pos]
+                previous.append(example.str_toks[pos])
                 pos += 1
 
             # Check if current token activates
-            elif current_act > 0.0:
+            elif example.activations[pos] > threshold:
                 delimited_string += CONFIG.l
 
                 # Build activating token chunk and
                 # delimited string at the same time
                 seq = ""
-                while pos < len(example.tokens) and current_act > 0.0:
-                    delimited_string += current_tok
-                    seq += current_tok
+                while pos < len(example.tokens) and example.activations[pos] > threshold:
+                    delimited_string += example.str_toks[pos]
+                    seq += example.str_toks[pos]
                     pos += 1
                 activating.append(seq)
 
@@ -134,7 +134,7 @@ class ChainOfThought(Explainer):
             
             # Else, keep building the delimited string
             else:
-                delimited_string += current_tok
+                delimited_string += example.str_toks[pos]
                 pos += 1
 
         return delimited_string, activating, previous
@@ -158,7 +158,7 @@ class ChainOfThought(Explainer):
         top_examples_str = ""
             
         for i, example in enumerate(top_examples):
-            top_examples_str += f"Example {i}: {example}\n"
+            top_examples_str += f"Example {i +1}: {example}\n"
 
         activating = self.flatten(activating)
         previous = self.flatten(previous)
@@ -166,7 +166,7 @@ class ChainOfThought(Explainer):
         prompt = create_prompt(
             l=CONFIG.l, 
             r=CONFIG.r, 
-            examples=top_examples, 
+            examples=top_examples_str, 
             top_logits=top_logits,
             activating=activating,
             previous=previous

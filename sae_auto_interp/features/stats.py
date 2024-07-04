@@ -231,6 +231,7 @@ class Activation(Stat):
         record.top_activations = top_activations
         record.top_tokens = top_tokens
         record.n_activations = n_activations
+        record.average_n_activations = np.mean(n_activations)
         record.unique_tokens = len(set(top_tokens))
         
         if self.get_lemmas:
