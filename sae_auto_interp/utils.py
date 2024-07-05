@@ -16,9 +16,9 @@ import random
 
 
 def load_tokenized_data(
-    tokenizer: AutoTokenizer
+    tokenizer: AutoTokenizer,CONFIG=CONFIG
 ):
-    data = load_dataset(CONFIG.dataset_repo, split=CONFIG.dataset_split)
+    data = load_dataset(CONFIG.dataset_repo,name=CONFIG.dataset_name, split=CONFIG.dataset_split)
 
     tokens = utils.tokenize_and_concatenate(
         data, 
@@ -60,3 +60,20 @@ async def execute_model(
     
     tasks = [process_and_save(query) for query in queries]
     await asyncio.gather(*tasks)
+
+def get_samples(N_LAYERS=12,N_FEATURES=32_768,N_SAMPLES=1000,features_per_layer=None):
+    random.seed(22)
+
+    samples = {}
+
+    for layer in range(N_LAYERS):
+
+        samples[layer] = random.sample(range(N_FEATURES), N_SAMPLES)
+
+    if features_per_layer:
+        samples = {
+            layer: features[:features_per_layer]
+            for layer, features in samples.items()
+        }
+
+    return samples

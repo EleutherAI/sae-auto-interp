@@ -8,7 +8,7 @@ from sae_auto_interp.features import FeatureRecord
 from sae_auto_interp.experiments import sample_top_and_quantiles
 from sae_auto_interp.logger import logger
 import argparse
-
+import random
 from sae_auto_interp import cache_config as CONFIG
 
 argparser = argparse.ArgumentParser()
@@ -23,8 +23,6 @@ tokens = load_tokenized_data(model.tokenizer,CONFIG=CONFIG)
 
 raw_features_path = "raw_features"
 processed_features_path = "processed_features"
-explanations_dir = "explanations/cot"
-scorer_out_dir = "scores/oai"
 
 samples = get_samples()
 
@@ -36,8 +34,7 @@ def load_explanation(explanation_dir,feature):
 
     return explanation
 
-scorer_inputs_cot = []
-scorer_inputs_simple = []
+scorer_inputs = []
 for layer in layers:
     records = FeatureRecord.from_tensor(
         tokens,
@@ -53,8 +50,11 @@ for layer in layers:
     for record in tqdm(records):
 
         try:
-            explanation_cot = load_explanation("saved_explanations/cot",record.feature)
-            explanation_simple = load_explanation("saved_explanations/simple",record.feature)
+            #random feature
+            
+            idx = random.sample(range(len(records)),1)[0]
+
+            explanation = load_explanation("saved_explanations/simple",records[idx].feature)
             _, test, extra = sample_top_and_quantiles(
                 record=record,
                 n_train=20,
@@ -70,38 +70,23 @@ for layer in layers:
 
         record.extra = extra
 
-        scorer_inputs_cot.append(
+        scorer_inputs.append(
             ScorerInput(
                 record=record,
                 test_examples=test,
-                explanation=explanation_cot
-            )
-        )
-        scorer_inputs_simple.append(
-            ScorerInput(
-                record=record,
-                test_examples=test,
-                explanation=explanation_simple
+                explanation=explanation
             )
         )
 
-client = get_client("local", "casperhansen/llama-3-70b-instruct-awq", base_url="http://127.0.0.1:8001")
+client = get_client("local", "casperhansen/llama-3-70b-instruct-awq", base_url="http://127.0.0.1:8000")
 scorer = FuzzingScorer(client)
-scorer_out_dir = "scores/cot"
-print("Running scorer for cot")
-asyncio.run(
-    execute_model(
-        scorer, 
-        scorer_inputs_cot,
-        output_dir=scorer_out_dir,
-    )
-)
-scorer_out_dir = "scores/simple"
+
+scorer_out_dir = "scores/random"
 print("Running scorer for simple")
 asyncio.run(
     execute_model(
         scorer, 
-        scorer_inputs_cot,
+        scorer_inputs,
         output_dir=scorer_out_dir,
     )
 )
