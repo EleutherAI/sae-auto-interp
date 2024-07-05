@@ -4,6 +4,7 @@ from sae_auto_interp.utils import get_samples
 from nnsight import LanguageModel
 import torch
 import argparse
+from sae_auto_interp import cache_config as CONFIG
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument("--layers", type=str, default="12,14")
@@ -16,32 +17,24 @@ print("Model loaded")
 # Load autoencoders, submodule dict, and edits.
 # Submodule dict is used in caching to save ae latents
 # Edits are applied to the model
-ae_dict, submodule_dict, edits = load_autoencoders(
+ae_dict, submodule_dict = load_autoencoders(
     model, 
     layers,
-    "saved_autoencoders/Meta-Llama-3-8B/"
+    "saved_autoencoders/llama-exp32"
 )
+
 print("Autoencoders loaded")
-# Set a default alteration on the model
-with model.alter(" ", edits=edits):
-    for layer_idx, _ in ae_dict.items():
-        layer = model.model.layers[layer_idx]
-        acts = layer.output[0]
-        layer.ae(acts, hook=True)
 
 # Get and sort samples
-samples = get_samples()
-samples = {
-    int(layer) : features
-    for layer, features in samples.items() 
-    if int(layer) in ae_dict.keys()
-}
+CONFIG.n_tokens = 102_400_000
+CONFIG.dataset_repo =  "kh4dien/fineweb-100m-sample"
+    
 print("Samples loaded")
 # Cache and save features
 cache = FeatureCache(model, submodule_dict)
 cache.run()
 print("Caching complete")
 for layer in layers:
-    feature_range = torch.tensor(samples[layer])
-    cache.save_selected_features(feature_range, layer, save_dir="raw_features_llama")
+    feature_range = torch.arange(0,10000)
+    cache.save_selected_features(feature_range, layer, save_dir="raw_features_llama_more")
 print("Selected features saved")

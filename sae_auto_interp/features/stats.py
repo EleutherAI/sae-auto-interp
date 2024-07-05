@@ -30,7 +30,7 @@ class CombinedStat(Stat):
 
     def compute(self, records, *args, **kwargs):
         for record in tqdm(records):
-            if type(record) == str:
+            if type(record) is str:
                 continue
             for obj in self._objs.values():
                 obj.compute(record, *args, **kwargs)
@@ -87,10 +87,15 @@ class Logits(Stat):
         self.get_entropy = get_entropy
         self.get_perplexity = get_perplexity
 
-    def refresh(self, W_dec=None, **kwargs):
-        W_U = self.model.transformer.ln_f.weight \
-            * self.model.lm_head.weight
-        self.logits = torch.matmul(W_U, W_dec).detach().cpu()
+    def refresh(self,W_U=None, W_dec=None, **kwargs):
+        self.W_U = W_U
+        self.W_dec = W_dec
+        
+    def logits(self,feature_index):
+        W_U = self.W_U
+        W_dec = self.W_dec
+        logits = torch.matmul(W_U, W_dec[feature_index, :])
+        return logits
 
     def top_logits(self, logits):
         top_logits = torch.topk(logits, self.k)
@@ -115,8 +120,7 @@ class Logits(Stat):
 
     def compute(self, record, *args, **kwargs):
         feature_index = record.feature.feature_index
-        narrowed_logits = self.logits[feature_index, :]
-
+        narrowed_logits = self.logits(feature_index)
         if self.get_top_logits:
             record.top_logits = self.top_logits(narrowed_logits)
         if self.get_skew:

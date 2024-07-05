@@ -16,6 +16,9 @@ class SaeConfig(Serializable):
     k: int = 32
     """Number of nonzero features."""
 
+    signed: bool = False
+    """Whether to allow negative activations."""
+
 
 @dataclass
 class TrainConfig(Serializable):
