@@ -33,7 +33,7 @@ def load_eai_autoencoders(model,ae_layers: List[int], weight_dir:str):
     submodule_dict = {}
 
     for layer in ae_layers:
-        path = f"{weight_dir}/layer_{layer}"
+        path = f"{weight_dir}/layer_{layer}.pt"
         sae = Sae.load_from_disk(path,"cuda:0")
 
         submodule = model.model.layers[layer]
@@ -45,7 +45,7 @@ def load_eai_autoencoders(model,ae_layers: List[int], weight_dir:str):
 
     with model.alter(" "):
         for layer_idx, _ in ae_dict.items():
-            layer = model.transformer.h[layer_idx]
+            layer = model.model.layers[layer_idx]
             acts = layer.output[0]
             layer.ae(acts, hook=True)
 
@@ -84,7 +84,7 @@ def load_autoencoders(model,ae_layers, weight_dir) -> Dict[int, Autoencoder]:
     if "gpt2" in weight_dir:
         ae_dict, submodule_dict = load_oai_autoencoders(model,ae_layers, weight_dir)
        
-    if "Llama" in weight_dir:
+    if "llama" in weight_dir:
         ae_dict, submodule_dict = load_eai_autoencoders(model,ae_layers, weight_dir)
     
     return ae_dict, submodule_dict
