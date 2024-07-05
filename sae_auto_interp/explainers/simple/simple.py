@@ -4,11 +4,10 @@ from typing import List
 from .prompts import create_prompt
 from ..explainer import (
     Explainer, 
-    ExplainerInput,
+    ExplainerInput
  )
 from ... import simple_explainer_config as CONFIG
 
-from transformers import AutoTokenizer
 
 class SimpleExplainer(Explainer):
     """
@@ -23,20 +22,16 @@ class SimpleExplainer(Explainer):
         client
     ):
         self.client = client
-        #TODO: Monkeypatch
-        self.tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
-
+        
     async def __call__(
         self,
         explainer_in: ExplainerInput,
     ):
 
-
         simplified, messages = self.build_prompt(
             explainer_in.train_examples,
-            self.tokenizer
+            explainer_in.record.max_activation
         )
-        
         response = await self.client.generate(
             messages,
             max_tokens=CONFIG.max_tokens,
@@ -58,7 +53,7 @@ class SimpleExplainer(Explainer):
         else:
             return "Explanation:"
     
-    def build_prompt(self,examples,tokenizer):
+    def build_prompt(self,examples,max_activation:float):
 
         #I think this can be prettier
         str_tokens = []
@@ -67,8 +62,8 @@ class SimpleExplainer(Explainer):
         for example in examples:
             str_tokens.append(example.str_toks)
             activations.append(example.activations)
-            sentences.append(example.text)
-        max_activation = max([max(activation) for activation in activations])
+            sentences.append("".join(example.str_toks))
+            
         undiscovered_feature = ""
         for i in range(len(sentences)):
             decoded = sentences[i]
@@ -86,7 +81,8 @@ class SimpleExplainer(Explainer):
         question += "Activating tokens:"
         for token,score in zip(activating_tokens,activations):
             if score > 0:
-                score = round(score/max_activation*10,0)
+                score = score/max_activation*10
+                score = score.round()
                 question += f" {token} ({score}),"
         # Remove the last comma
         question = question[:-1] + ".\n\n"
@@ -104,5 +100,3 @@ class SimpleExplainer(Explainer):
 
                 
     
-
-
