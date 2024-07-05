@@ -4,9 +4,8 @@
 *.log
 
 .gitignore
-
-raw_features
-processed_features
-
-explanations
-scores
+extras
+raw*
+processed*
+saved*
+scores*
