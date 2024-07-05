@@ -6,11 +6,11 @@ from asyncio import sleep
 import json
 
 class Local(Client):
-    def __init__(self, model: str):
+    def __init__(self, model: str,base_url="http://127.0.0.1:8000"):
         super().__init__(model)
         self.tokenizer = AutoTokenizer.from_pretrained(model)
         self.client = httpx.AsyncClient(
-            base_url="http://127.0.0.1:8000",
+            base_url=base_url,
             timeout=None
         )
 
