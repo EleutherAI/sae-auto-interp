@@ -9,25 +9,21 @@ from sae_auto_interp.scorers import ScorerInput, FuzzingScorer
 from sae_auto_interp.features import FeatureRecord
 from sae_auto_interp.experiments import sample_top_and_quantiles
 from sae_auto_interp.logger import logger
+import torch
 import argparse
-
-from sae_auto_interp import cache_config as CONFIG
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument("--layers", type=str, default="12,14")
 args = argparser.parse_args()
-layers = [int(layer) for layer in args.layers.split(",") if layer.isdigit()]
+#layers = [int(layer) for layer in args.layers.split(",") if layer.isdigit()]
+layers = [int(args.layers)]
 
+model = LanguageModel("meta-llama/Meta-Llama-3-8B", device_map="cpu", dispatch=True,torch_dtype =torch.bfloat16)
+tokens = load_tokenized_data(model.tokenizer)
 
-model = LanguageModel("openai-community/gpt2", device_map="cpu", dispatch=True)
-CONFIG.batch_len = 64
-tokens = load_tokenized_data(model.tokenizer,CONFIG=CONFIG)
+raw_features_path = "raw_features_llama"
 
-raw_features_path = "raw_features"
-processed_features_path = "processed_features"
-explanations_dir = "explanations/cot"
-
-samples = get_samples()
+samples = get_samples(N_LAYERS=32,N_FEATURES=131072,N_SAMPLES=1000)
 
 def load_explanation(explanation_dir,feature):
     explanations_path = f"{explanation_dir}/layer{feature.layer_index}_feature{feature.feature_index}.txt"
@@ -37,8 +33,8 @@ def load_explanation(explanation_dir,feature):
 
     return explanation
 
-scorer_inputs_cot = []
-scorer_inputs_simple = []
+scorer_inputs_short = []
+scorer_inputs_long = []
 for layer in layers:
     records = FeatureRecord.from_tensor(
         tokens,
@@ -54,8 +50,8 @@ for layer in layers:
     for record in tqdm(records):
 
         try:
-            explanation_cot = load_explanation("saved_explanations/cot",record.feature)
-            explanation_simple = load_explanation("saved_explanations/simple",record.feature)
+            explanation_short = load_explanation("saved_explanations/llama_simple",record.feature)
+            explanation_long = load_explanation("saved_explanations/llama_simple_long",record.feature)
             _, test, extra = sample_top_and_quantiles(
                 record=record,
                 n_train=20,
@@ -71,38 +67,38 @@ for layer in layers:
 
         record.extra = extra
 
-        scorer_inputs_cot.append(
+        scorer_inputs_short.append(
             ScorerInput(
                 record=record,
                 test_examples=test,
-                explanation=explanation_cot
+                explanation=explanation_short
             )
         )
-        scorer_inputs_simple.append(
+        scorer_inputs_long.append(
             ScorerInput(
                 record=record,
                 test_examples=test,
-                explanation=explanation_simple
+                explanation=explanation_long
             )
         )
 
 client = get_client("local", "casperhansen/llama-3-70b-instruct-awq", base_url="http://127.0.0.1:8001")
 scorer = FuzzingScorer(client)
-scorer_out_dir = "scores/cot"
-print("Running scorer for cot")
+scorer_out_dir = "scores/llama_short"
+print("Running short")
 asyncio.run(
     execute_model(
         scorer, 
-        scorer_inputs_cot,
+        scorer_inputs_short,
         output_dir=scorer_out_dir,
     )
 )
-scorer_out_dir = "scores/simple"
-print("Running scorer for simple")
+scorer_out_dir = "scores/llama_long"
+print("Running long")
 asyncio.run(
     execute_model(
         scorer, 
-        scorer_inputs_cot,
+        scorer_inputs_long,
         output_dir=scorer_out_dir,
     )
 )
