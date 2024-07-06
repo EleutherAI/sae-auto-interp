@@ -1,0 +1,1 @@
+{"feature":{"layer_index":2,"feature_index":0},"top_logits":[" IST","UTC"," UTC","PD"," GMT"," partName","ANG","PRESS","GMT","POS"],"average_n_activations":9.03,"unique_tokens":18,"n_per_quantile":[7439,1863,533,155]}

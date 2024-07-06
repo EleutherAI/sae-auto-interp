@@ -2,6 +2,8 @@ import yaml
 import os
 from dataclasses import dataclass, field
 
+CONFIG_PATH = os.environ.get("CONFIG_PATH", None)
+
 @dataclass
 class CacheConfig:
     dataset_repo: str
@@ -46,7 +48,7 @@ class GenScorerConfig:
     n_tests: int
     temperature: float
 
-with open(os.path.join(os.path.dirname(__file__), 'config.yaml'), 'r') as f:
+with open(os.path.join(os.path.dirname(__file__), CONFIG_PATH), 'r') as f:
     CONFIG = yaml.safe_load(f)
 
 cache_config = CacheConfig(**CONFIG["cache"])

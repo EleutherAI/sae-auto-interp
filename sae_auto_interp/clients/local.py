@@ -6,7 +6,10 @@ from asyncio import sleep
 import json
 
 class Local(Client):
-    def __init__(self, model: str,base_url="http://127.0.0.1:8000"):
+    def __init__(self,
+        model: str, 
+        base_url="http://127.0.0.1:8000"
+    ):
         super().__init__(model)
         self.tokenizer = AutoTokenizer.from_pretrained(model)
         self.client = httpx.AsyncClient(
@@ -27,8 +30,7 @@ class Local(Client):
         self, 
         prompt: str, 
         tokenize: bool = True, 
-        raw: bool = False, 
-        echo: bool = False, 
+        raw: bool = False,
         max_retries: int = 3,
         **kwargs
     ) -> str:
@@ -56,9 +58,6 @@ class Local(Client):
 
                 if raw:
                     return response
-                
-                if echo:
-                    return prompt, self.postprocess(prompt, response)
                 
                 if kwargs.get("schema") is not None:
                     response = self.postprocess(prompt, response)

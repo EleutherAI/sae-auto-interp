@@ -1,0 +1,1 @@
+{"feature":{"layer_index":10,"feature_index":9},"top_logits":[" Texas","Texas"," Texans","Houston"," Houston"," TX"," Tex"," Austin","Austin","Tex"],"average_n_activations":6.74,"unique_tokens":27,"n_per_quantile":[9368,464,126,32]}

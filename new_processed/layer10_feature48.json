@@ -1,0 +1,1 @@
+{"feature":{"layer_index":10,"feature_index":48},"top_logits":["base","sie","blog","lets","book"," Bulletin","let"," Blog"," Centre","force"],"average_n_activations":1.24,"unique_tokens":43,"n_per_quantile":[250,1054,171,22]}

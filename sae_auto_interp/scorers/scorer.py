@@ -10,7 +10,6 @@ class ScorerInput:
     record: FeatureRecord
     test_examples: List[Example]
 
-
 class Scorer(ABC):
     def __init__(self):
         pass
