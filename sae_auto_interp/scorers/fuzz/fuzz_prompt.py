@@ -4,7 +4,7 @@ You will be given a certain feature of text, such as "male pronouns" or "text wi
 
 Some examples might be mislabeled. Your task is to determine if every single token within << and >> is correctly labeled. Consider that all provided examples could be correct, none of the examples could be correct, or a mix. An example is only correct if every marked token is representative of the feature
 
-For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. Your response should be in JSON format.
+For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. You must return your answer as a JSON with a key for every example.
 """
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/6048
@@ -21,11 +21,11 @@ Example 5:<< line>>, with the left side âĢĶ namely<< tackle>> Byron Bell at<<
 
 
 DSCORER_RESPONSE_ONE = """{
-  "example_1": 1,
+  "example_0": 1,
+  "example_1": 0,
   "example_2": 0,
-  "example_3": 0,
+  "example_3": 1,
   "example_4": 1,
-  "example_5": 1,
 }"""
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/9396
@@ -42,11 +42,11 @@ Example 5:<< the>><|endoftext|>ľI want to<< remind>> you all that 10 days ago (
 
 
 DSCORER_RESPONSE_TWO = """{
+  "example_0": 0,
   "example_1": 0,
   "example_2": 0,
   "example_3": 0,
-  "example_4": 0,
-  "example_5": 0
+  "example_4": 0
 }"""
 
 # https://www.neuronpedia.org/gpt2-small/8-res-jb/12654
@@ -63,11 +63,11 @@ Example 5: and fair investigation not even include the Director<< of>> Athletics
 
 
 DSCORER_RESPONSE_THREE = """{
+  "example_0": 1,
   "example_1": 1,
   "example_2": 1,
   "example_3": 1,
-  "example_4": 1,
-  "example_5": 1
+  "example_4": 1
 }"""
 
 GENERATION_PROMPT = """Feature explanation: {explanation}

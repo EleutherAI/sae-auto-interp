@@ -1,76 +1,58 @@
 # %%
 
-import asyncio
-from transformers import AutoTokenizer
+import os
 
-from sae_auto_interp.clients import get_client
-from sae_auto_interp.scorers import ScorerInput, FuzzingScorer
-from sae_auto_interp.utils import load_tokenized_data, execute_model
-from sae_auto_interp.features import FeatureRecord
-from sae_auto_interp.experiments import sample_top_and_quantiles
+config_path = "configs/caden_gpt2.yaml"
+ae_path = "sae_auto_interp/autoencoders/oai/gpt2"
+raw_features_path = "raw_features"
+processed_features_path = "processed_features"
+os.environ["CONFIG_PATH"] = config_path
+
+# %%
+
+from nnsight import LanguageModel 
+from sae_auto_interp.utils import load_tokenized_data
 from sae_auto_interp.autoencoders.ae import load_autoencoders
-from nnsight import LanguageModel
+from sae_auto_interp.features import CombinedStat, FeatureRecord, Logits, Activation, QuantileSizes
 
-model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)    
-tokens = load_tokenized_data(model.tokenizer)
+model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 ae_dict, submodule_dict = load_autoencoders(
     model, 
     list(range(0,12,2)),
-    "sae_auto_interp/autoencoders/oai/gpt2"
+    ae_path
 )
+tokens = load_tokenized_data(model.tokenizer)
 
-raw_features_path = "raw_features"
-processed_features_path = "processed_features"
-explanations_dir = "saved_explanations/cot"
-scorer_out_dir = "saved_scores/cot"
+# %%
+
+stats = CombinedStat(
+    logits = Logits(
+        model.tokenizer, 
+        W_U = model.transformer.ln_f.weight * model.lm_head.weight
+    ),
+    activations = Activation(
+        k=100,
+    ),
+    quantiles=QuantileSizes()
+)    
 
 
 
-layer_records = {}
+for layer, ae in ae_dict.items():
 
-for layer in [0]:
     records = FeatureRecord.from_tensor(
         tokens,
         layer,
         tokenizer=model.tokenizer,
-        selected_features=list(range(10)),
-        raw_dir= raw_features_path,
-        processed_dir=processed_features_path,
-        n_random=10,
+        raw_dir=raw_features_path,
+        selected_features=list(range(0,10)),
         min_examples=200,
         max_examples=2000
     )
-    
-    for record in records:
 
-        try:
-            train, test, extra = sample_top_and_quantiles(
-                record=record,
-                n_train=20,
-                n_test=5,
-                n_quantiles=4,
-                n_extra=10,
-                seed=22,
-            )
-            print(extra)
-        except:
-            continue    
+    stats.refresh(
+        W_dec=ae.decoder.weight,
+    )
+    stats.compute(records)
 
 
-        record.train = train
-        record.extra = extra
-
-
-    layer_records[layer] = records
-
-# %%
-
-import torch
-
-a = torch.tensor(0)
-
-a.dim()
-
-# %%
-
-import oai_stuff

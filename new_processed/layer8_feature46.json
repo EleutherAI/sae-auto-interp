@@ -1,0 +1,1 @@
+{"feature":{"layer_index":8,"feature_index":46},"top_logits":["well"," uh","wait"," um"," gasp","interesting","SPONSORED","umm","uh","ugh"],"average_n_activations":1.12,"unique_tokens":6,"n_per_quantile":[2673,1369,452,145]}

@@ -1,0 +1,1 @@
+{"feature":{"layer_index":10,"feature_index":49},"top_logits":["ById","().","());","()","(),","();","():","())","info","(){"],"average_n_activations":1.7,"unique_tokens":83,"n_per_quantile":[161,188,36,10]}

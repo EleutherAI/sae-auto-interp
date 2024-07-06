@@ -106,6 +106,11 @@ class FuzzingScorer(Scorer):
             for batch in batches
         ]
 
+        # for t in batches:
+        #     print(len(t))
+        
+        # return
+
         # Execute the tasks concurrently
         results = await asyncio.gather(*tasks)
 
@@ -150,6 +155,6 @@ class FuzzingScorer(Scorer):
         )
 
         for i, sample in enumerate(batch):
-            sample.marked = selections[f"example_{i + 1}"] == 1
+            sample.marked = selections[f"example_{i}"] == 1
         
         return batch

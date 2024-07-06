@@ -1,0 +1,1 @@
+{"feature":{"layer_index":8,"feature_index":27},"top_logits":["Reason","Because"," reasons"," Reasons","Cause"," Because","cause"," WHY","because","why"],"average_n_activations":2.61,"unique_tokens":4,"n_per_quantile":[4835,961,361,58]}

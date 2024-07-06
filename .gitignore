@@ -3,6 +3,8 @@
 *.pt
 *.log
 
+keys.py
+
 .gitignore
 extras
 raw*
