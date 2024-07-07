@@ -12,11 +12,11 @@ DSCORER_EXAMPLE_ONE = """Feature explanation: Words related to American football
 
 Text examples:
 
-Example 1:<|endoftext|>Getty ImagesĊĊPatriots<< tight end>> Rob Gronkowski had his bossâĢĻ
-Example 2: posted<|endoftext|>You should know this<< about>> offensive line coaches: they are large, demanding<< men>>
-Example 3: Media Day 2015ĊĊLSU<< defensive>> end Isaiah Washington (94) speaks<< to the>>
-Example 4:<< running backs>>," he said. .. Defensive<< end>> Carroll Phillips is improving and his injury is
-Example 5:<< line>>, with the left side âĢĶ namely<< tackle>> Byron Bell at<< tackle>> and<< guard>> Amini
+Example 0:<|endoftext|>Getty ImagesĊĊPatriots<< tight end>> Rob Gronkowski had his bossâĢĻ
+Example 1: posted<|endoftext|>You should know this<< about>> offensive line coaches: they are large, demanding<< men>>
+Example 2: Media Day 2015ĊĊLSU<< defensive>> end Isaiah Washington (94) speaks<< to the>>
+Example 3:<< running backs>>," he said. .. Defensive<< end>> Carroll Phillips is improving and his injury is
+Example 4:<< line>>, with the left side âĢĶ namely<< tackle>> Byron Bell at<< tackle>> and<< guard>> Amini
 """
 
 
@@ -33,11 +33,11 @@ DSCORER_EXAMPLE_TWO = """Feature explanation: The word "guys" in the phrase "you
 
 Text examples:
 
-Example 1: if you are<< comfortable>> with it. You<< guys>> support me in many other ways already and
-Example 2: birth control access<|endoftext|> but I assure you<< women>> in Kentucky aren't laughing as they struggle
-Example 3:âĢĻs gig! I hope you guys<< LOVE>> her, and<< please>> be nice,
-Example 4:American, told<< Hannity>> that âĢľyou<< guys>> are playing the race card.âĢĿ
-Example 5:<< the>><|endoftext|>ľI want to<< remind>> you all that 10 days ago (director Massimil
+Example 0: if you are<< comfortable>> with it. You<< guys>> support me in many other ways already and
+Example 1: birth control access<|endoftext|> but I assure you<< women>> in Kentucky aren't laughing as they struggle
+Example 2:âĢĻs gig! I hope you guys<< LOVE>> her, and<< please>> be nice,
+Example 3:American, told<< Hannity>> that âĢľyou<< guys>> are playing the race card.âĢĿ
+Example 4:<< the>><|endoftext|>ľI want to<< remind>> you all that 10 days ago (director Massimil
 """
 
 
@@ -54,11 +54,11 @@ DSCORER_EXAMPLE_THREE = """Feature explanation: "of" before words that start wit
 
 Text examples:
 
-Example 1: climate, TomblinâĢĻs Chief<< of>> Staff Charlie Lorensen said.Ċ
-Example 2: no wonderworking relics, no true Body and Blood<< of>> Christ, no true Baptism
-Example 3:ĊĊDeborah Sathe, Head<< of>> Talent Development and Production at Film London,
-Example 4:ĊĊIt has been devised by Director<< of>> Public Prosecutions (DPP)
-Example 5: and fair investigation not even include the Director<< of>> Athletics? Â· Finally, we believe the
+Example 0: climate, TomblinâĢĻs Chief<< of>> Staff Charlie Lorensen said.Ċ
+Example 1: no wonderworking relics, no true Body and Blood<< of>> Christ, no true Baptism
+Example 2:ĊĊDeborah Sathe, Head<< of>> Talent Development and Production at Film London,
+Example 3:ĊĊIt has been devised by Director<< of>> Public Prosecutions (DPP)
+Example 4: and fair investigation not even include the Director<< of>> Athletics? Â· Finally, we believe the
 """
 
 
