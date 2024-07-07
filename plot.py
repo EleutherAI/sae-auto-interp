@@ -5,7 +5,7 @@ import json
 import pandas as pd
 from collections import Counter, defaultdict
 
-directory = "scores/fuzz_local_simple_id"
+directory = "scores/fuzz_local_simple_8b"
 
 def load_data(directory):
     data = []
@@ -34,7 +34,10 @@ def repreat_precision(df):
     # Iterate through the groups
     for name, group in grouped:
         if len(group) == 2:
-            first_pass = group[(group['highlighted'] == False) & (group['ground_truth'] == True)]
+            first_pass = group[
+                (group['highlighted'] == False) 
+                & (group['ground_truth'] == True)
+            ]
             second_pass = group[(group['highlighted'] == True)]
             
             if not first_pass.empty and not second_pass.empty:
@@ -64,6 +67,7 @@ def repreat_precision(df):
     per_quantile = {}
 
     for name, group in quantile_grouped:
+        print(name)
         count = Counter(group['correct'])
         per_quantile[name] = {
             'both': count['both'],

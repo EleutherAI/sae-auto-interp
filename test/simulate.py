@@ -1,6 +1,8 @@
 import asyncio
 from nnsight import LanguageModel
 from tqdm import tqdm
+import os
+os.environ["CONFIG_PATH"] = "configs/caden_gpt2.yaml"
 
 from sae_auto_interp.clients import get_client
 from sae_auto_interp.scorers import ScorerInput, OpenAISimulator
@@ -13,9 +15,12 @@ model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 tokens = load_tokenized_data(model.tokenizer)
 
 raw_features_path = "raw_features"
-processed_features_path = "processed_features"
-explanations_dir = "explanations/cot"
+processed_features_path = "new_processed"
+explanations_dir = "explanations/local_simple"
 scorer_out_dir = "scores/oai"
+
+def flatten(l):
+    return [item for sublist in l for item in sublist]
 
 def load_explanation(feature):
     explanations_path = f"{explanations_dir}/layer{feature.layer_index}_feature{feature.feature_index}.txt"
@@ -27,27 +32,31 @@ def load_explanation(feature):
 
 scorer_inputs = []
 
-for layer in [0]:
+for layer in range(0,12,2):
     records = FeatureRecord.from_tensor(
         tokens,
         layer,
         tokenizer=model.tokenizer,
-        selected_features=[1],
+        selected_features=list(range(50)),
+        # selected_features=[0],
         raw_dir= raw_features_path,
         processed_dir=processed_features_path,
         n_random=10,
-        min_examples=200,
-        max_examples=2000
+        min_examples=300,
+        max_examples=10000
     )
     
     for record in tqdm(records):
+
+        if len(record.examples) < 150:
+            continue
 
         try:
             explanation = load_explanation(record.feature)
             _, test = sample_top_and_quantiles(
                 record=record,
-                n_train=20,
-                n_test=5,
+                n_train=0,
+                n_test=2,
                 n_quantiles=4,
                 seed=22,
             )
@@ -55,15 +64,14 @@ for layer in [0]:
             logger.error(f"Failed while sampling for {record.feature}: {e}") 
             continue
 
-        test = [t[0] for t in test[:2]]
-
         scorer_inputs.append(
             ScorerInput(
                 record=record,
-                test_examples=test,
+                test_examples=flatten(test),
                 explanation=explanation
             )
         )
+
 
 client = get_client("local", "casperhansen/llama-3-70b-instruct-awq")
 scorer = OpenAISimulator(client)
