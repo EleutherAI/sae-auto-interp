@@ -1,1 +1,1 @@
-"The neuron is looking for words related to change or transformation."
+"The neuron is looking for the concept of transformation or alteration, specifically the verb \"changed\" or its variant \"changing\"."

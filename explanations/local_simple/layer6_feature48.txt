@@ -1,0 +1,1 @@
+"The neuron is looking for colons (:) used to indicate a definition, explanation, or elaboration."

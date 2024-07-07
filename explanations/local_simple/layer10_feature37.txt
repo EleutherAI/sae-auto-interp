@@ -1,0 +1,1 @@
+"The neuron is looking for punctuation marks, specifically periods and dashes, which often indicate the end of a sentence or a separation between clauses."

@@ -1,0 +1,1 @@
+"The neuron is looking for the phrase \"one [adverb/time]\" or similar constructions, often indicating a singular or sequential action."

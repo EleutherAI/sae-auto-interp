@@ -23,8 +23,10 @@ cache:
     # shuffle token seed for reproducibility
     seed: 22
 
-example:
+    # Number of tokens to the left of each activation
     l_ctx: 15
+
+    # Numeber of tokens to the right of each activation
     r_ctx: 4
 
 cot_explainer: 
@@ -37,11 +39,12 @@ cot_explainer:
 detection:
     max_tokens: 1000
     temperature: 0.0
-    n_batches: 5
     seed: 22
-    batch_size: 10
+    batch_size: 30
     threshold: 0.3
-    n_incorrect: 2
+
+    l: "<<"
+    r: ">>"
 
 simple_explainer:
     temperature: 0.0

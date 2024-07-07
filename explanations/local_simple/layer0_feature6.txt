@@ -1,1 +1,1 @@
-"The neuron is looking for words related to rhythm, beat, or pulse, such as \"pulse\", \"mut\", and \"pulsate\"."
+"The neuron is looking for words related to \"mut\" or \"pulse\", possibly related to sound or rhythm."
