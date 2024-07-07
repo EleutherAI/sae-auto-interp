@@ -1,1 +1,1 @@
-"The neuron is looking for the name \"Newton\", specifically referring to a person or place."
+"The neuron is looking for proper nouns that are names of people or places, specifically surnames that are also geographic locations."

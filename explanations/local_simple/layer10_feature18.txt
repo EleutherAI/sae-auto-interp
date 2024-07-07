@@ -1,0 +1,1 @@
+"The neuron is looking for Twitter handles or usernames, often denoted by the \"@\" symbol."

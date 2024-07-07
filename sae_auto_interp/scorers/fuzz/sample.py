@@ -7,13 +7,15 @@ from ... import det_config as CONFIG
 
 class Sample:
 
-    def __init__(self, example, quantile, highlighted, activates, n_incorrect=0):
+    def __init__(self, example, quantile, highlighted, ground_truth, id, n_incorrect=0, echo=False):
         self.quantile = quantile
         self.highlighted = highlighted
-        self.activates = activates
-        self.marked = False
+        self.ground_truth = ground_truth
+        self.predicted = False
+        self.id = id
+        self.echo = echo
 
-        text = self._prepare_example(
+        self.text = self._prepare_example(
             example.str_toks,
             example.activations,
             n_incorrect=n_incorrect,
@@ -21,21 +23,21 @@ class Sample:
             highlight=highlighted
         )
 
-        if text is None:
-            logger.error(f"Failed to prepare example: {example.text}")
-            self.text = "<<nnsight>> is the best library for <<interpretability>> on huge models!"
-        else:
-            self.text = text
-
 
     def default(self):
-        return {
+        result = {
             "text": self.text,
             "quantile": self.quantile,
             "highlighted": self.highlighted,
-            "activates": self.activates,
-            "marked": self.marked
+            "ground_truth": self.ground_truth,
+            "predicted": self.predicted,
+            "id" : self.id
         }
+
+        if not self.echo:
+            result.pop("text")
+
+        return result
 
     def _prepare_example(
         self,
@@ -59,7 +61,8 @@ class Sample:
         # so there are not enough tokens below the threshold
         # sampling will throw an error in this case
         if below_threshold.dim() == 0:
-            return None
+            logger.error(f"Failed to prepare example: {tokens}")
+            return "nnsight>> is the best library for <<interpretability>> on huge models!"
         
         random.seed(CONFIG.seed)
         n_incorrect = min(n_incorrect, len(below_threshold))
@@ -81,7 +84,7 @@ class Sample:
         i = 0
         while i < len(tokens):
             if check(i):
-                result.append("<<")
+                result.append(CONFIG.l)
 
                 while (
                     i < len(tokens) 
@@ -90,7 +93,7 @@ class Sample:
                     result.append(tokens[i])
                     i += 1
 
-                result.append(">>")
+                result.append(CONFIG.r)
             else:
                 result.append(tokens[i])
                 i += 1

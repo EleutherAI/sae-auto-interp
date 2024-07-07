@@ -1,1 +1,1 @@
-"The neuron is looking for the word \"unlimited\", specifically in the context of quantities or resources, indicating a lack of limitation or restriction."
+"The neuron is looking for words related to limits or bounds, specifically \"unlimited\", \"max\", and \"ult\"."

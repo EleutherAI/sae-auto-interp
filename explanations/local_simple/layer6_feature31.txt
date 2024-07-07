@@ -1,0 +1,1 @@
+"The neuron is looking for punctuation marks, specifically periods (.) and occasionally other punctuation marks or short words that often accompany them."

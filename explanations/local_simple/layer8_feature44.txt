@@ -1,0 +1,1 @@
+"The neuron is looking for first-person pronouns, such as \"I\", and related phrases that indicate personal thoughts or actions."

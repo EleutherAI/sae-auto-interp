@@ -1,0 +1,1 @@
+"The neuron is looking for words related to the stomach or gastrointestinal system."

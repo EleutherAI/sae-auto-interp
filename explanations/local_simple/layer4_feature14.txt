@@ -1,0 +1,1 @@
+"The neuron is looking for capital letters, specifically the first letter of a surname or proper noun."

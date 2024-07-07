@@ -11,24 +11,26 @@ from .schema import create_response_model
 from ... import det_config as CONFIG
 from ..scorer import Scorer, ScorerInput
 
+import json
+
 
 class FuzzingScorer(Scorer):
-    def __init__(self, client):
+    def __init__(self, client, echo=False):
         self.name = "fuzz"
         self.client = client
+        self.echo = echo
     
     async def __call__(
         self, 
         scorer_in: ScorerInput
     ) -> List[Sample]:
         
-        self.avg_acts = self.average_n_acts(scorer_in.record.examples[:150])
-        
         # Build clean and fuzzed batches
         clean_batches, fuzzed_batches = self._prepare(
             test_batches=scorer_in.test_examples, 
             random_examples=scorer_in.record.random,
             incorrect_examples=scorer_in.record.extra,
+            avg_acts=scorer_in.record.average_n_activations
         )
 
         # Generate responses
@@ -39,27 +41,21 @@ class FuzzingScorer(Scorer):
 
         return results
     
-    def average_n_acts(self, examples):
-        return sum(
-            torch.count_nonzero(example.activations)
-            for example in examples
-        ) / len(examples)
-
     def _prepare(
         self, 
         test_batches,
         random_examples,
-        incorrect_examples
+        incorrect_examples,
+        avg_acts
     ):  
-        def _prepare_batch(arr, batch, quantile, highlight, activates=True):
-            # If the example doesn't activate, its a random excerpt
-            if batch[0].max_activation == 0.0:
-                quantile = -1
-
-            n_incorrect = 0
-            if quantile == -1 and highlight:
-                n_incorrect = ceil(self.avg_acts.item())
+        def _prepare_batch(arr, batch, quantile, highlight, ground_truth=True):
             
+            n_incorrect = ceil(avg_acts) \
+                if (
+                    quantile == -1 
+                    and highlight
+                ) else 0
+
             # Append to a respective list
             for example in batch:
                 arr.append(
@@ -67,8 +63,10 @@ class FuzzingScorer(Scorer):
                         example=example,
                         quantile=quantile,
                         highlighted=highlight,
-                        activates=activates,
-                        n_incorrect=n_incorrect
+                        ground_truth=ground_truth,
+                        n_incorrect=n_incorrect,
+                        id=hash(example.text),
+                        echo=self.echo
                     )
                 )
 
@@ -79,14 +77,16 @@ class FuzzingScorer(Scorer):
             _prepare_batch(clean, batch, quantile, highlight=False)
             _prepare_batch(fuzzed, batch, quantile, highlight=True)
 
-        _prepare_batch(clean, random_examples, -1, highlight=False, activates=False)
-        _prepare_batch(fuzzed, incorrect_examples, -1, highlight=True, activates=False)
+        # Add random examples to the clean batch
+        _prepare_batch(clean, random_examples, -1, highlight=False, ground_truth=False)
+        # Add incorrectly predicted examples to the fuzzed batch
+        _prepare_batch(fuzzed, incorrect_examples, -1, highlight=True, ground_truth=False)
 
         random.shuffle(clean)
         random.shuffle(fuzzed)
 
         return self._batch(clean), self._batch(fuzzed)
-
+    
         
     def _batch(self, arr):
         return [
@@ -105,11 +105,6 @@ class FuzzingScorer(Scorer):
             self.query(batch, explanation) 
             for batch in batches
         ]
-
-        # for t in batches:
-        #     print(len(t))
-        
-        # return
 
         # Execute the tasks concurrently
         results = await asyncio.gather(*tasks)
@@ -149,12 +144,12 @@ class FuzzingScorer(Scorer):
 
         selections = await self.client.generate(
             prompt,
-            max_tokens=100,
-            temperature=0.0,
+            max_tokens=CONFIG.max_tokens,
+            temperature=CONFIG.temperature,
             schema=response_model.model_json_schema()
         )
 
         for i, sample in enumerate(batch):
-            sample.marked = selections[f"example_{i}"] == 1
+            sample.predicted = selections[f"example_{i}"] == 1
         
         return batch

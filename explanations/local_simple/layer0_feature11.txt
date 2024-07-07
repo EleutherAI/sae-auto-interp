@@ -1,0 +1,1 @@
+"The neuron is looking for the word \"own\" or variations of it, such as \"owned\"."

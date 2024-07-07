@@ -1,0 +1,1 @@
+"The neuron is looking for proper nouns or abbreviations that refer to specific locations or entities, such as company names or geographic locations."

@@ -16,9 +16,9 @@ model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 tokens = load_tokenized_data(model.tokenizer)
 
 raw_features_path = "raw_features"
-processed_features_path = "processed_features"
+processed_features_path = "new_processed"
 explanations_dir = "explanations/local_simple"
-scorer_out_dir = "scores/fuzz_remote_simple"
+scorer_out_dir = "scores/fuzz_local_simple_id"
 
 def load_explanation(feature):
     explanations_path = f"{explanations_dir}/layer{feature.layer_index}_feature{feature.feature_index}.txt"
@@ -35,10 +35,11 @@ for layer in range(0,12,2):
         tokens,
         layer,
         tokenizer=model.tokenizer,
-        selected_features=list(range(2)),
+        selected_features=list(range(50)),
         raw_dir= raw_features_path,
         processed_dir=processed_features_path,
         n_random=10,
+        min_examples=300,
         max_examples=10000
     )
     
@@ -73,9 +74,9 @@ for layer in range(0,12,2):
             )
         )
 
-    break
-client = get_client("openrouter", "meta-llama/llama-3-70b-instruct", api_key=openrouter_key)
-scorer = FuzzingScorer(client)
+# client = get_client("openrouter", "meta-llama/llama-3-70b-instruct", api_key=openrouter_key)
+client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct")
+scorer = FuzzingScorer(client, echo=False)
 
 asyncio.run(
     execute_model(

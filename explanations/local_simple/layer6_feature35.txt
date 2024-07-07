@@ -1,0 +1,1 @@
+"The neuron is looking for words that indicate degree or manner, such as \"so\", \"probably\", \"perhaps\", \"yet\", or \"quite\"."

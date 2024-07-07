@@ -1,0 +1,1 @@
+"The neuron is looking for words starting with the prefix \"reb-\", such as \"rebroadcast\", \"rebates\", \"Reba\", \"rebound\", \"rebalancing\", \"rebuys\", \"rebate\", \"rebalanced\", \"rebounding\", or \"rebuked\"."

@@ -57,7 +57,7 @@ class Local(Client):
                 response.raise_for_status()  
 
                 if raw:
-                    return response
+                    return response.json()
                 
                 if kwargs.get("schema") is not None:
                     response = self.postprocess(prompt, response)

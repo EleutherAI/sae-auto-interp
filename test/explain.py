@@ -26,9 +26,9 @@ for layer in range(0,12,2):
         tokens,
         tokenizer=model.tokenizer,
         layer_index=layer,
-        selected_features=list(range(0,10)),
+        selected_features=list(range(50)),
         raw_dir= raw_features_path,
-        max_examples=2000
+        max_examples=10000
     )
 
     for record in records:
@@ -47,13 +47,13 @@ for layer in range(0,12,2):
             )
         )
 
-    break
 
-client = get_client("openrouter", "meta-llama/llama-3-70b-instruct", api_key=openrouter_key)
+# client = get_client("openrouter", "meta-llama/llama-3-70b-instruct", api_key=openrouter_key)
+client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct")
 
 explainer = SimpleExplainer(client)
 
-explainer_out_dir = "explanations/remote_simple"
+explainer_out_dir = "explanations/local_simple"
 asyncio.run(
     execute_model(
         explainer, 

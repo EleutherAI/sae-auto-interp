@@ -1,0 +1,1 @@
+"The neuron is looking for numerical values or digits in the text."
