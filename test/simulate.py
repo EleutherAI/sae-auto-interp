@@ -37,7 +37,7 @@ for layer in range(0,12,2):
         tokens,
         layer,
         tokenizer=model.tokenizer,
-        selected_features=list(range(50)),
+        selected_features=[0],
         # selected_features=[0],
         raw_dir= raw_features_path,
         processed_dir=processed_features_path,
@@ -72,6 +72,7 @@ for layer in range(0,12,2):
             )
         )
 
+    break
 
 client = get_client("local", "casperhansen/llama-3-70b-instruct-awq")
 scorer = OpenAISimulator(client)
