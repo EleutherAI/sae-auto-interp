@@ -50,22 +50,6 @@ class Buffer:
         return nonzero_feature_locations, nonzero_feature_activations
     
 
-    def get_feature_occurances(
-        self,
-        feature_index: int,
-        layer_index: int
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
-        
-        if not self.saved:
-            self.save()
-
-        locations = self.feature_locations[layer_index]
-        activations = self.feature_activations[layer_index]
-
-        # Use boolean indexing
-        mask = locations[:, 2] == feature_index
-        return locations[mask].tolist(), activations[mask].tolist()
-
 class FeatureCache:
 
     def __init__(
@@ -190,18 +174,3 @@ class FeatureCache:
         masked_activations = feature_activations[mask]
         activation_output_file = os.path.join(save_dir, f"layer{layer}_activations.pt")
         torch.save(masked_activations, activation_output_file)
-    
-    
-    def save_some_features(self, feature_dict, save_dir):
-
-        self.buffer.save()
-
-        for layer_index, features in feature_dict.items(): 
-            
-            for feature_index in tqdm(features):
-                data = self.buffer.get_feature_occurances(feature_index, layer_index)
-                
-                with open(f"{save_dir}/layer{layer_index}_feature{feature_index}.json", "wb") as f:
-                    f.write(
-                        orjson.dumps(data)
-                    )

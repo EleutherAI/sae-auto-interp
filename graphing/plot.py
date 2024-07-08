@@ -67,12 +67,11 @@ def repreat_precision(df):
     per_quantile = {}
 
     for name, group in quantile_grouped:
-        print(name)
         count = Counter(group['correct'])
         per_quantile[name] = {
-            'both': count['both'],
             'first': count['first'],
             'second': count['second'],
+            'both': count['both'],
             'neither': count['neither']
         }
 
@@ -123,9 +122,9 @@ axs = axs.flatten()
 
 # Define a color map for categories
 category_colors = {
-    "both": "blue",
     "first": "green",
     "second": "orange",
+    "both": "blue",
     "neither": "red"
 }
 

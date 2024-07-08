@@ -16,7 +16,7 @@ import random
 
 
 def load_tokenized_data(
-    tokenizer: AutoTokenizer,CONFIG=CONFIG
+    tokenizer: AutoTokenizer
 ):
     data = load_dataset(CONFIG.dataset_repo,name=CONFIG.dataset_name, split=CONFIG.dataset_split)
 
