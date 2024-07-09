@@ -1,1 +1,0 @@
-"The neuron is looking for technical or mathematical terms, specifically related to geometry and data structures."

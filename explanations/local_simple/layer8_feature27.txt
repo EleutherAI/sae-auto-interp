@@ -1,1 +1,0 @@
-"The neuron is looking for sentences that ask questions, typically indicated by the presence of a question mark or words like \"Why\", \"What\", \"Did\", \"Should\", etc."

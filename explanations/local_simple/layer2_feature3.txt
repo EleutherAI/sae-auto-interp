@@ -1,1 +1,0 @@
-"The neuron is looking for specific tokens or short sequences of characters, particularly \"o\", \"e\", \"br\", \"Mem\", and \"bers\"."

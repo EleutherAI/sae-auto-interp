@@ -1,1 +1,0 @@
-"The neuron is looking for the term \"fee\" or its plural form \"fees\"."

@@ -1,1 +1,0 @@
-"The neuron is looking for punctuation marks, typically indicating the start or end of a quotation, title, or phrase."

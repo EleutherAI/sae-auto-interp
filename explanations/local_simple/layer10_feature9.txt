@@ -1,1 +1,0 @@
-"The neuron is looking for location-related tokens, particularly those related to Texas, such as city names (Dallas, Austin), state abbreviations (TX), and geographic features (Cedar Crest Blvd)."

@@ -1,1 +1,0 @@
-"The neuron is looking for punctuation marks or short function words."

@@ -1,1 +1,0 @@
-"The neuron is looking for nouns that are names of specific things, such as brands, products, or titles."

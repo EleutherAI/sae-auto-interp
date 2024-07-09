@@ -1,1 +1,0 @@
-"The neuron is looking for proper nouns that are names of people or places, specifically surnames that are also geographic locations."

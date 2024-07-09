@@ -1,1 +1,0 @@
-"The neuron is looking for postal-related abbreviations or words, specifically \"PO\" which stands for Post Office."

@@ -9,6 +9,8 @@ class ScorerInput:
     explanation: str
     record: FeatureRecord
     test_examples: List[Example]
+    random_examples: List[Example] = None
+    extra_examples: List[Example] = None
 
 class Scorer(ABC):
     def __init__(self):

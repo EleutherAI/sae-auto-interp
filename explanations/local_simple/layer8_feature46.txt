@@ -1,1 +1,0 @@
-"The neuron is looking for ellipsis (...) or suspension points, which are used to indicate a pause or trailing off in speech or writing."

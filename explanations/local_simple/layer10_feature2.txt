@@ -1,1 +1,0 @@
-"The neuron is looking for non-ASCII characters, such as emojis or non-English characters."

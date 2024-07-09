@@ -1,1 +1,0 @@
-"The neuron is looking for punctuation marks and formatting indicators that typically accompany citations, references, or listings of events, such as commas, parentheses, and dates."

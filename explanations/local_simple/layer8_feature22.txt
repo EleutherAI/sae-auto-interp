@@ -1,1 +1,0 @@
-"The neuron is looking for chemical prefixes or suffixes, such as \"phos-\", \"chlor-\", \"sulf-\", etc."

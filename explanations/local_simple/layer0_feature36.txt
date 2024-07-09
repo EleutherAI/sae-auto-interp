@@ -1,1 +1,0 @@
-"The neuron is looking for the term \"Resources\" or \"resources\" in a document."

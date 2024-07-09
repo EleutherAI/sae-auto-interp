@@ -1,1 +1,0 @@
-"The neuron is looking for the word \"first\" or phrases that indicate a starting point or initial event."

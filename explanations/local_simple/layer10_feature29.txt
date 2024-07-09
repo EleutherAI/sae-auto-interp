@@ -1,1 +1,0 @@
-"The neuron is looking for the sound or prefix \"ar\" in a word."

@@ -16,17 +16,29 @@ import random
 
 
 def load_tokenized_data(
-    tokenizer: AutoTokenizer
+    tokenizer: AutoTokenizer,
+    config=CONFIG,
+    **kwargs
 ):
-    data = load_dataset(CONFIG.dataset_repo,name=CONFIG.dataset_name, split=CONFIG.dataset_split)
+    # Use kwargs to override config values if provided
+    dataset_repo = kwargs.get('dataset_repo', config.dataset_repo)
+    dataset_name = kwargs.get('dataset_name', config.dataset_name)
+    dataset_split = kwargs.get('dataset_split', config.dataset_split)
+    batch_len = kwargs.get('batch_len', config.batch_len)
+    seed = kwargs.get('seed', config.seed)
 
+    # Load the dataset
+    data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
+
+    # Tokenize and concatenate
     tokens = utils.tokenize_and_concatenate(
         data, 
         tokenizer, 
-        max_length=CONFIG.batch_len
+        max_length=batch_len
     )   
 
-    tokens = tokens.shuffle(CONFIG.seed)['tokens']
+    # Shuffle the tokens
+    tokens = tokens.shuffle(seed)['tokens']
 
     return tokens
 

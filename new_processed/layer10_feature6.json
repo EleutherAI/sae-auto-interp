@@ -1,1 +1,0 @@
-{"feature":{"layer_index":10,"feature_index":6},"top_logits":["Window","Mouse","Menu"," Menu","menu","Screen","TextColor","Icon"," gui"," Keyboard"],"average_n_activations":6.19,"unique_tokens":61,"n_per_quantile":[1498,2219,330,42]}

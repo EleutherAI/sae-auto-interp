@@ -1,1 +1,0 @@
-"The neuron is looking for the abbreviation \"cc\", which can stand for various things such as \"country code\", \"creative commons\", or others."

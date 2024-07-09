@@ -1,1 +1,0 @@
-"The neuron is looking for the word \"air\" in a document, often in the context of broadcasting, atmosphere, or aviation."

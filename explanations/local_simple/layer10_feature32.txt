@@ -1,1 +1,0 @@
-"The neuron is looking for the preposition \"to\" in a sentence, often in the context of agreement or arrangement."

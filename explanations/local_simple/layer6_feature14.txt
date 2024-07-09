@@ -1,1 +1,0 @@
-"The neuron is looking for prepositions, particularly \"on\" and \"of\", that indicate relationships between entities or concepts."

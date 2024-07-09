@@ -1,1 +1,0 @@
-"The neuron is looking for verbs related to political candidacy or action, such as \"running\", \"run\", or \"ran\"."

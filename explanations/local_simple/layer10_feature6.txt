@@ -1,1 +1,0 @@
-"The neuron is looking for syntax elements, such as punctuation marks, brackets, and keywords, that are commonly used in programming or technical writing."

@@ -1,1 +1,0 @@
-"The neuron is looking for abbreviations or suffixes indicating multiple authors or references, specifically \"al\" or \"Alleg\"."

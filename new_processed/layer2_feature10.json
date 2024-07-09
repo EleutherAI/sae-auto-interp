@@ -1,1 +1,0 @@
-{"feature":{"layer_index":2,"feature_index":10},"top_logits":[" connectivity"," Ethernet","addr"," routers"," router"," adapter"," connector"," adapters"," chipset","device"],"average_n_activations":5.27,"unique_tokens":27,"n_per_quantile":[6924,2290,639,137]}

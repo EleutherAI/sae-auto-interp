@@ -1,1 +1,0 @@
-"The neuron is looking for phrases related to something being worth a certain value or cost."

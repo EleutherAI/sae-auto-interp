@@ -15,9 +15,9 @@ model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 tokens = load_tokenized_data(model.tokenizer)
 
 raw_features_path = "raw_features"
-processed_features_path = "new_processed"
-explanations_dir = "explanations/local_simple"
-scorer_out_dir = "scores/oai"
+processed_features_path = "processed_features"
+explanations_dir = "explanations/simple_local_70b"
+scorer_out_dir = "scores/oai_70b/simple_local_70b"
 
 def flatten(l):
     return [item for sublist in l for item in sublist]
@@ -37,12 +37,11 @@ for layer in range(0,12,2):
         tokens,
         layer,
         tokenizer=model.tokenizer,
-        selected_features=[0],
-        # selected_features=[0],
+        selected_features=list(range(50)),
         raw_dir= raw_features_path,
         processed_dir=processed_features_path,
         n_random=10,
-        min_examples=300,
+        min_examples=120,
         max_examples=10000
     )
     

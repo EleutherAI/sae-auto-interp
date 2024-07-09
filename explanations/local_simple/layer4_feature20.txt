@@ -1,1 +1,0 @@
-"The neuron is looking for the token \"icks\" or variations of it, such as \"ICK\" or \"icks\"."

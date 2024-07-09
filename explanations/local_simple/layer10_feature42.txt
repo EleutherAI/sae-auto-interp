@@ -1,1 +1,0 @@
-"The neuron is looking for titles, subtitles, or phrases that introduce or describe books, articles, or academic works."
