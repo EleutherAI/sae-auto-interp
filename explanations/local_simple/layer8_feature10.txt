@@ -1,1 +1,0 @@
-"The neuron is looking for the verb \"is\" or \"are\" in a sentence, likely indicating a focus on states of being or existence."

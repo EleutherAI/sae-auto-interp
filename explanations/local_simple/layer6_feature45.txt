@@ -1,1 +1,0 @@
-"The neuron is looking for the word \"next\" in a sentence, often in the context of anticipating or planning for future actions or events."

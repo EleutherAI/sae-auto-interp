@@ -1,1 +1,0 @@
-"The neuron is looking for the letter \"c\" in a document, possibly as the starting letter of a specific word or name, such as \"Carlo\" or \"Foucault\"."

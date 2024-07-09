@@ -1,1 +1,0 @@
-"The neuron is looking for commas in a sentence, particularly those used to separate items in a list or to set off nonessential clauses."

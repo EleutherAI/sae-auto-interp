@@ -1,1 +1,0 @@
-"The neuron is looking for the first-person singular pronoun \"I\" as the speaker in a sentence."

@@ -1,1 +1,0 @@
-"The neuron is looking for numerical values, specifically numbers in a sequence or enumeration."

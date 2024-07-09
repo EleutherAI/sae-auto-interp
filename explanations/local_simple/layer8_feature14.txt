@@ -1,1 +1,0 @@
-"The neuron is looking for punctuation marks or symbols that indicate a transition, separation, or connection between elements, such as colons, dashes, and \"from\"."

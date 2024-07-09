@@ -1,1 +1,0 @@
-"The neuron is looking for proper nouns, specifically surnames or initials."

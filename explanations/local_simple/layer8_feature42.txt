@@ -1,1 +1,0 @@
-"The neuron is looking for statistical or mathematical concepts, such as p-values, correlations, means, and margins of error."

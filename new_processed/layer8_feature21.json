@@ -1,1 +1,0 @@
-{"feature":{"layer_index":8,"feature_index":21},"top_logits":["charged","assembled","installed","loaded","elected","generated","placed","treated","appointed","published"],"average_n_activations":1.1,"unique_tokens":1,"n_per_quantile":[1599,176,110,122]}

@@ -191,6 +191,10 @@ class Activation(Stat):
             import spacy
             self.nlp = spacy.load("en_core_web_sm")
 
+    def refresh(self, k=None, **kwargs):
+        if k:
+            self.k = k
+
     def compute(self, record, *args, **kwargs):
 
         top_k_examples = record.examples[:self.k]
@@ -214,6 +218,7 @@ class Activation(Stat):
         if self.nlp:
             lemmas = self.lemmatize(top_tokens)
             record.lemmas = lemmas
+            record.n_lemmas = len(set(lemmas))
         if self.sentence_model:
             record.activation_similarity = self.similarity(
                 record.examples[:500]
@@ -230,7 +235,7 @@ class Activation(Stat):
 
             # Append top activation and token
             top_activations.append(example.activations[max_index].item())
-            top_tokens.append(example.tokens[max_index].item())
+            top_tokens.append(example.str_toks[max_index])
             
             # Count number of activations
             nonzero = np.count_nonzero(example.activations)

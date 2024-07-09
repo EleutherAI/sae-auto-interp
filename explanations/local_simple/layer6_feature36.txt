@@ -1,1 +1,0 @@
-"The neuron is looking for time or date separators, such as colons, dashes, or slashes, often used in timestamps or dates."

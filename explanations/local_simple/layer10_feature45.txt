@@ -1,1 +1,0 @@
-"The neuron is looking for suffixes or word parts, specifically \"-ton\", \"-ast\", and \"-oc\"."

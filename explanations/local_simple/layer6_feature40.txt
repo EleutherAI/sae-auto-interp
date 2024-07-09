@@ -1,1 +1,0 @@
-"The neuron is looking for the \"@\" symbol, which is typically used to indicate a username or handle on social media platforms."

@@ -1,1 +1,0 @@
-"The neuron is looking for the Latin prefix \"res\" or words that contain it, regardless of their meaning or context."

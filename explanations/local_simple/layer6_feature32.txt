@@ -1,1 +1,0 @@
-"The neuron is looking for short, common words or punctuation marks, often function words or tokens that are not carrying significant semantic meaning."

@@ -1,1 +1,0 @@
-"The neuron is looking for short sequences of characters, often prefixes or parts of words."

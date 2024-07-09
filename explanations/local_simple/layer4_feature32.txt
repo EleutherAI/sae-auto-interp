@@ -1,1 +1,0 @@
-"The neuron is looking for parts of words or short sequences of characters, possibly related to brand names or specific terms."

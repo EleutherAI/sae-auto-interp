@@ -1,1 +1,0 @@
-"The neuron is looking for specific proper nouns, particularly names and places, such as \"Carm\", \"Heath\", and \"Cob\"."

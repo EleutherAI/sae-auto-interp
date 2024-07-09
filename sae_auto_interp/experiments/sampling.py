@@ -195,7 +195,10 @@ def sample_top_and_quantiles(
 
     # Calculate thresholds based on fractions of the overall maximum activation
     overall_max = max_activations.max().item()
-    thresholds = [overall_max * (i + 1) / n_quantiles for i in range(n_quantiles - 1)]
+    thresholds = [
+        overall_max * (i + 1) / n_quantiles 
+        for i in range(n_quantiles - 1)
+    ]
     
     quantiles = []
     start = 0

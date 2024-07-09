@@ -1,1 +1,0 @@
-"The neuron is looking for special characters or symbols, specifically vertical pipes (||) and other delimiters."

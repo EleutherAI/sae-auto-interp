@@ -1,1 +1,0 @@
-"The neuron is looking for the word \"tweet\" or its variations, likely related to social media posts."

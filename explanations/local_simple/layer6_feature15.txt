@@ -1,1 +1,0 @@
-"The neuron is looking for phrases or words that indicate a significant extent or magnitude, such as \"long\", \"large\", or \"big\"."

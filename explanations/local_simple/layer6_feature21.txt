@@ -1,1 +1,0 @@
-"The neuron is looking for references to taking or having images, such as \"pictures\", \"photos\", or \"picture\"."

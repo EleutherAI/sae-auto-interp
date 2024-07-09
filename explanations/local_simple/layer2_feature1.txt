@@ -1,1 +1,0 @@
-"The neuron is looking for specific brand or proper nouns, such as \"Recovery\", \"ovi\" (likely referring to Rovi), and \"Pizza\"."

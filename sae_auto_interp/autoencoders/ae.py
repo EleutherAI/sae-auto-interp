@@ -43,7 +43,7 @@ def load_eai_autoencoders(model,ae_layers: List[int], weight_dir:str):
         ae_dict[layer] = sae
         submodule_dict[layer] = submodule
 
-    with model.alter(" "):
+    with model.edit(" "):
         for layer_idx, _ in ae_dict.items():
             layer = model.model.layers[layer_idx]
             acts = layer.output[0]
@@ -69,7 +69,7 @@ def load_oai_autoencoders(model,ae_layers: List[int], weight_dir:str):
         ae_dict[layer] = ae
         submodule_dict[layer] = submodule
 
-    with model.alter(" "):
+    with model.edit(" "):
         for layer_idx, _ in ae_dict.items():
             layer = model.transformer.h[layer_idx]
             acts = layer.output[0]

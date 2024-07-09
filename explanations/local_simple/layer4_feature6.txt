@@ -1,1 +1,0 @@
-"The neuron is looking for words that indicate a change in state or a current situation, such as \"now\", \"has\", \"been\", and \"should\"."

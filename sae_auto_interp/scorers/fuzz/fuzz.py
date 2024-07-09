@@ -15,10 +15,11 @@ import json
 
 
 class FuzzingScorer(Scorer):
-    def __init__(self, client, echo=False):
+    def __init__(self, client, echo=False, get_prompts=False):
         self.name = "fuzz"
         self.client = client
         self.echo = echo
+        self.get_prompts = get_prompts
     
     async def __call__(
         self, 
@@ -28,11 +29,14 @@ class FuzzingScorer(Scorer):
         # Build clean and fuzzed batches
         clean_batches, fuzzed_batches = self._prepare(
             test_batches=scorer_in.test_examples, 
-            random_examples=scorer_in.record.random,
-            incorrect_examples=scorer_in.record.extra,
+            random_examples=scorer_in.random_examples,
+            incorrect_examples=scorer_in.extra_examples,
             avg_acts=scorer_in.record.average_n_activations
         )
 
+        if self.get_prompts:
+            return clean_batches, fuzzed_batches
+        
         # Generate responses
         results = await self.process_batches(
             clean_batches + fuzzed_batches, 

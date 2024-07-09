@@ -1,1 +1,0 @@
-"The neuron is looking for conjunctions or punctuation marks that connect words or phrases."

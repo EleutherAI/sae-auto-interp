@@ -1,1 +1,0 @@
-"The neuron is looking for fragments of URLs, IDs, or codes, often containing numbers and special characters."

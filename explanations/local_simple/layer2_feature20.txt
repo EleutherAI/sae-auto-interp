@@ -1,1 +1,0 @@
-"The neuron is looking for negations, specifically the contractions \"don't\" and \"not\"."

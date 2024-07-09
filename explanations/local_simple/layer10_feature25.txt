@@ -1,1 +1,0 @@
-"The neuron is looking for mentions of hockey teams, players, and game-related information."
