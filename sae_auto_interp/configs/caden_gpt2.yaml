@@ -42,7 +42,6 @@ detection:
     seed: 22
     batch_size: 30
     threshold: 0.3
-
     l: "<<"
     r: ">>"
 

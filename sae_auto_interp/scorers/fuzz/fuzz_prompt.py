@@ -1,3 +1,4 @@
+# %%
 DSCORER_SYSTEM_PROMPT = """You are an intelligent and meticulous linguistics researcher.
 
 You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment". You will be given a few examples of text that contain this feature. Portions of the sentence which strongly represent this feature are between tokens << and >>. 
@@ -77,13 +78,7 @@ Text examples:
 {examples}
 """
 
-from .few_shot_examples import data
-import random
-
-def random_examples(data, n=3):
-
-  # Unpack
-  pass
+from .fuzzed_few_shot_examples import examples as fuzzed_examples
 
 def prompt(examples, explanation, n_test=-1):
   generation_prompt = GENERATION_PROMPT.format(explanation=explanation, examples=examples)
@@ -97,7 +92,11 @@ def prompt(examples, explanation, n_test=-1):
     {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
   ]
 
-  
+  if n_test == 0:
+    defaults = []
+  elif n_test != -1:
+    defaults = fuzzed_examples[str(n_test)]
+
   prompt = [
     {"role": "system", "content": DSCORER_SYSTEM_PROMPT},
     *defaults,

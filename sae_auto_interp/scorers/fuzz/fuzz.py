@@ -15,10 +15,11 @@ import json
 
 
 class FuzzingScorer(Scorer):
-    def __init__(self, client, echo=False, get_prompts=False):
+    def __init__(self, client, echo=False, get_prompts=False, n_few_shots=0):
         self.name = "fuzz"
         self.client = client
         self.echo = echo
+        self.n_few_shots = n_few_shots
         self.get_prompts = get_prompts
     
     async def __call__(
@@ -135,7 +136,8 @@ class FuzzingScorer(Scorer):
 
         return prompt(
             explanation=explanation,
-            examples=examples
+            examples=examples,
+            n_test=self.n_few_shots
         )
 
     async def query(
@@ -145,6 +147,8 @@ class FuzzingScorer(Scorer):
     ) -> List[Sample]:
         prompt = self.build_prompt(batch, explanation)
         response_model = create_response_model(len(batch))
+
+        print(prompt)
 
         selections = await self.client.generate(
             prompt,

@@ -35,7 +35,7 @@ for layer in range(0,12,2):
         tokens,
         layer,
         tokenizer=model.tokenizer,
-        selected_features=list(range(50)),
+        selected_features=list(range(20)),
         raw_dir= raw_features_path,
         processed_dir=processed_features_path,
         n_random=10,
@@ -72,15 +72,21 @@ for layer in range(0,12,2):
         )
 
 
-
 # client = get_client("openrouter", "anthropic/claude-3.5-sonnet", api_key=openrouter_key)
 client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct")
-scorer = FuzzingScorer(client, echo=False)
 
-asyncio.run(
-    execute_model(
-        scorer, 
-        scorer_inputs,
-        output_dir=scorer_out_dir,
+
+for n_few_shots in range(2,9):
+    scorer_out_dir = \
+        f"/share/u/caden/sae-auto-interp/scores/fuzz_70b/simple_local_70b_nfew{n_few_shots}"
+    os.makedirs(scorer_out_dir)
+
+    scorer = FuzzingScorer(client, echo=False, n_few_shots=n_few_shots)
+
+    asyncio.run(
+        execute_model(
+            scorer, 
+            scorer_inputs,
+            output_dir=scorer_out_dir,
+        )
     )
-)
