@@ -10,7 +10,7 @@ from sae_auto_interp.logger import logger
 import argparse
 import random
 from sae_auto_interp import cache_config as CONFIG
-
+from sae_auto_interp import det_config as DET_CONFIG
 argparser = argparse.ArgumentParser()
 argparser.add_argument("--layers", type=str, default="12,14")
 args = argparser.parse_args()
@@ -24,7 +24,7 @@ tokens = load_tokenized_data(model.tokenizer,CONFIG=CONFIG)
 raw_features_path = "raw_features"
 processed_features_path = "processed_features"
 
-samples = get_samples()
+samples = get_samples(N_SAMPLES=1000)
 
 def load_explanation(explanation_dir,feature):
     explanations_path = f"{explanation_dir}/layer{feature.layer_index}_feature{feature.feature_index}.txt"
@@ -34,9 +34,11 @@ def load_explanation(explanation_dir,feature):
 
     return explanation
 
+DET_CONFIG.batch_size = 5
 random_scorer_inputs = []
 simple_scorer_inputs = []
 cot_scorer_inputs = []
+counter=0
 for layer in layers:
     records = FeatureRecord.from_tensor(
         tokens,
@@ -56,9 +58,9 @@ for layer in layers:
             
             idx = random.sample(range(len(records)),1)[0]
 
-            random_explanation = load_explanation("saved_explanations/simple",records[idx].feature)
+            #random_explanation = load_explanation("saved_explanations/simple",records[idx].feature)
             simple_explanation = load_explanation("saved_explanations/simple",record.feature)
-            cot_explanation = load_explanation("saved_explanations/cot",record.feature)
+            #cot_explanation = load_explanation("saved_explanations/cot",record.feature)
             _, test, extra = sample_top_and_quantiles(
                 record=record,
                 n_train=0,
@@ -71,16 +73,15 @@ for layer in layers:
         except Exception as e:
             logger.error(f"Failed while sampling for {record.feature}: {e}") 
             continue
-
         record.extra = extra
 
-        random_scorer_inputs.append(
-            ScorerInput(
-                record=record,
-                test_examples=test,
-                explanation=random_explanation
-            )
-        )
+        # random_scorer_inputs.append(
+        #     ScorerInput(
+        #         record=record,
+        #         test_examples=test,
+        #         explanation=random_explanation
+        #     )
+        # )
         simple_scorer_inputs.append(
             ScorerInput(
                 record=record,
@@ -88,27 +89,30 @@ for layer in layers:
                 explanation=simple_explanation
             )
         )
-        cot_scorer_inputs.append(
-            ScorerInput(
-                record=record,
-                test_examples=test,
-                explanation=cot_explanation
-            )
-        )
+        # cot_scorer_inputs.append(
+        #     ScorerInput(
+        #         record=record,
+        #         test_examples=test,
+        #         explanation=cot_explanation
+        #     )
+        # )
+        if counter>100:
+            break
+        counter+=1
 
-client = get_client("local", "casperhansen/llama-3-70b-instruct-awq", base_url="http://127.0.0.1:8000")
+client = get_client("local", "casperhansen/llama-3-70b-instruct-awq", base_url="http://127.0.0.1:8002")
 scorer = FuzzingScorer(client)
 
-scorer_out_dir = "scores/random"
-print("Running scorer for random")
-asyncio.run(
-    execute_model(
-        scorer, 
-        random_scorer_inputs,
-        output_dir=scorer_out_dir,
-    )
-)
-scorer_out_dir = "scores/simple"
+# scorer_out_dir = "scores/random"
+# print("Running scorer for random")
+# asyncio.run(
+#     execute_model(
+#         scorer, 
+#         random_scorer_inputs,
+#         output_dir=scorer_out_dir,
+#     )
+# )
+scorer_out_dir = "scores/simple_batch"
 print("Running scorer for simple")
 asyncio.run(
     execute_model(
@@ -117,12 +121,12 @@ asyncio.run(
         output_dir=scorer_out_dir,
     )
 )
-scorer_out_dir = "scores/cot"
-print("Running scorer for cot")
-asyncio.run(
-    execute_model(
-        scorer, 
-        cot_scorer_inputs,
-        output_dir=scorer_out_dir,
-    )
-)
+# scorer_out_dir = "scores/cot"
+# print("Running scorer for cot")
+# asyncio.run(
+#     execute_model(
+#         scorer, 
+#         cot_scorer_inputs,
+#         output_dir=scorer_out_dir,
+#     )
+# )

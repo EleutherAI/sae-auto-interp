@@ -12,7 +12,7 @@ args = argparser.parse_args()
 layers = [int(layer) for layer in args.layers.split(",") if layer.isdigit()]
 
 # Load model and autoencoders
-model = LanguageModel("meta-llama/Meta-Llama-3-8b", device_map="auto", dispatch=True,torch_dtype =torch.bfloat16)
+model = LanguageModel("meta-llama/Meta-Llama-3-8B", device_map="auto", dispatch=True,torch_dtype =torch.bfloat16)
 print("Model loaded")
 # Load autoencoders, submodule dict, and edits.
 # Submodule dict is used in caching to save ae latents
@@ -26,9 +26,10 @@ ae_dict, submodule_dict = load_autoencoders(
 print("Autoencoders loaded")
 
 # Get and sort samples
-CONFIG.n_tokens = 102_400_000
+CONFIG.n_tokens = 10_400_000
 CONFIG.dataset_repo =  "kh4dien/fineweb-100m-sample"
-    
+CONFIG.batch_len = 256
+
 print("Samples loaded")
 # Cache and save features
 cache = FeatureCache(model, submodule_dict)
@@ -36,5 +37,5 @@ cache.run()
 print("Caching complete")
 for layer in layers:
     feature_range = torch.arange(0,10000)
-    cache.save_selected_features(feature_range, layer, save_dir="raw_features_llama_more")
+    cache.save_selected_features(feature_range, layer, save_dir="raw_features_llama")
 print("Selected features saved")

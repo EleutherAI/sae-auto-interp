@@ -30,9 +30,7 @@ print("Tokenized data loaded")
 # Raw features contains locations
 raw_features_path = "raw_features_llama"
 
-explainer_inputs_1=[]
-explainer_inputs_2=[]
-explainer_inputs_3=[]
+explainer_inputs=[]
 seed = 22
 random.seed(seed)
         
@@ -53,57 +51,27 @@ for layer in layers:
             continue
         top500 = all_examples[:500]
 
-        sampling_technique_1 = random.sample(top500, 20)+random.sample(all_examples[:-5], 15)+all_examples[-5:]
-        sampling_technique_2 = random.sample(top500, 20)+random.sample(all_examples[:-5], 20)
-        sampling_technique_3 = random.sample(top500, 5)+random.sample(all_examples[:-5], 35)
-
-        explainer_inputs_1.append(
+        sampling_technique = random.sample(top500, 20)+random.sample(all_examples[:-5], 15)+all_examples[-5:]
+        
+        explainer_inputs.append(
             ExplainerInput(
-                train_examples=sampling_technique_1,
+                train_examples=sampling_technique,
                 record=record
             )
         )
-        explainer_inputs_2.append(
-            ExplainerInput(
-                train_examples=sampling_technique_1,
-                record=record
-            )
-        )
-        explainer_inputs_3.append(
-            ExplainerInput(
-                train_examples=sampling_technique_1,
-                record=record
-            )
-        )
+        
 
 
-client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct", base_url="http://127.0.0.1:8001")
+client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct", base_url="http://127.0.0.1:8004")
 
 explainer = SimpleExplainer(client)
-print("Running 1")
-explainer_out_dir = "saved_explanations/llama_1/"
+print("Running small llama")
+explainer_out_dir = "saved_explanations/llama_small/"
 asyncio.run(
     execute_model(
         explainer, 
-        explainer_inputs_1,
+        explainer_inputs,
         output_dir=explainer_out_dir,
     )
 )
-print("Running 2")
-explainer_out_dir = "saved_explanations/llama_2/"
-asyncio.run(
-    execute_model(
-        explainer, 
-        explainer_inputs_1,
-        output_dir=explainer_out_dir,
-    )
-)
-print("Running 3")
-explainer_out_dir = "saved_explanations/llama_3/"
-asyncio.run(
-    execute_model(
-        explainer, 
-        explainer_inputs_1,
-        output_dir=explainer_out_dir,
-    )
-)
+
