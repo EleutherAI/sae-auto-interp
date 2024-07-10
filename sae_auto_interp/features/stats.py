@@ -40,7 +40,7 @@ class CombinedStat(Stat):
             if obj.collated:
                 obj.compute(records, *args, **kwargs)
 
-        for record in tqdm(records):
+        for record in records:
             for obj in self._objs.values():
                 if not obj.collated:
                     obj.compute(record, *args, **kwargs)
@@ -297,3 +297,96 @@ class Activation(Stat):
 
         return average_similarity
     
+
+
+class Activation(Stat):
+    collated = False
+
+    def __init__(
+        self,
+        k=10,
+        get_skew=False,
+        get_kurtosis=False,
+        get_lemmas = False,
+        get_similarity=False
+    ):
+        self.k = k
+        
+        self.get_skew = get_skew
+        self.get_kurtosis = get_kurtosis
+        self.sentence_model = None
+        self.nlp = None
+
+        if get_similarity:
+            from sentence_transformers import SentenceTransformer
+            self.sentence_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+
+        if get_lemmas:
+            import spacy
+            self.nlp = spacy.load("en_core_web_sm")
+
+    def refresh(self, k=None, **kwargs):
+        if k:
+            self.k = k
+
+    def compute(self, record, *args, **kwargs):
+
+        top_k_examples = record.examples[:self.k]
+        top_activations, top_tokens, n_activations =\
+            self.top(top_k_examples)
+        
+        ### PER EXAMPLE STATISTICS ###
+
+        record.average_n_activations = float(np.mean(n_activations))
+        record.unique_tokens = len(set(top_tokens))
+        
+        ### ACTIVATION TOKEN STATISTICS ###
+
+        if self.nlp:
+            lemmas = self.lemmatize(top_tokens)
+            record.lemmas = lemmas
+            record.n_lemmas = len(set(lemmas))
+
+    def top(self, examples):
+        top_activations = []
+        top_tokens = []
+        n_activations = []
+        
+        for example in examples:
+            # Get top activating token for each example
+            max_index = np.argmax(example.activations)
+
+            # Append top activation and token
+            top_activations.append(example.activations[max_index].item())
+            top_tokens.append(example.str_toks[max_index])
+            
+            # Count number of activations
+            nonzero = np.count_nonzero(example.activations)
+            n_activations.append(nonzero)
+        
+        return top_activations, top_tokens, n_activations
+    
+    def clean(self, tokens):
+        lowercase_tokens = [
+            token.lower().strip() 
+            for token in tokens
+        ]
+        alpha_tokens = [
+            token for token 
+            in lowercase_tokens 
+            if token.isalpha()
+        ]
+        unique_tokens = list(set(alpha_tokens))
+        return unique_tokens
+
+    ### ACTIVATION TOKEN STATISTICS ###
+
+    def lemmatize(self, tokens):
+        unique_tokens = self.clean(tokens)
+
+        text_for_spacy = " ".join(unique_tokens)
+
+        doc = self.nlp(text_for_spacy)
+
+        lemmatized_tokens = [token.lemma_ for token in doc]
+        return lemmatized_tokens

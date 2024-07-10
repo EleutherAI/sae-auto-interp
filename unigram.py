@@ -13,8 +13,6 @@ from sae_auto_interp.features import (
 import torch
 from sae_auto_interp.features.stats import Activation, Logits
 from collections import defaultdict
-from tqdm   import tqdm
-
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 submodule_dict = load_autoencoders(
     model, 
@@ -31,7 +29,7 @@ raw_features_path = "/share/u/caden/sae-auto-interp/raw_features"
 processed_features_path = "/share/u/caden/sae-auto-interp/feature_statistics"
 
 
-k_values = torch.arange(50, 1050, 100)
+k_values = torch.arange(10, 100, 10)
 
 results = defaultdict(lambda: defaultdict(list))
 
@@ -45,7 +43,7 @@ for layer, submodule in submodule_dict.items():
         layer_index=layer,
         tokenizer=model.tokenizer,
         raw_dir=raw_features_path,
-        selected_features=range(1000),
+        selected_features=list(range(10)),
         min_examples=50,
         max_examples=5000,
     )
@@ -71,13 +69,27 @@ for layer, submodule in submodule_dict.items():
 
             lemmatized_results[layer][k.item()].append(record.n_lemmas)
 
+    break
+
+# %%
+
+from sae_auto_interp.experiments.sampling import sample_top_and_activation_quantiles, sample_quantiles
+
+record = records[0]
+
+train, test, extra = sample_quantiles(record, n_extra=10)
+
+print(len(train))
+print(len(test[0]))
+print(len(extra))
+
 # %%
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 # Sample plotting function
-def plot_results(results, lemmatized_results, save_path='plots/combined_plots.png'):
+def plot_results(results, lemmatized_results, save_path='combined_plots.png'):
     num_layers = len(results)
     
     fig, axes = plt.subplots(num_layers, 1, figsize=(10, 6 * num_layers))
@@ -101,7 +113,7 @@ def plot_results(results, lemmatized_results, save_path='plots/combined_plots.pn
         
         # Scatter plot with error bands
         ax = axes[i]
-        
+
         # Scatter plot for n_unique
         for k, acts in zip(ks, n_unique):
             ax.scatter([k]*len(acts), acts, label=f'n_unique k={k}' if k == ks[0] else "", color='blue', alpha=0.6)
@@ -128,3 +140,12 @@ def plot_results(results, lemmatized_results, save_path='plots/combined_plots.pn
     plt.show()
 
 plot_results(results, lemmatized_results)
+
+# %%
+
+
+sorted_records = sorted(records, key=lambda x: x.unique_tokens, reverse=False)
+print(sorted_records[1].feature)
+print(sorted_records[1].unique_tokens)
+
+print(FeatureRecord.display(sorted_records[0].examples[:20]))
