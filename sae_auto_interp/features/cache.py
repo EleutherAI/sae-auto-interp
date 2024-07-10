@@ -71,7 +71,7 @@ class FeatureCache:
     def load_token_batches(self, minibatch_size=20):
         tokens = load_tokenized_data(self.model.tokenizer)
 
-        max_batches = CONFIG.n_tokens // CONFIG.batch_len
+        max_batches = CONFIG.n_tokens // CONFIG.seq_len
         tokens = tokens[:max_batches]
         
         n_mini_batches = len(tokens) // minibatch_size

@@ -10,16 +10,16 @@ from jaxtyping import Float
 from .. import cache_config as CONFIG
 
 class FrequencyBuffer:
-    def __init__(self, batch_len: int, n_features: int):
+    def __init__(self, seq_len: int, n_features: int):
         """
         Initialize the cache with the batch length and number of features.
 
         Args:
-            batch_len (int): The length of each sequence in the batch.
+            seq_len (int): The length of each sequence in the batch.
             n_features (int): The number of features.
         """
         self.total_counts = torch.zeros(n_features)
-        self.position_counts = torch.zeros((batch_len, n_features))
+        self.position_counts = torch.zeros((seq_len, n_features))
         self.num_sequences_processed = 0
 
     def final(self):
@@ -27,7 +27,7 @@ class FrequencyBuffer:
         Aggregate the counts and calculate the final frequency of 
         each feature and each feature at each position.
         """
-        fr_n = self.total_counts / (self.num_sequences_processed * CONFIG.batch_len)
+        fr_n = self.total_counts / (self.num_sequences_processed * CONFIG.seq_len)
         fr_n_pos = self.position_counts / self.num_sequences_processed
         return fr_n, fr_n_pos
     
@@ -36,7 +36,7 @@ class FrequencyBuffer:
         Finalize the cache and return the sorted indices by mutual information.
         """
         fr_n, fr_n_pos = self.final()
-        mutual_information = self.mutual_information_per_feature(fr_n_pos, fr_n, CONFIG.batch_len)
+        mutual_information = self.mutual_information_per_feature(fr_n_pos, fr_n, CONFIG.seq_len)
         sorted_indices = self.get_sorted_indices_above_threshold(mutual_information)
 
         return sorted_indices
@@ -97,7 +97,7 @@ class FrequencyCache:
         self.model = model
         self.submodule_dict = submodule_dict
         self.layer_caches = {
-            layer : FrequencyBuffer(CONFIG.batch_len, CONFIG.n_features)
+            layer : FrequencyBuffer(CONFIG.seq_len, CONFIG.n_features)
             for layer in submodule_dict.keys()
         }
 
@@ -111,7 +111,7 @@ class FrequencyCache:
     def load_token_batches(self, minibatch_size=20):
         tokens = load_tokenized_data(self.model.tokenizer)
 
-        max_batches = CONFIG.n_tokens // CONFIG.batch_len
+        max_batches = CONFIG.n_tokens // CONFIG.seq_len
         tokens = tokens[:max_batches]
         
         n_mini_batches = len(tokens) // minibatch_size

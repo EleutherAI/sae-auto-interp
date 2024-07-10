@@ -6,7 +6,7 @@ from nnsight import LanguageModel
 import matplotlib.pyplot as plt
 
 from sae_auto_interp.autoencoders.ae import load_autoencoders
-from sae_auto_interp.features.positional import FrequencyCache
+from sae_auto_interp.experiments.positional import FrequencyCache
 from sae_auto_interp.utils import load_tokenized_data
 
 LAYER = 0
