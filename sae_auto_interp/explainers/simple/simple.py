@@ -28,14 +28,14 @@ class SimpleExplainer(Explainer):
         explainer_in: ExplainerInput,
     ):
 
-        simplified, messages = self.build_prompt(
+        messages = self.build_prompt(
             explainer_in.train_examples,
             explainer_in.record.max_activation
         )
         response = await self.client.generate(
             messages,
             max_tokens=CONFIG.max_tokens,
-            temperature=CONFIG.temperature
+            temperature=CONFIG.temperature,
         )
 
         explanation = self.parse_explanation(response)
@@ -43,7 +43,7 @@ class SimpleExplainer(Explainer):
         return explanation
     
     def parse_explanation(self, text:str):
-        pattern = r'Explanation:\s*(.*)'
+        pattern = r'\[EXPLANATION\]:\s*(.*)'
 
         match = re.search(pattern, text, re.DOTALL)
         
@@ -51,7 +51,7 @@ class SimpleExplainer(Explainer):
             explanation = match.group(1).strip()
             return explanation
         else:
-            return "Explanation:"
+            return "Explanation not found"
     
     def build_prompt(self,examples,max_activation:float):
 
@@ -69,8 +69,8 @@ class SimpleExplainer(Explainer):
             decoded = sentences[i]
             activated_tokens,scores = str_tokens[i],activations[i]
             undiscovered_feature += self.formulate_question(i+1,decoded,activated_tokens,scores,max_activation)
-        msg,question = create_prompt(undiscovered_feature)
-        return question,msg
+        msg = create_prompt(undiscovered_feature)
+        return msg
     
     def formulate_question(self,index:int,document:str,activating_tokens:List[str],activations:List[int],max_activation:float) -> str:
         if index == 1:
