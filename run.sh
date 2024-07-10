@@ -1,3 +1,5 @@
-# PYTHONPATH=$(pwd) python scripts/explain.py
+# PYTHONPATH=$(pwd) python test/process.py
 
-PYTHONPATH=$(pwd) python scripts/score.py
+PYTHONPATH=$(pwd) python test/explain.py
+
+# PYTHONPATH=$(pwd) python test/score.py

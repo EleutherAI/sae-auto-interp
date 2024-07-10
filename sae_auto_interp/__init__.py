@@ -2,6 +2,8 @@ import yaml
 import os
 from dataclasses import dataclass, field
 
+CONFIG_PATH = os.environ.get("CONFIG_PATH", None)
+
 @dataclass
 class CacheConfig:
     dataset_repo: str
@@ -13,10 +15,8 @@ class CacheConfig:
     n_tokens: int
     seed: int
 
-@dataclass
-class ExampleConfig:
-    l_ctx: int
-    r_ctx: int
+    l_ctx: int = 0
+    r_ctx: int = 0
 
 @dataclass
 class ChainOfThoughtExplainerConfig:
@@ -35,22 +35,22 @@ class SimpleExplainerConfig:
 class DetectionScorerConfig:
     max_tokens: int
     temperature: float
-    n_batches: int
     seed: int
     batch_size: int
     threshold: float
-    n_incorrect: int
+
+    l: str
+    r: str
     
 @dataclass
 class GenScorerConfig:
     n_tests: int
     temperature: float
 
-with open(os.path.join(os.path.dirname(__file__), 'config.yaml'), 'r') as f:
+with open(os.path.join(os.path.dirname(__file__), CONFIG_PATH), 'r') as f:
     CONFIG = yaml.safe_load(f)
 
 cache_config = CacheConfig(**CONFIG["cache"])
-example_config = ExampleConfig(**CONFIG["example"])
 cot_explainer_config = ChainOfThoughtExplainerConfig(**CONFIG["cot_explainer"])
 simple_explainer_config = SimpleExplainerConfig(**CONFIG["simple_explainer"])
 det_config = DetectionScorerConfig(**CONFIG["detection"])
