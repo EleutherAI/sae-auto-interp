@@ -6,7 +6,7 @@ from nnsight import LanguageModel
 import matplotlib.pyplot as plt
 
 from sae_auto_interp.autoencoders.ae import load_autoencoders
-from sae_auto_interp.features.frequency import FrequencyCache
+from sae_auto_interp.features.positional import FrequencyCache
 from sae_auto_interp.utils import load_tokenized_data
 
 LAYER = 0
@@ -15,7 +15,7 @@ N_BATCHES = 20
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 print("Model loaded")
 
-ae_dict, submodule_dict = load_autoencoders(
+submodule_dict = load_autoencoders(
     model, 
     [LAYER],
     "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2",

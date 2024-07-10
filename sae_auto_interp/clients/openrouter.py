@@ -37,17 +37,11 @@ class OpenRouter(Client):
         self, 
         prompt: str, 
         raw: bool = False,
-        max_retries: int = 3,
+        max_retries: int = 2,
         **kwargs
     ) -> str:
 
-        # try:
-        #     if kwargs.pop("schema"):
-        #         kwargs["response_format"] = {"type" : "json_object"}
-        # except KeyError:
-        #     pass
-
-        kwargs.pop("schema")
+        kwargs.pop("schema", None)
 
         data = {
             "model": self.model,
@@ -56,7 +50,7 @@ class OpenRouter(Client):
             **kwargs
         }
 
-        for attempt in range(1):
+        for attempt in range(max_retries):
 
             try:
 
@@ -66,16 +60,12 @@ class OpenRouter(Client):
                     headers=self.headers
                 )
 
-
                 if raw:
-                    return response
+                    return response.json()
                 
                 result = self.postprocess(response)
                 
-                # if "response_format" in kwargs:
-                #     return json.loads(result)
-                
-                return json.loads(result)
+                return result
             
             except json.JSONDecodeError:
                 logger.warning(f"Attempt {attempt + 1}: Invalid JSON response, retrying...")

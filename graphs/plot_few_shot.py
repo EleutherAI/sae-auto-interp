@@ -10,6 +10,11 @@ directories = [
     for few_shots in range(2, 9)
 ]
 
+directories.append(
+    "scores/fuzz_70b/simple_local_70b_q4_nt5"
+)
+
+
 def load_data(directory):
     data = []
     for file in os.listdir(directory):
@@ -98,20 +103,24 @@ for i, layer_idx in enumerate(range(0, 12, 2)):
                     layer_stats[layer][quantile] += Counter(stat)
 
         # Extract 'both' data for the current layer
-        both_data = {quantile: stat['second'] for quantile, stat in layer_stats[layer_idx].items()}
+        both_data = {quantile: stat['both'] for quantile, stat in layer_stats[layer_idx].items()}
         
         # Sort the data by quantile
         sorted_data = sorted(both_data.items())
         quantiles, counts = zip(*sorted_data)
         
         # Plot the 'both' line for this directory
-        ax.plot(quantiles, counts, label=f'nfew{dir_idx+2}', linewidth=2)
+        if dir_idx+2 == 9:
+            label = 'hand-written'
+        else:
+            label = f'nfew{dir_idx+2}'
+        ax.plot(quantiles, counts, label=label, linewidth=1)
 
     ax.legend()
     ax.set_xlabel('Quantile')
     ax.set_ylabel('Count of "both" correct')
     ax.set_title(f'"Both" Correct Distribution (Layer {layer_idx})')
-    ax.set_ylim(0, 100)
+    ax.set_ylim(20, 90)
 
 plt.tight_layout()
 plt.show()

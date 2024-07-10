@@ -4,16 +4,24 @@ from typing import List
 
 from ...logger import logger
 from ... import det_config as CONFIG
+from ...features import Example
 
 class Sample:
 
-    def __init__(self, example, quantile, highlighted, ground_truth, id, n_incorrect=0, echo=False):
+    def __init__(
+        self, 
+        example: Example, 
+        quantile: int, 
+        highlighted: bool, 
+        ground_truth: bool, 
+        id: int,
+        n_incorrect: int = 0,
+    ):
         self.quantile = quantile
         self.highlighted = highlighted
         self.ground_truth = ground_truth
         self.predicted = False
         self.id = id
-        self.echo = echo
 
         self.text = self._prepare_example(
             example.str_toks,
@@ -24,7 +32,7 @@ class Sample:
         )
 
 
-    def default(self):
+    def default(self, echo):
         result = {
             "text": self.text,
             "quantile": self.quantile,
@@ -34,7 +42,7 @@ class Sample:
             "id" : self.id
         }
 
-        if not self.echo:
+        if not echo:
             result.pop("text")
 
         return result
@@ -47,11 +55,11 @@ class Sample:
         threshold=0.0,
         highlight=False,
     ) -> str:
-        # Just join if not highlighting tokens
+        # Just join if not highlighted
         if not highlight:
             return "".join(tokens)
 
-        # Get all tokens below the activation threshold
+        # Get all token indices below the activation threshold
         threshold = threshold * activations.max()
         below_threshold = torch.nonzero(
             activations <= threshold
@@ -61,7 +69,7 @@ class Sample:
         # so there are not enough tokens below the threshold
         # sampling will throw an error in this case
         if below_threshold.dim() == 0:
-            logger.error(f"Failed to prepare example: {tokens}")
+            logger.error(f"Failed to prepare example: {tokens}... Returning default text.")
             return "nnsight>> is the best library for <<interpretability>> on huge models!"
         
         random.seed(CONFIG.seed)

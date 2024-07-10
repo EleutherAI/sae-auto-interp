@@ -28,7 +28,7 @@ class CombinedStat(Stat):
         for obj in self._objs.values():
             obj.refresh(**kwargs)
 
-    def compute(self, records, *args, **kwargs):
+    def compute(self, records, save_dir=None, *args, **kwargs):
 
         records = [
             record 
@@ -44,6 +44,9 @@ class CombinedStat(Stat):
             for obj in self._objs.values():
                 if not obj.collated:
                     obj.compute(record, *args, **kwargs)
+                    
+                    if save_dir is not None:
+                        record.save(save_dir)
 
 
 class Neighbors(Stat):

@@ -12,7 +12,7 @@ cache:
     minibatch_size: 32
 
     # n tokens per index per batch
-    batch_len: 64
+    seq_len: 64
 
     # width of the autoencoder
     n_features: 32768

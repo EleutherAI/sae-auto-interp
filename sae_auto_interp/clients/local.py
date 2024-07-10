@@ -1,6 +1,4 @@
 from .client import Client
-import httpx
-from transformers import AutoTokenizer
 from ..logger import logger
 from asyncio import sleep
 import json
@@ -8,6 +6,8 @@ import json
 from openai import AsyncOpenAI
 
 class Local(Client):
+    provider = "vllm"
+
     def __init__(self,
         model: str, 
         base_url="http://localhost:8000/v1"
@@ -60,5 +60,4 @@ class Local(Client):
         """
         Postprocess the response from the API.
         """
-        
         return response.choices[0].message.content
