@@ -6,6 +6,9 @@ from ...oai_autointerp import LogprobFreeExplanationTokenSimulator, simulate_and
 from ..scorer import Scorer, ScorerInput
 
 class OpenAISimulator(Scorer):
+    """
+    Simple wrapper for the LogProbFreeExplanationTokenSimulator.
+    """
     def __init__(
         self,
         client,

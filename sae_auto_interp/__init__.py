@@ -10,7 +10,7 @@ class CacheConfig:
     dataset_split: str
     dataset_name: str
     minibatch_size: int
-    batch_len: int
+    seq_len: int
     n_features: int
     n_tokens: int
     seed: int

@@ -25,7 +25,7 @@ def load_tokenized_data(
     dataset_repo = kwargs.get('dataset_repo', config.dataset_repo)
     dataset_name = kwargs.get('dataset_name', config.dataset_name)
     dataset_split = kwargs.get('dataset_split', config.dataset_split)
-    batch_len = kwargs.get('batch_len', config.batch_len)
+    seq_len = kwargs.get('seq_len', config.seq_len)
     seed = kwargs.get('seed', config.seed)
 
     # Load the dataset
@@ -35,7 +35,7 @@ def load_tokenized_data(
     tokens = utils.tokenize_and_concatenate(
         data, 
         tokenizer, 
-        max_length=batch_len
+        max_length=seq_len
     )   
 
     # Shuffle the tokens

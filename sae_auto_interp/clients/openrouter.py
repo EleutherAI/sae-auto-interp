@@ -6,6 +6,8 @@ from asyncio import sleep
 import json
 import os
 
+# Preferred provider routing arguments. 
+# Change depending on what model you'd like to use.
 PROVIDER = {
     "order": [
         "Together",
