@@ -9,7 +9,7 @@ from sae_auto_interp.clients import get_client
 from sae_auto_interp.scorers import ScorerInput, FuzzingScorer
 from sae_auto_interp.utils import load_tokenized_data, execute_model
 from sae_auto_interp.features import FeatureRecord
-from sae_auto_interp.experiments import sample_top_and_quantiles
+from sae_auto_interp.experiments import sample_top_and_activation_quantiles
 from sae_auto_interp.logger import logger
 
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
@@ -18,7 +18,7 @@ tokens = load_tokenized_data(model.tokenizer)
 raw_features_path = "raw_features"
 processed_features_path = "processed_features"
 explanations_dir = "explanations/simple_local_70b"
-scorer_out_dir = "scores/fuzz_70b/simple_local_70b_q4_nt5"
+scorer_out_dir = "scores/fuzz_70b_single/simple_local_70b_q4_nt5"
 
 def load_explanation(feature):
     explanations_path = f"{explanations_dir}/layer{feature.layer_index}_feature{feature.feature_index}.txt"
@@ -48,7 +48,7 @@ for layer in range(0,12,2):
             explanation = load_explanation(record.feature)
 
             record.examples = record.examples[100:]
-            _, test, extra = sample_top_and_quantiles(
+            _, test, extra = sample_top_and_activation_quantiles(
                 record=record,
                 n_train=0,
                 n_test=5,
@@ -73,20 +73,14 @@ for layer in range(0,12,2):
 
 
 # client = get_client("openrouter", "anthropic/claude-3.5-sonnet", api_key=openrouter_key)
-client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct")
+client = get_client("local", "casperhansen/llama-3-70b-instruct-awq")
 
+scorer = FuzzingScorer(client, echo=False)
 
-for n_few_shots in range(2,9):
-    scorer_out_dir = \
-        f"/share/u/caden/sae-auto-interp/scores/fuzz_70b/simple_local_70b_nfew{n_few_shots}"
-    os.makedirs(scorer_out_dir)
-
-    scorer = FuzzingScorer(client, echo=False, n_few_shots=n_few_shots)
-
-    asyncio.run(
-        execute_model(
-            scorer, 
-            scorer_inputs,
-            output_dir=scorer_out_dir,
-        )
+asyncio.run(
+    execute_model(
+        scorer, 
+        scorer_inputs,
+        output_dir=scorer_out_dir,
     )
+)

@@ -37,10 +37,10 @@ cot_explainer:
     threshold: 0.4
 
 detection:
-    max_tokens: 1000
+    max_tokens: 2
     temperature: 0.0
     seed: 22
-    batch_size: 30
+    batch_size: 1
     threshold: 0.3
     l: "<<"
     r: ">>"
