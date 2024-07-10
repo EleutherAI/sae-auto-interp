@@ -26,6 +26,18 @@ class Example:
     activations: List[float]
     str_toks: List[str] = None
 
+    def __hash__(self) -> int:
+        if self.str_toks is None:
+            raise ValueError("Cannot hash examples without decoding.")
+        
+        return hash(self.text)
+
+    def __eq__(self, other) -> bool:
+        if self.str_toks is None:
+            raise ValueError("Cannot compare examples without decoding.")
+        
+        return self.text == other.text
+
     @property
     def max_activation(self):
         return max(self.activations)

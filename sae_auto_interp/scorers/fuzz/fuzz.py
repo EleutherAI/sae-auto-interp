@@ -70,7 +70,7 @@ class FuzzingScorer(Scorer):
                     highlighted=highlight,
                     ground_truth=ground_truth,
                     n_incorrect=n_incorrect,
-                    id=hash(example.text)
+                    id=hash(example)
                 )
                 for example in examples
             ]
