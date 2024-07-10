@@ -6,43 +6,72 @@ import orjson
 import os
 from collections import defaultdict
 from ..utils import load_tokenized_data
-
+from jaxtyping import Float
 from .. import cache_config as CONFIG
 
-class Cache:
-    def __init__(self, batch_len, n_features):
+class FrequencyBuffer:
+    def __init__(self, batch_len: int, n_features: int):
+        """
+        Initialize the cache with the batch length and number of features.
+
+        Args:
+            batch_len (int): The length of each sequence in the batch.
+            n_features (int): The number of features.
+        """
         self.total_counts = torch.zeros(n_features)
         self.position_counts = torch.zeros((batch_len, n_features))
         self.num_sequences_processed = 0
 
     def final(self):
+        """
+        Aggregate the counts and calculate the final frequency of 
+        each feature and each feature at each position.
+        """
         fr_n = self.total_counts / (self.num_sequences_processed * CONFIG.batch_len)
         fr_n_pos = self.position_counts / self.num_sequences_processed
         return fr_n, fr_n_pos
     
     def save(self):
+        """
+        Finalize the cache and return the sorted indices by mutual information.
+        """
         fr_n, fr_n_pos = self.final()
         mutual_information = self.mutual_information_per_feature(fr_n_pos, fr_n, CONFIG.batch_len)
-
         sorted_indices = self.get_sorted_indices_above_threshold(mutual_information)
 
         return sorted_indices
 
-
     def get_sorted_indices_above_threshold(self, mutual_information, threshold=0.05):
+        """
+        Get the indices of features with mutual information above a threshold.
+        Threshold specified in [https://arxiv.org/abs/2309.04827]
+        """
         indices = torch.where(mutual_information > threshold)[0]
         sorted_indices = indices[torch.argsort(mutual_information[indices], descending=True)]
         
         return sorted_indices
         
     def update(self, latents):
+        """
+        Update the cache with the latents from a batch of sequences.
+        """
         latents = latents.cpu()
         clamped_latents = torch.where(latents > 1e-5, torch.ones_like(latents), torch.zeros_like(latents))
         self.total_counts += torch.sum(clamped_latents, dim=(0, 1))
         self.position_counts += torch.sum(clamped_latents, dim=0)
         self.num_sequences_processed += CONFIG.minibatch_size
 
-    def mutual_information_per_feature(self, fr_n_pos, fr_n, T):
+    def mutual_information_per_feature(
+        self, 
+        fr_n_pos: torch.Tensor, 
+        fr_n,
+        T
+    ):
+        """
+        Calculate the mutual information between activation frequency and positional frequency.
+        From [https://arxiv.org/abs/2309.04827]
+        """
+
         num_positions, num_features = fr_n_pos.shape
         I_act_pos = torch.zeros(num_features)
 
@@ -68,7 +97,7 @@ class FrequencyCache:
         self.model = model
         self.submodule_dict = submodule_dict
         self.layer_caches = {
-            layer : Cache(CONFIG.batch_len, CONFIG.n_features)
+            layer : FrequencyBuffer(CONFIG.batch_len, CONFIG.n_features)
             for layer in submodule_dict.keys()
         }
 

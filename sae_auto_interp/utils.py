@@ -6,6 +6,7 @@ import os
 import orjson 
 import asyncio
 import aiofiles
+import time
 
 from transformer_lens import utils
 from datasets import load_dataset
@@ -45,7 +46,8 @@ def load_tokenized_data(
 async def execute_model(
     model: Callable[[ScorerInput], Awaitable[str]] | Callable[[ExplainerInput], Awaitable[str]],
     queries: List[ScorerInput] | List[ExplainerInput],
-    output_dir: str
+    output_dir: str,
+    record_time=False
 ):
     """
     Executes a model on a list of queries and saves the results to the output directory.
@@ -60,11 +62,19 @@ async def execute_model(
 
         logger.info(f"Executing {model.name} on feature layer {layer_index}, feature {feature_index}")
 
+        start_time = time.time()
         result = await model(query)
+        end_time = time.time()
 
         filename = f"layer{layer_index}_feature{feature_index}.txt"
         filepath = os.path.join(output_dir, filename)
 
+        if record_time:
+            result = {
+                "result": result,
+                "time": end_time - start_time
+            }
+            
         async with aiofiles.open(filepath, mode='wb') as f:
             await f.write(orjson.dumps(result))
 
@@ -72,20 +82,3 @@ async def execute_model(
     
     tasks = [process_and_save(query) for query in queries]
     await asyncio.gather(*tasks)
-
-def get_samples(N_LAYERS=12,N_FEATURES=32_768,N_SAMPLES=1000,features_per_layer=None):
-    random.seed(22)
-
-    samples = {}
-
-    for layer in range(N_LAYERS):
-
-        samples[layer] = random.sample(range(N_FEATURES), N_SAMPLES)
-
-    if features_per_layer:
-        samples = {
-            layer: features[:features_per_layer]
-            for layer, features in samples.items()
-        }
-
-    return samples

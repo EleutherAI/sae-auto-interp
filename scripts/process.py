@@ -8,7 +8,7 @@ from sae_auto_interp.autoencoders.ae import load_autoencoders
 from sae_auto_interp.features import CombinedStat, FeatureRecord, Logits, Activation, QuantileSizes
 
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
-ae_dict, submodule_dict = load_autoencoders(
+submodule_dict = load_autoencoders(
     model, 
     list(range(0,12,2)),
     "sae_auto_interp/autoencoders/oai/gpt2"
@@ -32,7 +32,8 @@ stats = CombinedStat(
     # quantiles=QuantileSizes()
 )    
 
-for layer, ae in ae_dict.items():
+for layer, submodule in submodule_dict.items():
+    ae = submodule.ae._module
 
     records = FeatureRecord.from_tensor(
         tokens,
@@ -47,7 +48,4 @@ for layer, ae in ae_dict.items():
     #     W_dec=ae.decoder.weight,
     # )
     
-    stats.compute(records)
-
-    for record in records:
-        record.save(processed_features_path)
+    stats.compute(records, save_dir=processed_features_path)

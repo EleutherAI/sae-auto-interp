@@ -6,6 +6,8 @@ from asyncio import sleep
 import json
 
 class Outlines(Client):
+    provider = "outlines"
+
     def __init__(self,
         model: str, 
         base_url="http://127.0.0.1:8000"
@@ -18,6 +20,11 @@ class Outlines(Client):
         )
 
     def postprocess(self, prompt, response):
+        """
+        Convert the response to a JSON object then 
+        remove the prompt from the response text.
+        """
+
         response_json = response.json()
         if "text" in response_json and len(response_json["text"]) > 0:
             response_text = response_json["text"][0]
@@ -35,7 +42,7 @@ class Outlines(Client):
         **kwargs
     ) -> str:
         """
-        Wrapper method for Outlines/vLLM post requests.
+        Wrapper for async requests to the Outlines vLLM inference engine.
         """
 
         if tokenize:
@@ -59,11 +66,12 @@ class Outlines(Client):
                 if raw:
                     return response.json()
                 
+                response = self.postprocess(prompt, response)
+                
                 if kwargs.get("schema") is not None:
-                    response = self.postprocess(prompt, response)
                     return json.loads(response)
                 
-                return self.postprocess(prompt, response)
+                return response
             
             except json.JSONDecodeError:
                 logger.warning(f"Attempt {attempt + 1}: Invalid JSON response, retrying...")

@@ -6,6 +6,7 @@ EXPLANATION_SYSTEM = \
 "Be specific if you think it activates for a specific token. Don't list examples of words."\
 "After each sentence you will get a list of tokens that activate the neuron and its activations. Activation values range from 0 to 10."\
 "The higher the activation value, the stronger the match."\
+"Return your explanation in a single line prepended by [EXPLANATION]: "
 
 first_neuron_user = "Neuron\n"\
 "Document 1:\n"\
@@ -33,7 +34,7 @@ first_neuron_user = "Neuron\n"\
 "Why the iPhone is a success\n\n"\
 "Two weeks after the iPhone virus "\
 "Activating tokens: weeks (5).\n\n"
-first_neuron_assistant="Explanation: The neuron is looking for units of time.\n\n"
+first_neuron_assistant="[EXPLANATION]: The neuron is looking for units of time.\n\n"
 second_neuron_user = "Neuron\n"\
 "Document 1:\n"\
 "'then fell away today,' he said."\
@@ -51,7 +52,7 @@ second_neuron_user = "Neuron\n"\
 "Mrs Fell yesterday said after his family and friends, newspapers were her husband's great passion.\n"\
 "'He spent 40 years in newspapers,' she said. 'In the early days he\n"\
 "Activating tokens: she (3).\n\n\n"
-second_neuron_assistant="Explanation: The neuron is looking for pronouns that are the active speakers in a sentence\n\n"\
+second_neuron_assistant="[EXPLANATION]: The neuron is looking for pronouns that are the active speakers in a sentence\n\n"\
 
 FEW_SHOT_EXAMPLES = {"example1":{"user": first_neuron_user, "assistant": first_neuron_assistant},"example2":{"user": second_neuron_user, "assistant": second_neuron_assistant}}
 
@@ -64,4 +65,4 @@ def create_prompt(question:str) -> str:
             msg.append({"role":"user","content":example["user"]})
             msg.append({"role":"assistant","content":example["assistant"]})
         msg.append({"role":"user","content":question})
-        return msg,question
+        return msg

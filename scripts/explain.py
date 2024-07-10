@@ -1,64 +1,65 @@
+import os
 import asyncio
-from tqdm import tqdm
 import random
-from nnsight import LanguageModel
 
-from sae_auto_interp.explainers import ChainOfThought, ExplainerInput
+from nnsight import LanguageModel
+from keys import openrouter_key
+
+os.environ["CONFIG_PATH"] = "configs/caden_gpt2.yaml"
+
+from sae_auto_interp.explainers import SimpleExplainer, ExplainerInput
 from sae_auto_interp.clients import get_client
 from sae_auto_interp.utils import execute_model, load_tokenized_data
 from sae_auto_interp.features import FeatureRecord
-from sae_auto_interp.experiments import sample_top_and_quantiles
 
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 tokens = load_tokenized_data(model.tokenizer)
 
 raw_features_path = "raw_features"
-processed_features_path = "processed_features"
-explainer_out_dir = "explanations/cot"
-
-explainer_inputs = []
+explainer_out_dir = "explanations/claude"
+explainer_inputs=[]
 random.seed(22)
 
 for layer in range(0,12,2):
     records = FeatureRecord.from_tensor(
         tokens,
-        layer,
         tokenizer=model.tokenizer,
-        selected_features=list(range(0,50)),
-        raw_dir=raw_features_path,
-        processed_dir=processed_features_path,
-        min_examples=200,
-        max_examples=2000
+        layer_index=layer,
+        # selected_features=list(range(5)),
+        selected_features=[0],
+        raw_dir= raw_features_path,
+        min_examples=120,
+        max_examples=10000
     )
 
     for record in records:
-        if not record:
+
+        examples = record.examples
+
+        if len(examples) < 120:
             continue
 
-        try:
-            train, _ = sample_top_and_quantiles(
-                record=record,
-                n_train=20,
-                n_quantiles=4
-            )
-        except:
-            continue
-
+        train_examples = random.sample(examples[:100], 10)
+        
         explainer_inputs.append(
             ExplainerInput(
-                train_examples=train,
+                train_examples=train_examples,
                 record=record
             )
         )
-        
+    break
 
-client = get_client("local", "casperhansen/llama-3-70b-instruct-awq")
-explainer = ChainOfThought(client)
+client = get_client("openrouter", "anthropic/claude-3-haiku", api_key=openrouter_key)
+# client = get_client("local", "casperhansen/llama-3-70b-instruct-awq")
+
+explainer = SimpleExplainer(client)
 
 asyncio.run(
     execute_model(
         explainer, 
         explainer_inputs,
         output_dir=explainer_out_dir,
+        record_time=True
     )
 )
+

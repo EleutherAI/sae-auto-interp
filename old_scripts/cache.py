@@ -6,7 +6,7 @@ import torch
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 print("Model loaded")
 
-submodule_dict = load_autoencoders(
+ae_dict, submodule_dict = load_autoencoders(
     model, 
     list(range(0,12,2)),
     "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/oai/gpt2",
