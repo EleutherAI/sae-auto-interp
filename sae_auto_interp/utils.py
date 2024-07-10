@@ -1,6 +1,6 @@
 from typing import List, Callable, Awaitable
-from .scorers.scorer import ScorerInput
-from .explainers import ExplainerInput
+# from .scorers.scorer import ScorerInput
+# from .explainers import ExplainerInput
 import logging
 import os
 import orjson 
@@ -44,8 +44,8 @@ def load_tokenized_data(
     return tokens
 
 async def execute_model(
-    model: Callable[[ScorerInput], Awaitable[str]] | Callable[[ExplainerInput], Awaitable[str]],
-    queries: List[ScorerInput] | List[ExplainerInput],
+    model,
+    queries,
     output_dir: str,
     record_time=False
 ):

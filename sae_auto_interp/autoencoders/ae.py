@@ -83,9 +83,9 @@ def load_autoencoders(model,ae_layers, weight_dir) -> Dict[int, Autoencoder]:
     
     #TODO: We need to make this a little bit differently in the future
     if "gpt2" in weight_dir:
-        ae_dict, submodule_dict = load_oai_autoencoders(model,ae_layers, weight_dir)
+        submodule_dict = load_oai_autoencoders(model,ae_layers, weight_dir)
        
     if "llama" in weight_dir:
-        ae_dict, submodule_dict = load_eai_autoencoders(model,ae_layers, weight_dir)
+        submodule_dict = load_eai_autoencoders(model,ae_layers, weight_dir)
     
-    return ae_dict, submodule_dict
+    return submodule_dict
