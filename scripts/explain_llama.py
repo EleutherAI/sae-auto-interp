@@ -2,12 +2,13 @@ import asyncio
 from nnsight import LanguageModel 
 from tqdm import tqdm
 import torch
-from sae_auto_interp.explainers import SimpleExplainer, ExplainerInput, ChainOfThought
+from sae_auto_interp.explainers import SimpleExplainer, ExplainerInput
 from sae_auto_interp.clients import get_client
 from sae_auto_interp.utils import execute_model, load_tokenized_data, get_samples
 from sae_auto_interp.features import FeatureRecord
 import random
 import argparse
+from sae_auto_interp import cache_config as CONFIG
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument("--layers", type=str, default="12,14")
@@ -18,15 +19,20 @@ layers = [int(layer) for layer in args.layers.split(",") if layer.isdigit()]
 model = LanguageModel("meta-llama/Meta-Llama-3-8B", device_map="cpu", dispatch=True,torch_dtype =torch.bfloat16)
 print("Model loaded")
 # Load tokenized data
+CONFIG.n_tokens = 10_400_000
+CONFIG.dataset_repo =  "kh4dien/fineweb-100m-sample"
+CONFIG.batch_len = 256
+
 tokens = load_tokenized_data(model.tokenizer)
 print("Tokenized data loaded")
 # Load features to explain
-samples = get_samples(N_LAYERS=32,N_FEATURES=131072,N_SAMPLES=1000)
 
 # Raw features contains locations
 raw_features_path = "raw_features_llama"
-processed_features_path = "processed_features_llama"
-explainer_inputs=[]
+
+explainer_inputs_1=[]
+explainer_inputs_2=[]
+explainer_inputs_3=[]
 seed = 22
 random.seed(seed)
         
@@ -35,38 +41,38 @@ for layer in layers:
         tokens,
         tokenizer=model.tokenizer,
         layer_index=layer,
-        selected_features=samples[layer],
-        processed_dir=processed_features_path,
+        selected_features=torch.arange(0,1000),
         raw_dir= raw_features_path,
-        max_examples=2000
+        n_random=5,
+        max_examples=10000
     )
 
     for record in records:
         all_examples = record.examples
-        if len(all_examples) < 100:
+        if len(all_examples) < 500:
             continue
-        top100 = all_examples[:100]
+        top500 = all_examples[:500]
 
-        random_10_all_10 = all_examples[:10]
+        sampling_technique_1 = random.sample(top500, 20)+random.sample(all_examples[:-5], 15)+all_examples[-5:]
         
-        explainer_inputs.append(
+        explainer_inputs_1.append(
             ExplainerInput(
-                train_examples=random_10_all_10,
+                train_examples=sampling_technique_1,
                 record=record
             )
         )
+        
 
 
-client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct", base_url="http://127.0.0.1:8001")
+client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct", base_url="http://127.0.0.1:8002")
 
-explainer = ChainOfThought(client)
-print("Running explainer")
-explainer_out_dir = "saved_explanations/llama_cot/"
+explainer = SimpleExplainer(client)
+print("Running 1")
+explainer_out_dir = "saved_explanations/llama_1/"
 asyncio.run(
     execute_model(
         explainer, 
-        explainer_inputs,
+        explainer_inputs_1,
         output_dir=explainer_out_dir,
     )
 )
-
