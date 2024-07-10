@@ -15,7 +15,7 @@ import json
 
 
 class FuzzingScorer(Scorer):
-    def __init__(self, client, echo=False, get_prompts=False, n_few_shots=0):
+    def __init__(self, client, echo=False, get_prompts=False, n_few_shots=-1):
         self.name = "fuzz"
         self.client = client
         self.echo = echo
@@ -149,15 +149,15 @@ class FuzzingScorer(Scorer):
         response_model = create_response_model(len(batch))
 
         print(prompt)
-
         selections = await self.client.generate(
             prompt,
             max_tokens=CONFIG.max_tokens,
             temperature=CONFIG.temperature,
-            schema=response_model.model_json_schema()
         )
 
-        for i, sample in enumerate(batch):
-            sample.predicted = selections[f"example_{i}"] == 1
+        # for i, sample in enumerate(batch):
+        #     sample.predicted = selections[f"example_{i}"] == 1
+
+        batch[0].predicted = int(selections[-1]) == 1
         
         return batch

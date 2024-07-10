@@ -2,461 +2,461 @@ examples = {
   "1": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  has been photographing children as fairies for inclusion in the annual Beautiful Things<< with>> Wings calendar\u2014with\nExample 1:  money for charities. The most outstanding efforts include his work with The Floating Hospital<< for>> Children in Boston and\nExample 2:  Warming: Global Climate Change. Global Warming Thesis CHAPTER 1<< IN>>TRODUCTION Climate\nExample 3:  world's top 100 universities in QS & Times Higher Education World University Rankings<< of>> 2022. Several\nExample 4:  in a range of diameters.The Moon i3.3 is one<< of>> a growing number of\n"
+      "content": "Feature explanation: \"The neuron is looking for the conjunction \\\"and\\\".\"\n\nText examples:\n\nExample 0:  Brisbane and who was he going to visit? Did his son divorce his wife and is that why they\nExample 1: \nIn Autostrada we only took short breaks to fill the tanks and riders\u2026\nIn\nExample 2:  is the first destination to add Airbnb data to their Acorn T-Stats System, and already some\nExample 3:  any individual feature of the Site will be error free, available all the time and/or free from\nExample 4:  and a visa. The Cape Verde embassies are not present in all countries and it is, therefore\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     }
   ],
   "2": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: akes are also available in 9ct gold. Please contact your local funeral home<< for>> more information.L\nExample 1:  of the World War<< II>> bestseller<<,>> Ludwika. Thank you Jean<< for>> allowing Detective Teme\nExample 2:  refund.Cartoon<< By>> Dedini<< Party>> In France 1950\nClick thumbnails<< for>> expanded view.\n\nExample 3:  neckline and buy sensible shoes. You can Google \ufffd\ufffdhairstyles<< for>> people over 40\ufffd\nExample 4:  - Frankenstein - very<< good>>. Comments<< are>> on my blog.I'll be<< posting>> a Winter Classics Wrap\n"
+      "content": "Feature explanation: \"The neuron is looking for sentences or phrases that contain questions, often involving the words \\\"I\\\", \\\"he\\\", \\\"she\\\", \\\"they\\\", and words related to asking or wanting.\"\n\nText examples:\n\nExample 0:  so won't be needing this...It's simple and when people ask what you are, and\nExample 1:  not fall off, and I was invited back again. As for for how I felt post ride-\nExample 2:  activity.\nOnly 29 per cent of companies surveyed answered yes when asked if they had investigated the measuring\nExample 3:  to both kswp and kavx. I always cringe when my husband and I sat down\nExample 4: <|endoftext|>\nI\ufffd\ufffdm wondering how they ever manage situations like\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> wasn\ufffd\ufffdt a Tartar.\nTR: No<<,>> but if a horse\nExample 1:  box contact to discharge<<.>>\nIV<<.>> Precautions during assembly operation\n1<<,>> the LCD module is\nExample 2:  your iPhone. Instead<<,>> they will<< revert>> to their default Bluetooth connection (yes<<,>> all Thread-enabled\nExample 3:  the glories and disgraces of its past.\ufffd\ufffd\nSo hey<<,>> New York! Now\nExample 4:  his combat pack.<< Did>> I need<< all>> that gear for that assignment? Yeah<<,>> I thought so\u2026\n"
+      "content": "Feature explanation: \"The neuron is looking for hyphens (-) in a text, likely indicating compound words or phrases.\"\n\nText examples:\n\nExample 0:  within the borders of Egypt. A war between the haves and the have-nots. A\nExample 1: 30 a.m. to 3 p.m. and will offer drive-through service from 6\nExample 2:  elegant and stylish look and feel.\nSerato DJ Software - A free-of-charge download\nExample 3:  with ensuite bathrooms and a sun-drenched decked terrace, \u00a3750,000\n\nExample 4: A modern and spacious two-bedroom, penthouse flat with two bathrooms in a prestigious development\nA\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 0\n}"
     }
   ],
   "3": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: akes are also available in 9ct gold. Please contact your local funeral home<< for>> more information.L\nExample 1:  of the World War<< II>> bestseller<<,>> Ludwika. Thank you Jean<< for>> allowing Detective Teme\nExample 2:  refund.Cartoon<< By>> Dedini<< Party>> In France 1950\nClick thumbnails<< for>> expanded view.\n\nExample 3:  neckline and buy sensible shoes. You can Google \ufffd\ufffdhairstyles<< for>> people over 40\ufffd\nExample 4:  - Frankenstein - very<< good>>. Comments<< are>> on my blog.I'll be<< posting>> a Winter Classics Wrap\n"
+      "content": "Feature explanation: \"The neuron is looking for negations, specifically the words \\\"not\\\", \\\"a\\\", and the contraction \\\"'t\\\" (which stands for \\\"not\\\").\"\n\nText examples:\n\nExample 0:  the notes say \"my gran gave me this teddy bear so I wouldn't be scared but now\nExample 1: <|endoftext|> they have good reputation and they are not known for sharing subscriber\nExample 2: ane and is sitting on the window sill as I type this. I don't know what it means\nExample 3: . General anesthesia is administered as part of the procedure.\nFollowing a neck lift, you will be\nExample 4: <|endoftext|> is mistaken. We have not seen the Madame before\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> and to<< the>> northwest of Al Bay\nExample 1: <|endoftext|> Mandal<<ay West>>, and areas to<< the>> south include King Edward\nExample 2:  +0.70<<%)>> and the<< same>> was true for Europe, though to<< a lesser>> extent (MS\nExample 3:  '09 following the release of Lolita Black's impressive debut album, Into<< the>> Wasteland ($6.\nExample 4:  that the fourth piece<< of>> the compass<< is>> in his chest that will sit to<< the>> right of the small\n"
+      "content": "Feature explanation: \"The neuron is looking for common function words, particularly articles and prepositions, that are often used to establish context or relationships in a sentence.\"\n\nText examples:\n\nExample 0: <|endoftext|>es. But to my amazement he answered\nExample 1:  Gourmet Burgers off of exit 26. Jerry's, which sits to the right of a gas\nExample 2: Hostility with carbs in the beginners to weight loss is quite common but to some extent, it is\nExample 3: . People wearing progressive lenses in glasses on the other hand have to look over their glasses if they want\nExample 4:  honestly found the writing a little dry. There was a lot of (to me) unnecessary background information\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  access to the outside world. The airport serves as a regional hub for all<< air>> travel, from bush\nExample 1: IX DENSITIES<<\n>>And the<< first>> grade is mineral life like earth,<< air>>, fire and water\nExample 2:  investigation continues into the<< cause>> of the<< fire>>. The home had central heat and<< air>> so there wasn't\nExample 3:  make one hotel more expensive than the other \u2026 you get the idea.\n<<Air>>fare is more expensive\nExample 4: , \ufffd\ufffdThe<< Survivor>> Diaries<<,>>\ufffd\ufffd hosted by Anderson Cooper,<< airing>> Tuesday at 10 p\n"
+      "content": "Feature explanation: \"The neuron is looking for the conjunction \\\"and\\\".\"\n\nText examples:\n\nExample 0:  Brisbane and who was he going to visit? Did his son divorce his wife and is that why they\nExample 1: \nIn Autostrada we only took short breaks to fill the tanks and riders\u2026\nIn\nExample 2:  is the first destination to add Airbnb data to their Acorn T-Stats System, and already some\nExample 3:  any individual feature of the Site will be error free, available all the time and/or free from\nExample 4:  and a visa. The Cape Verde embassies are not present in all countries and it is, therefore\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     }
   ],
   "4": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  has been photographing children as fairies for inclusion in the annual Beautiful Things<< with>> Wings calendar\u2014with\nExample 1:  money for charities. The most outstanding efforts include his work with The Floating Hospital<< for>> Children in Boston and\nExample 2:  Warming: Global Climate Change. Global Warming Thesis CHAPTER 1<< IN>>TRODUCTION Climate\nExample 3:  world's top 100 universities in QS & Times Higher Education World University Rankings<< of>> 2022. Several\nExample 4:  in a range of diameters.The Moon i3.3 is one<< of>> a growing number of\n"
+      "content": "Feature explanation: \"The neuron is looking for the pronoun \\\"it\\\" in a sentence.\"\n\nText examples:\n\nExample 0:  when it comes to availability of Selective Androgen Receptor Modulators. It is important to buy\nExample 1: <|endoftext|> it would be. It did not welcome me\nExample 2:  back with 10 diffe\nrent combinations with a repeating arc and theme. It\ufffd\ufffds a\nExample 3: <|endoftext|> finished my beer.\n\ufffd\ufffdCheck the port side,\ufffd\ufffd said the old man.\nExample 4:  easily one of the most cost-effective marketing strategies available to businesses today because it targets users who are\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Recorder. This allows you to verify how each file was recorded at its<< source>>. The sample rate\nExample 1: <|endoftext|><< limited urban>> land<< sources>> and environmental concerns have\nExample 2:  concerned with legally legitimate<< power>> and with<< the>> institution of the state as the sole<< source>> of authority. His\nExample 3:  of \ufffd\ufffdAlice Through The Looking Glass\ufffd\ufffd \u2014 namely, an obvious<< reference>> to Michelangelo\ufffd\nExample 4:  15 things which only<< you>> can understand<<.>>\n1. You don\ufffd\ufffd<<t>> need motivation.\n\n"
+      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  world's top 100 universities in QS & Times Higher Education World University Rankings of 2022. Several\nExample 1:  money for charities. The most outstanding efforts include his work with The Floating Hospital for Children in Boston and\nExample 2: wear business known as Makwa Studio and is also an emerging curator of contemporary Native art, and has\nExample 3:  in a range of diameters.The Moon i3.3 is one of a growing number of\nExample 4:  the goals of values education and peace education.\nLevel 4: Preparing for and taking action,\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> and Quality.\nErvin,<< A>>.M., Boland,<< M>>.V., My\nExample 1:  highlight the serious issue<< of>> awareness during<< ana>>esthesia in a recent review published by<< F>>1000 Medicine Reports.\nExample 2: -is-list<<ening>>-with<<->>intention/\nSchwartz,<< K>>., (2013,\nExample 3: bleday Publishing Group. Kindle Edition.\n 1.Davies,<< Paul>> (2008-04\nExample 4: \u201362<<.>>\nTricarico PM, Marcuzzi A<<, P>>\n"
+      "content": "Feature explanation: \"The neuron is looking for common function words, particularly articles and prepositions, that are often used to establish context or relationships in a sentence.\"\n\nText examples:\n\nExample 0: <|endoftext|>es. But to my amazement he answered\nExample 1:  Gourmet Burgers off of exit 26. Jerry's, which sits to the right of a gas\nExample 2: Hostility with carbs in the beginners to weight loss is quite common but to some extent, it is\nExample 3: . People wearing progressive lenses in glasses on the other hand have to look over their glasses if they want\nExample 4:  honestly found the writing a little dry. There was a lot of (to me) unnecessary background information\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|><<W>>V \u2013 1 death\nExample 1: <|endoftext|><< ch.>> 77-<<457>>\nExample 2:  let me vote with<< my>> pocketbook<< and>> where I decide to live.\n<<R>>ural Missourian\nExample 3: <|endoftext|><<s>> quite vague.I\nExample 4: <|endoftext|><< C.>> elegans<<,>>\n"
+      "content": "Feature explanation: \"The neuron is looking for the conjunction \\\"and\\\".\"\n\nText examples:\n\nExample 0:  Brisbane and who was he going to visit? Did his son divorce his wife and is that why they\nExample 1: \nIn Autostrada we only took short breaks to fill the tanks and riders\u2026\nIn\nExample 2:  is the first destination to add Airbnb data to their Acorn T-Stats System, and already some\nExample 3:  any individual feature of the Site will be error free, available all the time and/or free from\nExample 4:  and a visa. The Cape Verde embassies are not present in all countries and it is, therefore\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     }
   ],
   "5": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> and to<< the>> northwest of Al Bay\nExample 1: <|endoftext|> Mandal<<ay West>>, and areas to<< the>> south include King Edward\nExample 2:  +0.70<<%)>> and the<< same>> was true for Europe, though to<< a lesser>> extent (MS\nExample 3:  '09 following the release of Lolita Black's impressive debut album, Into<< the>> Wasteland ($6.\nExample 4:  that the fourth piece<< of>> the compass<< is>> in his chest that will sit to<< the>> right of the small\n"
+      "content": "Feature explanation: \"The neuron is looking for sentences or phrases that contain questions, often involving the words \\\"I\\\", \\\"he\\\", \\\"she\\\", \\\"they\\\", and words related to asking or wanting.\"\n\nText examples:\n\nExample 0:  so won't be needing this...It's simple and when people ask what you are, and\nExample 1:  not fall off, and I was invited back again. As for for how I felt post ride-\nExample 2:  activity.\nOnly 29 per cent of companies surveyed answered yes when asked if they had investigated the measuring\nExample 3:  to both kswp and kavx. I always cringe when my husband and I sat down\nExample 4: <|endoftext|>\nI\ufffd\ufffdm wondering how they ever manage situations like\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> and Quality.\nErvin,<< A>>.M., Boland,<< M>>.V., My\nExample 1:  highlight the serious issue<< of>> awareness during<< ana>>esthesia in a recent review published by<< F>>1000 Medicine Reports.\nExample 2: -is-list<<ening>>-with<<->>intention/\nSchwartz,<< K>>., (2013,\nExample 3: bleday Publishing Group. Kindle Edition.\n 1.Davies,<< Paul>> (2008-04\nExample 4: \u201362<<.>>\nTricarico PM, Marcuzzi A<<, P>>\n"
+      "content": "Feature explanation: \"The neuron is looking for hyphens (-) in a text, likely indicating compound words or phrases.\"\n\nText examples:\n\nExample 0:  within the borders of Egypt. A war between the haves and the have-nots. A\nExample 1: 30 a.m. to 3 p.m. and will offer drive-through service from 6\nExample 2:  elegant and stylish look and feel.\nSerato DJ Software - A free-of-charge download\nExample 3:  with ensuite bathrooms and a sun-drenched decked terrace, \u00a3750,000\n\nExample 4: A modern and spacious two-bedroom, penthouse flat with two bathrooms in a prestigious development\nA\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 0\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Recorder. This allows you to verify how each file was recorded at its<< source>>. The sample rate\nExample 1: <|endoftext|><< limited urban>> land<< sources>> and environmental concerns have\nExample 2:  concerned with legally legitimate<< power>> and with<< the>> institution of the state as the sole<< source>> of authority. His\nExample 3:  of \ufffd\ufffdAlice Through The Looking Glass\ufffd\ufffd \u2014 namely, an obvious<< reference>> to Michelangelo\ufffd\nExample 4:  15 things which only<< you>> can understand<<.>>\n1. You don\ufffd\ufffd<<t>> need motivation.\n\n"
+      "content": "Feature explanation: \"The neuron is looking for punctuation marks, specifically quotation marks, commas, and parentheses, as well as some common function words like \\\"is\\\", \\\"the\\\", and \\\"an\\\".\"\n\nText examples:\n\nExample 0: <|endoftext|> he performed well throughout his first season in Lawrence, the ups and downs continued\nExample 1:  Enjoy!\nFatou Laob\u00e9 & le Laob\u00e9 Gui - Gambia Modou\nExample 2:  of a group of young Moroccan heavy-metal rockers wrongly accused of being Satanists. The film\nExample 3: ed bed\nIl torrente Silan\nBassano del Grappa\nNatura vs\nExample 4: \n|Additional Online Files (Y/N)||N|Last Monday\ufffd\ufffds announcement of\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> the stock revolved around the potential tax increases<< that would have taken>> effect in\nExample 1:  talk slick well I'm Osama\nBin Laden, what's happenin<<'>> I get it crack\nExample 2: pose function lets you change the pitch of the incoming audio source by as much<< as>> one octave upward\nExample 3:  new edition has been fully updated to reflect dynamic changes in the industry. These<< changes>> include: an expansion\nExample 4:  the Chamber of Commerce to the New Jersey Business and Industry Association \u2014 applauded<< what they>> called Christie\ufffd\ufffd\n"
+      "content": "Feature explanation: \"The neuron is looking for the conjunction \\\"and\\\".\"\n\nText examples:\n\nExample 0:  Brisbane and who was he going to visit? Did his son divorce his wife and is that why they\nExample 1: \nIn Autostrada we only took short breaks to fill the tanks and riders\u2026\nIn\nExample 2:  is the first destination to add Airbnb data to their Acorn T-Stats System, and already some\nExample 3:  any individual feature of the Site will be error free, available all the time and/or free from\nExample 4:  and a visa. The Cape Verde embassies are not present in all countries and it is, therefore\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|><<W>>V \u2013 1 death\nExample 1: <|endoftext|><< ch.>> 77-<<457>>\nExample 2:  let me vote with<< my>> pocketbook<< and>> where I decide to live.\n<<R>>ural Missourian\nExample 3: <|endoftext|><<s>> quite vague.I\nExample 4: <|endoftext|><< C.>> elegans<<,>>\n"
+      "content": "Feature explanation: \"The neuron is looking for phrases indicating direction or reference to additional information.\"\n\nText examples:\n\nExample 0: \ufffd plant in Hartville, Ohio, in the US.\nClick here for the full text of\nExample 1: upatinath temple. Enjoy full darshan inside temple and if interested for\nExample 2: \ufffd\ufffds 28th annual review, please email email@example.com for more information. A\nExample 3: .\nWe cover a ton of relevant topics including lots of background on VHS and the home video\nExample 4: read daily news source for everything hotel curated for busy professionals. Sign up today for industry news delivered to\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     }
   ],
   "6": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Burr Williams\n- One Up on Wall Street and Beating the Street<<, both by>> Peter Lynch\n\nExample 1:  Enjoy!\nFatou Laob\u00e9 & le Laob\u00e9 Gui<< ->> Gambia Modou\nExample 2:  which although just as weird as my dreams at least my socks stay dry.<<\ufffd>>\ufffd\nJanuary 1\nExample 3: <|endoftext|> he performed well throughout his first season in Lawrence,<< the>> ups and downs continued\nExample 4: ed bed\nIl torrente Silan<<\n>>Bassano del Grappa<<\n>>Natura vs\n"
+      "content": "Feature explanation: \"The neuron is looking for the conjunction \\\"and\\\".\"\n\nText examples:\n\nExample 0:  Brisbane and who was he going to visit? Did his son divorce his wife and is that why they\nExample 1: \nIn Autostrada we only took short breaks to fill the tanks and riders\u2026\nIn\nExample 2:  is the first destination to add Airbnb data to their Acorn T-Stats System, and already some\nExample 3:  any individual feature of the Site will be error free, available all the time and/or free from\nExample 4:  and a visa. The Cape Verde embassies are not present in all countries and it is, therefore\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|>ry smiles of tourists I met in the country, asking if<< there was>> something<< they could>>\nExample 1: \" and need to<< come>> up with<< a>> new winter \"uniform\" If<< I>> see something I like\nExample 2:  feet and<< cons>>oled him. The man then asked Saint Eknath<< how He could>>\nExample 3:  involved, it doesn\ufffd\ufffdt yet affect Rodolfo Gugli<<el>>mi, or,\nExample 4:  please call them to<< find>> out when<< you>> can pick up your vehicle, if<< it>> is not damaged.\n"
+      "content": "Feature explanation: \"The neuron is looking for the word \\\"air\\\" in the context of broadcasting, atmosphere, or aviation.\"\n\nText examples:\n\nExample 0: <|endoftext|>All rooms at the Sirius Hotel offer air conditioning and satellite TV\nExample 1: . I will fly with them again in the future.\"\nPros: \"Air New Zealand check-\nExample 2:  and Durban, as well as plenty of domestic airports. The buses are air-conditioned\nExample 3: <|endoftext|>to 15 months and 41 months in federal prison, respectively. Teresa will serve\nher sentence first\nExample 4:  myself riding in the total shade. Even on this hot sweaty August day the air was surprisingly\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|><<W>>V \u2013 1 death\nExample 1: <|endoftext|><< ch.>> 77-<<457>>\nExample 2:  let me vote with<< my>> pocketbook<< and>> where I decide to live.\n<<R>>ural Missourian\nExample 3: <|endoftext|><<s>> quite vague.I\nExample 4: <|endoftext|><< C.>> elegans<<,>>\n"
+      "content": "Feature explanation: \"The neuron is looking for capital letters, likely the first letter of a proper noun or acronym.\"\n\nText examples:\n\nExample 0: <|endoftext|> Entertainments\nGentlemen series.\nExample 1: <|endoftext|>\ufffd\ufffds been featured all over\nExample 2:  patient trainers will prove to be more successful than harsh and loud ones.\nWelsh Springer Spaniels\nExample 3:  was another common theme at the meeting. Fr\u00e9d\u00e9ric Bantignies (Institute\nExample 4: <|endoftext|>l\u00e1loc\ufffd\ufffd\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  never stops fighting and that's what got us the win,\" said Stafford.<< \">>We can't make\nExample 1: ter Sports Center on<< Tuesday>>, there<< were>> no feeling-out moments.\n<<\">>We were going from\nExample 2:  restrained, and Dylan<< would>> later acknowledge<< this>> in an interview taken in 1980.<< \">>When Elvis did '\nExample 3: <|endoftext|><< \">>T\" D.\nExample 4:  my heart.\" Enough<< said>>.\n<<->> For ripping back a whole lot.<< \">>Ah, chi mi\n"
+      "content": "Feature explanation: \"The neuron is looking for punctuation marks, specifically quotation marks, commas, and parentheses, as well as some common function words like \\\"is\\\", \\\"the\\\", and \\\"an\\\".\"\n\nText examples:\n\nExample 0: <|endoftext|> he performed well throughout his first season in Lawrence, the ups and downs continued\nExample 1:  Enjoy!\nFatou Laob\u00e9 & le Laob\u00e9 Gui - Gambia Modou\nExample 2:  of a group of young Moroccan heavy-metal rockers wrongly accused of being Satanists. The film\nExample 3: ed bed\nIl torrente Silan\nBassano del Grappa\nNatura vs\nExample 4: \n|Additional Online Files (Y/N)||N|Last Monday\ufffd\ufffds announcement of\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> driving ranges allow the golf team, and sometimes fun<<->>seeking administrators, to\nExample 1:  Miraval Life in<< Balance>> Resort and<< Spa>> in Tucson, Arizona. These hard<<->>working mothers, daughters\nExample 2:  thing to get MS<<O>> shares moving<< back>> up the charts.\n- Head<<->>chopping at Martha\nExample 3:  name, if you ask me, but that's what Creative calls their top<<->>range line\nExample 4:  things to come,<< as>> long as<< neither>> one blows it.\nThe hundred<<->>foot journey in the\n"
+      "content": "Feature explanation: \"The neuron is looking for technical terms related to computer hardware and networking, such as Wi-Fi, USB, and other technical abbreviations.\"\n\nText examples:\n\nExample 0: <|endoftext|> recreation, sharing with other team members, backing up configuration before making changes.\nThis would be\nExample 1:  Cavium\ufffd\ufffds fully-integrated, carrier-deployed LTE stack software includes TR\nExample 2: P = P\ufffd\ufffd has proven a success in our consultation projects.\nProjects such as:\nExample 3: <|endoftext|> in bundled data or data add-on plans, but there are\nExample 4: Create a Proposal\nScreenshare to go over proposal\n- Property imagery is pulled prior to\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 0,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Recorder. This allows you to verify how each file was recorded at its<< source>>. The sample rate\nExample 1: <|endoftext|><< limited urban>> land<< sources>> and environmental concerns have\nExample 2:  concerned with legally legitimate<< power>> and with<< the>> institution of the state as the sole<< source>> of authority. His\nExample 3:  of \ufffd\ufffdAlice Through The Looking Glass\ufffd\ufffd \u2014 namely, an obvious<< reference>> to Michelangelo\ufffd\nExample 4:  15 things which only<< you>> can understand<<.>>\n1. You don\ufffd\ufffd<<t>> need motivation.\n\n"
+      "content": "Feature explanation: \"The neuron is looking for sentences or phrases that contain questions, often involving the words \\\"I\\\", \\\"he\\\", \\\"she\\\", \\\"they\\\", and words related to asking or wanting.\"\n\nText examples:\n\nExample 0:  so won't be needing this...It's simple and when people ask what you are, and\nExample 1:  not fall off, and I was invited back again. As for for how I felt post ride-\nExample 2:  activity.\nOnly 29 per cent of companies surveyed answered yes when asked if they had investigated the measuring\nExample 3:  to both kswp and kavx. I always cringe when my husband and I sat down\nExample 4: <|endoftext|>\nI\ufffd\ufffdm wondering how they ever manage situations like\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     }
   ],
   "7": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> the stock revolved around the potential tax increases<< that would have taken>> effect in\nExample 1:  talk slick well I'm Osama\nBin Laden, what's happenin<<'>> I get it crack\nExample 2: pose function lets you change the pitch of the incoming audio source by as much<< as>> one octave upward\nExample 3:  new edition has been fully updated to reflect dynamic changes in the industry. These<< changes>> include: an expansion\nExample 4:  the Chamber of Commerce to the New Jersey Business and Industry Association \u2014 applauded<< what they>> called Christie\ufffd\ufffd\n"
+      "content": "Feature explanation: \"The neuron is looking for common function words, particularly articles and prepositions, that are often used to establish context or relationships in a sentence.\"\n\nText examples:\n\nExample 0: <|endoftext|>es. But to my amazement he answered\nExample 1:  Gourmet Burgers off of exit 26. Jerry's, which sits to the right of a gas\nExample 2: Hostility with carbs in the beginners to weight loss is quite common but to some extent, it is\nExample 3: . People wearing progressive lenses in glasses on the other hand have to look over their glasses if they want\nExample 4:  honestly found the writing a little dry. There was a lot of (to me) unnecessary background information\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  so I do not need to worry about going out of the lines.\n<<It>> created a lift,\nExample 1:  \u2014 destines or<< even>> basically suits<< two>> people for each other is disgusting.<< It>> reminds me\nExample 2: Most of us see<< reflection>> as a<< personal>> pursuit, a solitary practice\u2014and<< it>> is. But it\nExample 3:  about my cats, food, entertainment, gossip, and\u2026well everything.<< It>> didn\ufffd\ufffdt\nExample 4: <|endoftext|> check<< the cl>>_timenudge setting,<< it>> interpolates the enemy\n"
+      "content": "Feature explanation: \"The neuron is looking for phrases indicating direction or reference to additional information.\"\n\nText examples:\n\nExample 0: \ufffd plant in Hartville, Ohio, in the US.\nClick here for the full text of\nExample 1: upatinath temple. Enjoy full darshan inside temple and if interested for\nExample 2: \ufffd\ufffds 28th annual review, please email email@example.com for more information. A\nExample 3: .\nWe cover a ton of relevant topics including lots of background on VHS and the home video\nExample 4: read daily news source for everything hotel curated for busy professionals. Sign up today for industry news delivered to\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> and Quality.\nErvin,<< A>>.M., Boland,<< M>>.V., My\nExample 1:  highlight the serious issue<< of>> awareness during<< ana>>esthesia in a recent review published by<< F>>1000 Medicine Reports.\nExample 2: -is-list<<ening>>-with<<->>intention/\nSchwartz,<< K>>., (2013,\nExample 3: bleday Publishing Group. Kindle Edition.\n 1.Davies,<< Paul>> (2008-04\nExample 4: \u201362<<.>>\nTricarico PM, Marcuzzi A<<, P>>\n"
+      "content": "Feature explanation: \"The neuron is looking for commas used in informal speech or dialogue.\"\n\nText examples:\n\nExample 0: <|endoftext|>\ufffd\ufffd from Act 1, step 5\nOh, she doth teach\nExample 1:  pictures. This picture is from April 19th of last year. (Yes, I do feel like\nExample 2:  indentured slavery that is the modern corporate experience, consider themselves independent? Hey, if you take exception\nExample 3: agreed insurance \ufffd\ufffdextras\ufffd\ufffd were a definite competitive advantage. It made his firm easier\nExample 4: -level security situation.|\n|82||4||\"Brains, Brains and Autom\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> wasn\ufffd\ufffdt a Tartar.\nTR: No<<,>> but if a horse\nExample 1:  box contact to discharge<<.>>\nIV<<.>> Precautions during assembly operation\n1<<,>> the LCD module is\nExample 2:  your iPhone. Instead<<,>> they will<< revert>> to their default Bluetooth connection (yes<<,>> all Thread-enabled\nExample 3:  the glories and disgraces of its past.\ufffd\ufffd\nSo hey<<,>> New York! Now\nExample 4:  his combat pack.<< Did>> I need<< all>> that gear for that assignment? Yeah<<,>> I thought so\u2026\n"
+      "content": "Feature explanation: \"The neuron is looking for hyphens (-) in a text, likely indicating compound words or phrases.\"\n\nText examples:\n\nExample 0:  within the borders of Egypt. A war between the haves and the have-nots. A\nExample 1: 30 a.m. to 3 p.m. and will offer drive-through service from 6\nExample 2:  elegant and stylish look and feel.\nSerato DJ Software - A free-of-charge download\nExample 3:  with ensuite bathrooms and a sun-drenched decked terrace, \u00a3750,000\n\nExample 4: A modern and spacious two-bedroom, penthouse flat with two bathrooms in a prestigious development\nA\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 0\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Recorder. This allows you to verify how each file was recorded at its<< source>>. The sample rate\nExample 1: <|endoftext|><< limited urban>> land<< sources>> and environmental concerns have\nExample 2:  concerned with legally legitimate<< power>> and with<< the>> institution of the state as the sole<< source>> of authority. His\nExample 3:  of \ufffd\ufffdAlice Through The Looking Glass\ufffd\ufffd \u2014 namely, an obvious<< reference>> to Michelangelo\ufffd\nExample 4:  15 things which only<< you>> can understand<<.>>\n1. You don\ufffd\ufffd<<t>> need motivation.\n\n"
+      "content": "Feature explanation: \"The neuron is looking for phrases or sentences that indicate a state of being or a change in state.\"\n\nText examples:\n\nExample 0:  new edition has been fully updated to reflect dynamic changes in the industry. These changes include: an expansion\nExample 1:  talk slick well I'm Osama\nBin Laden, what's happenin' I get it crack\nExample 2: rapo, will create an even worse problem of moral hazard?\n- It appears that a core\nExample 3:  the Chamber of Commerce to the New Jersey Business and Industry Association \u2014 applauded what they called Christie\ufffd\ufffd\nExample 4:  that we (humans) also have. Mutations in the human homolog can cause metabolic dysfunction.\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  access to the outside world. The airport serves as a regional hub for all<< air>> travel, from bush\nExample 1: IX DENSITIES<<\n>>And the<< first>> grade is mineral life like earth,<< air>>, fire and water\nExample 2:  investigation continues into the<< cause>> of the<< fire>>. The home had central heat and<< air>> so there wasn't\nExample 3:  make one hotel more expensive than the other \u2026 you get the idea.\n<<Air>>fare is more expensive\nExample 4: , \ufffd\ufffdThe<< Survivor>> Diaries<<,>>\ufffd\ufffd hosted by Anderson Cooper,<< airing>> Tuesday at 10 p\n"
+      "content": "Feature explanation: \"The neuron is looking for the word \\\"source\\\".\"\n\nText examples:\n\nExample 0: cault 1982:789). Consequently, power does not stem from a single source (the state)\nExample 1:  our condolences.Published by Viking\nPublication date \u2013 20 February 2020\nSource \u2013 review copy\n\nExample 2: <|endoftext|> from this source. Meteors\nExample 3:  handle that too\nWe can help you with any difficult situation that is currently weighing you down. Our\nExample 4:  hearing my 11-year-old say \ufffd\ufffddoing it\ufffd\ufffd in reference to her father and\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  has been photographing children as fairies for inclusion in the annual Beautiful Things<< with>> Wings calendar\u2014with\nExample 1:  money for charities. The most outstanding efforts include his work with The Floating Hospital<< for>> Children in Boston and\nExample 2:  Warming: Global Climate Change. Global Warming Thesis CHAPTER 1<< IN>>TRODUCTION Climate\nExample 3:  world's top 100 universities in QS & Times Higher Education World University Rankings<< of>> 2022. Several\nExample 4:  in a range of diameters.The Moon i3.3 is one<< of>> a growing number of\n"
+      "content": "Feature explanation: \"The neuron is looking for the conjunction \\\"and\\\".\"\n\nText examples:\n\nExample 0:  Brisbane and who was he going to visit? Did his son divorce his wife and is that why they\nExample 1: \nIn Autostrada we only took short breaks to fill the tanks and riders\u2026\nIn\nExample 2:  is the first destination to add Airbnb data to their Acorn T-Stats System, and already some\nExample 3:  any individual feature of the Site will be error free, available all the time and/or free from\nExample 4:  and a visa. The Cape Verde embassies are not present in all countries and it is, therefore\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     }
   ],
   "8": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|><<W>>V \u2013 1 death\nExample 1: <|endoftext|><< ch.>> 77-<<457>>\nExample 2:  let me vote with<< my>> pocketbook<< and>> where I decide to live.\n<<R>>ural Missourian\nExample 3: <|endoftext|><<s>> quite vague.I\nExample 4: <|endoftext|><< C.>> elegans<<,>>\n"
+      "content": "Feature explanation: \"The neuron is looking for punctuation marks, specifically quotation marks, commas, and parentheses, as well as some common function words like \\\"is\\\", \\\"the\\\", and \\\"an\\\".\"\n\nText examples:\n\nExample 0: <|endoftext|> he performed well throughout his first season in Lawrence, the ups and downs continued\nExample 1:  Enjoy!\nFatou Laob\u00e9 & le Laob\u00e9 Gui - Gambia Modou\nExample 2:  of a group of young Moroccan heavy-metal rockers wrongly accused of being Satanists. The film\nExample 3: ed bed\nIl torrente Silan\nBassano del Grappa\nNatura vs\nExample 4: \n|Additional Online Files (Y/N)||N|Last Monday\ufffd\ufffds announcement of\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> wasn\ufffd\ufffdt a Tartar.\nTR: No<<,>> but if a horse\nExample 1:  box contact to discharge<<.>>\nIV<<.>> Precautions during assembly operation\n1<<,>> the LCD module is\nExample 2:  your iPhone. Instead<<,>> they will<< revert>> to their default Bluetooth connection (yes<<,>> all Thread-enabled\nExample 3:  the glories and disgraces of its past.\ufffd\ufffd\nSo hey<<,>> New York! Now\nExample 4:  his combat pack.<< Did>> I need<< all>> that gear for that assignment? Yeah<<,>> I thought so\u2026\n"
+      "content": "Feature explanation: \"The neuron is looking for phrases indicating direction or reference to additional information.\"\n\nText examples:\n\nExample 0: \ufffd plant in Hartville, Ohio, in the US.\nClick here for the full text of\nExample 1: upatinath temple. Enjoy full darshan inside temple and if interested for\nExample 2: \ufffd\ufffds 28th annual review, please email email@example.com for more information. A\nExample 3: .\nWe cover a ton of relevant topics including lots of background on VHS and the home video\nExample 4: read daily news source for everything hotel curated for busy professionals. Sign up today for industry news delivered to\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> and to<< the>> northwest of Al Bay\nExample 1: <|endoftext|> Mandal<<ay West>>, and areas to<< the>> south include King Edward\nExample 2:  +0.70<<%)>> and the<< same>> was true for Europe, though to<< a lesser>> extent (MS\nExample 3:  '09 following the release of Lolita Black's impressive debut album, Into<< the>> Wasteland ($6.\nExample 4:  that the fourth piece<< of>> the compass<< is>> in his chest that will sit to<< the>> right of the small\n"
+      "content": "Feature explanation: \"The neuron is looking for phrases or sentences that indicate a state of being or a change in state.\"\n\nText examples:\n\nExample 0:  new edition has been fully updated to reflect dynamic changes in the industry. These changes include: an expansion\nExample 1:  talk slick well I'm Osama\nBin Laden, what's happenin' I get it crack\nExample 2: rapo, will create an even worse problem of moral hazard?\n- It appears that a core\nExample 3:  the Chamber of Commerce to the New Jersey Business and Industry Association \u2014 applauded what they called Christie\ufffd\ufffd\nExample 4:  that we (humans) also have. Mutations in the human homolog can cause metabolic dysfunction.\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> the stock revolved around the potential tax increases<< that would have taken>> effect in\nExample 1:  talk slick well I'm Osama\nBin Laden, what's happenin<<'>> I get it crack\nExample 2: pose function lets you change the pitch of the incoming audio source by as much<< as>> one octave upward\nExample 3:  new edition has been fully updated to reflect dynamic changes in the industry. These<< changes>> include: an expansion\nExample 4:  the Chamber of Commerce to the New Jersey Business and Industry Association \u2014 applauded<< what they>> called Christie\ufffd\ufffd\n"
+      "content": "Feature explanation: \"The neuron is looking for commas used in informal speech or dialogue.\"\n\nText examples:\n\nExample 0: <|endoftext|>\ufffd\ufffd from Act 1, step 5\nOh, she doth teach\nExample 1:  pictures. This picture is from April 19th of last year. (Yes, I do feel like\nExample 2:  indentured slavery that is the modern corporate experience, consider themselves independent? Hey, if you take exception\nExample 3: agreed insurance \ufffd\ufffdextras\ufffd\ufffd were a definite competitive advantage. It made his firm easier\nExample 4: -level security situation.|\n|82||4||\"Brains, Brains and Autom\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> driving ranges allow the golf team, and sometimes fun<<->>seeking administrators, to\nExample 1:  Miraval Life in<< Balance>> Resort and<< Spa>> in Tucson, Arizona. These hard<<->>working mothers, daughters\nExample 2:  thing to get MS<<O>> shares moving<< back>> up the charts.\n- Head<<->>chopping at Martha\nExample 3:  name, if you ask me, but that's what Creative calls their top<<->>range line\nExample 4:  things to come,<< as>> long as<< neither>> one blows it.\nThe hundred<<->>foot journey in the\n"
+      "content": "Feature explanation: \"The neuron is looking for quotation marks.\"\n\nText examples:\n\nExample 0:  pass.\n\"Had several opportunities in the game,\" Jim Harbaugh said. \"Didn't play\nExample 1:  would become prom kings. Murphy also promised the crowd that Colfer's character \"\nExample 2: <|endoftext|>Winning five here would be unimaginable,\" Gordon said. \"There was a time\nExample 3:  lining up the dominoes and the first will fall the night we open the ballpark. People are\nExample 4:  with more than 6,500 responses.\nRebecca Evans AM said: \ufffd\ufffdThe introduction of\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Burr Williams\n- One Up on Wall Street and Beating the Street<<, both by>> Peter Lynch\n\nExample 1:  Enjoy!\nFatou Laob\u00e9 & le Laob\u00e9 Gui<< ->> Gambia Modou\nExample 2:  which although just as weird as my dreams at least my socks stay dry.<<\ufffd>>\ufffd\nJanuary 1\nExample 3: <|endoftext|> he performed well throughout his first season in Lawrence,<< the>> ups and downs continued\nExample 4: ed bed\nIl torrente Silan<<\n>>Bassano del Grappa<<\n>>Natura vs\n"
+      "content": "Feature explanation: \"The neuron is looking for common function words, particularly articles and prepositions, that are often used to establish context or relationships in a sentence.\"\n\nText examples:\n\nExample 0: <|endoftext|>es. But to my amazement he answered\nExample 1:  Gourmet Burgers off of exit 26. Jerry's, which sits to the right of a gas\nExample 2: Hostility with carbs in the beginners to weight loss is quite common but to some extent, it is\nExample 3: . People wearing progressive lenses in glasses on the other hand have to look over their glasses if they want\nExample 4:  honestly found the writing a little dry. There was a lot of (to me) unnecessary background information\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|>ry smiles of tourists I met in the country, asking if<< there was>> something<< they could>>\nExample 1: \" and need to<< come>> up with<< a>> new winter \"uniform\" If<< I>> see something I like\nExample 2:  feet and<< cons>>oled him. The man then asked Saint Eknath<< how He could>>\nExample 3:  involved, it doesn\ufffd\ufffdt yet affect Rodolfo Gugli<<el>>mi, or,\nExample 4:  please call them to<< find>> out when<< you>> can pick up your vehicle, if<< it>> is not damaged.\n"
+      "content": "Feature explanation: \"The neuron is looking for technical terms related to computer hardware and networking, such as Wi-Fi, USB, and other technical abbreviations.\"\n\nText examples:\n\nExample 0: <|endoftext|> recreation, sharing with other team members, backing up configuration before making changes.\nThis would be\nExample 1:  Cavium\ufffd\ufffds fully-integrated, carrier-deployed LTE stack software includes TR\nExample 2: P = P\ufffd\ufffd has proven a success in our consultation projects.\nProjects such as:\nExample 3: <|endoftext|> in bundled data or data add-on plans, but there are\nExample 4: Create a Proposal\nScreenshare to go over proposal\n- Property imagery is pulled prior to\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 0,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> and Quality.\nErvin,<< A>>.M., Boland,<< M>>.V., My\nExample 1:  highlight the serious issue<< of>> awareness during<< ana>>esthesia in a recent review published by<< F>>1000 Medicine Reports.\nExample 2: -is-list<<ening>>-with<<->>intention/\nSchwartz,<< K>>., (2013,\nExample 3: bleday Publishing Group. Kindle Edition.\n 1.Davies,<< Paul>> (2008-04\nExample 4: \u201362<<.>>\nTricarico PM, Marcuzzi A<<, P>>\n"
+      "content": "Feature explanation: \"The neuron is looking for hyphens (-) in a text, likely indicating compound words or phrases.\"\n\nText examples:\n\nExample 0:  within the borders of Egypt. A war between the haves and the have-nots. A\nExample 1: 30 a.m. to 3 p.m. and will offer drive-through service from 6\nExample 2:  elegant and stylish look and feel.\nSerato DJ Software - A free-of-charge download\nExample 3:  with ensuite bathrooms and a sun-drenched decked terrace, \u00a3750,000\n\nExample 4: A modern and spacious two-bedroom, penthouse flat with two bathrooms in a prestigious development\nA\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 0\n}"
     }
   ],
   "9": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  so I do not need to worry about going out of the lines.\n<<It>> created a lift,\nExample 1:  \u2014 destines or<< even>> basically suits<< two>> people for each other is disgusting.<< It>> reminds me\nExample 2: Most of us see<< reflection>> as a<< personal>> pursuit, a solitary practice\u2014and<< it>> is. But it\nExample 3:  about my cats, food, entertainment, gossip, and\u2026well everything.<< It>> didn\ufffd\ufffdt\nExample 4: <|endoftext|> check<< the cl>>_timenudge setting,<< it>> interpolates the enemy\n"
+      "content": "Feature explanation: \"The neuron is looking for words related to physical measurements, specifically height and aerodynamics.\"\n\nText examples:\n\nExample 0: : 6' 4\" (193.04 cm)\nStanding at a height of 6 feet,\nExample 1:  greens in a food processor, tossing in some creme fraiche for good measure. Lastly, I\nExample 2:  from a pig and wrapped it around a spherical object to hurl through the air.\ufffd\ufffd What\nExample 3:  is comes under the Government job. This is the best opportunity for the job hunters who are looking for\nExample 4: <|endoftext|>\nThe University of Wolverhampton values a diverse workforce and welcomes applications from all sections of\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  can already hear that the beads are nearly seated due to the hissing of<< air>> when you squeeze the\nExample 1:  living zone for either<< the>> kids or<< parents>>.\n- Climate controlled via the<< air>> conditioner in the\nExample 2: <|endoftext|>\ufffd<<t enough>> on its own to put on<< air>> very serious allegations that\nExample 3:  sales of assets.\nCARs (cumulative abnormal returns)\na<< measure>> used in academic finance\nExample 4:  ten times.\n<<Standing>> in-<<flight>> exercises\nSide bends \u2013 stand up<< tall>> and place your hands\n"
+      "content": "Feature explanation: \"The neuron is looking for capital letters, likely the first letter of a proper noun or acronym.\"\n\nText examples:\n\nExample 0: <|endoftext|> Entertainments\nGentlemen series.\nExample 1: <|endoftext|>\ufffd\ufffds been featured all over\nExample 2:  patient trainers will prove to be more successful than harsh and loud ones.\nWelsh Springer Spaniels\nExample 3:  was another common theme at the meeting. Fr\u00e9d\u00e9ric Bantignies (Institute\nExample 4: <|endoftext|>l\u00e1loc\ufffd\ufffd\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Result 2018\n- First of all, visit or log on at vbs<<pu>>.ac.in\nExample 1: Create a Proposal\nScreenshare to go over proposal\n- Property<< imagery>> is pulled prior to\nExample 2: 3200 includes transportation from either Avignon or Marseille, International air<<fare>> and travel to Av\nExample 3:  between the NCLGA and organizations invested in our region.\nMake Res<<olutions>> More Effective\nThrough\nExample 4:  Example: +1<< 25>>62000280 or 001<< 25>>62000280<<.>>\nThis number is\n"
+      "content": "Feature explanation: \"The neuron is looking for the word \\\"source\\\".\"\n\nText examples:\n\nExample 0: cault 1982:789). Consequently, power does not stem from a single source (the state)\nExample 1:  our condolences.Published by Viking\nPublication date \u2013 20 February 2020\nSource \u2013 review copy\n\nExample 2: <|endoftext|> from this source. Meteors\nExample 3:  handle that too\nWe can help you with any difficult situation that is currently weighing you down. Our\nExample 4:  hearing my 11-year-old say \ufffd\ufffddoing it\ufffd\ufffd in reference to her father and\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> driving ranges allow the golf team, and sometimes fun<<->>seeking administrators, to\nExample 1:  Miraval Life in<< Balance>> Resort and<< Spa>> in Tucson, Arizona. These hard<<->>working mothers, daughters\nExample 2:  thing to get MS<<O>> shares moving<< back>> up the charts.\n- Head<<->>chopping at Martha\nExample 3:  name, if you ask me, but that's what Creative calls their top<<->>range line\nExample 4:  things to come,<< as>> long as<< neither>> one blows it.\nThe hundred<<->>foot journey in the\n"
+      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  world's top 100 universities in QS & Times Higher Education World University Rankings of 2022. Several\nExample 1:  money for charities. The most outstanding efforts include his work with The Floating Hospital for Children in Boston and\nExample 2: wear business known as Makwa Studio and is also an emerging curator of contemporary Native art, and has\nExample 3:  in a range of diameters.The Moon i3.3 is one of a growing number of\nExample 4:  the goals of values education and peace education.\nLevel 4: Preparing for and taking action,\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: .W. post about an hour east of here in Portsmouth. I don<<'t>> go for this speech\nExample 1:  company that brought it<< to>> market.<< At>> 70, Doerr says he does<< not>> have the time or\nExample 2: 3 piece, tho<< my>> favourites are<< the>> Renaissance-style portraits. You are<< a>> genius sir />/>\nExample 3:  any of seven qualities present.\"\nThese qualities include:\n* They didn<<'t>> go to the previous\nExample 4:  actually see any of<< the>> code in<< the>> product. Either way, I'm<< not>> trying to go into\n"
+      "content": "Feature explanation: \"The neuron is looking for the word \\\"air\\\" in the context of broadcasting, atmosphere, or aviation.\"\n\nText examples:\n\nExample 0: <|endoftext|>All rooms at the Sirius Hotel offer air conditioning and satellite TV\nExample 1: . I will fly with them again in the future.\"\nPros: \"Air New Zealand check-\nExample 2:  and Durban, as well as plenty of domestic airports. The buses are air-conditioned\nExample 3: <|endoftext|>to 15 months and 41 months in federal prison, respectively. Teresa will serve\nher sentence first\nExample 4:  myself riding in the total shade. Even on this hot sweaty August day the air was surprisingly\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: akes are also available in 9ct gold. Please contact your local funeral home<< for>> more information.L\nExample 1:  of the World War<< II>> bestseller<<,>> Ludwika. Thank you Jean<< for>> allowing Detective Teme\nExample 2:  refund.Cartoon<< By>> Dedini<< Party>> In France 1950\nClick thumbnails<< for>> expanded view.\n\nExample 3:  neckline and buy sensible shoes. You can Google \ufffd\ufffdhairstyles<< for>> people over 40\ufffd\nExample 4:  - Frankenstein - very<< good>>. Comments<< are>> on my blog.I'll be<< posting>> a Winter Classics Wrap\n"
+      "content": "Feature explanation: \"The neuron is looking for technical terms related to computer hardware and networking, such as Wi-Fi, USB, and other technical abbreviations.\"\n\nText examples:\n\nExample 0: <|endoftext|> recreation, sharing with other team members, backing up configuration before making changes.\nThis would be\nExample 1:  Cavium\ufffd\ufffds fully-integrated, carrier-deployed LTE stack software includes TR\nExample 2: P = P\ufffd\ufffd has proven a success in our consultation projects.\nProjects such as:\nExample 3: <|endoftext|> in bundled data or data add-on plans, but there are\nExample 4: Create a Proposal\nScreenshare to go over proposal\n- Property imagery is pulled prior to\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 0,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> wasn\ufffd\ufffdt a Tartar.\nTR: No<<,>> but if a horse\nExample 1:  box contact to discharge<<.>>\nIV<<.>> Precautions during assembly operation\n1<<,>> the LCD module is\nExample 2:  your iPhone. Instead<<,>> they will<< revert>> to their default Bluetooth connection (yes<<,>> all Thread-enabled\nExample 3:  the glories and disgraces of its past.\ufffd\ufffd\nSo hey<<,>> New York! Now\nExample 4:  his combat pack.<< Did>> I need<< all>> that gear for that assignment? Yeah<<,>> I thought so\u2026\n"
+      "content": "Feature explanation: \"The neuron is looking for sentences or phrases that contain questions, often involving the words \\\"I\\\", \\\"he\\\", \\\"she\\\", \\\"they\\\", and words related to asking or wanting.\"\n\nText examples:\n\nExample 0:  so won't be needing this...It's simple and when people ask what you are, and\nExample 1:  not fall off, and I was invited back again. As for for how I felt post ride-\nExample 2:  activity.\nOnly 29 per cent of companies surveyed answered yes when asked if they had investigated the measuring\nExample 3:  to both kswp and kavx. I always cringe when my husband and I sat down\nExample 4: <|endoftext|>\nI\ufffd\ufffdm wondering how they ever manage situations like\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Burr Williams\n- One Up on Wall Street and Beating the Street<<, both by>> Peter Lynch\n\nExample 1:  Enjoy!\nFatou Laob\u00e9 & le Laob\u00e9 Gui<< ->> Gambia Modou\nExample 2:  which although just as weird as my dreams at least my socks stay dry.<<\ufffd>>\ufffd\nJanuary 1\nExample 3: <|endoftext|> he performed well throughout his first season in Lawrence,<< the>> ups and downs continued\nExample 4: ed bed\nIl torrente Silan<<\n>>Bassano del Grappa<<\n>>Natura vs\n"
+      "content": "Feature explanation: \"The neuron is looking for common function words, particularly articles and prepositions, that are often used to establish context or relationships in a sentence.\"\n\nText examples:\n\nExample 0: <|endoftext|>es. But to my amazement he answered\nExample 1:  Gourmet Burgers off of exit 26. Jerry's, which sits to the right of a gas\nExample 2: Hostility with carbs in the beginners to weight loss is quite common but to some extent, it is\nExample 3: . People wearing progressive lenses in glasses on the other hand have to look over their glasses if they want\nExample 4:  honestly found the writing a little dry. There was a lot of (to me) unnecessary background information\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|><<W>>V \u2013 1 death\nExample 1: <|endoftext|><< ch.>> 77-<<457>>\nExample 2:  let me vote with<< my>> pocketbook<< and>> where I decide to live.\n<<R>>ural Missourian\nExample 3: <|endoftext|><<s>> quite vague.I\nExample 4: <|endoftext|><< C.>> elegans<<,>>\n"
+      "content": "Feature explanation: \"The neuron is looking for punctuation marks, specifically quotation marks, commas, and parentheses, as well as some common function words like \\\"is\\\", \\\"the\\\", and \\\"an\\\".\"\n\nText examples:\n\nExample 0: <|endoftext|> he performed well throughout his first season in Lawrence, the ups and downs continued\nExample 1:  Enjoy!\nFatou Laob\u00e9 & le Laob\u00e9 Gui - Gambia Modou\nExample 2:  of a group of young Moroccan heavy-metal rockers wrongly accused of being Satanists. The film\nExample 3: ed bed\nIl torrente Silan\nBassano del Grappa\nNatura vs\nExample 4: \n|Additional Online Files (Y/N)||N|Last Monday\ufffd\ufffds announcement of\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     }
   ],
   "10": [
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|><<W>>V \u2013 1 death\nExample 1: <|endoftext|><< ch.>> 77-<<457>>\nExample 2:  let me vote with<< my>> pocketbook<< and>> where I decide to live.\n<<R>>ural Missourian\nExample 3: <|endoftext|><<s>> quite vague.I\nExample 4: <|endoftext|><< C.>> elegans<<,>>\n"
+      "content": "Feature explanation: \"The neuron is looking for capital letters, likely the first letter of a proper noun or acronym.\"\n\nText examples:\n\nExample 0: <|endoftext|> Entertainments\nGentlemen series.\nExample 1: <|endoftext|>\ufffd\ufffds been featured all over\nExample 2:  patient trainers will prove to be more successful than harsh and loud ones.\nWelsh Springer Spaniels\nExample 3:  was another common theme at the meeting. Fr\u00e9d\u00e9ric Bantignies (Institute\nExample 4: <|endoftext|>l\u00e1loc\ufffd\ufffd\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> the stock revolved around the potential tax increases<< that would have taken>> effect in\nExample 1:  talk slick well I'm Osama\nBin Laden, what's happenin<<'>> I get it crack\nExample 2: pose function lets you change the pitch of the incoming audio source by as much<< as>> one octave upward\nExample 3:  new edition has been fully updated to reflect dynamic changes in the industry. These<< changes>> include: an expansion\nExample 4:  the Chamber of Commerce to the New Jersey Business and Industry Association \u2014 applauded<< what they>> called Christie\ufffd\ufffd\n"
+      "content": "Feature explanation: \"The neuron is looking for punctuation marks, specifically quotation marks, commas, and parentheses, as well as some common function words like \\\"is\\\", \\\"the\\\", and \\\"an\\\".\"\n\nText examples:\n\nExample 0: <|endoftext|> he performed well throughout his first season in Lawrence, the ups and downs continued\nExample 1:  Enjoy!\nFatou Laob\u00e9 & le Laob\u00e9 Gui - Gambia Modou\nExample 2:  of a group of young Moroccan heavy-metal rockers wrongly accused of being Satanists. The film\nExample 3: ed bed\nIl torrente Silan\nBassano del Grappa\nNatura vs\nExample 4: \n|Additional Online Files (Y/N)||N|Last Monday\ufffd\ufffds announcement of\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: .W. post about an hour east of here in Portsmouth. I don<<'t>> go for this speech\nExample 1:  company that brought it<< to>> market.<< At>> 70, Doerr says he does<< not>> have the time or\nExample 2: 3 piece, tho<< my>> favourites are<< the>> Renaissance-style portraits. You are<< a>> genius sir />/>\nExample 3:  any of seven qualities present.\"\nThese qualities include:\n* They didn<<'t>> go to the previous\nExample 4:  actually see any of<< the>> code in<< the>> product. Either way, I'm<< not>> trying to go into\n"
+      "content": "Feature explanation: \"The neuron is looking for the word \\\"air\\\" in the context of broadcasting, atmosphere, or aviation.\"\n\nText examples:\n\nExample 0: <|endoftext|>All rooms at the Sirius Hotel offer air conditioning and satellite TV\nExample 1: . I will fly with them again in the future.\"\nPros: \"Air New Zealand check-\nExample 2:  and Durban, as well as plenty of domestic airports. The buses are air-conditioned\nExample 3: <|endoftext|>to 15 months and 41 months in federal prison, respectively. Teresa will serve\nher sentence first\nExample 4:  myself riding in the total shade. Even on this hot sweaty August day the air was surprisingly\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Result 2018\n- First of all, visit or log on at vbs<<pu>>.ac.in\nExample 1: Create a Proposal\nScreenshare to go over proposal\n- Property<< imagery>> is pulled prior to\nExample 2: 3200 includes transportation from either Avignon or Marseille, International air<<fare>> and travel to Av\nExample 3:  between the NCLGA and organizations invested in our region.\nMake Res<<olutions>> More Effective\nThrough\nExample 4:  Example: +1<< 25>>62000280 or 001<< 25>>62000280<<.>>\nThis number is\n"
+      "content": "Feature explanation: \"The neuron is looking for negations, specifically the words \\\"not\\\", \\\"a\\\", and the contraction \\\"'t\\\" (which stands for \\\"not\\\").\"\n\nText examples:\n\nExample 0:  the notes say \"my gran gave me this teddy bear so I wouldn't be scared but now\nExample 1: <|endoftext|> they have good reputation and they are not known for sharing subscriber\nExample 2: ane and is sitting on the window sill as I type this. I don't know what it means\nExample 3: . General anesthesia is administered as part of the procedure.\nFollowing a neck lift, you will be\nExample 4: <|endoftext|> is mistaken. We have not seen the Madame before\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  never stops fighting and that's what got us the win,\" said Stafford.<< \">>We can't make\nExample 1: ter Sports Center on<< Tuesday>>, there<< were>> no feeling-out moments.\n<<\">>We were going from\nExample 2:  restrained, and Dylan<< would>> later acknowledge<< this>> in an interview taken in 1980.<< \">>When Elvis did '\nExample 3: <|endoftext|><< \">>T\" D.\nExample 4:  my heart.\" Enough<< said>>.\n<<->> For ripping back a whole lot.<< \">>Ah, chi mi\n"
+      "content": "Feature explanation: \"The neuron is looking for phrases indicating direction or reference to additional information.\"\n\nText examples:\n\nExample 0: \ufffd plant in Hartville, Ohio, in the US.\nClick here for the full text of\nExample 1: upatinath temple. Enjoy full darshan inside temple and if interested for\nExample 2: \ufffd\ufffds 28th annual review, please email email@example.com for more information. A\nExample 3: .\nWe cover a ton of relevant topics including lots of background on VHS and the home video\nExample 4: read daily news source for everything hotel curated for busy professionals. Sign up today for industry news delivered to\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  so I do not need to worry about going out of the lines.\n<<It>> created a lift,\nExample 1:  \u2014 destines or<< even>> basically suits<< two>> people for each other is disgusting.<< It>> reminds me\nExample 2: Most of us see<< reflection>> as a<< personal>> pursuit, a solitary practice\u2014and<< it>> is. But it\nExample 3:  about my cats, food, entertainment, gossip, and\u2026well everything.<< It>> didn\ufffd\ufffdt\nExample 4: <|endoftext|> check<< the cl>>_timenudge setting,<< it>> interpolates the enemy\n"
+      "content": "Feature explanation: \"The neuron is looking for words related to physical measurements, specifically height and aerodynamics.\"\n\nText examples:\n\nExample 0: : 6' 4\" (193.04 cm)\nStanding at a height of 6 feet,\nExample 1:  greens in a food processor, tossing in some creme fraiche for good measure. Lastly, I\nExample 2:  from a pig and wrapped it around a spherical object to hurl through the air.\ufffd\ufffd What\nExample 3:  is comes under the Government job. This is the best opportunity for the job hunters who are looking for\nExample 4: <|endoftext|>\nThe University of Wolverhampton values a diverse workforce and welcomes applications from all sections of\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> and Quality.\nErvin,<< A>>.M., Boland,<< M>>.V., My\nExample 1:  highlight the serious issue<< of>> awareness during<< ana>>esthesia in a recent review published by<< F>>1000 Medicine Reports.\nExample 2: -is-list<<ening>>-with<<->>intention/\nSchwartz,<< K>>., (2013,\nExample 3: bleday Publishing Group. Kindle Edition.\n 1.Davies,<< Paul>> (2008-04\nExample 4: \u201362<<.>>\nTricarico PM, Marcuzzi A<<, P>>\n"
+      "content": "Feature explanation: \"The neuron is looking for technical terms related to computer hardware and networking, such as Wi-Fi, USB, and other technical abbreviations.\"\n\nText examples:\n\nExample 0: <|endoftext|> recreation, sharing with other team members, backing up configuration before making changes.\nThis would be\nExample 1:  Cavium\ufffd\ufffds fully-integrated, carrier-deployed LTE stack software includes TR\nExample 2: P = P\ufffd\ufffd has proven a success in our consultation projects.\nProjects such as:\nExample 3: <|endoftext|> in bundled data or data add-on plans, but there are\nExample 4: Create a Proposal\nScreenshare to go over proposal\n- Property imagery is pulled prior to\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 0,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: <|endoftext|> wasn\ufffd\ufffdt a Tartar.\nTR: No<<,>> but if a horse\nExample 1:  box contact to discharge<<.>>\nIV<<.>> Precautions during assembly operation\n1<<,>> the LCD module is\nExample 2:  your iPhone. Instead<<,>> they will<< revert>> to their default Bluetooth connection (yes<<,>> all Thread-enabled\nExample 3:  the glories and disgraces of its past.\ufffd\ufffd\nSo hey<<,>> New York! Now\nExample 4:  his combat pack.<< Did>> I need<< all>> that gear for that assignment? Yeah<<,>> I thought so\u2026\n"
+      "content": "Feature explanation: \"The neuron is looking for common function words, particularly articles and prepositions, that are often used to establish context or relationships in a sentence.\"\n\nText examples:\n\nExample 0: <|endoftext|>es. But to my amazement he answered\nExample 1:  Gourmet Burgers off of exit 26. Jerry's, which sits to the right of a gas\nExample 2: Hostility with carbs in the beginners to weight loss is quite common but to some extent, it is\nExample 3: . People wearing progressive lenses in glasses on the other hand have to look over their glasses if they want\nExample 4:  honestly found the writing a little dry. There was a lot of (to me) unnecessary background information\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0: akes are also available in 9ct gold. Please contact your local funeral home<< for>> more information.L\nExample 1:  of the World War<< II>> bestseller<<,>> Ludwika. Thank you Jean<< for>> allowing Detective Teme\nExample 2:  refund.Cartoon<< By>> Dedini<< Party>> In France 1950\nClick thumbnails<< for>> expanded view.\n\nExample 3:  neckline and buy sensible shoes. You can Google \ufffd\ufffdhairstyles<< for>> people over 40\ufffd\nExample 4:  - Frankenstein - very<< good>>. Comments<< are>> on my blog.I'll be<< posting>> a Winter Classics Wrap\n"
+      "content": "Feature explanation: \"The neuron is looking for commas used in informal speech or dialogue.\"\n\nText examples:\n\nExample 0: <|endoftext|>\ufffd\ufffd from Act 1, step 5\nOh, she doth teach\nExample 1:  pictures. This picture is from April 19th of last year. (Yes, I do feel like\nExample 2:  indentured slavery that is the modern corporate experience, consider themselves independent? Hey, if you take exception\nExample 3: agreed insurance \ufffd\ufffdextras\ufffd\ufffd were a definite competitive advantage. It made his firm easier\nExample 4: -level security situation.|\n|82||4||\"Brains, Brains and Autom\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 1,\n  \"example_3\": 0,\n  \"example_4\": 1\n}"
     },
     {
       "role": "user",
-      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  Recorder. This allows you to verify how each file was recorded at its<< source>>. The sample rate\nExample 1: <|endoftext|><< limited urban>> land<< sources>> and environmental concerns have\nExample 2:  concerned with legally legitimate<< power>> and with<< the>> institution of the state as the sole<< source>> of authority. His\nExample 3:  of \ufffd\ufffdAlice Through The Looking Glass\ufffd\ufffd \u2014 namely, an obvious<< reference>> to Michelangelo\ufffd\nExample 4:  15 things which only<< you>> can understand<<.>>\n1. You don\ufffd\ufffd<<t>> need motivation.\n\n"
+      "content": "Feature explanation: \"The neuron is looking for prepositions, conjunctions, and other grammatical markers that indicate relationships between words or phrases.\"\n\nText examples:\n\nExample 0:  world's top 100 universities in QS & Times Higher Education World University Rankings of 2022. Several\nExample 1:  money for charities. The most outstanding efforts include his work with The Floating Hospital for Children in Boston and\nExample 2: wear business known as Makwa Studio and is also an emerging curator of contemporary Native art, and has\nExample 3:  in a range of diameters.The Moon i3.3 is one of a growing number of\nExample 4:  the goals of values education and peace education.\nLevel 4: Preparing for and taking action,\n"
     },
     {
       "role": "assistant",
-      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 0\n}"
+      "content": "{\n  \"example_0\": 1,\n  \"example_1\": 1,\n  \"example_2\": 0,\n  \"example_3\": 1,\n  \"example_4\": 1\n}"
     }
   ]
 }

@@ -54,5 +54,6 @@ for i in range(1,11):
     few_shot_examples = unpack("fuzzed" , i)
     all_examples[i] = few_shot_examples
 
-with open("clean_few_shot_examples.json", "w") as f:
+with open("fuzzed_few_shot_examples.json", "w") as f:
     json.dump(all_examples, f, indent=2)
+# %%
