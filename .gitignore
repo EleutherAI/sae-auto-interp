@@ -3,9 +3,14 @@
 *.pt
 *.log
 
+keys.py
+
 .gitignore
-extras
+
 raw*
+explanations*
 processed*
 saved*
 scores*
+
+caden_data

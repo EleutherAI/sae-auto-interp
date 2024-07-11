@@ -8,21 +8,14 @@ from collections import defaultdict
 from typing import List
 from ..logger import logger
 from torch import Tensor
+import random
 
-from .. import example_config as CONFIG
+from .. import cache_config as CONFIG
 
 @dataclass
 class Feature:
     layer_index: int
     feature_index: int
-
-    @staticmethod
-    def from_dict(layer_feature_dictionary):
-        features = []
-        for layer, layer_features in layer_feature_dictionary.items():
-            features.extend([Feature(int(layer), feature) for feature in layer_features])
-
-        return features
     
     def __repr__(self) -> str:
         return f"layer{self.layer_index}_feature{self.feature_index}"
@@ -32,11 +25,26 @@ class Example:
     tokens: List[int]
     activations: List[float]
     str_toks: List[str] = None
-    max_activation: float = 0.0
 
+    def __hash__(self) -> int:
+        if self.str_toks is None:
+            raise ValueError("Cannot hash examples without decoding.")
+        
+        return hash(self.text)
+
+    def __eq__(self, other) -> bool:
+        if self.str_toks is None:
+            raise ValueError("Cannot compare examples without decoding.")
+        
+        return self.text == other.text
+
+    @property
+    def max_activation(self):
+        return max(self.activations)
+
+    @property
     def text(self):
         return "".join(self.str_toks)
-
 
 
 class FeatureRecord:
@@ -92,12 +100,12 @@ class FeatureRecord:
         tokens: Tensor, 
         layer_index: int,
         raw_dir: str,
-        tokenizer=None,
+        tokenizer = None,
         selected_features: List[int] = None,
         processed_dir: str = None, 
         n_random: int = 0,
-        min_examples: int = 300,
-        max_examples: int = 500
+        min_examples: int = 120,
+        max_examples: int = 10000
     ) -> List["FeatureRecord"]:
         """
         Loads a list of records from a tensor of locations and activations. Pass
@@ -201,7 +209,6 @@ class FeatureRecord:
                     toks, 
                     clean_up_tokenization_spaces=False
                 ),
-                max_activation=max(acts),
             )
             for toks, acts in zip(
                 processed_tokens, 
@@ -216,24 +223,12 @@ class FeatureRecord:
         # POSTPROCESSING
 
         if n_random > 0:
-            random_tokens, random_activations = get_non_activating_windows(
-                example_tokens, example_activations, 
-                window_size=CONFIG.l_ctx + CONFIG.r_ctx + 1, 
-                n_random=n_random
+            record.random = load_random_examples(
+                n_random,
+                tokenizer,
+                example_tokens,
+                example_activations,
             )
-
-            record.random = [
-                Example(
-                    tokens=toks,
-                    activations=acts,
-                    str_toks=tokenizer.batch_decode(
-                        toks, 
-                        clean_up_tokenization_spaces=False
-                    ),
-                    max_activation=0.0,
-                )
-                for toks, acts in zip(random_tokens,random_activations)
-            ]
 
         # Load processed data if a directory is provided
         if processed_dir:
@@ -286,6 +281,29 @@ def get_activating_examples(
     
     return tokens[active_sentences], dense_activations[active_sentences]
 
+def load_random_examples(
+    n_random,
+    tokenizer,
+    example_tokens,
+    example_activations,
+):
+    random_tokens, random_activations = get_non_activating_windows(
+        example_tokens, example_activations, 
+        window_size=CONFIG.l_ctx + CONFIG.r_ctx + 1, 
+        n_random=n_random
+    )
+
+    return [
+        Example(
+            tokens=toks,
+            activations=acts,
+            str_toks=tokenizer.batch_decode(
+                toks, 
+                clean_up_tokenization_spaces=False
+            )
+        )
+        for toks, acts in zip(random_tokens,random_activations)
+    ]
 
 def get_non_activating_windows(
     tokens: torch.Tensor,
