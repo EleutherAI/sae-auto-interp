@@ -7,7 +7,13 @@ from .OpenAI.model import (
     ACTIVATIONS_CLASSES
 )
 from .EleutherAI.model import Sae
+
+
 class AutoencoderLatents(torch.nn.Module):
+    """
+    Wrapper module to simplify capturing of autoencoder latents.
+    """
+
     def __init__(self, autoencoder: torch.nn.Module,type: str) -> None:
             super().__init__()
             self.autoencoder = autoencoder
@@ -15,10 +21,12 @@ class AutoencoderLatents(torch.nn.Module):
             self.type = type
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+
         if self.type == "oai":
             # The OAI autoencoder returns a tuple with the encoded values and statistics, which we don't need
             latents,_ = self.autoencoder.encode(x)
             return latents
+        
         elif self.type == "eai":
             # The EAI autoencoder returns the encoded values before topk, and we use OAI TopK class.
             encoded = self.autoencoder.encode(x)
@@ -29,7 +37,6 @@ class AutoencoderLatents(torch.nn.Module):
     
 def load_eai_autoencoders(model,ae_layers: List[int], weight_dir:str):
     
-    ae_dict = {}
     submodule_dict = {}
 
     for layer in ae_layers:
@@ -37,22 +44,19 @@ def load_eai_autoencoders(model,ae_layers: List[int], weight_dir:str):
         sae = Sae.load_from_disk(path,"cuda:0")
 
         submodule = model.model.layers[layer]
-        passthrough_ae = AutoencoderLatents(sae, "eai")
-        submodule.ae = passthrough_ae
+        submodule.ae = AutoencoderLatents(sae, "eai")
 
-        ae_dict[layer] = sae
         submodule_dict[layer] = submodule
 
     with model.edit(" "):
-        for layer_idx, _ in ae_dict.items():
-            layer = model.model.layers[layer_idx]
-            acts = layer.output[0]
-            layer.ae(acts, hook=True)
+        for _, submodule in submodule_dict.items():
+            acts = submodule_dict.output[0]
+            submodule_dict.ae(acts, hook=True)
 
-    return ae_dict, submodule_dict	
+    return submodule_dict	
 
 def load_oai_autoencoders(model,ae_layers: List[int], weight_dir:str):
-    ae_dict = {}
+
     submodule_dict = {}
     for layer in ae_layers:
         # Tweaked this to work w how I save my autoencoders locally
@@ -63,28 +67,25 @@ def load_oai_autoencoders(model,ae_layers: List[int], weight_dir:str):
         ae.to("cuda:0")
 
         submodule = model.transformer.h[layer]
-        passthrough_ae = AutoencoderLatents(ae, "oai")
-        submodule.ae = passthrough_ae
+        submodule.ae = AutoencoderLatents(ae, "oai")
 
-        ae_dict[layer] = ae
         submodule_dict[layer] = submodule
 
     with model.edit(" "):
-        for layer_idx, _ in ae_dict.items():
-            layer = model.transformer.h[layer_idx]
-            acts = layer.output[0]
-            layer.ae(acts, hook=True)
+        for _, submodule in submodule_dict.items():
+            acts = submodule.output[0]
+            submodule.ae(acts, hook=True)
 
-    return ae_dict, submodule_dict
+    return submodule_dict
 
 
 def load_autoencoders(model,ae_layers, weight_dir) -> Dict[int, Autoencoder]:
     
     #TODO: We need to make this a little bit differently in the future
     if "gpt2" in weight_dir:
-        ae_dict, submodule_dict = load_oai_autoencoders(model,ae_layers, weight_dir)
+        submodule_dict = load_oai_autoencoders(model,ae_layers, weight_dir)
        
     if "llama" in weight_dir:
-        ae_dict, submodule_dict = load_eai_autoencoders(model,ae_layers, weight_dir)
+        submodule_dict = load_eai_autoencoders(model,ae_layers, weight_dir)
     
-    return ae_dict, submodule_dict
+    return submodule_dict
