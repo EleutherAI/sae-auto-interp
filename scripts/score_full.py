@@ -60,7 +60,7 @@ for layer in layers:
             explanation = load_explanation("saved_explanations/llama_1",record.feature)
             
             extra = record.examples[-30:]
-            test = [random.sample(record.examples, 500)]
+            test = [random.sample(record.examples, 1000)]
         
         except Exception as e:
             logger.error(f"Failed while sampling for {record.feature}: {e}") 
@@ -79,7 +79,7 @@ for layer in layers:
 
 client = get_client("local", "casperhansen/llama-3-70b-instruct-awq", base_url="http://127.0.0.1:8000")
 scorer = FuzzingScorer(client)
-scorer_out_dir = "scores/llama_full_more"
+scorer_out_dir = "scores/llama_full_morer"
 print("Running 1")
 asyncio.run(
     execute_model(
