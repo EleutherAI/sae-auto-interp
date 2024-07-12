@@ -47,11 +47,11 @@ def load_eai_autoencoders(model,ae_layers: List[int], weight_dir:str):
         submodule.ae = AutoencoderLatents(sae, "eai")
 
         submodule_dict[layer] = submodule
-
+    
     with model.edit(" "):
         for _, submodule in submodule_dict.items():
-            acts = submodule_dict.output[0]
-            submodule_dict.ae(acts, hook=True)
+            acts = submodule.output[0]
+            submodule.ae(acts, hook=True)
 
     return submodule_dict	
 
@@ -61,7 +61,7 @@ def load_oai_autoencoders(model,ae_layers: List[int], weight_dir:str):
     for layer in ae_layers:
         # Tweaked this to work w how I save my autoencoders locally
         path = f"{weight_dir}/resid_post_mlp_layer{layer}/ae.pt"
-        # path = f"{weight_dir}/resid_post_mlp_{layer}.pt"
+        #path = f"{weight_dir}/resid_post_mlp_autoencoder_{layer}.pt"
         state_dict = torch.load(path)
         ae = Autoencoder.from_state_dict(state_dict=state_dict)
         ae.to("cuda:0")
