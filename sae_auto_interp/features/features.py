@@ -24,6 +24,7 @@ class Feature:
 class Example:
     tokens: List[int]
     activations: List[float]
+    str_toks: List[str] = None
 
     def __hash__(self) -> int:
         if self.str_toks is None:
@@ -174,6 +175,7 @@ class FeatureRecord:
         min_examples: int = 200,
         max_examples: int = 2_000,
         processed_dir: str = None, 
+        tokenizer: Callable = None,
         n_random: int = 0,
     ):
         """
@@ -197,24 +199,42 @@ class FeatureRecord:
                 feature_locations, tokens, n_random
             )
 
-            self.random_examples = self._prepare(random_tokens, [-1] * n_random)
+            self.random_examples = self._prepare(
+                random_tokens, [-1] * n_random, 
+                tokenizer=tokenizer
+            )
 
         # Load processed data if a directory is provided
         if processed_dir:
             self.load_processed(processed_dir)
 
 
-    def _prepare(self, tokens, activations):
-        return [
-            Example(
-                tokens=toks,
-                activations=acts,
-            )
-            for toks, acts in zip(
-                tokens, 
-                activations
-            )
-        ]
+
+    def _prepare(self, tokens, activations, tokenizer=None):
+        # Messy but I feel like millions of conditionals is slower.
+        if tokenizer is None:
+            return [
+                Example(
+                    tokens=toks,
+                    activations=acts,
+                )
+                for toks, acts in zip(
+                    tokens, 
+                    activations
+                )
+            ]
+        else:
+            return [
+                Example(
+                    tokens=toks,
+                    activations=acts,
+                    str_toks=tokenizer.batch_decode(toks)
+                )
+                for toks, acts in zip(
+                    tokens, 
+                    activations
+                )
+            ]
 
     def load_processed(self, directory: str):
         path = f"{directory}/{self.feature}.json"

@@ -1,4 +1,3 @@
-# %%
 import asyncio
 from nnsight import LanguageModel
 from tqdm import tqdm
@@ -29,47 +28,21 @@ def load_explanation(feature):
 
     return explanation
 
-# %%
-
-import time 
-
 scorer_inputs = []
-all_records = []
-loaded = 0
-start = time.time()
+
 for layer in range(0,12,2):
     records = FeatureRecord.from_tensor(
         tokens,
         layer,
-        selected_features=list(range(1000)),
-        raw_dir = raw_features_path,
-        # processed_dir=processed_features_path,
         tokenizer=model.tokenizer,
-        min_examples=200,
-        max_examples=2_000,
+        selected_features=list(range(5)),
+        raw_dir= raw_features_path,
+        processed_dir=processed_features_path,
+        n_random=10,
+        min_examples=150,
+        max_examples=10000
     )
-    loaded += len(records)
-    all_records.extend(records)
-
-end_time = time.time() - start
-
-# %%
-
-print(end_time)
-print(loaded)
-
-avg_n_examples = []
-for record in all_records:
-    avg_n_examples.append(len(record.examples))
-
-print(sum(avg_n_examples) / len(avg_n_examples))
     
-# %%
-
-all_records[0].examples[0].str_toks
-# %%
-
-
     for record in tqdm(records):
         try:
             explanation = load_explanation(record.feature)
