@@ -71,17 +71,10 @@ for layer, submodule in submodule_dict.items():
 
     break
 
+
 # %%
 
-from sae_auto_interp.experiments.sampling import sample_top_and_activation_quantiles, sample_quantiles
 
-record = records[0]
-
-train, test, extra = sample_quantiles(record, n_extra=10)
-
-print(len(train))
-print(len(test[0]))
-print(len(extra))
 
 # %%
 
