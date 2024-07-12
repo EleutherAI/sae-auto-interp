@@ -30,7 +30,7 @@ print("Tokenized data loaded")
 # Raw features contains locations
 raw_features_path = "raw_features_llama"
 
-explainer_inputs=[]
+explainer_inputs_1=[]
 seed = 22
 random.seed(seed)
         
@@ -39,7 +39,7 @@ for layer in layers:
         tokens,
         tokenizer=model.tokenizer,
         layer_index=layer,
-        selected_features=torch.arange(0,1000),
+        selected_features=torch.arange(1000,10000),
         raw_dir= raw_features_path,
         n_random=5,
         max_examples=10000
@@ -51,27 +51,26 @@ for layer in layers:
             continue
         top500 = all_examples[:500]
 
-        sampling_technique = random.sample(top500, 20)+random.sample(all_examples[:-5], 15)+all_examples[-5:]
+        sampling_technique_1 = random.sample(top500, 20)+random.sample(all_examples[:-5], 15)+all_examples[-5:]
         
-        explainer_inputs.append(
+        explainer_inputs_1.append(
             ExplainerInput(
-                train_examples=sampling_technique,
+                train_examples=sampling_technique_1,
                 record=record
             )
         )
-        
+       
 
 
 client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct", base_url="http://127.0.0.1:8000")
 
 explainer = SimpleExplainer(client)
-print("Running small llama")
-explainer_out_dir = "saved_explanations/llama_small/"
+print("Running 1")
+explainer_out_dir = "saved_explanations/llama_1/"
 asyncio.run(
     execute_model(
         explainer, 
-        explainer_inputs,
+        explainer_inputs_1,
         output_dir=explainer_out_dir,
     )
 )
-

@@ -40,15 +40,18 @@ def load_explanation(explanation_dir,feature):
     return explanation
 
 
-scorer_inputs=[]
+scorer_inputs_1=[]
+scorer_inputs_2=[]
+scorer_inputs_3=[]
+scorer_random=[]
 for layer in layers:
     records = FeatureRecord.from_tensor(
         tokens,
         layer,
         tokenizer=model.tokenizer,
-        selected_features=range(100,1000),
+        selected_features=torch.arange(1000),
         raw_dir= raw_features_path,
-        n_random=40,
+        n_random=10,
         min_examples=200,
         max_examples=10000
     )
@@ -56,16 +59,17 @@ for layer in layers:
     for record in tqdm(records):
 
         try:
-            
-            explanation = load_explanation("saved_explanations/llama_small",record.feature)
+            idx = random.sample(range(len(records)),1)[0]
+
+            explanation_1 = load_explanation("saved_explanations/llama_1",record.feature)
             
             _, test, extra = sample_top_and_quantiles(
                 record=record,
                 n_train=0,
-                n_test=10,
+                n_test=4,
                 n_quantiles=5,
                 seed=22,
-                n_extra=40
+                n_extra=10
             )
         
         except Exception as e:
@@ -74,22 +78,23 @@ for layer in layers:
 
         record.extra = extra
 
-        scorer_inputs.append(
+        scorer_inputs_1.append(
             ScorerInput(
                 record=record,
                 test_examples=test,
-                explanation=explanation
+                explanation=explanation_1
             )
         )
+        
 
 client = get_client("local", "casperhansen/llama-3-70b-instruct-awq", base_url="http://127.0.0.1:8000")
 scorer = FuzzingScorer(client)
-scorer_out_dir = "scores/llama_small"
+scorer_out_dir = "scores/llama_less"
 print("Running 1")
 asyncio.run(
     execute_model(
         scorer, 
-        scorer_inputs,
+        scorer_inputs_1,
         output_dir=scorer_out_dir,
     )
 )
