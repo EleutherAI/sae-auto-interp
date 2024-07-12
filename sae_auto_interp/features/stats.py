@@ -299,27 +299,16 @@ class Activation(Stat):
     
 
 
-class Activation(Stat):
+class QuantileActivations(Stat):
     collated = False
 
     def __init__(
         self,
         k=10,
-        get_skew=False,
-        get_kurtosis=False,
         get_lemmas = False,
-        get_similarity=False
     ):
         self.k = k
-        
-        self.get_skew = get_skew
-        self.get_kurtosis = get_kurtosis
-        self.sentence_model = None
         self.nlp = None
-
-        if get_similarity:
-            from sentence_transformers import SentenceTransformer
-            self.sentence_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
 
         if get_lemmas:
             import spacy
