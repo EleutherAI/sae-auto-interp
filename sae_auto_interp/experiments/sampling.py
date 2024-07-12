@@ -22,15 +22,24 @@ def split_activation_quantiles(examples, n_quantiles):
     
     return quantiles
 
+# Split an array in n_quantiles of the same size. If the array cannot be split evenly, the last quantile will be larger.
 def split_quantiles(arr, n_quantiles):
-    n = len(arr)
-    quantile_size = n // n_quantiles
-    
-    return [
-        arr[i:i + quantile_size] if i < (n_quantiles - 1) * quantile_size
-        else arr[i:]
-        for i in range(0, n, quantile_size)
-    ]
+    quantiles = []
+    quantile_size = len(arr) // n_quantiles
+    remainder = len(arr) % n_quantiles
+
+    start = 0
+    for i in range(n_quantiles):
+        end = start + quantile_size
+        if i < remainder:
+            end += 1
+        quantiles.append(arr[start:end])
+        start = end
+
+    return quantiles
+
+
+
 
 def get_extra_examples(record, n_extra, train_examples, test_examples):
     used_examples = set(
@@ -175,16 +184,20 @@ def sample_top_and_quantiles(
     remaining_examples = examples[n_train:]
 
     quantiles = split_quantiles(remaining_examples, n_quantiles)
-
+    # print(len(quantiles))
+    # print(len(quantiles[0]))
+    # print(len(quantiles[-1]))
     test_examples = []
 
     for quantile in quantiles:
         if len(quantile) < n_test:
             logger.error(f"Quantile has too few examples in {record.feature}")
             raise ValueError(f"Quantile has too few examples in {record.feature}")
-        
-        test_examples.append(random.sample(quantile, n_test))
-
+        examples = random.sample(quantile, n_test)
+        for example in examples:
+            example.decode(record.tokenizer)
+        test_examples.append(examples)
+    
     extra_examples = []
     if n_extra > 0:
         extra_examples = get_extra_examples(
