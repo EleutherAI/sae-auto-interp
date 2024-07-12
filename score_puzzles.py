@@ -28,7 +28,12 @@ scorer_out_dir = "scores/fuzz_70b_single/simple_local_70b_q4_nt5"
 
 puzzles = load_puzzles("/share/u/caden/sae-auto-interp/sae_auto_interp/experiments/puzzles.json")
 # %%
+
+for puzzle in puzzles():
+
 scorer_inputs = []
+
+
 
 for layer in range(0,12,2):
     records = FeatureRecord.from_tensor(
