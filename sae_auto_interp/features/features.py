@@ -24,6 +24,7 @@ class Feature:
 class Example:
     tokens: List[int]
     activations: List[float]
+    str_toks: List[str] = None
 
     def __hash__(self) -> int:
         if self.str_toks is None:
@@ -36,6 +37,9 @@ class Example:
             raise ValueError("Cannot compare examples without decoding.")
         
         return self.text == other.text
+
+    def decode(self, tokenizer: Callable) -> None:
+        self.str_toks = tokenizer.batch_decode(self.tokens)
 
     @property
     def max_activation(self):
@@ -216,6 +220,10 @@ class FeatureRecord:
             )
         ]
 
+    def sample(self,sampling_method: Callable, **kwargs):
+        # This allows us to pass in a sampling method to the record
+        return sampling_method(self, **kwargs)
+
     def load_processed(self, directory: str):
         path = f"{directory}/{self.feature}.json"
         with bf.BlobFile(path, "rb") as f:
@@ -253,8 +261,9 @@ def pool_max_activation_slices(
         dense_activations, kernel_size=ctx_len, stride=ctx_len
     )
 
-    non_zero = avg_pools != 0
-    avg_pools = avg_pools[non_zero]
+    # This made the indices wrong in the topk
+    #non_zero = avg_pools != 0
+    #avg_pools = avg_pools[non_zero]
 
     activation_windows = dense_activations.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
     token_windows = token_batches.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
