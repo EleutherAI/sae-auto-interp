@@ -76,7 +76,7 @@ class FeatureRecord:
     def from_tensor(
         cls,
         tokens: Tensor, 
-        layer_index: int,
+        module_name: int,
         raw_dir: str,
         selected_features: List[int] = None,
         **kwargs
@@ -99,8 +99,8 @@ class FeatureRecord:
         """
         
         # Build location paths
-        locations_path = f"{raw_dir}/layer{layer_index}_locations.pt"
-        activations_path = f"{raw_dir}/layer{layer_index}_activations.pt"
+        locations_path = f"{raw_dir}/{module_name}_locations.pt"
+        activations_path = f"{raw_dir}/{module_name}_activations.pt"
         
         # Load tensor
         locations = torch.load(locations_path)
@@ -116,11 +116,11 @@ class FeatureRecord:
         
         records = []
 
-        for feature_index in tqdm(features, desc=f"Loading features from tensor for layer {layer_index}"):
+        for feature_index in tqdm(features, desc=f"Loading features from tensor for layer {module_name}"):
             
             record = cls(
                 Feature(
-                    layer_index=layer_index, 
+                    layer_index=module_name, 
                     feature_index=feature_index.item()
                 )
             )

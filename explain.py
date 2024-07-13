@@ -1,3 +1,4 @@
+# %%
 import os
 import asyncio
 import random
@@ -5,14 +6,14 @@ import random
 from nnsight import LanguageModel
 from keys import openrouter_key
 
-os.environ["CONFIG_PATH"] = "configs/caden_gpt2.yaml"
+os.environ["CONFIG_PATH"] = "configs/pythia.yaml"
 
 from sae_auto_interp.explainers import SimpleExplainer, ExplainerInput
 from sae_auto_interp.clients import get_client
 from sae_auto_interp.utils import execute_model, load_tokenized_data
 from sae_auto_interp.features import FeatureRecord
 
-model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
+model = LanguageModel("EleutherAI/pythia-70m-deduped", device_map="auto", dispatch=True)
 tokens = load_tokenized_data(model.tokenizer)
 
 raw_features_path = "raw_features"
@@ -20,18 +21,36 @@ explainer_out_dir = "explanations/claude"
 explainer_inputs=[]
 random.seed(22)
 
-for layer in range(0,12,2):
-    records = FeatureRecord.from_tensor(
+# %%
+
+records = FeatureRecord.from_tensor(
         tokens,
         tokenizer=model.tokenizer,
-        module_name=layer,
+        module_name='.gpt_neox.embed_in',
         # selected_features=list(range(5)),
-        selected_features=[0],
+        selected_features=[28533, 29476, 31461, 31467, 32081, 32469],
         raw_dir= raw_features_path,
         min_examples=120,
         max_examples=10000
     )
 
+# %%
+max_acts = []
+
+for i in range(len(records[0].examples)):
+    act = max(records[0].examples[i].activations)
+    max_acts.append(act)
+
+import matplotlib.pyplot as plt
+
+plt.hist(max_acts, bins=100)
+
+# %%
+
+records[0].examples = records[0].decode(records[0].examples, tokenizer=model.tokenizer)
+FeatureRecord.display(records[0].examples[:20])
+
+# %%
     for record in records:
 
         examples = record.examples

@@ -39,7 +39,7 @@ lemmatized_results = defaultdict(lambda: defaultdict(list))
 for layer, ae in ae_dict.items():
     records = FeatureRecord.from_tensor(
         tokens,
-        layer_index=layer,
+        module_name=layer,
         tokenizer=model.tokenizer,
         raw_dir=raw_features_path,
         selected_features=range(50),

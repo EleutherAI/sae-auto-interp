@@ -1,0 +1,15 @@
+{
+    "activation_dim": 512,
+    "dictionary_size": 32768,
+    "out_batch_size": 16384,
+    "entropy": false,
+    "io": "out",
+    "sparsity_penalty": 0.1,
+    "lr": 0.0001,
+    "steps": 120000,
+    "resample_steps": 25000,
+    "ghost_threshold": null,
+    "warmup_steps": 1000,
+    "n_ctxs": 10000.0,
+    "ctx_len": 128
+}

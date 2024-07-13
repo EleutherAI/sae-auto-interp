@@ -40,7 +40,7 @@ for layer, submodule in submodule_dict.items():
 
     records = FeatureRecord.from_tensor(
         tokens,
-        layer_index=layer,
+        module_name=layer,
         tokenizer=model.tokenizer,
         raw_dir=raw_features_path,
         selected_features=list(range(10)),
