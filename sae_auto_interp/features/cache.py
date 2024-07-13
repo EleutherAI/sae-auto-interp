@@ -21,24 +21,24 @@ class Buffer:
         self,
         latents: torch.Tensor,
         batch_number: int,
-        layer: int
+        module_path: int
     ):
         feature_locations, feature_activations = self.get_nonzeros(latents)
         feature_locations = feature_locations.cpu()
         feature_activations = feature_activations.cpu()
 
         feature_locations[:,0] += batch_number * CONFIG.minibatch_size
-        self.feature_locations[layer].append(feature_locations)
-        self.feature_activations[layer].append(feature_activations)
+        self.feature_locations[module_path].append(feature_locations)
+        self.feature_activations[module_path].append(feature_activations)
         
     def save(self):
 
         if self.saved:
             return
 
-        for layer in self.feature_locations.keys():
-            self.feature_locations[layer] = torch.cat(self.feature_locations[layer], dim=0)
-            self.feature_activations[layer] = torch.cat(self.feature_activations[layer], dim=0)
+        for module_path in self.feature_locations.keys():
+            self.feature_locations[module_path] = torch.cat(self.feature_locations[module_path], dim=0)
+            self.feature_activations[module_path] = torch.cat(self.feature_activations[module_path], dim=0)
         
         self.saved = True
 
@@ -105,11 +105,11 @@ class FeatureCache:
                     buffer = {}
 
                     with self.model.trace(batch, scan=False, validate=False):
-                        for layer, submodule in self.submodule_dict.items():
-                            buffer[layer] = submodule.ae.output.save()
+                        for module_path, submodule in self.submodule_dict.items():
+                            buffer[module_path] = submodule.ae.output.save()
 
-                    for layer, latents in buffer.items():
-                        self.buffer.add(latents, batch_number, layer)
+                    for module_path, latents in buffer.items():
+                        self.buffer.add(latents, batch_number, module_path)
 
                     del buffer
                     torch.cuda.empty_cache()
@@ -124,12 +124,12 @@ class FeatureCache:
     def _generate_split_indices(self, n_splits):
         return torch.arange(0, CONFIG.n_features).chunk(n_splits)
 
-    def save_splits(self, n_splits, layer, save_dir):
+    def save_splits(self, n_splits, module_path, save_dir):
         self.buffer.save()
 
         split_indices = self._generate_split_indices(n_splits)
-        feature_locations = self.buffer.feature_locations[layer]
-        feature_activations = self.buffer.feature_activations[layer]
+        feature_locations = self.buffer.feature_locations[module_path]
+        feature_activations = self.buffer.feature_activations[module_path]
 
         # Extract third elements
         third_elements = feature_locations[:, 2]
@@ -140,24 +140,24 @@ class FeatureCache:
             
             # Mask and save feature locations
             masked_locations = feature_locations[mask]
-            location_output_file = os.path.join(save_dir, f"layer{layer}_split_{split_index}_locations.pt")
+            location_output_file = os.path.join(save_dir, f"{module_path}_split_{split_index}_locations.pt")
             torch.save(masked_locations, location_output_file)
 
             # Mask and save feature activations
             masked_activations = feature_activations[mask]
-            activation_output_file = os.path.join(save_dir, f"layer{layer}_split_{split_index}_activations.pt")
+            activation_output_file = os.path.join(save_dir, f"{module_path}_split_{split_index}_activations.pt")
             torch.save(masked_activations, activation_output_file)
 
     def save_selected_features(
         self, 
         feature_list, 
-        layer, 
+        module_path, 
         save_dir
     ):
         self.buffer.save()
 
-        feature_locations = self.buffer.feature_locations[layer]
-        feature_activations = self.buffer.feature_activations[layer]
+        feature_locations = self.buffer.feature_locations[module_path]
+        feature_activations = self.buffer.feature_activations[module_path]
 
         # Extract third elements
         third_elements = feature_locations[:, 2]
@@ -167,10 +167,10 @@ class FeatureCache:
         
         # Mask and save feature locations
         masked_locations = feature_locations[mask]
-        location_output_file = os.path.join(save_dir, f"layer{layer}_locations.pt")
+        location_output_file = os.path.join(save_dir, f"{module_path}_locations.pt")
         torch.save(masked_locations, location_output_file)
 
         # Mask and save feature activations
         masked_activations = feature_activations[mask]
-        activation_output_file = os.path.join(save_dir, f"layer{layer}_activations.pt")
+        activation_output_file = os.path.join(save_dir, f"{module_path}_activations.pt")
         torch.save(masked_activations, activation_output_file)
