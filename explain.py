@@ -26,24 +26,30 @@ random.seed(22)
 records = FeatureRecord.from_tensor(
         tokens,
         tokenizer=model.tokenizer,
-        module_name='.gpt_neox.embed_in',
-        # selected_features=list(range(5)),
-        selected_features=[28533, 29476, 31461, 31467, 32081, 32469],
+        module_name='.gpt_neox.layers.4.attention',
         raw_dir= raw_features_path,
-        min_examples=120,
+        min_examples=10,
         max_examples=10000
     )
+# %%
+
+FeatureRecord.display(records[0].examples[:20], threshold=0.4)
+# records[0].examples[0].activations
 
 # %%
-max_acts = []
 
-for i in range(len(records[0].examples)):
-    act = max(records[0].examples[i].activations)
-    max_acts.append(act)
+with model.trace("test"):
 
-import matplotlib.pyplot as plt
+    val = model.gpt_neox.layers[0].output.save()
 
-plt.hist(max_acts, bins=100)
+val.shape
+
+# %%
+# max_acts = []
+
+# import matplotlib.pyplot as plt
+
+# plt.hist(records, bins=100)
 
 # %%
 

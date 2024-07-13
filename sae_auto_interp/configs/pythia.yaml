@@ -9,7 +9,7 @@ cache:
     dataset_name: ""
 
     # tokens_per_batch per batch is minibatch_size * batch_len. n_batches is n_tokens // tokens_per_batch
-    minibatch_size: 300
+    minibatch_size: 100
 
     # ctx len of the autoencoder
     seq_len: 128

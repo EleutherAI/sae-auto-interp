@@ -28,7 +28,8 @@ class FeatureRecord:
     
     @staticmethod
     def display(
-        examples=None
+        examples=None,
+        threshold=0.0,
     ) -> str:
         assert hasattr(examples[0], "str_toks"), \
             "Examples must have be detokenized to display."
@@ -38,10 +39,14 @@ class FeatureRecord:
         def _to_string(tokens, activations):
             result = []
             i = 0
+
+            max_act = max(activations)
+            _threshold = max_act * threshold
+
             while i < len(tokens):
-                if activations[i] > 0:
+                if activations[i] > _threshold:
                     result.append("<mark>")
-                    while i < len(tokens) and activations[i] > 0:
+                    while i < len(tokens) and activations[i] > _threshold:
                         result.append(tokens[i])
                         i += 1
                     result.append("</mark>")
@@ -84,18 +89,6 @@ class FeatureRecord:
         """
         Loads a list of records from a tensor of locations and activations. Pass
         in a proccessed_dir to load a feature's processed data.
-
-        Args:
-            tokens: Tokenized data from caching
-            tokenizer: Tokenizer from the model
-            layer: Layer index
-            locations_path: Path to the locations tensor
-            activations_path: Path to the activations tensor
-            processed_dir: Path to the processed data
-            max_examples: Maximum number of examples to load per record
-
-        Returns:
-            List of FeatureRecords
         """
         
         # Build location paths
@@ -129,6 +122,8 @@ class FeatureRecord:
             # Discard the feature dim
             feature_locations = locations[mask][:,:2]
             feature_activations = activations[mask]
+
+            print(feature_activations[:20])
         
             try:
                 record.from_locations(
