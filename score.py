@@ -34,20 +34,22 @@ scorer_inputs = []
 
 # %%
 
+from sae_auto_interp.features.sampling import sample_top_and_quantiles
 
 for layer in range(0,12,2):
     records = FeatureRecord.from_tensor(
         tokens,
         layer,
         tokenizer=model.tokenizer,
-        selected_features=list(range(100)),
+        selected_features=list(range(1000)),
         raw_dir= raw_features_path,
+        sampler=sample_top_and_quantiles,
         # processed_dir=processed_features_path,
         # n_random=10,
-        min_examples=300,
+        min_examples=120,
         max_examples=10000
     )
-    break
+    # break
 
 # %%
     for record in tqdm(records):

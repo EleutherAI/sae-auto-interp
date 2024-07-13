@@ -8,7 +8,7 @@ from collections import defaultdict
 from typing import List, Callable
 from ..logger import logger
 from torch import Tensor
-from .sampling import sample_default
+from .sampling import default_sampler
 
 from .. import cache_config as CONFIG
 from .types import Feature, Example
@@ -145,6 +145,7 @@ class FeatureRecord:
 
         return records
     
+    
     def from_locations(
         self,
         tokens: Tensor, 
@@ -152,7 +153,7 @@ class FeatureRecord:
         feature_activations: Tensor,
         min_examples: int = 200,
         max_examples: int = 2_000,
-        sampler: Callable = sample_default,
+        sampler: Callable = default_sampler,
         processed_dir: str = None, 
         tokenizer: Callable = None,
         n_random: int = 0,
@@ -173,7 +174,7 @@ class FeatureRecord:
         
         if tokenizer is not None:
             decode = lambda examples: self.decode(examples, tokenizer)
-            sampler(self, decode)
+            sampler(self, decode=decode)
         else:
             sampler(self)
 
