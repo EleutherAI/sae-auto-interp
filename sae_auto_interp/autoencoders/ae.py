@@ -143,13 +143,14 @@ def load_sam_autoencoders(model, weight_dir, modules=["embed", "mlp", "attention
 
     with model.edit(" "):
         for path, submodule in submodules.items():
-            acts = submodule.output
-            if "embed" not in path:
-                acts = acts[0]
+            if "embed" not in path and "mlp" not in path:
+                acts = submodule.output[0]
+            else:
+                acts = submodule.output
             submodule.ae(acts, hook=True)
 
 
-    return  submodules
+    return submodules
 
 
 def load_autoencoders(model,ae_layers, weight_dir, **kwargs) -> Dict[int, Autoencoder]:

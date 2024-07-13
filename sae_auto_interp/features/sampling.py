@@ -33,8 +33,8 @@ def check_quantile(quantile, n_test):
         logger.error(f"Quantile has too few examples")
         raise ValueError(f"Quantile has too few examples")
 
-def default_sampler(*args, **kwargs):
-    return
+def default_sampler(record, decode=lambda x : x):
+    record.examples = decode(record.examples)
 
 def sample_activation_quantiles(
     record,
