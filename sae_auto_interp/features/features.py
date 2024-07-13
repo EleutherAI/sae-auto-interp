@@ -8,46 +8,10 @@ from collections import defaultdict
 from typing import List, Callable
 from ..logger import logger
 from torch import Tensor
-import random
+from .sampling import sample_default
 
 from .. import cache_config as CONFIG
-
-@dataclass
-class Feature:
-    layer_index: int
-    feature_index: int
-    
-    def __repr__(self) -> str:
-        return f"layer{self.layer_index}_feature{self.feature_index}"
-    
-@dataclass
-class Example:
-    tokens: List[int]
-    activations: List[float]
-    str_toks: List[str] = None
-
-    def __hash__(self) -> int:
-        if self.str_toks is None:
-            raise ValueError("Cannot hash examples without decoding.")
-        
-        return hash(self.text)
-
-    def __eq__(self, other) -> bool:
-        if self.str_toks is None:
-            raise ValueError("Cannot compare examples without decoding.")
-        
-        return self.text == other.text
-
-    def decode(self, tokenizer: Callable) -> None:
-        self.str_toks = tokenizer.batch_decode(self.tokens)
-
-    @property
-    def max_activation(self):
-        return max(self.activations)
-    
-    @property
-    def text(self):
-        return "".join(self.str_toks)
+from .types import Feature, Example
 
 
 class FeatureRecord:
@@ -95,6 +59,18 @@ class FeatureRecord:
         ]
 
         display(HTML("<br><br>".join(strings)))
+
+    def prepare_examples(self, tokens, activations):
+        self.examples = [
+            Example(
+                tokens=toks,
+                activations=acts,
+            )
+            for toks, acts in zip(
+                tokens, 
+                activations
+            )
+        ]
     
     @classmethod
     def from_tensor(
@@ -140,7 +116,6 @@ class FeatureRecord:
         
         records = []
 
-
         for feature_index in tqdm(features, desc=f"Loading features from tensor for layer {layer_index}"):
             
             record = cls(
@@ -177,6 +152,7 @@ class FeatureRecord:
         feature_activations: Tensor,
         min_examples: int = 200,
         max_examples: int = 2_000,
+        sampler: Callable = sample_default,
         processed_dir: str = None, 
         tokenizer: Callable = None,
         n_random: int = 0,
@@ -193,7 +169,13 @@ class FeatureRecord:
             logger.error(f"Feature {self.feature} has fewer than {min_examples} examples.")
             raise ValueError(f"Feature {self.feature} has fewer than {min_examples} examples.")
 
-        self.examples = self._prepare(processed_tokens, processed_activations)
+        self.prepare_examples(processed_tokens, processed_activations)
+        
+        if tokenizer is not None:
+            decode = lambda examples: self.decode(examples, tokenizer)
+            sampler(self, decode)
+        else:
+            sampler(self)
 
         # POSTPROCESSING
 
@@ -202,54 +184,25 @@ class FeatureRecord:
                 feature_locations, tokens, n_random
             )
 
-            self.random_examples = self._prepare(
-                random_tokens, [-1] * n_random, 
-                tokenizer=tokenizer
+            self.random_examples = self.prepare_examples(
+                random_tokens, [-1] * n_random,
             )
 
         # Load processed data if a directory is provided
         if processed_dir:
             self.load_processed(processed_dir)
 
-
-
-    def _prepare(self, tokens, activations, tokenizer=None):
-        # Messy but I feel like millions of conditionals is slower.
-        if tokenizer is None:
-            return [
-                Example(
-                    tokens=toks,
-                    activations=acts,
-                )
-                for toks, acts in zip(
-                    tokens, 
-                    activations
-                )
-            ]
-        else:
-            return [
-                Example(
-                    tokens=toks,
-                    activations=acts,
-                    str_toks=tokenizer.batch_decode(toks)
-                )
-                for toks, acts in zip(
-                    tokens, 
-                    activations
-                )
-            ]
-
-    def sample(self,sampling_method: Callable, **kwargs):
-        # This allows us to pass in a sampling method to the record
-        return sampling_method(self, **kwargs)
-
     def load_processed(self, directory: str):
         path = f"{directory}/{self.feature}.json"
+
         with bf.BlobFile(path, "rb") as f:
             processed_data = orjson.loads(f.read())
-            feature_dict = processed_data.pop("feature")
-            self.feature = Feature(**feature_dict)
             self.__dict__.update(processed_data)
+
+    def decode(self, examples, tokenizer):
+        for example in examples:
+            example.decode(tokenizer)
+        return examples
     
     def save(self, directory: str, save_examples=False):
         path = f"{directory}/{self.feature}.json"
@@ -257,6 +210,8 @@ class FeatureRecord:
 
         if not save_examples:
             serializable.pop("examples")
+
+        serializable.pop("feature")
 
         with bf.BlobFile(path, "wb") as f:
             f.write(orjson.dumps(serializable))
@@ -280,14 +235,13 @@ def pool_max_activation_slices(
         dense_activations, kernel_size=ctx_len, stride=ctx_len
     )
 
-    # This made the indices wrong in the topk
-    #non_zero = avg_pools != 0
-    #avg_pools = avg_pools[non_zero]
-
     activation_windows = dense_activations.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
     token_windows = token_batches.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
 
+    non_zero = avg_pools != 0
+    non_zero = non_zero.sum()
     k = min(k, len(avg_pools))
+    
     top_indices = torch.topk(avg_pools.flatten(), k).indices
 
     activation_windows = activation_windows[top_indices]
