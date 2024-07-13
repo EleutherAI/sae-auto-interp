@@ -33,8 +33,6 @@ for puzzle in puzzles():
 
 scorer_inputs = []
 
-
-
 for layer in range(0,12,2):
     records = FeatureRecord.from_tensor(
         tokens,

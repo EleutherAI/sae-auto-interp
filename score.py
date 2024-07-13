@@ -1,3 +1,5 @@
+# %%
+
 import asyncio
 from nnsight import LanguageModel
 from tqdm import tqdm
@@ -30,19 +32,24 @@ def load_explanation(feature):
 
 scorer_inputs = []
 
+# %%
+
+
 for layer in range(0,12,2):
     records = FeatureRecord.from_tensor(
         tokens,
         layer,
         tokenizer=model.tokenizer,
-        selected_features=list(range(5)),
+        selected_features=list(range(100)),
         raw_dir= raw_features_path,
-        processed_dir=processed_features_path,
-        n_random=10,
-        min_examples=150,
+        # processed_dir=processed_features_path,
+        # n_random=10,
+        min_examples=300,
         max_examples=10000
     )
-    
+    break
+
+# %%
     for record in tqdm(records):
         try:
             explanation = load_explanation(record.feature)
