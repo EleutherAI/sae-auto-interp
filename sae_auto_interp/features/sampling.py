@@ -33,7 +33,7 @@ def check_quantile(quantile, n_test):
         logger.error(f"Quantile has too few examples")
         raise ValueError(f"Quantile has too few examples")
 
-def sample_default(record, decode=lambda x : x):
+def default_sampler(*args, **kwargs):
     return
 
 def sample_activation_quantiles(
@@ -63,7 +63,7 @@ def sample_activation_quantiles(
         test_examples.append(random.sample(quantile, n_test))
 
     record.train = decode(train_examples)
-    record.test = decode(test_examples)
+    record.test = [decode(test) for test in test_examples]
 
 
 def sample_top_and_activation_quantiles(
@@ -80,7 +80,8 @@ def sample_top_and_activation_quantiles(
     """
     random.seed(seed)
     torch.manual_seed(seed)
-
+    
+    # print(record, n_train, n_test, n_quantiles, seed, decode)
     train_examples = record.examples[:n_train]
 
     activation_quantiles = split_activation_quantiles(
@@ -94,7 +95,7 @@ def sample_top_and_activation_quantiles(
         test_examples.append(random.sample(quantile, n_test))
 
     record.train = decode(train_examples)
-    record.test = decode(test_examples)
+    record.test = [decode(test) for test in test_examples]
 
 def sample_top_and_quantiles(
     record,
@@ -138,4 +139,4 @@ def sample_top_and_quantiles(
         test_examples.append(random.sample(quantile, n_test))
 
     record.train = decode(train_examples)
-    record.test = decode(test_examples)
+    record.test = [decode(test) for test in test_examples]
