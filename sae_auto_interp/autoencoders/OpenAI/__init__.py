@@ -3,6 +3,8 @@ from ..wrapper import AutoencoderLatents
 from typing import List
 import torch
 
+DEVICE = "cuda:0"
+
 def load_oai_autoencoders(
     model, 
     ae_layers: List[int], 
@@ -15,11 +17,10 @@ def load_oai_autoencoders(
         path = f"{weight_dir}/{layer}.pt"
         state_dict = torch.load(path)
         ae = Autoencoder.from_state_dict(state_dict=state_dict)
-        ae.to("cuda:0")
+        ae.to(DEVICE)
 
         def _forward(x):
-            nonlocal ae
-            _, latents = ae.encode(x)
+            latents, _ = ae.encode(x)
             return latents
 
         submodule = model.transformer.h[layer]

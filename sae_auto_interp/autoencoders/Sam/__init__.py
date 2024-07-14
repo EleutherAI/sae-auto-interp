@@ -34,7 +34,7 @@ def load_sam_autoencoders(
             f'{weight_dir}/embed/{DICTIONARY_ID}_{DICTIONARY_SIZE}/ae.pt'
         )
 
-    for i in range(ae_layers):
+    for i in ae_layers:
 
         if "mlp" in modules:
             _load(
