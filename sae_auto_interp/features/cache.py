@@ -2,7 +2,7 @@ import torch
 from typing import Tuple, List, Dict
 from tqdm import tqdm
 import psutil
-import orjson
+from torchtyping import TensorType
 import os
 from collections import defaultdict
 from ..utils import load_tokenized_data
@@ -10,9 +10,13 @@ from ..utils import load_tokenized_data
 from .. import cache_config as CONFIG
 
 class Buffer:
+    """
+    The Buffer class stores feature locations and activations for modules.
+    """
+
     def __init__(
         self,
-        filters=None
+        filters: Dict[str, TensorType["indices"]] = None
     ):
         self.feature_locations = defaultdict(list)
         self.feature_activations = defaultdict(list)
@@ -21,11 +25,15 @@ class Buffer:
 
     def add(
         self,
-        latents: torch.Tensor,
+        latents: TensorType["batch", "sequence", "feature"],
         batch_number: int,
         module_path: str
     ):
-        feature_locations, feature_activations = self.get_nonzeros(latents, module_path)
+        """
+        Add the latents from a module to the buffer
+        """
+        feature_locations, feature_activations = \
+            self.get_nonzeros(latents, module_path)
         feature_locations = feature_locations.cpu()
         feature_activations = feature_activations.cpu()
 
@@ -34,8 +42,11 @@ class Buffer:
         self.feature_activations[module_path].append(feature_activations)
         
     def save(self):
+        """
+        Concatenate the feature locations and activations
+        """
 
-        if self.saved or len(self.feature_locations) == 0:
+        if self.saved:
             return
 
         for module_path in self.feature_locations.keys():
@@ -48,11 +59,18 @@ class Buffer:
         self.saved = True
 
     def get_nonzeros(self, latents, module_path):
+        """
+        Get the nonzero feature locations and activations
+        """
+
         nonzero_feature_locations = torch.nonzero(latents.abs() > 1e-5)
         nonzero_feature_activations = latents[latents.abs() > 1e-5]
 
+        # Return all nonzero features if no filter is provided
         if self.filters is None:
             return nonzero_feature_locations, nonzero_feature_activations
+        
+        # Return only the selected features if a filter is provided
         else:
             selected_features = self.filters[module_path]
             mask = torch.isin(
@@ -69,8 +87,8 @@ class FeatureCache:
     def __init__(
         self,
         model, 
-        submodule_dict,
-        filters: Dict[str, List[int]] = None
+        submodule_dict: Dict,
+        filters: Dict[str, TensorType["indices"]] = None
     ):  
         self.model = model
         self.submodule_dict = submodule_dict
@@ -78,12 +96,15 @@ class FeatureCache:
         if filters is not None:
             self.filter_submodules(filters)
             self.buffer = Buffer(filters)
+
         else:
             self.buffer = Buffer()
 
 
     def check_memory(self, threshold=0.9):
-        # Get memory usage as a percentage
+        """
+        Check memory usage to kick out of training before crash.
+        """
         memory_usage = psutil.virtual_memory().percent / 100.0
         return memory_usage > threshold
 
@@ -116,50 +137,44 @@ class FeatureCache:
 
         total_tokens = 0
         total_batches = len(token_batches)
+        tokens_per_batch = CONFIG.minibatch_size * CONFIG.seq_len
 
         with tqdm(total=total_batches, desc="Caching features") as pbar:
             
             for batch_number, batch in enumerate(token_batches):
-
-                # if self.check_memory(threshold=0.65):
-                #     print("Memory usage high.")
-                #     self.buffer.clean(filters)
+                total_tokens += tokens_per_batch
 
                 if self.check_memory(threshold=0.95):
                     print("Memory usage critical.")
                     raise MemoryError("Memory usage is critical. Exiting.")
 
-                batch_tokens = batch.numel()
-                total_tokens += batch_tokens
-
                 with torch.no_grad():
-                    buffer = {}
+                    _buffer = {}
 
                     with self.model.trace(batch, scan=False, validate=False):
                         for module_path, submodule in self.submodule_dict.items():
-                            buffer[module_path] = submodule.ae.output.save()
+                            _buffer[module_path] = submodule.ae.output.save()
 
-                    for module_path, latents in buffer.items():
+                    for module_path, latents in _buffer.items():
                         self.buffer.add(
                             latents, 
                             batch_number, module_path
                         )
 
-                    del buffer
+                    del _buffer
                     torch.cuda.empty_cache()
 
                 # Update the progress bar
                 pbar.update(1)
                 pbar.set_postfix({'Total Tokens': f'{total_tokens:,}'})
 
-        print(f"Total tokens processed: {total_tokens:,}")
-
+        print(f"Total tokens processed: {total_tokens:,}") 
+        self.buffer.save()
 
     def _generate_split_indices(self, n_splits):
         return torch.arange(0, CONFIG.n_features).chunk(n_splits)
     
     def save(self, save_dir):
-        self.buffer.save()
 
         for module_path in self.buffer.feature_locations.keys():
             location_output_file = os.path.join(save_dir, f"{module_path}_locations.pt")
@@ -169,7 +184,6 @@ class FeatureCache:
             torch.save(self.buffer.feature_activations[module_path], activation_output_file)
 
     def save_splits(self, n_splits, module_path, save_dir):
-        self.buffer.save()
 
         split_indices = self._generate_split_indices(n_splits)
         feature_locations = self.buffer.feature_locations[module_path]
@@ -198,7 +212,6 @@ class FeatureCache:
         module_path, 
         save_dir
     ):
-        self.buffer.save()
 
         feature_locations = self.buffer.feature_locations[module_path]
         feature_activations = self.buffer.feature_activations[module_path]
