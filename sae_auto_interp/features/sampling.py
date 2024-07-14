@@ -33,8 +33,15 @@ def check_quantile(quantile, n_test):
         logger.error(f"Quantile has too few examples")
         raise ValueError(f"Quantile has too few examples")
 
-def default_sampler(record, decode=lambda x : x):
-    record.examples = decode(record.examples)
+def default_sampler(
+        record, 
+        n_train = 10, 
+        n_test = 10
+    ):  
+    n_samples = n_train + n_test
+    samples = random.sample(record.examples, n_samples)
+    record.train = samples[:n_train]
+    record.test = samples[n_test:]
 
 def sample_activation_quantiles(
     record,
@@ -42,7 +49,6 @@ def sample_activation_quantiles(
     n_test=10,
     n_quantiles=3,
     seed=22,
-    decode=lambda x : x,
 ):
     """
     Split examples into quantiles based on fractions of the max activation across all examples.
@@ -62,8 +68,8 @@ def sample_activation_quantiles(
         check_quantile(quantile, n_test)
         test_examples.append(random.sample(quantile, n_test))
 
-    record.train = decode(train_examples)
-    record.test = [decode(test) for test in test_examples]
+    record.train = train_examples
+    record.test = test_examples
 
 
 def sample_top_and_activation_quantiles(
@@ -94,8 +100,8 @@ def sample_top_and_activation_quantiles(
         check_quantile(quantile, n_test)
         test_examples.append(random.sample(quantile, n_test))
 
-    record.train = decode(train_examples)
-    record.test = [decode(test) for test in test_examples]
+    record.train = train_examples
+    record.test = test_examples
 
 def sample_top_and_quantiles(
     record,
@@ -138,5 +144,5 @@ def sample_top_and_quantiles(
         check_quantile(quantile, n_test)
         test_examples.append(random.sample(quantile, n_test))
 
-    record.train = decode(train_examples)
-    record.test = [decode(test) for test in test_examples]
+    record.train = train_examples
+    record.test = test_examples

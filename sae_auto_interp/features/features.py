@@ -10,8 +10,6 @@ from ..logger import logger
 from torch import Tensor
 from .sampling import default_sampler
 
-from .. import cache_config as CONFIG
-from .types import Feature, Example
 from .utils import display
 from .activations import pool_max_activation_slices, get_non_activating_tokens
 
@@ -29,20 +27,12 @@ class Example:
     activations: List[float]
 
     def __hash__(self) -> int:
-        if self.str_toks is None:
-            raise ValueError("Cannot hash examples without decoding.")
-        
         return hash(tuple(self.tokens))
 
     def __eq__(self, other) -> bool:
-        if self.str_toks is None:
-            raise ValueError("Cannot compare examples without decoding.")
-        
         return self.tokens == other.tokens
     
     def decode(self, tokenizer):
-        if tokenizer is None:
-            self.str_toks = None
         self.str_toks = tokenizer.batch_decode(self.tokens)
 
     @property
@@ -76,9 +66,6 @@ class FeatureRecord:
                 activations
             )
         ]
-    
-    def display(self, n=10):
-        display(self.examples[:n])
 
     @classmethod
     def from_tensor(
@@ -125,8 +112,6 @@ class FeatureRecord:
             # Discard the feature dim
             feature_locations = locations[mask][:,:2]
             feature_activations = activations[mask]
-
-            print(feature_activations[:20])
         
             try:
                 record.from_locations(
@@ -153,7 +138,6 @@ class FeatureRecord:
         max_examples: int = 2_000,
         sampler: Callable = default_sampler,
         processed_dir: str = None, 
-        tokenizer: Callable = None,
         n_random: int = 0,
     ):
         """
@@ -170,11 +154,7 @@ class FeatureRecord:
 
         self.prepare_examples(processed_tokens, processed_activations)
         
-        if tokenizer is not None:
-            decode = lambda examples: self.decode(examples, tokenizer)
-            sampler(self, decode=decode)
-        else:
-            sampler(self)
+        sampler(self)
 
         # POSTPROCESSING
 
@@ -191,17 +171,17 @@ class FeatureRecord:
         if processed_dir:
             self.load_processed(processed_dir)
 
+    def display(self, tokenizer, n=10):
+        for example in self.examples[:n]:
+            example.decode(tokenizer)
+        display(self.examples[:n])
+
     def load_processed(self, directory: str):
         path = f"{directory}/{self.feature}.json"
 
         with bf.BlobFile(path, "rb") as f:
             processed_data = orjson.loads(f.read())
             self.__dict__.update(processed_data)
-
-    def decode(self, examples, tokenizer):
-        for example in examples:
-            example.decode(tokenizer)
-        return examples
     
     def save(self, directory: str, save_examples=False):
         path = f"{directory}/{self.feature}.json"
