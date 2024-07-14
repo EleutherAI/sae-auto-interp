@@ -12,8 +12,47 @@ from .sampling import default_sampler
 
 from .. import cache_config as CONFIG
 from .types import Feature, Example
+from .utils import display
+from .activations import pool_max_activation_slices, get_non_activating_tokens
 
+@dataclass
+class Feature:
+    layer_index: int
+    feature_index: int
+    
+    def __repr__(self) -> str:
+        return f"layer{self.layer_index}_feature{self.feature_index}"
+    
+@dataclass
+class Example:
+    tokens: List[int]
+    activations: List[float]
 
+    def __hash__(self) -> int:
+        if self.str_toks is None:
+            raise ValueError("Cannot hash examples without decoding.")
+        
+        return hash(tuple(self.tokens))
+
+    def __eq__(self, other) -> bool:
+        if self.str_toks is None:
+            raise ValueError("Cannot compare examples without decoding.")
+        
+        return self.tokens == other.tokens
+    
+    def decode(self, tokenizer):
+        if tokenizer is None:
+            self.str_toks = None
+        self.str_toks = tokenizer.batch_decode(self.tokens)
+
+    @property
+    def max_activation(self):
+        return max(self.activations)
+    
+    @property
+    def text(self):
+        return "".join(self.str_toks)
+    
 class FeatureRecord:
 
     def __init__(
@@ -26,45 +65,6 @@ class FeatureRecord:
     def max_activation(self):
         return self.examples[0].max_activation
     
-    @staticmethod
-    def display(
-        examples=None,
-        threshold=0.0,
-    ) -> str:
-        assert hasattr(examples[0], "str_toks"), \
-            "Examples must have be detokenized to display."
-
-        from IPython.core.display import display, HTML
-
-        def _to_string(tokens, activations):
-            result = []
-            i = 0
-
-            max_act = max(activations)
-            _threshold = max_act * threshold
-
-            while i < len(tokens):
-                if activations[i] > _threshold:
-                    result.append("<mark>")
-                    while i < len(tokens) and activations[i] > _threshold:
-                        result.append(tokens[i])
-                        i += 1
-                    result.append("</mark>")
-                else:
-                    result.append(tokens[i])
-                    i += 1
-            return "".join(result)
-        
-        strings = [
-            _to_string(
-                example.str_toks, 
-                example.activations
-            ) 
-            for example in examples
-        ]
-
-        display(HTML("<br><br>".join(strings)))
-
     def prepare_examples(self, tokens, activations):
         self.examples = [
             Example(
@@ -77,6 +77,9 @@ class FeatureRecord:
             )
         ]
     
+    def display(self, n=10):
+        display(self.examples[:n])
+
     @classmethod
     def from_tensor(
         cls,
@@ -212,49 +215,3 @@ class FeatureRecord:
         with bf.BlobFile(path, "wb") as f:
             f.write(orjson.dumps(serializable))
 
-
-def pool_max_activation_slices(
-    locations, activations, tokens, ctx_len, k=10
-):
-    batch_len, seq_len = tokens.shape
-
-    sparse_activations = torch.sparse_coo_tensor(
-        locations.t(), activations, (batch_len, seq_len)
-    )
-    dense_activations = sparse_activations.to_dense()
-
-    unique_batch_pos = torch.unique(locations[:,0])
-    token_batches = tokens[unique_batch_pos]
-    dense_activations = dense_activations[unique_batch_pos]
-
-    avg_pools = torch.nn.functional.max_pool1d(
-        dense_activations, kernel_size=ctx_len, stride=ctx_len
-    )
-
-    activation_windows = dense_activations.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
-    token_windows = token_batches.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
-
-    non_zero = avg_pools != 0
-    non_zero = non_zero.sum()
-    k = min(k, len(avg_pools))
-    
-    top_indices = torch.topk(avg_pools.flatten(), k).indices
-
-    activation_windows = activation_windows[top_indices]
-    token_windows = token_windows[top_indices]
-
-    return token_windows, activation_windows
-
-
-def get_non_activating_tokens(
-    locations, tokens, n_to_find, ctx_len=20
-):
-    unique_batch_pos = torch.unique(locations[:,0])
-    taken = set(unique_batch_pos.tolist())
-    free = []
-    value = 0
-    while value < n_to_find:
-        if value not in taken:
-            free.append(value)
-            value += 1
-    return tokens[free, 10:10+ctx_len]
