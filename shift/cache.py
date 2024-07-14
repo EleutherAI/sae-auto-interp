@@ -1,4 +1,3 @@
-# %%
 from nnsight import LanguageModel
 import os
 os.environ["CONFIG_PATH"] = "configs/pythia.yaml"
@@ -19,7 +18,6 @@ module_filter = load_module_stuff("feature-circuits/experiments/sfc.json")
 cache = FeatureCache(model, submodule_dict, filters=module_filter)
 cache.run()
 
-# %%
 cache.save( save_dir="/share/u/caden/sae-auto-interp/raw_features")
 
 

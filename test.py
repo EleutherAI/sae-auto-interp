@@ -13,3 +13,8 @@ submodule_dict = load_autoencoders(
     None,
     "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/Sam/pythia-70m-deduped"
 )
+
+# %%
+
+
+
