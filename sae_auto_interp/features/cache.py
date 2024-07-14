@@ -7,8 +7,6 @@ import os
 from collections import defaultdict
 from ..utils import load_tokenized_data
 
-from .. import cache_config as CONFIG
-
 class Buffer:
     """
     The Buffer class stores feature locations and activations for modules.
@@ -16,12 +14,14 @@ class Buffer:
 
     def __init__(
         self,
-        filters: Dict[str, TensorType["indices"]] = None
+        filters: Dict[str, TensorType["indices"]] = None,
+        minibatch_size: int = 64
     ):
         self.feature_locations = defaultdict(list)
         self.feature_activations = defaultdict(list)
         self.saved = False
         self.filters = filters
+        self.minibatch_size = minibatch_size
 
     def add(
         self,
@@ -37,7 +37,7 @@ class Buffer:
         feature_locations = feature_locations.cpu()
         feature_activations = feature_activations.cpu()
 
-        feature_locations[:,0] += batch_number * CONFIG.minibatch_size
+        feature_locations[:,0] += batch_number * self.minibatch_size
         self.feature_locations[module_path].append(feature_locations)
         self.feature_activations[module_path].append(feature_activations)
         
@@ -88,17 +88,26 @@ class FeatureCache:
         self,
         model, 
         submodule_dict: Dict,
+        width: int,
+        n_tokens: int = 5_000_000,
+        seq_len: int = 64,
+        minibatch_size: int = 64,
         filters: Dict[str, TensorType["indices"]] = None
     ):  
         self.model = model
         self.submodule_dict = submodule_dict
+
+        self.width = width
+        self.n_tokens = n_tokens
+        self.seq_len = seq_len
+        self.minibatch_size = minibatch_size
         
         if filters is not None:
             self.filter_submodules(filters)
-            self.buffer = Buffer(filters)
+            self.buffer = Buffer(filters, minibatch_size=minibatch_size)
 
         else:
-            self.buffer = Buffer()
+            self.buffer = Buffer(minibatch_size=minibatch_size)
 
 
     def check_memory(self, threshold=0.9):
@@ -112,7 +121,7 @@ class FeatureCache:
     def load_token_batches(self, minibatch_size=20):
         tokens = load_tokenized_data(self.model.tokenizer)
 
-        max_batches = CONFIG.n_tokens // CONFIG.seq_len
+        max_batches = self.n_tokens // self.seq_len
         tokens = tokens[:max_batches]
         
         n_mini_batches = len(tokens) // minibatch_size
@@ -133,11 +142,11 @@ class FeatureCache:
 
     def run(self):
 
-        token_batches = self.load_token_batches(CONFIG.minibatch_size)
+        token_batches = self.load_token_batches(self.minibatch_size)
 
         total_tokens = 0
         total_batches = len(token_batches)
-        tokens_per_batch = CONFIG.minibatch_size * CONFIG.seq_len
+        tokens_per_batch = self.minibatch_size * self.seq_len
 
         with tqdm(total=total_batches, desc="Caching features") as pbar:
             
@@ -172,7 +181,7 @@ class FeatureCache:
         self.buffer.save()
 
     def _generate_split_indices(self, n_splits):
-        return torch.arange(0, CONFIG.n_features).chunk(n_splits)
+        return torch.arange(0, self.width).chunk(n_splits)
     
     def save(self, save_dir):
 

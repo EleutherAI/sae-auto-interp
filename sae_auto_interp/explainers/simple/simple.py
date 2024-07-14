@@ -19,9 +19,16 @@ class SimpleExplainer(Explainer):
 
     def __init__(
         self,
-        client
+        client,
+        tokenizer,
+        max_tokens=200,
+        temperature=0.0,
     ):
         self.client = client
+        self.tokenizer = tokenizer
+
+        self.max_tokens = max_tokens
+        self.temperature = temperature
         
     async def __call__(
         self,
@@ -34,8 +41,8 @@ class SimpleExplainer(Explainer):
         )
         response = await self.client.generate(
             messages,
-            max_tokens=CONFIG.max_tokens,
-            temperature=CONFIG.temperature,
+            max_tokens=self.max_tokens,
+            temperature=self.temperature,
         )
 
         explanation = self.parse_explanation(response)
@@ -60,9 +67,10 @@ class SimpleExplainer(Explainer):
         activations = []
         sentences= []
         for example in examples:
-            str_tokens.append(example.str_toks)
+            str_toks = self.tokenizer.batch_decode(example.tokens)
+            str_tokens.append(str_toks)
             activations.append(example.activations)
-            sentences.append("".join(example.str_toks))
+            sentences.append("".join(str_toks))
             
         undiscovered_feature = ""
         for i in range(len(sentences)):

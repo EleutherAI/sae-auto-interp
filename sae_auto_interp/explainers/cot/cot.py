@@ -6,7 +6,10 @@ from ..explainer import (
     Explainer, 
     ExplainerInput, 
 )
-from ... import cot_explainer_config as CONFIG 
+
+
+L = "<<"
+R = ">>"
 
 class ChainOfThought(Explainer):
     """
@@ -18,9 +21,16 @@ class ChainOfThought(Explainer):
 
     def __init__(
         self,
-        client
+        client,
+        max_tokens=200,
+        temperature=0.0,
+        threshold=0.3
     ):
         self.client = client
+
+        self.max_tokens = max_tokens
+        self.temperature = temperature
+        self.threshold = threshold
 
     async def __call__(
         self,
@@ -40,8 +50,8 @@ class ChainOfThought(Explainer):
 
         response = await self.client.generate(
             messages, 
-            max_tokens=CONFIG.max_tokens,
-            temperature=CONFIG.temperature
+            max_tokens=self.max_tokens,
+            temperature=self.temperature
         )
 
         explanation = self.parse_explanation(response)
@@ -102,7 +112,7 @@ class ChainOfThought(Explainer):
         activating = []
         previous = []
 
-        threshold = example.max_activation * CONFIG.threshold
+        threshold = example.max_activation * self.threshold
 
         pos = 0
 
@@ -119,7 +129,7 @@ class ChainOfThought(Explainer):
 
             # Check if current token activates
             elif example.activations[pos] > threshold:
-                delimited_string += CONFIG.l
+                delimited_string += L
 
                 # Build activating token chunk and
                 # delimited string at the same time
@@ -130,7 +140,7 @@ class ChainOfThought(Explainer):
                     pos += 1
                 activating.append(seq)
 
-                delimited_string += CONFIG.r
+                delimited_string += R
             
             # Else, keep building the delimited string
             else:
@@ -164,8 +174,8 @@ class ChainOfThought(Explainer):
         previous = self.flatten(previous)
 
         prompt = create_prompt(
-            l=CONFIG.l, 
-            r=CONFIG.r, 
+            l=L, 
+            r=R, 
             examples=top_examples_str, 
             top_logits=top_logits,
             activating=activating,

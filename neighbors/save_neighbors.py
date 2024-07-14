@@ -19,8 +19,8 @@ submodule_dict = load_autoencoders(
 # %%
 import torch
 import torch.nn.functional as F
+from collections import defaultdict
 
-tensor = submodule_dict[0].ae.autoencoder._module.decoder.weight
 
 def cos(matrix, n=1000):
     
@@ -28,7 +28,7 @@ def cos(matrix, n=1000):
     b = matrix   
 
     a = F.normalize(a, p=2, dim=0)
-    b = F.normalize(b, p=2, dim=1)
+    b = F.normalize(b, p=2, dim=0)
 
     cos_sim = torch.mm(a.t(), b)
 
@@ -36,22 +36,29 @@ def cos(matrix, n=1000):
 
 import json
 
-data = {}
+data = defaultdict(dict)
+unique = {}
 
-for i in range(0,12,2):
-    tensor = submodule_dict[i].ae.autoencoder._module.decoder.weight
+for module, ae in submodule_dict.items():
+    tensor = ae.ae.autoencoder._module.decoder.weight
     cos_sim = cos(tensor)
     top = torch.topk(cos_sim[:100], k=10)
-    unique_top = torch.unique(top.indices)
-    print(len(torch.unique(unique_top)))
 
+    top_indices = top.indices
+    top_values = top.values
 
-    # break
-    data[submodule_dict[i]._module_path] = unique_top.tolist()
+    for i, (indices, values) in enumerate(zip(top_indices, top_values)):
+        data[module][i] = {
+            "indices": indices.tolist()[1:],
+            "values": values.tolist()[1:]
+        }
     
-# %%
-list(data.values())[0]
+    unique[module] = torch.unique(top_indices).tolist()
+
 
 # %%
 with open("neighbors.json", "w") as f:
     json.dump(data, f)
+
+with open("unique.json", "w") as f:
+    json.dump(unique, f)
