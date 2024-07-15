@@ -28,7 +28,7 @@ class Local(Client):
         **kwargs
     ) -> str:
         """
-        Wrapper method for Outlines/vLLM post requests.
+        Wrapper method for vLLM post requests.
         """
         
         for attempt in range(max_retries):
