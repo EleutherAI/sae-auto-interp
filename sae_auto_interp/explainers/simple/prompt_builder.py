@@ -1,7 +1,5 @@
-# %%
-
 from typing import List
-from prompts import example, system
+from .prompts import example, system
 
 def build_examples(
     **kwargs,
@@ -67,20 +65,3 @@ def build_prompt(
     )
 
     return messages
-
-
-# %%
-
-
-prompt = build_prompt(
-    "examples",
-    cot=True,
-    activations=True,
-    top_logits=["logit1", "logit2"]
-)
-
-with open("prompt.txt", "w") as f:
-    for message in prompt:
-        f.write(f"{message['role']}: {message['content']}\n")
-        f.write("\n")
-# %%
