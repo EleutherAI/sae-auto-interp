@@ -3,8 +3,10 @@ import random
 from typing import List
 
 from ...logger import logger
-from ... import det_config as CONFIG
 from ...features import Example
+
+L = "<<"
+R = ">>"
 
 class Sample:
 
@@ -16,6 +18,7 @@ class Sample:
         ground_truth: bool, 
         id: int,
         n_incorrect: int = 0,
+        threshold: float = 0.3,
     ):
         self.quantile = quantile
         self.highlighted = highlighted
@@ -27,7 +30,7 @@ class Sample:
             example.str_toks,
             example.activations,
             n_incorrect=n_incorrect,
-            threshold=CONFIG.threshold,
+            threshold=threshold,
             highlight=highlighted
         )
 
@@ -72,7 +75,7 @@ class Sample:
             logger.error(f"Failed to prepare example: {tokens}... Returning default text.")
             return "nnsight>> is the best library for <<interpretability>> on huge models!"
         
-        random.seed(CONFIG.seed)
+        random.seed(22)
         n_incorrect = min(n_incorrect, len(below_threshold))
         random_indices = set(
             random.sample(
@@ -92,7 +95,7 @@ class Sample:
         i = 0
         while i < len(tokens):
             if check(i):
-                result.append(CONFIG.l)
+                result.append(L)
 
                 while (
                     i < len(tokens) 
@@ -101,7 +104,7 @@ class Sample:
                     result.append(tokens[i])
                     i += 1
 
-                result.append(CONFIG.r)
+                result.append(R)
             else:
                 result.append(tokens[i])
                 i += 1

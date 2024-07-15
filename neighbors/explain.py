@@ -6,12 +6,10 @@ import random
 from nnsight import LanguageModel
 from keys import openrouter_key
 
-os.environ["CONFIG_PATH"] = "configs/gpt2_128k.yaml"
-
 import json
 from sae_auto_interp.explainers import SimpleExplainer, ExplainerInput
-from sae_auto_interp.clients import get_client
-from sae_auto_interp.utils import execute_model, load_tokenized_data
+from sae_auto_interp.clients import get_client, execute_model
+from sae_auto_interp.utils import load_tokenized_data
 from sae_auto_interp.features import FeatureRecord
 from sae_auto_interp.features.sampling import sample_top_and_quantiles
 
@@ -42,7 +40,6 @@ for module_path in modules:
         max_examples=10000
     )
 
-    break
 
 # %%
 
