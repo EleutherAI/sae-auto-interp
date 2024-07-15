@@ -1,0 +1,122 @@
+import re
+from typing import List
+
+from .prompt_builder import build_prompt
+from ..explainer import (
+    Explainer, 
+    ExplainerInput, 
+)
+
+L = "<<"
+R = ">>"
+
+class SimpleExplainer(Explainer):
+    name = "simple"
+
+    def __init__(
+        self,
+        client,
+        cot: bool = False,
+        logits: bool = False,
+        activations: bool = False,
+        max_tokens:int =200,
+        temperature:float =0.0,
+        threshold:float =0.3
+    ):
+        self.client = client
+
+        self.cot = cot
+        self.logits = logits
+        self.activations = activations
+
+        self.max_tokens = max_tokens
+        self.temperature = temperature
+        self.threshold = threshold
+
+    async def __call__(
+        self,
+        explainer_in: ExplainerInput
+    ):
+        messages = self._build_prompt(
+            explainer_in.train_examples,
+            explainer_in.record.top_logits
+        )
+
+        response = await self.client.generate(
+            messages, 
+            max_tokens=self.max_tokens,
+            temperature=self.temperature
+        )
+
+        explanation = self.parse_explanation(response)
+
+        return explanation
+
+    def parse_explanation(self, text: str) -> str:
+        """
+        Parses the explanation from the response text.
+        """
+        pattern = r'\[EXPLANATION\]:\s*(.*)'
+
+        match = re.search(pattern, text, re.DOTALL)
+        
+        if match:
+            explanation = match.group(1).strip()
+            return explanation
+        else:
+            return "Explantion could not be parsed."
+    
+    def _highlight(self, index, example, threshold):
+        result = f"Example {index}: "
+
+        threshold = example.max_activation * threshold
+        tokens = example.tokens
+        activations = example.activations
+
+        check = lambda i: activations[i] > threshold 
+
+        i = 0
+        while i < len(tokens):
+            if check(i):
+                result += L
+
+                while (
+                    i < len(tokens) 
+                    and check(i)
+                ):
+                    result += tokens[i]
+                    i += 1
+
+                result.append(R)
+            else:
+                result += tokens[i]
+                i += 1
+
+        return "".join(result)
+
+    def _build_prompt(self, examples, top_logits):
+        
+        highlighted_examples = []
+
+        for i, example in enumerate(examples):
+            highlighted_examples.append(
+                self._highlight(
+                    i + 1,
+                    example
+                )
+            )
+            
+            if self.activations:
+                highlighted_examples.append(
+                    f"Activation: ({example.max_activation})"
+                )
+            
+        highlighted_examples = "\n".join(highlighted_examples)
+
+        return build_prompt(
+            examples=highlighted_examples,
+            cot= self.cot,
+            activations= self.activations,
+            top_logits= top_logits,
+        )
+
