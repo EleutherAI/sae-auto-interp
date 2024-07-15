@@ -88,18 +88,16 @@ class FeatureCache:
         self,
         model, 
         submodule_dict: Dict,
-        width: int,
-        n_tokens: int = 5_000_000,
-        seq_len: int = 64,
         minibatch_size: int = 64,
         filters: Dict[str, TensorType["indices"]] = None
     ):  
         self.model = model
         self.submodule_dict = submodule_dict
+        # Get the weidth from the first submodule
+        first_sae = list(submodule_dict.values())[0].ae
 
-        self.width = width
-        self.n_tokens = n_tokens
-        self.seq_len = seq_len
+        self.width = first_sae.n_features
+        print(f"Feature width: {self.width}")
         self.minibatch_size = minibatch_size
         
         if filters is not None:
@@ -118,9 +116,8 @@ class FeatureCache:
         return memory_usage > threshold
 
 
-    def load_token_batches(self, minibatch_size=20):
-        tokens = load_tokenized_data(self.model.tokenizer)
-
+    def load_token_batches(self,tokens, minibatch_size=20):
+        
         max_batches = self.n_tokens // self.seq_len
         tokens = tokens[:max_batches]
         
@@ -140,9 +137,10 @@ class FeatureCache:
                 filtered_submodules[module_path] = self.submodule_dict[module_path]
         self.submodule_dict = filtered_submodules
 
-    def run(self):
-
-        token_batches = self.load_token_batches(self.minibatch_size)
+    def run(self, tokens, n_tokens=10_000_000):
+        self.n_tokens = n_tokens
+        self.seq_len = tokens.shape[1]
+        token_batches = self.load_token_batches(tokens,self.minibatch_size)
 
         total_tokens = 0
         total_batches = len(token_batches)
