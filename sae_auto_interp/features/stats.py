@@ -153,7 +153,7 @@ class Logits(Stat):
         
         narrowed_logits = torch.matmul(
             self.W_U, 
-            self.W_dec[feature_indices,:]
+            self.W_dec[:,feature_indices]
         )
 
         top_logits = torch.topk(narrowed_logits, self.k, dim=0).indices
