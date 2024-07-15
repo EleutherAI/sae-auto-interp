@@ -31,7 +31,7 @@ def load_eai_autoencoders(
         if model_type == "gpt2":
             submodule = model.transformer.h[layer]
         
-        submodule.ae = AutoencoderLatents(_forward,sae.d_in * sae.cfg.expansion_factor)
+        submodule.ae = AutoencoderLatents(sae,_forward,sae.d_in * sae.cfg.expansion_factor)
         submodules[layer] = submodule    
     
     with model.edit(" "):
