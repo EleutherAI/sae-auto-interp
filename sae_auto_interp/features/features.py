@@ -72,7 +72,6 @@ class FeatureRecord:
     def from_tensor(
         cls,
         tokens: Tensor, 
-        layer: int,
         module_name: str,
         raw_dir: str,
         selected_features: List[int] = None,
@@ -105,7 +104,7 @@ class FeatureRecord:
             
             record = cls(
                 Feature(
-                    layer_index=layer, 
+                    layer_index=module_name, 
                     feature_index=feature_index.item()
                 )
             )

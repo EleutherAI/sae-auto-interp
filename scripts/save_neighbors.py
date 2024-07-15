@@ -1,13 +1,7 @@
 # %%
-
 from nnsight import LanguageModel 
-import os 
-
-os.environ["CONFIG_PATH"] = "configs/gpt2_128k.yaml"
-
-from sae_auto_interp.utils import load_tokenized_data
 from sae_auto_interp.autoencoders.ae import load_autoencoders
-from sae_auto_interp.features import CombinedStat, FeatureRecord, Logits, Activation, QuantileSizes
+
 
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 submodule_dict = load_autoencoders(
@@ -39,10 +33,16 @@ import json
 data = defaultdict(dict)
 unique = {}
 
+
+# n determines how many features we want to compare
+# we use torch.unique to get all unique features that we need to cache 
+# these are the neighbors
+n = 100
+
 for module, ae in submodule_dict.items():
     tensor = ae.ae.autoencoder._module.decoder.weight
     cos_sim = cos(tensor)
-    top = torch.topk(cos_sim[:100], k=10)
+    top = torch.topk(cos_sim[:n], k=10)
 
     top_indices = top.indices
     top_values = top.values
@@ -57,8 +57,14 @@ for module, ae in submodule_dict.items():
 
 
 # %%
+
+# This creates two jsons
+
+# Neighbors contains information about the neighbors and distances for n neighbors
 with open("neighbors.json", "w") as f:
     json.dump(data, f)
 
+
+# Unique contains all the features you'll need to cache to run neighbors. 
 with open("unique.json", "w") as f:
     json.dump(unique, f)

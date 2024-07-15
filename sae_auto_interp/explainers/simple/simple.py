@@ -22,7 +22,7 @@ class SimpleExplainer(Explainer):
         activations: bool = False,
         max_tokens:int =200,
         temperature:float =0.0,
-        threshold:float =0.3,
+        threshold:float =0.6,
         echo: bool = False
     ):
         self.client = client
@@ -56,7 +56,7 @@ class SimpleExplainer(Explainer):
         explanation = self.parse_explanation(response)
 
         if self.echo:
-            return response, explanation
+            return [messages[-1], response], explanation
         return explanation
 
     def parse_explanation(self, text: str) -> str:
