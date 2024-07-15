@@ -11,10 +11,14 @@ def load_eai_autoencoders(
     ae_layers: List[int], 
     weight_dir:str
 ):
-    submodule = {}
+    submodules = {}
 
     for layer in ae_layers:
         path = f"{weight_dir}/layer_{layer}.pt"
+        if "llama" in weight_dir:
+            model_type = "llama"
+        if "gpt2" in weight_dir:
+            model_type = "gpt2"
         sae = Sae.load_from_disk(path, DEVICE)
 
         def _forward(x):
@@ -22,15 +26,17 @@ def load_eai_autoencoders(
             trained_k = sae.cfg.k
             topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
             return topk(encoded)
-
-        submodule = model.model.layers[layer]
-        submodule.ae = AutoencoderLatents(_forward)
-
-        submodule[layer] = submodule
+        if model_type == "llama":
+            submodule = model.model.layers[layer]    
+        if model_type == "gpt2":
+            submodule = model.transformer.h[layer]
+        
+        submodule.ae = AutoencoderLatents(_forward,sae.d_in * sae.cfg.expansion_factor)
+        submodules[layer] = submodule    
     
     with model.edit(" "):
-        for _, submodule in submodule.items():
+        for _, submodule in submodules.items():
             acts = submodule.output[0]
             submodule.ae(acts, hook=True)
 
-    return submodule	
+    return submodules	
