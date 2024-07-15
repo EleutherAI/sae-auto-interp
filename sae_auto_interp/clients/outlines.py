@@ -60,13 +60,15 @@ class Outlines(Client):
         for attempt in range(max_retries):
 
             try:
+                #print(data)
                 response = await self.client.post("/generate", json=data)
+                
                 response.raise_for_status()  
-
                 if raw:
                     return response.json()
                 
                 response = self.postprocess(prompt, response)
+                print(data,response)
                 
                 if kwargs.get("schema") is not None:
                     return json.loads(response)
