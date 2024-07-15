@@ -2,6 +2,7 @@ from .model import Autoencoder
 from ..wrapper import AutoencoderLatents
 from typing import List
 import torch
+from functools import partial
 
 DEVICE = "cuda:0"
 
@@ -19,12 +20,12 @@ def load_oai_autoencoders(
         ae = Autoencoder.from_state_dict(state_dict=state_dict)
         ae.to(DEVICE)
 
-        def _forward(x):
+        def _forward(ae, x):
             latents, _ = ae.encode(x)
             return latents
 
         submodule = model.transformer.h[layer]
-        submodule.ae = AutoencoderLatents(_forward)
+        submodule.ae = AutoencoderLatents(partial(_forward, ae))
 
         submodules[submodule._module_path] = submodule
 

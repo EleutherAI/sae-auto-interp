@@ -1,4 +1,4 @@
-
+# %%
 from nnsight import LanguageModel
 import torch
 from sae_auto_interp.autoencoders import load_autoencoders
@@ -11,6 +11,7 @@ submodule_dict = load_autoencoders(
     list(range(0,12,2)),
     "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/OpenAI/gpt2_128k",
 )
+# %%
 
 names = [
     model.transformer.h[i]._module_path
@@ -25,8 +26,16 @@ module_filter = {name:torch.tensor(data[name], device="cuda:0") for name in name
 cache = FeatureCache(
     model, 
     submodule_dict, 
-    width=32_768,
     filters=module_filter)
 cache.run()
 
 cache.save( save_dir="/share/u/caden/sae-auto-interp/raw_features")
+
+# %%
+
+with model.trace(['tawfelwekfjlkejwlkfjae']):
+    val = model.transformer.h[2].ae.output.save()
+
+print(torch.topk(val[:,4,:],10).indices)
+a = val[:,:,97521]
+a

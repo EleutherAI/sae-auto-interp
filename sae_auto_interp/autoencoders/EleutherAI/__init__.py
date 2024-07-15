@@ -1,7 +1,7 @@
 from .model import Sae
 from typing import List
 from ..wrapper import AutoencoderLatents
-
+from functools import partial
 from ..OpenAI.model import ACTIVATIONS_CLASSES, TopK
     
 DEVICE = "cuda:0"
@@ -17,14 +17,14 @@ def load_eai_autoencoders(
         path = f"{weight_dir}/layer_{layer}.pt"
         sae = Sae.load_from_disk(path, DEVICE)
 
-        def _forward(x):
+        def _forward(sae, x):
             encoded = sae.encode(x)
             trained_k = sae.cfg.k
             topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
             return topk(encoded)
 
         submodule = model.model.layers[layer]
-        submodule.ae = AutoencoderLatents(_forward)
+        submodule.ae = AutoencoderLatents(partial(_forward, sae))
 
         submodule[layer] = submodule
     

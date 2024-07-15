@@ -88,7 +88,6 @@ class FeatureCache:
         self,
         model, 
         submodule_dict: Dict,
-        width: int,
         n_tokens: int = 5_000_000,
         seq_len: int = 64,
         minibatch_size: int = 64,
@@ -96,8 +95,6 @@ class FeatureCache:
     ):  
         self.model = model
         self.submodule_dict = submodule_dict
-
-        self.width = width
         self.n_tokens = n_tokens
         self.seq_len = seq_len
         self.minibatch_size = minibatch_size
@@ -180,8 +177,8 @@ class FeatureCache:
         print(f"Total tokens processed: {total_tokens:,}") 
         self.buffer.save()
 
-    def _generate_split_indices(self, n_splits):
-        return torch.arange(0, self.width).chunk(n_splits)
+    def _generate_split_indices(self, width, n_splits):
+        return torch.arange(0, width).chunk(n_splits)
     
     def save(self, save_dir):
 
