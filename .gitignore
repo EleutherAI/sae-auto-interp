@@ -3,15 +3,15 @@
 *.pt
 *.log
 
-keys.py
-
 .gitignore
 
-raw*
-explanations*
-processed*
-saved*
-scores*
-extras*
+keys.py
 
-caden_data
+results/*
+!results/graphs
+
+saved_*
+processed*
+raw*
+extras*
+scores*

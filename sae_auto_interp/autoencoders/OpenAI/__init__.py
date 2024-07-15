@@ -24,7 +24,8 @@ def load_oai_autoencoders(
             return latents
 
         submodule = model.transformer.h[layer]
-        submodule.ae = AutoencoderLatents(_forward)
+        submodule.ae = AutoencoderLatents(ae,_forward,n_features=131072)
+        
 
         submodules[submodule._module_path] = submodule
 
