@@ -25,6 +25,7 @@ class Feature:
 class Example:
     tokens: List[int]
     activations: List[float]
+    normalize_activations: List[float] = None
 
     def __hash__(self) -> int:
         return hash(tuple(self.tokens))
@@ -43,6 +44,7 @@ class Example:
     @property
     def text(self):
         return "".join(self.str_toks)
+
     
 class FeatureRecord:
 
@@ -190,9 +192,10 @@ class FeatureRecord:
 
         if not save_examples:
             serializable.pop("examples")
+            serializable.pop("train")
+            serializable.pop("test")
 
         serializable.pop("feature")
-
         with bf.BlobFile(path, "wb") as f:
             f.write(orjson.dumps(serializable))
 
