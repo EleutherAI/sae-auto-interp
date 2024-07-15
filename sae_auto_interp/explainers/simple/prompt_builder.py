@@ -1,5 +1,7 @@
+# %%
+
 from typing import List
-from .prompts import example, system
+from prompts import example, system
 
 def build_examples(
     **kwargs,
@@ -31,13 +33,11 @@ def build_examples(
 
 def build_prompt(
     examples,
+    cot: bool = False,
     activations: bool = False,
     top_logits: List[str] = None,
-    activating: str = None,
-    previous: str = None,
 ):
     
-    cot = True if activating is not None else False
     logits = True if top_logits is not None else False
 
     messages = system(
@@ -55,12 +55,8 @@ def build_prompt(
     messages.extend(few_shot_examples)
 
     user_start = f"\n{examples}\n"
-    if activating:
-        user_start += f"\nACTIVATING TOKENS: {activating}."
-    if previous:
-        user_start += f"\nPREVIOUS TOKENS: {previous}.\n"
 
-    if top_logits:
+    if logits:
         user_start += f"\nTop_logits: {top_logits}"
 
     messages.append(
@@ -71,3 +67,20 @@ def build_prompt(
     )
 
     return messages
+
+
+# %%
+
+
+prompt = build_prompt(
+    "examples",
+    cot=True,
+    activations=True,
+    top_logits=["logit1", "logit2"]
+)
+
+with open("prompt.txt", "w") as f:
+    for message in prompt:
+        f.write(f"{message['role']}: {message['content']}\n")
+        f.write("\n")
+# %%
