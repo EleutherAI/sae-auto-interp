@@ -1,5 +1,6 @@
 from .model import AutoEncoder
 from ..wrapper import AutoencoderLatents
+from functools import partial
 
 DEVICE = "cuda:0"
 DICTIONARY_ID = 10
@@ -14,8 +15,10 @@ def _load(submodules, module, path):
         device=DEVICE
     )
     
+    _encode = partial(ae.encode)
+
     module.ae = AutoencoderLatents(
-        _forward=ae.encode,
+        _forward= lambda x: _encode(x),
     )
 
 def load_sam_autoencoders(

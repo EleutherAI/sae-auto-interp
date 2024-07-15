@@ -178,8 +178,8 @@ class FeatureCache:
         print(f"Total tokens processed: {total_tokens:,}") 
         self.buffer.save()
 
-    def _generate_split_indices(self, n_splits):
-        return torch.arange(0, self.width).chunk(n_splits)
+    def _generate_split_indices(self, width, n_splits):
+        return torch.arange(0, width).chunk(n_splits)
     
     def save(self, save_dir):
 
