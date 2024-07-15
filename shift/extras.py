@@ -1,7 +1,6 @@
 """
-Dump for some scripts to get SFC nodes.
+Some code to get SFC nodes.
 """
-
 
 running_nodes = None
 

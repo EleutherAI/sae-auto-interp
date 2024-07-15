@@ -1,70 +1,48 @@
 # %%
-import os
 import asyncio
 import random
-
 from nnsight import LanguageModel
-from keys import openrouter_key
-
-os.environ["CONFIG_PATH"] = "configs/pythia.yaml"
-
 from sae_auto_interp.explainers import SimpleExplainer, ExplainerInput
-from sae_auto_interp.clients import get_client
-from sae_auto_interp.utils import execute_model, load_tokenized_data
+from sae_auto_interp.clients import get_client, execute_model
+from sae_auto_interp.utils import load_tokenized_data
 from sae_auto_interp.features import FeatureRecord
+from sae_auto_interp.autoencoders import load_autoencoders
 
 model = LanguageModel("EleutherAI/pythia-70m-deduped", device_map="auto", dispatch=True)
-tokens = load_tokenized_data(model.tokenizer)
+tokens = load_tokenized_data(model.tokenizer, seq_len=128)
+
+submodule_dict = load_autoencoders(
+    model,
+    [0,1,2,3,4],
+    "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/Sam/pythia-70m-deduped",
+)
 
 raw_features_path = "raw_features"
-explainer_out_dir = "explanations/claude"
+explainer_out_dir = "results/explanations/pythia"
 explainer_inputs=[]
+
+
 random.seed(22)
 
-# %%
+for module_name in submodule_dict.keys():    
+    try:
+        records = FeatureRecord.from_tensor(
+            tokens,
+            module_name,
+            raw_dir = raw_features_path,
+            min_examples=120,
+            max_examples=10000
+        )
+    except:
+        # Module had no features in the SFC
+        continue
 
-records = FeatureRecord.from_tensor(
-        tokens,
-        tokenizer=model.tokenizer,
-        module_name='.gpt_neox.layers.4.attention',
-        raw_dir= raw_features_path,
-        min_examples=10,
-        max_examples=10000
-    )
-# %%
-
-FeatureRecord.display(records[0].examples[:20], threshold=0.4)
-# records[0].examples[0].activations
-
-# %%
-
-with model.trace("test"):
-
-    val = model.gpt_neox.layers[0].output.save()
-
-val.shape
-
-# %%
-# max_acts = []
-
-# import matplotlib.pyplot as plt
-
-# plt.hist(records, bins=100)
-
-# %%
-
-records[0].examples = records[0].decode(records[0].examples, tokenizer=model.tokenizer)
-FeatureRecord.display(records[0].examples[:20])
-
-# %%
     for record in records:
 
         examples = record.examples
-
-        if len(examples) < 120:
-            continue
-
         train_examples = random.sample(examples[:100], 10)
+
+        record.top_logits = None
         
         explainer_inputs.append(
             ExplainerInput(
@@ -72,12 +50,10 @@ FeatureRecord.display(records[0].examples[:20])
                 record=record
             )
         )
-    break
 
-client = get_client("openrouter", "anthropic/claude-3-haiku", api_key=openrouter_key)
-# client = get_client("local", "casperhansen/llama-3-70b-instruct-awq")
+client = get_client("local", "astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit")
 
-explainer = SimpleExplainer(client)
+explainer = SimpleExplainer(client, activations=True, cot=True,echo=True, tokenizer=model.tokenizer)
 
 asyncio.run(
     execute_model(
@@ -87,4 +63,3 @@ asyncio.run(
         record_time=True
     )
 )
-
