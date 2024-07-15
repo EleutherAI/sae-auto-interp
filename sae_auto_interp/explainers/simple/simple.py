@@ -11,8 +11,7 @@ L = "<<"
 R = ">>"
 
 class SimpleExplainer(Explainer):
-    name = "simple"
-
+    name = "Simple"
     def __init__(
         self,
         client,
@@ -31,7 +30,7 @@ class SimpleExplainer(Explainer):
         self.cot = cot
         self.logits = logits
         self.activations = activations
-
+        
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.threshold = threshold
@@ -42,11 +41,17 @@ class SimpleExplainer(Explainer):
         self,
         explainer_in: ExplainerInput
     ):
-        messages = self._build_prompt(
-            explainer_in.train_examples,
-            explainer_in.record.top_logits
-        )
-
+        
+        if self.logits:
+            messages = self._build_prompt(
+                explainer_in.train_examples,
+                explainer_in.record.top_logits
+            )
+        else:
+            messages = self._build_prompt(
+                explainer_in.train_examples,
+                None
+            )
         response = await self.client.generate(
             messages, 
             max_tokens=self.max_tokens,
@@ -88,7 +93,6 @@ class SimpleExplainer(Explainer):
                 ):
                     result += str_toks[i]
                     i += 1
-
                 result += R
             else:
                 result += str_toks[i]
@@ -109,9 +113,14 @@ class SimpleExplainer(Explainer):
             )
             
             if self.activations:
-                highlighted_examples.append(
-                    f"Activation: ({example.max_activation})"
-                )
+                for i, activation in enumerate(example.normalized_activations):
+                    if activation > example.max_activation * self.threshold:
+                        highlighted_examples.append(
+                            f"Activation {example.str_toks[i]}:{activation}, "
+                        )
+                # highlighted_examples.append(
+                #     f"Activation: ({example.max_activation})"
+                # )
             
         highlighted_examples = "\n".join(highlighted_examples)
 
