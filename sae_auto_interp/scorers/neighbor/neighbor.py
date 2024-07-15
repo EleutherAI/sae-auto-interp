@@ -4,8 +4,7 @@ from typing import List, Tuple
 import torch
 from math import ceil
 
-from .prompts.fuzz_prompt import prompt as fuzz_prompt
-from .prompts.clean_prompt import prompt as clean_prompt
+from .clean_prompt import prompt as clean_prompt
 from .schema import create_response_model
 from ..scorer import Scorer, ScorerInput
 from ...features import Example
@@ -19,9 +18,41 @@ import json
 class Sample:
     text: str
     ground_truth: bool
+    distance: float
+    neighbor_index: int
     predicted: bool = None
-    distance: float = None
-    neighbor_index: int = None
+
+    @staticmethod
+    def _prepare_samples(
+        examples: List, 
+        distance: float,
+        neighbor_index: int,
+        ground_truth: bool, 
+        tokenizer,
+    ):
+        samples = []
+
+        for example in examples:
+            example.decode(tokenizer)
+
+            samples.append(
+                Sample(
+                    text=example.text,
+                    ground_truth = ground_truth,
+                    distance = distance,
+                    neighbor_index = neighbor_index
+                )
+            )
+
+        return samples
+    
+    def default(self):
+        return {
+            "ground_truth": self.ground_truth,
+            "distance": self.distance,
+            "neighbor_index": self.neighbor_index,
+            "predicted": self.predicted
+        }
 
 class NeighborScorer(Scorer):
     name = "neighbor"
@@ -29,76 +60,76 @@ class NeighborScorer(Scorer):
     def __init__(
         self, 
         client: Client, 
+        tokenizer,
         echo: bool = False, 
         temperature: float = 0.0,
-        max_tokens: int = 200,
-        batch_size: int = 10,
+        max_tokens: int = 2,
+        batch_size: int = 1,
+        n_test: int = 5,
     ):
         self.client = client
+        self.tokenizer = tokenizer
         self.echo = echo
 
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.batch_size = batch_size
+        
+        self.n_test = n_test
 
     async def __call__(
         self, 
-        scorer_in: ScorerInput
+        scorer_in: ScorerInput,
     ) -> List[Sample]:
-        
-        # Build clean and fuzzed batches
-        clean_batches, fuzzed_batches = self._prepare(
-            test_batches=scorer_in.test_examples, 
-            random_examples=scorer_in.random_examples,
-            incorrect_examples=scorer_in.extra_examples,
-            avg_acts=scorer_in.record.average_n_activations
+
+        samples = self._prepare(
+            scorer_in.test_examples,
+            scorer_in.record.neighbors
         )
 
         # Generate responses
         results = await self.process_batches(
-            clean_batches + fuzzed_batches, 
+            samples,
             scorer_in.explanation
         )
 
         return results
-        
-    def _prepare(self, test_batches, random_examples, incorrect_examples, avg_acts):
-        def create_samples(examples, quantile, highlight, ground_truth=True):
-
-            n_incorrect = ceil(avg_acts) \
-                if highlight and not ground_truth else 0
-            
-            return [
-                Sample(
-                    example=example,
-                    quantile=quantile,
-                    highlighted=highlight,
-                    ground_truth=ground_truth,
-                    n_incorrect=n_incorrect,
-                    id=hash(example)
-                )
-                for example in examples
-            ]
-
-        clean = []
-        fuzzed = []
-
-        for quantile, batch in enumerate(test_batches):
-            clean.extend(create_samples(batch, quantile, False))
-            fuzzed.extend(create_samples(batch, quantile, True))
-
-        clean.extend(create_samples(random_examples, -1, False, False))
-        fuzzed.extend(create_samples(incorrect_examples, -1, True, False))
-
-        random.shuffle(clean)
-        random.shuffle(fuzzed)
-
-        return self._batch(clean), self._batch(fuzzed)
     
-    def _batch(self, arr):
+    def _prepare(self, test_examples, neighbors):
+
+        samples = Sample._prepare_samples(
+            test_examples,
+            0.0,
+            0,
+            True,
+            self.tokenizer
+        )
+
+        for i, (distance, neighbor)\
+            in enumerate(neighbors.items()):
+
+            # Neighbor was probably too sparse to cache
+            if neighbor is None: 
+                continue
+
+            examples = random.sample(
+                neighbor.examples,
+                self.n_test
+            )
+
+            samples.extend(
+                Sample._prepare_samples(
+                    examples,
+                    distance,
+                    i + 1,
+                    False,
+                    self.tokenizer
+                )
+            )
+        
         return [
-            arr[i:i + self.batch_size] 
-            for i in range(0, len(arr), self.batch_size)
+            samples[i:i + self.batch_size] 
+            for i in range(0, len(samples), self.batch_size)
         ]
     
     async def process_batches(
@@ -117,11 +148,10 @@ class NeighborScorer(Scorer):
 
         # Return a flattened list of samples
         return [
-            item.default(echo=self.echo)
+            item.default()
             for sublist in results 
             for item in sublist
         ]
-
 
     def build_prompt(
         self, 
@@ -133,12 +163,9 @@ class NeighborScorer(Scorer):
             for i, sample in enumerate(batch)
         )
 
-        prompt = fuzz_prompt if batch[0].highlighted else clean_prompt
-
-        return prompt(
+        return clean_prompt(
             explanation=explanation,
             examples=examples,
-            n_test=self.n_few_shots
         )
 
     async def query(
@@ -153,7 +180,7 @@ class NeighborScorer(Scorer):
             "temperature": self.temperature,
         }
 
-        if len(batch) > 1:
+        if self.batch_size > 1:
             selections = await self.client.generate(
                 prompt,
                 schema=create_response_model(len(batch)),

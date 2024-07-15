@@ -16,14 +16,17 @@ class SimpleExplainer(Explainer):
     def __init__(
         self,
         client,
+        tokenizer,
         cot: bool = False,
         logits: bool = False,
         activations: bool = False,
         max_tokens:int =200,
         temperature:float =0.0,
-        threshold:float =0.3
+        threshold:float =0.3,
+        echo: bool = False
     ):
         self.client = client
+        self.tokenizer = tokenizer
 
         self.cot = cot
         self.logits = logits
@@ -32,6 +35,8 @@ class SimpleExplainer(Explainer):
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.threshold = threshold
+
+        self.echo = echo
 
     async def __call__(
         self,
@@ -50,46 +55,43 @@ class SimpleExplainer(Explainer):
 
         explanation = self.parse_explanation(response)
 
+        if self.echo:
+            return response, explanation
         return explanation
 
     def parse_explanation(self, text: str) -> str:
-        """
-        Parses the explanation from the response text.
-        """
-        pattern = r'\[EXPLANATION\]:\s*(.*)'
-
-        match = re.search(pattern, text, re.DOTALL)
+        match = re.search(
+            r'\[EXPLANATION\]:\s*(.*)', 
+            text, re.DOTALL
+        )
         
-        if match:
-            explanation = match.group(1).strip()
-            return explanation
-        else:
-            return "Explantion could not be parsed."
-    
-    def _highlight(self, index, example, threshold):
+        return match.group(1).strip() \
+            if match else "Explanation could not be parsed."
+        
+    def _highlight(self, index, example):
         result = f"Example {index}: "
 
-        threshold = example.max_activation * threshold
-        tokens = example.tokens
+        threshold = example.max_activation * self.threshold
+        str_toks = example.decode(self.tokenizer)
         activations = example.activations
 
         check = lambda i: activations[i] > threshold 
 
         i = 0
-        while i < len(tokens):
+        while i < len(str_toks):
             if check(i):
                 result += L
 
                 while (
-                    i < len(tokens) 
+                    i < len(str_toks) 
                     and check(i)
                 ):
-                    result += tokens[i]
+                    result += str_toks[i]
                     i += 1
 
-                result.append(R)
+                result += R
             else:
-                result += tokens[i]
+                result += str_toks[i]
                 i += 1
 
         return "".join(result)

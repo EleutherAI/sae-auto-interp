@@ -12,7 +12,7 @@ COT = """
 
 You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like {l}this{r}. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters {l}just like this{r}.
 
-Step 1: List the activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any.
+Step 1: List a couple activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any.
 Step 2: Write down general shared features of the text examples.
 """
 
@@ -21,7 +21,7 @@ ACTIVATIONS = """
 
 You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like {l}this{r}. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters {l}just like this{r}. The activation value of the example is listed after each example in parentheses.
 
-Step 1: List the activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any.
+Step 1: List a couple activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any.
 Step 2: Write down several general shared features of the text examples.
 Step 3: Take note of the activation values to understand which examples are most representative of the neuron.
 """
@@ -60,7 +60,7 @@ Top_logits: ["elated", "joyful", "story", "thrilled", "spider"]
 
 EXAMPLE_1_COT_RESPONSE = """
 (Part 1)
-ACTIVATING TOKENS: "over the moon", "till the cows come home", "than meets the eye".
+ACTIVATING TOKENS: "over the moon", "than meets the eye".
 PREVIOUS TOKENS: No interesting patterns.
 
 Step 1.
@@ -77,7 +77,7 @@ Let me think carefully. Did I miss any patterns in the text examples? Are there 
 
 EXAMPLE_1_COT_ACTIVATION_RESPONSE = """
 (Part 1)
-ACTIVATING TOKENS: "over the moon", "till the cows come home", "than meets the eye".
+ACTIVATING TOKENS: "over the moon", "than meets the eye".
 PREVIOUS TOKENS: No interesting patterns.
 
 Step 1.
@@ -130,7 +130,7 @@ Top_logits: ["apple", "running", "book", "wider", "quickly"]
 
 EXAMPLE_2_COT_RESPONSE = """
 (Part 1)
-ACTIVATING TOKENS: "er", "ish", "er", "er".
+ACTIVATING TOKENS: "er", "er", "er".
 PREVIOUS TOKENS: "wid", "tall", "small", "deep".
 
 Step 1.
@@ -148,7 +148,7 @@ Let me look again for patterns in the examples. Are there any links or hidden li
 
 EXAMPLE_2_COT_ACTIVATION_RESPONSE = """
 (Part 1)
-ACTIVATING TOKENS: "er", "ish", "er", "er".
+ACTIVATING TOKENS: "er", "er", "er".
 PREVIOUS TOKENS: "wid", "tall", "small", "deep".
 
 Step 1.

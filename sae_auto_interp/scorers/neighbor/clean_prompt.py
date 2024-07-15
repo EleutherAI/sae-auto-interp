@@ -56,13 +56,10 @@ Text examples:
 {examples}
 """
 
-
-from .clean_few_shot_examples import examples as clean_examples
-
-def prompt(examples, explanation, n_test=-1):
+def prompt(examples, explanation):
   generation_prompt = GENERATION_PROMPT.format(explanation=explanation, examples=examples)
 
-  defaults = [
+  few_shot_examples = [
     {"role": "user", "content": DSCORER_EXAMPLE_ONE},
     {"role": "assistant", "content": DSCORER_RESPONSE_ONE},
     {"role": "user", "content": DSCORER_EXAMPLE_TWO},
@@ -71,14 +68,9 @@ def prompt(examples, explanation, n_test=-1):
     {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
   ]
 
-  if n_test == 0:
-    defaults = []
-  elif n_test != -1:
-    defaults = clean_examples[str(n_test)]
-
   prompt = [
     {"role": "system", "content": DSCORER_SYSTEM_PROMPT},
-    *defaults,
+    *few_shot_examples,
     {"role": "user", "content": generation_prompt}
   ]
 

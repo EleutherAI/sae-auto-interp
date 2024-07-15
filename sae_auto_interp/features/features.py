@@ -34,6 +34,7 @@ class Example:
     
     def decode(self, tokenizer):
         self.str_toks = tokenizer.batch_decode(self.tokens)
+        return self.str_toks
 
     @property
     def max_activation(self):
@@ -71,7 +72,8 @@ class FeatureRecord:
     def from_tensor(
         cls,
         tokens: Tensor, 
-        module_name: int,
+        layer: int,
+        module_name: str,
         raw_dir: str,
         selected_features: List[int] = None,
         **kwargs
@@ -103,7 +105,7 @@ class FeatureRecord:
             
             record = cls(
                 Feature(
-                    layer_index=module_name, 
+                    layer_index=layer, 
                     feature_index=feature_index.item()
                 )
             )
