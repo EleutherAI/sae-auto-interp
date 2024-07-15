@@ -160,7 +160,7 @@ class FuzzingScorer(Scorer):
         if len(batch) > 1:
             selections = await self.client.generate(
                 prompt,
-                schema=create_response_model(len(batch)),
+                #schema=create_response_model(len(batch)),
                 **generation_kwargs
             )
 
@@ -170,6 +170,7 @@ class FuzzingScorer(Scorer):
         else:
             selections = await self.client.generate(
                 prompt,
+                #schema=create_response_model(1),
                 **generation_kwargs
             )
 

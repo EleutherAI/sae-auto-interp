@@ -25,8 +25,7 @@ class Feature:
 class Example:
     tokens: List[int]
     activations: List[float]
-    normalize_activations: List[float] = None
-
+    
     def __hash__(self) -> int:
         return hash(tuple(self.tokens))
 
