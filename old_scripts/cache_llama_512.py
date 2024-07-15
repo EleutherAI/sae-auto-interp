@@ -32,5 +32,5 @@ cache.run()
 print("Caching complete")
 for layer in layers:
     feature_range = torch.arange(0,10000)
-    cache.save_selected_features(feature_range, layer, save_dir="raw_features_llama_256")
+    cache.save_selected_features(feature_range, layer, save_dir="raw_features_llama_512")
 print("Selected features saved")
