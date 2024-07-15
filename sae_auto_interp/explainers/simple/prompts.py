@@ -10,7 +10,7 @@ Guidelines:
 COT = """
 (Part 1) Tokens that the neuron activates highly on in text
 
-You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like {l}this{r}. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters {l}just like this{r}.
+You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like <<this>>. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters <<just like this>>.
 
 Step 1: List a couple activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any.
 Step 2: Write down general shared features of the text examples.
@@ -19,7 +19,7 @@ Step 2: Write down general shared features of the text examples.
 ACTIVATIONS = """
 (Part 1) Tokens that the neuron activates highly on in text
 
-You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like {l}this{r}. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters {l}just like this{r}. The activation value of the example is listed after each example in parentheses.
+You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like <<this>>. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters <<just like this>>. The activation value of the example is listed after each example in parentheses.
 
 Step 1: List a couple activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any.
 Step 2: Write down several general shared features of the text examples.
@@ -38,17 +38,17 @@ Pay close attention to the words in this list and write down what they have in c
 ### EXAMPLE 1 ###
 
 EXAMPLE_1 = """
-Example 1:  and he was {l}over the moon{r} to find
-Example 2:  we'll be laughing {l}till the cows come home{r}! Pro
-Example 3:  thought Scotland was boring, but really there's more {l}than meets the eye{r}! I'd
+Example 1:  and he was <<over the moon>> to find
+Example 2:  we'll be laughing <<till the cows come home>>! Pro
+Example 3:  thought Scotland was boring, but really there's more <<than meets the eye>>! I'd
 """
 
 EXAMPLE_1_ACTIVATIONS = """
-Example 1:  and he was {l}over the moon{r} to find
+Example 1:  and he was <<over the moon>> to find
 Activation: (9)
-Example 2:  we'll be laughing {l}till the cows come home{r}! Pro
+Example 2:  we'll be laughing <<till the cows come home>>! Pro
 Activation: (5)
-Example 3:  thought Scotland was boring, but really there's more {l}than meets the eye{r}! I'd
+Example 3:  thought Scotland was boring, but really there's more <<than meets the eye>>! I'd
 Activation: (8)
 """
 
@@ -108,17 +108,17 @@ EXAMPLE_1_EXPLANATION = """
 ### EXAMPLE 2 ###
 
 EXAMPLE_2 = """
-Example 1:  a river is wide but the ocean is wid{l}er{r}. The ocean
-Example 2:  every year you get tall{l}er{r}," she
-Example 3:  the hole was small{l}er{r} but deep{l}er{r} than the
+Example 1:  a river is wide but the ocean is wid<<er>>. The ocean
+Example 2:  every year you get tall<<er>>," she
+Example 3:  the hole was small<<er>> but deep<<er>> than the
 """
 
 EXAMPLE_2_ACTIVATIONS = """
-Example 1:  a river is wide but the ocean is wid{l}er{r}. The ocean
+Example 1:  a river is wide but the ocean is wid<<er>>. The ocean
 Activation: (8)
-Example 2:  every year you get tall{l}ish{r}," she
+Example 2:  every year you get tall<<ish>>," she
 Activation: (2)
-Example 3:  the hole was small{l}er{r} but deep{l}er{r} than the
+Example 3:  the hole was small<<er>> but deep<<er>> than the
 Activation: (9)
 """
 
@@ -180,24 +180,24 @@ EXAMPLE_2_EXPLANATION = """
 ### EXAMPLE 3 ###
 
 EXAMPLE_3 = """
-Example 1:  something happening inside my {l}house{r}", he
-Example 2:  presumably was always contained in {l}a box{r}", according
-Example 3:  people were coming into the {l}smoking area{r}".
+Example 1:  something happening inside my <<house>>", he
+Example 2:  presumably was always contained in <<a box>>", according
+Example 3:  people were coming into the <<smoking area>>".
 
 However he
-Example 4:  Patrick: "why are you getting in the {l} way?{l}" Later,
+Example 4:  Patrick: "why are you getting in the << way?>>" Later,
 """
 
 EXAMPLE_3_ACTIVATIONS = """
-Example 1:  something happening inside my {l}house{r}", he
+Example 1:  something happening inside my <<house>>", he
 Activation: (7)
-Example 2:  presumably was always contained in {l}a box{r}", according
+Example 2:  presumably was always contained in <<a box>>", according
 Activation: (9)
-Example 3:  people were coming into the {l}smoking area{r}".
+Example 3:  people were coming into the <<smoking area>>".
 
 However he
 Activation: (3)
-Example 4:  Patrick: "why are you getting in the {l} way?{r}" Later,
+Example 4:  Patrick: "why are you getting in the << way?>>" Later,
 Activation: (2)
 """
 
