@@ -8,9 +8,10 @@ from collections import defaultdict
 from typing import List, Callable
 from ..logger import logger
 from torch import Tensor
-import random
+from .sampling import default_sampler
 
-from .. import cache_config as CONFIG
+from .utils import display
+from .activations import pool_max_activation_slices, get_non_activating_tokens
 
 @dataclass
 class Feature:
@@ -24,22 +25,16 @@ class Feature:
 class Example:
     tokens: List[int]
     activations: List[float]
-    str_toks: List[str] = None
 
     def __hash__(self) -> int:
-        if self.str_toks is None:
-            raise ValueError("Cannot hash examples without decoding.")
-        
-        return hash(self.text)
+        return hash(tuple(self.tokens))
 
     def __eq__(self, other) -> bool:
-        if self.str_toks is None:
-            raise ValueError("Cannot compare examples without decoding.")
-        
-        return self.text == other.text
-
-    def decode(self, tokenizer: Callable) -> None:
+        return self.tokens == other.tokens
+    
+    def decode(self, tokenizer):
         self.str_toks = tokenizer.batch_decode(self.tokens)
+        return self.str_toks
 
     @property
     def max_activation(self):
@@ -48,8 +43,7 @@ class Example:
     @property
     def text(self):
         return "".join(self.str_toks)
-
-
+    
 class FeatureRecord:
 
     def __init__(
@@ -62,45 +56,23 @@ class FeatureRecord:
     def max_activation(self):
         return self.examples[0].max_activation
     
-    @staticmethod
-    def display(
-        examples=None
-    ) -> str:
-        assert hasattr(examples[0], "str_toks"), \
-            "Examples must have be detokenized to display."
-
-        from IPython.core.display import display, HTML
-
-        def _to_string(tokens, activations):
-            result = []
-            i = 0
-            while i < len(tokens):
-                if activations[i] > 0:
-                    result.append("<mark>")
-                    while i < len(tokens) and activations[i] > 0:
-                        result.append(tokens[i])
-                        i += 1
-                    result.append("</mark>")
-                else:
-                    result.append(tokens[i])
-                    i += 1
-            return "".join(result)
-        
-        strings = [
-            _to_string(
-                example.str_toks, 
-                example.activations
-            ) 
-            for example in examples
+    def prepare_examples(self, tokens, activations):
+        self.examples = [
+            Example(
+                tokens=toks,
+                activations=acts,
+            )
+            for toks, acts in zip(
+                tokens, 
+                activations
+            )
         ]
 
-        display(HTML("<br><br>".join(strings)))
-    
     @classmethod
     def from_tensor(
         cls,
         tokens: Tensor, 
-        layer_index: int,
+        module_name: str,
         raw_dir: str,
         selected_features: List[int] = None,
         **kwargs
@@ -108,23 +80,11 @@ class FeatureRecord:
         """
         Loads a list of records from a tensor of locations and activations. Pass
         in a proccessed_dir to load a feature's processed data.
-
-        Args:
-            tokens: Tokenized data from caching
-            tokenizer: Tokenizer from the model
-            layer: Layer index
-            locations_path: Path to the locations tensor
-            activations_path: Path to the activations tensor
-            processed_dir: Path to the processed data
-            max_examples: Maximum number of examples to load per record
-
-        Returns:
-            List of FeatureRecords
         """
         
         # Build location paths
-        locations_path = f"{raw_dir}/layer{layer_index}_locations.pt"
-        activations_path = f"{raw_dir}/layer{layer_index}_activations.pt"
+        locations_path = f"{raw_dir}/{module_name}_locations.pt"
+        activations_path = f"{raw_dir}/{module_name}_activations.pt"
         
         # Load tensor
         locations = torch.load(locations_path)
@@ -140,12 +100,11 @@ class FeatureRecord:
         
         records = []
 
-
-        for feature_index in tqdm(features, desc=f"Loading features from tensor for layer {layer_index}"):
+        for feature_index in tqdm(features, desc=f"Loading features from tensor for layer {module_name}"):
             
             record = cls(
                 Feature(
-                    layer_index=layer_index, 
+                    layer_index=module_name, 
                     feature_index=feature_index.item()
                 )
             )
@@ -170,6 +129,7 @@ class FeatureRecord:
 
         return records
     
+    
     def from_locations(
         self,
         tokens: Tensor, 
@@ -177,6 +137,7 @@ class FeatureRecord:
         feature_activations: Tensor,
         min_examples: int = 200,
         max_examples: int = 2_000,
+        sampler: Callable = default_sampler,
         processed_dir: str = None, 
         n_random: int = 0,
     ):
@@ -192,7 +153,9 @@ class FeatureRecord:
             logger.error(f"Feature {self.feature} has fewer than {min_examples} examples.")
             raise ValueError(f"Feature {self.feature} has fewer than {min_examples} examples.")
 
-        self.examples = self._prepare(processed_tokens, processed_activations)
+        self.prepare_examples(processed_tokens, processed_activations)
+        
+        sampler(self)
 
         # POSTPROCESSING
 
@@ -201,35 +164,24 @@ class FeatureRecord:
                 feature_locations, tokens, n_random
             )
 
-            self.random_examples = self._prepare(random_tokens, [-1] * n_random)
+            self.random_examples = self.prepare_examples(
+                random_tokens, [-1] * n_random,
+            )
 
         # Load processed data if a directory is provided
         if processed_dir:
             self.load_processed(processed_dir)
 
-
-    def _prepare(self, tokens, activations):
-        return [
-            Example(
-                tokens=toks,
-                activations=acts,
-            )
-            for toks, acts in zip(
-                tokens, 
-                activations
-            )
-        ]
-
-    def sample(self,sampling_method: Callable, **kwargs):
-        # This allows us to pass in a sampling method to the record
-        return sampling_method(self, **kwargs)
+    def display(self, tokenizer, n=10):
+        for example in self.examples[:n]:
+            example.decode(tokenizer)
+        display(self.examples[:n])
 
     def load_processed(self, directory: str):
         path = f"{directory}/{self.feature}.json"
+
         with bf.BlobFile(path, "rb") as f:
             processed_data = orjson.loads(f.read())
-            feature_dict = processed_data.pop("feature")
-            self.feature = Feature(**feature_dict)
             self.__dict__.update(processed_data)
     
     def save(self, directory: str, save_examples=False):
@@ -239,53 +191,8 @@ class FeatureRecord:
         if not save_examples:
             serializable.pop("examples")
 
+        serializable.pop("feature")
+
         with bf.BlobFile(path, "wb") as f:
             f.write(orjson.dumps(serializable))
 
-
-def pool_max_activation_slices(
-    locations, activations, tokens, ctx_len, k=10
-):
-    batch_len, seq_len = tokens.shape
-
-    sparse_activations = torch.sparse_coo_tensor(
-        locations.t(), activations, (batch_len, seq_len)
-    )
-    dense_activations = sparse_activations.to_dense()
-
-    unique_batch_pos = torch.unique(locations[:,0])
-    token_batches = tokens[unique_batch_pos]
-    dense_activations = dense_activations[unique_batch_pos]
-
-    avg_pools = torch.nn.functional.max_pool1d(
-        dense_activations, kernel_size=ctx_len, stride=ctx_len
-    )
-
-    # This made the indices wrong in the topk
-    #non_zero = avg_pools != 0
-    #avg_pools = avg_pools[non_zero]
-
-    activation_windows = dense_activations.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
-    token_windows = token_batches.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
-
-    k = min(k, len(avg_pools))
-    top_indices = torch.topk(avg_pools.flatten(), k).indices
-
-    activation_windows = activation_windows[top_indices]
-    token_windows = token_windows[top_indices]
-
-    return token_windows, activation_windows
-
-
-def get_non_activating_tokens(
-    locations, tokens, n_to_find, ctx_len=20
-):
-    unique_batch_pos = torch.unique(locations[:,0])
-    taken = set(unique_batch_pos.tolist())
-    free = []
-    value = 0
-    while value < n_to_find:
-        if value not in taken:
-            free.append(value)
-            value += 1
-    return tokens[free, 10:10+ctx_len]

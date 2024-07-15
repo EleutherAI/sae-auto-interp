@@ -1,102 +1,124 @@
 import re
 from typing import List
 
-from .prompts import create_prompt
+from .prompt_builder import build_prompt
 from ..explainer import (
     Explainer, 
-    ExplainerInput
- )
-from ... import simple_explainer_config as CONFIG
+    ExplainerInput, 
+)
 
+L = "<<"
+R = ">>"
 
 class SimpleExplainer(Explainer):
-    """
-    The Simple explainer generates an explanation using few shot examples
-    using just the tokens that are activated in the sequence.
-    """
-
     name = "simple"
 
     def __init__(
         self,
-        client
+        client,
+        tokenizer,
+        cot: bool = False,
+        logits: bool = False,
+        activations: bool = False,
+        max_tokens:int =200,
+        temperature:float =0.0,
+        threshold:float =0.6,
+        echo: bool = False
     ):
         self.client = client
-        
+        self.tokenizer = tokenizer
+
+        self.cot = cot
+        self.logits = logits
+        self.activations = activations
+
+        self.max_tokens = max_tokens
+        self.temperature = temperature
+        self.threshold = threshold
+
+        self.echo = echo
+
     async def __call__(
         self,
-        explainer_in: ExplainerInput,
+        explainer_in: ExplainerInput
     ):
-
-        messages = self.build_prompt(
+        messages = self._build_prompt(
             explainer_in.train_examples,
-            explainer_in.record.max_activation
+            explainer_in.record.top_logits
         )
+
         response = await self.client.generate(
-            messages,
-            max_tokens=CONFIG.max_tokens,
-            temperature=CONFIG.temperature,
+            messages, 
+            max_tokens=self.max_tokens,
+            temperature=self.temperature
         )
 
         explanation = self.parse_explanation(response)
 
+        if self.echo:
+            return [messages[-1], response], explanation
         return explanation
-    
-    def parse_explanation(self, text:str):
-        pattern = r'\[EXPLANATION\]:\s*(.*)'
 
-        match = re.search(pattern, text, re.DOTALL)
+    def parse_explanation(self, text: str) -> str:
+        match = re.search(
+            r'\[EXPLANATION\]:\s*(.*)', 
+            text, re.DOTALL
+        )
         
-        if match:
-            explanation = match.group(1).strip()
-            return explanation
-        else:
-            return "Explanation not found"
-    
-    def build_prompt(self,examples,max_activation:float):
+        return match.group(1).strip() \
+            if match else "Explanation could not be parsed."
+        
+    def _highlight(self, index, example):
+        result = f"Example {index}: "
 
-        #I think this can be prettier
-        str_tokens = []
-        activations = []
-        sentences= []
-        for example in examples:
-            str_tokens.append(example.str_toks)
-            activations.append(example.activations)
-            sentences.append("".join(example.str_toks))
+        threshold = example.max_activation * self.threshold
+        str_toks = example.decode(self.tokenizer)
+        activations = example.activations
+
+        check = lambda i: activations[i] > threshold 
+
+        i = 0
+        while i < len(str_toks):
+            if check(i):
+                result += L
+
+                while (
+                    i < len(str_toks) 
+                    and check(i)
+                ):
+                    result += str_toks[i]
+                    i += 1
+
+                result += R
+            else:
+                result += str_toks[i]
+                i += 1
+
+        return "".join(result)
+
+    def _build_prompt(self, examples, top_logits):
+        
+        highlighted_examples = []
+
+        for i, example in enumerate(examples):
+            highlighted_examples.append(
+                self._highlight(
+                    i + 1,
+                    example
+                )
+            )
             
-        undiscovered_feature = ""
-        for i in range(len(sentences)):
-            decoded = sentences[i]
-            activated_tokens,scores = str_tokens[i],activations[i]
-            undiscovered_feature += self.formulate_question(i+1,decoded,activated_tokens,scores,max_activation)
-        msg = create_prompt(undiscovered_feature)
-        return msg
-    
-    def formulate_question(self,index:int,document:str,activating_tokens:List[str],activations:List[int],max_activation:float) -> str:
-        if index == 1:
-            question = "Neuron\n"
-        else:
-            question = ""
-        question += f"Document {index}:\n{document}\n"
-        question += "Activating tokens:"
-        for token,score in zip(activating_tokens,activations):
-            if score > 0:
-                score = score/max_activation*10
-                score = score.round()
-                question += f" {token} ({score}),"
-        # Remove the last comma
-        question = question[:-1] + ".\n\n"
-        return question
+            if self.activations:
+                highlighted_examples.append(
+                    f"Activation: ({example.max_activation})"
+                )
+            
+        highlighted_examples = "\n".join(highlighted_examples)
 
-    
+        return build_prompt(
+            examples=highlighted_examples,
+            cot= self.cot,
+            activations= self.activations,
+            top_logits= top_logits,
+        )
 
-    
-
-    
-
-
-
-
-
-                
-    

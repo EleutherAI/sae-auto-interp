@@ -8,7 +8,6 @@ from .sample import Sample
 from .prompts.fuzz_prompt import prompt as fuzz_prompt
 from .prompts.clean_prompt import prompt as clean_prompt
 from .schema import create_response_model
-from ... import det_config as CONFIG
 from ..scorer import Scorer, ScorerInput
 from ...features import Example
 from ...clients.client import Client
@@ -24,12 +23,21 @@ class FuzzingScorer(Scorer):
         client: Client, 
         echo: bool = False, 
         execute: bool = True, 
-        n_few_shots: int = -1
+        n_few_shots: int = -1,
+        batch_size: int = 1,
+        temperature: float = 0.0,
+        max_tokens: int = 100,
+        threshold: float = 0.3
     ):
         self.client = client
         self.echo = echo
         self.n_few_shots = n_few_shots
         self.execute = execute
+
+        self.batch_size = batch_size
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+        self.threshold = threshold
 
     async def __call__(
         self, 
@@ -70,7 +78,8 @@ class FuzzingScorer(Scorer):
                     highlighted=highlight,
                     ground_truth=ground_truth,
                     n_incorrect=n_incorrect,
-                    id=hash(example)
+                    id=hash(example),
+                    threshold=self.threshold
                 )
                 for example in examples
             ]
@@ -92,8 +101,8 @@ class FuzzingScorer(Scorer):
     
     def _batch(self, arr):
         return [
-            arr[i:i + CONFIG.batch_size] 
-            for i in range(0, len(arr), CONFIG.batch_size)
+            arr[i:i + self.batch_size] 
+            for i in range(0, len(arr), self.batch_size)
         ]
     
     async def process_batches(
@@ -144,8 +153,8 @@ class FuzzingScorer(Scorer):
         prompt = self.build_prompt(batch, explanation)
 
         generation_kwargs = {
-            "max_tokens": CONFIG.max_tokens,
-            "temperature": CONFIG.temperature,
+            "max_tokens": self.max_tokens,
+            "temperature": self.temperature,
         }
 
         if len(batch) > 1:
