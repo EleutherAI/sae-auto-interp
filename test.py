@@ -13,3 +13,11 @@ submodule_dict = load_autoencoders(
     ae_layers=[0],
     weight_dir="/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/Sam/pythia-70m-deduped",
 )
+
+# %%
+
+DATA = "HELLO"
+
+a = exec("DATA")
+
+print(a)

@@ -1,16 +1,6 @@
-import os
-import orjson 
-import asyncio
-import aiofiles
-import time
-
 from transformer_lens import utils
 from datasets import load_dataset
 from transformers import AutoTokenizer
-
-from . import cache_config as CONFIG
-
-
 
 def load_tokenized_data(
     tokenizer: AutoTokenizer,

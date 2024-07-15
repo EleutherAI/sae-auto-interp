@@ -7,7 +7,6 @@ from ..explainer import (
     ExplainerInput, 
 )
 
-
 L = "<<"
 R = ">>"
 
@@ -27,7 +26,6 @@ class ChainOfThought(Explainer):
         threshold=0.3
     ):
         self.client = client
-
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.threshold = threshold

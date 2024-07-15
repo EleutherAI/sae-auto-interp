@@ -5,8 +5,7 @@ from .prompts import create_prompt
 from ..explainer import (
     Explainer, 
     ExplainerInput
- )
-from ... import simple_explainer_config as CONFIG
+)
 
 
 class SimpleExplainer(Explainer):
