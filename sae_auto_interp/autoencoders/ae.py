@@ -9,6 +9,8 @@ def load_autoencoders(model, ae_layers, weight_dir, **kwargs):
        
     if "llama" in weight_dir:
         submodules = load_eai_autoencoders(model, ae_layers, weight_dir)
+    if "nora" in weight_dir:
+        submodules = load_eai_autoencoders(model, ae_layers, weight_dir)
 
     if "pythia" in weight_dir:
         submodules = load_sam_autoencoders(model, ae_layers, weight_dir, **kwargs)
