@@ -23,11 +23,7 @@ Example 3:<< running backs>>," he said. .. Defensive<< end>> Carroll Phillips is
 Example 4:<< line>>, with the left side âĢĶ namely<< tackle>> Byron Bell at<< tackle>> and<< guard>> Amini
 """
 
-<<<<<<< HEAD
-DSCORER_RESPONSE_ONE =  """{
-=======
 DSCORER_RESPONSE_ONE = """{
->>>>>>> 921d3726f865d1f4326f9defaa285d1cca08f029
   "example_0": 1,
   "example_1": 0,
   "example_2": 0,
@@ -47,11 +43,7 @@ Example 3:American, told<< Hannity>> that âĢľyou<< guys>> are playing the rac
 Example 4:<< the>><|endoftext|>ľI want to<< remind>> you all that 10 days ago (director Massimil
 """
 
-<<<<<<< HEAD
-DSCORER_RESPONSE_TWO =  """{
-=======
 DSCORER_RESPONSE_TWO = """{
->>>>>>> 921d3726f865d1f4326f9defaa285d1cca08f029
   "example_0": 0,
   "example_1": 0,
   "example_2": 0,
@@ -71,11 +63,7 @@ Example 3:ĊĊIt has been devised by Director<< of>> Public Prosecutions (DPP)
 Example 4: and fair investigation not even include the Director<< of>> Athletics? Â· Finally, we believe the
 """
 
-<<<<<<< HEAD
-DSCORER_RESPONSE_THREE =  """{
-=======
 DSCORER_RESPONSE_THREE = """{
->>>>>>> 921d3726f865d1f4326f9defaa285d1cca08f029
   "example_0": 1,
   "example_1": 1,
   "example_2": 1,
