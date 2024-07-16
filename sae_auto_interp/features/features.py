@@ -15,11 +15,11 @@ from .activations import pool_max_activation_slices, get_non_activating_tokens
 
 @dataclass
 class Feature:
-    layer_index: int
+    module_name: int
     feature_index: int
     
     def __repr__(self) -> str:
-        return f"layer{self.layer_index}_feature{self.feature_index}"
+        return f"{self.module_name}_feature{self.feature_index}"
     
 @dataclass
 class Example:
@@ -58,7 +58,7 @@ class FeatureRecord:
         return self.examples[0].max_activation
     
     def prepare_examples(self, tokens, activations):
-        self.examples = [
+        return [
             Example(
                 tokens=toks,
                 activations=acts,
@@ -105,7 +105,7 @@ class FeatureRecord:
             
             record = cls(
                 Feature(
-                    layer_index=module_name, 
+                    module_name=module_name, 
                     feature_index=feature_index.item()
                 )
             )
@@ -154,7 +154,7 @@ class FeatureRecord:
             logger.error(f"Feature {self.feature} has fewer than {min_examples} examples.")
             raise ValueError(f"Feature {self.feature} has fewer than {min_examples} examples.")
 
-        self.prepare_examples(processed_tokens, processed_activations)
+        self.examples = self.prepare_examples(processed_tokens, processed_activations)
         
         sampler(self)
 
@@ -166,7 +166,7 @@ class FeatureRecord:
             )
 
             self.random_examples = self.prepare_examples(
-                random_tokens, [-1] * n_random,
+                random_tokens, torch.zeros_like(random_tokens),
             )
 
         # Load processed data if a directory is provided

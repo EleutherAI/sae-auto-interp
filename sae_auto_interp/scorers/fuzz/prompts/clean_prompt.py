@@ -22,8 +22,8 @@ Example 4: line, with the left side âĢĶ namely tackle Byron Bell at tackle an
 DSCORER_RESPONSE_ONE = """{
   "example_0": 1,
   "example_1": 0,
-  "example_2": 1,
-  "example_3": 0,
+  "example_2": 0,
+  "example_3": 1,
   "example_4": 1
 }"""
 
@@ -39,7 +39,7 @@ Example 3:Ċ<|endoftext|> distasteful. Amidst the slime lurk bits of Schadenfre
 Example 4: the<|endoftext|>ľI want to remind you all that 10 days ago (director Massimil
 """
 
-DSCORER_RESPONSE_TWO =  """{
+DSCORER_RESPONSE_TWO = """{
   "example_0": 0,
   "example_1": 0,
   "example_2": 0,
@@ -59,7 +59,7 @@ Example 3:ĊĊIt has been devised by Director of Public Prosecutions (DPP)
 Example 4: and fair investigation not even include the Director of Athletics? Â· Finally, we believe the
 """
 
-DSCORER_RESPONSE_THREE =  """{
+DSCORER_RESPONSE_THREE = """{
   "example_0": 1,
   "example_1": 1,
   "example_2": 1,

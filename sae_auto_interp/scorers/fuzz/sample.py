@@ -12,7 +12,8 @@ class Sample:
 
     def __init__(
         self, 
-        example: Example, 
+        str_toks: List[str],
+        activations: torch.Tensor,
         quantile: int, 
         highlighted: bool, 
         ground_truth: bool, 
@@ -27,8 +28,8 @@ class Sample:
         self.id = id
 
         self.text = self._prepare_example(
-            example.str_toks,
-            example.activations,
+            str_toks,
+            activations,
             n_incorrect=n_incorrect,
             threshold=threshold,
             highlight=highlighted
