@@ -15,11 +15,11 @@ from .activations import pool_max_activation_slices, get_non_activating_tokens
 
 @dataclass
 class Feature:
-    layer_index: int
+    module_name: int
     feature_index: int
     
     def __repr__(self) -> str:
-        return f"layer{self.layer_index}_feature{self.feature_index}"
+        return f"{self.module_name}_feature{self.feature_index}"
     
 @dataclass
 class Example:
@@ -105,7 +105,7 @@ class FeatureRecord:
             
             record = cls(
                 Feature(
-                    layer_index=module_name, 
+                    module_name=module_name, 
                     feature_index=feature_index.item()
                 )
             )
