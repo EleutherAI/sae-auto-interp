@@ -39,7 +39,6 @@ for layer in range(0,12,2):
 
     all_records = FeatureRecord.from_tensor(
         tokens,
-        layer,
         module_name,
         selected_features=unique[module_name],
         raw_dir = raw_features_path,
