@@ -24,26 +24,34 @@ class Local(Client):
         self, 
         prompt: str, 
         raw: bool = False,
-        max_retries: int = 3,
+        max_retries: int = 2,
         **kwargs
     ) -> str:
         """
         Wrapper method for vLLM post requests.
         """
-        
+        if "schema" in kwargs:
+            schema = kwargs.pop("schema")
+        else:
+            schema = None
         for attempt in range(max_retries):
 
             try:
+                
                 response = await self.client.chat.completions.create(
                     model=self.model,
                     messages=prompt,
                     **kwargs
                 )
-                
                 if raw:
                     return response
                 
-                return self.postprocess(response)
+                processed_response = self.postprocess(response)
+                
+                if schema is not None:
+                    processed_response = json.loads(processed_response)
+
+                return processed_response
             
             except json.JSONDecodeError:
                 logger.warning(f"Attempt {attempt + 1}: Invalid JSON response, retrying...")
