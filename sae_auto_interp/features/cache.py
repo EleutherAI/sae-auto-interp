@@ -1,11 +1,10 @@
 import torch
-from typing import Tuple, List, Dict
+from typing import Dict
 from tqdm import tqdm
 import psutil
 from torchtyping import TensorType
 import os
 from collections import defaultdict
-from ..utils import load_tokenized_data
 
 class Buffer:
     """
@@ -116,7 +115,7 @@ class FeatureCache:
         return memory_usage > threshold
 
 
-    def load_token_batches(self,tokens, minibatch_size=20):
+    def load_token_batches(self, tokens, minibatch_size=20):
         
         max_batches = self.n_tokens // self.seq_len
         tokens = tokens[:max_batches]

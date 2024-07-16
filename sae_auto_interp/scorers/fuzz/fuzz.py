@@ -21,15 +21,17 @@ class FuzzingScorer(Scorer):
     def __init__(
         self, 
         client: Client, 
+        tokenizer,
         echo: bool = False, 
         execute: bool = True, 
         n_few_shots: int = -1,
         batch_size: int = 1,
         temperature: float = 0.0,
-        max_tokens: int = 100,
+        max_tokens: int = 2,
         threshold: float = 0.3
     ):
         self.client = client
+        self.tokenizer = tokenizer  
         self.echo = echo
         self.n_few_shots = n_few_shots
         self.execute = execute
@@ -43,13 +45,15 @@ class FuzzingScorer(Scorer):
         self, 
         scorer_in: ScorerInput
     ) -> List[Sample]:
-        
+    
         # Build clean and fuzzed batches
         clean_batches, fuzzed_batches = self._prepare(
             test_batches=scorer_in.test_examples, 
             random_examples=scorer_in.random_examples,
             incorrect_examples=scorer_in.extra_examples,
-            avg_acts=scorer_in.record.average_n_activations
+            avg_acts=self.average_n_activations(
+                scorer_in.extra_examples
+            )
         )
 
         # Sometimes we just want the prompts for manual labeling,
@@ -64,6 +68,12 @@ class FuzzingScorer(Scorer):
         )
 
         return results
+    
+    def average_n_activations(self, examples) -> float:
+        return sum(
+            len(torch.nonzero(example.activations)) 
+            for example in examples
+        ) / len(examples)
         
     def _prepare(self, test_batches, random_examples, incorrect_examples, avg_acts):
         def create_samples(examples, quantile, highlight, ground_truth=True):
@@ -73,7 +83,8 @@ class FuzzingScorer(Scorer):
             
             return [
                 Sample(
-                    example=example,
+                    str_toks=example.decode(self.tokenizer),
+                    activations=example.activations,
                     quantile=quantile,
                     highlighted=highlight,
                     ground_truth=ground_truth,
@@ -90,6 +101,7 @@ class FuzzingScorer(Scorer):
         for quantile, batch in enumerate(test_batches):
             clean.extend(create_samples(batch, quantile, False))
             fuzzed.extend(create_samples(batch, quantile, True))
+
 
         clean.extend(create_samples(random_examples, -1, False, False))
         fuzzed.extend(create_samples(incorrect_examples, -1, True, False))

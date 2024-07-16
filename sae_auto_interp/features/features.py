@@ -58,7 +58,7 @@ class FeatureRecord:
         return self.examples[0].max_activation
     
     def prepare_examples(self, tokens, activations):
-        self.examples = [
+        return [
             Example(
                 tokens=toks,
                 activations=acts,
@@ -154,7 +154,7 @@ class FeatureRecord:
             logger.error(f"Feature {self.feature} has fewer than {min_examples} examples.")
             raise ValueError(f"Feature {self.feature} has fewer than {min_examples} examples.")
 
-        self.prepare_examples(processed_tokens, processed_activations)
+        self.examples = self.prepare_examples(processed_tokens, processed_activations)
         
         sampler(self)
 
@@ -166,7 +166,7 @@ class FeatureRecord:
             )
 
             self.random_examples = self.prepare_examples(
-                random_tokens, [-1] * n_random,
+                random_tokens, torch.zeros_like(random_tokens),
             )
 
         # Load processed data if a directory is provided

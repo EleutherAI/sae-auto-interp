@@ -7,9 +7,6 @@ from ..explainer import (
     ExplainerInput, 
 )
 
-L = "<<"
-R = ">>"
-
 class SimpleExplainer(Explainer):
     name = "Simple"
     def __init__(
@@ -85,7 +82,7 @@ class SimpleExplainer(Explainer):
         i = 0
         while i < len(str_toks):
             if check(i):
-                result += L
+                result += "<<"
 
                 while (
                     i < len(str_toks) 
@@ -93,7 +90,7 @@ class SimpleExplainer(Explainer):
                 ):
                     result += str_toks[i]
                     i += 1
-                result += R
+                result += ">>"
             else:
                 result += str_toks[i]
                 i += 1
@@ -118,9 +115,6 @@ class SimpleExplainer(Explainer):
                         highlighted_examples.append(
                             f"Activation {example.str_toks[i]}:{activation}, "
                         )
-                # highlighted_examples.append(
-                #     f"Activation: ({example.max_activation})"
-                # )
             
         highlighted_examples = "\n".join(highlighted_examples)
 

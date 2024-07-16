@@ -28,9 +28,8 @@ for layer in range(0,12,2):
 
     records = FeatureRecord.from_tensor(
         tokens,
-        layer,
         module_name,
-        selected_features=[0,1,3,4],
+        selected_features=list(range(20)),
         raw_dir = raw_features_path,
         min_examples=120,
         max_examples=10000
@@ -49,6 +48,8 @@ for layer in range(0,12,2):
                 record=record
             )
         )
+
+    break
 
 client = get_client("local", "astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit")
 
