@@ -78,7 +78,6 @@ def sample_top_and_activation_quantiles(
     n_test=5,
     n_quantiles=4,
     seed=22,
-    decode=lambda x : x,
 ):
     """
     Train examples are the top n_train examples, then split the rest quantiles of the max activation.
@@ -106,10 +105,9 @@ def sample_top_and_activation_quantiles(
 def sample_top_and_quantiles(
     record,
     n_train=10,
-    n_test=5,
-    n_quantiles=2,
+    n_test=10,
+    n_quantiles=4,
     seed=22,
-    decode=lambda x : x,
 ):
     """
     Train examples are the top n_train examples, then split the rest into
