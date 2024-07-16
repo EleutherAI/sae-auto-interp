@@ -12,7 +12,7 @@ COT = """
 
 You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like <<this>>. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters <<just like this>>.
 
-Step 1: List a couple activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any.
+Step 1: List a couple activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any. Don't list more than 5 tokens.
 Step 2: Write down general shared features of the text examples.
 """
 

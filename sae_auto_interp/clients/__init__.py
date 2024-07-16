@@ -25,7 +25,7 @@ async def execute_model(
     queries,
     output_dir: str,
     record_time=False,
-    batch_size=10
+    batch_size=100
 ):
     """
     Executes a model on a list of queries in batches and saves the results to the output directory.
