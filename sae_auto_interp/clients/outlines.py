@@ -68,8 +68,6 @@ class Outlines(Client):
                     return response.json()
                 
                 response = self.postprocess(prompt, response)
-                print(data,response)
-                
                 if kwargs.get("schema") is not None:
                     return json.loads(response)
                 
