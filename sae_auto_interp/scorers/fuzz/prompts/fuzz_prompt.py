@@ -20,7 +20,13 @@ Example 3:<< running backs>>," he said. .. Defensive<< end>> Carroll Phillips is
 Example 4:<< line>>, with the left side âĢĶ namely<< tackle>> Byron Bell at<< tackle>> and<< guard>> Amini
 """
 
-DSCORER_RESPONSE_ONE = "[1,0,0,1,1]"
+DSCORER_RESPONSE_ONE = """{
+  "example_0": 1,
+  "example_1": 0,
+  "example_2": 0,
+  "example_3": 1,
+  "example_4": 1
+}"""
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/9396
 DSCORER_EXAMPLE_TWO = """Feature explanation: The word "guys" in the phrase "you guys".
@@ -34,7 +40,13 @@ Example 3:American, told<< Hannity>> that âĢľyou<< guys>> are playing the rac
 Example 4:<< the>><|endoftext|>ľI want to<< remind>> you all that 10 days ago (director Massimil
 """
 
-DSCORER_RESPONSE_TWO = "[0,0,0,0,0]"
+DSCORER_RESPONSE_TWO = """{
+  "example_0": 0,
+  "example_1": 0,
+  "example_2": 0,
+  "example_3": 0,
+  "example_4": 0
+}"""
 
 # https://www.neuronpedia.org/gpt2-small/8-res-jb/12654
 DSCORER_EXAMPLE_THREE = """Feature explanation: "of" before words that start with a capital letter.
@@ -48,7 +60,13 @@ Example 3:ĊĊIt has been devised by Director<< of>> Public Prosecutions (DPP)
 Example 4: and fair investigation not even include the Director<< of>> Athletics? Â· Finally, we believe the
 """
 
-DSCORER_RESPONSE_THREE = "[1,1,1,1,1]"
+DSCORER_RESPONSE_THREE = """{
+  "example_0": 1,
+  "example_1": 1,
+  "example_2": 1,
+  "example_3": 1,
+  "example_4": 1
+}"""
 
 GENERATION_PROMPT = """Feature explanation: {explanation}
 

@@ -74,7 +74,7 @@ for layer in range(0,12,2):
 # %%
 
 # client = get_client("openrouter", "anthropic/claude-3-haiku", api_key=openrouter_key)
-client = get_client("local", "astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit")
+client = get_client("outlines", "casperhansen/llama-3-70b-instruct-awq")
 
 scorer = FuzzingScorer(client, tokenizer=model.tokenizer, echo=False)
 
