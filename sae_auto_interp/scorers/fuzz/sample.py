@@ -84,10 +84,17 @@ class Sample:
                 n_incorrect
             )
         )
-
-        check = lambda i: activations[i] > threshold \
-            or i in random_indices
-        
+        if n_incorrect > 0:
+            check = [0]*len(tokens)
+            for i in random_indices:
+                if activations[i] < threshold:
+                    check[i] = 1
+        else:
+            check = [0]*len(tokens)
+            for i in range(len(tokens)):
+                if activations[i] > threshold:
+                    check[i] = 1
+            
         return self._highlight(tokens, check)
     
     def _highlight(self, tokens, check):
@@ -95,12 +102,12 @@ class Sample:
 
         i = 0
         while i < len(tokens):
-            if check(i):
+            if check[i]:
                 result.append(L)
 
                 while (
                     i < len(tokens) 
-                    and check(i)
+                    and check[i]
                 ):
                     result.append(tokens[i])
                     i += 1
