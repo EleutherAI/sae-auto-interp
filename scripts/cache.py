@@ -8,7 +8,8 @@ import json
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 submodule_dict = load_autoencoders(
     model, 
-    list(range(0,12,2)),
+    # list(range(0,12,2)),
+    [0,2],
     "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/OpenAI/gpt2_128k",
 )
 # %%
@@ -18,7 +19,7 @@ names = [
     for i in range(0,12,2)
 ]
 
-with open("/share/u/caden/sae-auto-interp/neighbors/unique.json") as f:
+with open("/share/u/caden/sae-auto-interp/scripts/unique.json") as f:
     data = json.load(f)
 
 module_filter = {name:torch.tensor(data[name], device="cuda:0") for name in names}
@@ -26,16 +27,13 @@ module_filter = {name:torch.tensor(data[name], device="cuda:0") for name in name
 cache = FeatureCache(
     model, 
     submodule_dict, 
-    filters=module_filter)
-cache.run()
+    filters=module_filter
+)
 
-cache.save( save_dir="/share/u/caden/sae-auto-interp/raw_features")
+from sae_auto_interp.utils import load_tokenized_data
 
-# %%
+tokens = load_tokenized_data(model.tokenizer)
 
-with model.trace(['tawfelwekfjlkejwlkfjae']):
-    val = model.transformer.h[2].ae.output.save()
+cache.run(tokens, n_tokens=100_000)
 
-print(torch.topk(val[:,4,:],10).indices)
-a = val[:,:,97521]
-a
+cache.save_splits(n_splits=2, save_dir="/share/u/caden/sae-auto-interp/raw_features")

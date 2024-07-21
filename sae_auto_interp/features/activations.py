@@ -21,8 +21,9 @@ def pool_max_activation_slices(
     activation_windows = dense_activations.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
     token_windows = token_batches.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
 
-    non_zero = avg_pools != 0
-    non_zero = non_zero.sum()
+    # Should add this back in?
+    # non_zero = avg_pools != 0
+    # non_zero = non_zero.sum()
     k = min(k, len(avg_pools))
     
     top_indices = torch.topk(avg_pools.flatten(), k).indices
