@@ -8,17 +8,18 @@ import json
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 submodule_dict = load_autoencoders(
     model, 
-    list(range(0,12,2)),
+    # list(range(0,12,2)),
+    [0,2],
     "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/OpenAI/gpt2_128k",
 )
-# %%
 
 names = [
     model.transformer.h[i]._module_path
-    for i in range(0,12,2)
+    # for i in range(0,12,2)
+    for i in [0,2]
 ]
 
-with open("/share/u/caden/sae-auto-interp/scripts/unique.json") as f:
+with open("/share/u/caden/sae-auto-interp/scripts/all.json") as f:
     data = json.load(f)
 
 module_filter = {name:torch.tensor(data[name], device="cuda:0") for name in names}
@@ -35,4 +36,4 @@ tokens = load_tokenized_data(model.tokenizer)
 
 cache.run(tokens, n_tokens=15_000_000)
 
-cache.save_splits(n_splits=4, save_dir="/share/u/caden/sae-auto-interp/raw_features")
+cache.save_splits(n_splits=2, save_dir="/share/u/caden/sae-auto-interp/raw_features")

@@ -13,7 +13,7 @@ from .sampling import default_sampler
 from .example import Example
 
 
-from .utils import display
+
 from ..load.activations import pool_max_activation_slices, get_non_activating_tokens
 
 @dataclass
@@ -35,6 +35,27 @@ class FeatureRecord:
     @property
     def max_activation(self):
         return self.examples[0].max_activation
+    
+    @staticmethod
+    def load(
+        feature: Feature,
+        tokens: Tensor,
+        feature_locations: Tensor,
+        feature_activations: Tensor,
+    ):
+        """
+        Loads a single record from a tensor of locations and activations.
+        """
+
+        record = FeatureRecord(feature)
+        
+        processed_tokens, processed_activations = pool_max_activation_slices(
+            feature_locations, feature_activations, tokens, ctx_len=20, k=1_000
+        )
+
+        record.examples = Example.prepare_examples(processed_tokens, processed_activations)
+        
+        return record
     
     
     @staticmethod

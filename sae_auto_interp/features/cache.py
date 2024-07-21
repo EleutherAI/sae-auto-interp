@@ -92,8 +92,6 @@ class FeatureCache:
         self.submodule_dict = submodule_dict
         self.minibatch_size = minibatch_size
         self.width = width
-
-        filters = None if filters is not None else filters
         self.cache = Cache(filters, minibatch_size=minibatch_size)
 
     def load_token_batches(self, tokens: TensorType["batch", "sequence"]):
@@ -166,9 +164,8 @@ class FeatureCache:
 
     def _generate_split_indices(self, n_splits):
         boundaries = torch.linspace(0, self.width, steps=n_splits+1).long()
-        return zip(boundaries[:-1], boundaries[1:])
+        return list(zip(boundaries[:-1], boundaries[1:]))
 
-    
     def save_splits(self, n_splits, save_dir):
 
         split_indices = self._generate_split_indices(n_splits)
