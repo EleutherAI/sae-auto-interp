@@ -4,6 +4,6 @@ from dataclasses import dataclass
 @dataclass
 class FeatureConfig(Serializable):
     
-    width: int = 32_768
+    width: int = 131_072
 
-    n_splits: int = 1
+    n_splits: int = 2

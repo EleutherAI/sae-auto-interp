@@ -1,61 +1,41 @@
-import time
-import ray
-import asyncio
+
+# %%
+
+from sae_auto_interp.load.loader import FeatureDataset
+from sae_auto_interp.utils import load_tokenized_data
 import torch
+from nnsight import LanguageModel
 
+import torch.multiprocessing as mp
+import time
+def main():
 
-@ray.remote
-class Actor:
-    def __init__(self, name):
-        self.name = name
-        self.data = torch.arange(1000)
+    mp.set_start_method('spawn', force=True)
+    print("spawned")
 
-    def do_some_work(self, index):
+    model = LanguageModel('gpt2', device_map="auto")
 
-        time.sleep(1)
-        return self.data[index].item()
+    tokens = load_tokenized_data(model.tokenizer)
 
-@ray.remote
-class AsyncActor:
-    def __init__(self, name):
-        self.name = name
+    modules = [".transformer.h.0", ".transformer.h.2"]
 
-    async def process_incremental(self, result):
-        print("processing", result)
-        await asyncio.sleep(1) # Replace this with some processing code.
-        print("done processing", result)
-        return result
+    features = {
+        m : torch.arange(100) for m in modules
+    }
 
-ray.init()
+    dataset = FeatureDataset(
+        raw_dir="raw_features",
+        modules = modules,
+        features=features,
+        tokens=tokens
+    )
+    
+    for i in dataset.load(n_workers=5):
+        print(i)
+    
+# %%
 
-
-start = time.time()
-
-results = []
-
-generator = Actor.options(max_concurrency=4).remote("generator")    
-
-
-def gen(n):
-
-    for _ in range(n):
-        yield [generator.do_some_work.remote(x) for x in range(5)]
-
-
-actor = AsyncActor.options(max_concurrency=5).remote("one")
-actor_two = AsyncActor.options(max_concurrency=5).remote("two")
-
-
-for result_ids in gen(2):
-
-    done_id, result_ids = ray.wait(result_ids, num_returns=5)
-
-    result = [actor.process_incremental.remote(i) for i in ray.get(done_id)]
-
-    result_two = [actor_two.process_incremental.remote(i) for i in ray.get(result)]
-
-    results.append(result_two)
-
-r = [ray.get(i) for i in results]
-
-print("duration =", time.time() - start, "\nresult = ", r)
+if __name__ == "__main__":
+    start_time = time.time()    
+    main()
+    print(f"Execution time: {time.time() - start_time}")
