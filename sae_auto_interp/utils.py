@@ -10,17 +10,14 @@ def load_tokenized_data(
     seq_len: int = 64,
     seed: int = 22,
 ):
-    # Load the dataset
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
 
-    # Tokenize and concatenate
     tokens = utils.tokenize_and_concatenate(
         data, 
         tokenizer, 
         max_length=seq_len
     )   
 
-    # Shuffle the tokens
     tokens = tokens.shuffle(seed)['tokens']
 
     return tokens

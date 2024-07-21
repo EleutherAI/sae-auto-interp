@@ -10,6 +10,9 @@ from ..logger import logger
 from torch import Tensor
 from .sampling import default_sampler
 
+from .example import Example
+
+
 from .utils import display
 from .activations import pool_max_activation_slices, get_non_activating_tokens
 
@@ -20,30 +23,6 @@ class Feature:
     
     def __repr__(self) -> str:
         return f"{self.module_name}_feature{self.feature_index}"
-    
-@dataclass
-class Example:
-    tokens: List[int]
-    activations: List[float]
-    
-    def __hash__(self) -> int:
-        return hash(tuple(self.tokens))
-
-    def __eq__(self, other) -> bool:
-        return self.tokens == other.tokens
-    
-    def decode(self, tokenizer):
-        self.str_toks = tokenizer.batch_decode(self.tokens)
-        return self.str_toks
-
-    @property
-    def max_activation(self):
-        return max(self.activations)
-    
-    @property
-    def text(self):
-        return "".join(self.str_toks)
-
     
 class FeatureRecord:
 
@@ -197,4 +176,3 @@ class FeatureRecord:
         serializable.pop("feature")
         with bf.BlobFile(path, "wb") as f:
             f.write(orjson.dumps(serializable))
-

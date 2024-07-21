@@ -1,12 +1,11 @@
 import torch
 from typing import Dict
 from tqdm import tqdm
-import psutil
 from torchtyping import TensorType
 import os
 from collections import defaultdict
 
-class Buffer:
+class Cache:
     """
     The Buffer class stores feature locations and activations for modules.
     """
@@ -18,7 +17,6 @@ class Buffer:
     ):
         self.feature_locations = defaultdict(list)
         self.feature_activations = defaultdict(list)
-        self.saved = False
         self.filters = filters
         self.minibatch_size = minibatch_size
 
@@ -45,19 +43,18 @@ class Buffer:
         Concatenate the feature locations and activations
         """
 
-        if self.saved:
-            return
-
         for module_path in self.feature_locations.keys():
             self.feature_locations[module_path] = \
                 torch.cat(self.feature_locations[module_path], dim=0)
             
             self.feature_activations[module_path] = \
                 torch.cat(self.feature_activations[module_path], dim=0)
-        
-        self.saved = True
 
-    def get_nonzeros(self, latents, module_path):
+    def get_nonzeros(
+        self, 
+        latents: TensorType["batch", "seq", "feature"], 
+        module_path: str
+    ):
         """
         Get the nonzero feature locations and activations
         """
@@ -79,7 +76,7 @@ class Buffer:
 
             return nonzero_feature_locations[mask], \
                 nonzero_feature_activations[mask]
-    
+
 
 class FeatureCache:
 
@@ -88,48 +85,32 @@ class FeatureCache:
         model, 
         submodule_dict: Dict,
         minibatch_size: int = 64,
+        width: int = 131_072,
         filters: Dict[str, TensorType["indices"]] = None
     ):  
         self.model = model
         self.submodule_dict = submodule_dict
-        # Get the weidth from the first submodule
-        first_sae = list(submodule_dict.values())[0].ae
-
-        self.width = first_sae.n_features
-        print(f"Feature width: {self.width}")
         self.minibatch_size = minibatch_size
+        self.width = width
+
+        filters = None if filters is not None else filters
+        self.cache = Cache(filters, minibatch_size=minibatch_size)
+
+    def load_token_batches(self, tokens: TensorType["batch", "sequence"]):
         
-        if filters is not None:
-            self.filter_submodules(filters)
-            self.buffer = Buffer(filters, minibatch_size=minibatch_size)
-
-        else:
-            self.buffer = Buffer(minibatch_size=minibatch_size)
-
-
-    def check_memory(self, threshold=0.9):
-        """
-        Check memory usage to kick out of training before crash.
-        """
-        memory_usage = psutil.virtual_memory().percent / 100.0
-        return memory_usage > threshold
-
-
-    def load_token_batches(self, tokens, minibatch_size=20):
-        
-        max_batches = self.n_tokens // self.seq_len
+        max_batches = self.n_tokens // tokens.shape[1]
         tokens = tokens[:max_batches]
         
-        n_mini_batches = len(tokens) // minibatch_size
+        n_mini_batches = len(tokens) // self.minibatch_size
 
         token_batches = [
-            tokens[minibatch_size * i : minibatch_size * (i + 1), :] 
+            tokens[self.minibatch_size * i : self.minibatch_size * (i + 1), :] 
             for i in range(n_mini_batches)
         ]
 
         return token_batches
     
-    def filter_submodules(self, filters):
+    def filter_submodules(self, filters: Dict[str, TensorType["indices"]]):
         filtered_submodules = {}
         for module_path in self.submodule_dict.keys():
             if module_path in filters:
@@ -137,37 +118,33 @@ class FeatureCache:
         self.submodule_dict = filtered_submodules
 
     def run(self, tokens, n_tokens=10_000_000):
+
         self.n_tokens = n_tokens
-        self.seq_len = tokens.shape[1]
-        token_batches = self.load_token_batches(tokens,self.minibatch_size)
+        token_batches = self.load_token_batches(tokens)
 
         total_tokens = 0
         total_batches = len(token_batches)
-        tokens_per_batch = self.minibatch_size * self.seq_len
+        tokens_per_batch = token_batches[0].numel()
 
         with tqdm(total=total_batches, desc="Caching features") as pbar:
             
             for batch_number, batch in enumerate(token_batches):
                 total_tokens += tokens_per_batch
 
-                if self.check_memory(threshold=0.95):
-                    print("Memory usage critical.")
-                    raise MemoryError("Memory usage is critical. Exiting.")
-
                 with torch.no_grad():
-                    _buffer = {}
+                    buffer = {}
 
                     with self.model.trace(batch, scan=False, validate=False):
                         for module_path, submodule in self.submodule_dict.items():
-                            _buffer[module_path] = submodule.ae.output.save()
+                            buffer[module_path] = submodule.ae.output.save()
 
-                    for module_path, latents in _buffer.items():
-                        self.buffer.add(
+                    for module_path, latents in buffer.items():
+                        self.cache.add(
                             latents, 
                             batch_number, module_path
                         )
 
-                    del _buffer
+                    del buffer
                     torch.cuda.empty_cache()
 
                 # Update the progress bar
@@ -175,65 +152,47 @@ class FeatureCache:
                 pbar.set_postfix({'Total Tokens': f'{total_tokens:,}'})
 
         print(f"Total tokens processed: {total_tokens:,}") 
-        self.buffer.save()
+        self.cache.save()
 
-    def _generate_split_indices(self, width, n_splits):
-        return torch.arange(0, width).chunk(n_splits)
-    
     def save(self, save_dir):
 
-        for module_path in self.buffer.feature_locations.keys():
-            location_output_file = os.path.join(save_dir, f"{module_path}_locations.pt")
-            activation_output_file = os.path.join(save_dir, f"{module_path}_activations.pt")
+        for module_path in self.cache.feature_locations.keys():
 
-            torch.save(self.buffer.feature_locations[module_path], location_output_file)
-            torch.save(self.buffer.feature_activations[module_path], activation_output_file)
+            location_output_file = f"{save_dir}/{module_path}_locations.pt"
+            activation_output_file = f"{save_dir}/{module_path}_activations.pt"
 
-    def save_splits(self, n_splits, module_path, save_dir):
+            torch.save(self.cache.feature_locations[module_path], location_output_file)
+            torch.save(self.cache.feature_activations[module_path], activation_output_file)
+
+    def _generate_split_indices(self, n_splits):
+        boundaries = torch.linspace(0, self.width, steps=n_splits+1).long()
+        return zip(boundaries[:-1], boundaries[1:])
+
+    
+    def save_splits(self, n_splits, save_dir):
 
         split_indices = self._generate_split_indices(n_splits)
-        feature_locations = self.buffer.feature_locations[module_path]
-        feature_activations = self.buffer.feature_activations[module_path]
 
-        # Extract third elements
-        third_elements = feature_locations[:, 2]
+        for module_path in self.cache.feature_locations.keys():
 
-        for split_index, split in enumerate(split_indices):
-            # Create mask for this split
-            mask = torch.isin(third_elements, split)
-            
-            # Mask and save feature locations
-            masked_locations = feature_locations[mask]
-            location_output_file = os.path.join(save_dir, f"{module_path}_split_{split_index}_locations.pt")
-            torch.save(masked_locations, location_output_file)
+            feature_locations = self.cache.feature_locations[module_path]
+            feature_activations = self.cache.feature_activations[module_path]
 
-            # Mask and save feature activations
-            masked_activations = feature_activations[mask]
-            activation_output_file = os.path.join(save_dir, f"{module_path}_split_{split_index}_activations.pt")
-            torch.save(masked_activations, activation_output_file)
+            features = feature_locations[:, 2]
 
-    def save_selected_features(
-        self, 
-        feature_list, 
-        module_path, 
-        save_dir
-    ):
+            for start, end in split_indices:
+                
+                mask = (features >= start) & (features < end)
+                
+                masked_locations = feature_locations[mask]
+                masked_activations = feature_activations[mask]
 
-        feature_locations = self.buffer.feature_locations[module_path]
-        feature_activations = self.buffer.feature_activations[module_path]
+                module_dir = f"{save_dir}/{module_path}"
+                os.makedirs(module_dir, exist_ok=True)
 
-        # Extract third elements
-        third_elements = feature_locations[:, 2]
-
-        # Create mask for this split
-        mask = torch.isin(third_elements, feature_list)
-        
-        # Mask and save feature locations
-        masked_locations = feature_locations[mask]
-        masked_activations = feature_activations[mask]
-
-        location_output_file = os.path.join(save_dir, f"{module_path}_locations.pt")
-        activation_output_file = os.path.join(save_dir, f"{module_path}_activations.pt")
-
-        torch.save(masked_locations, location_output_file)
-        torch.save(masked_activations, activation_output_file)
+                adj = end - 1
+                location_output_file = f"{module_dir}/{start}_{adj}_locations.pt"
+                activation_output_file = f"{module_dir}/{start}_{adj}_activations.pt"
+                
+                torch.save(masked_locations, location_output_file)
+                torch.save(masked_activations, activation_output_file)

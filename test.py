@@ -1,23 +1,48 @@
 # %%
 
-import os
-os.environ["CONFIG_PATH"] = "configs/caden_gpt2.yaml"
+import time
+import random
+import ray
+import asyncio
 
-from sae_auto_interp.autoencoders import load_autoencoders
-from nnsight import LanguageModel
+@ray.remote
+def do_some_work(x):
+    time.sleep(1) # Replace this with work you need to do.
+    return x
 
-model = LanguageModel("EleutherAI/pythia-70m-deduped", device_map="auto", dispatch=True)
+@ray.remote
+class AsyncActor:
 
-submodule_dict = load_autoencoders(
-    model,
-    ae_layers=[0],
-    weight_dir="/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/Sam/pythia-70m-deduped",
-)
+    def __init__(self, name):
+        self.name = name
 
-# %%
+    async def process_incremental(self, result):
 
-DATA = "HELLO"
+        print(f"Actor {self.name} processing")
+        await asyncio.sleep(1) # Replace this with some processing code.
 
-a = exec("DATA")
+        return result
 
-print(a)
+start = time.time()
+result_ids = [do_some_work.remote(x) for x in range(4)]
+
+
+results = []
+
+actor = AsyncActor.remote("one")
+
+actor_two = AsyncActor.options(max_concurrency=4).remote("two")
+
+while len(result_ids):
+
+    done_id, result_ids = ray.wait(result_ids)
+
+    result = actor.process_incremental.remote(ray.get(done_id[0]))
+
+    result_two = actor_two.process_incremental.remote(result)
+
+    results.append(result_two)
+
+results = ray.get(results)
+
+print("duration =", time.time() - start, "\nresult = ", results)
