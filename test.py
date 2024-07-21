@@ -1,43 +1,54 @@
-# %%
-
 import time
-import random
 import ray
 import asyncio
+import torch
+
 
 @ray.remote
-def do_some_work(x):
-    time.sleep(1) # Replace this with work you need to do.
-    return x
+class Actor:
+    def __init__(self, name):
+        self.name = name
+        self.data = torch.arange(1000)
+
+    def do_some_work(self, index):
+
+        time.sleep(1)
+        return self.data[index].item()
 
 @ray.remote
 class AsyncActor:
-
     def __init__(self, name):
         self.name = name
 
     async def process_incremental(self, result):
-
-        print(f"Actor {self.name} processing")
+        print("processing", result)
         await asyncio.sleep(1) # Replace this with some processing code.
-        print(f"Actor {self.name} processed")
-
+        print("done processing", result)
         return result
 
+ray.init()
+
+
 start = time.time()
-result_ids = [do_some_work.remote(x) for x in range(20)]
 
 results = []
 
-actor = AsyncActor.options(max_concurrency=4).remote("one")
+generator = Actor.options(max_concurrency=4).remote("generator")    
 
-actor_two = AsyncActor.options(max_concurrency=4).remote("two")
 
-print(len(result_ids))
+def gen(n):
 
-while len(result_ids):
+    for _ in range(n):
+        yield [generator.do_some_work.remote(x) for x in range(5)]
 
-    done_id, result_ids = ray.wait(result_ids, num_returns=4)
+
+actor = AsyncActor.options(max_concurrency=5).remote("one")
+actor_two = AsyncActor.options(max_concurrency=5).remote("two")
+
+
+for result_ids in gen(2):
+
+    done_id, result_ids = ray.wait(result_ids, num_returns=5)
 
     result = [actor.process_incremental.remote(i) for i in ray.get(done_id)]
 
@@ -45,6 +56,6 @@ while len(result_ids):
 
     results.append(result_two)
 
-r = [ray.get(i)for i in results]
+r = [ray.get(i) for i in results]
 
 print("duration =", time.time() - start, "\nresult = ", r)

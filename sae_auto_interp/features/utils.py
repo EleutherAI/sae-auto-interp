@@ -1,13 +1,20 @@
+from transformers import PreTrainedTokenizer
+from torchtyping import TensorType
+
+from .features import FeatureRecord
+
 def display(
-    examples=None,
-    threshold=0.0,
+    record: FeatureRecord,
+    tokenizer: PreTrainedTokenizer,
+    threshold: float = 0.0,
 ) -> str:
-    assert hasattr(examples[0], "str_toks"), \
-        "Examples must have be detokenized to display."
 
     from IPython.core.display import display, HTML
 
-    def _to_string(tokens, activations):
+    def _to_string(
+        tokens: TensorType["seq"], 
+        activations: TensorType["seq"]
+    ) -> str:
         result = []
         i = 0
 
@@ -28,10 +35,10 @@ def display(
     
     strings = [
         _to_string(
-            example.str_toks, 
+            tokenizer.batch_decode(example.tokens), 
             example.activations
-        ) 
-        for example in examples
+        )
+        for example in record.examples
     ]
 
     display(HTML("<br><br>".join(strings)))
