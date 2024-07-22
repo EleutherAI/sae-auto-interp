@@ -31,6 +31,9 @@ class TensorBuffer:
         self.features = features
         self.start = 0
 
+        self.activations = None
+        self.locations = None
+
     def _load(self):
 
         self.activations = torch.load(self.tensor_path % "activations")
@@ -65,7 +68,7 @@ class TensorBuffer:
 
         return BufferOutput(
             Feature(
-                self.module_path.replace("%s.pt_", ""),
+                self.module_path,
                 feature
             ),
             feature_locations,
@@ -199,11 +202,11 @@ class FeatureLoader:
     def _all(self):
         all_records = []
 
-        for buffer in self.dataset.buffers:
+        for buffer in tqdm(self.dataset.buffers, desc="Loading all records"):
 
             buffer_records = [
                 self._process(data)
-                for data in tqdm(buffer)
+                for data in buffer
                 if data is not None
             ]
 
@@ -217,7 +220,7 @@ class FeatureLoader:
 
             buffer_records = [
                 self._process(data)
-                for data in tqdm(buffer)
+                for data in tqdm(buffer, desc="Loading record batch")
                 if data is not None
             ]
 
@@ -227,6 +230,6 @@ class FeatureLoader:
 
         if collate: 
 
-            return self._batched()
+            return self._all()
         
-        return self._all()
+        return self._batched()

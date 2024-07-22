@@ -5,9 +5,8 @@ from typing import List, NamedTuple
 import torch
 
 from .prompt import prompt as clean_prompt
-from ..scorer import Scorer
+from ..scorer import Scorer, ScorerResult
 from ...clients.client import Client, create_response_model
-
 
 
 @dataclass
@@ -82,7 +81,10 @@ class RecallScorer(Scorer):
             record.explanation
         )
 
-        return results
+        return ScorerResult(
+            record=record,
+            score=results
+        )
     
     def _prepare(self, activating_examples, incorrect_examples):
 
@@ -133,8 +135,7 @@ class RecallScorer(Scorer):
     def build_prompt(
         self, 
         batch: List[Sample], 
-        explanation: str,
-        batched: bool
+        explanation: str
     ) -> str:
         examples = "\n".join(
             f"Example {i}: {sample.text}" 
@@ -143,8 +144,7 @@ class RecallScorer(Scorer):
 
         return clean_prompt(
             explanation=explanation,
-            examples=examples,
-            batched=batched
+            examples=examples
         )
 
     async def query(
@@ -152,32 +152,20 @@ class RecallScorer(Scorer):
         batch: List[Sample], 
         explanation: str
     ) -> List[Sample]:
-        
-        batched = len(batch) > 1
-        prompt = self.build_prompt(batch, explanation, batched)
+    
+        prompt = self.build_prompt(batch, explanation)
 
         generation_kwargs = {
             "max_tokens": self.max_tokens,
             "temperature": self.temperature,
         }
 
-        schema = create_response_model(len(batch))
-        if batched:
-            selections = await self.client.generate(
-                prompt,
-                schema=schema.model_json_schema(),
-                **generation_kwargs
-            )
+        selections = await self.client.generate(
+            prompt,
+            **generation_kwargs
+        )
 
-            for i, sample in enumerate(batch):
-                sample.predicted = selections[f"example_{i}"] == 1
-
-        else:
-            selections = await self.client.generate(
-                prompt,
-                **generation_kwargs
-            )
-
-            batch[0].predicted = int(selections[-1]) == 1
+        for i, sample in enumerate(batch):
+            sample.predicted = selections[i] == 1
 
         return batch

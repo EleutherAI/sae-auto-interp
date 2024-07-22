@@ -3,70 +3,69 @@ from typing import List
 from tqdm.asyncio import tqdm
 from typing import Callable
 
-
-class Pipe:
+class Actor:
 
     def __init__(
         self, 
-        actors: List, 
+        actor, 
         preprocess: Callable = None, 
         postprocess: Callable = None
     ):
+        self.actor = actor
         self.preprocess = preprocess
-        self.actors = actors
         self.postprocess = postprocess
 
-        self.pbar = None
-
-    async def _run(self, semaphore, actor, input):
+    async def _run(self, semaphore, input):
 
         async with semaphore:
                 
-            return await actor(input)
+            return await self.actor(input)
 
-    def run(self, input, semaphore):
+    def __call__(self, input, semaphore):
 
         if self.preprocess is not None:
             input = self.preprocess(input)
 
+        task = asyncio.create_task(
+            self._run(semaphore, input)
+        )
+
+        if self.postprocess is not None:
+            task.add_done_callback(
+                lambda x: self.postprocess(x)
+            )
+
+        return task
+    
+class Pipe:
+
+    def __init__(
+        self, 
+        *actors: List, 
+    ):
+        self.actors = actors
+
+    def run(self, input, semaphore):
+
         tasks = []
 
         for actor in self.actors:
-
-            task = asyncio.create_task(
-                self._run(semaphore, actor, input)
-            )
-
-            if self.postprocess is not None:
-                task.add_done_callback(
-                    lambda x: self.postprocess(x)
-                )
-
+                
+            task = actor(input, semaphore)
             tasks.append(task)
-
-            self.pbar.update(1)
 
         return tasks
 
 class Pipeline:
 
-    def __init__(self, generator, **pipes):
+    def __init__(self, generator, *pipes):
 
         self.generator = generator
         self.pipes = pipes
 
-    def _pbars(self, total):
-
-        names = ["generator"] + list(self.pipes.keys())
-
-        # Names are offset by one to point toward the previous pipe
-        for name, pipe in zip(names, self.pipes.values()):
-
-            pipe.pbar = tqdm(total=total, desc=name)
-
     async def run(self, max_process: int = 100, collate=False):
 
-        semaphore = asyncio.Semaphore(max_process)  
+        sem = asyncio.Semaphore(max_process)  
 
         running = []
         total = 0
@@ -77,10 +76,8 @@ class Pipeline:
                 total += 1
 
                 running.extend(
-                    self.pipes[0].run(record, semaphore)
+                    self.pipes[0].run(record, sem)
                 )
-
-        self._pbars(total)
             
         if len(self.pipes) > 1:
             
@@ -93,20 +90,21 @@ class Pipeline:
                     result = await task
 
                     _running.extend(
-                        pipe.run(result, semaphore)
+                        pipe.run(result, sem)
                     )
 
                 running = _running
 
         results = []
 
-        pbar = tqdm(total=total)
+        pbar = tqdm(total=total, desc="Collecting")
+
         for completed_task in asyncio.as_completed(running):
+
             result = await completed_task
+
             results.append(result)
             pbar.update(1)
-
-        return results
         
 
                 

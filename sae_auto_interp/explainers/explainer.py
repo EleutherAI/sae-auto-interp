@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import NamedTuple
+import aiofiles
 
 from ..features.features import FeatureRecord
 
@@ -21,10 +22,9 @@ class Explainer(ABC):
         pass
 
 
-def explanation_loader(record: FeatureRecord, explanation_dir: str) -> str:
-
-    with open(f'{explanation_dir}/{record.id}.txt', 'r') as f:
-        explanation = f.read()
+async def explanation_loader(record: FeatureRecord, explanation_dir: str) -> str:
+    async with aiofiles.open(f'{explanation_dir}/{record.feature}.txt', 'r') as f:
+        explanation = await f.read()
     
     return ExplainerResult(
         record=record,
