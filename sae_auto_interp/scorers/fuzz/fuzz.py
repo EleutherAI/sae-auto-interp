@@ -8,11 +8,9 @@ from .sample import Sample
 from .prompts.fuzz_prompt import prompt as fuzz_prompt
 from .prompts.clean_prompt import prompt as clean_prompt
 from .schema import create_response_model
-from ..scorer import Scorer, ScorerInput
+from ..scorer import Scorer, ScorerResult
 from ...features import Example
 from ...clients.client import Client
-
-import json
 
 
 class FuzzingScorer(Scorer):
@@ -23,7 +21,6 @@ class FuzzingScorer(Scorer):
         client: Client, 
         tokenizer,
         echo: bool = False, 
-        execute: bool = True, 
         n_few_shots: int = -1,
         batch_size: int = 1,
         temperature: float = 0.5,
@@ -34,7 +31,6 @@ class FuzzingScorer(Scorer):
         self.tokenizer = tokenizer  
         self.echo = echo
         self.n_few_shots = n_few_shots
-        self.execute = execute
 
         self.batch_size = batch_size
         self.temperature = temperature
@@ -43,31 +39,30 @@ class FuzzingScorer(Scorer):
 
     async def __call__(
         self, 
-        scorer_in: ScorerInput
+        record
     ) -> List[Sample]:
     
+        # NOTE: Need to change random_examples to extra_examples
         # Build clean and fuzzed batches
         clean_batches, fuzzed_batches = self._prepare(
-            test_batches=scorer_in.test_examples, 
-            random_examples=scorer_in.random_examples,
-            incorrect_examples=scorer_in.extra_examples,
+            test_batches=record.test, 
+            random_examples=record.random_examples,
+            incorrect_examples=record.random_examples,
             avg_acts=self.average_n_activations(
-                scorer_in.extra_examples
+                record.random_examples
             )
         )
 
-        # Sometimes we just want the prompts for manual labeling,
-        # debugging, or other experiments.
-        if not self.execute:
-            return clean_batches, fuzzed_batches
-        
         # Generate responses
         results = await self.process_batches(
             clean_batches + fuzzed_batches, 
-            scorer_in.explanation
+            record.explanation
         )
 
-        return results
+        return ScorerResult(
+            record=record,
+            score=results
+        )
     
     def average_n_activations(self, examples) -> float:
         return sum(
@@ -83,7 +78,7 @@ class FuzzingScorer(Scorer):
             
             return [
                 Sample(
-                    str_toks=example.decode(self.tokenizer),
+                    str_toks=self.tokenizer.batch_decode(example.tokens),
                     activations=example.activations,
                     quantile=quantile,
                     highlighted=highlight,
@@ -154,7 +149,6 @@ class FuzzingScorer(Scorer):
         return prompt(
             explanation=explanation,
             examples=examples,
-            n_test=self.n_few_shots
         )
 
     async def query(
@@ -168,21 +162,13 @@ class FuzzingScorer(Scorer):
             "max_tokens": self.max_tokens,
             "temperature": self.temperature,
         }
-        schema = create_response_model(len(batch))
-        try:
-            selections = await self.client.generate(
-                prompt,
-                schema=schema.model_json_schema(),
-                **generation_kwargs
-            )
+        
+        selections = await self.client.generate(
+            prompt,
+            **generation_kwargs
+        )
 
-            for i, sample in enumerate(batch):
-                sample.predicted = selections[f"example_{i}"] == 1
-        
-        except:
-            selections = {}
-            for i,sample in enumerate(batch):
-                sample.predicted = -1
-        
+        for i, sample in enumerate(batch):
+            sample.predicted = selections[i] == 1
         
         return batch

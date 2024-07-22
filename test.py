@@ -1,57 +1,51 @@
+import asyncio
+from functools import wraps
 
-# %%
+def to_async_generator(func):
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        loop = asyncio.get_running_loop()
+        async_generator = AsyncGenerator(func, args, kwargs, loop)
+        return async_generator
 
-from sae_auto_interp.features.loader import FeatureLoader, FeatureDataset
-from sae_auto_interp.utils import load_tokenized_data
-from sae_auto_interp.features.constructors import pool_max_activation_windows, random_activation_windows
-from sae_auto_interp.features.samplers import top_and_quantiles
-import torch
-from nnsight import LanguageModel
+    return wrapper
 
-model = LanguageModel('gpt2', device_map="auto")
+class AsyncGenerator:
+    def __init__(self, func, args, kwargs, loop):
+        self.func = func
+        self.args = args
+        self.kwargs = kwargs
+        self.loop = loop
+        self.iterator = None
 
-tokens = load_tokenized_data(model.tokenizer)
+    def __aiter__(self):
+        return self
 
-modules = [".transformer.h.0", ".transformer.h.2"]
+    async def __anext__(self):
+        if self.iterator is None:
+            self.iterator = self.func(*self.args, **self.kwargs)
 
-features = {
-    m : torch.arange(100) for m in modules
-}
+        try:
+            result = await self.loop.run_in_executor(None, next, self.iterator)
+            return result
+        except 
 
-dataset = FeatureDataset(
-    raw_dir="raw_features",
-    modules = modules,
-    features=features,
-)
+# Example usage
+def sync_generator(n):
+    for i in range(n):
+        yield i
 
-def constructor(record, tokens, locations, activations):
+    return
 
-    pool_max_activation_windows(
-        record,
-        tokens=tokens,
-        locations=locations,
-        activations=activations,
-        k=200
-    )
+async def main():
+    # Method 1: Using the decorator
+    @to_async_generator
+    def decorated_sync_generator(n):
+        for i in range(n):
+            yield i
 
-    random_activation_windows(
-        record,
-        tokens=tokens,
-        locations=locations,
-    )
+    async_gen1 = await decorated_sync_generator(5)  # Note the 'await' here
+    async for item in async_gen1:
+        print(item)
 
-
-loader = FeatureLoader(
-    tokens=tokens,
-    dataset=dataset,
-    constructor=constructor,
-    sampler=top_and_quantiles
-)
-
-# %%
-
-records = loader.load_all()
-
-# %%
-
-
+asyncio.run(main())

@@ -78,9 +78,7 @@ Text examples:
 {examples}
 """
 
-from .fuzzed_few_shot_examples import examples as fuzzed_examples
-
-def prompt(examples, explanation, n_test=-1):
+def prompt(examples, explanation):
   generation_prompt = GENERATION_PROMPT.format(explanation=explanation, examples=examples)
 
   defaults = [
@@ -91,11 +89,6 @@ def prompt(examples, explanation, n_test=-1):
     {"role": "user", "content": DSCORER_EXAMPLE_THREE},
     {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
   ]
-
-  if n_test == 0:
-    defaults = []
-  elif n_test != -1:
-    defaults = fuzzed_examples[str(n_test)]
 
   prompt = [
     {"role": "system", "content": DSCORER_SYSTEM_PROMPT},

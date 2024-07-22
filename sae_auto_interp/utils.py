@@ -69,10 +69,15 @@ def display(
 
 
 def load_tokenizer(model):
+    """
+    Loads tokenizer to the default NNsight configuration.
+    """
+    
     tokenizer = AutoTokenizer.from_pretrained(model, padding_side="left")
     tokenizer._pad_token = tokenizer._eos_token
 
     return tokenizer
+
 
 def default_constructor(record, tokens, locations, activations):
 
