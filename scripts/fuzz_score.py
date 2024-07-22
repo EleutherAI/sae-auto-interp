@@ -8,7 +8,7 @@ from sae_auto_interp.clients import get_client,execute_model
 from sae_auto_interp.scorers import ScorerInput, FuzzingScorer
 from sae_auto_interp.utils import load_tokenized_data
 from sae_auto_interp.features import FeatureRecord
-from sae_auto_interp.features.sampling import sample_top_and_quantiles
+from sae_auto_interp.load.sampling import sample_top_and_quantiles
 from sae_auto_interp.logger import logger
 
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
