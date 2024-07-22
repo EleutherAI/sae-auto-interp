@@ -1,9 +1,8 @@
 from transformer_lens import utils
 from datasets import load_dataset
 from transformers import AutoTokenizer
-
+from .features.constructors import pool_max_activation_windows, random_activation_windows
 from torchtyping import TensorType
-
 from .features import FeatureRecord
 
 def load_tokenized_data(
@@ -31,6 +30,7 @@ def display(
     record: FeatureRecord,
     tokenizer: AutoTokenizer,
     threshold: float = 0.0,
+    n: int = 10
 ) -> str:
 
     from IPython.core.display import display, HTML
@@ -62,7 +62,30 @@ def display(
             tokenizer.batch_decode(example.tokens), 
             example.activations
         )
-        for example in record.examples
+        for example in record.examples[:n]
     ]
 
     display(HTML("<br><br>".join(strings)))
+
+
+def load_tokenizer(model):
+    tokenizer = AutoTokenizer.from_pretrained(model, padding_side="left")
+    tokenizer._pad_token = tokenizer._eos_token
+
+    return tokenizer
+
+def default_constructor(record, tokens, locations, activations):
+
+        pool_max_activation_windows(
+            record,
+            tokens=tokens,
+            locations=locations,
+            activations=activations,
+            k=200
+        )
+
+        random_activation_windows(
+            record,
+            tokens=tokens,
+            locations=locations,
+        )

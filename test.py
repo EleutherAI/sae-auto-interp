@@ -1,12 +1,12 @@
 
 # %%
 
-from sae_auto_interp.load.loader import FeatureDataset
+from sae_auto_interp.features.loader import FeatureLoader, FeatureDataset
 from sae_auto_interp.utils import load_tokenized_data
+from sae_auto_interp.features.constructors import pool_max_activation_windows, random_activation_windows
+from sae_auto_interp.features.samplers import top_and_quantiles
 import torch
 from nnsight import LanguageModel
-
-from sae_auto_interp.load.sampling import sample_top_and_quantiles
 
 model = LanguageModel('gpt2', device_map="auto")
 
@@ -22,20 +22,36 @@ dataset = FeatureDataset(
     raw_dir="raw_features",
     modules = modules,
     features=features,
-    tokens=tokens,
-    sampler=sample_top_and_quantiles
 )
 
+def constructor(record, tokens, locations, activations):
 
+    pool_max_activation_windows(
+        record,
+        tokens=tokens,
+        locations=locations,
+        activations=activations,
+        k=200
+    )
+
+    random_activation_windows(
+        record,
+        tokens=tokens,
+        locations=locations,
+    )
+
+
+loader = FeatureLoader(
+    tokens=tokens,
+    dataset=dataset,
+    constructor=constructor,
+    sampler=top_and_quantiles
+)
 
 # %%
 
-from sae_auto_interp.features.utils import display
-records = []
-for i in dataset.load():
-
-    records.append(i)
+records = loader.load_all()
 
 # %%
 
-display(records[0], model.tokenizer)
+len(records)

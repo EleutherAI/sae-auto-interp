@@ -63,67 +63,67 @@ class FeatureRecord:
     def max_activation(self):
         return self.examples[0].max_activation
     
-    @staticmethod
-    def load(
-        feature: Feature,
-        tokens: Tensor,
-        feature_locations: Tensor,
-        feature_activations: Tensor,
-    ):
-        """
-        Loads a single record from a tensor of locations and activations.
-        """
+    # @staticmethod
+    # def load(
+    #     feature: Feature,
+    #     tokens: Tensor,
+    #     feature_locations: Tensor,
+    #     feature_activations: Tensor,
+    # ):
+    #     """
+    #     Loads a single record from a tensor of locations and activations.
+    #     """
 
-        record = FeatureRecord(feature)
+    #     record = FeatureRecord(feature)
         
-        processed_tokens, processed_activations = pool_max_activation_slices(
-            feature_locations, feature_activations, tokens, ctx_len=20, k=1_000
-        )
+    #     processed_tokens, processed_activations = pool_max_activation_slices(
+    #         feature_locations, feature_activations, tokens, ctx_len=20, k=1_000
+    #     )
 
-        record.examples = Example.prepare_examples(processed_tokens, processed_activations)
+    #     record.examples = Example.prepare_examples(processed_tokens, processed_activations)
         
-        return record
+    #     return record
     
     
-    @staticmethod
-    def from_locations(
-        feature: Feature,
-        tokens: Tensor, 
-        feature_locations: Tensor,
-        feature_activations: Tensor,
-        min_examples: int = 200,
-        max_examples: int = 2_000,
-        processed_dir: str = None, 
-        n_random: int = 0,
-    ):
-        """
-        Loads a single record from a tensor of locations and activations.
-        """
+    # @staticmethod
+    # def from_locations(
+    #     feature: Feature,
+    #     tokens: Tensor, 
+    #     feature_locations: Tensor,
+    #     feature_activations: Tensor,
+    #     min_examples: int = 200,
+    #     max_examples: int = 2_000,
+    #     processed_dir: str = None, 
+    #     n_random: int = 0,
+    # ):
+    #     """
+    #     Loads a single record from a tensor of locations and activations.
+    #     """
 
-        record = FeatureRecord(feature)
+    #     record = FeatureRecord(feature)
         
-        processed_tokens, processed_activations = pool_max_activation_slices(
-            feature_locations, feature_activations, tokens, ctx_len=20, k=max_examples
-        )
+    #     processed_tokens, processed_activations = pool_max_activation_slices(
+    #         feature_locations, feature_activations, tokens, ctx_len=20, k=max_examples
+    #     )
 
-        record.examples = Example.prepare_examples(processed_tokens, processed_activations)
+    #     record.examples = Example.prepare_examples(processed_tokens, processed_activations)
         
-        sampler(self)
+    #     sampler(self)
 
-        # POSTPROCESSING
+    #     # POSTPROCESSING
 
-        if n_random > 0:
-            random_tokens = get_non_activating_tokens(
-                feature_locations, tokens, n_random
-            )
+    #     if n_random > 0:
+    #         random_tokens = get_non_activating_tokens(
+    #             feature_locations, tokens, n_random
+    #         )
 
-            self.random_examples = self.prepare_examples(
-                random_tokens, torch.zeros_like(random_tokens),
-            )
+    #         self.random_examples = self.prepare_examples(
+    #             random_tokens, torch.zeros_like(random_tokens),
+    #         )
 
-        # Load processed data if a directory is provided
-        if processed_dir:
-            self.load_processed(processed_dir)
+    #     # Load processed data if a directory is provided
+    #     if processed_dir:
+    #         self.load_processed(processed_dir)
 
     def load_processed(self, directory: str):
         path = f"{directory}/{self.feature}.json"
