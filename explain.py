@@ -1,8 +1,9 @@
 # %%
 import asyncio
 import torch
-from sae_auto_interp.explainers import SimpleExplainer, ExplainerInput
-from sae_auto_interp.clients import get_client, execute_model
+from sae_auto_interp.explainers import SimpleExplainer
+# from sae_auto_interp.scorers import ScorerInput, FuzzingScorer
+from sae_auto_interp.clients import Local
 from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
 from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
 from sae_auto_interp.pipeline import Pipe, Pipeline
@@ -16,7 +17,7 @@ explainer_out_dir = "results/explanations/simple"
 modules = [".transformer.h.0", ".transformer.h.2"]
 
 features = {
-    m : torch.arange(100) for m in modules
+    m : torch.arange(10) for m in modules
 }
 
 dataset = FeatureDataset(
@@ -32,22 +33,35 @@ loader = FeatureLoader(
     sampler=top_and_quantiles
 )
 
-def preprocess(record):
-    return ExplainerInput(
-        train_examples=record.train,
-        record=record,
-    )
+def explainer_postprocess(result):
+    result = result.result()
+    with open(f"{explainer_out_dir}/{result.record.feature}.txt", "w") as f:
+        f.write(result.explanation)
 
-client = get_client("local", "meta-llama/Meta-Llama-3-8B-Instruct")
+# def scorer_preprocess(record):
+#     return ScorerInput(
+#         record=record,
+#         test_examples=sum(record.test, []),
+#         explanation=record.explanation,
+#         random_examples=record.random_examples,
+#     )
 
-pipe = Pipe(
-    preprocess,
-    SimpleExplainer(client, tokenizer=tokenizer)
+client = Local("meta-llama/Meta-Llama-3-8B-Instruct")
+
+explainer_pipe = Pipe(
+    [SimpleExplainer(client, tokenizer=tokenizer)],
+    postprocess=explainer_postprocess
 )
 
+# scorer_pipe = Pipe(
+#     scorer_preprocess,
+#     FuzzingScorer(client, tokenizer=tokenizer)
+# )
+
 pipeline = Pipeline(
-    generator=loader.load,
-    pipes=[pipe]
+    loader.load,
+    explainer_pipe,
+    # scorer_pipe,
 )
 
 asyncio.run(

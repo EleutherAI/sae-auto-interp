@@ -8,6 +8,12 @@ def generator(n):
         yield [i] * 10
 
     
+async def wrap(x):
+    result = await x
+    print(type(result))
+    # print(f"Wrapped {result}")
+    return x
+
 class Actor:
 
     def __init__(self, name):
@@ -20,7 +26,7 @@ class Actor:
     async def process(self, semaphore, result):
         async with semaphore:
             print(f"Actor {self.name} processing {result}")
-            return await self._process(result)
+            return await wrap(self._process(result))
 
 MAX_CONCURRENT_TASKS = 10
 

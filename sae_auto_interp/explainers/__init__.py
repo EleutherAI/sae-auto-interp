@@ -1,2 +1,2 @@
-from .explainer import Explainer, ExplainerInput
+from .explainer import Explainer
 from .simple.simple import SimpleExplainer
