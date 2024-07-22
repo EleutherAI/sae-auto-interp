@@ -2,7 +2,7 @@
 import asyncio
 import torch
 from sae_auto_interp.explainers import SimpleExplainer
-# from sae_auto_interp.scorers import ScorerInput, FuzzingScorer
+from sae_auto_interp.scorers.recall.recall import RecallScorer
 from sae_auto_interp.clients import Local
 from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
 from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
@@ -38,13 +38,10 @@ def explainer_postprocess(result):
     with open(f"{explainer_out_dir}/{result.record.feature}.txt", "w") as f:
         f.write(result.explanation)
 
-# def scorer_preprocess(record):
-#     return ScorerInput(
-#         record=record,
-#         test_examples=sum(record.test, []),
-#         explanation=record.explanation,
-#         random_examples=record.random_examples,
-#     )
+def scorer_preprocess(result):
+    record = result.record
+    record.explanation = result.explanation
+    return record
 
 client = Local("meta-llama/Meta-Llama-3-8B-Instruct")
 
@@ -53,15 +50,15 @@ explainer_pipe = Pipe(
     postprocess=explainer_postprocess
 )
 
-# scorer_pipe = Pipe(
-#     scorer_preprocess,
-#     FuzzingScorer(client, tokenizer=tokenizer)
-# )
+scorer_pipe = Pipe(
+    [RecallScorer(client, tokenizer=tokenizer)],
+    preprocess=scorer_preprocess,
+)
 
 pipeline = Pipeline(
     loader.load,
     explainer_pipe,
-    # scorer_pipe,
+    scorer_pipe,
 )
 
 asyncio.run(

@@ -16,6 +16,8 @@ class Pipe:
         self.actors = actors
         self.postprocess = postprocess
 
+        self.pbar = None
+
     async def _run(self, semaphore, actor, input):
 
         async with semaphore:
@@ -42,23 +44,34 @@ class Pipe:
 
             tasks.append(task)
 
+            self.pbar.update(1)
+
         return tasks
 
 class Pipeline:
 
-    def __init__(self, generator, *pipes):
+    def __init__(self, generator, **pipes):
 
         self.generator = generator
         self.pipes = pipes
 
-    async def run(self, max_process: int = 100):
+    def _pbars(self, total):
+
+        names = ["generator"] + list(self.pipes.keys())
+
+        # Names are offset by one to point toward the previous pipe
+        for name, pipe in zip(names, self.pipes.values()):
+
+            pipe.pbar = tqdm(total=total, desc=name)
+
+    async def run(self, max_process: int = 100, collate=False):
 
         semaphore = asyncio.Semaphore(max_process)  
 
         running = []
         total = 0
-
-        for records in self.generator():
+        
+        for records in self.generator(collate):
 
             for record in records:
                 total += 1
@@ -67,8 +80,10 @@ class Pipeline:
                     self.pipes[0].run(record, semaphore)
                 )
 
+        self._pbars(total)
+            
         if len(self.pipes) > 1:
-
+            
             for pipe in self.pipes[1:]:
 
                 _running = []
@@ -78,7 +93,7 @@ class Pipeline:
                     result = await task
 
                     _running.extend(
-                        pipe.run(result.record, semaphore)
+                        pipe.run(result, semaphore)
                     )
 
                 running = _running

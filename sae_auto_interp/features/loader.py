@@ -196,7 +196,7 @@ class FeatureLoader:
 
         return record
     
-    def load_all(self):
+    def _all(self):
         all_records = []
 
         for buffer in self.dataset.buffers:
@@ -209,9 +209,9 @@ class FeatureLoader:
 
             all_records.extend(buffer_records)
 
-        return all_records
+        yield all_records
     
-    def load(self):
+    def _batched(self):
 
         for buffer in self.dataset.buffers:
 
@@ -222,3 +222,11 @@ class FeatureLoader:
             ]
 
             yield buffer_records
+
+    def load(self, collate=False):
+
+        if collate: 
+
+            return self._batched()
+        
+        return self._all()

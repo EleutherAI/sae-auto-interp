@@ -5,7 +5,7 @@ from typing import List, NamedTuple
 import torch
 
 from .prompt import prompt as clean_prompt
-from ..scorer import Scorer, ScorerInput
+from ..scorer import Scorer
 from ...clients.client import Client, create_response_model
 
 
@@ -68,18 +68,18 @@ class RecallScorer(Scorer):
 
     async def __call__(
         self, 
-        scorer_in: ScorerInput,
+        record
     ) -> List[Sample]:
 
         samples = self._prepare(
-            scorer_in.test_examples,
-            scorer_in.record.random_examples
+            record.test,
+            record.random_examples
         )
 
         # Generate responses
         results = await self.process_batches(
             samples,
-            scorer_in.explanation
+            record.explanation
         )
 
         return results
