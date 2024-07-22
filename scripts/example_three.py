@@ -25,7 +25,7 @@ tokens = load_tokenized_data(tokenizer)
 
 modules = [".transformer.h.0", ".transformer.h.2"]
 features = {
-    m : torch.arange(10) for m in modules
+    m : torch.arange(1) for m in modules
 }
 
 dataset = FeatureDataset(
@@ -68,7 +68,7 @@ def scorer_postprocess(result):
 
 scorer_pipe = Pipe(
     Actor(
-        FuzzingScorer(client, tokenizer=tokenizer),
+        FuzzingScorer(client, tokenizer=tokenizer,verbose=True),
         preprocess=scorer_preprocess,
         postprocess=scorer_postprocess
     )

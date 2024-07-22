@@ -18,12 +18,14 @@ class RecallScorer(Classifier):
         self, 
         client: Client, 
         tokenizer: PreTrainedTokenizer,
+        verbose: bool = False,
         batch_size: int = 10,
         **generation_kwargs
     ):
         super().__init__(
             client = client,
             tokenizer = tokenizer,
+            verbose=verbose,
             batch_size = batch_size,
             **generation_kwargs
         )
