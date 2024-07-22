@@ -8,13 +8,40 @@ from collections import defaultdict
 from typing import List, Callable
 from ..logger import logger
 from torch import Tensor
-from .sampling import default_sampler
+from torchtyping import TensorType
 
-from .example import Example
+@dataclass
+class Example:
+    tokens: TensorType["seq"]
+    activations: TensorType["seq"]
+    
+    def __hash__(self) -> int:
+        return hash(tuple(self.tokens.tolist()))
 
+    def __eq__(self, other: 'Example') -> bool:
+        return self.tokens == other.tokens
+    
+    @property
+    def max_activation(self):
+        return max(self.activations)
+    
+    @property
+    def text(self):
+        return "".join(self.str_toks)
 
+    @staticmethod
+    def prepare_examples(tokens, activations):
+        return [
+            Example(
+                tokens=toks,
+                activations=acts,
+            )
+            for toks, acts in zip(
+                tokens, 
+                activations
+            )
+        ]
 
-from ..load.activations import pool_max_activation_slices, get_non_activating_tokens
 
 @dataclass
 class Feature:
@@ -66,7 +93,6 @@ class FeatureRecord:
         feature_activations: Tensor,
         min_examples: int = 200,
         max_examples: int = 2_000,
-        sampler: Callable = default_sampler,
         processed_dir: str = None, 
         n_random: int = 0,
     ):
@@ -82,22 +108,22 @@ class FeatureRecord:
 
         record.examples = Example.prepare_examples(processed_tokens, processed_activations)
         
-        # sampler(self)
+        sampler(self)
 
-        # # POSTPROCESSING
+        # POSTPROCESSING
 
-        # if n_random > 0:
-        #     random_tokens = get_non_activating_tokens(
-        #         feature_locations, tokens, n_random
-        #     )
+        if n_random > 0:
+            random_tokens = get_non_activating_tokens(
+                feature_locations, tokens, n_random
+            )
 
-        #     self.random_examples = self.prepare_examples(
-        #         random_tokens, torch.zeros_like(random_tokens),
-        #     )
+            self.random_examples = self.prepare_examples(
+                random_tokens, torch.zeros_like(random_tokens),
+            )
 
-        # # Load processed data if a directory is provided
-        # if processed_dir:
-        #     self.load_processed(processed_dir)
+        # Load processed data if a directory is provided
+        if processed_dir:
+            self.load_processed(processed_dir)
 
     def load_processed(self, directory: str):
         path = f"{directory}/{self.feature}.json"
