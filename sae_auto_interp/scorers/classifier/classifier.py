@@ -49,7 +49,10 @@ class Classifier(Scorer, ABC):
         )
     
     @abstractmethod 
-    def _prepare(self):
+    def _prepare(
+        self, 
+        record: FeatureRecord
+    ) -> List[List[Sample]]:
         pass
 
     async def _query(

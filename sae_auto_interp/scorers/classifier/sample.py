@@ -13,6 +13,7 @@ from torchtyping import TensorType
 
 L = "<<"
 R = ">>"
+DEFAULT_MESSAGE = "<<NNsight>> is the best library for <<interpretability>> on huge models!"
 
 @dataclass
 class ClassifierOutput:
@@ -44,71 +45,103 @@ def examples_to_samples(
     examples: List[Example],
     tokenizer: PreTrainedTokenizer,
     n_incorrect: int = 0,
-    threshold: float = 0.0,
+    threshold: float = 0.3,
+    highlighted: bool = False,
     **sample_kwargs
 ) -> List[Sample]:
 
     samples = []
 
     for example in examples:
+        text = _prepare_text(
+            example,
+            tokenizer,
+            n_incorrect,
+            threshold,
+            highlighted
+        )
 
         samples.append(
             Sample(
-                text = tokenizer.batch_decode(example.tokens),
+                text = text,
                 data = ClassifierOutput(
                     id = hash(example),
+                    highlighted = highlighted,
                     **sample_kwargs
                 )
             )
         )
-
+        
     return samples
 
+# NOTE: Should reorganize below, it's a little confusing
 
-# def _highlight(
-#     self,
-#     example: Example,
-#     n_incorrect: int = 0,
-#     threshold: float = 0.0,
-#     **sample_kwargs
-# ) -> str:
-#     threshold = threshold * example.max_activation
+def _prepare_text(
+    example,
+    tokenizer: PreTrainedTokenizer,
+    n_incorrect: int,
+    threshold: float,
+    highlighted: bool
+):
+    str_toks = tokenizer.batch_decode(example.tokens)
 
-#     below_threshold = torch.nonzero(
-#         example.activations <= threshold
-#     ).squeeze()
+    # Just return text if there's no highlighting
+    if not highlighted:
+        return "".join(str_toks)
+    
+    threshold = threshold * example.max_activation
+    
+    # Highlight tokens with activations above threshold 
+    # if correct example
+    if n_incorrect == 0:
+        check = lambda i : example.activations[i] >= threshold
+        return _highlight(str_toks, check)
+    
 
-#     random.seed(22)
+    # Highlight n_incorrect tokens with activations 
+    # below threshold if incorrect example
+    below_threshold = torch.nonzero(
+        example.activations <= threshold
+    ).squeeze()
 
-#     n_incorrect = min(n_incorrect, len(below_threshold))
+    # Rare case where there are no tokens below threshold
+    if below_threshold.dim() == 0:
+        logger.error(f"Failed to prepare example.")
+        return DEFAULT_MESSAGE
 
-#     random_indices = set(
-#         random.sample(
-#             below_threshold.tolist(),
-#             n_incorrect
-#         )
-#     )
-        
-#     return self._highlight(tokens, check)
+    random.seed(22)
 
-# def _highlight(self, tokens, check):
-#     result = []
+    n_incorrect = min(n_incorrect, len(below_threshold))
 
-#     i = 0
-#     while i < len(tokens):
-#         if check[i]:
-#             result.append(L)
+    random_indices = set(
+        random.sample(
+            below_threshold.tolist(),
+            n_incorrect
+        )
+    )
 
-#             while (
-#                 i < len(tokens) 
-#                 and check[i]
-#             ):
-#                 result.append(tokens[i])
-#                 i += 1
+    check = lambda i : i in random_indices
 
-#             result.append(R)
-#         else:
-#             result.append(tokens[i])
-#             i += 1
+    return _highlight(str_toks, check)
 
-#     return "".join(result)
+def _highlight(tokens, check):
+    result = []
+
+    i = 0
+    while i < len(tokens):
+        if check(i):
+            result.append(L)
+
+            while (
+                i < len(tokens) 
+                and check(i)
+            ):
+                result.append(tokens[i])
+                i += 1
+
+            result.append(R)
+        else:
+            result.append(tokens[i])
+            i += 1
+
+    return "".join(result)

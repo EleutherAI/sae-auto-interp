@@ -4,7 +4,7 @@ import orjson
 import torch
 
 from sae_auto_interp.explainers import explanation_loader
-from sae_auto_interp.scorers import RecallScorer
+from sae_auto_interp.scorers import FuzzingScorer
 from sae_auto_interp.clients import Local
 from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
 from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
@@ -58,6 +58,7 @@ explainer_pipe = Pipe(
 def scorer_preprocess(result):
     record = result.record
     record.explanation = result.explanation
+    record.extra_examples = record.train
     return record
 
 def scorer_postprocess(result):
@@ -67,7 +68,7 @@ def scorer_postprocess(result):
 
 scorer_pipe = Pipe(
     Actor(
-        RecallScorer(client, tokenizer=tokenizer),
+        FuzzingScorer(client, tokenizer=tokenizer),
         preprocess=scorer_preprocess,
         postprocess=scorer_postprocess
     )
