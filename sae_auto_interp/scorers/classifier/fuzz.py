@@ -21,18 +21,20 @@ class FuzzingScorer(Classifier, Scorer):
         self, 
         client: Client, 
         tokenizer: PreTrainedTokenizer,
+        verbose: bool = False,
         batch_size: int = 1,
         threshold: float = 0.3,
         **generation_kwargs
     ):
-        self.client = client
-        self.tokenizer = tokenizer  
+        super().__init__(
+            client = client,
+            tokenizer = tokenizer,
+            verbose = verbose,
+            batch_size = batch_size,
+            **generation_kwargs
+        )
 
-        self.batch_size = batch_size
         self.threshold = threshold
-
-        self.generation_kwargs = generation_kwargs
-
         self.prompt = prompt
     
     def average_n_activations(self, examples) -> float:

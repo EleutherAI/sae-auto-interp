@@ -2,6 +2,8 @@ import asyncio
 from abc import ABC, abstractmethod
 from typing import List
 import random
+import re
+import json
 
 from transformers import PreTrainedTokenizer
 
@@ -17,11 +19,13 @@ class Classifier(Scorer, ABC):
         self, 
         client: Client, 
         tokenizer: PreTrainedTokenizer,
-        batch_size: int = 10,
+        verbose: bool,
+        batch_size: int,
         **generation_kwargs
     ):
         self.client = client
         self.tokenizer = tokenizer
+        self.verbose = verbose
 
         self.batch_size = batch_size
         self.generation_kwargs = generation_kwargs
@@ -42,7 +46,6 @@ class Classifier(Scorer, ABC):
             self._batch(samples),
         )
         
-
         return ScorerResult(
             record=record,
             score=results
@@ -88,17 +91,33 @@ class Classifier(Scorer, ABC):
             prompt,
             **self.generation_kwargs
         )
+        array = self._parse(selections)
 
         results = []
 
         for i, sample in enumerate(batch):
-
             result = sample.data
-            result.prediction = selections[i] == 1
+            prediction = array[i] == 1
+            result.prediction = \
+                prediction == result.ground_truth
             results.append(result)
+
+            if self.verbose:
+                result.text = sample.text
 
         return results
     
+
+    def _parse(self, string):
+        pattern = r'\[.*?\]'
+        match = re.search(pattern, string)
+
+        try:
+            array = json.loads(match.group(0))
+            return array
+        except:
+            return [0] * self.batch_size
+
 
     def _build_prompt(
         self, 
