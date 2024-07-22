@@ -17,5 +17,5 @@ class Scorer(ABC):
     def __call__(
         self,
         record: FeatureRecord
-    ):
+    ) -> ScorerResult:
         pass

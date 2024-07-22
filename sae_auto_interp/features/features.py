@@ -24,10 +24,6 @@ class Example:
     @property
     def max_activation(self):
         return max(self.activations)
-    
-    @property
-    def text(self):
-        return "".join(self.str_toks)
 
     @staticmethod
     def prepare_examples(tokens, activations):

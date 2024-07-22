@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import NamedTuple
+
 import aiofiles
 
 from ..features.features import FeatureRecord
+
 
 class ExplainerResult(NamedTuple):
     record: FeatureRecord
@@ -18,7 +20,7 @@ class Explainer(ABC):
     def __call__(
         self,
         record: FeatureRecord
-    ):
+    ) -> ExplainerResult:
         pass
 
 
