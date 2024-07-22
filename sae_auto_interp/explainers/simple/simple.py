@@ -74,7 +74,7 @@ class SimpleExplainer(Explainer):
         result = f"Example {index}: "
 
         threshold = example.max_activation * self.threshold
-        str_toks = example.decode(self.tokenizer)
+        str_toks = self.tokenizer.batch_decode(example.tokens)
         activations = example.activations
 
         check = lambda i: activations[i] > threshold 

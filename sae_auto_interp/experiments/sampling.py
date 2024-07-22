@@ -1,17 +1,16 @@
 import random
 import torch
 
+from typing import List
+from features import Example
 from ..logger import logger
 
-# Claude 3.5 assisted in generating this code.
-
-def split_activation_quantiles(examples, n_quantiles):
+def split_activation_quantiles(examples: List[Example], n_quantiles: int):
     max_activation = examples[0].max_activation
     
     thresholds = [max_activation * i / n_quantiles for i in range(1, n_quantiles)]
     quantiles = [[] for _ in range(n_quantiles)]
 
-    
     for example in examples:
         for i, threshold in enumerate(thresholds):
             if example.max_activation <= threshold:
@@ -22,22 +21,15 @@ def split_activation_quantiles(examples, n_quantiles):
     
     return quantiles
 
-# Split an array in n_quantiles of the same size. If the array cannot be split evenly, the last quantile will be larger.
-def split_quantiles(arr, n_quantiles):
-    quantiles = []
-    quantile_size = len(arr) // n_quantiles
-    remainder = len(arr) % n_quantiles
 
-    start = 0
-    for i in range(n_quantiles):
-        end = start + quantile_size
-        if i < remainder:
-            end += 1
-        quantiles.append(arr[start:end])
-        start = end
-
-    return quantiles
-
+def split_quantiles(examples: List[Example], n_quantiles: int):
+    n = len(examples)
+    quantile_size = n // n_quantiles
+    
+    return [
+        examples[i * quantile_size:(i + 1) * quantile_size] 
+        for i in range(n_quantiles)
+    ]
 
 
 
