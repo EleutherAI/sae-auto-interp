@@ -34,4 +34,4 @@ def load_oai_autoencoders(
             acts = submodule.output[0]
             submodule.ae(acts, hook=True)
 
-    return submodules
+    return submodules ,model

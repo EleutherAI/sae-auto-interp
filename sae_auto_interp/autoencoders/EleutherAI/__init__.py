@@ -14,7 +14,7 @@ def load_eai_autoencoders(
     submodules = {}
 
     for layer in ae_layers:
-        path = f"{weight_dir}/layer_{layer}.pt"
+        path = f"{weight_dir}/layers.{layer}"
         if "llama" in weight_dir:
             model_type = "llama"
         if "gpt2" in weight_dir:
@@ -28,13 +28,13 @@ def load_eai_autoencoders(
             return topk(encoded)
 
         submodule = model.model.layers[layer]
-        submodule.ae = AutoencoderLatents(partial(_forward, sae),sae.d_in * sae.cfg.expansion_factor)
+        submodule.ae = AutoencoderLatents(sae,partial(_forward, sae),sae.d_in * sae.cfg.expansion_factor)
 
-        submodule[layer] = submodule
+        submodules[submodule._module_path] = submodule
     
     with model.edit(" "):
         for _, submodule in submodules.items():
             acts = submodule.output[0]
             submodule.ae(acts, hook=True)
 
-    return submodules	
+    return submodules ,model	
