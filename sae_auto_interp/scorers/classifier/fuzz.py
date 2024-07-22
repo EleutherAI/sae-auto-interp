@@ -32,12 +32,16 @@ class FuzzingScorer(Classifier, Scorer):
         self.threshold = threshold
 
         self.generation_kwargs = generation_kwargs
+
+        self.prompt = prompt
     
     def average_n_activations(self, examples) -> float:
-        return sum(
+        avg = sum(
             len(torch.nonzero(example.activations)) 
             for example in examples
         ) / len(examples)
+
+        return ceil(avg)
         
     def _prepare(
         self, 
@@ -47,11 +51,21 @@ class FuzzingScorer(Classifier, Scorer):
         Prepare and shuffle a list of samples for classification.
         """
 
+        defaults = {
+            "highlighted" : True,
+            "tokenizer" : self.tokenizer,
+        }
+
+        n_incorrect = self.average_n_activations(
+            record.extra_examples
+        )
+
         samples = examples_to_samples(
-            record.random_examples,
+            record.extra_examples,
             distance = -1,
             ground_truth = False,
-            tokenizer = self.tokenizer
+            n_incorrect = n_incorrect,
+            **defaults
         )
 
         for i, examples in enumerate(record.test):
@@ -61,73 +75,10 @@ class FuzzingScorer(Classifier, Scorer):
                     examples,
                     distance = i + 1,
                     ground_truth = True,
-                    tokenizer = self.tokenizer
+                    n_incorrect = 0,
+                    **defaults
                 )
             )
 
-        random.shuffle(samples)
-        
-        return [
-            samples[i : i + self.batch_size] 
-            for i in range(0, len(samples), self.batch_size)
-        ]
+        return samples
     
-    def _batch(self, arr):
-        return [
-            arr[i:i + self.batch_size] 
-            for i in range(0, len(arr), self.batch_size)
-        ]
-    
-    async def _query(
-        self, 
-        batches: List[List[Sample]], 
-        explanation: str
-    ) -> List[Sample]:
-        # Create a list of tasks to be executed concurrently
-        tasks = [
-            self._generate(explanation, batch) 
-            for batch in batches
-        ]
-
-        # Execute the tasks concurrently
-        results = await asyncio.gather(*tasks)
-
-        # Return a flattened list of samples
-        return [
-            item.default(echo=self.echo)
-            for sublist in results 
-            for item in sublist
-        ]
-
-    async def _generate(
-        self, 
-        explanation: str,
-        batch: List[Sample]
-    ) -> List[Sample]:
-        prompt = self.build_prompt(explanation, batch)
-        
-        selections = await self.client.generate(
-            prompt,
-            **self.generation_kwargs
-        )
-
-        for i, sample in enumerate(batch):
-            sample.predicted = selections[i] == 1
-        
-        return batch
-
-    def build_prompt(
-        self, 
-        explanation: str,
-        batch: List[Sample]
-    ) -> str:
-        
-        examples = "\n".join(
-            f"Example {i}: {sample.text}" 
-            for i, sample in enumerate(batch)
-        )
-
-        return prompt(
-            explanation=explanation,
-            examples=examples,
-        )
