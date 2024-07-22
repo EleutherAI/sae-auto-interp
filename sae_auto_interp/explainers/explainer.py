@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import List
+from typing import NamedTuple
 
-from ..features.features import Example, FeatureRecord
+from ..features.features import FeatureRecord
 
+class ExplainerResult(NamedTuple):
+    record: FeatureRecord
+    """Feature record passed through to scorer."""
 
-@dataclass
-class ExplainerInput:
-    train_examples: List[Example]
-    record: FeatureRecord 
+    explanation: str
+    """Generated explanation for feature."""
 
 
 class Explainer(ABC):
@@ -16,6 +16,18 @@ class Explainer(ABC):
     @abstractmethod
     def __call__(
         self,
-        explainer_in: ExplainerInput
-    ) -> str:
+        record: FeatureRecord
+    ):
         pass
+
+
+def explanation_loader(record: FeatureRecord, explanation_dir: str) -> str:
+
+    with open(f'{explanation_dir}/{record.id}.txt', 'r') as f:
+        explanation = f.read()
+    
+    return ExplainerResult(
+        record=record,
+        explanation=explanation
+    )
+

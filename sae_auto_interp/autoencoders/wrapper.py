@@ -8,7 +8,7 @@ class AutoencoderLatents(torch.nn.Module):
 
     def __init__(
         self,
-        autoencoder, 
+        autoencoder: torch.nn.Module, 
         _forward: Callable,
         n_features: int = 32768,
     ) -> None:

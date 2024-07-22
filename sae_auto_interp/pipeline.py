@@ -1,6 +1,7 @@
 import asyncio
-import time
+from typing import List
 from tqdm.asyncio import tqdm
+from typing import Callable
 
 MAX_CONCURRENT_TASKS = 10
 
@@ -8,12 +9,18 @@ def generator(n):
     for i in range(n):
         yield [i] * 10
 
+
 class Pipe:
 
-    def __init__(self, preprocess, *actors):
-
-        self.actors = actors
+    def __init__(
+        self, 
+        actors: List, 
+        preprocess: Callable = None, 
+        postprocess: Callable = None
+    ):
         self.preprocess = preprocess
+        self.actors = actors
+        self.postprocess = postprocess
 
     async def _run(self, semaphore, actor, input):
 
@@ -23,7 +30,8 @@ class Pipe:
 
     def run(self, input, semaphore):
 
-        input = self.preprocess(input)
+        if self.preprocess is not None:
+            input = self.preprocess(input)
 
         tasks = []
 
@@ -33,13 +41,18 @@ class Pipe:
                 self._run(semaphore, actor, input)
             )
 
+            if self.postprocess is not None:
+                task.add_done_callback(
+                    lambda x: self.postprocess(x)
+                )
+
             tasks.append(task)
 
         return tasks
 
 class Pipeline:
 
-    def __init__(self, generator, pipes):
+    def __init__(self, generator, *pipes):
 
         self.generator = generator
         self.pipes = pipes
@@ -68,10 +81,10 @@ class Pipeline:
 
                 for task in asyncio.as_completed(running):
 
-                    record = await task
+                    result = await task
 
                     _running.extend(
-                        pipe.run(record, semaphore)
+                        pipe.run(result.record, semaphore)
                     )
 
                 running = _running

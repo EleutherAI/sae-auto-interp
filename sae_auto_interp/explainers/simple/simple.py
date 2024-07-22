@@ -4,7 +4,7 @@ from typing import List
 from .prompt_builder import build_prompt
 from ..explainer import (
     Explainer, 
-    ExplainerInput, 
+    ExplainerResult
 )
 
 class SimpleExplainer(Explainer):
@@ -16,10 +16,9 @@ class SimpleExplainer(Explainer):
         cot: bool = False,
         logits: bool = False,
         activations: bool = False,
-        max_tokens:int =200,
-        temperature:float =0.0,
-        threshold:float =0.6,
-        echo: bool = False
+        max_tokens:int = 200,
+        temperature:float = 0.0,
+        threshold:float = 0.6,
     ):
         self.client = client
         self.tokenizer = tokenizer
@@ -32,21 +31,19 @@ class SimpleExplainer(Explainer):
         self.temperature = temperature
         self.threshold = threshold
 
-        self.echo = echo
-
     async def __call__(
         self,
-        explainer_in: ExplainerInput
+        record
     ):
         
         if self.logits:
             messages = self._build_prompt(
-                explainer_in.train_examples,
-                explainer_in.record.top_logits
+                record.train,
+                record.top_logits
             )
         else:
             messages = self._build_prompt(
-                explainer_in.train_examples,
+                record.train,
                 None
             )
         response = await self.client.generate(
@@ -57,9 +54,10 @@ class SimpleExplainer(Explainer):
 
         explanation = self.parse_explanation(response)
 
-        if self.echo:
-            return [messages[-1], response], explanation
-        return explanation
+        return ExplainerResult(
+            record=record,
+            explanation=explanation
+        )
 
     def parse_explanation(self, text: str) -> str:
         match = re.search(
