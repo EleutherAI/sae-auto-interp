@@ -3,12 +3,6 @@ from typing import List
 from tqdm.asyncio import tqdm
 from typing import Callable
 
-MAX_CONCURRENT_TASKS = 10
-
-def generator(n):
-    for i in range(n):
-        yield [i] * 10
-
 
 class Pipe:
 
