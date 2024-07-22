@@ -1,0 +1,123 @@
+import asyncio
+from abc import ABC, abstractmethod
+from typing import List
+import random
+
+from transformers import PreTrainedTokenizer
+
+from .sample import ClassifierOutput, Sample
+from ..scorer import Scorer, ScorerResult
+from ...clients.client import Client
+from ...features import FeatureRecord
+
+
+class Classifier(Scorer, ABC):
+
+    def __init__(
+        self, 
+        client: Client, 
+        tokenizer: PreTrainedTokenizer,
+        batch_size: int = 10,
+        **generation_kwargs
+    ):
+        self.client = client
+        self.tokenizer = tokenizer
+
+        self.batch_size = batch_size
+        self.generation_kwargs = generation_kwargs
+
+    async def __call__(
+        self, 
+        record: FeatureRecord,
+    ) -> List[ClassifierOutput]:
+
+        samples = self._prepare(
+            record
+        )
+
+        random.shuffle(samples)
+
+        results = await self._query(
+            record.explanation,
+            self._batch(samples),
+        )
+        
+
+        return ScorerResult(
+            record=record,
+            score=results
+        )
+    
+    @abstractmethod 
+    def _prepare(self):
+        pass
+
+    async def _query(
+        self, 
+        explanation: str,
+        batches: List[List[Sample]],
+    ) -> List[Sample]:
+        """
+        Send and gather batches of samples to the model.
+        """
+        
+        tasks = [
+            self._generate(explanation, batch) 
+            for batch in batches
+        ]
+
+        results = await asyncio.gather(*tasks)
+
+        return sum(results, [])
+    
+    async def _generate(
+        self, 
+        explanation: str,
+        batch: List[Sample]
+    ) -> List[ClassifierOutput]:
+        """
+        Generate predictions for a batch of samples.
+        """
+    
+        prompt = self._build_prompt(explanation, batch)
+
+        selections = await self.client.generate(
+            prompt,
+            **self.generation_kwargs
+        )
+
+        results = []
+
+        for i, sample in enumerate(batch):
+
+            result = sample.data
+            result.prediction = selections[i] == 1
+            results.append(result)
+
+        return results
+    
+
+    def _build_prompt(
+        self, 
+        explanation: str,
+        batch: List[Sample], 
+    ) -> str:
+        """
+        Prepare prompt for generation.
+        """
+        
+        examples = "\n".join(
+            f"Example {i}: {sample.text}" 
+            for i, sample in enumerate(batch)
+        )
+
+        return self.prompt(
+            explanation=explanation,
+            examples=examples
+        )
+    
+    def _batch(self, samples):
+        return [
+            samples[i : i + self.batch_size] 
+            for i in range(0, len(samples), self.batch_size)
+        ]

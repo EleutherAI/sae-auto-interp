@@ -3,15 +3,7 @@
 *.pt
 *.log
 
-.gitignore
-
 keys.py
 
 results/*
-!results/graphs
-
-saved_*
-processed*
 raw*
-extras*
-scores*
