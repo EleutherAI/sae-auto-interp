@@ -3,32 +3,33 @@ from typing import List
 from ...features import Example
 from ...oai_autointerp.activations.activations import ActivationRecord
 from ...oai_autointerp import LogprobFreeExplanationTokenSimulator, simulate_and_score
-from ..scorer import Scorer, ScorerInput
+from ..scorer import Scorer, ScorerResult
 
 class OpenAISimulator(Scorer):
     """
     Simple wrapper for the LogProbFreeExplanationTokenSimulator.
     """
+    name = "simulator"
     def __init__(
         self,
         client,
+        tokenizer,
     ):
         self.client = client
-        self.name = "simulator"
+        self.tokenizer = tokenizer  
 
     async def __call__(
         self,
-        scorer_in: ScorerInput,
-        echo=False
+        record
     ):
         # Simulate and score the explanation.
         simulator = LogprobFreeExplanationTokenSimulator(
             self.client,
-            scorer_in.explanation,
+            record.explanation,
         )
 
         valid_activation_records = self.to_activation_records(
-            scorer_in.test_examples
+            record.test
         )
 
         result = await simulate_and_score(
@@ -36,7 +37,10 @@ class OpenAISimulator(Scorer):
             valid_activation_records
         )
 
-        return result
+        return ScorerResult(
+            record=record,
+            score=result,
+        )
 
     def to_activation_records(
         self,
@@ -44,7 +48,7 @@ class OpenAISimulator(Scorer):
     ) -> List[ActivationRecord]:
         return [ 
             ActivationRecord(
-                example.str_toks, 
+                self.tokenizer.batch_decode(example.tokens), 
                 example.activations
             ) 
             for example in examples
