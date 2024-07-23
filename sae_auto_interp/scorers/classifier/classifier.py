@@ -92,7 +92,6 @@ class Classifier(Scorer, ABC):
             prompt,
             **self.generation_kwargs
         )
-        print(selections)
         array = self._parse(selections)
 
         results = []
