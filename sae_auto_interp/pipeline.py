@@ -42,7 +42,9 @@ class Pipe:
     def __init__(
         self, 
         *actors: List, 
+        name: str ="process"
     ):
+        self.name = name
         self.actors = actors
 
     def run(self, input, semaphore):
@@ -81,11 +83,14 @@ class Pipeline:
             
         if len(self.pipes) > 1:
             
-            for pipe in self.pipes[1:]:
+            for i, pipe in enumerate(self.pipes[1:]):
 
                 _running = []
 
-                for task in asyncio.as_completed(running):
+                for task in tqdm(
+                    asyncio.as_completed(running), 
+                    desc=self.pipes[i].name
+                ):
 
                     result = await task
 
@@ -97,7 +102,7 @@ class Pipeline:
 
         results = []
 
-        pbar = tqdm(total=total, desc="Collecting")
+        pbar = tqdm(total=total, desc=self.pipes[-1].name)
 
         for completed_task in asyncio.as_completed(running):
 
