@@ -117,6 +117,7 @@ class Classifier(Scorer, ABC):
 
         try:
             array = json.loads(match.group(0))
+            assert len(array) == self.batch_size
             return array
         except:
             return [0] * self.batch_size

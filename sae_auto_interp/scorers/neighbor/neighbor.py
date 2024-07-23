@@ -5,13 +5,11 @@ import torch
 from math import ceil
 
 from .clean_prompt import prompt as clean_prompt
-from .schema import create_response_model
-from ..scorer import Scorer, ScorerInput
+from ..scorer import Scorer
 from ...features import Example
-from ...clients.client import Client
+from ...clients import create_response_model, Client
 from dataclasses import dataclass
 
-import json
 
 
 @dataclass
@@ -79,18 +77,18 @@ class NeighborScorer(Scorer):
 
     async def __call__(
         self, 
-        scorer_in: ScorerInput,
+        record,
     ) -> List[Sample]:
 
         samples = self._prepare(
-            scorer_in.test_examples,
-            scorer_in.record.neighbors
+            record.test,
+            record.neighbors
         )
 
         # Generate responses
         results = await self.process_batches(
             samples,
-            scorer_in.explanation
+            record.explanation
         )
 
         return results
