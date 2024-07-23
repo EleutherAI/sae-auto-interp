@@ -1,12 +1,14 @@
+from tqdm import tqdm
+from typing import List, Dict, NamedTuple, Callable
+
+import torch
 import torch.multiprocessing as mp
-from ..features.features import Feature, FeatureRecord
-from typing import List, Tuple, Dict, NamedTuple
 from torchtyping import TensorType
+from safetensors.torch import load_file
+
 from .transforms import Transform
 from ..config import FeatureConfig
-import time
-import torch
-from tqdm import tqdm
+from ..features.features import Feature, FeatureRecord
 
 CONFIG = FeatureConfig()
 
@@ -18,10 +20,10 @@ class BufferOutput(NamedTuple):
 
     activations: TensorType["locations"]
 
+
 class TensorBuffer:
     """
-    Buffer for loading tensors from disk. Returns an
-    iterable that yields feature locations and activations.
+    Lazy loading buffer for cached splits.
     """
 
     def __init__(self, path, module_path, features):
@@ -36,8 +38,10 @@ class TensorBuffer:
 
     def _load(self):
 
-        self.activations = torch.load(self.tensor_path % "activations")
-        self.locations = torch.load(self.tensor_path % "locations")
+        split_data = load_file(self.tensor_path)
+
+        self.activations = split_data["activations"]
+        self.locations = split_data["locations"]
 
     def __iter__(self):
         self._load()
@@ -75,6 +79,7 @@ class TensorBuffer:
             feature_activations
         )
 
+
 class FeatureDataset:
     """
     Dataset which constructs TensorBuffers for each module and feature.
@@ -104,21 +109,25 @@ class FeatureDataset:
             )
 
     def _edges(self):
+
         return torch.linspace(
             0, 
             self.cfg.width, 
             steps=self.cfg.n_splits+1
         ).long()
     
-
     def _load_all(self, raw_dir: str, modules: List[str]):
+        """
+        Build dataset buffers which load all cached features. 
+        """
+
         edges = self._edges()
 
         for module in modules:
             for start, end in zip(edges[:-1], edges[1:]):
 
                 # Adjust end by one as the path avoids overlap
-                path = f"{raw_dir}/{module}/{start}_{end-1}_%s.pt"
+                path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
 
                 self.buffers.append(
                     TensorBuffer(
@@ -129,6 +138,9 @@ class FeatureDataset:
                 )
 
     def _load_selected(self, raw_dir: str, modules: List[str], features: Dict[str, int]):
+        """
+        Build a dataset buffer which loads only selected features.
+        """
         
         edges = self._edges()
         
@@ -147,7 +159,7 @@ class FeatureDataset:
                 start, end = edges[bucket-1], edges[bucket]
 
                 # Adjust end by one as the path avoids overlap
-                path = f"{raw_dir}/{module}/{start}_{end-1}_%s.pt"
+                path = f"{raw_dir}/{module}/{start}_{end-1}.pt"
 
                 self.buffers.append(
                     TensorBuffer(
@@ -156,6 +168,7 @@ class FeatureDataset:
                         _selected_features
                     )
                 )
+
 
 class FeatureLoader:
     """
@@ -166,16 +179,28 @@ class FeatureLoader:
         self,
         tokens: TensorType["batch", "seq"],
         dataset: FeatureDataset,
-        sampler = None,
-        transform = None,
-        constructor = None,
+        constructor: Callable = None,
+        sampler: Callable = None,
+        transform: Transform = None,
     ):
+        """
+        Args:
+            tokens (TensorType["batch", "seq"]): The tokenized input data.
+            dataset (FeatureDataset): The dataset to load.
+            constructor (Callable): A function defining how examples are sampled from the tokens.
+            sampler (Callable): A function for sampling top examples into train/test splits.
+            transform (Transform): A transform for adding information to the FeatureRecord.
+        """
         self.tokens = tokens
         self.dataset = dataset
 
         self.constructor = constructor
         self.sampler = sampler
         self.transform = transform
+
+    def __len__(self):
+
+        return len(self.dataset.buffers)
 
     def _process(self, data: BufferOutput):
         record = FeatureRecord(data.feature)
@@ -200,37 +225,29 @@ class FeatureLoader:
 
         return record
     
-    def _all(self):
-        all_records = []
+    def load(self, collate: bool = False, num_workers: int = 2):
 
-        for buffer in self.dataset.buffers:
+        return self._all(num_workers=num_workers) \
+            if collate else self._batched()
+    
+    def _worker(self, buffer):
+        """
+        Worker for loading all features from a buffer.
+        """
+        return [
+            self._process(data)
+            for data in tqdm(buffer, desc=f"Loading {buffer.module_path}")
+            if data is not None
+        ]
 
-            buffer_records = [
-                self._process(data)
-                for data in tqdm(buffer, desc=f"Loading {buffer.module_path}")
-                if data is not None
-            ]
-
-            all_records.extend(buffer_records)
-
-        return all_records
+    def _all(self, num_workers: int):
+        with mp.Pool(processes=num_workers) as pool:
+            all_records = pool.map(self._process_buffer, self.dataset.buffers)
+        
+        return sum(all_records, [])
     
     def _batched(self):
 
         for buffer in self.dataset.buffers:
 
-            buffer_records = [
-                self._process(data)
-                for data in tqdm(buffer, desc="Loading record batch")
-                if data is not None
-            ]
-
-            yield buffer_records
-
-    def load(self, collate=False):
-
-        if collate: 
-
-            return self._all()
-        
-        return self._batched()
+            yield self._worker(buffer)
