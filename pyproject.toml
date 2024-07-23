@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sae_auto_interp"
+version = "0.1.0"
+description = "Automated Interpretability"
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["interpretability", "explainable-ai"]
+dependencies = [
+    "datasets",
+    "nnsight",
+    "orjson",
+    "safetensors",
+    "simple_parsing"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,9 +1,12 @@
 *.egg-info
 *__pycache__
 *.pt
+*.safetensors
 *.log
 
 keys.py
 
 results/*
 raw*
+
+.nfs*

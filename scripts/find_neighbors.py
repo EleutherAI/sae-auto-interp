@@ -1,7 +1,7 @@
 from nnsight import LanguageModel
 import torch
 from sae_auto_interp.autoencoders import load_oai_autoencoders
-from sae_auto_interp.scorers.neighbor.utils import get_neighbors
+from sae_auto_interp.scorers import get_neighbors
 
 NEIGHBOR_DIR = "sae_auto_interp/scorers/neighbor"
 

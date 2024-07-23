@@ -4,6 +4,9 @@ from tqdm import tqdm
 from torchtyping import TensorType
 import os
 from collections import defaultdict
+from safetensors.torch import save_file
+
+from ..config import CacheConfig
 
 class Cache:
     """
@@ -13,12 +16,12 @@ class Cache:
     def __init__(
         self,
         filters: Dict[str, TensorType["indices"]] = None,
-        minibatch_size: int = 64
+        batch_size: int = 64
     ):
         self.feature_locations = defaultdict(list)
         self.feature_activations = defaultdict(list)
         self.filters = filters
-        self.minibatch_size = minibatch_size
+        self.batch_size = batch_size
 
     def add(
         self,
@@ -34,7 +37,7 @@ class Cache:
         feature_locations = feature_locations.cpu()
         feature_activations = feature_activations.cpu()
 
-        feature_locations[:,0] += batch_number * self.minibatch_size
+        feature_locations[:,0] += batch_number * self.batch_size
         self.feature_locations[module_path].append(feature_locations)
         self.feature_activations[module_path].append(feature_activations)
         
@@ -84,25 +87,26 @@ class FeatureCache:
         self,
         model, 
         submodule_dict: Dict,
-        minibatch_size: int = 64,
-        width: int = 131_072,
-        filters: Dict[str, TensorType["indices"]] = None
+        cfg: CacheConfig,
+        filters: Dict[str, TensorType["indices"]] = None,
     ):  
         self.model = model
         self.submodule_dict = submodule_dict
-        self.minibatch_size = minibatch_size
-        self.width = width
-        self.cache = Cache(filters, minibatch_size=minibatch_size)
 
-    def load_token_batches(self, tokens: TensorType["batch", "sequence"]):
+        self.batch_size = cfg.batch_size
+        self.width = cfg.width
+
+        self.cache = Cache(filters, batch_size=cfg.batch_size)
+
+    def load_token_batches(self, n_tokens: int, tokens: TensorType["batch", "sequence"]):
         
-        max_batches = self.n_tokens // tokens.shape[1]
+        max_batches = n_tokens // tokens.shape[1]
         tokens = tokens[:max_batches]
         
-        n_mini_batches = len(tokens) // self.minibatch_size
+        n_mini_batches = len(tokens) // self.batch_size
 
         token_batches = [
-            tokens[self.minibatch_size * i : self.minibatch_size * (i + 1), :] 
+            tokens[self.batch_size * i : self.batch_size * (i + 1), :] 
             for i in range(n_mini_batches)
         ]
 
@@ -115,10 +119,8 @@ class FeatureCache:
                 filtered_submodules[module_path] = self.submodule_dict[module_path]
         self.submodule_dict = filtered_submodules
 
-    def run(self, tokens, n_tokens=10_000_000):
-
-        self.n_tokens = n_tokens
-        token_batches = self.load_token_batches(tokens)
+    def run(self, n_tokens: int, tokens: TensorType["batch", "seq"]):
+        token_batches = self.load_token_batches(n_tokens, tokens)
 
         total_tokens = 0
         total_batches = len(token_batches)
@@ -156,17 +158,22 @@ class FeatureCache:
 
         for module_path in self.cache.feature_locations.keys():
 
-            location_output_file = f"{save_dir}/{module_path}_locations.pt"
-            activation_output_file = f"{save_dir}/{module_path}_activations.pt"
+            output_file = f"{save_dir}/{module_path}.safetensors"
 
-            torch.save(self.cache.feature_locations[module_path], location_output_file)
-            torch.save(self.cache.feature_activations[module_path], activation_output_file)
+            data = {
+                "locations" : self.cache.feature_locations[module_path],
+                "activations" : self.cache.feature_activations[module_path]
+            }
+
+            save_file(data, output_file)
 
     def _generate_split_indices(self, n_splits):
         boundaries = torch.linspace(0, self.width, steps=n_splits+1).long()
-        return list(zip(boundaries[:-1], boundaries[1:]))
 
-    def save_splits(self, n_splits, save_dir):
+        # Adjust end by one
+        return list(zip(boundaries[:-1], boundaries[1:] - 1))
+
+    def save_splits(self, n_splits: int, save_dir):
 
         split_indices = self._generate_split_indices(n_splits)
 
@@ -187,9 +194,11 @@ class FeatureCache:
                 module_dir = f"{save_dir}/{module_path}"
                 os.makedirs(module_dir, exist_ok=True)
 
-                adj = end - 1
-                location_output_file = f"{module_dir}/{start}_{adj}_locations.pt"
-                activation_output_file = f"{module_dir}/{start}_{adj}_activations.pt"
-                
-                torch.save(masked_locations, location_output_file)
-                torch.save(masked_activations, activation_output_file)
+                output_file = f"{module_dir}/{start}_{end}.safetensors"
+
+                split_data = {
+                    "locations" : masked_locations,
+                    "activations" : masked_activations
+                }
+
+                save_file(split_data, output_file)
