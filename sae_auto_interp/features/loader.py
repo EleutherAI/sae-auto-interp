@@ -69,7 +69,7 @@ class TensorBuffer:
         return BufferOutput(
             Feature(
                 self.module_path,
-                feature
+                feature.item()
             ),
             feature_locations,
             feature_activations
@@ -203,17 +203,17 @@ class FeatureLoader:
     def _all(self):
         all_records = []
 
-        for buffer in tqdm(self.dataset.buffers, desc="Loading all records"):
+        for buffer in self.dataset.buffers:
 
             buffer_records = [
                 self._process(data)
-                for data in buffer
+                for data in tqdm(buffer, desc=f"Loading {buffer.module_path}")
                 if data is not None
             ]
 
             all_records.extend(buffer_records)
 
-        yield all_records
+        return all_records
     
     def _batched(self):
 

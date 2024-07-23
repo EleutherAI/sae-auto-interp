@@ -65,9 +65,9 @@ class Pipeline:
         self.generator = generator
         self.pipes = pipes
 
-    async def run(self, max_process: int = 100, collate=False):
+    async def run(self, max_processes: int = 200, collate=False):
 
-        sem = asyncio.Semaphore(max_process)  
+        sem = asyncio.Semaphore(max_processes)  
 
         running = []
         total = 0
@@ -100,16 +100,12 @@ class Pipeline:
 
                 running = _running
 
-        results = []
-
-        pbar = tqdm(total=total, desc=self.pipes[-1].name)
-
-        for completed_task in asyncio.as_completed(running):
+        for completed_task in tqdm(
+            asyncio.as_completed(running), 
+            desc=self.pipes[-1].name
+        ):
 
             result = await completed_task
-
-            results.append(result)
-            pbar.update(1)
         
 
                 

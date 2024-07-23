@@ -1,15 +1,15 @@
 import asyncio
 import orjson
+from functools import partial
 
 import torch
 
-from sae_auto_interp.explainers import SimpleExplainer
-from sae_auto_interp.scorers import RecallScorer
+from sae_auto_interp.explainers import explanation_loader
+from sae_auto_interp.scorers import NeighborScorer, load_neighbors
 from sae_auto_interp.clients import Local
 from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
 from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
 from sae_auto_interp.pipeline import Pipe, Pipeline, Actor
-from functools import partial
 
 ### Set directories ###
 
@@ -23,15 +23,11 @@ SCORER_OUT_DIR_B = "results/scores_b"
 tokenizer = load_tokenizer('gpt2')
 tokens = load_tokenized_data(tokenizer)
 
-modules = [".transformer.h.0", ".transformer.h.2"]
-features = {
-    m : torch.arange(20) for m in modules
-}
+modules = [".transformer.h.0"]
 
 dataset = FeatureDataset(
     raw_dir=RAW_FEATURES_PATH,
     modules = modules,
-    features=features,
 )
 
 loader = FeatureLoader(
@@ -41,23 +37,26 @@ loader = FeatureLoader(
     sampler=top_and_quantiles
 )
 
+records = loader.load(collate=True)
+
+to_score = load_neighbors(
+    records,
+    modules, 
+    "sae_auto_interp/scorers/neighbor/neighbors.json"
+)
+
+generator = lambda _ : [to_score]
+
 ### Load client ###
 
 client = Local("meta-llama/Meta-Llama-3-8B-Instruct")
 
 ### Build Explainer pipe ###
 
-def explainer_postprocess(result):
-    result = result.result()
-    with open(f"{EXPLAINER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
-        f.write(orjson.dumps(result.explanation))
-
 explainer_pipe = Pipe(
     Actor(
-        SimpleExplainer(client, tokenizer=tokenizer),
-        postprocess=explainer_postprocess
-    ),
-    name="explainer"
+        partial(explanation_loader, explanation_dir=EXPLAINER_OUT_DIR)
+    )
 )
 
 ### Build Scorer pipe ###
@@ -74,7 +73,7 @@ def scorer_postprocess(result):
 
 scorer_pipe = Pipe(
     Actor(
-        RecallScorer(client, tokenizer=tokenizer),
+        NeighborScorer(client, tokenizer=tokenizer),
         preprocess=scorer_preprocess,
         postprocess=scorer_postprocess
     ),
@@ -84,7 +83,7 @@ scorer_pipe = Pipe(
 ### Build the pipeline ###
 
 pipeline = Pipeline(
-    loader.load,
+    generator,
     explainer_pipe,
     scorer_pipe,
 )
