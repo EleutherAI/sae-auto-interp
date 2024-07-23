@@ -180,12 +180,13 @@ class FeatureLoader:
     def _process(self, data: BufferOutput):
         record = FeatureRecord(data.feature)
 
-        self.constructor(
-            record,
-            self.tokens,
-            locations = data.locations,
-            activations = data.activations,
-        )
+        if self.constructor:
+            self.constructor(
+                record,
+                self.tokens,
+                locations = data.locations,
+                activations = data.activations,
+            )
 
         if self.sampler is not None:
             self.sampler(
