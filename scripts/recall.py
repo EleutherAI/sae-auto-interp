@@ -3,7 +3,7 @@ import orjson
 
 import torch
 
-from sae_auto_interp.explainers import explanation_loader
+from sae_auto_interp.explainers import SimpleExplainer
 from sae_auto_interp.scorers import RecallScorer
 from sae_auto_interp.clients import Local
 from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
@@ -47,10 +47,17 @@ client = Local("meta-llama/Meta-Llama-3-8B-Instruct")
 
 ### Build Explainer pipe ###
 
+def explainer_postprocess(result):
+    result = result.result()
+    with open(f"{EXPLAINER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
+        f.write(orjson.dumps(result.explanation))
+
 explainer_pipe = Pipe(
     Actor(
-        partial(explanation_loader, explanation_dir=EXPLAINER_OUT_DIR)
-    )
+        SimpleExplainer(client, tokenizer=tokenizer),
+        postprocess=explainer_postprocess
+    ),
+    name="explainer"
 )
 
 ### Build Scorer pipe ###
@@ -70,7 +77,8 @@ scorer_pipe = Pipe(
         RecallScorer(client, tokenizer=tokenizer),
         preprocess=scorer_preprocess,
         postprocess=scorer_postprocess
-    )
+    ),
+    name="scorer"
 )
 
 ### Build the pipeline ###

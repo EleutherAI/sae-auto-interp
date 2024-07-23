@@ -76,6 +76,7 @@ class Classifier(Scorer, ABC):
 
         return sum(results, [])
     
+
     async def _generate(
         self, 
         explanation: str,
@@ -91,6 +92,7 @@ class Classifier(Scorer, ABC):
             prompt,
             **self.generation_kwargs
         )
+        print(selections)
         array = self._parse(selections)
 
         results = []
@@ -98,8 +100,10 @@ class Classifier(Scorer, ABC):
         for i, sample in enumerate(batch):
             result = sample.data
             prediction = array[i] == 1
+
             result.prediction = \
                 prediction == result.ground_truth
+
             results.append(result)
 
             if self.verbose:

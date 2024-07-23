@@ -5,10 +5,7 @@ You will be given a certain feature of text, such as "male pronouns" or "text wi
 
 Some examples might be mislabeled. Your task is to determine if every single token within << and >> is correctly labeled. Consider that all provided examples could be correct, none of the examples could be correct, or a mix. An example is only correct if every marked token is representative of the feature
 
-For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. You must return your response in a json format. For example, if you believe the first and last examples are correct, but the middle three are not, you would return :"{\n  \"example_0\": 1,\n  \"example_1\": 0,\n  \"example_2\": 0,\n  \"example_3\": 0,\n  \"example_4\": 1\n} 
-
-Don't write anything else after the json response.
-".
+For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. You must return your response in a valid Python list.
 """
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/6048
