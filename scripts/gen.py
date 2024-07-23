@@ -3,18 +3,19 @@ import orjson
 
 import torch
 
-from sae_auto_interp.explainers import SimpleExplainer
-from sae_auto_interp.scorers import FuzzingScorer
-from sae_auto_interp.clients import Local
-from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
-from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
+from sae_auto_interp.explainers import explanation_loader
+from sae_auto_interp.scorers import GenerationScorer
+from sae_auto_interp.clients import Outlines
+from sae_auto_interp.utils import load_tokenized_data, load_tokenizer
+from sae_auto_interp.features import FeatureLoader, FeatureDataset
 from sae_auto_interp.pipeline import Pipe, Pipeline, Actor
+from functools import partial
 
 ### Set directories ###
 
 RAW_FEATURES_PATH = "raw_features"
 EXPLAINER_OUT_DIR = "results/explanations/simple"
-SCORER_OUT_DIR = "results/fuzz"
+SCORER_OUT_DIR = "results"
 
 ### Load dataset ###
 
@@ -23,7 +24,7 @@ tokens = load_tokenized_data(tokenizer)
 
 modules = [".transformer.h.0", ".transformer.h.2"]
 features = {
-    m : torch.arange(10) for m in modules
+    m : torch.arange(1) for m in modules
 }
 
 dataset = FeatureDataset(
@@ -35,25 +36,17 @@ dataset = FeatureDataset(
 loader = FeatureLoader(
     tokens=tokens,
     dataset=dataset,
-    constructor=default_constructor,
-    sampler=top_and_quantiles
 )
 
 ### Load client ###
 
-client = Local("meta-llama/Meta-Llama-3-8B-Instruct")
+client = Outlines("meta-llama/Meta-Llama-3-8B-Instruct")
 
 ### Build Explainer pipe ###
 
-def explainer_postprocess(result):
-    result = result.result()
-    with open(f"{EXPLAINER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
-        f.write(orjson.dumps(result.explanation))
-
 explainer_pipe = Pipe(
     Actor(
-        SimpleExplainer(client, tokenizer=tokenizer),
-        postprocess=explainer_postprocess
+        partial(explanation_loader, explanation_dir=EXPLAINER_OUT_DIR)
     )
 )
 
@@ -71,10 +64,10 @@ def scorer_postprocess(result):
 
 scorer_pipe = Pipe(
     Actor(
-        FuzzingScorer(client, tokenizer=tokenizer),
+        GenerationScorer(client, max_tokens=1500, temperature=0.5),
         preprocess=scorer_preprocess,
         postprocess=scorer_postprocess
-    ),
+    )
 )
 
 ### Build the pipeline ###

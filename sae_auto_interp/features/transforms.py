@@ -218,5 +218,3 @@ class UmapNeighbors(Transform):
 
         record.neighbors = neighbors
 
-class CosNeigbors(Transform):
-    pass
