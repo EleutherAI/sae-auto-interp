@@ -9,87 +9,93 @@ from sae_auto_interp.clients import Local
 from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
 from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
 from sae_auto_interp.pipeline import Pipe, Pipeline, Actor
-from functools import partial
+from sae_auto_interp.config import FeatureConfig
 
 ### Set directories ###
 
-RAW_FEATURES_PATH = "raw_features"
+RAW_FEATURES_PATH = "raw_features/gpt2"
 EXPLAINER_OUT_DIR = "results/explanations/simple"
 SCORER_OUT_DIR = "results/scores"
-SCORER_OUT_DIR_B = "results/scores_b"
 
-### Load dataset ###
+def main():
 
-tokenizer = load_tokenizer('gpt2')
-tokens = load_tokenized_data(tokenizer)
+    ### Load dataset ###
 
-modules = [".transformer.h.0", ".transformer.h.2"]
-features = {
-    m : torch.arange(20) for m in modules
-}
+    tokenizer = load_tokenizer('gpt2')
+    tokens = load_tokenized_data(tokenizer)
 
-dataset = FeatureDataset(
-    raw_dir=RAW_FEATURES_PATH,
-    modules = modules,
-    features=features,
-)
+    modules = [".transformer.h.0", ".transformer.h.2"]
+    features = {
+        m : torch.arange(20) for m in modules
+    }
 
-loader = FeatureLoader(
-    tokens=tokens,
-    dataset=dataset,
-    constructor=default_constructor,
-    sampler=top_and_quantiles
-)
+    dataset = FeatureDataset(
+        raw_dir=RAW_FEATURES_PATH,
+        modules = modules,
+        cfg=FeatureConfig(),
+        features=features,
+    )
 
-### Load client ###
+    loader = FeatureLoader(
+        tokens=tokens,
+        dataset=dataset,
+        constructor=default_constructor,
+        sampler=top_and_quantiles
+    )
 
-client = Local("meta-llama/Meta-Llama-3-8B-Instruct")
+    ### Load client ###
 
-### Build Explainer pipe ###
+    client = Local("meta-llama/Meta-Llama-3-8B-Instruct")
 
-def explainer_postprocess(result):
-    result = result.result()
-    with open(f"{EXPLAINER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
-        f.write(orjson.dumps(result.explanation))
+    ### Build Explainer pipe ###
 
-explainer_pipe = Pipe(
-    Actor(
-        SimpleExplainer(client, tokenizer=tokenizer),
-        postprocess=explainer_postprocess
-    ),
-    name="explainer"
-)
+    def explainer_postprocess(result):
+        result = result.result()
+        with open(f"{EXPLAINER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
+            f.write(orjson.dumps(result.explanation))
 
-### Build Scorer pipe ###
+    explainer_pipe = Pipe(
+        Actor(
+            SimpleExplainer(client, tokenizer=tokenizer),
+            postprocess=explainer_postprocess
+        ),
+        name="explainer"
+    )
 
-def scorer_preprocess(result):
-    record = result.record
-    record.explanation = result.explanation
-    return record
+    ### Build Scorer pipe ###
 
-def scorer_postprocess(result):
-    result = result.result()
-    with open(f"{SCORER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
-        f.write(orjson.dumps(result.score))
+    def scorer_preprocess(result):
+        record = result.record
+        record.explanation = result.explanation
+        return record
 
-scorer_pipe = Pipe(
-    Actor(
-        RecallScorer(client, tokenizer=tokenizer),
-        preprocess=scorer_preprocess,
-        postprocess=scorer_postprocess
-    ),
-    name="scorer"
-)
+    def scorer_postprocess(result):
+        result = result.result()
+        with open(f"{SCORER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
+            f.write(orjson.dumps(result.score))
 
-### Build the pipeline ###
+    scorer_pipe = Pipe(
+        Actor(
+            RecallScorer(client, tokenizer=tokenizer),
+            preprocess=scorer_preprocess,
+            postprocess=scorer_postprocess
+        ),
+        name="scorer"
+    )
 
-pipeline = Pipeline(
-    loader.load,
-    explainer_pipe,
-    scorer_pipe,
-)
+    ### Build the pipeline ###
 
-asyncio.run(
-    pipeline.run()
-)
+    pipeline = Pipeline(
+        loader.load,
+        explainer_pipe,
+        scorer_pipe,
+    )
 
+    asyncio.run(
+        pipeline.run()
+    )
+
+
+if __name__ == "__main__":
+
+    main()

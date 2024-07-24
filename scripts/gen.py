@@ -10,6 +10,7 @@ from sae_auto_interp.utils import load_tokenized_data, load_tokenizer
 from sae_auto_interp.features import FeatureLoader, FeatureDataset
 from sae_auto_interp.pipeline import Pipe, Pipeline, Actor
 from functools import partial
+from sae_auto_interp.config import FeatureConfig
 
 ### Set directories ###
 
@@ -30,6 +31,7 @@ features = {
 dataset = FeatureDataset(
     raw_dir=RAW_FEATURES_PATH,
     modules = modules,
+    cfg=FeatureConfig(),
     features=features,
 )
 
