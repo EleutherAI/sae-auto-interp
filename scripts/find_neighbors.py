@@ -1,15 +1,14 @@
 from nnsight import LanguageModel
-import torch
 from sae_auto_interp.autoencoders import load_oai_autoencoders
 from sae_auto_interp.scorers import get_neighbors
 
-NEIGHBOR_DIR = "sae_auto_interp/scorers/neighbor"
+NEIGHBOR_DIR = "weights"
 
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 submodule_dict = load_oai_autoencoders(
     model, 
     [0,2],
-    "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/OpenAI/gpt2_128k",
+    "weights/gpt2_128k",
 )
 
 modules = [".transformer.h.0", ".transformer.h.2"]

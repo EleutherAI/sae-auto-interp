@@ -1,9 +1,10 @@
-from transformer_lens import utils
-from datasets import load_dataset
-from transformers import AutoTokenizer
-from .features.constructors import pool_max_activation_windows, random_activation_windows
+from typing import Dict, List
+
 from torchtyping import TensorType
+from transformers import AutoTokenizer
+
 from .features import FeatureRecord
+from .features.constructors import pool_max_activation_windows, random_activation_windows
 
 def load_tokenized_data(
     tokenizer: AutoTokenizer,
@@ -13,6 +14,12 @@ def load_tokenized_data(
     seq_len: int = 64,
     seed: int = 22,
 ):
+    """
+    Load a huggingface dataset, tokenize it, and shuffle.
+    """
+    from transformer_lens import utils
+    from datasets import load_dataset
+
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
 
     tokens = utils.tokenize_and_concatenate(
@@ -24,6 +31,18 @@ def load_tokenized_data(
     tokens = tokens.shuffle(seed)['tokens']
 
     return tokens
+
+
+def load_filter(filter: Dict[str, List[int]], device="cuda:0") -> Dict:
+    """
+    Wrap a filter dictionary in torch tensors.
+    """
+    import torch
+
+    return {
+        key : torch.tensor(value, device=device) 
+        for key, value in filter.items()
+    }
 
 
 def display(
@@ -79,18 +98,23 @@ def load_tokenizer(model):
     return tokenizer
 
 
-def default_constructor(record, tokens, locations, activations):
+def default_constructor(
+    record: FeatureRecord, 
+    tokens: TensorType["batch", "seq"], 
+    locations: TensorType["locations", 2],
+    activations: TensorType["locations"]
+):
 
-        pool_max_activation_windows(
-            record,
-            tokens=tokens,
-            locations=locations,
-            activations=activations,
-            k=200
-        )
+    pool_max_activation_windows(
+        record,
+        tokens=tokens,
+        locations=locations,
+        activations=activations,
+        k=200
+    )
 
-        random_activation_windows(
-            record,
-            tokens=tokens,
-            locations=locations,
-        )
+    random_activation_windows(
+        record,
+        tokens=tokens,
+        locations=locations,
+    )

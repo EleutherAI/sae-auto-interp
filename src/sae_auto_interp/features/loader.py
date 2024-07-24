@@ -1,5 +1,6 @@
 from tqdm import tqdm
 from typing import List, Dict, NamedTuple, Callable
+from dataclasses import asdict
 
 import torch
 import torch.multiprocessing as mp
@@ -9,9 +10,6 @@ from safetensors.torch import load_file
 from .transforms import Transform
 from ..config import FeatureConfig
 from ..features.features import Feature, FeatureRecord
-
-CONFIG = FeatureConfig()
-
 
 class BufferOutput(NamedTuple):
     feature: Feature
@@ -54,6 +52,11 @@ class TensorBuffer:
     def __next__(self):
 
         if self.start >= len(self.features):
+            
+            del self.activations
+            del self.locations
+            torch.cuda.empty_cache()
+
             raise StopIteration
         
         feature = self.features[self.start]
@@ -89,8 +92,8 @@ class FeatureDataset:
         self, 
         raw_dir: str,
         modules: List[str],
+        cfg: FeatureConfig,
         features: Dict[str, int] = None,
-        cfg: FeatureConfig = CONFIG,
     ):
         self.cfg = cfg
 
@@ -159,7 +162,7 @@ class FeatureDataset:
                 start, end = edges[bucket-1], edges[bucket]
 
                 # Adjust end by one as the path avoids overlap
-                path = f"{raw_dir}/{module}/{start}_{end-1}.pt"
+                path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
 
                 self.buffers.append(
                     TensorBuffer(
@@ -225,10 +228,15 @@ class FeatureLoader:
 
         return record
     
-    def load(self, collate: bool = False, num_workers: int = 2):
+    def load(self, collate: bool = False, num_workers: int = 0):
 
-        return self._all(num_workers=num_workers) \
-            if collate else self._batched()
+        if num_workers > 0 and collate:
+            return self._threaded(num_workers)
+        
+        if collate:
+            return self._all()
+        
+        return self._batched()
     
     def _worker(self, buffer):
         """
@@ -239,10 +247,19 @@ class FeatureLoader:
             for data in tqdm(buffer, desc=f"Loading {buffer.module_path}")
             if data is not None
         ]
+    
+    def _all(self):
+        all_records = []
 
-    def _all(self, num_workers: int):
+        for buffer in self.dataset.buffers:
+
+            all_records.extend(self._worker(buffer))
+
+        return all_records
+
+    def _threaded(self, num_workers: int):
         with mp.Pool(processes=num_workers) as pool:
-            all_records = pool.map(self._process_buffer, self.dataset.buffers)
+            all_records = pool.map(self._worker, self.dataset.buffers)
         
         return sum(all_records, [])
     

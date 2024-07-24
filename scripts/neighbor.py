@@ -10,6 +10,7 @@ from sae_auto_interp.clients import Local
 from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
 from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
 from sae_auto_interp.pipeline import Pipe, Pipeline, Actor
+from sae_auto_interp.config import FeatureConfig
 
 ### Set directories ###
 
@@ -23,11 +24,12 @@ SCORER_OUT_DIR_B = "results/scores_b"
 tokenizer = load_tokenizer('gpt2')
 tokens = load_tokenized_data(tokenizer)
 
-modules = [".transformer.h.0"]
+modules = [".transformer.h.0", ".transformer.h.2"]
 
 dataset = FeatureDataset(
     raw_dir=RAW_FEATURES_PATH,
     modules = modules,
+    cfg=FeatureConfig(),
 )
 
 loader = FeatureLoader(
@@ -42,7 +44,7 @@ records = loader.load(collate=True)
 to_score = load_neighbors(
     records,
     modules, 
-    "sae_auto_interp/scorers/neighbor/neighbors.json"
+    "weights/neighbors.json"
 )
 
 generator = lambda _ : [to_score]

@@ -5,14 +5,19 @@ from dataclasses import dataclass
 class FeatureConfig(Serializable):
     
     width: int = 131_072
+    """Number of features in the autoencoder"""
 
     n_splits: int = 2
+    """Number of splits that features were devided into"""
 
     n_train: int = 20
+    """Number of examples for generating an explanation"""
 
-    n_test: int = 50
+    n_test: int = 5
+    """Number of examples for evaluating an explanation, per quantile"""
 
     n_quantiles: int = 10
+    """Number of quantiles to draw test examples from"""
 
 @dataclass
 class CacheConfig(Serializable):
@@ -29,5 +34,5 @@ class CacheConfig(Serializable):
     n_tokens: int = 15_000_000
     """Number of tokens to cache"""
 
-    n_splits: int = 4
+    n_splits: int = 2
     """Number of splits to divide .safetensors into"""
