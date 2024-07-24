@@ -2,19 +2,19 @@ import asyncio
 import orjson
 
 import torch
-
+import time
 from sae_auto_interp.explainers import SimpleExplainer
 from sae_auto_interp.scorers import RecallScorer
 from sae_auto_interp.clients import Local
 from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
 from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
-from sae_auto_interp.pipeline import Pipe, Pipeline, Actor
+from sae_auto_interp.sequential_pipeline import Pipe, Pipeline, Actor
 from sae_auto_interp.config import FeatureConfig
 
 ### Set directories ###
 
 RAW_FEATURES_PATH = "raw_features/gpt2"
-EXPLAINER_OUT_DIR = "results/explanations/simple"
+EXPLAINER_OUT_DIR = "results/explanations"
 SCORER_OUT_DIR = "results/scores"
 
 def main():
@@ -49,14 +49,26 @@ def main():
 
     ### Build Explainer pipe ###
 
+    def explainer_preprocess(record):
+        record.time = time.time()
+
+        return record
+
     def explainer_postprocess(result):
         result = result.result()
+
+        data= {
+            "time" : time.time() - result.record.time,
+            "explanation": result.explanation
+        }
+
         with open(f"{EXPLAINER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
-            f.write(orjson.dumps(result.explanation))
+            f.write(orjson.dumps(data))
 
     explainer_pipe = Pipe(
         Actor(
             SimpleExplainer(client, tokenizer=tokenizer),
+            preprocess=explainer_preprocess,
             postprocess=explainer_postprocess
         ),
         name="explainer"
@@ -65,14 +77,23 @@ def main():
     ### Build Scorer pipe ###
 
     def scorer_preprocess(result):
+
         record = result.record
+        record.time = time.time()
         record.explanation = result.explanation
+
         return record
 
     def scorer_postprocess(result):
         result = result.result()
+
+        data= {
+            "time" : time.time() - result.record.time,
+            "score": result.score
+        }
+
         with open(f"{SCORER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
-            f.write(orjson.dumps(result.score))
+            f.write(orjson.dumps(data))
 
     scorer_pipe = Pipe(
         Actor(
