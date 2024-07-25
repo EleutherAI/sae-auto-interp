@@ -8,8 +8,8 @@ def pool_max_activation_windows(
     tokens: TensorType["batch", "seq"],
     locations: TensorType["locations", 2],
     activations: TensorType["locations"],  
-    k: int = 10,
-    ctx_len: int = 20
+    ctx_len: int = 20,
+    max_examples: int = 5000
 ):
     batch_len, seq_len = tokens.shape
 
@@ -32,7 +32,7 @@ def pool_max_activation_windows(
     # Should add this back in?
     # non_zero = avg_pools != 0
     # non_zero = non_zero.sum()
-    k = min(k, len(avg_pools))
+    k = min(max_examples, len(avg_pools))
     
     top_indices = torch.topk(avg_pools.flatten(), k).indices
 
