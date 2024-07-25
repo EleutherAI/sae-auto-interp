@@ -27,7 +27,7 @@ class ClassifierOutput:
     ground_truth: bool
     """Whether the example is correct or not"""
 
-    predicted: bool = False
+    prediction: bool = False
     """Whether the model predicted the example correctly"""
 
     highlighted: bool = False
