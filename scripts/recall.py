@@ -1,6 +1,8 @@
 import asyncio
 import orjson
 
+import argparse
+
 import torch
 import time
 from sae_auto_interp.explainers import SimpleExplainer
@@ -17,16 +19,16 @@ RAW_FEATURES_PATH = "raw_features/gpt2"
 EXPLAINER_OUT_DIR = "results/explanations"
 SCORER_OUT_DIR = "results/scores"
 
-def main():
+def main(batch_size: int):
 
     ### Load dataset ###
 
     tokenizer = load_tokenizer('gpt2')
     tokens = load_tokenized_data(tokenizer)
 
-    modules = [".transformer.h.0", ".transformer.h.2"]
+    modules = [f".transformer.h.{i}" for i in range(0,12,2)]
     features = {
-        m : torch.arange(20) for m in modules
+        m : torch.arange(100) for m in modules
     }
 
     dataset = FeatureDataset(
@@ -67,7 +69,7 @@ def main():
 
     explainer_pipe = Pipe(
         Actor(
-            SimpleExplainer(client, tokenizer=tokenizer),
+            SimpleExplainer(client, tokenizer=tokenizer, cot=True),
             preprocess=explainer_preprocess,
             postprocess=explainer_postprocess
         ),
@@ -97,7 +99,7 @@ def main():
 
     scorer_pipe = Pipe(
         Actor(
-            RecallScorer(client, tokenizer=tokenizer),
+            RecallScorer(client, tokenizer=tokenizer, batch_size=batch_size),
             preprocess=scorer_preprocess,
             postprocess=scorer_postprocess
         ),
@@ -109,7 +111,7 @@ def main():
     pipeline = Pipeline(
         loader.load,
         explainer_pipe,
-        scorer_pipe,
+        # scorer_pipe,
     )
 
     asyncio.run(
@@ -119,4 +121,9 @@ def main():
 
 if __name__ == "__main__":
 
-    main()
+    parser = argparse.ArgumentParser(description='Run the recall pipeline')
+    parser.add_argument('--batch_size', type=int, help='Batch size of scorer')
+
+    args = parser.parse_args()
+
+    main(args.batch_size)

@@ -13,7 +13,7 @@ def main(cfg: CacheConfig):
     model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
     submodule_dict = load_oai_autoencoders(
         model, 
-        [0,2],
+        list(range(0,12,2)),
         "weights/gpt2_128k",
     )
 

@@ -5,6 +5,27 @@ import json
 
 from openai import AsyncOpenAI
 
+import logging
+
+# Define a custom log level
+CUSTOM_LEVEL = 25  # Between INFO (20) and WARNING (30)
+logging.addLevelName(CUSTOM_LEVEL, "CUSTOM")
+
+# Create a method for the custom level
+def custom(self, message, *args, **kwargs):
+    if self.isEnabledFor(CUSTOM_LEVEL):
+        self._log(CUSTOM_LEVEL, message, args, **kwargs)
+
+# Add the custom level method to the Logger class
+logging.Logger.custom = custom
+
+# Configure the logger
+logging.basicConfig(filename='token_stats/vllm.log', level=CUSTOM_LEVEL,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Get the logger
+log = logging.getLogger(__name__)
+
 class Local(Client):
     provider = "vllm"
 
@@ -39,6 +60,8 @@ class Local(Client):
                     messages=prompt,
                     **kwargs
                 )
+
+                log.custom(response.usage)
 
                 return response if raw else self.postprocess(response)
 

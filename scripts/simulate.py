@@ -15,7 +15,7 @@ from sae_auto_interp.config import FeatureConfig
 ### Set directories ###
 
 RAW_FEATURES_PATH = "raw_features/gpt2"
-EXPLAINER_OUT_DIR = "results/explanations/simple"
+EXPLAINER_OUT_DIR = "results/explanations"
 SCORER_OUT_DIR = "results/simulation"
 
 ### Load dataset ###
@@ -24,15 +24,15 @@ tokenizer = load_tokenizer('gpt2')
 tokens = load_tokenized_data(tokenizer)
 
 modules = [".transformer.h.0", ".transformer.h.2"]
-features = {
-    m : torch.arange(1) for m in modules
-}
+# features = {
+#     m : torch.arange(10) for m in modules
+# }
 
 dataset = FeatureDataset(
     raw_dir=RAW_FEATURES_PATH,
     modules = modules,
     cfg=FeatureConfig(),
-    features=features,
+    # features=features,
 )
 
 loader = FeatureLoader(
