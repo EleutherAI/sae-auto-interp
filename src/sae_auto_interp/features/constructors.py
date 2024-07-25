@@ -9,7 +9,8 @@ def pool_max_activation_windows(
     locations: TensorType["locations", 2],
     activations: TensorType["locations"],  
     ctx_len: int = 20,
-    max_examples: int = 5000
+    max_examples: int = 5000,
+    **kwargs
 ):
     batch_len, seq_len = tokens.shape
 
@@ -49,7 +50,8 @@ def random_activation_windows(
     tokens: torch.Tensor,
     locations: torch.Tensor,
     n_to_find: int = 10, 
-    ctx_len: int = 20
+    ctx_len: int = 20,
+    **kwargs
 ):
     torch.manual_seed(22)
     batch_size = tokens.shape[0]

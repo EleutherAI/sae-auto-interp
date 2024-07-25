@@ -7,6 +7,15 @@ class FeatureConfig(Serializable):
     width: int = 131_072
     """Number of features in the autoencoder"""
 
+    min_examples: int = 100
+    """Minimum number of examples for a feature to be included"""
+
+    max_examples: int = 5_000
+    """Maximum number of examples for a feature to included"""
+
+    ctx_len: int = 20
+    """Length of each example"""
+
     n_splits: int = 2
     """Number of splits that features were devided into"""
 

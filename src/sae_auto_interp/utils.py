@@ -102,7 +102,8 @@ def default_constructor(
     record: FeatureRecord, 
     tokens: TensorType["batch", "seq"], 
     locations: TensorType["locations", 2],
-    activations: TensorType["locations"]
+    activations: TensorType["locations"],
+    **kwargs
 ):
 
     pool_max_activation_windows(
@@ -110,11 +111,12 @@ def default_constructor(
         tokens=tokens,
         locations=locations,
         activations=activations,
-        k=200
+        **kwargs
     )
 
     random_activation_windows(
         record,
         tokens=tokens,
         locations=locations,
+        **kwargs
     )

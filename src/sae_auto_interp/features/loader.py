@@ -219,11 +219,13 @@ class FeatureLoader:
                 self.tokens,
                 locations = data.locations,
                 activations = data.activations,
+                **asdict(self.cfg)
             )
 
         if self.sampler is not None:
             self.sampler(
-                record
+                record,
+                **asdict(self.cfg)
             )
 
         # if self.transform is not None:

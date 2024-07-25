@@ -33,7 +33,7 @@ def main(cfg: CacheConfig):
 
     cache.save_splits(
         n_splits=cfg.n_splits, 
-        save_dir="/share/u/caden/sae-auto-interp/raw_features/pythia"
+        save_dir="/share/u/caden/sae-auto-interp/raw_features/weights"
     )
 
 

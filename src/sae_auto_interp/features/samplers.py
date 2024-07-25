@@ -42,6 +42,7 @@ def random_and_activation_quantiles(
     n_test=10,
     n_quantiles=3,
     seed=22,
+    **kwargs
 ):
     random.seed(seed)
 
@@ -64,6 +65,7 @@ def top_and_activation_quantiles(
     n_test=5,
     n_quantiles=4,
     seed=22,
+    **kwargs
 ):
     random.seed(seed)
     
@@ -89,6 +91,7 @@ def top_and_quantiles(
     n_test=10,
     n_quantiles=4,
     seed=22,
+    **kwargs
 ):
     random.seed(seed)
 
