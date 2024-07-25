@@ -8,7 +8,7 @@ from sae_auto_interp.scorers import FuzzingScorer
 from sae_auto_interp.clients import Local
 from sae_auto_interp.utils import load_tokenized_data, load_tokenizer, default_constructor
 from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
-from sae_auto_interp.sequential_pipeline import Pipe, Pipeline, Actor
+from sae_auto_interp.pipeline import Pipe, Pipeline, Actor
 from functools import partial
 from sae_auto_interp.config import FeatureConfig
 

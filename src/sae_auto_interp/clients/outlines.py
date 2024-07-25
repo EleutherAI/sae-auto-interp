@@ -7,26 +7,6 @@ from transformers import AutoTokenizer
 from ..logger import logger
 from .client import Client
 
-import logging
-# Define a custom log level
-CUSTOM_LEVEL = 25  # Between INFO (20) and WARNING (30)
-logging.addLevelName(CUSTOM_LEVEL, "CUSTOM")
-
-# Create a method for the custom level
-def custom(self, message, *args, **kwargs):
-    if self.isEnabledFor(CUSTOM_LEVEL):
-        self._log(CUSTOM_LEVEL, message, args, **kwargs)
-
-# Add the custom level method to the Logger class
-logging.Logger.custom = custom
-
-# Configure the logger
-logging.basicConfig(filename='token_stats/outlines.log', level=CUSTOM_LEVEL,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
-
-# Get the logger
-log = logging.getLogger(__name__)
-
 class Outlines(Client):
     provider = "outlines"
 
@@ -55,9 +35,6 @@ class Outlines(Client):
 
             response = response_text[len(prompt):]
 
-            n_response_tokens = len(self.tokenizer.tokenize(response))
-            log.custom(f"Response tokens: {n_response_tokens}")
-
             if schema is not None:
                 return json.loads(response)
         
@@ -85,9 +62,6 @@ class Outlines(Client):
             )
         
         schema = kwargs.get("schema", None)
-
-        n_prompt_tokens = len(self.tokenizer.tokenize(prompt))
-        log.custom(f"Prompt tokens: {n_prompt_tokens}")
 
         data = {
             "prompt": prompt,
