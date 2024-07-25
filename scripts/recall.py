@@ -41,13 +41,14 @@ def main(batch_size: int):
     loader = FeatureLoader(
         tokens=tokens,
         dataset=dataset,
+        cfg=FeatureConfig(),
         constructor=default_constructor,
         sampler=top_and_quantiles
     )
 
     ### Load client ###
 
-    client = Local("meta-llama/Meta-Llama-3-8B-Instruct")
+    client = Local("casperhansen/llama-3-70b-instruct-awq")
 
     ### Build Explainer pipe ###
 
@@ -69,7 +70,7 @@ def main(batch_size: int):
 
     explainer_pipe = Pipe(
         Actor(
-            SimpleExplainer(client, tokenizer=tokenizer, cot=True),
+            SimpleExplainer(client, tokenizer=tokenizer, cot=False),
             preprocess=explainer_preprocess,
             postprocess=explainer_postprocess
         ),
