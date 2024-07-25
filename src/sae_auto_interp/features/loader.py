@@ -24,11 +24,18 @@ class TensorBuffer:
     Lazy loading buffer for cached splits.
     """
 
-    def __init__(self, path, module_path, features):
+    def __init__(
+        self, 
+        path: str, 
+        module_path: str, 
+        features: TensorType["features"] = None,
+        min_examples: int = 120
+    ):
         self.tensor_path = path
         self.module_path = module_path
 
         self.features = features
+        self.min_examples = min_examples
         self.start = 0
 
         self.activations = None
@@ -64,7 +71,7 @@ class TensorBuffer:
         mask = self.locations[:, 2] == feature
 
         # NOTE: MIN examples is here
-        if mask.sum() <= 120:
+        if mask.sum() < self.min_examples:
             self.start += 1
             return None
         
@@ -133,11 +140,7 @@ class FeatureDataset:
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
 
                 self.buffers.append(
-                    TensorBuffer(
-                        path, 
-                        module,
-                        None
-                    )
+                    TensorBuffer(path, module, min_examples=self.cfg.min_examples)
                 )
 
     def _load_selected(self, raw_dir: str, modules: List[str], features: Dict[str, int]):
@@ -164,11 +167,11 @@ class FeatureDataset:
                 # Adjust end by one as the path avoids overlap
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
 
-                self.buffers.append(
-                    TensorBuffer(
+                self.buffers.append(TensorBuffer(
                         path, 
                         module,
-                        _selected_features
+                        _selected_features,
+                        min_examples=self.cfg.min_examples
                     )
                 )
 
@@ -182,6 +185,7 @@ class FeatureLoader:
         self,
         tokens: TensorType["batch", "seq"],
         dataset: FeatureDataset,
+        cfg: FeatureConfig,
         constructor: Callable = None,
         sampler: Callable = None,
         transform: Transform = None,
@@ -196,6 +200,7 @@ class FeatureLoader:
         """
         self.tokens = tokens
         self.dataset = dataset
+        self.cfg = cfg
 
         self.constructor = constructor
         self.sampler = sampler
