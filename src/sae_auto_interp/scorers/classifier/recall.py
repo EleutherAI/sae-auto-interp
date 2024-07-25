@@ -19,7 +19,7 @@ class RecallScorer(Classifier):
         client: Client, 
         tokenizer: PreTrainedTokenizer,
         verbose: bool = False,
-        batch_size: int = 5,
+        batch_size: int = 10,
         **generation_kwargs
     ):
         super().__init__(

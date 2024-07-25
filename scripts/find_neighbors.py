@@ -7,13 +7,13 @@ NEIGHBOR_DIR = "weights"
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 submodule_dict = load_oai_autoencoders(
     model, 
-    [0,2],
+    list(range(0,12,2)),
     "weights/gpt2_128k",
 )
 
-modules = [".transformer.h.0", ".transformer.h.2"]
+modules = [f".transformer.h.{i}" for i in range(0,12,2)]
 features = {
-    m : list(range(20)) for m in modules
+    m : list(range(100)) for m in modules
 }
 
 get_neighbors(
