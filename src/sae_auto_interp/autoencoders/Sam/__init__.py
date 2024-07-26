@@ -4,7 +4,7 @@ from functools import partial
 
 DEVICE = "cuda:0"
 DICTIONARY_ID = 10
-DICTIONARY_SIZE = 32768
+DICTIONARY_SIZE = 32_768
 
 def _load(submodules, module, path):
     submodules[module._module_path] = \
@@ -14,11 +14,10 @@ def _load(submodules, module, path):
         path,
         device=DEVICE
     )
-    
-    _encode = partial(ae.encode)
 
     module.ae = AutoencoderLatents(
-        _forward= lambda x: _encode(x),
+        _forward = lambda x: ae.encode(x),
+        n_features=DICTIONARY_SIZE
     )
 
 def load_sam_autoencoders(
