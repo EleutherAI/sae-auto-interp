@@ -4,7 +4,7 @@ from collections import OrderedDict, defaultdict
 import torch
 
 from ...logger import logger
-from ...features.transforms import cos
+from ...features.stats import cos
 
 def load_neighbors(all_records, modules, neighbor_file_path):
 

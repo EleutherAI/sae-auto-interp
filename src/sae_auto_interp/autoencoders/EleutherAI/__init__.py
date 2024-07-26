@@ -28,7 +28,11 @@ def load_eai_autoencoders(
             return topk(encoded)
 
         submodule = model.model.layers[layer]
-        submodule.ae = AutoencoderLatents(partial(_forward, sae),sae.d_in * sae.cfg.expansion_factor)
+
+        submodule.ae = AutoencoderLatents(
+            partial(_forward, sae),
+            n_features=sae.d_in * sae.cfg.expansion_factor
+        )
 
         submodule[layer] = submodule
     

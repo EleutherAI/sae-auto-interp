@@ -1,5 +1,4 @@
 import re
-from typing import List
 
 from .prompt_builder import build_prompt
 from ..explainer import (
@@ -19,7 +18,10 @@ class SimpleExplainer(Explainer):
         max_tokens:int = 200,
         temperature:float = 0.0,
         threshold:float = 0.6,
+        **kwargs
     ):
+        super().__init__(**kwargs)
+
         self.client = client
         self.tokenizer = tokenizer
 

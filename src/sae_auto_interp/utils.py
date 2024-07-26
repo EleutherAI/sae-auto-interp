@@ -103,7 +103,9 @@ def default_constructor(
     tokens: TensorType["batch", "seq"], 
     locations: TensorType["locations", 2],
     activations: TensorType["locations"],
-    **kwargs
+    n_random: int,
+    ctx_len: int,
+    max_examples: int
 ):
 
     pool_max_activation_windows(
@@ -111,12 +113,14 @@ def default_constructor(
         tokens=tokens,
         locations=locations,
         activations=activations,
-        **kwargs
+        ctx_len=ctx_len,
+        max_examples=max_examples,
     )
 
     random_activation_windows(
         record,
         tokens=tokens,
         locations=locations,
-        **kwargs
+        n_random=n_random,
+        ctx_len=ctx_len,
     )

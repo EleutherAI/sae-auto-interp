@@ -1,5 +1,4 @@
 import random
-import torch
 from ..logger import logger
 from .features import FeatureRecord, Example
 from typing import List
@@ -32,8 +31,8 @@ def split_quantiles(examples: List[Example], n_quantiles: int):
 
 def check_quantile(quantile, n_test):
     if len(quantile) < n_test:
-        logger.error(f"Quantile has too few examples")
-        raise ValueError(f"Quantile has too few examples")
+        logger.error("Quantile has too few examples")
+        raise ValueError("Quantile has too few examples")
 
 
 def random_and_activation_quantiles(
@@ -42,7 +41,6 @@ def random_and_activation_quantiles(
     n_test=10,
     n_quantiles=3,
     seed=22,
-    **kwargs
 ):
     random.seed(seed)
 
@@ -65,7 +63,6 @@ def top_and_activation_quantiles(
     n_test=5,
     n_quantiles=4,
     seed=22,
-    **kwargs
 ):
     random.seed(seed)
     
@@ -91,7 +88,6 @@ def top_and_quantiles(
     n_test=10,
     n_quantiles=4,
     seed=22,
-    **kwargs
 ):
     random.seed(seed)
 

@@ -98,6 +98,8 @@ class FeatureCache:
 
         self.cache = Cache(filters, batch_size=cfg.batch_size)
 
+        self.filter_submodules(filters)
+
     def load_token_batches(self, n_tokens: int, tokens: TensorType["batch", "sequence"]):
         
         max_batches = n_tokens // tokens.shape[1]
@@ -141,7 +143,8 @@ class FeatureCache:
                     for module_path, latents in buffer.items():
                         self.cache.add(
                             latents, 
-                            batch_number, module_path
+                            batch_number, 
+                            module_path
                         )
 
                     del buffer

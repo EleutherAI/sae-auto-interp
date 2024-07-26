@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class FeatureConfig(Serializable):
     
-    width: int = 131_072
+    width: int = 32_768
     """Number of features in the autoencoder"""
 
     min_examples: int = 100
@@ -16,7 +16,7 @@ class FeatureConfig(Serializable):
     ctx_len: int = 20
     """Length of each example"""
 
-    n_splits: int = 2
+    n_splits: int = 1
     """Number of splits that features were devided into"""
 
     n_train: int = 20
@@ -31,7 +31,7 @@ class FeatureConfig(Serializable):
 @dataclass
 class CacheConfig(Serializable):
 
-    width: int = 131_072
+    width: int = 32_768
     """Number of features in the autoencoder"""
 
     batch_size: int = 128
@@ -43,5 +43,5 @@ class CacheConfig(Serializable):
     n_tokens: int = 15_000_000
     """Number of tokens to cache"""
 
-    n_splits: int = 2
+    n_splits: int = 1
     """Number of splits to divide .safetensors into"""

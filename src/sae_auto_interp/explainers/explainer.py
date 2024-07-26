@@ -1,8 +1,9 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from typing import NamedTuple
 
 import aiofiles
 
+from ..pipeline import Actor
 from ..features.features import FeatureRecord
 
 
@@ -14,7 +15,10 @@ class ExplainerResult(NamedTuple):
     """Generated explanation for feature."""
 
 
-class Explainer(ABC):
+class Explainer(Actor):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     @abstractmethod
     def __call__(
