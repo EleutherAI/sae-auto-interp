@@ -1,13 +1,12 @@
 import torch
-from typing import Tuple, List, Dict
 from tqdm import tqdm
 import psutil
 import orjson
-import os
-from collections import defaultdict
-from ..utils import load_tokenized_data
-from jaxtyping import Float
-from .. import cache_config as CONFIG
+
+SEQ_LEN = 64
+MINIBATCH_SIZE = 128
+N_FEATURES = 131072
+
 
 class FrequencyBuffer:
     def __init__(self, seq_len: int, n_features: int):
@@ -27,7 +26,7 @@ class FrequencyBuffer:
         Aggregate the counts and calculate the final frequency of 
         each feature and each feature at each position.
         """
-        fr_n = self.total_counts / (self.num_sequences_processed * CONFIG.seq_len)
+        fr_n = self.total_counts / (self.num_sequences_processed * SEQ_LEN)
         fr_n_pos = self.position_counts / self.num_sequences_processed
         return fr_n, fr_n_pos
     
@@ -36,7 +35,7 @@ class FrequencyBuffer:
         Finalize the cache and return the sorted indices by mutual information.
         """
         fr_n, fr_n_pos = self.final()
-        mutual_information = self.mutual_information_per_feature(fr_n_pos, fr_n, CONFIG.seq_len)
+        mutual_information = self.mutual_information_per_feature(fr_n_pos, fr_n, SEQ_LEN)
         sorted_indices = self.get_sorted_indices_above_threshold(mutual_information)
 
         return sorted_indices
@@ -59,7 +58,7 @@ class FrequencyBuffer:
         clamped_latents = torch.where(latents > 1e-5, torch.ones_like(latents), torch.zeros_like(latents))
         self.total_counts += torch.sum(clamped_latents, dim=(0, 1))
         self.position_counts += torch.sum(clamped_latents, dim=0)
-        self.num_sequences_processed += CONFIG.minibatch_size
+        self.num_sequences_processed += MINIBATCH_SIZE
 
     def mutual_information_per_feature(
         self, 
@@ -92,14 +91,22 @@ class FrequencyCache:
     def __init__(
         self,
         model, 
-        submodule_dict
+        submodule_dict,
+        minibatch_size: int,
+        seq_len: int,
     ):  
         self.model = model
         self.submodule_dict = submodule_dict
+
+        n_features = list(submodule_dict.values())[0].ae.width
+
+        self.seq_len = seq_len
         self.layer_caches = {
-            layer : FrequencyBuffer(CONFIG.seq_len, CONFIG.n_features)
+            layer : FrequencyBuffer(seq_len, n_features)
             for layer in submodule_dict.keys()
         }
+
+        self.minibatch_size = minibatch_size
 
 
     def check_memory(self, threshold=0.9):
@@ -108,24 +115,22 @@ class FrequencyCache:
         return memory_usage > threshold
 
 
-    def load_token_batches(self, minibatch_size=20):
-        tokens = load_tokenized_data(self.model.tokenizer)
-
-        max_batches = CONFIG.n_tokens // CONFIG.seq_len
+    def load_token_batches(self, n_tokens, tokens):
+        max_batches = n_tokens // self.seq_len
         tokens = tokens[:max_batches]
         
-        n_mini_batches = len(tokens) // minibatch_size
+        n_mini_batches = len(tokens) // self.minibatch_size
 
         token_batches = [
-            tokens[minibatch_size * i : minibatch_size * (i + 1), :] 
+            tokens[self.minibatch_size * i : self.minibatch_size * (i + 1), :] 
             for i in range(n_mini_batches)
         ]
 
         return token_batches
     
     
-    def run(self):
-        token_batches = self.load_token_batches(CONFIG.minibatch_size)
+    def run(self, n_tokens, tokens):
+        token_batches = self.load_token_batches(n_tokens, tokens)
 
         total_tokens = 0
         total_batches = len(token_batches)
@@ -160,19 +165,17 @@ class FrequencyCache:
 
         print(f"Total tokens processed: {total_tokens:,}")
 
-    def save(self, output_dir="feature_sorting"):
+    def save(self):
 
         results = {}
 
         for layer, cache in self.layer_caches.items():
             sorted_indices = cache.save()
-            filename = f"layer{layer}.txt"
-            filepath = os.path.join(output_dir, filename)
+            filename = f"{layer}.txt"
 
-            with open(filepath, 'wb') as f:
+            with open(filename, 'wb') as f:
                 f.write(orjson.dumps(sorted_indices.tolist()))
 
-            
             results[layer] = sorted_indices
 
         return results
