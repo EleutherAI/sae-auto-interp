@@ -28,7 +28,7 @@ def load_oai_autoencoders(
         
         submodule.ae = AutoencoderLatents(
             partial(_forward, ae),
-            n_features=131_072
+            width=131_072
         )
 
         submodules[submodule._module_path] = submodule

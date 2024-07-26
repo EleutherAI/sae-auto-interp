@@ -1,17 +1,14 @@
-from typing import Dict, List
-
 from torchtyping import TensorType
 from transformers import AutoTokenizer
 
 from .features import FeatureRecord
-from .features.constructors import pool_max_activation_windows, random_activation_windows
 
 def load_tokenized_data(
+    ctx_len: int,
     tokenizer: AutoTokenizer,
-    dataset_repo: str = "kh4dien/fineweb-100m-sample",
+    dataset_repo: str,
+    dataset_split: str,
     dataset_name: str = "",
-    dataset_split: str = "train[:15%]",
-    seq_len: int = 64,
     seed: int = 22,
 ):
     """
@@ -25,7 +22,7 @@ def load_tokenized_data(
     tokens = utils.tokenize_and_concatenate(
         data, 
         tokenizer, 
-        max_length=seq_len
+        max_length=ctx_len
     )   
 
     tokens = tokens.shuffle(seed)['tokens']
@@ -33,12 +30,13 @@ def load_tokenized_data(
     return tokens
 
 
-def load_filter(filter: Dict[str, List[int]], device="cuda:0") -> Dict:
-    """
-    Wrap a filter dictionary in torch tensors.
-    """
+def load_filter(path: str, device: str = "cuda:0"):
+    import json
     import torch
-
+        
+    with open(path) as f:
+        filter = json.load(f)
+        
     return {
         key : torch.tensor(value, device=device) 
         for key, value in filter.items()
@@ -96,31 +94,3 @@ def load_tokenizer(model):
     tokenizer._pad_token = tokenizer._eos_token
 
     return tokenizer
-
-
-def default_constructor(
-    record: FeatureRecord, 
-    tokens: TensorType["batch", "seq"], 
-    locations: TensorType["locations", 2],
-    activations: TensorType["locations"],
-    n_random: int,
-    ctx_len: int,
-    max_examples: int
-):
-
-    pool_max_activation_windows(
-        record,
-        tokens=tokens,
-        locations=locations,
-        activations=activations,
-        ctx_len=ctx_len,
-        max_examples=max_examples,
-    )
-
-    random_activation_windows(
-        record,
-        tokens=tokens,
-        locations=locations,
-        n_random=n_random,
-        ctx_len=ctx_len,
-    )

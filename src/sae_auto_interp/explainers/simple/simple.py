@@ -15,12 +15,9 @@ class SimpleExplainer(Explainer):
         cot: bool = False,
         logits: bool = False,
         activations: bool = False,
-        max_tokens:int = 200,
-        temperature:float = 0.0,
         threshold:float = 0.6,
-        **kwargs
+        **generation_kwargs
     ):
-        super().__init__(**kwargs)
 
         self.client = client
         self.tokenizer = tokenizer
@@ -29,9 +26,8 @@ class SimpleExplainer(Explainer):
         self.logits = logits
         self.activations = activations
         
-        self.max_tokens = max_tokens
-        self.temperature = temperature
         self.threshold = threshold
+        self.generation_kwargs = generation_kwargs
 
     async def __call__(
         self,
@@ -50,8 +46,7 @@ class SimpleExplainer(Explainer):
             )
         response = await self.client.generate(
             messages, 
-            max_tokens=self.max_tokens,
-            temperature=self.temperature
+            **self.generation_kwargs
         )
 
         explanation = self.parse_explanation(response)
@@ -77,7 +72,8 @@ class SimpleExplainer(Explainer):
         str_toks = self.tokenizer.batch_decode(example.tokens)
         activations = example.activations
 
-        check = lambda i: activations[i] > threshold 
+        def check(i):
+            return activations[i] > threshold
 
         i = 0
         while i < len(str_toks):

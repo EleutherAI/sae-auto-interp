@@ -2,44 +2,37 @@ import asyncio
 from typing import List
 from tqdm.asyncio import tqdm
 from typing import Callable
-from abc import ABC
+from functools import wraps
 
-class Actor(ABC):
+def process_wrapper(function, preprocess=None, postprocess=None):
+    @wraps(function)
+    async def wrapped(input):
 
-    def __init__(
-        self, 
-        preprocess: Callable = None, 
-        postprocess: Callable = None
-    ):
-        self.preprocess = preprocess
-        self.postprocess = postprocess
-
-    async def run(self, input):
-
-        if self.preprocess is not None:
-            input = self.preprocess(input)
-
-        result = await self(input)
-
-        if self.postprocess is not None:
-            result = self.postprocess(result)
-
+        if preprocess is not None:
+            input = preprocess(input)
+        
+        result = await function(input)
+        
+        if postprocess is not None:
+            result = postprocess(result)
+        
         return result
+    
+    return wrapped
     
     
 class Pipe:
     def __init__(
         self, 
-        *actors: List[Actor],
-        name: str ="process"
+        *functions: List[Callable],
     ):
-        self.name = name
-        self.actors = actors
+        self.functions = functions
 
-    async def run(self, input):
+    async def __call__(self, input):
+
         tasks = [
-            actor.run(input) 
-            for actor in self.actors
+            function(input) 
+            for function in self.functions
         ]
 
         return await asyncio.gather(*tasks) 
@@ -54,12 +47,12 @@ class Pipeline:
     async def loop(self, input, pipes):
 
         if len(pipes) > 0:
-            output = await pipes[0].run(input)
+            output = await pipes[0](input)
             return await self.loop(output, pipes[1:])
         
         return input
 
-    async def run(self, max_processes: int = 200, collate=False):
+    async def run(self, max_processes: int = 1, collate=False):
 
         sem = asyncio.Semaphore(max_processes)
 

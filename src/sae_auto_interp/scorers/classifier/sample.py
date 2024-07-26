@@ -106,7 +106,7 @@ def _prepare_text(
 
     # Rare case where there are no tokens below threshold
     if below_threshold.dim() == 0:
-        logger.error(f"Failed to prepare example.")
+        logger.error("Failed to prepare example.")
         return DEFAULT_MESSAGE
 
     random.seed(22)
