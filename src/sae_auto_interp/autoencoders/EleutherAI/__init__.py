@@ -31,7 +31,7 @@ def load_eai_autoencoders(
 
         submodule.ae = AutoencoderLatents(
             partial(_forward, sae),
-            n_features=sae.d_in * sae.cfg.expansion_factor
+            width=sae.d_in * sae.cfg.expansion_factor
         )
 
         submodule[layer] = submodule
