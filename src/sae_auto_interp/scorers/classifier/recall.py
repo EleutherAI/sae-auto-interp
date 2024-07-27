@@ -1,13 +1,10 @@
-import asyncio
 from typing import List
-import random 
 
 from transformers import PreTrainedTokenizer
 
 from .classifier import Classifier
-from .sample import examples_to_samples, ClassifierOutput, Sample
+from .sample import examples_to_samples, Sample
 from .prompts.recall_prompt import prompt
-from ..scorer import Scorer
 from ...clients.client import Client
 from ...features import FeatureRecord
 

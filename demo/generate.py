@@ -43,11 +43,11 @@ def main(cfg):
     loader = FeatureLoader(
         tokens=tokens,
         dataset=dataset,
-        constructor=partial(
-            pool_max_activation_windows,
-            ctx_len=cfg.ctx_len,
-            max_examples=cfg.max_examples,
-        ),
+        # constructor=partial(
+        #     pool_max_activation_windows,
+        #     ctx_len=cfg.ctx_len,
+        #     max_examples=cfg.max_examples,
+        # ),
     )
 
     ### Load client ###

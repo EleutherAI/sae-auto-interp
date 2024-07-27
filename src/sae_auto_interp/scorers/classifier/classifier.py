@@ -94,6 +94,8 @@ class Classifier(Scorer):
         )
         array = self._parse(selections)
 
+        print(selections)
+
         results = []
 
         for i, sample in enumerate(batch):

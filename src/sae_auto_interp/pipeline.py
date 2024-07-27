@@ -52,7 +52,7 @@ class Pipeline:
         
         return input
 
-    async def run(self, max_processes: int = 1, collate=False):
+    async def run(self, max_processes: int = 100, collate=False):
 
         sem = asyncio.Semaphore(max_processes)
 

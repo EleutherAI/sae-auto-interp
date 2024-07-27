@@ -30,6 +30,7 @@ def load_eai_autoencoders(
         submodule = model.model.layers[layer]
 
         submodule.ae = AutoencoderLatents(
+            sae,
             partial(_forward, sae),
             width=sae.d_in * sae.cfg.expansion_factor
         )
