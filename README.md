@@ -1,5 +1,7 @@
 # Introduction
 
+**README IS A WIP**
+
 This library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) features.
 
 ## Installation
