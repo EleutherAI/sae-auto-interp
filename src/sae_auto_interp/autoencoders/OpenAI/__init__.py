@@ -27,6 +27,7 @@ def load_oai_autoencoders(
         submodule = model.transformer.h[layer]
         
         submodule.ae = AutoencoderLatents(
+            ae,
             partial(_forward, ae),
             width=131_072
         )

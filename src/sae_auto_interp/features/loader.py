@@ -193,6 +193,7 @@ class FeatureLoader:
         dataset: FeatureDataset,
         constructor: Callable = None,
         sampler: Callable = None,
+        transform: Callable = None,
     ):
         """
         Args:
@@ -206,6 +207,8 @@ class FeatureLoader:
 
         self.constructor = constructor
         self.sampler = sampler
+
+        self.transform = transform
 
     def __len__(self):
         return len(self.dataset.buffers)
@@ -223,6 +226,9 @@ class FeatureLoader:
 
         if self.sampler is not None:
             self.sampler(record)
+
+        if self.transform is not None:
+            self.transform(record)
 
         return record
 

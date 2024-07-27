@@ -5,7 +5,7 @@ You will be given a certain feature of text, such as "male pronouns" or "text wi
 
 Some examples might be mislabeled. Your task is to determine if every single token within << and >> is correctly labeled. Consider that all provided examples could be correct, none of the examples could be correct, or a mix. An example is only correct if every marked token is representative of the feature
 
-For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. You must return your response in a valid Python list.
+For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. You must return your response in a valid Python list. Do not return anything else besides a Python list.
 """
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/6048

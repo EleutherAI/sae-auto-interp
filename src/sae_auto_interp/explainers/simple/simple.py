@@ -1,5 +1,7 @@
 import re
-
+import orjson
+import torch
+import math
 from .prompt_builder import build_prompt
 from ..explainer import (
     Explainer, 
@@ -29,10 +31,28 @@ class SimpleExplainer(Explainer):
         self.threshold = threshold
         self.generation_kwargs = generation_kwargs
 
+    def normalize_examples(self, record, train):
+        
+        max_activation = record.examples[0].max_activation
+
+        def _normalize(example):
+            example.normalized_activations = \
+                10 * torch.floor(
+                    example.activations / max_activation
+                )
+            
+        for example in train:
+            _normalize(example)
+
     async def __call__(
         self,
         record
     ):
+        if self.activations:
+            self.normalize_examples(
+                record, 
+                record.train
+            )
         
         if self.logits:
             messages = self._build_prompt(
@@ -44,6 +64,7 @@ class SimpleExplainer(Explainer):
                 record.train,
                 None
             )
+
         response = await self.client.generate(
             messages, 
             **self.generation_kwargs
@@ -51,7 +72,7 @@ class SimpleExplainer(Explainer):
 
         explanation = self.parse_explanation(response)
 
-        return ExplainerResult(
+        return messages[-1]['content'], response, ExplainerResult(
             record=record,
             explanation=explanation
         )
@@ -70,6 +91,7 @@ class SimpleExplainer(Explainer):
 
         threshold = example.max_activation * self.threshold
         str_toks = self.tokenizer.batch_decode(example.tokens)
+        example.str_toks = str_toks
         activations = example.activations
 
         def check(i):
@@ -93,6 +115,22 @@ class SimpleExplainer(Explainer):
 
         return "".join(result)
 
+    def _join_activations(self, example):
+        activations = []
+
+        threshold = example.max_activation * 0.7
+        for i, normalized in enumerate(example.normalized_activations):
+
+            if example.activations[i] > threshold:
+
+                activations.append(
+                    (example.str_toks[i], int(normalized))
+                )
+
+        acts = ", ".join(f'("{item[0]}" : {item[1]})' for item in activations)
+
+        return "Activations: " + acts
+
     def _build_prompt(self, examples, top_logits):
         
         highlighted_examples = []
@@ -106,11 +144,11 @@ class SimpleExplainer(Explainer):
             )
             
             if self.activations:
-                for i, activation in enumerate(example.normalized_activations):
-                    if activation > example.max_activation * self.threshold:
-                        highlighted_examples.append(
-                            f"Activation {example.str_toks[i]}:{activation}, "
-                        )
+                highlighted_examples.append(
+                    self._join_activations(
+                        example
+                    )
+                )
             
         highlighted_examples = "\n".join(highlighted_examples)
 
@@ -120,4 +158,3 @@ class SimpleExplainer(Explainer):
             activations= self.activations,
             top_logits= top_logits,
         )
-

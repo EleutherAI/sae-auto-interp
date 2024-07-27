@@ -10,3 +10,7 @@ results/*
 raw*
 
 .nfs*
+
+processed_features/
+
+output_html/

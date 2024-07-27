@@ -4,7 +4,7 @@ You will be given a certain feature of text, such as "male pronouns" or "text wi
 
 You will then be given several text examples. Your task is to determine which examples possess the feature.
 
-For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. You must return your response in a valid Python list.
+For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. You must return your response in a valid Python list. Do not return anything else besides a Python list.
 """
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/6048

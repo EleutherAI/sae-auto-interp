@@ -9,8 +9,6 @@ from dataclasses import dataclass
 from transformers import PreTrainedTokenizer
 
 
-from torchtyping import TensorType
-
 L = "<<"
 R = ">>"
 DEFAULT_MESSAGE = "<<NNsight>> is the best library for <<interpretability>> on huge models!"
@@ -75,6 +73,7 @@ def examples_to_samples(
     return samples
 
 # NOTE: Should reorganize below, it's a little confusing
+# TODO: Currently highlights entire example if extras have no activations
 
 def _prepare_text(
     example,
@@ -119,7 +118,7 @@ def _prepare_text(
             n_incorrect
         )
     )
-
+    
     check = lambda i : i in random_indices
 
     return _highlight(str_toks, check)

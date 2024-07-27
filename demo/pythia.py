@@ -22,7 +22,6 @@ raw_features = "raw_features/pythia"
 explanation_dir = "results/pythia_explanations"
 recall_dir = "results/pythia_recall"
 fuzz_dir = "results/pythia_fuzz"
-processed_path = "/share/u/caden/sae-auto-interp/processed_features"
 
 def main(cfg):
     ### Load dataset ###
@@ -40,30 +39,16 @@ def main(cfg):
         cfg=cfg,
     )
 
-    def load_logits(record):
-        try: 
-            with open(f"{processed_path}/{record.feature}.txt", "rb") as f:
-                record.top_logits = orjson.loads(f.read())
-        except:
-            record.top_logits = ["Top logits could not be loaded."]
-        return record
-
     loader = FeatureLoader(
         tokens=tokens,
         dataset=dataset,
         constructor=partial(
             default_constructor, 
-            n_random=20, 
+            n_random=5, 
             ctx_len=20, 
             max_examples=5_000
         ),
-        sampler=partial(
-            top_and_quantiles,
-            n_train=20,
-            n_test=7,
-            n_quantiles=10
-        ),
-        transform=load_logits
+        sampler=top_and_quantiles,
     )
 
     ### Load client ###
@@ -71,43 +56,18 @@ def main(cfg):
     client = Local("casperhansen/llama-3-70b-instruct-awq")
 
     ### Build Explainer pipe ###
-
-    def preprocess(record):
-        test = []
-        extra_examples = []
-        
-        for examples in record.test:
-            test.append(examples[:5])
-            extra_examples.extend(examples[5:])
-
-        record.test = test
-        record.extra_examples = extra_examples
-
-        return record
-
     def explainer_postprocess(result):
-        data = {
-            "generation_prompt" : result[0],
-            "response" : result[1],
-            "explanation": result[2].explanation,
-        }
 
-        with open(f"{explanation_dir}/{result[2].record.feature}.txt", "wb") as f:
-            f.write(orjson.dumps(data))
+        with open(f"{explanation_dir}/{result.record.feature}.txt", "wb") as f:
+            f.write(orjson.dumps(result.explanation))
 
-        return result[2]
+        return result
 
     explainer_pipe = process_wrapper(
         SimpleExplainer(
             client, 
             tokenizer=tokenizer,
-            cot=True,
-            activations=True, 
-            logits=True,
-            max_tokens=500,
-            temperature=0.0,
         ),
-        preprocess=preprocess,
         postprocess=explainer_postprocess,
     )
 
@@ -117,6 +77,7 @@ def main(cfg):
         record = result.record
         
         record.explanation = result.explanation
+        record.extra_examples = record.random_examples
 
         return record
 
@@ -126,26 +87,12 @@ def main(cfg):
 
     scorer_pipe = Pipe(
         process_wrapper(
-            RecallScorer(
-                client, 
-                tokenizer=tokenizer, 
-                verbose=True, 
-                max_tokens=25,
-                temperature=0.0,
-                batch_size=cfg.batch_size
-            ),
+            RecallScorer(client, tokenizer=tokenizer, batch_size=cfg.batch_size),
             preprocess=scorer_preprocess,
             postprocess=partial(scorer_postprocess, score_dir=recall_dir),
         ),
         process_wrapper(
-            FuzzingScorer(
-                client, 
-                tokenizer=tokenizer, 
-                verbose=True, 
-                max_tokens=25,
-                temperature=0.0,
-                batch_size=cfg.batch_size
-            ),
+            FuzzingScorer(client, tokenizer=tokenizer, batch_size=cfg.batch_size),
             preprocess=scorer_preprocess,
             postprocess=partial(scorer_postprocess, score_dir=fuzz_dir),
         ),

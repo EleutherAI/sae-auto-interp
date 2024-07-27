@@ -11,34 +11,36 @@ def pool_max_activation_windows(
     ctx_len: int,
     max_examples: int,
 ):
+    # Reconstruct dense tensor
     batch_len, seq_len = tokens.shape
-
     sparse_activations = torch.sparse_coo_tensor(
         locations.t(), activations, (batch_len, seq_len)
     )
     dense_activations = sparse_activations.to_dense()
 
+    # Get unique location rows along the tokens tensor
     unique_batch_pos = torch.unique(locations[:,0])
     token_batches = tokens[unique_batch_pos]
     dense_activations = dense_activations[unique_batch_pos]
 
+    # Max pool activations
     avg_pools = torch.nn.functional.max_pool1d(
         dense_activations, kernel_size=ctx_len, stride=ctx_len
     )
-
+    
+    # Unfold tokens and activations to match
     activation_windows = dense_activations.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
     token_windows = token_batches.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
-
-    # Should add this back in?
-    # non_zero = avg_pools != 0
-    # non_zero = non_zero.sum()
-    k = min(max_examples, len(avg_pools))
     
+    # Get top k activation pools
+    k = min(max_examples, len(avg_pools))
     top_indices = torch.topk(avg_pools.flatten(), k).indices
 
+    # Get the top indices
     activation_windows = activation_windows[top_indices]
     token_windows = token_windows[top_indices]
 
+    # Set as examples
     record.examples = Example.prepare_examples(
         token_windows, activation_windows
     )

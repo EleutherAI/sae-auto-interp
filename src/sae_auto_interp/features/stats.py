@@ -41,10 +41,11 @@ def logits(
 
     for record_index in range(len(records)):
         decoded = tokenizer.batch_decode(per_example_top_logits[record_index])
-
         decoded_top_logits.append(decoded)
 
-    return decoded_top_logits
+        records[record_index].top_logits = decoded
+
+    
 
 
 def unigram(record: FeatureRecord, k: int):

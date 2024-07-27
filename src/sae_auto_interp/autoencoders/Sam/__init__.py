@@ -16,6 +16,7 @@ def _load(submodules, module, path):
     )
 
     module.ae = AutoencoderLatents(
+        ae,
         _forward = lambda x: ae.encode(x),
         width=DICTIONARY_SIZE
     )
