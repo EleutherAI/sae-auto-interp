@@ -1,5 +1,0 @@
-width: 131_072
-minibatch_size: 128
-seq_len: 64
-n_tokens: 15_000_000
-n_splits: 4

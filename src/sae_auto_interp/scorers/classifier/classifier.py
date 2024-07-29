@@ -1,5 +1,5 @@
 import asyncio
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from typing import List
 import random
 import re
@@ -13,7 +13,7 @@ from ...clients.client import Client
 from ...features import FeatureRecord
 
 
-class Classifier(Scorer, ABC):
+class Classifier(Scorer):
 
     def __init__(
         self, 
@@ -93,6 +93,8 @@ class Classifier(Scorer, ABC):
             **self.generation_kwargs
         )
         array = self._parse(selections)
+
+        print(selections, array)
 
         results = []
 

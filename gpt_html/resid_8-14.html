@@ -1,0 +1,703 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-14</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-14</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> of 1973, as amended (29 U.S.C. §<span style="background-color:rgba(57,212,155, 1.0)"> 7</span>94d), and<br>Activations: (" 7" : 10)<br>Example 2:  (ii) which contains cocaine base....<br>21 U.S.C. §<span style="background-color:rgba(57,212,155, 1.0)"> 8</span>41(<br>Activations: (" 8" : 9)<br>Example 3:  in carrying out its statutory responsibilities under 28 U.S.C. §<span style="background-color:rgba(57,212,155, 1.0)"> 9</span>94(o);<br>Activations: (" 9" : 9)<br>Example 4: <|endoftext|> with N.Y. Crim. Proc. Law §<span style="background-color:rgba(57,212,155, 1.0)"> 7</span>10.30. That statute requires<br>Activations: (" 7" : 8)<br>Example 5: <|endoftext|>TRATIVE AND CEASE-AND-DESIST PROCEEDINGS PURSUANT TO SECTION<span style="background-color:rgba(57,212,155, 1.0)"> 8</span><br>Activations: (" 8" : 8)<br>Example 6: . PBHG Funds is an investment company registered with the Commission since December 1985 pursuant to Section<span style="background-color:rgba(57,212,155, 1.0)"> 8</span><br>Activations: (" 8" : 8)<br>Example 7: , instituted pursuant to Section<span style="background-color:rgba(57,212,155, 1.0)"> 8</span>A of the Securities Act of 1933 ("Securities Act"), Sections 17<br>Activations: (" 8" : 8)<br>Example 8:  material injury. Pursuant to section<span style="background-color:rgba(57,212,155, 1.0)"> 7</span>51(c)(2) of the Act, interested<br>Activations: (" 7" : 8)<br>Example 9: IONS<span style="background-color:rgba(57,212,155, 1.0)"> 9</span>(b) AND<span style="background-color:rgba(57,212,155, 1.0)"> 9</span>(f) OF THE INVESTMENT COMPANY ACT OF 1940<br>Activations: (" 9" : 8)<br>Example 10:  not Treasury has the authority to do this unilaterally hinges on your reading of 26 US Code §<span style="background-color:rgba(57,212,155, 1.0)"> 7</span>07<br>Activations: (" 7" : 7)<br>Example 11:  defamed. See Restatement (Second) of Torts §<span style="background-color:rgba(57,212,155, 1.0)"> 5</span>77(1). The<br>Activations: (" 5" : 7)<br>Example 12: <|endoftext|>, and Congress�� power under section<span style="background-color:rgba(57,212,155, 1.0)"> 5</span> of the 14th article of amendment to the Constitution<br>Activations: (" 5" : 7)<br>Example 13:  of Rape and Incest.<br>SOURCE: H.R.<span style="background-color:rgba(57,212,155, 1.0)"> 10</span>91,<span style="background-color:rgba(57,212,155, 1.0)"> 7</span>/23/<br>Activations: (" 7" : 7)<br>Example 14:  tax shelter defined in Sec.<span style="background-color:rgba(57,212,155, 1.0)"> 6</span>662(d)(2)(C)(ii).<br>The definition<br>Activations: (" 6" : 7)<br>Example 15:  pursuant to section<span style="background-color:rgba(57,212,155, 1.0)"> 7</span>51(c) of the Tariff Act of 1930 (19 U.S<br>Activations: (" 7" : 7)<br>Example 16: <span style="background-color:rgba(57,212,155, 1.0)"> 8</span> of the Act or has been the subject of any refusal order or stop order under section 8 of<br>Activations: (" 8" : 7)<br>Example 17: <|endoftext|> 203(k) of the Investment Advisers Act of 1940 and Sections<span style="background-color:rgba(57,212,155, 1.0)"> 9</span>(b) and<br>Activations: (" 9" : 7)<br>Example 18: 's alleged failure to comply with N.Y. Crim. Proc. Law §<span style="background-color:rgba(57,212,155, 1.0)"> 7</span>10.30<br>Activations: (" 7" : 7)<br>Example 19: ant to Section<span style="background-color:rgba(57,212,155, 1.0)"> 8</span>A of the Securities Act, Section 21C of the Exchange Act, Section 203<br>Activations: (" 8" : 7)<br>Example 20:  violated by any failure to comply with N.Y. Crim. Proc. Law §<span style="background-color:rgba(57,212,155, 1.0)"> 7</span>10.<br>Activations: (" 7" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Single-digit numbers, often part of a section or statute reference in legal or legislative text.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Single-digit numbers, often part of a section or statute reference in legal or legislative text.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> courthouse for the hearing. See Rule<span style="background-color:rgba(57,212,155, 1.0)"> 8</span>(c) of the Rules Governing Section 2254 Cases</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> filed a shelf registration statement or amended a shelf registration statement for purposes of complying with section<span style="background-color:rgba(57,212,155, 1.0)"> 10</span>(a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>SIBILITY OF SUCH DAMAGES.
+Section<span style="background-color:rgba(57,212,155, 1.0)"> 7</span>. Links to other Sites.
+If</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> and Section<span style="background-color:rgba(57,212,155, 1.0)"> 9</span>(b) of the Investment Company Act, Pilgrim be, and hereby is barred from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> in the zoneless South Atlantic.
+I recommend the repeal of section<span style="background-color:rgba(57,212,155, 1.0)"> 6</span> of the act of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> 5</span>,513,251 to Rochkind et al. and U.S. Pat. No</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> to another EU country, the EU Regulation on social security coordination (Regulation<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> 8</span>83/2004)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> of materials on such third party Web sites.
+Section<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> 8</span>. User Information.
+Section 9.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> : 2005, ISO<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> 9</span>001:2008 Co) is a multi-process business process consulting and management</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> defined in this section.
+Is not an asset-backed issuer as defined in Item<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> 11</span>01</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, I signed into law House Bill<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> 4</span>369, which establishes the Commission on the Elimination of Poverty</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> whatever other part applies
+to the device) only once... 47 CFR<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> 2</span>.1060(c</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>
+SBM Position on HB<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> 4</span>885 and HB<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> 4</span>886: Support the Concept of Expanding</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> U.S. Pat. No.<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> 5</span>,448,555 to Bremer et al.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> statements, the Alliance uses the IRS Form<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> 9</span>90 to calculate the ratio. Using the IRS Form 9</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>ral of Aetna's "Marketing Management Award." (Compl. P<span style="background-color:rgba(57,212,155, 0.76)"> 6</span>). On June</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>.<span style="background-color:rgba(57,212,155, 0.76)">4</span>385 https://www.ncbi.nlm.nih.gov/pubmed/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>allowance is worked out as section<span style="background-color:rgba(57,212,155, 0.76)"> 14</span>A read with Rule<span style="background-color:rgba(57,212,155, 0.76)"> 8</span>D of the I.T.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>, or environmental dimension" (p.<span style="background-color:rgba(57,212,155, 0.76)"> 7</span>87). This approach can be at four levels of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> no.<span style="background-color:rgba(57,212,155, 0.76)"> 7</span>76
+Scope and Contents
+Three-quarter view of head and neck of a Mi</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>33 FSB) (up to 2 supported) Manufacturer Part#<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> 4</span>16780-B21
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>.Ct. at<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> 13</span>36 (plurality opinion) (quoting Moskal v</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> on New Zealand
+December 1, 2010
+Motu Working Paper No.<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> 10</span>-14
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> 16:7; I Thess. 1:6; Act.<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> 9</span>:31; Rom</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>. Cal. Labor Code<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> 26</span>99(e)(2).
+64. Cal. Labor Code</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>, 443, 17 L. ed.<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> 8</span>60, 861. See also Boyce v.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Right to portability (pursuant to art.<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> 20</span> GDPR): in order to receive</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>://doi.org/10.1002/smll.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">20</span>2000272.
+H</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> 70 F.3d at<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> 4</span>89-91
+Jackson argues that Shaw is not controlling because</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Ms., Yale, CVIa, tome<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> 4</span>.
+[28. ]See Democracy (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Form<span style="background-color:rgba(57,212,155, 0.52)"> 10</span>-Q following the determination, rather than waiting until the first fiscal quarter of the next year</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> now abandoned, which is a division of application Serial No.<span style="background-color:rgba(57,212,155, 0.52)"> 7</span>57,850, filed August 28</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> Enterprise Single Sign-On Suite - Version 10.1.4.1 to<span style="background-color:rgba(57,212,155, 0.52)"> 10</span>.1</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> 2422-<span style="background-color:rgba(57,212,155, 0.52)">9</span>41 DS8000 Licensed Machine 2422-941 Code: 2422-951</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> this Notice.
+<span style="background-color:rgba(57,212,155, 0.52)">10</span>. Data security
+The Data Controller adopts the appropriate technical and organisational</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> The State further relies on K.A.R. 44-<span style="background-color:rgba(57,212,155, 0.44)">6</span>-141(e), which</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Tax Code Chapter<span style="background-color:rgba(57,212,155, 0.44)"> 23</span>, and that the appraisal was performed in accordance with the Uniform Standards of Professional App</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>.<span style="background-color:rgba(57,212,155, 0.44)"> 12</span>56(e)(3)(B) considers the term "syndicate" to include</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>
+In a block<span style="background-color:rgba(57,212,155, 0.44)"> 5</span>34, a trainee performs the simulated procedure, and the evaluation circuit provides</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Format to Cryptographic Message Syntax Standard – PKCS<span style="background-color:rgba(57,212,155, 0.44)"> 7</span> Certificate (.P7B)
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> FIG.<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 5</span> to indicate that a TSR program is stored in the unit and is used in the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>Absent further legislative elaboration, Section<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 1</span>-2-5 of the Code of Alabama 1975 requiring</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> was a problem, and some police and gendarmes extorted bribes (see section<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 2</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Version<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 5</span> will be a long time coming! Dan M
+==== TMG Mailing List =</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 9</span>-318(4) of the UCC invalidates any provision of the Agreement prohibiting the allocation</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> fashion [Table<span style="background-color:rgba(57,212,155, 0.28)"> 6</span>] and [Figure 1].
+|Table 6: Clinical, laboratory,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>explained in Section<span style="background-color:rgba(57,212,155, 0.28)"> 3</span>. 1.
+Other than that, turning the control logic into a data</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> 8</span>, a flowchart is shown illustrating one preferred method of manufacturing the lamp assembly 200 of FIGS</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> every 6 months, called the Form<span style="background-color:rgba(57,212,155, 0.28)"> 9</span>-K Report. The Form 9-K Report was replaced</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> 14</span> CFR part 39 with a proposed AD. The proposed AD applies to Lycoming Engines models 320</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and works to keep our community safe.
+This month, the C-M Alumni Office is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>. Sporting gold, and we all felt a part of it.
+*The ��Stick</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> means prank, takes shape when, among the many photographs of the family archive, two emerge: the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> not acceptable."
+She understands why some people might be comfortable living alongside the coyotes, but she</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>% of the vote, but "20 Feet From Stardom" won and was picked by about 24</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> priority areas across Scotland.
+We��ve faced significant challenges along the way, not least due</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Patriots�� top pass-catching tight end, a role that��s carried limited fantasy upside</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Remilitarization 0. The creativity examples and promotions are bad to the site of the P2</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> technicians instruction and direct, hands-on experience in all aspects of audio and video recording and sound reinforcement</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>� �������
+Three hundred and seventy million and the Chinese team has</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> No. 10/303<span style="background-color:rgba(57,212,155, 0.2)">,</span>385,<span style="background-color:rgba(57,212,155, 0.2)"> filed</span> Nov. 25, 2002; which is a continuation-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>52. https<span style="background-color:rgba(57,212,155, 0.2)">://</span>doi.<span style="background-color:rgba(57,212,155, 0.2)">org</span>/10.1021/nn102112b https</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> 2227, unchanged.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Oct.<span style="background-color:rgba(57,212,155, 0.2)"> 29</span>, 1940, eff. Sept. 1, 1941.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> please contact first<span style="background-color:rgba(57,212,155, 0.2)">name</span>.last<span style="background-color:rgba(57,212,155, 0.2)">name</span>@example.org or call 0203 372 6278.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>86 29 TRB<span style="background-color:rgba(57,212,155, 0.2)"> TS</span> 74550<span style="background-color:rgba(57,212,155, 0.2)">-</span>74850 139.7×215.9×47</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Referring now<span style="background-color:rgba(57,212,155, 0.2)"> to</span> FIGS<span style="background-color:rgba(57,212,155, 0.2)">.</span> 4C-1 and 4C-2, the "</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> to that, we<span style="background-color:rgba(57,212,155, 0.2)"> are</span> accredited with<span style="background-color:rgba(57,212,155, 0.2)"> ISO</span> 9001:2015 certification, which enables us to guarantee highest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Court Rule 10.<span style="background-color:rgba(57,212,155, 0.2)">04</span> and the<span style="background-color:rgba(57,212,155, 0.2)"> State</span> Bar Bylaws be given by a single publication of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>.R.<span style="background-color:rgba(57,212,155, 0.2)"> 2</span>.
+<span style="background-color:rgba(57,212,155, 0.2)">Sec</span>. 1107. – Cooperative Watershed Management Program (Rep</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>." 24 C.<span style="background-color:rgba(57,212,155, 0.2)">J</span>.S<span style="background-color:rgba(57,212,155, 0.2)">.,</span> Criminal Law § 1582. See State v. Bell,</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

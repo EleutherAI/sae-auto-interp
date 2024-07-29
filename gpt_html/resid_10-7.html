@@ -1,0 +1,696 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-7</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-7</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  per day to support a weight loss goal and you want to do a ketogenic diet<span style="background-color:rgba(57,212,155, 1.0)">, then</span> you<br>Activations: ("," : 8), (" then" : 10)<br>Example 2:  over the last twelve months<span style="background-color:rgba(57,212,155, 1.0)"> and</span> the current stock price<span style="background-color:rgba(57,212,155, 1.0)">,</span> we<span style="background-color:rgba(57,212,155, 1.0)"> get</span> an annual yield of 5.2<br>Activations: ("," : 7)<br>Example 3: , DC to Madrid, Spain.<br>That<span style="background-color:rgba(57,212,155, 1.0)"> gives</span> 20.462 ms.<span style="background-color:rgba(57,212,155, 1.0)"><br></span>In practice however,<br>Activations: (" gives" : 7), ("<br>" : 5)<br>Example 4:  in Month A your company only used £1,000 of your Levy allocation money<span style="background-color:rgba(57,212,155, 1.0)">, you will</span> not<br>Activations: ("," : 7)<br>Example 5:  Obama voters and just 50% of 70<span style="background-color:rgba(57,212,155, 1.0)">,</span>000 returning third-party and new voters<span style="background-color:rgba(57,212,155, 1.0)">, then she</span><br>Activations: ("," : 5), ("," : 7), (" then" : 7)<br>Example 6:  percentage for each macro from the list above.<br>For<span style="background-color:rgba(57,212,155, 1.0)"> example, if</span> you need 2,000 calories<br>Activations: (" example" : 5), ("," : 7)<br>Example 7: . At $1,359.33<span style="background-color:rgba(57,212,155, 1.0)">,</span> we��re $35 better off this month in<br>Activations: ("," : 7)<br>Example 8: <br>So in the example<span style="background-color:rgba(57,212,155, 1.0)"> above,</span> 100 calories worth of carbs<span style="background-color:rgba(57,212,155, 1.0)"> would equal</span> 25 g or carbs (100<br>Activations: ("," : 6)<br>Example 9: ization rate<span style="background-color:rgba(57,212,155, 1.0)">,</span> the assessed<span style="background-color:rgba(57,212,155, 1.0)"> value</span> would<span style="background-color:rgba(57,212,155, 1.0)"> be</span> $1.25 million.<span style="background-color:rgba(57,212,155, 1.0)"> But</span> if they use a 12<br>Activations: ("," : 6), (" value" : 5), (" be" : 4), (" But" : 4)<br>Example 10:  for the fact that most titles will be read by two or three people<span style="background-color:rgba(57,212,155, 1.0)">, then</span> it shows that we<br>Activations: ("," : 5), (" then" : 6)<br>Example 11: <|endoftext|> rate. For example, if you count 20 beats in 10 seconds<span style="background-color:rgba(57,212,155, 1.0)">,</span> your exercise heart rate is<br>Activations: ("," : 6)<br>Example 12:  that dividend yields aren't as hefty as they used to be<span style="background-color:rgba(57,212,155, 1.0)"> --</span> which I calculated here<span style="background-color:rgba(57,212,155, 1.0)"> -- we still</span><br>Activations: (" --" : 6), (" we" : 4)<br>Example 13: <|endoftext|> whole thing + a large salad. Calorie<span style="background-color:rgba(57,212,155, 1.0)"> wise,</span> there are 248 calories per serving,<span style="background-color:rgba(57,212,155, 1.0)"> so</span><br>Activations: (" so" : 6)<br>Example 14:  lost rent to the city (at roughly $28,000 to $29,000 a year<span style="background-color:rgba(57,212,155, 1.0)">),</span><br>Activations: (")," : 6)<br>Example 15:  64-bit version of Windows<span style="background-color:rgba(57,212,155, 1.0)">,</span> PMVS2 could still only consume 8GB of it itself,<br>Activations: ("," : 6)<br>Example 16: <|endoftext|>00. If you put 1200.00 in the amount field and 12 in the months field<span style="background-color:rgba(57,212,155, 1.0)">,</span><br>Activations: ("," : 6)<br>Example 17:  each month. If you consider it<span style="background-color:rgba(57,212,155, 1.0)">,</span> this method will conserve you $120 during 3 years. It<br>Activations: ("," : 6)<br>Example 18: <span style="background-color:rgba(57,212,155, 1.0)">, which was</span> at the entry level including costs.<span style="background-color:rgba(57,212,155, 1.0)"> Therefore</span> if the trade was stopped out at 1542<br>Activations: ("," : 4), (" which" : 4), (" Therefore" : 6)<br>Example 19:  of fuel, considering you drive an average car (30 mpg) and<span style="background-color:rgba(57,212,155, 1.0)">,</span> if you drive an<br>Activations: ("," : 6)<br>Example 20:  of Rs. 1800=Rs. 1800 + Rs.<br><span style="background-color:rgba(57,212,155, 1.0)">So, now</span> the balance which has been<br>Activations: ("So" : 4), ("," : 6)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Punctuation marks (commas, dashes) and conjunctions ("then", "so", "but") that connect clauses or items in a list, often in explanatory or mathematical contexts.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Punctuation marks (commas, dashes) and conjunctions (&quot;then&quot;, &quot;so&quot;, &quot;but&quot;) that connect clauses or items in a list, often in explanatory or mathematical contexts.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">.</span>
+<span style="background-color:rgba(57,212,155, 1.0)">- This is</span> the<span style="background-color:rgba(57,212,155, 1.0)"> distance</span> the sound traveled to the obstacle and back<span style="background-color:rgba(57,212,155, 1.0)">. So the distance</span> of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> per month.<span style="background-color:rgba(57,212,155, 1.0)"> So for the average</span> reader<span style="background-color:rgba(57,212,155, 1.0)">, does a</span> subscription make sense in a world of daily</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> you want the Super version (the one with all the goodies we��ve talked about<span style="background-color:rgba(57,212,155, 1.0)">),</span> you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">). With</span> the trade moving in our<span style="background-color:rgba(57,212,155, 1.0)"> favour, we moved the</span> stop-loss<span style="background-color:rgba(57,212,155, 1.0)"> down to</span> 1542p</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> 30-days<span style="background-color:rgba(57,212,155, 1.0)">, there</span> will be no refund no matter how quickly you unsubscribe.
+In this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> more!
+As I write these words over 163 million Americans, (that��<span style="background-color:rgba(57,212,155, 0.9200000000000002)">s</span> more than</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>1,300 instead. I did<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the same</span> in March. By May of 2011<span style="background-color:rgba(57,212,155, 0.9200000000000002)">,</span> I was notified</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> is</span> the simple fact<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> that if</span> the USDA were to use the Pro Farmer numbers<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> for just</span> Iowa and Illinois</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> non-LUCF sectors (gross) only,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> whereas</span>
+for the commitment<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> period</span> the uncertainties would</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>,000 points would<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> net</span> 3,000 miles<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> instead</span>.
+Points-to-mile transfers rarely deliver</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> not an episode.) If that $2 million a year doesn't sound like much<span style="background-color:rgba(57,212,155, 0.8400000000000001)">,</span> keep in<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> mind</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> your current setup and download that version of Win8 without asking.<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> So, if</span> you're running 32</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>,000<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> instead of</span> 5 per cent. for six months<span style="background-color:rgba(57,212,155, 0.8400000000000001)">;</span> this is the extent of loss<span style="background-color:rgba(57,212,155, 0.8400000000000001)">,</span> which</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>s more than the entire year��s worth of Bitcoin trades in 2016 in Brazil [<span style="background-color:rgba(57,212,155, 0.8400000000000001)">around</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, so July to January<span style="background-color:rgba(57,212,155, 0.8400000000000001)">,</span> resulted the participants not likely to carry the task out. This was simply</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> extra market space of more than £ 258m will be developed over the next 5 years.<span style="background-color:rgba(57,212,155, 0.76)"> At this</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> 2004, early 2005. To<span style="background-color:rgba(57,212,155, 0.76)"> even</span> BEGIN to work on a ��pause back to 2005�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> only uses 512 bytes -<span style="background-color:rgba(57,212,155, 0.76)"> so</span> you have lots of space for your code!
+- Arduino IDE</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> on your Galaxy Note 9 you have the edge lighting option.
+<span style="background-color:rgba(57,212,155, 0.76)">So basically what</span> this allows you to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> position at the end of the month, when you<span style="background-color:rgba(57,212,155, 0.76)"> consider</span> our fixtures for December,<span style="background-color:rgba(57,212,155, 0.76)"> then</span> it will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> brisket point by itself. That should<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> give</span> you enough to fuel the entire smoke, even if you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> their Employee Provident Fund Account at the end of every month.
+-<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Now,</span> the contribution made</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>Here are the stats for the last two weeks, separated by days.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">-</span> The lowest daily</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> tournaments tab, and select Gross "N" Nasty Round 2<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,</span> from the list of tournaments,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> began posting pictures with the guy since then. As of now<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,</span> the girlfriend<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> and</span> boyfriend seem to be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>- If Kane wrestles on this Monday's RAW<span style="background-color:rgba(57,212,155, 0.6000000000000001)">,</span> it will be his 400th match on RAW</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> the household survey showed nearly a million new jobs were created in June 1983<span style="background-color:rgba(57,212,155, 0.6000000000000001)">,</span> the employer survey did not</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> become a consultant at Bain and make $44,000.<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Even then</span> you made a life style choice</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> and you'll see there are 78 words in the description of Brown's video,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> compared to</span> only 13</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> connection speed. Our connection<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> at</span> work varies from +2MB to as low as 600K when all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> you have a total super balance of less<span style="background-color:rgba(57,212,155, 0.52)"> than</span> $500<span style="background-color:rgba(57,212,155, 0.52)">,</span>000 on the previous 30 June and you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>ed in Holland €269,-<span style="background-color:rgba(57,212,155, 0.52)">.</span> It plays also vids and pics of my 2 computers. Then</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> I think we should<span style="background-color:rgba(57,212,155, 0.52)"> count</span> Alice's Adventures in Wonderland and Through the Looking Glass as two separate classics.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>)
+2. 45 - 200 KGS<span style="background-color:rgba(57,212,155, 0.52)">,</span> we will send by air transport. (Fastest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>s, or goats. I say,Craig1916: 168
+To buy his favour<span style="background-color:rgba(57,212,155, 0.52)">,</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> my desk I happened to glance at the calendar and noticed<span style="background-color:rgba(57,212,155, 0.44)"> that</span> today was the last day of the month</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Vitamin D3 Supplement, Calcium Iodate, Vitamin B12 Supplement
+Calorie Content<span style="background-color:rgba(57,212,155, 0.44)"> -</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> see from above<span style="background-color:rgba(57,212,155, 0.44)">,</span> B&G's significantly higher debt load was quite the burden in the 2009 recession</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>st August 2018. Or, if you earned Miles in October 2015<span style="background-color:rgba(57,212,155, 0.44)"> and</span> the joining date of your</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> kWh.<span style="background-color:rgba(57,212,155, 0.44)"> While</span> the 550 grams of CO2 per kWh is a significant target, there is a need</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> higher tax rate than he does.
+As a result<span style="background-color:rgba(57,212,155, 0.36000000000000004)">,</span> the top 1 percent has done progressively better</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> over 4 million.<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Even by</span> the government's fiddled standards unemployment is still higher now than it was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>?
+day delivery guaranteed one. Not<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> only</span> is it guaranteed to get to you in a single day</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> me, it��s your cheapest option out there. Yes, even<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> at</span> that price<span style="background-color:rgba(57,212,155, 0.36000000000000004)">,</span> it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ilk.<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Instead of</span> starting over or adding more of the dry ingredients to even it out, I just</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> the download will start.
+Redirect<span style="background-color:rgba(57,212,155, 0.28)"> to</span> Page:
+This link will redirect you to a download</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>
+��If that does not happen, the polling average of those six weeks<span style="background-color:rgba(57,212,155, 0.28)"> should be</span> treated as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> 18 bars
+If you only have regular porridge oats<span style="background-color:rgba(57,212,155, 0.28)">,</span> and no jumbo oats<span style="background-color:rgba(57,212,155, 0.28)">,</span> and you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> control is not allowed (still China...) but I managed to sneak in one.
+So that<span style="background-color:rgba(57,212,155, 0.28)">'s</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> 2011 VS. FIRST HALF 2010
+Revenue of $182.9 million<span style="background-color:rgba(57,212,155, 0.28)"> compared</span> with $</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>insular India sporadically in the forested areas (Sankar and Acharya 2004),</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> day.
+- The absence of cyclists on the magnificent and expensive new cycleway on East Coast Rd</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> He is a Fellow of the American Association of Pharmaceutical Scientists.
+Dr. Smith��s current</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> alibi geniti, in ipsam domicilio aut studiis asciti,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> often pointed out the benefits to keeping a Predator or Reaper collecting video over a target for multiple days to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> If she must, she will even give her own life for her kittens. For example, a lion</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> mistreating an animal? 5. Have you mistreated an animal? Have you repented? Educ</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>.
+Also the Water Protector Legal Collective and the National Lawyer��s Guild have a really</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the information, and may cause the printer 16 to print an appropriate record of the transaction, such as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>. strikes in these areas have been token gestures at best. Obama is not worried that Kurdistan will fall</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>an Allen��<span style="background-color:rgba(57,212,155, 0.2)">s</span> 90 receiving<span style="background-color:rgba(57,212,155, 0.2)"> yards</span>, and the Chargers' top-two threats combined for 210</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> now +116 in<span style="background-color:rgba(57,212,155, 0.2)"> win</span>-loss<span style="background-color:rgba(57,212,155, 0.2)"> differential</span>, virtually lapping the field of greatest QBs in history</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>
+And here are<span style="background-color:rgba(57,212,155, 0.2)"> Obama</span>'s electoral<span style="background-color:rgba(57,212,155, 0.2)"> college</span> chances. It's 270 to win, kids:
+|</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> row onto the<span style="background-color:rgba(57,212,155, 0.2)"> X</span>OR array<span style="background-color:rgba(57,212,155, 0.2)"> 128</span>, 228 but inhibits the connection for row 2. The X</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> 0.1%<span style="background-color:rgba(57,212,155, 0.2)"> is</span> a material<span style="background-color:rgba(57,212,155, 0.2)"> shift</span> in price, but we are a bit uneasy this morning being</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> announcement that the new<span style="background-color:rgba(57,212,155, 0.2)"> CS</span>5 Flash<span style="background-color:rgba(57,212,155, 0.2)"> product</span> has built in iPhone app support. All in all, pretty</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> barely have a 50<span style="background-color:rgba(57,212,155, 0.2)"> point</span> IQ, let<span style="background-color:rgba(57,212,155, 0.2)"> me</span> ask what would the IQ be on people that didn't</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> not hurt to<span style="background-color:rgba(57,212,155, 0.2)"> get one</span>).
+So given that information, does the Gock 19 sound like a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> units earn the $<span style="background-color:rgba(57,212,155, 0.2)">.</span>70 per<span style="background-color:rgba(57,212,155, 0.2)"> share</span> dividend, or $541,378 per year. Smart</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>5kg. At<span style="background-color:rgba(57,212,155, 0.2)"> the</span> minute, I'm<span style="background-color:rgba(57,212,155, 0.2)"> at</span> 107.1kg. I wouldn't want to</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

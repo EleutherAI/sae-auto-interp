@@ -1,0 +1,690 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-12</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-12</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  away to Canada — but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> after hustling her way to $50,000 — Janssen<br>Activations: (" only" : 10)<br>Example 2:  is explored in the text. David sedaris would eat chinese food – but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> as an alternative<br>Activations: (" only" : 9)<br>Example 3: 1 John 3:22).<br>Valerie is now out of intensive care—but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> in one<br>Activations: (" only" : 9)<br>Example 4: , but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> a drop in the poisoned pool of many other calamities. This thought has its appeal<br>Activations: (" only" : 9)<br>Example 5:  rather than rent would have been expected to occur if interest rates hit 6.2%—but<span style="background-color:rgba(57,212,155, 1.0)"> only</span><br>Activations: (" only" : 9)<br>Example 6:  Travis Hall (Sam Jaeger) are ordered to raid a terrorist group's warehouse, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> find<br>Activations: (" only" : 9)<br>Example 7:  your core, and then bend to the side as far as possible—but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> at the waist.<br>Activations: (" only" : 9)<br>Example 8: ��s in Mary Kills People, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> in two episodes.)<br>Tara Armstrong created Mary<br>Activations: (" only" : 9)<br>Example 9: <|endoftext|> riveting, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> because it��s so silly.<br>And it will end with<br>Activations: (" only" : 9)<br>Example 10:  swiftly and ferociously—but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> after its operatives identify her killer and rescue the hostages.<br><br>Activations: (" only" : 9)<br>Example 11:  banned for some reason. I found an Auzzie supplement company that sells it, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> one<br>Activations: (" only" : 9)<br>Example 12:  a more inclusive government. They never learn.<br>Meanwhile, America has relaxed – but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> temporarily –<br>Activations: (" only" : 8)<br>Example 13: <|endoftext|> 2015. Development team members will still be checking their respective and common email inbox's - but<span style="background-color:rgba(57,212,155, 1.0)"> only</span><br>Activations: (" only" : 8)<br>Example 14:  for $500, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> if they are able to win you additional aid of $5,000<br>Activations: (" only" : 8)<br>Example 15:  edits that AiG or ICR would have killed for... but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> Dembski could find it<br>Activations: (" only" : 8)<br>Example 16:  he's retiring, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> to accept the Williamstown Chief of Police position.<br>He says it<br>Activations: (" only" : 8)<br>Example 17:  and ready to rumble, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> one can remain at the top of the food chain! Mr<br>Activations: (" only" : 8)<br>Example 18:  filed a restraining order against her ex, he claims he went over to her apartment, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> because<br>Activations: (" only" : 8)<br>Example 19:  gimmick and a gimmick only. Their sound could work, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> with enough imagination, which the band<br>Activations: (" only" : 8)<br>Example 20: <|endoftext|> their bad luck.<br>When we hit middle school it got worse, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> because they knew<br>Activations: (" only" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The word "only" in a sentence, often indicating a restriction or limitation.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The word &quot;only&quot; in a sentence, often indicating a restriction or limitation.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> scene, said her son was not involved in any ritual killing but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> prescribed traditional healing drugs.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> again for another minute - but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> if needed. You don't want to overcook the vegetables here</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>an even, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> for the candidate, not for us. By losing, in fact,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> completely anonymous. We do track IPs for comments and email form use, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> as a weapon</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> lives. Today more people are reading Kashmir Observer than ever, but<span style="background-color:rgba(57,212,155, 1.0)"> only</span> a handful are paying while advertising</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> progress each week.
+Unfortunately he<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> only</span> plays one recognizable tune, the classic coda from Black</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> of the standings. It is however<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> only</span> a slender lead on countback ahead of Matt Lavers with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> only</span> in mime, no trips to the ER this time!
+After the breathing shenanigans subsided</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> record, however, could<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> only</span> be used to date the ��appearance�� of an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>, and everybody was entitled to
+choose. In Holland, however,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> only</span> members of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> but<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> just</span> shy of full blown Lyme. Had been sick, fever, severe fatigue for a year,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> bullshit. But there is really<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> only</span> one new title worth welcoming into the guilty sanctuary of your own</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>. The Cowboys have allowed 33 hits this season, but<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> just</span> six in the three weeks that Kitna</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> appeared.
+Both men and women instinctively looked at that figure.
+However, the projection<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> only</span> showed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> unions work, for example). But the hierarchy<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> only</span> works if people at lower levels know they��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> steel grill that looks like the $800 models, but was a find for<span style="background-color:rgba(57,212,155, 0.76)"> only</span> $350 at Home</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> all the 4 shades
+I don��t like foundation or BB creams but after reading<span style="background-color:rgba(57,212,155, 0.76)"> only</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> there has so far<span style="background-color:rgba(57,212,155, 0.76)"> only</span> been a small rise in global average temperature, of ~0.8 °</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> ��Maybe I��m too naive, but I<span style="background-color:rgba(57,212,155, 0.76)"> simply</span> gave him the benefit of doubt that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> inherently wrong with the book, and it may even become a favourite, but I am<span style="background-color:rgba(57,212,155, 0.76)"> just</span> not</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> or want to write the next chapter of my story. but I<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> just</span> cant do it yet.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> $5 or so that I paid for it, if<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> only</span> to give
+me something to say about</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> you<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> only</span> play for a half, maybe you don't deserve the full amount.
+Now the team</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>
+But the typically gruff shipwright made no complaint about his company,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> only</span> sat down in an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>However, Danger Room is reporting that the military is<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> only</span> ��30 to 50 percent�� of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>. I love you, damn it, but I<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> just</span> don't think it��s working</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>Actually, I<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> just</span> made up that phone number. Won��t some lady in London be tick</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>
+Even Carl Sandburg<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> only</span> lasted two years when he occupied Curley��s office a century</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> reduction in overheads and the speeding up of process cycle times. Of course this<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> only</span> works if</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>, only thus is a relation of the infinite to the finite thinkable; and<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> only</span> in this way</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> quality and future improvement.
+But<span style="background-color:rgba(57,212,155, 0.52)"> just</span> as we begin to close the quality gap on the French,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> time so I guess I must be a little more careful because I have<span style="background-color:rgba(57,212,155, 0.52)"> only</span> dropped my last smartphone</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> patient's own body to treat the disease.But<span style="background-color:rgba(57,212,155, 0.52)"> just</span> barely.
+Ben McLemore scored 16</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> in search algorithms are now<span style="background-color:rgba(57,212,155, 0.52)"> only</span> recognizable at the margins? Is there some hidden network effect that makes it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> they are<span style="background-color:rgba(57,212,155, 0.52)"> only</span> temporary and that following the finalisation and enactment of the proposed easing measures, potential borrowers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>. I tend to lean toward Malwarebytes for this. But don't<span style="background-color:rgba(57,212,155, 0.44)"> just</span> use the free version</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>'s<span style="background-color:rgba(57,212,155, 0.44)"> only</span> small inclines and declines for 3km before the Quarry Road gate. After turning around</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>ords were put back into effect; war was an inevitability, and<span style="background-color:rgba(57,212,155, 0.44)"> only</span> the Federation-K</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> his freshman season. After<span style="background-color:rgba(57,212,155, 0.44)"> only</span> getting one hit in 12 at bats in 2011, Murray hit.271</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> though e-business is<span style="background-color:rgba(57,212,155, 0.44)"> simply</span> like a regular offline company, however it makes it easier for you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> they noted, had won<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> only</span> 43% of the vote. He had no mandate, and what</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>.<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Only</span> then did he notice the girl that was lying, unconcious, on top of him.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> our community of small businesses. Not only does this uplift other entrepreneurs, but<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> it</span> boosts local/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Knox argue that<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> only</span> one person is guilty of the murder: Ivory Coast-born Rudy Guede</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> votes. It is<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> only</span> because they opted for online votes kaufen and just didn��t</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> it��s based on, though. The changes to the Omologata are<span style="background-color:rgba(57,212,155, 0.28)"> only</span> skin-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> herself to breathe. When the<span style="background-color:rgba(57,212,155, 0.28)"> only</span> discernable sound was the steady drip of Megan��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Malto" brew not<span style="background-color:rgba(57,212,155, 0.28)"> only</span> has as much complexity as dopplebocks around the world,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>celerating reforms is the<span style="background-color:rgba(57,212,155, 0.28)"> only</span> way to cope with the TPP�� and that China needs to �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> strategic choke points. Unfortunately ammunition is limited and there will<span style="background-color:rgba(57,212,155, 0.28)"> only</span> be a few rounds of SOS fire</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with the pool and it was sponsored by several local businesses. A giant screen had been placed at the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, including a one-point defeat to Maryland. However, they've won their last two games despite</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, you have enough to kick in at least $100. Click here to give now and prove that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>old doesn��t have a helluva lot to bribe with. Otto stood his ground -</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+push the guard and go left down another hallway. In this third bubble
+there is black carpet</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Korea itself is a safe place to work and live, overhanging it is the nuclear threat of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in the Modena archives. She co-authored the following study guides: Renaissance History and Italian Cinema</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> is accused of making obscene phone calls to your home. Would you please tell the jury precisely what the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> space radiation environment.
+"Scientists will use this facility as a research tool to protect today's crews</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> disagreement.
+Conservatives, compared with liberals, have higher levels of respect for and obedience to authority</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> age provision but only<span style="background-color:rgba(57,212,155, 0.2)"> for</span> future employees. Shelby County did this in 2011 and Memphis did this in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, taught us this<span style="background-color:rgba(57,212,155, 0.2)"> technique</span> because she only had a half day on Fridays to work on poetry. She</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> apps to check<span style="background-color:rgba(57,212,155, 0.2)"> which</span> ones run in the background but till now only the music/radio app run</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>. But it just takes<span style="background-color:rgba(57,212,155, 0.2)"> so</span>oooo long. Silver stamping has been a fun distraction until more time</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> of products with only little<span style="background-color:rgba(57,212,155, 0.2)"> of</span> the desired one.
+I am not using too many cycles and have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> etc., as in<span style="background-color:rgba(57,212,155, 0.2)"> conventional</span> personal computers.
+Of course, if only one sales terminal is needed,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> win but just cannot get<span style="background-color:rgba(57,212,155, 0.2)"> that</span> last little bump to put you in the win column,�� Bryant</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> go out but also just<span style="background-color:rgba(57,212,155, 0.2)"> likes</span> staying in and cuddling on thetalented tongue stuck in my</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Most shareware<span style="background-color:rgba(57,212,155, 0.2)"> programs</span> cost money and demo versions may only allow you to create a few PDF files</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> him from being<span style="background-color:rgba(57,212,155, 0.2)"> considered</span> for eviction (except for Jessie).
+But although he only had a POV</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

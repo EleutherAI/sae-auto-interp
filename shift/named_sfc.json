@@ -15,7 +15,7 @@
         32081,
         32469
     ],
-    ".gpt_neox.layers.0.attn": [
+    ".gpt_neox.layers.0.attention": [
         23752
     ],
     ".gpt_neox.layers.0.mlp": [
@@ -41,7 +41,7 @@
         29626,
         31201
     ],
-    ".gpt_neox.layers.1.attn": [
+    ".gpt_neox.layers.1.attention": [
         8147
     ],
     ".gpt_neox.layers.1.mlp": [
@@ -58,7 +58,7 @@
         26969,
         30248
     ],
-    ".gpt_neox.layers.2.attn": [
+    ".gpt_neox.layers.2.attention": [
         13570,
         27472
     ],
@@ -72,7 +72,7 @@
         29295,
         31098
     ],
-    ".gpt_neox.layers.3.attn": [
+    ".gpt_neox.layers.3.attention": [
         2959,
         19128,
         22029
@@ -84,7 +84,7 @@
         27334,
         31453
     ],
-    ".gpt_neox.layers.4.attn": [
+    ".gpt_neox.layers.4.attention": [
         31101
     ],
     ".gpt_neox.layers.4": [

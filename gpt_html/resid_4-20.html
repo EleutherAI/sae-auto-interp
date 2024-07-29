@@ -1,0 +1,690 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-20</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-20</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: ��s Cafe for an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> of about 50, mainly twenty-somethings. They<br>Activations: (" audience" : 10)<br>Example 2: <|endoftext|>. With an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> participation murder mystery, your guests can be part of the show, and some<br>Activations: (" audience" : 9)<br>Example 3: <|endoftext|> an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span>.<br>The number of motivational speakers is growing, and women are making their mark.<br>Activations: (" audience" : 9)<br>Example 4:  was he going.<br>A big<span style="background-color:rgba(57,212,155, 1.0)"> crowd</span> at Surrender nightclub at Encore got a surprise about 12<br>Activations: (" crowd" : 9)<br>Example 5: <br>In front of an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> of Labour party members, young people and members of the public, Ed<br>Activations: (" audience" : 8)<br>Example 6:  as well as an FAO Emergencies Officer. For an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> that was energetically addressed by<br>Activations: (" audience" : 8)<br>Example 7:  why all Americans love horse and buggies��<br>The debate will be conducted with a live<span style="background-color:rgba(57,212,155, 1.0)"> audience</span><br>Activations: (" audience" : 8)<br>Example 8: <|endoftext|> of a<span style="background-color:rgba(57,212,155, 1.0)"> crowd</span> the same he would at his home studio.<br>Exile shows off his new<br>Activations: (" crowd" : 8)<br>Example 9: <|endoftext|> will have a big<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> for their first ever design build project – approximately 300,000 fairgoers<br>Activations: (" audience" : 8)<br>Example 10:  Lama. He did not get an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> but was able to pass on a message through an official.<br>Activations: (" audience" : 8)<br>Example 11: <span style="background-color:rgba(57,212,155, 1.0)"> crowd</span>-pleaser. Macaulay's own suggestion about pairing a short work with one of the<br>Activations: (" crowd" : 8)<br>Example 12: <|endoftext|> — in this case Star Wars — without an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span>? Without them, it doesn��t<br>Activations: (" audience" : 8)<br>Example 13:  whose real name is Ange Didier Huon, had a massive<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> in French-speaking western and<br>Activations: (" audience" : 8)<br>Example 14: <|endoftext|> a<span style="background-color:rgba(57,212,155, 1.0)"> crowd</span> gathered for a boisterous second-line parade Sunday suddenly scattering in all directions,<br>Activations: (" crowd" : 8)<br>Example 15: <|endoftext|> a<span style="background-color:rgba(57,212,155, 1.0)"> crowd</span> at a sporting event was at Carver-Hawkeye Arena. It was Big Ten<br>Activations: (" crowd" : 8)<br>Example 16: nd by the 8th circuit. Spence and Deese would then out on a<span style="background-color:rgba(57,212,155, 1.0)"> crowd</span> pleasing duel<br>Activations: (" crowd" : 8)<br>Example 17:  to see White Chocolate still knows how to make a<span style="background-color:rgba(57,212,155, 1.0)"> crowd</span> go wild.*(Los Angeles) On<br>Activations: (" crowd" : 8)<br>Example 18:  a gun."<br>Obama pressed his views to an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> of Denver police, families of gun violence victims<br>Activations: (" audience" : 8)<br>Example 19:  an international<span style="background-color:rgba(57,212,155, 1.0)"> audience</span>. Visit The Selector Facebook and Twitter to keep up to date with all the latest<br>Activations: (" audience" : 8)<br>Example 20: <|endoftext|> exuberance with which Wellstone once introduced her band, Rhea Valentine, to a<span style="background-color:rgba(57,212,155, 1.0)"> crowd</span><br>Activations: (" crowd" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The words "audience" and "crowd", referring to a group of people gathered for a specific purpose or event.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The words &quot;audience&quot; and &quot;crowd&quot;, referring to a group of people gathered for a specific purpose or event.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> greater detail. That will help him to bring in a wider<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> as he takes on his official leadership</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> respects, this is the golden age of aviation,�� Gentile said to a<span style="background-color:rgba(57,212,155, 1.0)"> crowd</span> of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> the gun, an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span> no longer shocked by atrocity but increasingly prepared to celebrate it. The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>. I often find that when I write for an<span style="background-color:rgba(57,212,155, 1.0)"> audience</span>, I try to mitigate my mind��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> a<span style="background-color:rgba(57,212,155, 1.0)"> crowd</span> pleaser! Perfect for sports events and entertaining!
+Good morning! It��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>acola, Florida is a beautiful, and vibrant city with a diverse reputation.With a<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> population</span> of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Getty Trust and Getty programs serve a varied<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> audience</span> from two locations: the Getty Center in Los Angeles</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>. Ohhhh. This is too hard,' " Boehner whined before a luncheon<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> crowd</span> at Brown</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> advertising to a much larger<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> audience</span>. Keeping existing customers is done through your provision of goods and services,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Web sites in an effort to ��build an<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> audience</span>�� among the clutter on the Internet.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> in which Labour leader Jeremy Corbyn was repeatedly attracting large and enthusiastic<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> crowds</span> at open-air events arranged at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> of a friendly, compassionate<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> staff</span> of the leading experts in the bariatric field. Call our offices today</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> years of proven experience
+The CAA School Safety Patrol Program is a<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> community</span> – just look at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>uous sound bites. An educated citizen<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ry</span> is no longer a necessary prerequisite to a vibrant democracy; may</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> electorate</span> that has sizeable Jewish and gay populations. He has taken a swing at ABC��s Q</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> administrative services supervisor for the Champaign Public Works Department, said a<span style="background-color:rgba(57,212,155, 0.76)"> crew</span> of 12 drivers, two mechanics</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>) established a<span style="background-color:rgba(57,212,155, 0.76)"> community</span> stakeholder model to enhance collaboration among multiple community partners and minimize the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> a living<span style="background-color:rgba(57,212,155, 0.76)"> community</span> cards. Choosing online casinos can see which cards. Over those specific order to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> a plan, a budget, or a<span style="background-color:rgba(57,212,155, 0.76)"> staff</span>. We definitely did not own any physical property much less</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>We are competing in a global<span style="background-color:rgba(57,212,155, 0.76)"> community</span> and appreciate the support of the state and local government agencies that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> medical services being used by a growing older<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> population</span>. As the median age rises, so does the price</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> the true stag experts.Nailpolis is a<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> community</span> to showcase your nail art, share</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> have betrayed…�� We stand as a<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> congregation</span> and recite a confession together, an act which simultaneously</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> linkage in the Fendt 200 Vario has also been revamped. A new<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> cast</span> metal lower</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>, a beautiful outdoor<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> community</span> swimming pool to cool off in, and even a rod hockey tournament (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> best of her class, part of an elite hunting<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> force</span> trained to eliminate werewolves from the hills of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> community</span> organizer. In 1973, he and his partner Corrine Jennings established Kenkeleba House on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> have to do as a Chamber and also as a<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> community</span> to make sure we do roll out the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> developers. Topics range from testing to building complete web applications. I also work with a<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> team</span> of other</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> from A<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> People</span>��s History of the United States.
+Arawak men and women,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> further performance – and this extended to its<span style="background-color:rgba(57,212,155, 0.52)"> audience</span> – adventured excommunication. It was not until February</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> for it, was hardly surprising. No doubt it felt to him like a<span style="background-color:rgba(57,212,155, 0.52)"> mob</span>, but then,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> clutched in their frozen hands.
+#2: Several kilometers away, during daytime, a<span style="background-color:rgba(57,212,155, 0.52)"> flock</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> as part of a large<span style="background-color:rgba(57,212,155, 0.52)"> gathering</span> I wish you all health, peace and happiness for the coming year</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> is in this spirit that I invite you to help us co-create a<span style="background-color:rgba(57,212,155, 0.52)"> community</span> altar.
+What</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>. 3.
+Robinson agreed that teachers need time alone to reassemble as a<span style="background-color:rgba(57,212,155, 0.44)"> staff</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>Diallo is the best PC player on a<span style="background-color:rgba(57,212,155, 0.44)"> roster</span> filled with top 150-type players. Truth</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> the vast and massive<span style="background-color:rgba(57,212,155, 0.44)"> population</span> living on the continent of Asia, but before that, let��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>�Occupy��.
+In my preparation for a<span style="background-color:rgba(57,212,155, 0.44)"> panel</span> discussion called Why enterprise Social Media</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> open exclusively to sales professionals from companies affiliated with LeadingRE, a global<span style="background-color:rgba(57,212,155, 0.44)"> community</span> of independent real estate companies</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> the magic of Miracle to new<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> audiences</span>, in a unique, funny and heartwarming spot that will have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> this right I propose a<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> mass</span> program to up-grade the education of our adults who are trapped in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> and contributed valuable energy to Homer. Every<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> community</span> needs an immigrant class to stay vital and healthy. WW</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> respect for Ralph. (And for Cynthia.) But I'm an original<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> community</span> member. I go back</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> with our pleasure principle. It provides a<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> forum</span> in which we can laugh at others' misfortune and embarrassment</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>-too-distant past, setting up a home<span style="background-color:rgba(57,212,155, 0.28)"> network</span> required the skills of a Cisco certified</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> of pupils. We now have a new link, since our migration to a single<span style="background-color:rgba(57,212,155, 0.28)"> network</span> with all of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> new<span style="background-color:rgba(57,212,155, 0.28)"> staff</span>, they��ll be open for breakfast (coffee, donuts and other</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>man you are assured a extraordinary piece of jewelry with character and quality to last a<span style="background-color:rgba(57,212,155, 0.28)"> lifetime</span>.Chicken can</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> Constitution. At his initial trial, a<span style="background-color:rgba(57,212,155, 0.28)"> jury</span> convicted petitioner of three counts of aggravated murder, one count</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Monitor Display
+- Auto Modification Accessories
+- Original Launch X431 Tool
+- Factory Expired</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>63 cases over two days as case rates in the state continued to fall.
+The latest figures included</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Republic, Denmark, France, Finland, Germany, Italy, the Netherlands, Poland, Portugal, Spain</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> insurance company, so we stuck with that. We thought that's good for us, hopefully nothing will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>� in the first place?
+Mrs. Eddy goes into elaborate detail on these points. Based</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> you want the Steelers to lose, anytime you are not a true fan.
+Cleveland Browns</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Easy Tap Convenience
+RFID credentials on a waterproof wristband. Nothing to carry,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> zone's
+file system. See zones(5).
+-s spool Write the package into</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> a year earlier. The ratio of the IMF��s uncommitted and adjusted liquid resources to its</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with both hands? No problem! Holding your friends' hair back if she becomes ill? No problem</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> going to be<span style="background-color:rgba(57,212,155, 0.2)"> like</span> for an audience that mostly knows full well what it's like.
+But</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> type of trickery<span style="background-color:rgba(57,212,155, 0.2)">.</span> They know if they can confuse a jury, the jury will not give a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> one of the<span style="background-color:rgba(57,212,155, 0.2)"> most</span> innovative and diverse cities and features a vibrant community of students and faculty who achieve</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> on a mass market<span style="background-color:rgba(57,212,155, 0.2)"> scale</span>, has just announced a new line of features to help improve your ability</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, and over seven<span style="background-color:rgba(57,212,155, 0.2)"> feet</span> tall.
+The battle rages between an army of more than one hundred</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Achievement of Northern California<span style="background-color:rgba(57,212,155, 0.2)"> is</span> inspiring a generation to be financially capable and prepared for career success. With the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> and broke out the<span style="background-color:rgba(57,212,155, 0.2)"> big</span> glass instant deer jam. Big glass, brings big crowds. I felt bad</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> males. This is<span style="background-color:rgba(57,212,155, 0.2)"> mainly</span> due to the fact that Asians are more of a community-based people,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> title in 1993.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>��We were instrumental in getting a field on campus, I think that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> at fast pace,<span style="background-color:rgba(57,212,155, 0.2)"> producing</span> one megacity after another. However, architectural structures and urban infrastructure being built</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

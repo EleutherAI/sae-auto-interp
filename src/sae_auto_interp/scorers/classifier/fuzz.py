@@ -7,9 +7,9 @@ from math import ceil
 from transformers import PreTrainedTokenizer
 
 from .classifier import Classifier
-from .sample import examples_to_samples, Sample, ClassifierOutput
+from .sample import examples_to_samples, Sample
 from .prompts.fuzz_prompt import prompt
-from ..scorer import Scorer, ScorerResult
+from ..scorer import Scorer
 from ...clients.client import Client
 from ...features import FeatureRecord
 

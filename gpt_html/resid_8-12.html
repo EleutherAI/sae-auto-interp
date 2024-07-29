@@ -1,0 +1,695 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-12</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-12</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  A549; RPMI 2650; impedance; resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span>||Document URI:||http://h<br>Activations: ("iration" : 10)<br>Example 2: <|endoftext|> and coma. Res<span style="background-color:rgba(57,212,155, 1.0)">piration</span> is usually not seriously depressed; blood pressure is usually stable.<br>Should<br>Activations: ("piration" : 9)<br>Example 3:  spinal movements with their resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span>. The experience is relaxing and renewing. Areas that were armored (<br>Activations: ("iration" : 8)<br>Example 4: , to analyze elements in pers<span style="background-color:rgba(57,212,155, 1.0)">piration</span> such as electrolytes (sodium and ammonium ions), metabolites<br>Activations: ("piration" : 8)<br>Example 5:  to help evaporate pers<span style="background-color:rgba(57,212,155, 1.0)">piration</span> and ensure you stay dry underneath no matter how long you're out having<br>Activations: ("piration" : 8)<br>Example 6:  acetycholine, the chemical behind pers<span style="background-color:rgba(57,212,155, 1.0)">piration</span>. In a hot climate like Miami, excessive sweating<br>Activations: ("piration" : 8)<br>Example 7:  photos<span style="background-color:rgba(57,212,155, 1.0)">ynthesis</span> and resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span>, and long-term cycles with carbon burial in strata and exhum<br>Activations: ("iration" : 8)<br>Example 8:  the skin in the ridges of the print (Allen, 2007). Pers<span style="background-color:rgba(57,212,155, 1.0)">piration</span> contains about 98%<br>Activations: ("piration" : 8)<br>Example 9: <|endoftext|> with resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span>|<br>Click here to view<br>Right ventricular/left ventricular ratio<br><br>Activations: ("iration" : 7)<br>Example 10: <|endoftext|> impact yield negatively because of the increase in canopy resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span> rates and decrease in net photos<span style="background-color:rgba(57,212,155, 1.0)">ynthesis</span> (<br>Activations: ("iration" : 7)<br>Example 11: <|endoftext|>, 2006). Most latent prints are made of pers<span style="background-color:rgba(57,212,155, 1.0)">piration</span>, which exudes from the pores of<br>Activations: ("piration" : 7)<br>Example 12: <|endoftext|> as 10 K, but that Ps formation at these temperatures can be inhibited by cond<span style="background-color:rgba(57,212,155, 1.0)">ensation</span> of residual<br>Activations: ("ensation" : 7)<br>Example 13: ging of power from evap<span style="background-color:rgba(57,212,155, 1.0)">oration</span> and low pressure head flows, including our work on microscale boundary<br>Activations: ("oration" : 7)<br>Example 14: brid resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span>, whereas the other 2 mutations impair the oxygen consumption rate...<br>- Bioenerget<br>Activations: ("iration" : 7)<br>Example 15: <|endoftext|> particular sort (e.g., mechanical resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span>) need not be used because they are always<br>Activations: ("iration" : 7)<br>Example 16:  in which decreased resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span> (hypoventilation) causes increased blood carbon dioxide and decreased pH (<br>Activations: ("iration" : 7)<br>Example 17:  temperature because of plant trans<span style="background-color:rgba(57,212,155, 1.0)">piration</span> (Gardner et al., 1981) and that TX in the<br>Activations: ("piration" : 7)<br>Example 18:  the epidermis. As a result, improves cellular resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span>, narrow pores, increases skin tone<br>Activations: ("iration" : 7)<br>Example 19:  to our inner cues, energy, and resp<span style="background-color:rgba(57,212,155, 1.0)">iration</span>, and we are no longer focused on the outer<br>Activations: ("iration" : 7)<br>Example 20:  other bodies of water. The water heats up and becomes water vapor in a process called evap<span style="background-color:rgba(57,212,155, 1.0)">oration</span><br>Activations: ("oration" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Suffixes "-piration", "-oration", and "-synthesis" in scientific or technical contexts, often related to biological or chemical processes.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Suffixes &quot;-piration&quot;, &quot;-oration&quot;, and &quot;-synthesis&quot; in scientific or technical contexts, often related to biological or chemical processes.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> acc<span style="background-color:rgba(57,212,155, 1.0)">retion</span>ary mountain belt, which has seen episodic plate convergence since the early Paleozoic,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> associated with increased serum urate levels and decreased urinary urate exc<span style="background-color:rgba(57,212,155, 1.0)">retion</span>. Finally, the researchers used</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> process. Sweat alone does not cool the body. It is the evap<span style="background-color:rgba(57,212,155, 1.0)">oration</span> of sweat that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> act as a support system and keep leaves open for photos<span style="background-color:rgba(57,212,155, 1.0)">ynthesis</span> -- the process through which plants make food</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">ensation</span>, which drips out into a drain pan, but can also lead to the development of mold</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> only naturally dry out when water evapor<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ates</span> in a vase but also hold their color. Flowers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>put for Beer F<span style="background-color:rgba(57,212,155, 0.9200000000000002)">iltration</span>
+Flotrex AP filters are available the following absolute pore size mic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> UTC
+Ex<span style="background-color:rgba(57,212,155, 0.9200000000000002)">piration</span> Date:26-Feb-2009 05:00:00 UTC
+Sponsoring</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> and simmer for about 60 minutes or until lamb is tender and most of the water has evapor<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ated</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>cemic clamps, the disposition index, and measurement of pulsatile insulin<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> secretion</span> or of the entrain</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>.)
+Ex<span style="background-color:rgba(57,212,155, 0.8400000000000001)">piration</span> of Temporary Tax Breaks Raised Effective Income Tax Rate
+Figure 1 shows that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>. We next investigated the expression of genes involved in the uptake and bios<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ynthesis</span> of cholesterol in PP</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>otes Connective Tissue Bios<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ynthesis</span>
+Supports the Body��s Processes of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>Insp<span style="background-color:rgba(57,212,155, 0.8400000000000001)">iration</span> is a dangerous beast, lurking from the shadows, waiting a perfect moment to jump on your</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> secrete large amounts of liquid, which when evapor<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ated</span>, help to cool the skin, which in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> predicated on the inactivation or reconstitution of the lumines<span style="background-color:rgba(57,212,155, 0.76)">cence</span> of the encoded luc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> chronicles Jake��s vac<span style="background-color:rgba(57,212,155, 0.76)">illation</span> between two masters or loyalties, the military master</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> concrete to check for discol<span style="background-color:rgba(57,212,155, 0.76)">oration</span> or damage before using it elsewhere. Scrub with TSP Most</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>.
+Mil<span style="background-color:rgba(57,212,155, 0.76)">ky</span> Way |
+Crater Lake |
+clear sky |
+Canon 6D</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> a window, entryway or fireplace mantle.
+Click for Tons of Insp<span style="background-color:rgba(57,212,155, 0.76)">iration</span>..
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> oxygen flow/concent<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ration</span> led to the best week so far in terms of numbers of oxygen</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>- how to use portable ultrasonic cav<span style="background-color:rgba(57,212,155, 0.6799999999999999)">itation</span> machineMadison25 is a 178,781 sq. ft</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> about other means of achieving hoverboard lev<span style="background-color:rgba(57,212,155, 0.6799999999999999)">itation</span> that can be achieved today? Is there any hover technology</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> a superconducting electromagnetic lev<span style="background-color:rgba(57,212,155, 0.6799999999999999)">itation</span> hoverboard cooled with liquid nitrogen. While this is cool and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> age, gender, or food.
+Absor<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ption</span> and Distribution
+After oral administration of Ran</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> technical assistance and the purchase of equipment for refriger<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ation</span>, freezing, storage and washing was funded by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> and of virtue, but whose fame would have wit<span style="background-color:rgba(57,212,155, 0.6000000000000001)">hered</span> like parched scroll, had his breath,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>. Some diseases and other factors that may give rise to frequent ur<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ination</span> particularly in the elderly includes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> chemilumines<span style="background-color:rgba(57,212,155, 0.6000000000000001)">cence</span> (ECL)-based methods in western blot applications. No stripping and re</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> Uh oh. I gathered some data about the inadvisability of eating ref<span style="background-color:rgba(57,212,155, 0.6000000000000001)">rozen</span> defrosted</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> with increasing amounts of smoking in all inhal<span style="background-color:rgba(57,212,155, 0.52)">ation</span> groups and a reduction to less than half the risk of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> such sensory inputs as vision, touch and proprio<span style="background-color:rgba(57,212,155, 0.52)">ception</span>. However, in the presented illusion none of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> include the structure of power, its exert<span style="background-color:rgba(57,212,155, 0.52)">ion</span> and objectifications, the governmentality into this concept</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>' App<span style="background-color:rgba(57,212,155, 0.52)">assion</span>ata (Narada Jazz), named Jazz Album of the Year" in Billboard Magazine's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> who come up with bunches of silly theories about the location of
+conscious<span style="background-color:rgba(57,212,155, 0.52)">ness</span>(es) to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>, disapprove, disbelieve, discord, diss<span style="background-color:rgba(57,212,155, 0.44)">ension</span>, dissent, doubt, except, exception,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>.
+Electromagnetic lev<span style="background-color:rgba(57,212,155, 0.44)">itation</span> utilizes superconducting material cooled with liquid nitrogen paired with high-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> coding all inhal<span style="background-color:rgba(57,212,155, 0.44)">ation</span> levels as continuous variables in terms of packyear (Table 3). The effect of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> collection of water rates and water<span style="background-color:rgba(57,212,155, 0.44)"> leakage</span> problems. The resolution of these water problems requires a maintenance management for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> burning during ur<span style="background-color:rgba(57,212,155, 0.44)">ination</span>
+Some patients experienced a sudden loss of some or all of their vision after they</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> quadratic chirp to the exc<span style="background-color:rgba(57,212,155, 0.36000000000000004)">itation</span> field. This simple, reproducible and scalable approach</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> also help by scraping away bacteria that builds on the tongue.
+Sal<span style="background-color:rgba(57,212,155, 0.36000000000000004)">iva</span> is responsible for keeping mouth</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> its two ever-present characters, Scott continues to serve up
+st<span style="background-color:rgba(57,212,155, 0.36000000000000004)">agy</span>, talky interactions</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> include<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> discharge</span> from eyes or nostrils, drooping wings, discoloured wattle and comb,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> period, their bet used team! On a team and 7 or systems multi come politicians?! Inf<span style="background-color:rgba(57,212,155, 0.36000000000000004)">lux</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> colour from the skins. Fer<span style="background-color:rgba(57,212,155, 0.28)">mentation</span> was then carried out with Burgundian yeast strains, in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>ainting, a fast, irregular, or pounding heartbeat, increased<span style="background-color:rgba(57,212,155, 0.28)"> thirst</span> or urination, irritability</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> mixtures and their respective decomp<span style="background-color:rgba(57,212,155, 0.28)">ression</span> tables in the late 1970s. Thanks to his research and testing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> color impact in a<span style="background-color:rgba(57,212,155, 0.28)"> liquid</span> — are now reunited in Rouge Dior Liquid.
+��The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> CO
+You don't have to live with damage, discol<span style="background-color:rgba(57,212,155, 0.28)">oration</span>, or gaps when it comes</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> spacious kitchen with ample cupboard & counter space, corner pantry and huge island with breakfast bar over</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the day before at iPic, 5750 N. Bayshore Drive.
+According to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in some cases, itemized deductions), personal exemptions, and tax credits such as the child tax credit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ara Tears from The Hills
+- Read the Cover Story: George Turns 3: The Preschool Prince</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> than most. We respect a ��dirt-dog�� effort on the field and give</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>s workout on the elliptical machine. The more time you will spend on the elliptical machine to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> lag effects, together with the storage of heat in oceans (which are much larger stores of heat compared</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> debt. He fled to Dublin in 1787 to escape his creditors. He lived in Ireland from 17</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> sms deposit type in some text and try automating key combinations such as Backspace. With better</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> best practices for being a power networker. We also hear what you, our listeners, had to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> around here. Already<span style="background-color:rgba(57,212,155, 0.2)"> simple</span> evaporation and the weight of the snow is changing the strange sculptures we</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>The poro<span style="background-color:rgba(57,212,155, 0.2)">el</span>astic simulations estimate 3D compaction related to pumping by taking subsurface</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>ok, your<span style="background-color:rgba(57,212,155, 0.2)"> version</span> vs many experts versions, being lately on LGF? bizarre this conspiration</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>expiration of the time<span style="background-color:rgba(57,212,155, 0.2)"> limit</span>, the spacecraft will assume there is a
+"problem", call fault</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> inhalation in terms<span style="background-color:rgba(57,212,155, 0.2)"> of</span> packyears (py), where one packyear is identical to 20 cigarettes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> and Air Quality<span style="background-color:rgba(57,212,155, 0.2)"> Em</span>issions Analysis' BAA solicitation for research and development projects that could lead to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> over and over in<span style="background-color:rgba(57,212,155, 0.2)"> my</span> mind ever since I was young. Obsession. Inspiration. Addiction.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> sharpness to diffraction<span style="background-color:rgba(57,212,155, 0.2)"> which</span> tends to "even" the difference between the lenses. And getting the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>1 cup boiling water<span style="background-color:rgba(57,212,155, 0.2)">
+</span>1/2 cup milky mixture (that you make in a minute)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> increased secretion of pro-<span style="background-color:rgba(57,212,155, 0.2)">inflammatory</span> mediators (cytokines) (KE1) and increased</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

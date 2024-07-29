@@ -87,16 +87,20 @@ class FeatureCache:
         self,
         model, 
         submodule_dict: Dict,
-        cfg: CacheConfig,
+        batch_size: int,
         filters: Dict[str, TensorType["indices"]] = None,
     ):  
         self.model = model
         self.submodule_dict = submodule_dict
 
-        self.batch_size = cfg.batch_size
-        self.width = cfg.width
+        self.batch_size = batch_size
+        self.width = list(submodule_dict.values())[0].ae.width
 
-        self.cache = Cache(filters, batch_size=cfg.batch_size)
+        self.cache = Cache(filters, batch_size=batch_size)
+
+        self.filter_submodules(filters)
+
+        print(submodule_dict.keys())
 
     def load_token_batches(self, n_tokens: int, tokens: TensorType["batch", "sequence"]):
         
@@ -141,7 +145,8 @@ class FeatureCache:
                     for module_path, latents in buffer.items():
                         self.cache.add(
                             latents, 
-                            batch_number, module_path
+                            batch_number, 
+                            module_path
                         )
 
                     del buffer

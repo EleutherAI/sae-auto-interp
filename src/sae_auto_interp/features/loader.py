@@ -1,16 +1,14 @@
 from tqdm import tqdm
 from typing import List, Dict, NamedTuple, Callable
+import os
 
 import torch
 import torch.multiprocessing as mp
 from torchtyping import TensorType
 from safetensors.torch import load_file
 
-from .transforms import Transform
 from ..config import FeatureConfig
 from ..features.features import Feature, FeatureRecord
-
-CONFIG = FeatureConfig()
 
 
 class BufferOutput(NamedTuple):
@@ -26,18 +24,24 @@ class TensorBuffer:
     Lazy loading buffer for cached splits.
     """
 
-    def __init__(self, path, module_path, features):
+    def __init__(
+        self,
+        path: str,
+        module_path: str,
+        features: TensorType["features"] = None,
+        min_examples: int = 120,
+    ):
         self.tensor_path = path
         self.module_path = module_path
 
         self.features = features
+        self.min_examples = min_examples
         self.start = 0
 
         self.activations = None
         self.locations = None
 
     def _load(self):
-
         split_data = load_file(self.tensor_path)
 
         self.activations = split_data["activations"]
@@ -50,33 +54,33 @@ class TensorBuffer:
             self.features = torch.unique(self.locations[:, 2])
 
         return self
-    
-    def __next__(self):
 
+    def __next__(self):
         if self.start >= len(self.features):
+            del self.activations
+            del self.locations
+            torch.cuda.empty_cache()
+
             raise StopIteration
-        
+
         feature = self.features[self.start]
 
         mask = self.locations[:, 2] == feature
 
         # NOTE: MIN examples is here
-        if mask.sum() <= 120:
+        if mask.sum() < self.min_examples:
             self.start += 1
             return None
-        
-        feature_locations = self.locations[mask][:,:2]
+
+        feature_locations = self.locations[mask][:, :2]
         feature_activations = self.activations[mask]
 
         self.start += 1
 
         return BufferOutput(
-            Feature(
-                self.module_path,
-                feature.item()
-            ),
+            Feature(self.module_path, feature.item()),
             feature_locations,
-            feature_activations
+            feature_activations,
         )
 
 
@@ -86,11 +90,11 @@ class FeatureDataset:
     """
 
     def __init__(
-        self, 
+        self,
         raw_dir: str,
-        modules: List[str],
+        cfg: FeatureConfig,
+        modules: List[str] = None,
         features: Dict[str, int] = None,
-        cfg: FeatureConfig = CONFIG,
     ):
         self.cfg = cfg
 
@@ -98,54 +102,61 @@ class FeatureDataset:
 
         if features is None:
 
-            self._load_all(raw_dir, modules)
+            if modules is None:
+                self._load_all(raw_dir)
+
+            else:
+                self._load_modules(raw_dir, modules)
 
         else:
-        
-            self._load_selected(
-                raw_dir,
-                modules, 
-                features
-            )
+            self._load_selected(raw_dir, modules, features)
 
     def _edges(self):
-
-        return torch.linspace(
-            0, 
-            self.cfg.width, 
-            steps=self.cfg.n_splits+1
-        ).long()
+        return torch.linspace(0, self.cfg.width, steps=self.cfg.n_splits + 1).long()
     
-    def _load_all(self, raw_dir: str, modules: List[str]):
+
+    def _load_all(self, raw_dir: str):
         """
-        Build dataset buffers which load all cached features. 
+        Build dataset buffers which load all cached features.
+        """
+
+        edges = self._edges()
+
+        for module in os.listdir(raw_dir):
+            for start, end in zip(edges[:-1], edges[1:]):
+                # Adjust end by one as the path avoids overlap
+                path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
+
+                self.buffers.append(
+                    TensorBuffer(path, module, min_examples=self.cfg.min_examples)
+                )
+
+    def _load_modules(self, raw_dir: str, modules: List[str]):
+        """
+        Build dataset buffers which load all cached features.
         """
 
         edges = self._edges()
 
         for module in modules:
             for start, end in zip(edges[:-1], edges[1:]):
-
                 # Adjust end by one as the path avoids overlap
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
 
                 self.buffers.append(
-                    TensorBuffer(
-                        path, 
-                        module,
-                        None
-                    )
+                    TensorBuffer(path, module, min_examples=self.cfg.min_examples)
                 )
 
-    def _load_selected(self, raw_dir: str, modules: List[str], features: Dict[str, int]):
+    def _load_selected(
+        self, raw_dir: str, modules: List[str], features: Dict[str, int]
+    ):
         """
         Build a dataset buffer which loads only selected features.
         """
-        
-        edges = self._edges()
-        
-        for module in modules:
 
+        edges = self._edges()
+
+        for module in modules:
             selected_features = features[module]
 
             bucketized = torch.bucketize(selected_features, edges, right=True)
@@ -156,23 +167,24 @@ class FeatureDataset:
 
                 _selected_features = selected_features[mask]
 
-                start, end = edges[bucket-1], edges[bucket]
+                start, end = edges[bucket - 1], edges[bucket]
 
                 # Adjust end by one as the path avoids overlap
-                path = f"{raw_dir}/{module}/{start}_{end-1}.pt"
+                path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
 
                 self.buffers.append(
                     TensorBuffer(
-                        path, 
+                        path,
                         module,
-                        _selected_features
+                        _selected_features,
+                        min_examples=self.cfg.min_examples,
                     )
                 )
 
 
 class FeatureLoader:
     """
-    Loader which applies transformations and samplers to data.
+    Loader which constructs FeatureRecords from a dataset.
     """
 
     def __init__(
@@ -181,7 +193,7 @@ class FeatureLoader:
         dataset: FeatureDataset,
         constructor: Callable = None,
         sampler: Callable = None,
-        transform: Transform = None,
+        transform: Callable = None,
     ):
         """
         Args:
@@ -189,17 +201,16 @@ class FeatureLoader:
             dataset (FeatureDataset): The dataset to load.
             constructor (Callable): A function defining how examples are sampled from the tokens.
             sampler (Callable): A function for sampling top examples into train/test splits.
-            transform (Transform): A transform for adding information to the FeatureRecord.
         """
         self.tokens = tokens
         self.dataset = dataset
 
         self.constructor = constructor
         self.sampler = sampler
+
         self.transform = transform
 
     def __len__(self):
-
         return len(self.dataset.buffers)
 
     def _process(self, data: BufferOutput):
@@ -209,30 +220,30 @@ class FeatureLoader:
             self.constructor(
                 record,
                 self.tokens,
-                locations = data.locations,
-                activations = data.activations,
+                locations=data.locations,
+                activations=data.activations,
             )
 
         if self.sampler is not None:
-            self.sampler(
-                record
-            )
+            self.sampler(record)
 
-        # if self.transform is not None:
-        #     self.transform(
-        #         record
-        #     )
+        if self.transform is not None:
+            self.transform(record)
 
         return record
-    
-    def load(self, collate: bool = False, num_workers: int = 2):
 
-        return self._all(num_workers=num_workers) \
-            if collate else self._batched()
-    
+    def load(self, collate: bool = False, num_workers: int = 0):
+        if num_workers > 0 and collate:
+            return self._threaded(num_workers)
+
+        if collate:
+            return self._all()
+
+        return self._batched()
+
     def _worker(self, buffer):
         """
-        Worker for loading all features from a buffer.
+        Worker for loading all features from a buffer. Usable in a thread pool.
         """
         return [
             self._process(data)
@@ -240,14 +251,20 @@ class FeatureLoader:
             if data is not None
         ]
 
-    def _all(self, num_workers: int):
-        with mp.Pool(processes=num_workers) as pool:
-            all_records = pool.map(self._process_buffer, self.dataset.buffers)
-        
-        return sum(all_records, [])
-    
-    def _batched(self):
+    def _all(self):
+        all_records = []
 
         for buffer in self.dataset.buffers:
+            all_records.extend(self._worker(buffer))
 
+        return all_records
+
+    def _threaded(self, num_workers: int):
+        with mp.Pool(processes=num_workers) as pool:
+            all_records = pool.map(self._worker, self.dataset.buffers)
+
+        return sum(all_records, [])
+
+    def _batched(self):
+        for buffer in self.dataset.buffers:
             yield self._worker(buffer)

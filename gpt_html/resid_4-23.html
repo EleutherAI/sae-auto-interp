@@ -1,0 +1,691 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-23</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-23</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: emaker told him he<span style="background-color:rgba(57,212,155, 1.0)"> should</span> be a leader in the classroom as well, according to the complaint.<br><br>Activations: (" should" : 10)<br>Example 2:  advising that he<span style="background-color:rgba(57,212,155, 1.0)"> should</span> be monitored in case further problems developed.<br>Police confiscated the liquid. The school<br>Activations: (" should" : 9)<br>Example 3:  dizziness") and told me I<span style="background-color:rgba(57,212,155, 1.0)"> should</span> be completely normal by today.<br>So in the car on<br>Activations: (" should" : 9)<br>Example 4: . Her dying wish was that they<span style="background-color:rgba(57,212,155, 1.0)"> should</span> never see their father again. She died at the age of<br>Activations: (" should" : 9)<br>Example 5: <|endoftext|> Diet<br>When I started working out with a trainer in 2008 she constantly told me I<span style="background-color:rgba(57,212,155, 1.0)"> should</span> eat<br>Activations: (" should" : 9)<br>Example 6:  and instructed that they<span style="background-color:rgba(57,212,155, 1.0)"> should</span> have full confidence that ultimately faith would have its victory. They were also told<br>Activations: (" should" : 9)<br>Example 7: <span style="background-color:rgba(57,212,155, 1.0)"> should</span> frequent it.<br>And so there we both were, sat down at a table with our respective<br>Activations: (" should" : 8)<br>Example 8: . He seemed to like it...He didn't complain anyway. Afterwards, I decided that we<span style="background-color:rgba(57,212,155, 1.0)"> should</span><br>Activations: (" should" : 8)<br>Example 9:  Holmes on condition that he<span style="background-color:rgba(57,212,155, 1.0)"> should</span> marry Mary Holmes. (fn. 73) This Henry did and the<br>Activations: (" should" : 8)<br>Example 10: . The Vicar, the Rev.Townsend and the churchwardens agreed that it<span style="background-color:rgba(57,212,155, 1.0)"> should</span> be<br>Activations: (" should" : 8)<br>Example 11:  distinctive elements like stripes. My husband finally decided that I<span style="background-color:rgba(57,212,155, 1.0)"> should</span> just do different patterns and different colors for<br>Activations: (" should" : 8)<br>Example 12:  I<span style="background-color:rgba(57,212,155, 1.0)"> should</span> do it, I've decided that I could start doing it. So here I am blogging<br>Activations: (" should" : 8)<br>Example 13:  Sally succumbed to my suggestion that she<span style="background-color:rgba(57,212,155, 1.0)"> should</span> go to the fancy dress party as Princes Leia, I<br>Activations: (" should" : 8)<br>Example 14: <|endoftext|> to primary school until he was fourteen, when his parents decided that he<span style="background-color:rgba(57,212,155, 1.0)"> should</span> be sent neither to<br>Activations: (" should" : 8)<br>Example 15:  failure was a blizzard, and I was determined that on my fourth attempt I<span style="background-color:rgba(57,212,155, 1.0)"> should</span> succeed in climbing<br>Activations: (" should" : 8)<br>Example 16: 's age. The family members met and decided that John<span style="background-color:rgba(57,212,155, 1.0)"> should</span> return to Colorado. All the other Nak<br>Activations: (" should" : 8)<br>Example 17:  was instructed by police to communicate with protesters that they<span style="background-color:rgba(57,212,155, 1.0)"> should</span> disperse peacefully as they have no permission to gather<br>Activations: (" should" : 8)<br>Example 18:  the country's first permanent circuit, the Colombians decided the inauguration<span style="background-color:rgba(57,212,155, 1.0)"> should</span> feature an all-star list<br>Activations: (" should" : 8)<br>Example 19:  and the head of news, Helen Boaden, suggested that he<span style="background-color:rgba(57,212,155, 1.0)"> should</span> treat Savile as if<br>Activations: (" should" : 8)<br>Example 20:  time I started talking with our agent and thought we<span style="background-color:rgba(57,212,155, 1.0)"> should</span> reach out to Michael too, because I was<br>Activations: (" should" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The auxiliary verb "should" indicating obligation, recommendation, or advisability.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The auxiliary verb &quot;should&quot; indicating obligation, recommendation, or advisability.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)"> should</span> only use publicly available records to create profiles of U.S. visitors. Based on the narrower</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+"If you wanted a social call you<span style="background-color:rgba(57,212,155, 1.0)"> should</span> have left me a note! I could have had</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> thought I<span style="background-color:rgba(57,212,155, 1.0)"> should</span> wash it, but it looks so pretty, I'm a little afraid it will not</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> returned and if we<span style="background-color:rgba(57,212,155, 1.0)"> should</span> leave them alone. We found everyone in the kitchen cooking and sat down to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>Caroline said you weren't coming."
+"I thought I<span style="background-color:rgba(57,212,155, 1.0)"> should</span>."
+She nodded.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> with this set, mounting them into my test boxes was a breeze and<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> should</span> be just about as easy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> When she graduated in 1994, she saw a black hole where intelligent coverage of religion<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> should</span> be.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> or everyone else around you."
+Me: "My friend told me that I<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> should</span> get beach shoes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>- From the section Asia
+A UN court ruling that the Japanese government<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> must</span> halt its whaling programme</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>� commiserating type. Duane Swacker considered that I<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> should</span>, ��always give</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> cases where it was used beyond the sustainable paceh, and the involved countries<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> should</span> seek an agreement on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> firm and way too thick! I think my first cake had about 10 layers when it really<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> should</span> have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>.
+��From that time Jesus began to show to His disciples that He<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> must</span> go to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> face was, but when he caught a look at it, it<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> must</span> have been comical. We</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> T. Brown, by workmen who learned their trades building the University of Virginia– it<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> must</span> have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> the next century "might not even get to to read the letter at all" if the Republicans<span style="background-color:rgba(57,212,155, 0.76)"> should</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> how patients who travel abroad for liberation therapy<span style="background-color:rgba(57,212,155, 0.76)"> should</span> be cared for once they return.Do you have demonstrated</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> severe air pollution regions and cities<span style="background-color:rgba(57,212,155, 0.76)"> should</span> continue to reduce their coal consumption after 2017, the final year</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> he<span style="background-color:rgba(57,212,155, 0.76)"> should</span> move with the freedom and natural balance of a riderless animal — this to apply to all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> the drone return to its original launch site<span style="background-color:rgba(57,212,155, 0.76)"> should</span> it lose a signal from the remote control. More than</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> for two trips of 45 minutes. Remember, if your pace starts to slow down, you<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> should</span> stop</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> should</span> now open in charity.... The trouble��maker should now become a peacemaker". Last but</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> their servers were hacked. Bitcoin Gold users<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> should</span> delete the old wallets and install the new version.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>, EPI explains that the minimum wage<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> should</span> be raised precisely because labor markets are slack:
+Even</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> before eating. Ask your healthcare provider if you<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> should</span> tell childcare providers or school officials that your child has</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> credit unions<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> should</span> have to bear the costs for institutions that Congress doesn��t have the stomach</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Online companies<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> should</span> be aware of these statutory exceptions, as well as other potential gaps in Section 230</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>'s nothing wrong with that. This notion that somehow this should be a cakewalk and I<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> should</span> just</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> material<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> should</span> receive publication and proper
+attention and criticism by the medical profession. I sincerely
+h</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> up where it<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> should</span> be!
+Pay Your Bills Strategically
+One of the best ways to fix</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> of the 1978 Dallas Cowboys. (We concluded that the other dollar<span style="background-color:rgba(57,212,155, 0.52)"> must</span> have been used for shipping and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> had to be approved by the king. I am not saying that we<span style="background-color:rgba(57,212,155, 0.52)"> should</span> bring back some of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> to do very different kinds of work for different instructors we<span style="background-color:rgba(57,212,155, 0.52)"> should</span> not assume they will always interpret general instructions</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> street, the company has made the appropriate arrangements. You<span style="background-color:rgba(57,212,155, 0.52)"> should</span> also ensure that you get the permit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> carried out.
+In your first appointment with a practitioner, you<span style="background-color:rgba(57,212,155, 0.52)"> should</span> clearly explain your expectations of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> and we faced snow! It<span style="background-color:rgba(57,212,155, 0.44)"> must</span> have been a terrifying drive for the team in an open-to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> order to avoid trouble cardholders<span style="background-color:rgba(57,212,155, 0.44)"> should</span> avoid overspending. Minimizing unnecessary expenses like dining</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> microwave them until they melt but you<span style="background-color:rgba(57,212,155, 0.44)"> must</span> stir them every thirty seconds to prevent lumps. Pour your</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> always going to start in mid-field and<span style="background-color:rgba(57,212,155, 0.44)"> should</span> score points. Up front Giroud may be a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>��, her name<span style="background-color:rgba(57,212,155, 0.44)"> should</span> begin with the letters ��B, Y or E�� like</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> in this are entering college age or going to work. And, should you did<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> not</span> understand it,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Neon Museum in Las Vegas. During the interview she mentioned that I<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> must</span> reach out to the Society</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> should</span> resign yourself to a life of loneliness to avoid rejection is abhorrent to me.
+Another mistake</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> tribal government<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> must</span> also hold a Memorandum of Understanding (MOU) with the VA, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>. It has had time to adapt. The administration<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> should</span> have finished this job." Leverett, former</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> drug discontinuations due to adverse events. In general, dose selection for an elderly patient<span style="background-color:rgba(57,212,155, 0.28)"> should</span> usually start</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> them.�� In order to fill this command, we<span style="background-color:rgba(57,212,155, 0.28)"> must</span> call our kids to respond to Christ</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> over their pique from the previous time and I did not<span style="background-color:rgba(57,212,155, 0.28)"> need</span> any sort of pain relief.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> materials should seek tariff exemptions from their government. At the same time, they<span style="background-color:rgba(57,212,155, 0.28)"> must</span> shift their sources of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>, since the
+<span style="background-color:rgba(57,212,155, 0.28)">OS</span> is supposed to be 64-bits (isn't it??), and</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> today, over long periods of time and in all climate zones of the world. They also offer a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>||Polaroid Corp||Laminated polarizer and birefringent layers|
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> a lot of banter and snark, some surprising description that really works, and at a brisk pace</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, a ��principle of self-legislation,�� where all citizens conceive</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> this is a good job' I heard one of the guys whisper to his friend. I closed my</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>6 The Deputy Secretary as may be authorized by the Chairman may sanction the expenditures from the amount allocated to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>iraqbodycount.net/bodycount.htm.Provincial regulations can vary greatly from one</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> subordinate Joint Force Command coordinates and commands the HDF corps.
+Structure of modern day Hungarian Defence</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> his happiness. He is a graduate of Butler Traditional High School. Kim is an exemplary mom and also</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Rogers subscribers during the study period last fall. That's 2.6 times the OECD average of $</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> death. The Court<span style="background-color:rgba(57,212,155, 0.2)"> of</span>Appeal in 2008 ordered that previous Amendment Rules for Secure Training Centres should</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> catastrophic event. The<span style="background-color:rgba(57,212,155, 0.2)"> customers</span> should be able to receive such information through public forums such as public service announcements</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> parliament with Liberal<span style="background-color:rgba(57,212,155, 0.2)"> Democrats</span>' and Tories' help. The Irish electorate has been told that it must</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> in Vancouver:<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Seafoodventure with Vancouver cougars at
+This location was a should</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> on the X8<span style="background-color:rgba(57,212,155, 0.2)"> and</span> improve the quality of our sidewalks and streets. We should also explore installing additional</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> picking spending plan,<span style="background-color:rgba(57,212,155, 0.2)"> you</span> must believe what functions you can��t manage to miss out on in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>Dobermans should only<span style="background-color:rgba(57,212,155, 0.2)"> be</span> bathed once every three months. When you do bathe your dog</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> syllabus should<span style="background-color:rgba(57,212,155, 0.2)"> be</span> carefully planned and should reflect the goals of the course. It's more like</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>inthwonder<span style="background-color:rgba(57,212,155, 0.2)">.</span>com> Allen Briggs writes:
+: Ideally, there should be no more</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> didn��t<span style="background-color:rgba(57,212,155, 0.2)"> know</span> what to do for him. My parents got the idea that maybe we should</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    
