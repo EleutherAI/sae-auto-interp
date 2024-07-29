@@ -1,0 +1,709 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-14</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-14</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> 405 U.S. 156, 162, 92 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 8</span>39, 843<br>Activations: ("." : 10), (" 8" : 7)<br>Example 2: <|endoftext|> 461 U.S. 138, 146, 149, 103 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 16</span>84<br>Activations: ("." : 9), (" 16" : 7)<br>Example 3:  U.S. 188, 97 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 9</span>90, 51 L.Ed.2<br>Activations: ("." : 9), (" 9" : 7)<br>Example 4:  denied, 506 U.S. 1070, 113 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 10</span>25, 122 L<br>Activations: ("." : 9), (" 10" : 8)<br>Example 5: <|endoftext|>... v. North Dakota, 504 US 298, 112 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">.</span> 1904, 119 L<br>Activations: ("." : 9)<br>Example 6: ano, 507 U.S. 725, 734, 113 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 17</span><br>Activations: ("." : 9), (" 17" : 8)<br>Example 7: <|endoftext|>. 957, 971-73, 102 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 28</span>36, 2847<br>Activations: ("." : 9), (" 28" : 8)<br>Example 8:  92 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 110</span>3, 31 L.Ed.2d 408 (1972); Wald<br>Activations: ("." : 9), (" 110" : 7)<br>Example 9: rick v. Oklahoma, 413 U.S. 601, 93 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 29</span>08,<br>Activations: ("." : 9), (" 29" : 7)<br>Example 10: . United States, 498 U.S. 103, 108, 111 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 4</span><br>Activations: ("." : 9), (" 4" : 7)<br>Example 11: S. 347 (1976) (plurality opinion), 367, 96 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 26</span><br>Activations: ("." : 9), (" 26" : 8)<br>Example 12: <|endoftext|>.1995), cert. denied, --- U.S. ----, 116 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">.</span><br>Activations: ("." : 9)<br>Example 13:  ----, 116 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 13</span>34, 134 L.Ed.2d 484 (<br>Activations: ("." : 9), (" 13" : 7)<br>Example 14: , 413 U.S. 548, 556, 93 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 28</span>80,<br>Activations: ("." : 9), (" 28" : 8)<br>Example 15: , 376 U.S. 254, 84 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 7</span>10, 11 L.Ed<br>Activations: ("." : 9), (" 7" : 7)<br>Example 16: <|endoftext|> 330 U.S. 75, 67 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 5</span>56, 91 L.Ed<br>Activations: ("." : 9), (" 5" : 7)<br>Example 17: <|endoftext|>.S. ----, 113 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 30</span>33, 125 L.Ed.2<br>Activations: ("." : 9), (" 30" : 7)<br>Example 18: , 413 U.S. 601, 616-17, 93 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 29</span>08<br>Activations: ("." : 9), (" 29" : 6)<br>Example 19:  supra, 427 U.S. at 367, 96 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. at</span> 2687; Br<br>Activations: ("." : 9), (" at" : 7)<br>Example 20: <|endoftext|>., --- U.S. ----, ---- - ----, 113 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 217</span>3<br>Activations: ("." : 9), (" 217" : 6)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Period (.) and numbers in the context of US court case citations.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Period (.) and numbers in the context of US court case citations.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> 407, 410, 639 S.E.2d 455, 456 (Ct<span style="background-color:rgba(57,212,155, 1.0)">. App</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> U.S. at 149-51, 103 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. at 16</span>91-92;</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>.S. 507, 100 S.Ct<span style="background-color:rgba(57,212,155, 1.0)">. 1287, 63</span> L.Ed.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>, 126 (Ct<span style="background-color:rgba(57,212,155, 1.0)">. App. 1995</span>). Therefore, we may find the facts in accordance with our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> certiorari denied 332 U.S. 761, 68 S. Ct<span style="background-color:rgba(57,212,155, 1.0)">. 64,</span> was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>. ed. 414, 16 Sup. Ct<span style="background-color:rgba(57,212,155, 0.9200000000000002)">. Rep. 291</span>; Re Potts, 166</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> 60, 65, 13 Sup. Ct<span style="background-color:rgba(57,212,155, 0.9200000000000002)">.</span> Rep<span style="background-color:rgba(57,212,155, 0.9200000000000002)">.</span> 246; Ex parte Des Moines & M</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>, 416, 16 Sup. Ct<span style="background-color:rgba(57,212,155, 0.9200000000000002)">.</span> Rep. 291.
+The libel in this case was for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> ed. 812, 2 Sup. Ct<span style="background-color:rgba(57,212,155, 0.9200000000000002)">.</span> Rep. 876; Re Atlantic City R.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Sup. Ct<span style="background-color:rgba(57,212,155, 0.9200000000000002)">.</span> Rep<span style="background-color:rgba(57,212,155, 0.9200000000000002)">.</span> 67, and enter a decree dividing the damages equally, so that petitioner</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> 2886, 37</span> L.Ed.2d 796 (1973). Cf. United Public Workers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>ECi): Amendment 39-14632. Docket<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> No.</span> FAA-2005-22358;</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> 1989</span>).
+MIGA contends the cases cited by API and the employee are distinguishable as they</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>ed Citation: Suggested CitationTotal Carat Weight...........0.75 Ct<span style="background-color:rgba(57,212,155, 0.8400000000000001)">.</span>
+Design by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)">.</span>Ed.2d<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> 170</span> (1993). He contends that the rational basis for the 100:1</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> March 10, 1998, Docket<span style="background-color:rgba(57,212,155, 0.76)"> No.</span> (258,706). Accordingly, his work disability</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> off a well maintained, yet quiet County Rd<span style="background-color:rgba(57,212,155, 0.76)">.</span> that is a primary Bus route so it gets pl</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>,199 filed Jul. 18, 1994 U.S. Pat.<span style="background-color:rgba(57,212,155, 0.76)"> No</span>. 5,528,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> after his lower back injury in claim Docket<span style="background-color:rgba(57,212,155, 0.76)"> No.</span> 258,706. After his second injury,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>. Caputo, DDS3490 E Lake Rd<span style="background-color:rgba(57,212,155, 0.76)"> S</span> Suite AI always sort of liked</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>Ct<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> about</span> "J.Ol.uunv, mm tnu
+editor irotsl</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>Fred III Cactus Train
+February 26, 1994
+Avg<span style="background-color:rgba(57,212,155, 0.6799999999999999)">.</span> queue length:
+Cram</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> Rd<span style="background-color:rgba(57,212,155, 0.6799999999999999)">.,</span> Cherry Hill; Mass of Christian Burial, 10:30 a.m. tomorrow</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>
+100 Poverty Rd<span style="background-color:rgba(57,212,155, 0.6799999999999999)">.</span>
+Southbury, CT 06488
+203-262-0626</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>m 2100 Rd<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,</span> Ste A, Crosby, TX 77532-6585, Crosby
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> Peachtree Rd<span style="background-color:rgba(57,212,155, 0.6000000000000001)">, N</span>.E. Atlanta Georgia United States|
+|Phone:||(</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>. Saturday, Insomniac Theater, 1 E. Silver Springs Blvd<span style="background-color:rgba(57,212,155, 0.6000000000000001)">.,</span> Ocala</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Molly Ivins in care of Creators Syndicate, 5777 W. Century Blvd<span style="background-color:rgba(57,212,155, 0.6000000000000001)">.,</span> Suite 700</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> industrial electrical gray electric company electricians• 5731 Clarksburg Rd<span style="background-color:rgba(57,212,155, 0.6000000000000001)">,</span> Buckhannon, West Virginia</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>�s very reasonable and has veggie o
+259 Dyke Rd<span style="background-color:rgba(57,212,155, 0.6000000000000001)">,</span> Marshfield, MA</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> Laycox, Group Manager
+36 Parmenter Rd<span style="background-color:rgba(57,212,155, 0.52)">.</span>
+Hudson, MA 017</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> first-half touchdown in their past four games.<span style="background-color:rgba(57,212,155, 0.52)">
+</span>3. CONTAIN THE LEAK: The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> and field coursers. Assembly Bill<span style="background-color:rgba(57,212,155, 0.52)"> 21</span>10, which sought to outlaw open field coursing competitions,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> nigga had at least two G's
+And he was clock<span style="background-color:rgba(57,212,155, 0.52)">in</span>' it with so much ease</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>67 F.2d 1321, 1326 (9th Cir<span style="background-color:rgba(57,212,155, 0.52)">.1992)</span> (finding implicitly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>2d 1273, 1276 (9th Cir<span style="background-color:rgba(57,212,155, 0.44)">.1993</span>) (citations omitted). But</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>herty, 111 Ga. App.<span style="background-color:rgba(57,212,155, 0.44)"> 144</span>
+HALL, Presiding Judge, concurring specially.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Road<span style="background-color:rgba(57,212,155, 0.44)"> 6</span>03 and follow
+it to the battlefield, which will be on your right.
+The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> 1990. "Human Capital, Fertility, and Economic Growth," Journal of Political Economy,<span style="background-color:rgba(57,212,155, 0.44)"> University</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> observed in the heart surgery patients, the study authors noted.<span style="background-color:rgba(57,212,155, 0.44)">
+</span>These results came in spite of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>: Rob Arndt <teuton263@xxxxxxx>
+- Date: Fri,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 20</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> Perspective, Part II—Social and Political Context," Health Progress, April 1993, p. 18<span style="background-color:rgba(57,212,155, 0.36000000000000004)">).</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> the Assembly of God Church, 1205 S. Boulder Ave<span style="background-color:rgba(57,212,155, 0.36000000000000004)">.,</span> Moab.Confused write</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>01 East Orange Road
+P.O. Box<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 8</span>015
+Waterloo, Iowa 50704</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>High Court of American Samoa
+CA No.<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 62</span>-97
+February 9, 1998
+Before R</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Authority
+City of Corpus Christi
+PO Box<span style="background-color:rgba(57,212,155, 0.28)"> 9</span>277
+Corpus Christi, Texas</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> United States v. Sarno, 73 F.3d<span style="background-color:rgba(57,212,155, 0.28)"> 14</span>70, 1485 (9</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> one walk, and 13 strikeouts over 9 1/3 innings<span style="background-color:rgba(57,212,155, 0.28)"> —</span> suggest that he might be capable of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> RB Mike James, CB Mike Jenkins, QB Ryan W. Griffin, LB T.J<span style="background-color:rgba(57,212,155, 0.28)">.</span> F</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Las Vegas. The Indian Gaming Regulatory Act (Pub<span style="background-color:rgba(57,212,155, 0.28)">.</span> 100497, 25 U. 167;</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> here is also the second, behind the scene part. Enjoy the party!was tremendously disappointed that "</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> verses in I Thessalonians which are as follows. ��Rejoice evermore. Pr</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>re currently working on getting it back up, stay tuned.
+— Warp Records (@WarpRec</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> I first joined back in December, the "Beer Connoisseur" for having five beers from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Water and Sewer System and others to help make a determination as to the building��s suit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>.
+- In 2010, on the 40th anniversary of Earth Day, it is estimated that more</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to an alarming degree the aversion felt in broad sections of the public in Germany and among the ruling elite</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> form into the urethra to attain erections. It is available in four dosage strengths: 125</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Those students who excel might get her tutelage.��
+Then he smiled at Lu Ze</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, Near East, Africa and USA. In 1997 he establishes and leads since then Factum, the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"><|endoftext|</span>> Tips&v<span style="background-color:rgba(57,212,155, 0.2)">=</span>sF<span style="background-color:rgba(57,212,155, 0.2)">9</span>Ctn33ZAg
+Jan 23, 2008......</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)">,</span> 625 (7<span style="background-color:rgba(57,212,155, 0.2)">th</span> Cir.1982<span style="background-color:rgba(57,212,155, 0.2)">).</span> A subordinate of a public official is, moreover, ideally</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)">75</span>, 629<span style="background-color:rgba(57,212,155, 0.2)"> S</span>.E<span style="background-color:rgba(57,212,155, 0.2)">.</span>2d 697, 699 (Ct. App.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)">
+</span>|Course name||<span style="background-color:rgba(57,212,155, 0.2)">G</span>overning<span style="background-color:rgba(57,212,155, 0.2)"> Britain</span>|Search Homes for Sale in Teterboro
+T</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"> emergency</span> food. It<span style="background-color:rgba(57,212,155, 0.2)">'s</span> located in<span style="background-color:rgba(57,212,155, 0.2)"> the</span> Congregational Church on the corner of State Street and Park</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"><|endoftext|</span>>ice. United<span style="background-color:rgba(57,212,155, 0.2)"> States</span> v.<span style="background-color:rgba(57,212,155, 0.2)"> de</span> Cruz, 82 F.3d 856, 863</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>.<span style="background-color:rgba(57,212,155, 0.2)">Ct</span>. 2891, 28<span style="background-color:rgba(57,212,155, 0.2)">97</span>, 97 L.Ed.2d 315 (<span style="background-color:rgba(57,212,155, 0.2)">1987</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)">.</span> See Docket Entry<span style="background-color:rgba(57,212,155, 0.2)"> 14</span>.
+<span style="background-color:rgba(57,212,155, 0.2)">Gra</span>jales claims that the proceedings before me were flawed because</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)">.</span>E.2<span style="background-color:rgba(57,212,155, 0.2)">d</span> 110, 112<span style="background-color:rgba(57,212,155, 0.2)"> (</span>1974).
+Demetre claims Folly Beach is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"><|endoftext|</span>>us". Ph<span style="background-color:rgba(57,212,155, 0.2)">.</span>D.<span style="background-color:rgba(57,212,155, 0.2)"> dissertation</span>, University of California, Santa Cruz.
+- ^ a</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

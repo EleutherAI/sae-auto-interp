@@ -1,6 +1,7 @@
 from typing import List
 from . import FeatureRecord
 
+from math import floor
 import torch
 import torch.nn.functional as F
 from collections import defaultdict
@@ -48,19 +49,28 @@ def logits(
     
 
 
-def unigram(record: FeatureRecord, k: int):
+def unigram(record: FeatureRecord, k: int = 10, threshold: float = 0.0, negative_shift: int = 0):
     avg_nonzero = []
     top_tokens = []
 
-    for example in record.examples[:k]:
+    n_examples = floor(len(record.examples) * threshold)
+    
+    for example in record.examples[:n_examples]:
         # Get the number of nonzero activations per example
         avg_nonzero.append(np.count_nonzero(example.activations))
 
         # Get the max activating token per example
-        top_tokens.append(example.tokens[np.argmax(example.activations)].item())
+        index = np.argmax(example.activations) - negative_shift
 
-    return len(set(top_tokens)), np.mean(avg_nonzero)
+        if index < 0:
+            continue
 
+        top_tokens.append(example.tokens[index].item())
+
+    if len(set(top_tokens)) < k:
+        return set(top_tokens), np.mean(avg_nonzero)
+    
+    return -1, np.mean(avg_nonzero)
 
 def cos(matrix, selected_features=[0]):
     a = matrix[:, selected_features]

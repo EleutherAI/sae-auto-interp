@@ -29,7 +29,7 @@ def main(cfg):
     model = LanguageModel("EleutherAI/pythia-70m-deduped", device_map="auto", dispatch=True)
     submodule_dict = load_sam_autoencoders(
         model, 
-        list(range(4)),
+        list(range(5)),
         "weights/pythia-70m-deduped",
     )
 

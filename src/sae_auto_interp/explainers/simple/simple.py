@@ -1,7 +1,5 @@
 import re
-import orjson
 import torch
-import math
 from .prompt_builder import build_prompt
 from ..explainer import (
     Explainer, 
@@ -34,15 +32,12 @@ class SimpleExplainer(Explainer):
     def normalize_examples(self, record, train):
         
         max_activation = record.examples[0].max_activation
-
-        def _normalize(example):
-            example.normalized_activations = \
-                10 * torch.floor(
-                    example.activations / max_activation
-                )
             
         for example in train:
-            _normalize(example)
+            example.normalized_activations = \
+                torch.floor(
+                    10 * example.activations / max_activation
+                )
 
     async def __call__(
         self,

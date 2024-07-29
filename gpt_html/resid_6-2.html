@@ -1,0 +1,689 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-2</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-2</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <span style="background-color:rgba(57,212,155, 1.0)"> have</span> received your order. You will receive a second email when your order has shipped. Please save these<br>Activations: (" have" : 10)<br>Example 2:  application sends back a response to the Web site notifying that<span style="background-color:rgba(57,212,155, 1.0)"> it is</span> 'OK'<span style="background-color:rgba(57,212,155, 1.0)"> to</span> issue the<br>Activations: (" it" : 8), (" is" : 9)<br>Example 3: <|endoftext|> approve permissions to run the Product Registration and validate your installation. This way you confirm<span style="background-color:rgba(57,212,155, 1.0)"> you are</span> compliant<br>Activations: (" are" : 9)<br>Example 4:  For example, a lit LED indicates that<span style="background-color:rgba(57,212,155, 1.0)"> the</span> LAN adapter<span style="background-color:rgba(57,212,155, 1.0)"> is being</span> addressed.<br>As shown in FIG<br>Activations: (" is" : 9), (" being" : 7)<br>Example 5:  mark which the gallery will use to check that<span style="background-color:rgba(57,212,155, 1.0)"> they are</span> genuine.<br>The museum can be contacted at<br>Activations: (" they" : 6), (" are" : 8)<br>Example 6: <span style="background-color:rgba(57,212,155, 1.0)"> the</span> teacher program<span style="background-color:rgba(57,212,155, 1.0)"> is</span> active. Thereafter, processing proceeds to step S390, in which an initial<br>Activations: (" is" : 8)<br>Example 7:  background service that will check for apps and its usage and data storage permissions and notify users if<span style="background-color:rgba(57,212,155, 1.0)"> it is</span><br>Activations: (" it" : 6), (" is" : 8)<br>Example 8:  visual or an audible indication that<span style="background-color:rgba(57,212,155, 1.0)"> a</span> procedure<span style="background-color:rgba(57,212,155, 1.0)"> has been</span> performed correctly or incorrectly, provided to a trainee<br>Activations: (" a" : 5), (" has" : 8), (" been" : 7)<br>Example 9:  and erect temporary structures<br>- Put traffic signs up to indicate that construction<span style="background-color:rgba(57,212,155, 1.0)"> is in</span> process<br>- M<br>Activations: (" is" : 8), (" in" : 6)<br>Example 10:  Each of<br>> them has a "-dev" suffix in its version number to indicate that<span style="background-color:rgba(57,212,155, 1.0)"> it is</span><br>Activations: (" it" : 7), (" is" : 8)<br>Example 11: based electrical evaluation circuits can be configured to provide an indication that the person<span style="background-color:rgba(57,212,155, 1.0)"> has</span> either correctly or incorrectly performed<br>Activations: (" has" : 8)<br>Example 12:  notification displays informing you that<span style="background-color:rgba(57,212,155, 1.0)"> you have</span> given permission for the program to obtain design ideas for you. To<br>Activations: (" you" : 6), (" have" : 8)<br>Example 13:  installing the TegraZone application, you are confirming that<span style="background-color:rgba(57,212,155, 1.0)"> you have</span> read and agree to be bound by<br>Activations: (" you" : 5), (" have" : 8)<br>Example 14: .<br>The arming view port on the back allows easy confirmation that your Swim IT<span style="background-color:rgba(57,212,155, 1.0)"> is</span> armed with a<br>Activations: (" is" : 8)<br>Example 15: <|endoftext|> disk, QSR will provide notification that<span style="background-color:rgba(57,212,155, 1.0)"> there is a</span> problem, in order to minimize the impact<br>Activations: (" there" : 6), (" is" : 8), (" a" : 6)<br>Example 16:  described, data taps are periodically polled to determine if<span style="background-color:rgba(57,212,155, 1.0)"> they have</span> data for the master computer. If they<br>Activations: (" they" : 5), (" have" : 8)<br>Example 17: Trust Certificate.<br>Shortly after completion of placing your order, you will receive an email confirming that<span style="background-color:rgba(57,212,155, 1.0)"> we</span><br>Activations: (" we" : 8)<br>Example 18:  number or certificate number to verify you<span style="background-color:rgba(57,212,155, 1.0)"> are</span> certified to work in that state. You can obtain this number<br>Activations: (" are" : 7)<br>Example 19:  saying that the platform<span style="background-color:rgba(57,212,155, 1.0)"> wasn't</span> compatible with that version of Fluent. But I obviated it<br>Activations: (" wasn" : 7), ("'t" : 5)<br>Example 20:  features. It will now scan your calendar to see if<span style="background-color:rgba(57,212,155, 1.0)"> you have</span> any events coming up and should show<br>Activations: (" you" : 6), (" have" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Auxiliary verbs and linking verbs (e.g. "have", "is", "are", "be") in formal or instructional text, often used to form the present perfect or simple present tenses.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Auxiliary verbs and linking verbs (e.g. &quot;have&quot;, &quot;is&quot;, &quot;are&quot;, &quot;be&quot;) in formal or instructional text, often used to form the present perfect or simple present tenses.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> records of the delivering physician to show that<span style="background-color:rgba(57,212,155, 1.0)"> he was</span> dealing with a personal issue during the birth of their</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> awards points for each factor that helps predict who<span style="background-color:rgba(57,212,155, 1.0)"> is most likely to</span> repay a debt. A total number</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> individual or an entity, receiving the Payment) certifies that<span style="background-color:rgba(57,212,155, 1.0)"> it billed</span> Medicare in 2019; currently provides</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> an HTTPS session, it asks for the server's certificate. This is checked to ensure that<span style="background-color:rgba(57,212,155, 1.0)"> it was</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> devices to find which services<span style="background-color:rgba(57,212,155, 1.0)"> are</span> avaible on a hotspot by example.
+PalmMap</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> away a VM. It also checks for<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the presence of</span> Fiddler and certain types of VPN services.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>scape - Denotes<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> an</span> image<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> is</span> wider than it is high, and is viewed in the horizontal format</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> partially shredded timing belt? I wonder if somebody could tell if<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> it</span>��<span style="background-color:rgba(57,212,155, 0.9200000000000002)">s the</span> original Honda belt</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> mark<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the</span> file<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> as</span> urgent. Or you can select from the drop-down list in the Send File</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>amine him out with your state's organization to determine if<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> he has any</span> grievances authorized from him.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> trains on the docks for quick ship-to-rail transfers and they need to determine if<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> they are</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> do</span>, then the master computer may request such data<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> be</span> transmitted to the master computer by way of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>iesta Beach��<span style="background-color:rgba(57,212,155, 0.8400000000000001)">s</span> status as No. 1 in the country. The question is whether such signage</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Invitations follows four simple steps:
+- Clear your table of anything that won��<span style="background-color:rgba(57,212,155, 0.8400000000000001)">t</span> be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> dating app. POF��s activities try not to imply you simply<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> will not be able to</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>CanvasSpline::closed () const
+Returns TRUE if<span style="background-color:rgba(57,212,155, 0.76)"> the</span> control<span style="background-color:rgba(57,212,155, 0.76)"> points are</span> a closed set</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> something, rocks a listing boat, marks one<span style="background-color:rgba(57,212,155, 0.76)"> as the</span> crackpot…or a dead man. For</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> means ��eggcorn��<span style="background-color:rgba(57,212,155, 0.76)"> was</span> still relatively rare, but I think any truly eggcornish</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>, detailed descriptions of those contaminants, possible reasons why<span style="background-color:rgba(57,212,155, 0.76)"> they're present</span>, and potential health effects (if</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> stay in pitch only to be told by the player that<span style="background-color:rgba(57,212,155, 0.76)"> it was still going</span> out of tune.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> are covered: Does it<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> have</span> before and after images and photos? Are there customer customer reviews? Is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> to determine if<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> there is an</span> appropriate workload for APS. Careful analysis of the current state of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> that<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> someone had a</span> plan and created it all. I only have enough faith to believe the latter.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> says that<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> he is</span> "Ionia DPS Officer and Rockstar... Mike Cronk".
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>130, in which a flag is detected, if<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> it is present</span>, indicating<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> that video</span> cassette rental</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> they thought<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> were best</span> in their specialty for complex or difficult cases.
+Patient survival looks at how</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> test, and color coded:
+- green: latest tests<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> were</span> acquired on time
+- red:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>crust. The serving size is noted on the box as<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> being</span> 1/2 of a personal pizza</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> amp. You can be sure that<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> you will have</span> the best service when you are using this kind</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> technology<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> is</span> the next great thing. Typically, the more boastful a CEO sounds, the more risk</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> incorrect) perception that it<span style="background-color:rgba(57,212,155, 0.52)">'s the</span> most healthful one. I like California style burgers. Q</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> is more than writing a check and claiming<span style="background-color:rgba(57,212,155, 0.52)"> a</span> tax deduction. For most of us—the non-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> the Adjoining Owners are satisfied that<span style="background-color:rgba(57,212,155, 0.52)"> the</span> Structure Owners�� proposed works<span style="background-color:rgba(57,212,155, 0.52)"> will</span> be of no inconvenience or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>asing Division. The division uses the database to solicit bids for city and county departments that<span style="background-color:rgba(57,212,155, 0.52)"> have</span> construction or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> her pussy on her slaves face. She makes sure he<span style="background-color:rgba(57,212,155, 0.52)"> is</span> well aware that he<span style="background-color:rgba(57,212,155, 0.52)"> is only</span> allowed to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> useful way to weed out sales calls, since the caller will often ask<span style="background-color:rgba(57,212,155, 0.44)"> for</span> me by my husband�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> identifying goals and agreeing the limits of medical care is much harder when the signals that death<span style="background-color:rgba(57,212,155, 0.44)"> is</span> approaching come</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> the horse. Unfortunately my calves made it very plain to me that<span style="background-color:rgba(57,212,155, 0.44)"> I was a</span> very bad person</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> in the sense that people assume that it��<span style="background-color:rgba(57,212,155, 0.44)">s</span> all about obesity; people assume that it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> mathematician<span style="background-color:rgba(57,212,155, 0.44)">'s</span> MGP ID of 13796 for the advisor ID.In Louisville, the Gilded Age</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> that<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> we have</span> a special place in creation. We are superior to the rest of creation. This command</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> (Windows)
+Graphics cards only work properly if they<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> have</span> a hardware provider supplied driver (not system</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> party recently in Dallas and noticed that invitations no longer look like they<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> were</span> printed of neighboring Dallas printers?</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> ship assignments on time, so you shouldn��t get nervous that it��<span style="background-color:rgba(57,212,155, 0.36000000000000004)">s</span> almost a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> perform the task. The measurement provided by the circuits indicates<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> not</span> only<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> the</span> position where the needle is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> and will slam on the brakes to make out what that movement was that<span style="background-color:rgba(57,212,155, 0.28)"> he</span> just saw. Many novice</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> the breeds they offer. You need to ensure that the Puppies dealer is<span style="background-color:rgba(57,212,155, 0.28)"> selling</span> legit labrad</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> tell that<span style="background-color:rgba(57,212,155, 0.28)"> an</span> innovative tradition<span style="background-color:rgba(57,212,155, 0.28)"> was</span> solid a generation or two after it was established. Therefore, I would</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>able suspicion that criminal activity<span style="background-color:rgba(57,212,155, 0.28)"> has</span> taken, is taking, or is about to take place in violation of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> URL of the errors you get an option for "Linked From" if those pages<span style="background-color:rgba(57,212,155, 0.28)"> are</span> linking from</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> was also a member of the Dazzlers, the Gator basketball dance team, from 1997-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>UM OF RELIGIOUS LIFE AND ART 2 Castle Street. 553 2557. Mon—</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> choice had been Tower Ridge, but an inch or two of fresh powder snow overnight, and a good</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> are watching brand new films,�� Kovacs said, translated from Hungarian. ��It�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+- More from Physics Forums - Medical Sciences
+More news stories
+In recent years, microRN</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and payments are accepted through Viewpoint Cloud for the Board of Health, the Building Department, the City</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>-year-old Haziq Putra has much to scream about. In addition to his SG</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>POSES.Outbound Call Center Evaluation
+There is a wide range, and large number, of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Division rival.
+��They beat us the first time in league, and we came back and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> necessary to experiment with a range
+of values in order to get the motor working just right.Chelsea</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> which he will hereafter<span style="background-color:rgba(57,212,155, 0.2)"> file</span>, which<span style="background-color:rgba(57,212,155, 0.2)"> vouchers</span> will show that he has paid precedent claims against said estate to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> different cadence<span style="background-color:rgba(57,212,155, 0.2)"> to</span> your call<span style="background-color:rgba(57,212,155, 0.2)"> will</span> sometimes convince him to come all the way.
+When I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> the landmarks<span style="background-color:rgba(57,212,155, 0.2)"> have changed</span>, this indicates that the screen being displayed has changed, and the next screen must</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> clients fit your expertise<span style="background-color:rgba(57,212,155, 0.2)"> and</span> look.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Find out if they have personally represented any of their talent and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>% so it�<span style="background-color:rgba(57,212,155, 0.2)">�</span>s essential protected<span style="background-color:rgba(57,212,155, 0.2)"> that</span> fee all through your compensation.
+Con 1: You</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> is that its<span style="background-color:rgba(57,212,155, 0.2)"> song</span> is not<span style="background-color:rgba(57,212,155, 0.2)"> just</span> about genetic inheritance, or indeed mapping territories by warning off the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>
+if any<span style="background-color:rgba(57,212,155, 0.2)"> information</span>, which<span style="background-color:rgba(57,212,155, 0.2)"> appears</span> on the confirmation, or any other document appears
+to be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>chery. A video<span style="background-color:rgba(57,212,155, 0.2)"> posted</span> by the<span style="background-color:rgba(57,212,155, 0.2)"> company</span> that designed and manufactured the device indicates he��s a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the national average)<span style="background-color:rgba(57,212,155, 0.2)"> electricity</span> price per<span style="background-color:rgba(57,212,155, 0.2)"> kil</span>owatt. The calculation lets you know approximately how much you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> the numbers as they<span style="background-color:rgba(57,212,155, 0.2)"> are</span> called into<span style="background-color:rgba(57,212,155, 0.2)"> his</span> system. Manage your token account, which determines if any</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

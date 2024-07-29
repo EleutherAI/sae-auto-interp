@@ -1,0 +1,701 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-8</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-8</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  Katie and him are living happily ever<span style="background-color:rgba(57,212,155, 1.0)"> after</span>. They have 2 beautiful children. Send this to at least<br>Activations: (" after" : 10)<br>Example 2: se. He lived in the United<span style="background-color:rgba(57,212,155, 1.0)"> States</span> of<span style="background-color:rgba(57,212,155, 1.0)"> America</span> for long time. When he first established Zay<br>Activations: (" States" : 8), (" America" : 9)<br>Example 3:  together over two years; we��ve been living<span style="background-color:rgba(57,212,155, 1.0)"> together</span>. My idea of that is you have<br>Activations: (" together" : 9)<br>Example 4:  lived in<span style="background-color:rgba(57,212,155, 1.0)"> Britain</span> for many more. During the course of my three-hour interview with him he readily<br>Activations: (" Britain" : 9)<br>Example 5:  child. Amy and Ashley��s parents, divorced yet living<span style="background-color:rgba(57,212,155, 1.0)"> together</span>, are considering remarrying<br>Activations: (" together" : 9)<br>Example 6: <|endoftext|>: Historical Beginnings<br>We still live, formally<span style="background-color:rgba(57,212,155, 1.0)">,</span> within the Holocene Epoch. However<br>Activations: ("," : 9)<br>Example 7:  relatives on my dad��s side who lived like hipp<span style="background-color:rgba(57,212,155, 1.0)">ies</span> in the California<span style="background-color:rgba(57,212,155, 1.0)"> desert</span> – maybe I<br>Activations: ("ies" : 9), (" desert" : 7)<br>Example 8: , historical architecture and well-placed sarcasm. She lives color<span style="background-color:rgba(57,212,155, 1.0)">fully</span>, collects vintage books, art<br>Activations: ("fully" : 8)<br>Example 9:  told the Star that living close to ravines means living side-by-<span style="background-color:rgba(57,212,155, 1.0)">side</span> with wildlife, including<br>Activations: ("side" : 8)<br>Example 10:  my mother and siblings and I all moved back to Kansas. My father lives around<span style="background-color:rgba(57,212,155, 1.0)"> here</span>, somewhere,<br>Activations: (" here" : 8)<br>Example 11:  around to document what his life was like living on the<span style="background-color:rgba(57,212,155, 1.0)"> street</span>. If you already think you know how<br>Activations: (" street" : 8)<br>Example 12: . She lived in<span style="background-color:rgba(57,212,155, 1.0)"> Spain</span>, England, and<span style="background-color:rgba(57,212,155, 1.0)"> Scotland</span> for a time, then pursued a M.Div<br>Activations: (" Spain" : 8), (" Scotland" : 8)<br>Example 13: <|endoftext|> divorced twice. His son Blaine, from his first marriage, lives with<span style="background-color:rgba(57,212,155, 1.0)"> him today</span> and is<br>Activations: (" him" : 8), (" today" : 6)<br>Example 14:  escape his creditors. He lived in<span style="background-color:rgba(57,212,155, 1.0)"> Ireland</span> from 1787 to 1792 and then returned to America to<br>Activations: (" Ireland" : 8)<br>Example 15: in rural Western<span style="background-color:rgba(57,212,155, 1.0)"> Washington</span> her whole life and loves listening<br>to Fleetwood Mac (especially Stevie N<br>Activations: (" Washington" : 8)<br>Example 16: <|endoftext|>The couple got married in 2014 after living<span style="background-color:rgba(57,212,155, 1.0)"> together</span> for about 10<span style="background-color:rgba(57,212,155, 1.0)"> years</span>. They have six children.<br>Activations: (" together" : 8), (" years" : 7)<br>Example 17:  year has been divorced for about 5 years. His ex lives in<span style="background-color:rgba(57,212,155, 1.0)"> CA</span> we live<span style="background-color:rgba(57,212,155, 1.0)"> elsewhere</span>. Well,<br>Activations: (" elsewhere" : 8)<br>Example 18:  and Wales. It shows Joseph and Ann Purnell living<span style="background-color:rgba(57,212,155, 1.0)"> together</span> with six children in Banbury,<br>Activations: (" together" : 8)<br>Example 19: ater (ca. 1782). For a while Stuart lived in splend<span style="background-color:rgba(57,212,155, 1.0)">our</span>, but being a bad<br>Activations: ("our" : 8)<br>Example 20: �s dad wasn��t involved because he lived in a commun<span style="background-color:rgba(57,212,155, 1.0)">e</span> in<span style="background-color:rgba(57,212,155, 1.0)"> Nebraska</span>, and I<br>Activations: ("e" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Geographical locations, words related to togetherness, and suffixes (-after, -ies, -fully, -side, -here, -our) indicating a sense of place or unity.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Geographical locations, words related to togetherness, and suffixes (-after, -ies, -fully, -side, -here, -our) indicating a sense of place or unity.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> in Wynants<span style="background-color:rgba(57,212,155, 1.0)">kill</span> and have two daughters: Meghan, 22, a graduate of SUNY One</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> couple resided in<span style="background-color:rgba(57,212,155, 1.0)"> Detroit, Mich.,</span> before moving to Havre in 1948.
+Jagow was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> many years, discovering that work colleagues live on the same<span style="background-color:rgba(57,212,155, 1.0)"> street</span> and meeting our new<span style="background-color:rgba(57,212,155, 1.0)"> neighbours</span>.
+Many</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>. But the problem is, I am not able to correct my memory. I do not live<span style="background-color:rgba(57,212,155, 1.0)"> there</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> in Keene,<span style="background-color:rgba(57,212,155, 1.0)"> NH</span>. He can be reached at 603-357-0484.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> clean<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> conditions</span> and free of unnecessary chemicals.
+* It means knowing that our bottom line doesn��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>, ��Oh, come on….��
+No. You know what? Live<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> here</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>even on days
+we had rather be living on our isolated<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> island</span>.
+I'll take care of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>, the gods lived in the real<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> world</span> and the objects that were using were...
+29.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>He lived in the Sher<span style="background-color:rgba(57,212,155, 0.9200000000000002)">aton</span> between 2004 and<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> 2008</span> when he was deputy to late minister of communications Ivy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, a Kurdish exile<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> living</span> in<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Beirut</span>, described it as a ��comedy.��
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> we live in a modern<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> society</span>. Were constantly being bombarded with advertisements for the newest model and most</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> of "being out of harmony with the Church."
+We do indeed live in strange<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> times</span> when a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> back. Keep a supply of water or fire extinguisher at hand. If you live in an<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> area</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> disagree with BMitch here. If you live in an<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> area</span> with sustained freezing<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> temperatures</span>, you should</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>
+Jan Willis was raised in the Jim Crow<span style="background-color:rgba(57,212,155, 0.76)"> south</span> and had crosses burnt on her lawn when she</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> my<span style="background-color:rgba(57,212,155, 0.76)"> house</span>,<span style="background-color:rgba(57,212,155, 0.76)"> but</span> pretty near<span style="background-color:rgba(57,212,155, 0.76)"> by</span>. SSOOOO, it's been 3-4 yrs.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> already for decades been working at the gulf of S<span style="background-color:rgba(57,212,155, 0.76)">iam</span>.
+The mosque is built in an artificial</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> other known prominent figures have also stayed in our<span style="background-color:rgba(57,212,155, 0.76)"> hotel</span> including Renato Nicolini, the former commissioner of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> to Lose?
+If you already live a comfortable<span style="background-color:rgba(57,212,155, 0.76)"> life</span>, you may only have experiences to gain and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> Shakespeare�<span style="background-color:rgba(57,212,155, 0.6799999999999999)">�</span>s London. She prides herself on being able to ride a<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> horse</span> (badly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>. The majority of South Africans were confined to the Bantust<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ans</span> and townships that were totally</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> gym at the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> ranch</span> to keep his frame lean. He says he has not noticed any decrease in his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> two pit bulls get along<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> well</span> with the five pigs sharing their home. Usually, the pigs are pretty</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> gorgeously decorated two room<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> studio</span>, at 78 West 55th Street. Rudy wakes late each day;</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> other nations now ��want to be with<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> us</span>.�� That��s how she ends</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Missouri! Living in this beautifully developed<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> apartment community</span> provides everything you want right at home, in your own</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>��s ridley sea<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> turtles</span> forage and nest along the Louisiana<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> coastline</span>. Breton Sound plus</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> special woman take her to a fine restaurant, not to McDonald�<span style="background-color:rgba(57,212,155, 0.6000000000000001)">�</span>s.
+Successful,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> single women with children under the age of 18 live below the poverty<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> line</span>, and that their median annual</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> and walking trails, and make sure that the indoor environment you live and<span style="background-color:rgba(57,212,155, 0.52)"> work</span> in is healthy.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>t�<span style="background-color:rgba(57,212,155, 0.52)">�</span>s historical center.
+The hotel��s Big Apple theme had a few sour</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> on the importance of education and everyone getting a crack at living the American<span style="background-color:rgba(57,212,155, 0.52)"> Dream</span>, but as this story</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>keep the world safe�<span style="background-color:rgba(57,212,155, 0.52)">�</span> Like the new world, space will offer a release valve, of an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> women.
+The city of Memphis, she wrote, does not protect an African American �<span style="background-color:rgba(57,212,155, 0.52)">�</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Jim Harkey, chef and owner of the Cape Fear Cafe in Duncan�<span style="background-color:rgba(57,212,155, 0.44)">�</span>s Mills died Monday</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> actions in reliance on such content or sites. Users of this Site use its contents at their own<span style="background-color:rgba(57,212,155, 0.44)"> risk</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.44)"> fantasy</span>; you��re thinking, This can��t be true, it��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>, China
+Black tea is grown in<span style="background-color:rgba(57,212,155, 0.44)"> China</span>, India, Sri Lanka, and Africa, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> executive<span style="background-color:rgba(57,212,155, 0.44)"> position</span> afforded Smith the opportunity to be an educator over the past seven years. ��At the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> good news for the animals that live in these freshwater<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> streams</span>. The animals are all connected to each</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> and storytelling that everyone can relate to. After surviving his childhood growing<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> up</span> with nine<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> sisters</span> and one brother</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> suggesting that a large number of people do their shopping from<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> work</span> for delivery that evening,��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> bulk trash zone map to find out which day of the week we might be in your<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> neighborhood</span> and remember</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> this incredible<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> summer together</span>?' I didn't know if it was real."
+Buffy continued to stare</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> moment he was in some sort of living<span style="background-color:rgba(57,212,155, 0.28)"> hell</span>. The sides of the plane reverberated with rattling</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Bingo in an extraordinary partnership. America�<span style="background-color:rgba(57,212,155, 0.28)">�</span>s #1 Game Show & America��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> disadvantageous... Where do you<span style="background-color:rgba(57,212,155, 0.28)"> live</span>?
+<span style="background-color:rgba(57,212,155, 0.28)">#</span>12 of 30 Re: Lease question [ky</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> to a building that exists purely as ICWs office and GPWA�<span style="background-color:rgba(57,212,155, 0.28)">�</span>s training school to interview</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Quote of the Day
+Swimming like there's no tomorrow
+Living<span style="background-color:rgba(57,212,155, 0.28)"> like</span> there's no regret</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> on D-League castoffs and second-round picks to fill a roster.
+"We talk</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the destroyer droid carousel or he may have been
+destroyed) and coax him into this room</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> looks of this just-released clip, she's proving she's as mesmerizing on film as she</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> feed, and in particular his muscle condition was outstanding.
+Since I've been using The Hanley</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>��t hear the term often (if ever, before reading this). If a lawyer, accountant</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> am in stressful situations, I can start mentally singing that four-note melody and it helps me to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> value in $ billions.
+Data segmentations: Regional breakdowns, market share of competitors, key</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the Flavor of the 'New Harlem Renaissance' with the Debut of the Original Series 'Harlem</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and is an imitation of tortoiseshell but I think it's just one color, without any</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the government and get subsidies, mandates and other things, so the economy is no longer directed by individual</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, or live with you<span style="background-color:rgba(57,212,155, 0.2)"> or</span> other relatives.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Be Considerate: No one likes to be pest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> one of the most<span style="background-color:rgba(57,212,155, 0.2)"> important</span> parts of<span style="background-color:rgba(57,212,155, 0.2)"> your</span> house. If you want to have your home��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Final.Personal Loan<span style="background-color:rgba(57,212,155, 0.2)"> In</span> Chennai
+<span style="background-color:rgba(57,212,155, 0.2)">The</span> capital city of Tamil Nadu, Chennai lies on India��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>?
+No.<span style="background-color:rgba(57,212,155, 0.2)"> Under</span> no circumstances<span style="background-color:rgba(57,212,155, 0.2)"> can</span> rental vehicles travel to Mexico.
+Do your rental vehicles have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Now Reh<span style="background-color:rgba(57,212,155, 0.2)">obo</span>am the<span style="background-color:rgba(57,212,155, 0.2)"> son</span> of Solomon reigned in Judah. Rehoboam was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> concept -- it's<span style="background-color:rgba(57,212,155, 0.2)"> working</span> better than<span style="background-color:rgba(57,212,155, 0.2)"> I</span> expected. You can grow fruit trees in tight spaces after all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> of a property owner<span style="background-color:rgba(57,212,155, 0.2)">�</span>�s responsibility<span style="background-color:rgba(57,212,155, 0.2)"> in</span> this area of law – known as premises liability – depending</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> farmer who raises Jacob sheep<span style="background-color:rgba(57,212,155, 0.2)"> and</span> chickens.S<span style="background-color:rgba(57,212,155, 0.2)">ting</span>: An Englishman in Luxembourg...
+Last night</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> and, according to<span style="background-color:rgba(57,212,155, 0.2)"> her</span>, ��<span style="background-color:rgba(57,212,155, 0.2)">the</span> differences are massive!��
+8. Oprah Win</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the '60s and<span style="background-color:rgba(57,212,155, 0.2)"> '</span>70s with<span style="background-color:rgba(57,212,155, 0.2)"> the</span> left distrustful of government and came of age with</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -1,0 +1,703 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-13</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-13</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: , you must have been discharged for a service-related disability.<br>National Guard and military<span style="background-color:rgba(57,212,155, 1.0)"> reserve</span> members<br>Activations: (" reserve" : 9)<br>Example 2:  to entry-level<span style="background-color:rgba(57,212,155, 1.0)"> enlisted</span> training for 50 percent of males and 100 percent of females in the<span style="background-color:rgba(57,212,155, 1.0)"> Marine</span> Corps<br>Activations: (" enlisted" : 9), (" Marine" : 6)<br>Example 3:  of<span style="background-color:rgba(57,212,155, 1.0)"> servicemen</span> and women around the world.<br>The fact that we will protect DoD mobile users<br>Activations: (" servic" : 7), ("emen" : 9)<br>Example 4: <|endoftext|> military applications by the U.S. Navy<span style="background-color:rgba(57,212,155, 1.0)"> Marine</span> Mammal Program, including detecting underwater mines and<br>Activations: (" Marine" : 9)<br>Example 5:  could do to save money,<span style="background-color:rgba(57,212,155, 1.0)"> enlisted soldiers</span>�� career progression is what they decide to cut. From<br>Activations: (" enlisted" : 8)<br>Example 6:  been confirmed as suicide, and 18 cases remain under investigation.<br>During June, among<span style="background-color:rgba(57,212,155, 1.0)"> reserve component soldiers</span><br>Activations: (" reserve" : 8), (" component" : 7), (" soldiers" : 6)<br>Example 7: <span style="background-color:rgba(57,212,155, 1.0)">emen</span> and women and to audiences from stages worldwide. Then illness and advancing age forced Virginia to remain within<br>Activations: ("emen" : 8)<br>Example 8:  of veterans and<span style="background-color:rgba(57,212,155, 1.0)"> reservists</span> from the U.S.<span style="background-color:rgba(57,212,155, 1.0)"> Marine Corps</span>, Naval<span style="background-color:rgba(57,212,155, 1.0)"> Special Warfare</span>, U.<br>Activations: (" reserv" : 8), ("ists" : 6), (" Marine" : 7), (" Warfare" : 8)<br>Example 9:  help active<span style="background-color:rgba(57,212,155, 1.0)"> duty</span> and retired military<span style="background-color:rgba(57,212,155, 1.0)"> members</span> get auto financing.<br>October 28, 2020A spot delivery is<br>Activations: (" duty" : 8), (" members" : 6)<br>Example 10: <|endoftext|>ization Command.<br>��The Army��s<span style="background-color:rgba(57,212,155, 1.0)"> enlisted rank</span> structure has 9 steps, and<br>Activations: (" enlisted" : 8), (" rank" : 7)<br>Example 11: <|endoftext|>er is a colonel in the U.S. Air Force<span style="background-color:rgba(57,212,155, 1.0)"> Reserve</span> and has a Bachelor of Science<br>Activations: (" Reserve" : 8)<br>Example 12:  wife. My husband served as an Apache Pilot warrant officer in the 82nd Air<span style="background-color:rgba(57,212,155, 1.0)">borne</span> and is currently<br>Activations: ("borne" : 8)<br>Example 13: <span style="background-color:rgba(57,212,155, 1.0)"> Marine</span> Corps, and Coast Guard.<br>For more information about the USMAP or to register for an<br>Activations: (" Marine" : 8)<br>Example 14:  Residency Relief Act. Our coalition also has the support from a number of veteran and<span style="background-color:rgba(57,212,155, 1.0)"> active duty service</span><br>Activations: (" duty" : 8)<br>Example 15: . Army<span style="background-color:rgba(57,212,155, 1.0)"> Reserve officer</span>, a GA certified Peace Officer, and a certified counselor.<br>C.L<br>Activations: (" Reserve" : 8), (" officer" : 6)<br>Example 16:  of U.S. soldiers of the 101st Air<span style="background-color:rgba(57,212,155, 1.0)">borne</span> division will recall in their collective memories that<br>Activations: ("borne" : 8)<br>Example 17: <|endoftext|> Army��. The standard ones are worn by general<span style="background-color:rgba(57,212,155, 1.0)"> servicemen</span>. America navy embroidered patches<br>Activations: (" servic" : 7), ("emen" : 8)<br>Example 18:  be buried this week at Arlington National Cemetery, the Pentagon said Monday.<br>Air Force Master<span style="background-color:rgba(57,212,155, 1.0)"> Sergeant</span> Thomas<br>Activations: (" Sergeant" : 8)<br>Example 19:  fire: Army Staff<span style="background-color:rgba(57,212,155, 1.0)"> Sgt</span>. Jason A. McDonald, 28, of Butler, Ga.<br>Military<br>Activations: (" Sgt" : 8)<br>Example 20: <|endoftext|> May 2011, the Army reported 21 potential suicides among<span style="background-color:rgba(57,212,155, 1.0)"> active</span>-<span style="background-color:rgba(57,212,155, 1.0)">duty soldiers</span>. Since the release of<br>Activations: (" active" : 7), ("duty" : 8), (" soldiers" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Military-related terms, including ranks, branches, and statuses (e.g., reserve, enlisted, active duty).
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Military-related terms, including ranks, branches, and statuses (e.g., reserve, enlisted, active duty).</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> next reason to kill orf some more of our brave soldiers/<span style="background-color:rgba(57,212,155, 1.0)">sold</span>ieresses.
+Have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)"> Sgt.</span> Howard Ray. "I think the punishment should be reserved for him."
+Ray was awarded</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>, 26, were the first New Jersey National Guard<span style="background-color:rgba(57,212,155, 1.0)"> servicemen</span> to die in the Iraq war.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)"> Sp</span>c. Justin R. Helton, 25, of Beaver, Ohio; and<span style="background-color:rgba(57,212,155, 1.0)"> Pv</span>t.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">duty soldiers</span>. Since the release of that report, one case has been added for a total of seven</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> World War II in several CO<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> camps</span> doing forestry work. It was at a<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> camp</span> in Michigan where St</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> from the point of view of<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> soldiers</span>, sailors, and par<span style="background-color:rgba(57,212,155, 0.9200000000000002)">atroopers</span> who were involved in the invasion</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Auxiliary (1885-1966), organized in 1885 for the purpose of<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> enlist</span>ing the women</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> of the attack. The claim he filed under the Defense<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Base</span> Act, a World War II-era</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>�Behind the scenes in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Marine Corps mission</span> against the Islamic State,�� Washington Post, 12</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>-employed. Military spouses make $3.00 less per hour than our<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> civilian</span> counterparts. The Department</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>: The Memorial Day parade in Portsmouth, Virginia.
+A chance to honour war<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> veterans</span> and for local</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>Alaska National Guards<span style="background-color:rgba(57,212,155, 0.8400000000000001)">men</span> from the 207th Engineer Support Pl<span style="background-color:rgba(57,212,155, 0.8400000000000001)">atoon</span> use a mobile application to respond</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)">aries</span> and RC leaders abandoned the moniker ��spiritual director�� in favor of the less dubious</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> of his time.
+��I did a lot of military support<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> tours</span>��, he stated</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Disposal and Warship Regiment
+- HDF Peace Support<span style="background-color:rgba(57,212,155, 0.76)"> Training</span> Center
+- Hungary has one of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> are looking for
+What we look for in our Officer Cad<span style="background-color:rgba(57,212,155, 0.76)">ets</span> is leadership potential, a sense</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> Infantry</span>, on 22nd May 1861. At that time he resided in Houston, Minnesota. The R</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>a, Morocco, May 26.
+ieutenant Roget, a French av<span style="background-color:rgba(57,212,155, 0.76)">iator</span>
+who</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> as a childhood because of an accident during a Boy<span style="background-color:rgba(57,212,155, 0.76)"> Scout ritual</span>. He wore hearing aids during performances.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>. These men were officially<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> stationed</span>, but infrequently resided, at the port of Monterey. Among</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> than them.
+To those who have and are serving in the United States<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Armed Forces</span>, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> National Defense<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Authorization</span> Act. In it, they argue the Court should dismiss Hedges for lack of standing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> Leonard still has the plaque in a box, because the chief impact his military<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> service</span> had on his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> from the Center for Information<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Warfare Training</span> organization, visit www.navy.mil/local/c</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> operational</span> situation may preclude the
+preparation of the detailed radiological contamination overlay, and a
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>
+Boyle, a Muslim convert and long-time advocate of freed Guantanamo<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> inmate Omar</span> Khadr --</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>Image 6 of 6]
+Photo by<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Lance</span> Cpl. Vaniah Temple
+A<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> drill</span> instructor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> law by Donald Trump.
+The Pentagon, which has been backing the F-35<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> deployment</span> to Britain</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> he also was the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Missions</span> Strategist for LRBA. In May 2005, he served as Associate Pastor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> Defence Staff of the Ministry of Defence. A subordinate<span style="background-color:rgba(57,212,155, 0.52)"> Joint</span> Force<span style="background-color:rgba(57,212,155, 0.52)"> Command</span> coordinates and commands the HDF</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> the overall delivery of search and rescue services and disaster relief, often as missions assigned by the<span style="background-color:rgba(57,212,155, 0.52)"> Air</span> Force</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> a fireman after completing his military<span style="background-color:rgba(57,212,155, 0.52)"> service</span>. In 1991, when the Soviet Union collapsed, Firt</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> said COOL's director Keith Boring. "Safe ship handling and navigation in our<span style="background-color:rgba(57,212,155, 0.52)"> Navy</span> are paramount</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>ler PIO. He was asked to develop a PIO curriculum and when he teaches young<span style="background-color:rgba(57,212,155, 0.52)"> recruits</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> the business whether or not to allow the firearms.
+The law allows those with a<span style="background-color:rgba(57,212,155, 0.44)"> concealed carry</span> permit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> foundation and agency grants including those from the U.S. Peace<span style="background-color:rgba(57,212,155, 0.44)"> Corps</span>, Ford Foundation, ActionAid</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> Security by the American Board for Certification in
+Homeland<span style="background-color:rgba(57,212,155, 0.44)"> Security</span>. Duncan earned a Bachelor of Arts degree</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> got a rare opportunity to visit Fort Riley for an inside look at what<span style="background-color:rgba(57,212,155, 0.44)"> soldiers</span> do on a daily basis</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> color, religion, sex, national origin, age, disability,<span style="background-color:rgba(57,212,155, 0.44)"> veteran</span> status, genetic information, sexual</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> manager, Bheodari served as interim assistant general manager for
+<span style="background-color:rgba(57,212,155, 0.36000000000000004)">Oper</span>ations, Maintenance and Security</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>, it is easy to see Florence as the young energetic Peace Corps<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> volunteer</span> from California. She is still</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> found<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Lieutenant</span> William Calley guilty of murdering Vietnamese civilians, a decision generally recalled by liberals as a tipping</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> returned to<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Camp</span> Shelby, their faces were somber.
+Like many of the Hawaiians, Tad</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>This site focus on the Spanish-American War 1898,
+especially the 1st United States<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Volunteer</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> have no comment on the audiotape. There was no immediate indication that<span style="background-color:rgba(57,212,155, 0.28)"> Ad</span>nani��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> scenario, and I remain confident that navigation will continue," said Maj. Gen<span style="background-color:rgba(57,212,155, 0.28)">. John</span> Peab</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> in<span style="background-color:rgba(57,212,155, 0.28)"> Fort</span> Dix, New Jersey. His release is scheduled for April 1, 2016.
+The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> his or her work, and establish educational goals based on the<span style="background-color:rgba(57,212,155, 0.28)"> intern</span>'s interests and abilities. FA</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> inside the<span style="background-color:rgba(57,212,155, 0.28)"> pal</span>atial home, where Mary and their two kids have been living while he took up residence</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Referring to FIG. 1, a client, e.g., User 1, is coupled</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Performance, March 2003
+Tate Liverpool - Group show, November 2003 until January 2004Sebast</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> up?��
+By the way, the Library is adding that blue ribbon to the collection (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the 'server' at git://git.eclipse.org/gitroot/mdt/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> still near historic lows, are down from 6.8 percent in 2006 and more than 10 percent in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in barely ten weeks, but is now likely to take at least three times that. Der Spiegel reports</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> blogging and all the other things you've come to expect from Kimberly and I – with the same high</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>.
+He elaborated with a few examples:
+The image enhancing super computer is inside [a computer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> much help myself. That kind of celebration makes us lazy.
+Next time, let��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, forget it.
+"Nowadays I use warm, rounded bass sounds, with not as much</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>S.<span style="background-color:rgba(57,212,155, 0.2)"> Navy</span> Expeditionary Combat Command<span style="background-color:rgba(57,212,155, 0.2)">,</span> U.S. Army Watercraft Program and Special Operations Command</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>ers I know who are<span style="background-color:rgba(57,212,155, 0.2)"> now</span> navigating the<span style="background-color:rgba(57,212,155, 0.2)"> waters</span> of college. I think about my children and their friends</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> at the installation as<span style="background-color:rgba(57,212,155, 0.2)"> they</span> train for combat<span style="background-color:rgba(57,212,155, 0.2)">.</span>
+On Friday, 130 students from Stewart, Schilling</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Henry Stafford,<span style="background-color:rgba(57,212,155, 0.2)"> Under</span> Armour�<span style="background-color:rgba(57,212,155, 0.2)">�</span>s former chief merchandising officer, Steve Battista,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> students who earn cum<span style="background-color:rgba(57,212,155, 0.2)"> la</span>ude status<span style="background-color:rgba(57,212,155, 0.2)"> and</span> are elected to membership in Robots.
+Professional Leadership Honor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> and providing either equipment<span style="background-color:rgba(57,212,155, 0.2)"> or</span> technical support<span style="background-color:rgba(57,212,155, 0.2)">,</span> according to a regime army officer. The military cooperation soon evolved</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> inSomalia<span style="background-color:rgba(57,212,155, 0.2)">is</span> imbued<span style="background-color:rgba(57,212,155, 0.2)"> with</span> controversy. In the eyes of a large number of Somalis</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> 6,816<span style="background-color:rgba(57,212,155, 0.2)"> parcels</span> owned by<span style="background-color:rgba(57,212,155, 0.2)"> the</span> partially or totally disabled and the blind, including military veterans;</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> has bail set at<span style="background-color:rgba(57,212,155, 0.2)"> 100</span>k. OU<span style="background-color:rgba(57,212,155, 0.2)">CH</span>.
+Here's the link if your interestedHow did</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> task.��<span style="background-color:rgba(57,212,155, 0.2)"> —</span> Lt. Seth<span style="background-color:rgba(57,212,155, 0.2)"> M</span>oulton.
+- ��It was just hen</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

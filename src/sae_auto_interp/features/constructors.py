@@ -9,7 +9,7 @@ def pool_max_activation_windows(
     locations: TensorType["locations", 2],
     activations: TensorType["locations"],  
     ctx_len: int,
-    max_examples: int,
+    max_examples: int = None,
 ):
     # Reconstruct dense tensor
     batch_len, seq_len = tokens.shape
@@ -31,9 +31,13 @@ def pool_max_activation_windows(
     # Unfold tokens and activations to match
     activation_windows = dense_activations.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
     token_windows = token_batches.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
+
+    # Filter out zero pools
+    non_zero_mask = avg_pools != 0
+    non_zero_pools = avg_pools[non_zero_mask]
     
     # Get top k activation pools
-    k = min(max_examples, len(avg_pools))
+    k = min(max_examples, len(non_zero_pools))
     top_indices = torch.topk(avg_pools.flatten(), k).indices
 
     # Get the top indices

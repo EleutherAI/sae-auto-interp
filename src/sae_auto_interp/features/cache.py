@@ -100,6 +100,8 @@ class FeatureCache:
 
         self.filter_submodules(filters)
 
+        print(submodule_dict.keys())
+
     def load_token_batches(self, n_tokens: int, tokens: TensorType["batch", "sequence"]):
         
         max_batches = n_tokens // tokens.shape[1]
