@@ -53,7 +53,7 @@ def main(cfg):
 
     ### Load client ###
 
-    client = Local("casperhansen/llama-3-70b-instruct-awq")
+    client = Local("Qwen/Qwen1.5-0.5B-Chat")
 
     ### Build Explainer pipe ###
     def explainer_postprocess(result):

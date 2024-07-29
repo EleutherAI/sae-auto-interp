@@ -4,28 +4,28 @@ from dataclasses import dataclass
 @dataclass
 class FeatureConfig(Serializable):
     
-    width: int
+    width: int = 131072
     """Number of features in the autoencoder"""
 
-    min_examples: int
+    min_examples: int = 200
     """Minimum number of examples for a feature to be included"""
 
-    max_examples: int
+    max_examples: int = 10000
     """Maximum number of examples for a feature to included"""
 
-    ctx_len: int
+    ctx_len: int = 64
     """Length of each example"""
 
-    n_splits: int
+    n_splits: int = 5
     """Number of splits that features were devided into"""
 
-    n_train: int 
+    n_train: int = 10
     """Number of examples for generating an explanation"""
 
-    n_test: int
+    n_test: int = 10
     """Number of examples for evaluating an explanation, per quantile"""
 
-    n_quantiles: int
+    n_quantiles: int = 5
     """Number of quantiles to draw test examples from"""
 
 @dataclass

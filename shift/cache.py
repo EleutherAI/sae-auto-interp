@@ -9,7 +9,7 @@ model = LanguageModel("EleutherAI/pythia-70m-deduped", device_map="auto", dispat
 
 submodule_dict = load_autoencoders(
     model,
-    None,
+    [8],
     "/share/u/caden/sae-auto-interp/sae_auto_interp/autoencoders/Sam/pythia-70m-deduped",
 )
 
