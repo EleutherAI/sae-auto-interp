@@ -71,7 +71,6 @@ def scorer_preprocess(result):
     return record
 
 def scorer_postprocess(result):
-    result = result.result()
     with open(f"{SCORER_OUT_DIR}/{result.record.feature}.txt", "wb") as f:
         f.write(orjson.dumps(result.score))
 
