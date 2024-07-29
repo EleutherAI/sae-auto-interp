@@ -1,0 +1,688 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-25</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-25</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  actors dispatched a total of 157 million C&C attacks, which represents 22%<span style="background-color:rgba(57,212,155, 1.0)"> of</span> all threats.<br>Activations: (" of" : 10)<br>Example 2: 5 million to $28 million, which represented 45%<span style="background-color:rgba(57,212,155, 1.0)"> of the</span> Hedge Fund's assets.<br>21<br>Activations: (" of" : 9), (" the" : 7)<br>Example 3:  year.<br>- The National Turkey Federation estimated that 46 million turkeys – one fifth<span style="background-color:rgba(57,212,155, 1.0)"> of the</span> annual<br>Activations: (" of" : 9), (" the" : 8)<br>Example 4: <span style="background-color:rgba(57,212,155, 1.0)"> of the</span> list, while settlers make up just 4 percent of Israel's population.<br>As Ynet<br>Activations: (" of" : 9), (" the" : 6)<br>Example 5: 4 million jobs in 2012. That represents 10.3%<span style="background-color:rgba(57,212,155, 1.0)"> of</span> all private sector jobs.<br>Earn<br>Activations: (" of" : 9)<br>Example 6: <span style="background-color:rgba(57,212,155, 1.0)"> of</span> all addiction treatment programs.<br>- Intensive Outpatient Programs Make up 44%<span style="background-color:rgba(57,212,155, 1.0)"> of</span> All Addiction<br>Activations: (" of" : 8), (" of" : 7)<br>Example 7:  comprise up to 10%<span style="background-color:rgba(57,212,155, 1.0)"> of</span> their business, while Tucson Concrete Cutting and Coring says coring<br>Activations: (" of" : 8)<br>Example 8: %<span style="background-color:rgba(57,212,155, 1.0)"> of the</span> total cost of completing 52-55 credit hours during a student��s two years<br>Activations: (" of" : 8), (" the" : 6)<br>Example 9:  around 10 percent<span style="background-color:rgba(57,212,155, 1.0)"> of</span> world steel output.<br>As of May 17, 2008, the market capitalization<br>Activations: (" of" : 8)<br>Example 10: � were collected.<br>He estimates e-waste makes up less than one percent<span style="background-color:rgba(57,212,155, 1.0)"> of</span> kerbs<br>Activations: (" of" : 8)<br>Example 11: %<span style="background-color:rgba(57,212,155, 1.0)"> of</span> total sales in the sector.<br>Last month, mortgage house sales skyrocketed by 410.<br>Activations: (" of" : 8)<br>Example 12:  almost 7 percent<span style="background-color:rgba(57,212,155, 1.0)"> of</span> total foreign investment in Vietnam.<br>"This is a remarkable achievement," said Sam<br>Activations: (" of" : 8)<br>Example 13: .42 percent<span style="background-color:rgba(57,212,155, 1.0)"> of</span> total production. The findings show the industry��s efforts to reduce emissions are<br>Activations: (" of" : 8)<br>Example 14:  United States, which makes up 75%<span style="background-color:rgba(57,212,155, 1.0)"> of</span> total sales, and declined 10.9% in the<br>Activations: (" of" : 8)<br>Example 15:  2018 did not exceed 4,700. This represents just 0.3 per cent<span style="background-color:rgba(57,212,155, 1.0)"> of the</span> total citizens<br>Activations: (" of" : 8), (" the" : 7)<br>Example 16:  barrel a day unit, which accounts for<br>one-eighth<span style="background-color:rgba(57,212,155, 1.0)"> of the</span> total refinery capacity of California<br>Activations: (" of" : 8), (" the" : 8)<br>Example 17:  trillion, or 5.4%<span style="background-color:rgba(57,212,155, 1.0)"> of</span> total loans, a ratio three times higher than in other major<br>Activations: (" of" : 8)<br>Example 18:  of 76.5 billion dollars, accounting for 1.2 percent<span style="background-color:rgba(57,212,155, 1.0)"> of the</span> country��s GDP<br>Activations: (" of" : 8), (" the" : 6)<br>Example 19: let mortgages outstanding, accounting for a tiny 0.7 per cent<span style="background-color:rgba(57,212,155, 1.0)"> of</span> total home loans.<br>The<br>Activations: (" of" : 8)<br>Example 20:  outstanding, accounting for 12.8 per cent<span style="background-color:rgba(57,212,155, 1.0)"> of</span> total mortgages.<br>Figures from the Council of<br>Activations: (" of" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The preposition "of" and sometimes "the" in percentage or proportion phrases, indicating a part-to-whole relationship.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The preposition &quot;of&quot; and sometimes &quot;the&quot; in percentage or proportion phrases, indicating a part-to-whole relationship.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> which is actually about 3/4<span style="background-color:rgba(57,212,155, 1.0)"> of the</span> full 200-page book.
+The preview, provided</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> 120 million to $ 1.2 billion, or 5 %<span style="background-color:rgba(57,212,155, 1.0)"> of</span> gross loans, and it wants to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> or 4.4 per cent<span style="background-color:rgba(57,212,155, 1.0)"> of its</span> total registered private cars, according to Transport Department data. However</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> like a sizable budget deficit -- about $300 billion, or roughly 20%<span style="background-color:rgba(57,212,155, 1.0)"> of that</span> year<span style="background-color:rgba(57,212,155, 1.0)">'s</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> accounted for 2.8 percent<span style="background-color:rgba(57,212,155, 1.0)"> of</span> Kentucky<span style="background-color:rgba(57,212,155, 1.0)">'s</span> offense on the entire year and nearly six percent<span style="background-color:rgba(57,212,155, 1.0)"> of</span> its</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>, global contextualization. This was but a minor fraction<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> of</span> what can be completed with the support</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> 1.5 percent<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> of</span> total minutes spent online (according to comScore Media Metrix). The leader</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>S. military has about 31,000 troops in Afghanistan, less than a quarter<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> of its</span> total strength</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> across 84 countries and serves over 547 million customers – nearly 16.5 percent<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> of the</span> world</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> website in the past month. That��s 14.1%<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> of all</span> Adults and up nearly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>, who now make up 63 percent<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> of the</span> House.
+Not a very big speed bump,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> to eliminate coal-fired power generation and for renewable energy to contribute up to 10 per cent<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> of</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> repair the monument in the parish church in memory of his son, one-third<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> of the</span> residue</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Feldman said. ��This latest study shows that methane emissions are a fraction<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> of</span> estimates from just a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> than typical video today. Video will be 80 percent<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> of</span> all traffic by 2010, up from 30 percent</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> closure, or such other fraction<span style="background-color:rgba(57,212,155, 0.76)"> of the</span> inventory as may be approved or specified by the Commission;</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> other facilities.
+Transport generates over 40%<span style="background-color:rgba(57,212,155, 0.76)"> of</span> greenhouse gas emissions in the Central American country</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> the majority<span style="background-color:rgba(57,212,155, 0.76)"> of the</span> people in this country.
+BILL FLETCHER: And unfortunately, many</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> about 37 percent of<span style="background-color:rgba(57,212,155, 0.76)"> the</span> Sullom Voe Terminal input and around 8 percent<span style="background-color:rgba(57,212,155, 0.76)"> of</span> British offshore</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> to 20%<span style="background-color:rgba(57,212,155, 0.76)"> of</span> qualified business income.
+4) For companies with gross revenues greater than $25</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> involved in this step reduces the
+list of candidates to 20 to 25 percent<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> of the</span> original pool.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> It keeps your monthly payment as low as 10%<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> of your</span> optional income and can be discharged in as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> our</span> business. This is our way of saying thank you. Got a song you're ready to submit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>opsy. This type of biopsy — also called surgical biopsy — removes a portion or all<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> of</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> size. It is usually about half<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> the</span> size of the original, while still maintaining its rectangular shape</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> are not tested (25 percent<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> of the</span> student body in 2008-9; 6 percent<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> of</span> the student</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> because the LCB is ��top heavy�� that 33 percent contribute 85 percent<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> of</span> overall revenue</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> representing the recreational boating industry. NMMA member companies produce more than 80 percent<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> of the</span> boats,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> the note authoring pages is one‑sixth<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> the</span> Cerner average.
+We saw our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> total to the athletes, a far cry from the 47 percent<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> of</span> total revenue the NFL��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> of</span> profit on slot machines they consider it their obligation to leave stellar reviews. There are of course an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> also located on the airport grounds, and are a kilometre or two<span style="background-color:rgba(57,212,155, 0.52)"> from</span> the main building. The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>�s easy to forget that only one percent<span style="background-color:rgba(57,212,155, 0.52)"> of the</span> U.S. population has access to accredited</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> an 11-period shutout streak, the longest of<span style="background-color:rgba(57,212,155, 0.52)"> her</span> career. It also marks the first time</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> of</span> the events that happen in the book i'm worried after the book becomes successful, that he'll</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> deputy coroner.
+Hickle was 16 when he suffered burns over 55 percent of<span style="background-color:rgba(57,212,155, 0.44)"> his</span> body. His</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> for less than one in<span style="background-color:rgba(57,212,155, 0.44)"> every</span> 3,000 pediatric admissions in the U.S. and about 2</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> activities. From six to ten percent<span style="background-color:rgba(57,212,155, 0.44)"> of</span> each class entering the military service academies are former CAP</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Chital remains (Sankar 1994). Chital remains were found in about 53%<span style="background-color:rgba(57,212,155, 0.44)"> of</span> Tiger</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> costs related to energy consumption.
+The truth is, up to 30 percent<span style="background-color:rgba(57,212,155, 0.44)"> of the</span> energy used by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> A percentage of<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> the</span> funds raised will be given back to a selected woman with breast cancer in that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>bed Driver. Contractor Settlements - 70%<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> of</span> Haul....
+School Bus Driver $</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>unded mandates accounted for $100 billion<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> in</span> State expenditures. The NCSL list of Federal programs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> about $1 trillion worth<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> in</span> the tax code. Getting rid of many of them would have exactly the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> with a lot of character within it. The Bedroom is somewhere the bulk<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> of</span> us spend a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> among foreclosures. As an alternative, we also apply a more conservative estimate that 50 percent<span style="background-color:rgba(57,212,155, 0.28)"> of</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> equivalents" from the grain group each day, at least half<span style="background-color:rgba(57,212,155, 0.28)"> of</span> which should come from whole grains</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> horse, and
+roughly half<span style="background-color:rgba(57,212,155, 0.28)"> the</span> column went down in the first
+volley. One</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> with GMAC��s relocation business in late 2008, found that about one-third<span style="background-color:rgba(57,212,155, 0.28)"> of</span> U</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>5% of<span style="background-color:rgba(57,212,155, 0.28)"> the</span> smoking cases and 85.4% of the smoking controls were cigarette only smokers</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the Astronomical League presents special awards to people who have contributed greatly to astronomy and/or the League</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> be adopted as rapidly as possible.
+i. Advance Filing of Form D
+From the perspective</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> this coveted region charge. Note: Scott �� s the Groom �� s especially mesmerizing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ATE SACRIFICE FOR US AND OUR COUNTRY. WE REMEMBER AND APPRECI</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, wholly reliant on its parents.
+It was probably at this stage in our evolutionary history that monog</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ary)
+We have prepared the script book for Laboratory exercises in Organic Chemistry for foreign students of Green</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>The Tokyo-based agency, called Shiseido Creative, will be responsible for the Japanese conglomerate's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the benefits of this plan should you don��t require a lot of health practitioner��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to profit from it too, but big business takes it a different level, attempting to patent generic ideas</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to tidy up his or her toys, but anyway if you say ��Put your toys in order</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>a is an aggressive<span style="background-color:rgba(57,212,155, 0.2)"> bone</span> cancer in<span style="background-color:rgba(57,212,155, 0.2)"> dogs</span>, although it only makes up about 5% of dog tum</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>os ($7<span style="background-color:rgba(57,212,155, 0.2)">34</span> million)<span style="background-color:rgba(57,212,155, 0.2)"> in</span> 10-year notes, doubling the intended
+size after receiving</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>-in-class<span style="background-color:rgba(57,212,155, 0.2)"> up</span> to nine<span style="background-color:rgba(57,212,155, 0.2)"> available</span> camera views. This is half of what a 2021 GMC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> hit by the coron<span style="background-color:rgba(57,212,155, 0.2)">av</span>irus outbreak<span style="background-color:rgba(57,212,155, 0.2)">.</span> Collectively, about a third of the world's economy is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> waste, typically in<span style="background-color:rgba(57,212,155, 0.2)"> the</span> form of<span style="background-color:rgba(57,212,155, 0.2)"> u</span>rea. Most of the animal's nitrogenous waste is,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> still led the ACC<span style="background-color:rgba(57,212,155, 0.2)"> in</span> strikeouts,<span style="background-color:rgba(57,212,155, 0.2)"> with</span> the three starting outfielders accounting for 137 of the 449</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>b) an exterior<span style="background-color:rgba(57,212,155, 0.2)"> cover</span> encompassing<span style="background-color:rgba(57,212,155, 0.2)"> a</span> substantial portion of the surgical trainer, the exterior cover having at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> 70 percent of patient care<span style="background-color:rgba(57,212,155, 0.2)"> decisions</span>.
+<span style="background-color:rgba(57,212,155, 0.2)">We</span> have an extensive quality assurance program in anatomic and clinical</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the appeal in such films<span style="background-color:rgba(57,212,155, 0.2)">.</span> Chris Fog<span style="background-color:rgba(57,212,155, 0.2)">gin</span>, a former Assistant Director to Richard Ayoade and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> 90% of the work you<span style="background-color:rgba(57,212,155, 0.2)">�</span>�ll<span style="background-color:rgba(57,212,155, 0.2)"> ever</span> do in affiliate marketing. It used to be easy</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

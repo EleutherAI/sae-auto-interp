@@ -1,0 +1,703 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-3</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-3</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  of Ballet. But if you went<span style="background-color:rgba(57,212,155, 1.0)"> to</span> be active, how about the Frazer Mountain Madness Mountain<br>Activations: (" to" : 10)<br>Example 2:  to him shortly, but if you went<span style="background-color:rgba(57,212,155, 1.0)"> to</span> see that movie because of what I said, I must<br>Activations: (" to" : 9)<br>Example 3:  being announced for the PC soon.<br>If you go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> this page at the Microsoft Download Centre,<br>Activations: (" to" : 9)<br>Example 4: <|endoftext|><br>I volleyed back with my standard,<br>��Well if you went<span style="background-color:rgba(57,212,155, 1.0)"> to</span> sleep at<br>Activations: (" to" : 9)<br>Example 5:  items in the lower section to locate cars sharing those attributes.<br>If you go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> the Gallery,<br>Activations: (" to" : 9)<br>Example 6: <|endoftext|>'ll like it.<br>DH: If I go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> Ulta, I'll focus on Ker<br>Activations: (" to" : 9)<br>Example 7:  go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> an event or want us to promote an event on the site, email me at firstname<br>Activations: (" to" : 9)<br>Example 8: <|endoftext|>riness immediately, but if you go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> bed right away that is not a problem.<br><br>Activations: (" to" : 9)<br>Example 9:  it, although if you go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> see them on tour when they are live no two performances will be<br>Activations: (" to" : 9)<br>Example 10: )<br>If you go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> an event, want us to post about an event or have an event<br>Activations: (" to" : 9)<br>Example 11:  you happen<span style="background-color:rgba(57,212,155, 1.0)"> to</span> find these at a discounted price around $110-$130 US, then it��<br>Activations: (" to" : 8)<br>Example 12:  go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> a Buddhist meditation place, almost everybody��s white, why? And how do we<br>Activations: (" to" : 8)<br>Example 13:  symbolism, because the city is the emblem of the people or the group. So if you go<span style="background-color:rgba(57,212,155, 1.0)"> to</span><br>Activations: (" to" : 8)<br>Example 14:  incorrect, you may have a letter instead of a number or vice versa.<br>If you go<span style="background-color:rgba(57,212,155, 1.0)"> to</span><br>Activations: (" to" : 8)<br>Example 15:  motions where the whole investigation is laid out if you go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> the court files, so I��<br>Activations: (" to" : 8)<br>Example 16:  the environment around you. And if you happen<span style="background-color:rgba(57,212,155, 1.0)"> to</span> be following tracks, pay attention! It is not<br>Activations: (" to" : 8)<br>Example 17:  toward whatever switch needs an operator, and if you happen<span style="background-color:rgba(57,212,155, 1.0)"> to</span> be in the way, they��<br>Activations: (" to" : 8)<br>Example 18:  much easier to work with if you happen<span style="background-color:rgba(57,212,155, 1.0)"> to</span> be taking advantage of a little privacy and a mirror to<br>Activations: (" to" : 8)<br>Example 19: <|endoftext|> and choosing one from amongst them will be quite difficult. If I go<span style="background-color:rgba(57,212,155, 1.0)"> to</span> work for the federal<br>Activations: (" to" : 8)<br>Example 20:  try<span style="background-color:rgba(57,212,155, 1.0)"> to</span> tell me any season of Real Housewives other than NYC is the best, things might get<br>Activations: (" to" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The infinitive "to" in phrases indicating direction or intention.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The infinitive &quot;to&quot; in phrases indicating direction or intention.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>, I can��t tell you
+more unless you come<span style="background-color:rgba(57,212,155, 1.0)"> to</span> work for me,��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> instance if you have to combine your internship with a module at uni. If you manage<span style="background-color:rgba(57,212,155, 1.0)"> to</span> prove</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> if you happen<span style="background-color:rgba(57,212,155, 1.0)"> to</span> have a specific interest — a blog might be worth dipping into. That��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> unpredictable. If I were<span style="background-color:rgba(57,212,155, 1.0)"> to</span> have made a list, however, I would have incorporated the Wood</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)"> to</span> do that as a ploy to return to familiar shores, the ground will collapse underneath us. There</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> decide<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> to</span> have this big goal that you want to achieve this year, some people might tell you that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>Notes offers four recommendations to consider if you are looking<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> to</span> begin or expand your use of online community</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> are getting for well under $30 for private rooms. If you are willing<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> to</span> do the dorm thing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> efforts<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> to</span> repress this moral error led to greater perils to social peace and order.��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> if he continues<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> to</span> start.
+9. Ronald Murray, G, Atlanta Hawks – 1.04</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>
+2 ��So when you give<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> to</span> the needy, do not announce it with trumpets</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>raised as if<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> to</span> wonder what happened.
+He wasn��t the only one. For</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> so take your time even when you get<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> to</span> your holiday destination.
+Embrace the Make Believe
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>, on the other, if compelled<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> to</span> sell his merchandise, which he must do were he unable</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> if their initiative<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> to</span> improve science and technology education could get more children interested in becoming engineers, but</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> and fearing that they will be attracted to the BNP if they are allowed<span style="background-color:rgba(57,212,155, 0.76)"> to</span> hear from them.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> her ribsCraig1916: 28
+To kiss her burial. Should I go<span style="background-color:rgba(57,212,155, 0.76)"> to</span> church
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>esstimating on what I am supposed to do and when I tried<span style="background-color:rgba(57,212,155, 0.76)"> to</span> do the P-Start</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>If you are queuing up<span style="background-color:rgba(57,212,155, 0.76)"> to</span> collect an order, please only queue up in single file. One</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> way, if you do make the switch<span style="background-color:rgba(57,212,155, 0.76)"> to</span> solar power, you��ll use it wisely and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> the child sexual assault was found<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> to</span> be hidden or ��covered up�� by anyone that had</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> outdoors (especially the ocean!)
+Plants that I can manage<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> to</span> keep alive
+(But</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> sandpaper.
+Although your digital camera will not let that happen<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> to</span> your photos, you can still</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>
+If you have a hard copy<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> to</span> fax instead, our fax number will appear
+on the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> glass that creates the red, green, and blue. When you��re moving<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> to</span> lasers,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>):
+Simply a slice of grape fruit that you happen<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> to</span> add in your salad can be like a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> It's also on newsstands. You can also borrow my copy if you promise<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> to</span> bring</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> can make<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> to</span>lling and product according to customer order
+for all plastic products and metal stampings</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> the Fairfax County landfill.
+To learn more or<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> to</span> post a job, visit bandboosters</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>, 2022
+Are you ready<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> to</span> roll up your sleeves and help spruce up camp? We</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>.
+There are many more advantages to study online, and if anyone should decide<span style="background-color:rgba(57,212,155, 0.52)"> to</span> study online,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> while reading from or writing<span style="background-color:rgba(57,212,155, 0.52)"> to</span> a filesystem.
+- The named file is a directory.
+-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> to</span> live in a similar old neighborhood in Boston, the effect is perfect. The sooty buildings</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> when two people who were married for years suddenly renew their vows, it means they are desperate<span style="background-color:rgba(57,212,155, 0.52)"> to</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> having to go looking for it. Am I coming<span style="background-color:rgba(57,212,155, 0.52)"> to</span> Vegas? I don't know at this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> it if he ever wanted<span style="background-color:rgba(57,212,155, 0.44)"> to</span> be truly elite.
+He chose the 800, which obviously was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.44)"> to</span> finish their medicine course. Australian figures are consistent with these findings, estimating that 41.0 per</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> it be that you start<span style="background-color:rgba(57,212,155, 0.44)"> to</span> track Time to First Value. You��ll see results. But</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>, use pressure-treated wood.
+Take the time<span style="background-color:rgba(57,212,155, 0.44)"> to</span> check the winch and lubricate the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> will likely be over time.
+Before opting<span style="background-color:rgba(57,212,155, 0.44)"> to</span> homeschool the kids, be sure you do</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> please check aboutcookies.org. If you'd like<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> to</span> opt out of cookies, please go</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> to cause you<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> to</span> blink will become all you see.
+How do you tell someone the pain that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> you would like<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> to</span> find some nice clothing, try Uniqlo and Muji. They are near</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> May 2000, Jesper Skov wrote:
+> Anyhu, if Sam is going<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> to</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> does, poking the tile up and out with a long black umbrella he happens<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> to</span> have on hand,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> answered when the Federal Prosecutor who was trying<span style="background-color:rgba(57,212,155, 0.28)"> to</span> prosecute seven oil companies in North Dakota over 28 dead birds</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>: if possible, I try<span style="background-color:rgba(57,212,155, 0.28)"> to</span> avoid potentially divisive political discussions because, sadly, many people judge others</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> in a given situation. In a word, we all of a sudden ask a student<span style="background-color:rgba(57,212,155, 0.28)"> to</span> depend on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> you<span style="background-color:rgba(57,212,155, 0.28)"> to</span> save the stylesheet to your local disk after making changes.
+Can somebody refer me to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>, the men started beating her up. When her friend Jajo tried<span style="background-color:rgba(57,212,155, 0.28)"> to</span> intervene, she too was</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the exact name of the colonel who dashed along so like a knight with the graceful and much-ad</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Nicolet), tough cub reporter Allegra Garcia (Kayla Compton) and brilliant tech-nerd</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to be having a good time when all I can do is keep myself from crying.
+I've</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Bogusz is pursuing an initiative to help small businesses get a start in the city.
+It</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of primary concern in the correspondence for 1892. Carr and other Alliancemen express opposition to the St</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> May, 2014
+The governorate of Hajja is situated 120 km North West of Sana'a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the Azimut 50 Fly. The 15-metre craft from the Flybridge Collection is an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> without ever having been granted it, while Serbia has gained everything that belongs to it in a canonical and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Moving a simple single-user interface such as a remote control into a to multi-user scenario may</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> make your partner feel appreciated. How do you live by the guidelines stated earlier? Lower your pride.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> I'm not sure<span style="background-color:rgba(57,212,155, 0.2)"> what</span> count as a bounce and whats not.
+If a person go to my</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>. As we get to<span style="background-color:rgba(57,212,155, 0.2)"> know</span> the film more intimately, we see patterns of coherence that probably many</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>e. in<span style="background-color:rgba(57,212,155, 0.2)"> bed</span> my 7pm if a baby up to 6 years and a bit later for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>First determine how sore<span style="background-color:rgba(57,212,155, 0.2)"> you</span> are. If the muscle is sore to the touch, or limits your range</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> God a lot.<span style="background-color:rgba(57,212,155, 0.2)"> The</span> second post is quite helpful as well for someone learning to color in photoshop</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>'d like to learn more<span style="background-color:rgba(57,212,155, 0.2)">,</span> read our article about the best time to buy airline tickets.
+How</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> that the next time<span style="background-color:rgba(57,212,155, 0.2)"> I</span> try to verbalize it, I have a framework and a method that doesn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> such picky paperwork<span style="background-color:rgba(57,212,155, 0.2)"> details</span> when people are clamoring to use the product? After all, isn't</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>onday. However I<span style="background-color:rgba(57,212,155, 0.2)"> think</span> I
+had to wait about 20 minutes until I got to speak to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> ask; and usually<span style="background-color:rgba(57,212,155, 0.2)"> you</span> happen to be much better of by perhaps not inquiring.
+My suggestion</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

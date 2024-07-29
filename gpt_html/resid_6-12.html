@@ -1,0 +1,692 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-12</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-12</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: 669546460/6/7005/7005<span style="background-color:rgba(57,212,155, 1.0)">/700</span>2<span style="background-color:rgba(57,212,155, 1.0)">/700</span>2<span style="background-color:rgba(57,212,155, 1.0)">/700</span><br>Activations: ("/" : 10), ("700" : 8), ("700" : 7), ("/" : 9), ("700" : 8)<br>Example 2: )||1||-||1<span style="background-color:rgba(57,212,155, 1.0)">||</span>-|<br>|Inhalation (per 10 packyears)|<br>Activations: ("||" : 7)<br>Example 3:  GB<span style="background-color:rgba(57,212,155, 1.0)">,</span> 8 GB<span style="background-color:rgba(57,212,155, 1.0)">,</span> 16GB<span style="background-color:rgba(57,212,155, 1.0)">,</span> 32GB<span style="background-color:rgba(57,212,155, 1.0)">,</span> 64GB|<br>|OS Support :|<br>Activations: ("," : 6), ("," : 7), ("," : 6)<br>Example 4: , holidays, celebration, celebrates, celebrate<span style="background-color:rgba(57,212,155, 1.0)">,</span> hebrew, feast, feasts, represent, represents<br>Activations: ("," : 6)<br>Example 5: 71-thm/319/thm/319<span style="background-color:rgba(57,212,155, 1.0)">/</span>1/22<br>- This material is<br>Activations: ("/" : 6)<br>Example 6: 1||-||1<span style="background-color:rgba(57,212,155, 1.0)">||</span>-|<br>|middle/mixed||67 (26.1)|<br>Activations: ("||" : 6)<br>Example 7: <|endoftext|>64MB, 128MB, 256 MB, 512 MB, 1 GB<span style="background-color:rgba(57,212,155, 1.0)">,</span> 2 GB<span style="background-color:rgba(57,212,155, 1.0)">,</span> 4<br>Activations: ("," : 6)<br>Example 8: <|endoftext|>-by Feb. 3, 2018, Feb. 15, 2018<span style="background-color:rgba(57,212,155, 1.0)">, Feb</span>. 16, 2018<br>Activations: ("," : 4), (" Feb" : 6)<br>Example 9: 192<span style="background-color:rgba(57,212,155, 1.0)">,</span> 16384<span style="background-color:rgba(57,212,155, 1.0)">,</span> can be any reasonable number.) skip= seek= conv=<conversion<br>Activations: ("," : 4), ("," : 6)<br>Example 10: ″ bgcolor=��#�� color=��<span style="background-color:rgba(57,212,155, 1.0)">#��</span> bcolor=<br>Activations: ("#" : 4), ("�" : 4), ("�" : 5)<br>Example 11:  studies, rs teacher, rs teachers, re teachers, pick, picking, choose<span style="background-color:rgba(57,212,155, 1.0)">,</span> choosing<span style="background-color:rgba(57,212,155, 1.0)">,</span> discriminate<br>Activations: ("," : 4), ("," : 5)<br>Example 12: K Media Entertainment Please choose time to call in - 2pm, 4pm<span style="background-color:rgba(57,212,155, 1.0)">,</span> 6pm<span style="background-color:rgba(57,212,155, 1.0)">, 6</span><br>Activations: ("," : 4), ("," : 5), (" 6" : 5)<br>Example 13: , 2014 at 2:00 pm<span style="background-color:rgba(57,212,155, 1.0)">,</span> and on October 26, 2014 at 4:00 pm and<br>Activations: ("," : 5)<br>Example 14: , ped barriers<span style="background-color:rgba(57,212,155, 1.0)">,</span> crowd control, control, controls<span style="background-color:rgba(57,212,155, 1.0)">,</span> controlled<span style="background-color:rgba(57,212,155, 1.0)">,</span> contolling, crowd controlling<span style="background-color:rgba(57,212,155, 1.0)">,</span><br>Activations: ("," : 4), ("," : 4), ("," : 5), ("," : 4)<br>Example 15: /NZ$34.23<span style="background-color:rgba(57,212,155, 1.0)">/</span>R329.11<span style="background-color:rgba(57,212,155, 1.0)">/</span>zł91.08<span style="background-color:rgba(57,212,155, 1.0)">/</span>R$<br>Activations: ("/" : 5), ("/" : 5), ("/" : 5)<br>Example 16: , 1kg, 5kg<span style="background-color:rgba(57,212,155, 1.0)">,</span> 10 kg) so that you can order them as per your needs<br>Activations: ("," : 5)<br>Example 17:  (����Fight For Your Freedom�<span style="background-color:rgba(57,212,155, 1.0)">���</span> by Symphony-of-Specters<br>Activations: ("�" : 5), ("�" : 4)<br>Example 18: <1 – <1<span style="background-color:rgba(57,212,155, 1.0)">||</span>IV|Title: A Kiss Of Shadows Meredith Gentry Book 1 By<br>Activations: ("||" : 5)<br>Example 19: 40 00<span style="background-color:rgba(57,212,155, 1.0)">:</span>03:50 00<span style="background-color:rgba(57,212,155, 1.0)">:</span>00:19<br>If you have questions or technical problems,<br>Activations: (":" : 4), (":" : 5)<br>Example 20: 9622&show_title=1&va<span style="background-color:rgba(57,212,155, 1.0)">_</span>id=4058099&width=640<br>Activations: ("_" : 5)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Punctuation marks, specifically delimiters and separators (/, ||, ,, #, :, _, �) in structured data, such as lists, tables, or technical notation.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Punctuation marks, specifically delimiters and separators (/, ||, ,, #, :, _, �) in structured data, such as lists, tables, or technical notation.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> part 13<span style="background-color:rgba(57,212,155, 1.0)">,</span> is here.
+Historically, Protestants struggled with language that styled ministers as ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>-||1<span style="background-color:rgba(57,212,155, 1.0)">||</span>-|
+|Smoker||244 (94.9)||536 (69</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>.000 mi = 1.609 km; 1<span style="background-color:rgba(57,212,155, 1.0)">.</span>000 km = 0.621 mi|</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>, queue, queues<span style="background-color:rgba(57,212,155, 1.0)">,</span> selection<span style="background-color:rgba(57,212,155, 1.0)">,</span> selection process<span style="background-color:rgba(57,212,155, 1.0)">,</span> club, clubs, clubbing, admitting, adm</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>, B, C, C, C0, Pu. mm, kN, kN<span style="background-color:rgba(57,212,155, 1.0)">,</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>400013, India
+Tel: +91 22 4340 8500 Fax: +<span style="background-color:rgba(57,212,155, 0.9200000000000002)">91</span> 22</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>:27 PM ET3:27 GMT11:27 8:27 PM MST10:<span style="background-color:rgba(57,212,155, 0.9200000000000002)">27</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> sick too (in the car, in a bucket<span style="background-color:rgba(57,212,155, 0.9200000000000002)">,</span> in bed<span style="background-color:rgba(57,212,155, 0.9200000000000002)">,</span> at school<span style="background-color:rgba(57,212,155, 0.9200000000000002)">,</span> in the toilet</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>ScreenShot); gfx.CopyFromScreen(0, 0, 0, 0<span style="background-color:rgba(57,212,155, 0.9200000000000002)">,</span> new Size</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>!<span style="background-color:rgba(57,212,155, 0.9200000000000002)">@</span>!@@!<span style="background-color:rgba(57,212,155, 0.9200000000000002)">@</span>!!<span style="background-color:rgba(57,212,155, 0.9200000000000002)">@@</span>!!@
+My Guns Don't Work How About Their's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> in Section A<span style="background-color:rgba(57,212,155, 0.8400000000000001)">;</span> and 5 in Section F for a total of 52. Rental rates: $</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> feeling a little bit a la la la-la la<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> la la</span>, a little bit Alexis — you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>�� Given my musical interests, my technology interests<span style="background-color:rgba(57,212,155, 0.8400000000000001)">,</span> and my frugality interests, it almost</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>--8mm,3--8mm<span style="background-color:rgba(57,212,155, 0.8400000000000001)">,</span>2--10mm,6--10mm).
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> directions|
+|US9204949||Dec 17, 2013||Dec 8, 2015<span style="background-color:rgba(57,212,155, 0.8400000000000001)">||</span>The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>iation Stratigraphy. Past history deep time Present Future Futures studies Far future in religion Far<span style="background-color:rgba(57,212,155, 0.76)"> future</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> up in V-ing �<span style="background-color:rgba(57,212,155, 0.76)">�</span> and to ��� �������</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> 7 in Width: 3.5 in Drop: 3 in Drop<span style="background-color:rgba(57,212,155, 0.76)">:</span> 18.5 in
+I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>right of this page and/<span style="background-color:rgba(57,212,155, 0.76)">or</span> at<span style="background-color:rgba(57,212,155, 0.76)"> the</span> bottom of this page) to apply.
+2.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>, 7.1.0, 7.1.1, 7<span style="background-color:rgba(57,212,155, 0.76)">.</span>1.2, 7</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> staff member, group leader<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,</span> and division director at MIT Lincoln Laboratory (1968 - 1972); and assistant</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>64.74/$24,596/PEN123.39/NZ$52.03<span style="background-color:rgba(57,212,155, 0.6799999999999999)">/</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> by
+email to the EATCS Secretary (firstname.lastname<span style="background-color:rgba(57,212,155, 0.6799999999999999)">@</span>example.org).</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>, night in the town<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,</span> uqeens, luxury limousine coaches, antiques,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> in a car, in a bar<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,</span> with a star…. Go for it. There are no rules</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>-<span style="background-color:rgba(57,212,155, 0.6000000000000001)">||</span>1.3||(1.2, 1.5)|
+|Years of education</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> straws, trays<span style="background-color:rgba(57,212,155, 0.6000000000000001)">,</span> wrapping or packaging films around sweets boxes, invitation cards, cigarette packets,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>:||20.59 Mb|
+|ePub File Size:||5.41 Mb<span style="background-color:rgba(57,212,155, 0.6000000000000001)">|</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)">!</span> Hate to keep using that saying, but the racing at Revolution Park was everything but boring, which</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)">,</span> 10/30/15]
+The Washington Post: ��New York Is Investigating Exxon</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> 110 miles southwest of Islamabad, not far from an area<span style="background-color:rgba(57,212,155, 0.52)"> controlled</span> by the Taliban, two large new structures</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> or</span> talking about someone who just walked by and you sort of don't want him or her to hear</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Please read the note. ����<span style="background-color:rgba(57,212,155, 0.52)">�</span>� pic.twitter.com/oksT80</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> // June 2nd
+Life of Community // June 9th
+Life in the Spirit //<span style="background-color:rgba(57,212,155, 0.52)"> June</span> 16</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> (<span style="background-color:rgba(57,212,155, 0.52)">4</span>,91 km), Melagrani (2,42 km), Merlo (11</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>, gods chosen ones, god's chosen ones<span style="background-color:rgba(57,212,155, 0.44)">,</span> rope, ropes, barrier, barriers, ped barrier</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> / 9810568675
+E: email@example.com / firstname.lastname<span style="background-color:rgba(57,212,155, 0.44)">@</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> sure you are only giving, giving, giving, giving, giving, giving<span style="background-color:rgba(57,212,155, 0.44)">,</span> giving and never receiving</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>02, by email at firstname.lastname<span style="background-color:rgba(57,212,155, 0.44)">@</span>example.org, or by fax at (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> not quite cooked in the centre (use a toothpick<span style="background-color:rgba(57,212,155, 0.44)"> to</span> check). Remember: the perfect brownie</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>Please contact Rohan via email (firstname.lastname<span style="background-color:rgba(57,212,155, 0.36000000000000004)">@</span>example.org) or the guest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>; left:12px; top:0px<span style="background-color:rgba(57,212,155, 0.36000000000000004)">;</span> font-size:20px;"></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>com or firstname.lastname<span style="background-color:rgba(57,212,155, 0.36000000000000004)">@</span>example.org
+kulaBrands – A new b</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> by Dominic Bil<span style="background-color:rgba(57,212,155, 0.36000000000000004)">key</span>, movement by Dan Canham and dramaturgy by Mike Akers. Jane</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> updated resume to firstname.lastname<span style="background-color:rgba(57,212,155, 0.36000000000000004)">@</span>example.org
+- Focused on Cavite developments</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>30. ����ל��ה��<span style="background-color:rgba(57,212,155, 0.28)">י�</span>� �� lôhî</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> only, pets considered, wheelchair inaccessible, Adventure, Away From It All<span style="background-color:rgba(57,212,155, 0.28)">,</span> Family, Historic, Romantic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Lufkin, TX – 75902; scanned and emailed to firstname.lastname<span style="background-color:rgba(57,212,155, 0.28)">@</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> age 0–64 years by using the severe influenza case history form (available at: http<span style="background-color:rgba(57,212,155, 0.28)">://</span>www</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> 1997; Bergamaschi and Matzenauer, 2009<span style="background-color:rgba(57,212,155, 0.28)">).</span>
+There is an increasing consensus in the</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> designed with a slightly over weighted belly helping to load your rod immediately for those quick short presentations. With</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> for someone who is planning to travel throughout India and wants to stay out of the pricier hotels and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> not earn sufficient wages — In Pennsylvania, in order to receive UC benefits, you are required to earn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with the Envato Purchase Code Solo Registration. This change was precipitated due to Envato</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, the GOP attacks Dems for what it, the GOP, is actually guilty of: being anti-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>I. 10K. That morning 3265 men and women tested their breaking point on an extremely h</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Before he retired he used to come home from shift work around 1 am to find me on the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�
+Oh, I meant to tell you before the break. Check this out. You��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>500lbs) that I would like to take to Kearney sale barn in October (preferably</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and marketing services designed to accelerate the success of pharmaceutical, biotechnology and medical device products. Innove</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>13 (5.<span style="background-color:rgba(57,212,155, 0.2)">1</span>)||<span style="background-color:rgba(57,212,155, 0.2)">233</span> (30.3)||1||-||1||</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>osh <firstname<span style="background-color:rgba(57,212,155, 0.2)">.</span>lastname@<span style="background-color:rgba(57,212,155, 0.2)">example</span>.org>
+Date: 06/26/1999</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> x 12 cm (<span style="background-color:rgba(57,212,155, 0.2)">2</span> 9/<span style="background-color:rgba(57,212,155, 0.2)">16</span> x 13 3/8 x 4 3/4 in.)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> you want to give voice<span style="background-color:rgba(57,212,155, 0.2)"> to</span> the voic<span style="background-color:rgba(57,212,155, 0.2)">eless</span>, you��ve got to find a language.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> expiration date. Please<span style="background-color:rgba(57,212,155, 0.2)"> email</span> firstname<span style="background-color:rgba(57,212,155, 0.2)">.</span>lastname@example.org if you have any questions.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> design plays a role in<span style="background-color:rgba(57,212,155, 0.2)"> the</span> development of<span style="background-color:rgba(57,212,155, 0.2)"> innovation</span> and innovative capabilities both within individual companies and in regional clusters</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Catalog: Page 374<span style="background-color:rgba(57,212,155, 0.2)">In</span> a world<span style="background-color:rgba(57,212,155, 0.2)"> that</span> is powered by the internet, it comes as no surprise that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>@example.org
+<span style="background-color:rgba(57,212,155, 0.2)">FOR</span> FULL EN<span style="background-color:rgba(57,212,155, 0.2)">TRY</span> CONDITIONS PLEASE CHECK ONLINE ATHave you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> hear in our on<span style="background-color:rgba(57,212,155, 0.2)">-</span>air discussion<span style="background-color:rgba(57,212,155, 0.2)"> (</span>see link below), he says he has received countless instructions and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>||2 pm - 6<span style="background-color:rgba(57,212,155, 0.2)"> pm</span>||2 pm<span style="background-color:rgba(57,212,155, 0.2)"> -</span> 6 pm||2 pm - 6 pm||Cl</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -1,0 +1,714 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-5</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-5</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: . The<span style="background-color:rgba(57,212,155, 1.0)"> card</span> that no one asked for and no one needs. Honestly, the UFC needs to get<br>Activations: (" card" : 10)<br>Example 2: <|endoftext|> to the venue. The main UFC Fight Night 169<span style="background-color:rgba(57,212,155, 1.0)"> card</span> is scheduled for 8 p.m.<br>Activations: (" card" : 9)<br>Example 3: .<br><span style="background-color:rgba(57,212,155, 1.0)">"</span>We know that to win matches you need to score more goals than the opponent, but<br>Activations: (""" : 9)<br>Example 4: <|endoftext|> by the Los Angeles Galaxy in the second<span style="background-color:rgba(57,212,155, 1.0)"> round</span> (24th overall) of the 2013 MLS Super<br>Activations: (" round" : 9)<br>Example 5:  was at least one<span style="background-color:rgba(57,212,155, 1.0)"> ref</span> bump and one time Silver pulled the<span style="background-color:rgba(57,212,155, 1.0)"> ref</span> out to stop the count, but<br>Activations: (" ref" : 8), (" ref" : 7)<br>Example 6:  set for the FOX 1<span style="background-color:rgba(57,212,155, 1.0)"> card</span>, however UFC President Dana White has stated that it will be the best<br>Activations: (" card" : 8)<br>Example 7:  UFC 243<span style="background-color:rgba(57,212,155, 1.0)"> card</span>.<br>��Tybura looks like he could be a shot fighter and there<br>Activations: (" card" : 8)<br>Example 8:  be posting during and after this<span style="background-color:rgba(57,212,155, 1.0)"> card</span>. After the main event all the talk should be focused in the<br>Activations: (" card" : 8)<br>Example 9:  single<span style="background-color:rgba(57,212,155, 1.0)"> point</span> in Spain for making contact with Marcus Ericsson's Caterham. He believes he was treated<br>Activations: (" point" : 8)<br>Example 10: <|endoftext|> the space of three weeks, in qualifying for the French Open and in the first<span style="background-color:rgba(57,212,155, 1.0)"> round</span> of the<br>Activations: (" round" : 7)<br>Example 11:  first<span style="background-color:rgba(57,212,155, 1.0)"> round</span> of the FA Women��s Premier Reserve League Cup.<br>The tie will take place<br>Activations: (" round" : 7)<br>Example 12:  shake Cronus off, but the<span style="background-color:rgba(57,212,155, 1.0)"> side</span> in red pushed once more and after some superb<span style="background-color:rgba(57,212,155, 1.0)"> wing</span> play by<br>Activations: (" side" : 7), (" wing" : 5)<br>Example 13: <|endoftext|> Federer two weeks ago in the Swiss Indoors Basel<span style="background-color:rgba(57,212,155, 1.0)"> final</span> and on Saturday at The O<br>Activations: (" final" : 7)<br>Example 14: bane removed Davids for a 35-ball 43. Offspinner Colin Ackermann then<span style="background-color:rgba(57,212,155, 1.0)"> dismissed</span><br>Activations: (" dismissed" : 7)<br>Example 15:  overall skill would be the difference, and a fifth-round<span style="background-color:rgba(57,212,155, 1.0)"> takedown</span> likely gave the New Zealander the<br>Activations: (" takedown" : 7)<br>Example 16:  this summer despite guiding the Parisians to their first Ligue 1<span style="background-color:rgba(57,212,155, 1.0)"> title</span> in 18 years, and the<br>Activations: (" title" : 7)<br>Example 17:  playoff destiny.<br><span style="background-color:rgba(57,212,155, 1.0)">"</span>This was a huge week for us," Greenwich coach Phil Tarantino said.<br>Activations: (""" : 7)<br>Example 18: <|endoftext|> has won all but three French Open men��s<span style="background-color:rgba(57,212,155, 1.0)"> singles titles</span><br>Rafael Nadal<br>Activations: (" singles" : 7)<br>Example 19: <|endoftext|>mid to win the title outright with a 2-<span style="background-color:rgba(57,212,155, 1.0)">0</span> decision.<br><span style="background-color:rgba(57,212,155, 1.0)">"</span>Yes, some guys<br>Activations: (""" : 7)<br>Example 20:  be in a positive position<span style="background-color:rgba(57,212,155, 1.0)">.</span> We have got to win our games anyway, so it didn��<br>Activations: ("." : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Terms related to sports, competitions, or events, such as "card", "round", "ref", "point", "side", "wing", "final", "dismissed", "takedown", "title", and "singles", as well as quotation marks and punctuation marks.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Terms related to sports, competitions, or events, such as &quot;card&quot;, &quot;round&quot;, &quot;ref&quot;, &quot;point&quot;, &quot;side&quot;, &quot;wing&quot;, &quot;final&quot;, &quot;dismissed&quot;, &quot;takedown&quot;, &quot;title&quot;, and &quot;singles&quot;, as well as quotation marks and punctuation marks.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+<span style="background-color:rgba(57,212,155, 1.0)">"</span>We knew on the<span style="background-color:rgba(57,212,155, 1.0)"> bench</span> that we had to get back to work," said Gallagher. "</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> provided him all the indication he needed<span style="background-color:rgba(57,212,155, 1.0)">.</span>
+<span style="background-color:rgba(57,212,155, 1.0)">"</span>I didn't need to go play in the Min</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> in 2001 which got you a red<span style="background-color:rgba(57,212,155, 1.0)"> card</span>.
+RK: Sure, there��s an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> sign that the Ferraris were starting to be competitive<span style="background-color:rgba(57,212,155, 1.0)">.
+</span>Before the<span style="background-color:rgba(57,212,155, 1.0)"> start</span>,<span style="background-color:rgba(57,212,155, 1.0)"> V</span>ettel and both</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>. Jordi Alba<span style="background-color:rgba(57,212,155, 1.0)"> won</span> the<span style="background-color:rgba(57,212,155, 1.0)"> header</span> but Sadio Mané won the second ball. He then</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>, everything had changed except what really needed to be changed. There were nine different kick-<span style="background-color:rgba(57,212,155, 0.9200000000000002)">off</span> times</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Coast Conference) had a 43-29 rebounding<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> advantage</span> and took 20 more<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> shots</span> in<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the game</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>en had the early<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> lead</span>, with Travis PeCoy, Dickerson, Darren Hardesty, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> European<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Tour</span>.
+Zanotti, 31, shot a<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> final</span> day 65 to<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> finish</span> on 19 under</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> 20 yards.
+Jackson was so close to an equaliser midway through<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the</span> half, his flashing<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> header</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> she followed that up by being crowned the 2019 Australian Open<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> champion</span>. Osaka has reached the at least</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Hub.Who has qualified for Champions League 2021/22<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Round</span> of 16
+As we near the end</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>Elvis) in the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> quarter</span>-finals,
+- HDFC 4-3 (<span style="background-color:rgba(57,212,155, 0.8400000000000001)">Goal</span> scored by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> 2-1 Chelsea, 2017
+Unlike in 2014, Arsenal<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> headed</span> into this<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> FA Cup</span> final as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, we've gone from the B<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> division</span> to the A division and showed we can<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> play</span> basketball.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> most successful year we've had<span style="background-color:rgba(57,212,155, 0.76)">,"</span> Kreis<span style="background-color:rgba(57,212,155, 0.76)"> said</span>.
+Both Thompson and McKenzie are determined to play</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> sun for a double and a 2-0 SMSU lead.
+<span style="background-color:rgba(57,212,155, 0.76)">"</span>We've been getting big</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> by Aberdeen ��keeper Adam Collin.
+Shay Logan pounced on a<span style="background-color:rgba(57,212,155, 0.76)"> loose</span> ball in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>.<span style="background-color:rgba(57,212,155, 0.76)">
+</span>This all served as motivation for UD as<span style="background-color:rgba(57,212,155, 0.76)"> the</span> Blue Hens<span style="background-color:rgba(57,212,155, 0.76)"> returned</span> to the CAA<span style="background-color:rgba(57,212,155, 0.76)"> Championship</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> the first, after a Theriot one-out<span style="background-color:rgba(57,212,155, 0.76)"> single</span>, Bradley lined a triple down the right field</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>. Edmonton also improved its troubling<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> home record</span> to 7-9-2 with a 2-1-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> flu, Morgan -- before the injury -- provided a quick glimpse of<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> his</span> value<span style="background-color:rgba(57,212,155, 0.6799999999999999)">. He</span> walked to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>-1 in their last 15<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> home games</span> (10-1-1 in their last 12).
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> end up with a real good backup catcher that a lot of clubs would want<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,"</span> Wren<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> said</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> any headway on this list.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">
+</span>Tony Kanaan – Last year during the celebration of their</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> leg.
+Valencia<span style="background-color:rgba(57,212,155, 0.6000000000000001)">'s</span> collapse was complete.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">
+</span>Its<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> attack</span> was toothless, its midfield sloppy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> impressive array of gear has been built up bit by bit over the past few years.
+<span style="background-color:rgba(57,212,155, 0.6000000000000001)">"</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> into it<span style="background-color:rgba(57,212,155, 0.6000000000000001)">.
+</span>Is Wyatt Davis locked in as the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> #</span>1 iOL to come off the board</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> these boxes.
+<span style="background-color:rgba(57,212,155, 0.6000000000000001)">"</span>We get 48 hours' worth of food delivered to their door at a time</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> plays when they've needed to<span style="background-color:rgba(57,212,155, 0.6000000000000001)">.
+</span>In last week<span style="background-color:rgba(57,212,155, 0.6000000000000001)">'s</span> 13-10 win over Towson,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> that knurl as a result of the new<span style="background-color:rgba(57,212,155, 0.52)"> finish</span>.
+For those who have handled the original high</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> U-17 side, Golden Eaglets, has once again proven their worth in<span style="background-color:rgba(57,212,155, 0.52)"> goal scoring</span> prepar</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>rings is pleasing and graceful.<span style="background-color:rgba(57,212,155, 0.52)"> Made</span> from Premium Quality Beads crystals and materials, pearls and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)">
+</span>Gregorio scored 25 points against New Trier.<span style="background-color:rgba(57,212,155, 0.52)">
+</span>Loyola Academy (4-4</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> only active<span style="background-color:rgba(57,212,155, 0.52)"> player</span> to have 50-plus assists in each of the past six seasons.
+��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> are still in their recovery stage so it��s too early for them both," Lampard<span style="background-color:rgba(57,212,155, 0.44)"> said</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>owski, the Blue Devils are 14-4 (.778) in post-season play.<span style="background-color:rgba(57,212,155, 0.44)">
+</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> per game in the finals.
+Tyler Herro<span style="background-color:rgba(57,212,155, 0.44)"> hit</span> the rookie wall right before the season got</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> couple of years<span style="background-color:rgba(57,212,155, 0.44)">."</span>
+The key to that foundation sits under center, and with Johnny Manziel, A</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> same contract? That's what I did and I never asked for anything.
+<span style="background-color:rgba(57,212,155, 0.44)">"</span>If I was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> "So far everything has been good<span style="background-color:rgba(57,212,155, 0.36000000000000004)">."</span>
+Anthony Dasher is the managing editor for UGAS</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>3rd, Western Conference-12th, NHL-22nd
+<span style="background-color:rgba(57,212,155, 0.36000000000000004)">Home</span> Record: 14-9</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>ate while Gervinho could be heading to Roma for £7million.
+With<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> the</span> summer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> also believes Hart's personality is prone to a bounce-back.
+<span style="background-color:rgba(57,212,155, 0.36000000000000004)">"</span>He's from the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>, he<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> appeared</span> to momentarily lose control of the puck, then regained it and slipped it between Nabok</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> in changing his mind after<span style="background-color:rgba(57,212,155, 0.28)"> Manchester</span> City��s collapse at Southampton on Saturday evening.
+Ferguson</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> in the Heat��s regular rotation. How can they not? The 25-year-<span style="background-color:rgba(57,212,155, 0.28)">old</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> and improved efficiency<span style="background-color:rgba(57,212,155, 0.28)">.</span> It��s nonetheless designed primarily for on-road use, but four-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>�Beckham�� Ramadan.
+Egypt<span style="background-color:rgba(57,212,155, 0.28)"> will</span> start the preparatory camp on 27 December 2021.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> in the studio to record their next album "Descend Into Chaos." The new album<span style="background-color:rgba(57,212,155, 0.28)"> will</span> be</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>-qualifying stage of the ITA All-American Championships to move on to the qualifying round of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>old doesn��t have a helluva lot to bribe with. Otto stood his ground -</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> have made her a champion in caregiving. To register for this virtual event, please click here.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> keeping your pants higher on your waist could help even out a long torso and shorter legs by making your</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> you own a bike, you need a patch kit. Here are our picks for the best levers,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> lives of the poor here in America. Another powerful voice speaking volumes to millions of Americans and to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the video is still a pretty damn creepy, eye-searing collage of found imagery of computer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> on the energy, tech, space sector and life sciences, and where government collaborates with business and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> challenging, therefore it��s alright to request help if you��re experiencing a classes or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> elsewhere, and that can result in an accident.
+On the way to the studio today, I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> lot of people think<span style="background-color:rgba(57,212,155, 0.2)"> my</span> main influence<span style="background-color:rgba(57,212,155, 0.2)"> is</span> ECW but in reality it��s that, the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> contract design,
+<span style="background-color:rgba(57,212,155, 0.2)">def</span>ining how<span style="background-color:rgba(57,212,155, 0.2)"> cutting</span>-edge materials can allow the designer to realize pragmatic
+design</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Spain go into<span style="background-color:rgba(57,212,155, 0.2)"> their</span> home UEFA<span style="background-color:rgba(57,212,155, 0.2)"> Women</span>'s EURO 2013 play-off second leg against Scotland on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>There will be<span style="background-color:rgba(57,212,155, 0.2)"> six</span> qualifiers in<span style="background-color:rgba(57,212,155, 0.2)"> total</span>, the winners making the teams with the top 12 point score</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>��s experience<span style="background-color:rgba(57,212,155, 0.2)">?</span>
+Being<span style="background-color:rgba(57,212,155, 0.2)"> able</span> to step through the front door and see clearly through the building</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>orable mention: Kendall Hunter<span style="background-color:rgba(57,212,155, 0.2)">,</span> Oklahoma State<span style="background-color:rgba(57,212,155, 0.2)"> (</span>5-7 1/2, 199). If the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>
+Everton<span style="background-color:rgba(57,212,155, 0.2)"> (</span>4-<span style="background-color:rgba(57,212,155, 0.2)">5</span>-1): Howard; Coleman, Jagielka, Dist</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> The runner-up<span style="background-color:rgba(57,212,155, 0.2)"> result</span> for the<span style="background-color:rgba(57,212,155, 0.2)"> No</span>. 66 marked the 17th podium for the Ford GT program</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Biyombo got<span style="background-color:rgba(57,212,155, 0.2)"> the</span> start for<span style="background-color:rgba(57,212,155, 0.2)"> Charlotte</span> with Brendan Haywood having to miss the game due to a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> form...
+L<span style="background-color:rgba(57,212,155, 0.2)">ets</span> win, split the series<span style="background-color:rgba(57,212,155, 0.2)"> and</span> continue rolling...:handclap:
+</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -1,0 +1,701 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-15</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-15</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> served your father years ago in the Clone Wars...<br>This R<span style="background-color:rgba(57,212,155, 1.0)">2</span> unit has no rockets:<br>Activations: ("2" : 10)<br>Example 2: <|endoftext|>1741 or.Your very own R<span style="background-color:rgba(57,212,155, 1.0)">2</span> unit multimedia machine<br>Practical purchase or overweight glob<br>Activations: ("2" : 9)<br>Example 3: <|endoftext|>ers provide acoustic fun Friday evening, while R<span style="background-color:rgba(57,212,155, 1.0)">2</span>B2 brings the full band party excitement on<br>Activations: ("2" : 9)<br>Example 4: <|endoftext|> options available for download range from R<span style="background-color:rgba(57,212,155, 1.0)">2</span>-D2's bleeps and Chewbacca's<br>Activations: ("2" : 9)<br>Example 5: <|endoftext|> Star Wars in HD:<br>Note how R<span style="background-color:rgba(57,212,155, 1.0)">2</span>s hologram is actually white in the original<br>Activations: ("2" : 9)<br>Example 6: <span style="background-color:rgba(57,212,155, 1.0)">2</span>Pleasent<br>Posted 9 months agoCity Of Orange Water Division<br>The City of Orange<br>Activations: ("2" : 9)<br>Example 7: <|endoftext|> this particular product is shaped like R<span style="background-color:rgba(57,212,155, 1.0)">2</span>-D2 from Star Wars.<br>The driod<br>Activations: ("2" : 9)<br>Example 8: <|endoftext|>oes (I can��t remember which) with extra munitions but fortunately both were R<span style="background-color:rgba(57,212,155, 1.0)">2</span><br>Activations: ("2" : 9)<br>Example 9: . This R<span style="background-color:rgba(57,212,155, 1.0)">2</span> unit also supports MP3/WMA/JPEG/MP4 and Div<br>Activations: ("2" : 9)<br>Example 10: <span style="background-color:rgba(57,212,155, 1.0)">2</span> unit fixing a broken door.<br>Be careful, to the right of him are 2 battle dro<br>Activations: ("2" : 9)<br>Example 11: IXIFY<br>Adventure Club, Tommy Trash, R<span style="background-color:rgba(57,212,155, 1.0)">3</span>HAB, Tritonal, Ar<br>Activations: ("3" : 9)<br>Example 12: <|endoftext|> 10w speakers are built into the droid, which also provide R<span style="background-color:rgba(57,212,155, 1.0)">2</span>-D2-esque<br>Activations: ("2" : 8)<br>Example 13: , but the total paid units had a better R<span style="background-color:rgba(57,212,155, 1.0)">2</span>, so I stuck with that.<br>What<br>Activations: ("2" : 8)<br>Example 14: <|endoftext|> engineering. It is classified among "R<span style="background-color:rgba(57,212,155, 1.0)">2</span>: Doctoral Universities – High research activity".,<br>Activations: ("2" : 8)<br>Example 15:  full health in the service<br>closet, but it will only open if the R<span style="background-color:rgba(57,212,155, 1.0)">2</span> unit<br>Activations: ("2" : 8)<br>Example 16:  punchline)<br>"What's that, R<span style="background-color:rgba(57,212,155, 1.0)">2</span>...?"<br>"No, I will not<br>Activations: ("2" : 8)<br>Example 17: Wings with R<span style="background-color:rgba(57,212,155, 1.0)">2</span>��s and IA<br>After using the stresshog and TLT for<br>Activations: ("2" : 8)<br>Example 18: <|endoftext|><br>Giants Of Science at 4D��s Lounge, Altoona<br>R<span style="background-color:rgba(57,212,155, 1.0)">2</span>B<br>Activations: ("2" : 8)<br>Example 19:  BMW 528s for the Mpumalanga executive at a cost of R<span style="background-color:rgba(57,212,155, 1.0)">2</span>.3<br>Activations: ("2" : 8)<br>Example 20:  2008 64 bits R<span style="background-color:rgba(57,212,155, 1.0)">2</span><br>Virtualized over VMWare, 4 virtual CPUs (2 real on<br>Activations: ("2" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The digit "2" in various contexts, often related to R2-D2, a Star Wars character, or as part of a model/series number.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The digit &quot;2&quot; in various contexts, often related to R2-D2, a Star Wars character, or as part of a model/series number.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> cost of R<span style="background-color:rgba(57,212,155, 1.0)">2</span> 300; andA rear view camera at a cost of R<span style="background-color:rgba(57,212,155, 1.0)">5</span> 000
+In</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>C had an r<span style="background-color:rgba(57,212,155, 1.0)">2</span> of 0.84 (16), although Blonde noted that it appears</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+R<span style="background-color:rgba(57,212,155, 1.0)">2</span>Pleasent Gold prides itself in providing OSRS Gold at the cheapest rate</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>R<span style="background-color:rgba(57,212,155, 1.0)">1</span>, really--to do a monster burnout is not a tall order to fill.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>, Wifi Bridges, POW R<span style="background-color:rgba(57,212,155, 1.0)">2</span> and smart switches and so need this features for all those</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> to the cost of R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">12</span> 200, including:
+- A sports leather steering wheel at a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> Graphics Card Review @ Techgage
+- Sapphire ITX Compact R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">9</span> 285 OC Review @ OCC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> eTeknix
+- How Low Should You Go? ASUS Radeon R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">7</span> 250X</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>Not yet aired' and 'R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">18</span>+' titles are excluded.Security Services are responsible for the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> China Development Bank.
+« The remaining 23% required for the year, which constitutes R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">16</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">01</span> whose over-arching intention is to pursue the next logical set of aims. We propose to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> – R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">35</span>k p/m|
+|Education||IT related education|
+Our client</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>8800 (MT 242x) DS8000 LMC R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">6</span>.2 - Replacement availableIBM</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>2 (#1723) DS8000 LMC R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">6</span>.3 (#1724) DS8000</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> set A in a metric space S with range in R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">1</span>. So we are happy in that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>5 percent to £3.272 billion (R<span style="background-color:rgba(57,212,155, 0.76)">58</span>.6 billion) in 2013 from net profit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> a 700-R<span style="background-color:rgba(57,212,155, 0.76)">4</span> built by Transmissions To Go. The front suspension received a stack of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> via webtickets at R<span style="background-color:rgba(57,212,155, 0.76)">120</span> (including a beer glass). But for you lucky blog readers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>-beam optical method. There are four intensity measurements: R<span style="background-color:rgba(57,212,155, 0.76)">1</span>, R<span style="background-color:rgba(57,212,155, 0.76)">2</span>, M1,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> Your Body: Web-based Curricula for Secondary Science
+R<span style="background-color:rgba(57,212,155, 0.76)">25</span>RR032174-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> midrange product. RV410 is officially an R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">423</span> derivative. We see this as a very big step</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> of this word). R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">1</span>R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">2</span>and R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">3</span> model the various loads connected by a customer.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> still later period, apparently after the middle of the r<span style="background-color:rgba(57,212,155, 0.6799999999999999)">6</span>th century, the practice of Benediction</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> |
+PSSap ABN: 65 127 917 725 RSE: R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">100</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> futuristic, exciting, imperfect, flagship notebook
+- 4 Oppo R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">15</span> Pro review: A compelling</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)">9</span>.68 for 2x4" framed walls with fiberglass insulation, and R-11 for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> S65 and the R<span style="background-color:rgba(57,212,155, 0.6000000000000001)">65</span> (dinky di F3 997cc engine in the article PS</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>-951 Code: 2424-951 DS8000 LMC R<span style="background-color:rgba(57,212,155, 0.6000000000000001)">6</span>.2 (#1723)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Robin: Aiglon (R-<span style="background-color:rgba(57,212,155, 0.6000000000000001)">11</span>80T).|
+|O-360-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Million.
+Runescape 3 Mobile
+Runescape 3, otherwise known as RS<span style="background-color:rgba(57,212,155, 0.6000000000000001)">3</span> will also</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>ations and Repairs. GT-800067 R.<span style="background-color:rgba(57,212,155, 0.52)">09</span>14
+Jun 24, 2021 Con</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> both the gravitas and the hit songs of the R<span style="background-color:rgba(57,212,155, 0.52)"> &</span> H smashes that preceded it. What</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>%||Rs.<span style="background-color:rgba(57,212,155, 0.52)">50</span>,000- Rs.7.5 lakh||1-5 Years</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> The power can be send to front or all<span style="background-color:rgba(57,212,155, 0.52)"> four</span> wheels with a automatic/manual gearbox.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>" AR 2 R<span style="background-color:rgba(57,212,155, 0.52)"> 12</span>"
+AC 3+ D 1d6-1
+Fast:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>C (UNII: 7SEV7J4R<span style="background-color:rgba(57,212,155, 0.44)">1</span>U) FERRIC O</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>, the Company recorded a nett profit of Rp<span style="background-color:rgba(57,212,155, 0.44)">36</span>.5 billion from the target R</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>7AO2R<span style="background-color:rgba(57,212,155, 0.44)">1</span>M0B) PROPYLPARABEN (UN</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> vitamin D). Patients with these triple HR-positive tumors (HR<span style="background-color:rgba(57,212,155, 0.44)">3</span>) were up to seven times</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> and July 2011, and that the first R<span style="background-color:rgba(57,212,155, 0.44)">IR</span> will exhaust all its usable address space within 3 to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> minimum, your first $<span style="background-color:rgba(57,212,155, 0.36000000000000004)">12</span>,200 (for 2019) in income is not taxable due to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> in Texas, California and New York. Leah Parks represents their research and writing<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> partnership</span> with clear enthusiasm for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> with R<span style="background-color:rgba(57,212,155, 0.36000000000000004)">SP</span>B on a plan to try and tackle some of these fundamental issues in a piece</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> anatomic locations of bite wounds (��<span style="background-color:rgba(57,212,155, 0.36000000000000004)">2</span> = 15.18; P<0.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Floor Cleaning and Restoration as a Specialist Floor Cleaning Service for Business South Croydon CR<span style="background-color:rgba(57,212,155, 0.36000000000000004)">2</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>XB/1/<span style="background-color:rgba(57,212,155, 0.28)">1</span>/SPE
+- Dates of Creation2011
+- Physical Description</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> system. The ZR<span style="background-color:rgba(57,212,155, 0.28)">1</span> tips the scales at 3,333 pounds, but all that extra weight</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>R<span style="background-color:rgba(57,212,155, 0.28)">34</span>MDkE ) step by step but I still cannot get it to work. It pops</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> polishing
+Nation Wide Cleaning 4U South Croydon CR<span style="background-color:rgba(57,212,155, 0.28)">2</span> teams are fully licensed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> BMW R<span style="background-color:rgba(57,212,155, 0.28)">1200</span>GS. The installation is a simple bolt-on process, and requires no removal</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+It's one of my favorite openings of 2010.
+And honestly, you cannot beat the prices</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> kids frolic amidst the bounce houses and slides, parents enjoy grownup distractions such as free WiFi,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> improving the nowcasting/forecasting of high-impact weather events! @SINOPTICA</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with dyslexia. There are approximately 50 children participating in the after school program. Kent administers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> rabbits is prohibited. The answers provided on this board are for general guideline purposes only. The information is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>.6m high (including the Yoni-shaped stone pedestal). The statue has ten hands</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>:
+- Project Initiator: Production Companies or producers make cash investment into their movie project.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> should I use for a large amount of disk space in Linux (>32TB)?
+up vote 3</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> back was the current pandemic. It will also be available on many platforms like Hulu, Vud</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> then please telephone the office on 020 8938 4611 and we will take you through a specific</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>morning press release<span style="background-color:rgba(57,212,155, 0.2)"> that</span> it will<span style="background-color:rgba(57,212,155, 0.2)"> be</span> selling the standard PlayStation 4 bundle for R5,599
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> the RS3 community<span style="background-color:rgba(57,212,155, 0.2)">.</span> Mobile is<span style="background-color:rgba(57,212,155, 0.2)"> just</span> a win-win for everybody.
+Written by R</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>-951 DS<span style="background-color:rgba(57,212,155, 0.2)">8000</span> LMC<span style="background-color:rgba(57,212,155, 0.2)"> R</span>6.2 (#1723) DS8000 LMC R</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>.4.1<span style="background-color:rgba(57,212,155, 0.2)"> [</span>Release 10<span style="background-color:rgba(57,212,155, 0.2)">g</span>R3]
+Information in this document applies to any platform</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> is called DR4<span style="background-color:rgba(57,212,155, 0.2)">.</span> Children with<span style="background-color:rgba(57,212,155, 0.2)"> the</span> DR4 HLA antigen are thought to have an increased</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> four wheels.
+2<span style="background-color:rgba(57,212,155, 0.2)">)</span> MR W<span style="background-color:rgba(57,212,155, 0.2)">agon</span>
+Another Kei car with a tall boy design,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>alsign.<span style="background-color:rgba(57,212,155, 0.2)">com</span>/ts<span style="background-color:rgba(57,212,155, 0.2)">a</span>/r6advanced1 /td SHA256 c:/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> are responsible... Read<span style="background-color:rgba(57,212,155, 0.2)"> More</span>RN CR<span style="background-color:rgba(57,212,155, 0.2)">IT</span>ICAL CARE SUPERVISORRequisition R032437 Market</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> all RIRs,<span style="background-color:rgba(57,212,155, 0.2)">which</span> have first<span style="background-color:rgba(57,212,155, 0.2)"> been</span> approved by the AFRINIC Internet Community through its</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Auberge<span style="background-color:rgba(57,212,155, 0.2)"> Michel</span> and R12<span style="background-color:rgba(57,212,155, 0.2)"> 297</span> at Pigalle in March;
+R2 030</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

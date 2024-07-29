@@ -13,8 +13,8 @@ data = defaultdict(dict)
 
 def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
 
-    prompt = explanation.get('generation_prompt', 'No prompt available.')[1:].replace('\n', '<br>')
-    prompt = _highlight(prompt, 1.0)
+    prompt = _highlight(explanation.get('generation_prompt', 'No prompt available.')[1:], 1.0)
+    prompt = prompt.replace('\n', '<br>')
     response = explanation.get('response', 'No response available.').replace('\n', '<br>')
 
     feature_name = edit(feature_name)
@@ -25,7 +25,7 @@ def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Feature Analysis: {feature_name}</title>
+        <title>{feature_name}</title>
         <style>
             body {{
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
@@ -42,11 +42,17 @@ def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
                 border-bottom: 2px solid #3498db;
                 padding-bottom: 10px;
             }}
+            .subtitle {{
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }}
             .card {{
                 background-color: #ffffff;
                 border-radius: 8px;
-                border-color: #f0f0f0;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                border: solid #E4E4E7;
+                border-width: .25px;
                 padding: 20px;
                 margin-bottom: 20px;
             }}
@@ -70,6 +76,7 @@ def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
                 height: 8px;
                 border-radius: 50%;
                 margin-right: 5px;
+                border: 0.5px solid #84848C;
             }}
             .true {{
                 background-color: #27ae60;
@@ -82,7 +89,7 @@ def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
             }}
             .key {{
                 font-size: 10px;
-                color: #71717A;
+                color: #84848C;
             }}
         </style>
     </head>
@@ -106,11 +113,14 @@ def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
 
         <div class="card">
             <h2>
-                Scores 
-                <br>
-                <span class="key">
-                ● Ground Truth | ● Recall | ● Fuzz | # Distance
-                </span>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
             </h2>
             <div id="scores">
                 {generate_score_html(recall_scores, fuzz_scores)}
@@ -203,8 +213,9 @@ def generate_score_html(recall_scores, fuzz_scores):
         
         score_html += f"""
         <div class="score-item">
-            <div style="min-width: 40px;">
+            <div style="min-width: 60px;">
                 {recall_circle}{fuzz_circle}
+                <small>{score['distance']}</small>
             </div>
             <span>{text}</span>
         </div>

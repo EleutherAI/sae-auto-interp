@@ -13,19 +13,24 @@ def main(cfg: CacheConfig):
     model = LanguageModel("EleutherAI/pythia-70m-deduped", device_map="auto", dispatch=True)
     submodule_dict = load_sam_autoencoders(
         model, 
-        list(range(4)),
+        [4],
         "weights/pythia-70m-deduped",
     )
 
-    with open("shift/named_sfc.json") as f:
-        module_filter = load_filter(json.load(f))
+    module_filter = load_filter("shift/named_sfc.json")
 
-    tokens = load_tokenized_data(model.tokenizer)
+
+    tokens = load_tokenized_data(
+        cfg.ctx_len,
+        model.tokenizer,
+        "kh4dien/fineweb-100m-sample",
+        "train[:15%]",
+    )
 
     cache = FeatureCache(
         model, 
         submodule_dict, 
-        cfg = cfg,
+        batch_size=cfg.batch_size,
         filters = module_filter
     )
     

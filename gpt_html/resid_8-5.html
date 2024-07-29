@@ -1,0 +1,696 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-5</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-5</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> London Soundproof windows<br>Whether you own a historical home or a brand new condo near a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span><br>Activations: (" busy" : 10)<br>Example 2:  a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> road just before midnight.<br>The police chief says the men wanted to arrive at the hotel<br>Activations: (" busy" : 9)<br>Example 3: <|endoftext|> body heat from morning commuters at the<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> Stockholm station and transfer it to the heating system of a<br>Activations: (" busy" : 9)<br>Example 4:  the basement of a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> restaurant and you actually have to walk through part of the restaurant to get to<br>Activations: (" busy" : 9)<br>Example 5:  little brown pup I took from a smoldering tyre in downtown Kingston along a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> road beside my<br>Activations: (" busy" : 9)<br>Example 6: <|endoftext|> child over her adopted one during lunch time at a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> restaurant.<br>Subscribe for brand new episodes<br>Activations: (" busy" : 8)<br>Example 7: �s finding a space in a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> shopping centre, dropping the kids off at school, coughing up<br>Activations: (" busy" : 8)<br>Example 8:  still handcuffed, tumbled onto the<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> freeway, got up and ran for a short distance, officials<br>Activations: (" busy" : 8)<br>Example 9: <|endoftext|> multiple levels and was carried out over eight phases within a live working environment in a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> city centre<br>Activations: (" busy" : 8)<br>Example 10:  walk through a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> airport terminal or wander the lobbies of a few of the larger downtown hotels and<br>Activations: (" busy" : 8)<br>Example 11:  most popular Golf resorts in the Mar Menor. This property is perfectly placed on a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> main road<br>Activations: (" busy" : 8)<br>Example 12: <|endoftext|> enjoys a primo location on a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> intersection smack in the heart of Midtown, less than<br>Activations: (" busy" : 8)<br>Example 13:  Best Coffee kind of situations. It��s a fortress of solitude in a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> city (except<br>Activations: (" busy" : 8)<br>Example 14: gaier. The billboard will remain above one of the<span style="background-color:rgba(57,212,155, 1.0)"> busiest</span> sections of Springfield for the month of October<br>Activations: (" busiest" : 8)<br>Example 15:  crash occurred in 2003, when an 86-year-old motorist crashed into a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> farmers market<br>Activations: (" busy" : 8)<br>Example 16: <|endoftext|> only to lodge for a quick dinner in the<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> streets of this largest Vietnamese city and sleep.<br>Activations: (" busy" : 8)<br>Example 17:  up position outside the<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> Birmingham Store!<br>Does your business need a healthy boost of promotional photography?<br>Activations: (" busy" : 8)<br>Example 18:  your car if you kind of lose it if you are parked in a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> city.<br>you�<br>Activations: (" busy" : 8)<br>Example 19:  urge all runners to use caution when crossing<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> junctions, as marshals do not have<br>rights<br>Activations: (" busy" : 8)<br>Example 20: , Chicago, Cleveland, and Boston and many other cities have transformed<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> traffic routes into pedestrian-friendly<br>Activations: (" busy" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The adjective "busy" describing a location or area with high activity.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The adjective &quot;busy&quot; describing a location or area with high activity.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> communicate. She went extra miles to fit me in on her day off just because of my<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> schedule</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>ist mobilisation in Belfast City Centre tomorrow afternoon has pretty much ensured that one of the<span style="background-color:rgba(57,212,155, 1.0)"> busiest shopping</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> The Little Neck station is the easternmost New York City station on the<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> Port Washington Branch of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> us to exit this scheme.
+Today's APS news comes during a<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> week for RBS</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> provides a very nice setting for some quiet/down time amidst<span style="background-color:rgba(57,212,155, 1.0)"> busy</span> Orchard Road.
+Shop</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> variety of oranges, referred to as Nagpur Oranges. Being a<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> major</span> trading<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> hub</span> for oranges</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> glitz<span style="background-color:rgba(57,212,155, 0.9200000000000002)">y shopping</span> in colorful Georgetown, famed spot of the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> iconic</span> Seven Mile Beach, and land of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> is the weight loss plan that complements even the most he<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ctic of</span> schedules.Overall hydrotherapy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> that focus on helping<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> busy</span> families make memories.Since its inception in 2018, Titan Crusher has been</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>.
+It is 100m from the Prince Charles Hospitals main entrance and enjoys a high<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> volume of</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> book took me completely by surprise. Having loaded up my Kindle ready for a long-<span style="background-color:rgba(57,212,155, 0.8400000000000001)">haul</span> flight,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> Proven ability to operate and thrive in a fast-<span style="background-color:rgba(57,212,155, 0.8400000000000001)">paced</span> entrepreneurial environment
+Benefits and Salary</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> visit and a planned one may bring the same amount of stress, every week may be a<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> busy</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> since Ischomachus seemed to be a very<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> busy person</span>. Ischomachus replies that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> community shelter in highly<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> populated</span> city communities, a contribution from Airbnb, working with Shelter to help people to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> on his back roof, but they are clearly visible from a<span style="background-color:rgba(57,212,155, 0.76)"> popular</span> walking trail that runs right behind his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> of your agency, the market location and size, also some years are bus<span style="background-color:rgba(57,212,155, 0.76)">ier</span> than others.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>), a wordless story of an emotive dog��s<span style="background-color:rgba(57,212,155, 0.76)"> busy</span> day with a beloved red</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> 'Shivsagar' boat Club in Tapola is very<span style="background-color:rgba(57,212,155, 0.76)"> popular</span> amongst water sports enthusiasts. If</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>
+Preparations were<span style="background-color:rgba(57,212,155, 0.76)"> disrupted</span> when a couple of players tested positive for covid the night before the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> skilled</span> and experienced, we assure you the best services from all our nail technicians. Our owner is another</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> start at intersections.
+New York plans to add more bike lanes to meet<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> surging</span> demand.
+NY</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> will be descending<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> on</span> the outdoor space from Friday, July 14-15 for two days of music,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> E. Hughes, MSU associate professor of marketing.
+In today's highly competitive<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> global</span> economy,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> many of the plains of inland Australia. Solitary and slow-<span style="background-color:rgba(57,212,155, 0.6799999999999999)">moving</span>, the reptiles wander the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>. As a fully-<span style="background-color:rgba(57,212,155, 0.6000000000000001)">equipped</span> state-of-the-art multi-purpose performing arts center,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> destroyed more low-in<span style="background-color:rgba(57,212,155, 0.6000000000000001)">coming</span> housing than it actually built.�� This process had extended right into</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> group will take a break to eat lunch in Casco Viejo, the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> historic</span> district of Panama</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> 12 years!
+Devon fare from the BBQ, the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> famous</span> selection of Trotters cakes and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> the ceiling. She said the plane was fairly<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> quiet</span> because everyone was wearing a mask, while some passengers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> their visit to Universal Orlando, James and his family also enjoyed the family-<span style="background-color:rgba(57,212,155, 0.52)">friendly</span> coaster, Flight</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>oscale. People are familiar with MRI. You go into this big<span style="background-color:rgba(57,212,155, 0.52)"> �</span>�tunnel�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>-<span style="background-color:rgba(57,212,155, 0.52)">service</span> logistics provider with specialized fleet capabilities and a network of third-party partnerships. We value our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> - ensuring even audio coverage and a pleasant background music soundtrack to match the relaxing<span style="background-color:rgba(57,212,155, 0.52)">,</span> lounge-like</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> hang their banners. The canopy was nice during the early-<span style="background-color:rgba(57,212,155, 0.52)">hours</span> drizzle. Behind the actual B</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> Road Safety Week and was timely, as instances of impaired driving tend to increase on long<span style="background-color:rgba(57,212,155, 0.44)"> weekends</span>.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> by the hotel):
+- The Hilton Garden Inn Portsmouth Downtown is located in the heart<span style="background-color:rgba(57,212,155, 0.44)"> of historic</span> downtown</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>. They're very bouncy."
+That is more very good news, considering the daily traffic<span style="background-color:rgba(57,212,155, 0.44)"> of</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Eastern end.
+Rockhampton Airport plays a<span style="background-color:rgba(57,212,155, 0.44)"> vital</span> role in military exercises for the Australian Defence</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> looked like.
+At a cafe near the<span style="background-color:rgba(57,212,155, 0.44)"> iconic</span> Sather Gate, Jacqueline Williams studied the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> they apparently own the building. I'm sure they will want rent from you. Around here<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> commercial</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>am Monday and runs 24-hours of full<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> service</span> on weekdays. On weekends it opens on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> on its original premises. The fantastic<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> service</span> and cosy nature of the hotel help to create a unique</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> standard work day (e.g<span style="background-color:rgba(57,212,155, 0.36000000000000004)">.</span> 10-6).
+- We're open to the possibility</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> brownstone buildings, and tree lined streets. Good Restaurants<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> and</span> cafés. A great diner (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> undergoing significant<span style="background-color:rgba(57,212,155, 0.28)"> �</span>�life-changing�� psychological shifts in thinking and relating to the world, that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> or another at least 100,000 – 150,000 guns get added to the<span style="background-color:rgba(57,212,155, 0.28)"> �</span>�wrong hands</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> also graced the middle of the<span style="background-color:rgba(57,212,155, 0.28)"> �</span>�Riders�� order for three games while battling</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>ling services, are available across<span style="background-color:rgba(57,212,155, 0.28)"> the capital</span> city. But during the coronavirus pandemic, they</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> is an easy throw on for a stroll around the<span style="background-color:rgba(57,212,155, 0.28)"> city</span>.
+Photos by Noah Petrowski
+</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> get reminders and directions.
+– Online Doctor Visits – telehealth access to Nemours clinicians is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Rick Freiberg, and the Catsimatidises — Margo and John the maybe mayor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>! turned several girls. And the conversation always had long-winded explanation about what Sergei or K</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>. Any TV, movie or book recommendations you can drop on us?
+BB: I��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> for the pages of the WSJ? It's certainly more politics of resentment. It also reminds me</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�� Amanda Foreman��s bestselling biography (adapted here by Jeffrey Hatcher, Anders</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+"Here," she said rapidly, "is what strengthens John in his folly. This is a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+thence down said stream to where it
+emptie? into Saluda river, thence
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> is ultimately about love and the renewal of the heart.
+Mahatma Joe��s heart</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> a scaremongering "important notice to patients" threatening "you may not receive the same level of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> to members of the<span style="background-color:rgba(57,212,155, 0.2)"> General</span> Assembly during<span style="background-color:rgba(57,212,155, 0.2)"> a</span> busy legislative season, said State Sen. Larry Farnese,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> 9/11 has<span style="background-color:rgba(57,212,155, 0.2)"> 19</span> Islamic fundamental<span style="background-color:rgba(57,212,155, 0.2)">ists</span> hijacking four commercial carriers, outfoxing the most sophisticated</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> tree lined streets,<span style="background-color:rgba(57,212,155, 0.2)"> and</span> its excellent<span style="background-color:rgba(57,212,155, 0.2)"> shopping</span> and cafe life, it makes for a good excursion from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> fish camps and a<span style="background-color:rgba(57,212,155, 0.2)"> draw</span>ling French dialect<span style="background-color:rgba(57,212,155, 0.2)"> –</span> have already started fleeing for higher ground.
+Sheriffs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the easiest instrument in<span style="background-color:rgba(57,212,155, 0.2)"> the</span> world to<span style="background-color:rgba(57,212,155, 0.2)"> play</span>. Officially, and in the rest of this website,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> of the beautiful Phe<span style="background-color:rgba(57,212,155, 0.2)">asant</span> Run Resort<span style="background-color:rgba(57,212,155, 0.2)">.</span> I-88 and Metra commuter rail service to downtown</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> road strained impatiently to<span style="background-color:rgba(57,212,155, 0.2)"> embrace</span> our spinning<span style="background-color:rgba(57,212,155, 0.2)"> tires</span>. This valley had been the scene of some of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> a choice to either<span style="background-color:rgba(57,212,155, 0.2)"> explore</span> its historical<span style="background-color:rgba(57,212,155, 0.2)"> identity</span> or to just relax along its Mediterranean seaside- but whatever</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> born and raised<span style="background-color:rgba(57,212,155, 0.2)">,</span> before it<span style="background-color:rgba(57,212,155, 0.2)"> got</span> to be such a big city. Small towns offer a number</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>. The atmosphere is<span style="background-color:rgba(57,212,155, 0.2)"> usually</span> fairly quiet,<span style="background-color:rgba(57,212,155, 0.2)"> though</span> can get boisterous since the place specializes in sake</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

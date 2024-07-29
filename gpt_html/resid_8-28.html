@@ -1,0 +1,693 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-28</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-28</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  Lake Charles for its Class 4A state semifinal game<span style="background-color:rgba(57,212,155, 1.0)"> against</span> St. Thomas More, Lulu Perry<br>Activations: (" against" : 10)<br>Example 2:  the annual football game<span style="background-color:rgba(57,212,155, 1.0)"> against</span> the Wall Crimson Knights.<br>It��s a game that means more<br>Activations: (" against" : 9)<br>Example 3:  Rangers with 31. Rangers' weekend game was postponed so it could concentrate on its Champions League match<span style="background-color:rgba(57,212,155, 1.0)"> against</span><br>Activations: (" against" : 9)<br>Example 4:  after three stops.<br>The Red Raiders play in the Oyster River holiday tournament next Thursday<span style="background-color:rgba(57,212,155, 1.0)"> against</span> host<br>Activations: (" against" : 8)<br>Example 5:  England for their NBA Global Game<span style="background-color:rgba(57,212,155, 1.0)"> against</span> the Brooklyn Nets! Tip off is set for this afternoon at 3<br>Activations: (" against" : 8)<br>Example 6: <|endoftext|><br>Nute plays in the Farmington holiday tournament next Wednesday<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Concord Christian at 1 p.<br>Activations: (" against" : 8)<br>Example 7: ball game Saturday<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Santa Teresa, Leland coach Joe Gron told his players that they shouldn��<br>Activations: (" against" : 8)<br>Example 8:  (Maine) holiday tournament next Thursday at 6:30 p.m.<span style="background-color:rgba(57,212,155, 1.0)"> against</span> the host team<br>Activations: (" against" : 8)<br>Example 9: <|endoftext|> they head to Statesboro, Ga., for a pivotal three-game SoCon series<span style="background-color:rgba(57,212,155, 1.0)"> against</span> first<br>Activations: (" against" : 8)<br>Example 10:  of Game 5 of the National League baseball championship series<span style="background-color:rgba(57,212,155, 1.0)"> against</span> the St. Louis Cardinals, Wednesday, Oct<br>Activations: (" against" : 7)<br>Example 11:  Caps on September 21 with a group fixture<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Bangladesh.<br>India haven't beaten New Zealand in the<br>Activations: (" against" : 7)<br>Example 12: <|endoftext|>��s opening home game at the Barclay��s Center, a game<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Oklahoma<br>Activations: (" against" : 7)<br>Example 13:  in their home opener<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Storm Lake.<br>(B) Le Mars (1-0) 78<br>Activations: (" against" : 7)<br>Example 14:  Dec. 15 meeting<span style="background-color:rgba(57,212,155, 1.0)"> against</span> USC at the Galen Center in Los Angeles. Other games including CSUB<br>Activations: (" against" : 7)<br>Example 15:  and goblins in the stands at Ryan Field for Northwestern's Halloween game<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Penn State. But for the<br>Activations: (" against" : 7)<br>Example 16: -game losing streak when they return home for their regular-season finale Sunday<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Wake Forest. The<br>Activations: (" against" : 7)<br>Example 17: <br>Spain go into their home UEFA Women's EURO 2013 play-off second leg<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Scotland on<br>Activations: (" against" : 7)<br>Example 18: �s. After their America East opener<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Albany, Binghamton will play it��s<br>Activations: (" against" : 7)<br>Example 19: Q Division One competition<span style="background-color:rgba(57,212,155, 1.0)"> against</span> the Souths Logan Magpies.<br>Wright said his side is<br>Activations: (" against" : 7)<br>Example 20: . Another option would be the Independence Bowl on December 26th<span style="background-color:rgba(57,212,155, 1.0)"> against</span> a MWC team in Shreve<br>Activations: (" against" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The preposition "against" in the context of sports, indicating a team or entity competing or playing a match/game.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The preposition &quot;against&quot; in the context of sports, indicating a team or entity competing or playing a match/game.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> of the home team was the Mediterranean clash<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Israel that was seen by 1,155 fans.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> have five vice captains by his side for the contest<span style="background-color:rgba(57,212,155, 1.0)"> against the</span> United States, the trio joining Harrington�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>��
+First, however, there��s Saturday��s homecoming game<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Monroe</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>, the Terriers face games<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Middlesbrough, Leeds United, Bolton, Hull City and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>Wylie softball in bi-district Game 2<span style="background-color:rgba(57,212,155, 1.0)"> against</span> Vernon
+Before the year started</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Four Invitational with an 8-3 win<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> over</span> Radford��s Nicholas Sayer and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> winners of four in a row and victors in all three of its regular- season meetings<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> with</span> Indiana</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> 30 Saint men earned an 8-1 win<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> over the</span> Crusaders while North Georgia's women stepped up</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> Mt. Ida College last night. They will take<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> on</span> Johnson & Wales University tomorrow night at home</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> December 30th from the Ricoh Coliseum in Toronto, ON. The show will be going up<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> against</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>
+A 3-1 away win<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> over a</span> 10-man Borussia Dortmund ensured Ajax booked a berth</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> this past weekend - and indeed, the entire week of series wins<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> against the</span> Yankees and Rays -</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> development options for USA cricket.
+The immediate impact of this partnership was the official ICC match<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> between</span> Full</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> have won a date<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> with the</span> Lions next weekend, while after an up-and-down season,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> to the quarterfinals of the doubles tournament before dropping an 8-6 decision<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> to third</span>-ranked Chase</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> Series leader and defending world champ Eddie Krawiec qualified third and will open<span style="background-color:rgba(57,212,155, 0.76)"> against</span> Steve Johnson</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> that with a 6-1, 7-5, 6-4 win<span style="background-color:rgba(57,212,155, 0.76)"> over</span> No. 22 Philipp</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> that Kevin Hogan has not lost as the Cardinal's starting quarterback? He extended that streak Saturday night<span style="background-color:rgba(57,212,155, 0.76)"> against</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> Tracing their rivalry from the moment they first competed<span style="background-color:rgba(57,212,155, 0.76)"> against</span> each other to the climax of their collision</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> last chance for registration
+4 p.m. — Mora Rangersttes softball<span style="background-color:rgba(57,212,155, 0.76)"> vs.</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> On top of that, he competes for the start<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> against</span> third base and outfield alternatives, allowing owners</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> at-large selection from the Big Ten Conference and the Wolverines<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> defeated</span> South Dakota State<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,</span> 71-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> matches played today were:
+1. Thailand Women<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> vs</span> Hong Kong Women
+2. Indonesia Women</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>zac Day, Paringa does battle<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> with</span> Cobdogla.
+The RFL get underway on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>��s crew that has received as much attention as the championship race<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> between</span> Keselowski and five</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>, 5:30pm
+Arizona Diamondbacks<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> vs.</span> San Francisco Giants
+TicketsMon., Sep.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>04 mark<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> against</span> Wisconsin-Milwaukee (Oct. 20)... Played in Michigan Invitational (Sept</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> of</span> the season.
+Abiola Dauda��s second-half close range strike was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> week after dominating the Saints at home, Seattle goes out on the road and drops a narrow game<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> to</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>AF<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> champions and</span> arch-ri<span style="background-color:rgba(57,212,155, 0.6000000000000001)">vals</span> Mexico in the region��s clasico on Tuesday.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> four-hitter<span style="background-color:rgba(57,212,155, 0.52)"> against</span> the World Series champion Giants and broke a scoreless tie with his first</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> arc<span style="background-color:rgba(57,212,155, 0.52)"> against the</span> Zokugaku Chameleons, a lot of flags should be thrown on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>The moment when the two guys were talking about Linghu Chong getting married<span style="background-color:rgba(57,212,155, 0.52)"> to</span> his Junior totally made</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> next weekend.
+River Plate were 3-0 road winners<span style="background-color:rgba(57,212,155, 0.52)"> over</span> Racing, but only made sure</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>! Tony Sparano is 4-2 vs<span style="background-color:rgba(57,212,155, 0.52)">.</span> the Jets since taking over as head coach,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>oster Capital — Restrictions
+In light of the pending marriage<span style="background-color:rgba(57,212,155, 0.44)"> between</span> H.R.H. Princess</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>based Olympia Palm Beach filed a $3.3 million foreclosure action on July 13<span style="background-color:rgba(57,212,155, 0.44)"> against</span> Testa Family</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Rated: T - English - Mystery/Adventure - Chapters<span style="background-color:rgba(57,212,155, 0.44)">:</span> 30 - Words: 139,9</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> - Adventure - Chapters<span style="background-color:rgba(57,212,155, 0.44)">:</span> 20 - Words: 69,010 - Reviews: 1321 - Favs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> this hotel is 5 minutes�� walk<span style="background-color:rgba(57,212,155, 0.44)"> from</span> Gothenburg Central Station. It offers rooms with a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> Valero Texas Open — losing his No. 1 ranking<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> to</span> Woods as he tries to adjust to his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> be the first time in franchise history that Green Bay will<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> face</span> a team in Week 1 that won 13</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> in</span> San Francisco, but let��s hope we won��t have to travel that far</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> right at the border where it bumps up<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> with</span> Tuscany.This is one of the hottest albums</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> - Heavy traffic on A453 southbound in Ratcliffe on Soar<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> between</span> the Kegworth Road</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> However</span>, these effects are countered by such elements as a chalk outline around where a chainsaw SHOULD</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>� in a battle for<span style="background-color:rgba(57,212,155, 0.28)"> the</span> only remaining play-off berth.
+The Sharks looked to have the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Sherman didn��t lose his job by blowing a halftime lead<span style="background-color:rgba(57,212,155, 0.28)"> against</span> Oklahoma State. He didn�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> a major injury<span style="background-color:rgba(57,212,155, 0.28)"> against</span> Spurs. Arteta is awaiting word on the calf injury that forced his removal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> again. We camped at Cape Woods Campground in a Motorhome.<span style="background-color:rgba(57,212,155, 0.28)">Und</span>o
+Date</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> for other pursuits, whether birding or hiking. He is especially hoping that this and other public land</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Maintenance Charge or any other charges due in accordance with these Conditions within 7 (seven) days of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> on Wall Street and what better way to show your attention to detail than lunch?
+I once had</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> we value just as highly.
+5. Fun things are the very large pineapple in Bathurst that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>big don't fit in te cart along with 3 kiddos!
+These diapers work just fine</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> a tight fit in pockets, but the 4-inch display is perfectly appropriate for a touch-screen</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> way I liked it. As Nando hummed along, I looked at the empty passenger seat to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�s through the mid 1980��s. The purpose of this organization and assistance from its Legal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>bleday's new imprint Doubleday Anchor in New York City and rapidly became a significant figure</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> business with God on purpose?
+ALBERT FINCH MINISTRYYou go a wondering,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>enko tested positive<span style="background-color:rgba(57,212,155, 0.2)"> after</span> playing in<span style="background-color:rgba(57,212,155, 0.2)"> a</span> Champions League game for CSKA Moscow against Bayer Leverkusen</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> hair in the<span style="background-color:rgba(57,212,155, 0.2)"> back</span> of the<span style="background-color:rgba(57,212,155, 0.2)"> n</span>ape of the neck, slow teething, enlargement</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>-winning goal in<span style="background-color:rgba(57,212,155, 0.2)"> overtime</span> to help<span style="background-color:rgba(57,212,155, 0.2)"> Arizona</span> to a 4-3 victory over Philadelphia in Saturday's season</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>- The total has<span style="background-color:rgba(57,212,155, 0.2)"> gone</span> UNDER in<span style="background-color:rgba(57,212,155, 0.2)"> 6</span> of Miami��s last 7 games against an opponent in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>Duke returns to<span style="background-color:rgba(57,212,155, 0.2)"> the</span> courts Friday<span style="background-color:rgba(57,212,155, 0.2)">,</span> April 12 as it takes on Florida State to being the squad</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> point in the NCAA<span style="background-color:rgba(57,212,155, 0.2)"> Championship</span> Round of 16<span style="background-color:rgba(57,212,155, 0.2)">...</span> Finished the season ranked No. 102 in singles nationally and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> had a full practice<span style="background-color:rgba(57,212,155, 0.2)"> since</span> he was<span style="background-color:rgba(57,212,155, 0.2)"> injured</span> Nov. 16 against the Florida Panthers and wasn't expected to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> front extension at 31<span style="background-color:rgba(57,212,155, 0.2)"> Tra</span>vershes<span style="background-color:rgba(57,212,155, 0.2)"> Close</span>.Defeat Charlottetown after losing to Saint John</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>son
+United 1<span style="background-color:rgba(57,212,155, 0.2)">-</span>1 Everton
+<span style="background-color:rgba(57,212,155, 0.2)">£</span>1 bet club
+Mata to open the scoring @</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> more run than he<span style="background-color:rgba(57,212,155, 0.2)"> allowed</span> in the<span style="background-color:rgba(57,212,155, 0.2)"> record</span>-tying six-homer game against the Tigers in</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    
