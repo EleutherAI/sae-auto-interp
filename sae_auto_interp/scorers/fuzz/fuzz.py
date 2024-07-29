@@ -175,11 +175,11 @@ class FuzzingScorer(Scorer):
                 schema=schema.model_json_schema(),
                 **generation_kwargs
             )
-
             for i, sample in enumerate(batch):
                 sample.predicted = selections[f"example_{i}"] == 1
         
-        except:
+        except Exception as e:
+            print(f"Error in {e}")
             selections = {}
             for i,sample in enumerate(batch):
                 sample.predicted = -1

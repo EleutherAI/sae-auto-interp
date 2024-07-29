@@ -2,7 +2,7 @@ from .client import Client
 from ..logger import logger
 from asyncio import sleep
 import json
-
+import re
 from openai import AsyncOpenAI
 
 class Local(Client):
@@ -49,6 +49,16 @@ class Local(Client):
                 processed_response = self.postprocess(response)
                 
                 if schema is not None:
+                    # Patern match the response to a valid json
+                    pattern = r'\{[^{}]*\}'
+                    matches = re.findall(pattern, processed_response)
+                    if len(matches) > 0:
+                        processed_response = matches[0]
+                    else:
+                        logger.error("Invalid response structure.")
+                        raise json.JSONDecodeError("Invalid response structure.", processed_response, 0)
+
+
                     processed_response = json.loads(processed_response)
 
                 return processed_response

@@ -5,7 +5,7 @@ from ..logger import logger
 from asyncio import sleep
 import json
 import os
-
+import re
 # Preferred provider routing arguments. 
 # Change depending on what model you'd like to use.
 PROVIDER = {
@@ -39,23 +39,20 @@ class OpenRouter(Client):
         self, 
         prompt: str, 
         raw: bool = False,
-        max_retries: int = 2,
+        max_retries: int = 1,
         **kwargs
     ) -> str:
 
-        kwargs.pop("schema", None)
-
+        schema = kwargs.pop("schema", None)
         data = {
             "model": self.model,
             "messages" : prompt,
             # "provider": PROVIDER,
             **kwargs
         }
-
         for attempt in range(max_retries):
 
             try:
-
                 response = await self.client.post(
                     url=self.url, 
                     json=data, 
@@ -66,8 +63,18 @@ class OpenRouter(Client):
                     return response.json()
                 
                 result = self.postprocess(response)
-                
-                return result
+                if schema is not None:
+                    # Patern match the response to a valid json
+                    pattern = r'\{[^{}]*\}'
+                    matches = re.findall(pattern, result)
+                    if len(matches) > 0:
+                        processed_response = matches[0]
+                        processed_response = json.loads(processed_response)
+                    else:
+                        logger.warning("Invalid response structure.")
+                        raise json.JSONDecodeError("Invalid response structure.", processed_response, 0)
+
+                return processed_response
             
             except json.JSONDecodeError:
                 logger.warning(f"Attempt {attempt + 1}: Invalid JSON response, retrying...")
@@ -75,7 +82,7 @@ class OpenRouter(Client):
             except Exception as e:
                 logger.warning(f"Attempt {attempt + 1}: {str(e)}, retrying...")
             
-            await sleep(1)
+                await sleep(1)
 
         logger.error("All retry attempts failed.")
         raise RuntimeError("Failed to generate text after multiple attempts.")
