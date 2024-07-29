@@ -1,13 +1,10 @@
-import asyncio
 from typing import List
-import random 
 
 from transformers import PreTrainedTokenizer
 
 from .classifier import Classifier
-from .sample import examples_to_samples, ClassifierOutput, Sample
+from .sample import examples_to_samples, Sample
 from .prompts.recall_prompt import prompt
-from ..scorer import Scorer
 from ...clients.client import Client
 from ...features import FeatureRecord
 
@@ -19,7 +16,7 @@ class RecallScorer(Classifier):
         client: Client, 
         tokenizer: PreTrainedTokenizer,
         verbose: bool = False,
-        batch_size: int = 5,
+        batch_size: int = 10,
         **generation_kwargs
     ):
         super().__init__(

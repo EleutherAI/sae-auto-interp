@@ -1,0 +1,706 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-1</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-1</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: ener, Pitta<br>Foster, BGE,<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span>, Mendy, Dwyer<br>A<br>Activations: (" Benson" : 10)<br>Example 2:  and challenge<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span> Henderson and the other top UFC stars, but is mired in a contract dispute with<br>Activations: (" Benson" : 9)<br>Example 3: ), Jesuit's Jordan Akwenuke (Portland) and<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span>'s Andrew Andrews (Washington).<br>Others<br>Activations: (" Benson" : 8)<br>Example 4:  most glamorous venue: Monaco. J<span style="background-color:rgba(57,212,155, 1.0)">enson</span> Button led the driver��s championship, 14 points ahead<br>Activations: ("enson" : 8)<br>Example 5: -4) plays<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span> (1-1, 1-5) at Marshall; and Madison (<br>Activations: (" Benson" : 8)<br>Example 6: <span style="background-color:rgba(57,212,155, 1.0)">enson</span> Button and Rubens Barrichello will return to the cars. Brawn thanks everyone at Br<br>Activations: ("enson" : 7)<br>Example 7: azzy undertones of international greats George<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span>; the soulful rhythms of Lauryn Hill<br>Activations: (" Benson" : 7)<br>Example 8:  at the podium while Button casually legged it!<br>J<span style="background-color:rgba(57,212,155, 1.0)">enson</span> Button celebrates with Nick Fry after the<br>Activations: ("enson" : 7)<br>Example 9: <|endoftext|> indicates that this attack occurred near<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span> and 7th Street in Upland, rather than La<br>Activations: (" Benson" : 7)<br>Example 10: <|endoftext|> the session fourth and fifth fastest.<br>J<span style="background-color:rgba(57,212,155, 1.0)">enson</span> Button was sixth, with Fernando Alonso the fastest<br>Activations: ("enson" : 6)<br>Example 11: <|endoftext|> greater difference from 2008, and the same could be said about J<span style="background-color:rgba(57,212,155, 1.0)">enson</span> Button.<br>J<span style="background-color:rgba(57,212,155, 1.0)">enson</span><br>Activations: ("enson" : 6), ("enson" : 5)<br>Example 12: <|endoftext|> when the accident occurred about 9:30 p.m. March 14. Emma lived on<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span><br>Activations: (" Benson" : 6)<br>Example 13: <|endoftext|> the set, and keep the viewers informed with accurate information.<br>Michael Waltrip, Johnny<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span><br>Activations: (" Benson" : 6)<br>Example 14: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> Benson</span> reiterated this point in his: post published yesterday: as well. : Additionally,<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span>:<br>Activations: (" Benson" : 6), (" Benson" : 5)<br>Example 15: - Martin<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span>.... Flimnap<br>- Mary Ellis.... Queen of Brobdingnag<br>Activations: (" Benson" : 6)<br>Example 16:  will take the Truck Series' most popular driver Johnny<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span> to an indoor skydiving center. That<br>Activations: (" Benson" : 5)<br>Example 17: <span style="background-color:rgba(57,212,155, 1.0)"> Bedford</span>, N.Y., estate, about 550 miles from here.<br>Stewart's Martha Stewart<br>Activations: (" Bedford" : 5)<br>Example 18:  Daugherty Water for Food Institute. Details forthcoming. Contact: Lorrie<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span>,402-472<br>Activations: (" Benson" : 5)<br>Example 19:  the original spelling and syntax) by Gail<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span>. If you have any further information about this newspaper<br>Activations: (" Benson" : 5)<br>Example 20: <span style="background-color:rgba(57,212,155, 1.0)"> Benson</span> of "1964: The Tribute," who plays the role of the young John Lennon in the<br>Activations: (" Benson" : 5)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The surname "Benson" or "enson" in various contexts, often referring to a specific person.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The surname &quot;Benson&quot; or &quot;enson&quot; in various contexts, often referring to a specific person.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> center voters, also backed up the claim that this race is still deadlocked. :<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span> noted �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> move to the Eagle Brewery in Havelock Street,<span style="background-color:rgba(57,212,155, 1.0)"> Bedford</span> gave the company the opportunity to install</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>
+By Marie<span style="background-color:rgba(57,212,155, 1.0)"> Benson</span>
+The importance attached to the development of strong character is evident in schools,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> championship win over<span style="background-color:rgba(57,212,155, 1.0)"> Bedford</span>.
+Not to overlooked from a place-kicking standpoint are a pair of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> the state to offer a vanity plate honoring the Confederate General Nathan<span style="background-color:rgba(57,212,155, 1.0)"> Bedford</span> Forrest. Now if it were Bobby</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>�Here in New<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Bedford</span>, when fishermen die, it is not uncommon at all to have the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> two children," said Sw<span style="background-color:rgba(57,212,155, 0.9200000000000002)">enson</span>.
+Even before the pandemic, she said she felt she</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> elevate her social status. Asher Hornsby: Jesse Sw<span style="background-color:rgba(57,212,155, 0.9200000000000002)">enson</span>.
+Cast & Details</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>.
+Mrs H<span style="background-color:rgba(57,212,155, 0.9200000000000002)">enson</span> explained: ��I just wrote some letters. The businesses get through</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>mit was later played by Jim H<span style="background-color:rgba(57,212,155, 0.9200000000000002)">enson</span> from 1987 until his 1990 death. He was then on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> the Improvisatore, or, Life in Italy. This edition is published by Richard<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Bentley</span> of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> once was the voice of a Jim H<span style="background-color:rgba(57,212,155, 0.8400000000000001)">enson</span> ostrich puppet.
+But Paizis often depended</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>�s Managing Director Malcolm Wilson remarks: ��Joining forces with<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Bentley</span> to help create the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>39. Other counties followed this pattern; for instance,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Essex</span> appointed its first chief constable on 11</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> and advanced mathematics and he holds an MBA from<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Bentley</span> University.
+DATE: Tuesday, April</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> his own designs in his workshop in rural<span style="background-color:rgba(57,212,155, 0.76)"> Essex</span>. I met him at 100% Design last year and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> contact who controlled<span style="background-color:rgba(57,212,155, 0.76)"> Essex</span> media. Relatives of the dirty dozen would be told their kin had died</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> Essex</span>. If we were lucky enough to get the tides right we would see vast numbers of birds coming</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> guilt-tripped into sending money to fund a new<span style="background-color:rgba(57,212,155, 0.76)"> Bentley</span> for their CEO. Pay your TV provider</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>home based covering<span style="background-color:rgba(57,212,155, 0.76)"> Essex</span> and the following postcodes: EN, E, SE and S
+-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> of a satisfactory loan agreement from<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Essex</span> County Council, as the Accountable Body for Growing Places Fund;</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Susan (Elizabeth Est<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ensen</span>) and Colin (Lennox Greaves) – she escorts her</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> Contract Position Available in<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Essex</span> County
+Panel Re-designation Application Due October 1, 2016
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> Recovery
+Governor Robert<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Bentley</span> on Tuesday said various state agencies in Alabama are in contact with their counterparts</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> Middle East peace process.
+Mr. Mubarak met Tuesday with UAE President Sheikh Khalifa bin Z<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ayed</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> of play at the 2012 Pine<span style="background-color:rgba(57,212,155, 0.6000000000000001)">hurst</span> Challenge on Monday, shooting a combined score of 642 through</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> is written by David Sw<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ensen</span>, the chief investment officer of Yale University's Endowment Fund, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> 98 to lead the way for Wellsville.
+Also for the Tigers, Nick<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Bayer</span> recorded a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>�
+One student, Afanaisa K<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ensen</span>huis, shared her findings at the end</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> good stocks and hold them (which can really only be implemented by a genius like Buffett), Sw<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ensen</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> about yourself and your background.
+I grew up in Romford,<span style="background-color:rgba(57,212,155, 0.52)"> Essex</span> and was the first in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>Gwern+Bran<span style="background-color:rgba(57,212,155, 0.52)">wen</span>|
+Full donor page for donor Gwern Branwen
+|</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> than comparable overseas funds.
+Sw<span style="background-color:rgba(57,212,155, 0.52)">ensen</span> laments that many retail investors spend too much unproductive effort</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>m<span style="background-color:rgba(57,212,155, 0.52)">enson</span>: Every summer our little lake in central Minnesota has a boat parade. These three grandkids</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>J<span style="background-color:rgba(57,212,155, 0.52)">ensen</span>.What The Bergesen Foundation Fund
+The Bergesen Foundation fund projects of public</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>--jobs that will never make it possible for them to pay off their student loans, Fyn<span style="background-color:rgba(57,212,155, 0.44)">anz</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> battle and the two rods he has in his leg. Herz<span style="background-color:rgba(57,212,155, 0.44)">lich</span> will have a long day of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> lists good man and the R Us and Target. Isaac Ehr<span style="background-color:rgba(57,212,155, 0.44)">lich</span> in a worn by criminals to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>, b<span style="background-color:rgba(57,212,155, 0.44)">auer</span>an at in.tum.de, http://home.in.tum</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> question about housing allowances.
+Adolf is wondering whether Cunl<span style="background-color:rgba(57,212,155, 0.44)">iffe</span> has quietly helped this one</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>30665014.
+Dani<span style="background-color:rgba(57,212,155, 0.36000000000000004)">elsen</span> PH, Knudsen KB, Strancar J,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> Africa, Collinet is sort of like Michael Jordan, P. Diddy and<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Nelson</span> Mandela rolled into</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>iors in joining the Nass<span style="background-color:rgba(57,212,155, 0.36000000000000004)">au</span> County Junior Fire Association. We are also, always reaching out to more</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> to the mid-1600s, the Matine<span style="background-color:rgba(57,212,155, 0.36000000000000004)">cock</span> lived in what is today considered Little Neck,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> game, he said that facing challenging opponents has prepared<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Emerson</span> for the post-season.
+��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> less<span style="background-color:rgba(57,212,155, 0.28)"> commitment</span> and hope to find a man to have sex with occasionally.
+The ability to accurately</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Researchers at the prestigious Harvard University in<span style="background-color:rgba(57,212,155, 0.28)"> Cambridge</span>, Massachusetts, conducted a study of MLS Laser Therapy that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>) and a cowardly lion (Jerry Haines of<span style="background-color:rgba(57,212,155, 0.28)"> Berk</span>ley, also playing farmhand Zeke</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> history and discover how women are contributing to STEM fields today.
+The Oak<span style="background-color:rgba(57,212,155, 0.28)">hurst</span> Branch Library, located</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> sale,�� says<span style="background-color:rgba(57,212,155, 0.28)"> Davis</span>, adding that the spread entered contract within 45 days. ��</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of bid) in favour of Oxford County.
+PRE-TENDER SITE MEETING</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>omaterials journey. As stated earlier, while the chemical or nanomaterial-induced mechanisms of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> email@example.com)
+QUARTERLY READING: Marion County Veteran��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>encila project (part of eLife��s Reproducible Document Stack initiative)—integrates</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> senior management of
+Alleghany and its operating companies. Presentations will cover corporate and
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> law cases, although it may be of use in criminal law cases too. Generally, the purpose of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> you hundreds of dollars or make you wait hours or days for an issue that can be fixed in several</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> new society as well as buildings and public works that stood as the foundations on which the future Sydney was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> will make up my own word).
+Thus we have our problem.
+As long as the Black</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> started.
+congratulations guys- you are all awesome and perfect for the roles:)
+Thank</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>The Bedford Avenue burger joint<span style="background-color:rgba(57,212,155, 0.2)"> made</span> the announcement on their Facebook page Tuesday night.
+For the second consecutive</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> study, the Editor<span style="background-color:rgba(57,212,155, 0.2)">-</span>in-Chief of the Journal of Alternative and Complementary Medicine, Dr</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>., Bayer AG, Te<span style="background-color:rgba(57,212,155, 0.2)">va</span> Pharmaceuticals, Merck & Co.
+Geographic scope: Asia</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Returners: Nathan<span style="background-color:rgba(57,212,155, 0.2)"> Jacob</span>son, Sr., OL/DL; Alex Fairhurst, Sr., OL</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>proofed Buckinghamshire Pass<span style="background-color:rgba(57,212,155, 0.2)">iv</span>haus by laying cables ready for batteries and technology to measure how much of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> of Nazi Germany and<span style="background-color:rgba(57,212,155, 0.2)"> Imperial</span> Japan, Hans Dollinger, Library of Congress Catalogue Card Number 67-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> been associated with Essex,<span style="background-color:rgba(57,212,155, 0.2)"> Hert</span>fordshire and the surrounding area since 1999. No doubt, if you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Essex Police website
+<span style="background-color:rgba(57,212,155, 0.2)">-</span> "First woman chief constable is appointed". The Independent. 15 June</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>hurst delivered a pair<span style="background-color:rgba(57,212,155, 0.2)"> of</span> touchdown passes to rally the Bolts back from a 10-0 halftime</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> in five years<span style="background-color:rgba(57,212,155, 0.2)">,</span> there were also clinics in Springfield, Worcester, Boston, New Bedford, F</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

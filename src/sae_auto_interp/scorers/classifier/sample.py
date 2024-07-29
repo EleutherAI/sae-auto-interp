@@ -9,8 +9,6 @@ from dataclasses import dataclass
 from transformers import PreTrainedTokenizer
 
 
-from torchtyping import TensorType
-
 L = "<<"
 R = ">>"
 DEFAULT_MESSAGE = "<<NNsight>> is the best library for <<interpretability>> on huge models!"
@@ -27,7 +25,7 @@ class ClassifierOutput:
     ground_truth: bool
     """Whether the example is correct or not"""
 
-    predicted: bool = False
+    prediction: bool = False
     """Whether the model predicted the example correctly"""
 
     highlighted: bool = False
@@ -75,6 +73,7 @@ def examples_to_samples(
     return samples
 
 # NOTE: Should reorganize below, it's a little confusing
+# TODO: Currently highlights entire example if extras have no activations
 
 def _prepare_text(
     example,
@@ -106,7 +105,7 @@ def _prepare_text(
 
     # Rare case where there are no tokens below threshold
     if below_threshold.dim() == 0:
-        logger.error(f"Failed to prepare example.")
+        logger.error("Failed to prepare example.")
         return DEFAULT_MESSAGE
 
     random.seed(22)
@@ -119,7 +118,7 @@ def _prepare_text(
             n_incorrect
         )
     )
-
+    
     check = lambda i : i in random_indices
 
     return _highlight(str_toks, check)

@@ -1,0 +1,692 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-32</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-32</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> non-Google employees have contributed to the project in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>, said Prem Ramaswami<br>Activations: (" past" : 10)<br>Example 2:  vampires.<br>I��ve grown cabbage in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span> without much success. It has a long<br>Activations: (" past" : 9)<br>Example 3: The former Lille forward has previously admitted that he is torn between what to do. In the<span style="background-color:rgba(57,212,155, 1.0)"> past</span><br>Activations: (" past" : 9)<br>Example 4: achi in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span> and now VPN is a big topic. With more people using open WiFi access points<br>Activations: (" past" : 9)<br>Example 5:  on her walls in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>, and I desperately wished it were chocolate. However, this installment of<br>Activations: (" past" : 9)<br>Example 6: <|endoftext|> to the task? Watching videos on your phone used to be about convenience over quality in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span><br>Activations: (" past" : 9)<br>Example 7: <|endoftext|> briefly used laser cutters in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>. Much of Blackwell��s work is produced entirely<br>Activations: (" past" : 9)<br>Example 8: <br>I have two garbage cans, but in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span> month, two of them have been left for<br>Activations: (" past" : 9)<br>Example 9:  that I previously had plenty of cause to use tunnels in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>, I just didn��t<br>Activations: (" past" : 9)<br>Example 10: <|endoftext|> in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>, and who supported Personhood at a press conference in 2008.�� [<br>Activations: (" past" : 9)<br>Example 11: <|endoftext|> in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>, Riverdale has more in common with pornography than any other genre.) So when<br>Activations: (" past" : 9)<br>Example 12: <|endoftext|> in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>,�� the source told us. ��He brings such a positive energy<br>Activations: (" past" : 9)<br>Example 13: <|endoftext|> in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>. The recent snow has made the trails impassable, so he has had<br>Activations: (" past" : 9)<br>Example 14: <|endoftext|> in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>. The part of the story that focuses on his childhood and time at Hogwarts had<br>Activations: (" past" : 9)<br>Example 15: <|endoftext|> in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span> couple of weeks on a wide range of workplace human rights issues. Here��<br>Activations: (" past" : 9)<br>Example 16: <|endoftext|> in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span> but, if so, it's a pleasure to show them again :)<br>T<br>Activations: (" past" : 9)<br>Example 17: <|endoftext|> in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span> few years, with a number of new channels and trends emerging. What impact does<br>Activations: (" past" : 9)<br>Example 18: <|endoftext|> in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span> seven years). Other countries have seen a decline in the number of congregations during<br>Activations: (" past" : 9)<br>Example 19: . She also uploads promotional posts of brands and establishments that she has worked with in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>.<br>Activations: (" past" : 9)<br>Example 20: <|endoftext|> the content required for the webpage.<br>In the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>, the most used tip of targeting SEO<br>Activations: (" past" : 9)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The word "past" in a sentence, often indicating a time period prior to the present.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The word &quot;past&quot; in a sentence, often indicating a time period prior to the present.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> loops, and a capellas on the fly. In the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>, I��ve mainly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span>ified planet - the sphere has assimilated Earth in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>, and only the fact that they are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> in New York, are reporting that they have listened to the radio on the internet in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> I have worked at in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span> suggesting they make a synth map a part of their dive master/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>�ve done in the<span style="background-color:rgba(57,212,155, 1.0)"> past</span>. So in that sense I feel like my best is yet to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> neighbors and friends. Thank you.
+We have used Plumbers Florida many times in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> past</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> noise and it puts me to sleep.In the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> past</span> couple of days, we've seen reports here</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> bullish on Hasbro in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> past</span>, I continue to come around to the Mattel side of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>making schemes in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> past</span> year, like paying to send messages to strangers. Most of the company's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>Ms Eman has said in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> past</span>: ��I want to try and break the stigma that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> given up a child or two in the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> past</span> possibly it would be about the side that is smart to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, dear readers. In the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> past</span> week-and-a-half, new trailers have been released</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>. Not in the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> past</span>, but now.VUE without competition
+Can you please give us</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> stressful than life in the big corporations! My favourite pub in the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> past</span> was probably the Jolly Sailor.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> were looking for, finding out what they had done in the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> past</span>, how many people they wanted</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> in the<span style="background-color:rgba(57,212,155, 0.76)"> past</span> – all of these measures have to be advanced elsewhere.
+With due respect for the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>, releasing two major Star Wars titles in the<span style="background-color:rgba(57,212,155, 0.76)"> past</span> six years – Star Wars Battlefront and Star</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> internet for watching or downloading TV programs in the<span style="background-color:rgba(57,212,155, 0.76)"> past</span> month compared to last year, up now to 13</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> we've gotten in the<span style="background-color:rgba(57,212,155, 0.76)"> past</span> aren't the greatest. My favorite is probably the "Kam</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>'ve noticed in the<span style="background-color:rgba(57,212,155, 0.76)"> past</span> here at 5B4 Photography and Books I do not particularly enjoy negatively reviewing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> cancer have more than doubled in the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> past</span> two decades, despite a significant drop in smoking.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> least three in the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> past</span> year.
+"I would like to thank my family and friends,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>Sound like those survivalists of the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> past</span>? Emphatically no. Zombie Squad��s message</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>
+The Blues killed all four Avalanche power plays and have killed 20 of 21 penalties in the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> past</span> seven</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> that have occurred in the recent<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> past</span> (the last 10,000 years). I do most of my</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> to propose on Friday,�� Toiv said. ��There have been proposals in<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> past</span> years</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> past</span> few days. "Sir Alex just offered encouragement for everyone, for the workforce," McCoist</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>�t it about time clerical celibacy became a thing of the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> past</span>? If all the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> with built in robes. Those hot summer nights and cold winter mornings are a thing of the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> past</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> the direction of the address listed for Kelley in<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> past</span> days.
+It was definitely not just a shotgun</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> efforts and made substantial investments during the<span style="background-color:rgba(57,212,155, 0.52)"> past</span> five years to improve access, capacity, service and quality for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>
+For the past three weeks, you have been voting for the top
+technology products of the<span style="background-color:rgba(57,212,155, 0.52)"> past</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> changes in his personal and professional life during the<span style="background-color:rgba(57,212,155, 0.52)"> past</span> 20 years by applying the principles of what he now</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> need a winner or a loser. Point 4: Never bring up mistakes of the<span style="background-color:rgba(57,212,155, 0.52)"> past</span>. Whenever something</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>, prostitution, spousal abuse would all be things of the<span style="background-color:rgba(57,212,155, 0.52)"> past</span>. No more bik</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> new
+website in 3 seconds:
+Although TRIPOD has served me well over the<span style="background-color:rgba(57,212,155, 0.44)"> past</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>1 Kentucky. Iowa has showed moments of promise over the<span style="background-color:rgba(57,212,155, 0.44)"> past</span> few years, and Carver has been</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> has been reported to DShield for the<span style="background-color:rgba(57,212,155, 0.44)"> past</span> 3 days.
+Oct 26 11:58:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> stock of my accomplishments during the<span style="background-color:rgba(57,212,155, 0.44)"> past</span> year and capture my dreams, wishes and intentions for the coming year</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> in a<span style="background-color:rgba(57,212,155, 0.44)"> previous</span> proceeding may not be accepted in a later criminal prosecution, if the defendant was previously</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ver encircled the globe with good reason. What he has done here over the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> past</span> nine days</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>ley explains, Costco has purchased a lot of new block pallets over the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> past</span> year.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> successful events this<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> past</span> year. Harmonie �Hundred Bicycle Tour in May, Posey County</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> 2012. I would be a bit leery of this stock as they have missed badly the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> past</span> two</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> company has demonstrated a pattern of positive earnings per share growth over the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> past</span> two years. We feel that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> over the<span style="background-color:rgba(57,212,155, 0.28)"> past</span> few months and it is able to compose music in a few genres. For more</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> sponsors … I��ve been able to go so many different places in the<span style="background-color:rgba(57,212,155, 0.28)"> last</span> year.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> travelers like you over the<span style="background-color:rgba(57,212,155, 0.28)"> past</span> 30 days
+Flights between some cities may be significantly cheaper if you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> I have worked over the<span style="background-color:rgba(57,212,155, 0.28)"> past</span> year to integrate the use of the hydraulic flume in geomorph</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> past</span> 7 days. She was born on February 28, 1939 in Winneconne, WI,</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> an entrepreneur based on the valuation of my company. I don��t value myself as a leader</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> some of my favorite candy!
+At first glance this cupcake may just appear to be a chocolate</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>JB has established its reputation for excellent pre and after sales service. Based in Nashville KJB products are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Creek Crossing Ranch in an attempt to collect their first UCI points of 2012. The unfamiliar course made</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>am – 1:30pm, Home Depot Trip, van leaves from front steps 25th: 1</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>orba Linda, Calif./Esperanza H.S.), who went 3-for-5</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> country, and that is the party of money. It has two branches, the Republicans and the Democrats</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> my way up and there were only four to five seconds until the thunder followed.
+This was,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�s nomination haul included Best Picture, Best Director, Best Actor for Ryan Gosling and Best Actress</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> largest jails, holds new languages created by gangs to evade the authorities.�� Not only a stimulating</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> mentioned using the cult<span style="background-color:rgba(57,212,155, 0.2)"> favourite</span> RMS Living Luminizer on Meghan in the past (RMS is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> a suspect believed involved<span style="background-color:rgba(57,212,155, 0.2)"> in</span> numerous storage shed burglaries in Bay County during the past two months.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> especially when two billion<span style="background-color:rgba(57,212,155, 0.2)"> are</span> watching? It��s been documented in the past that Meghan has</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> always looking to reverse<span style="background-color:rgba(57,212,155, 0.2)"> the</span> gains made in Iraq in the past year and a half.
+In the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the past three years,<span style="background-color:rgba(57,212,155, 0.2)"> repeated</span> over and over again that his Cabinet would continue reforms until a new Parliament</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> the past to start a<span style="background-color:rgba(57,212,155, 0.2)"> new</span> future in societies, like during Renaissance we went back to Classics after the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> money and will spend<span style="background-color:rgba(57,212,155, 0.2)"> it</span> when the personalities are right. They also have won two titles in the past</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> deaths as a result<span style="background-color:rgba(57,212,155, 0.2)"> of</span> fire increased by 20% in the past year.
+Responding to these</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> reviews
+Vern<span style="background-color:rgba(57,212,155, 0.2)">on</span> changed in the beginning to be a better man, thanks to a wish.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>.
+We have<span style="background-color:rgba(57,212,155, 0.2)"> had</span> hundreds of kids compete for the club in the past 15 years.
+Kids</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

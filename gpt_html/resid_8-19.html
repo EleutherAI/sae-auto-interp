@@ -1,0 +1,689 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-19</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-19</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: ,<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>, Turkmenistan, Tajikistan, Uzbekistan.<br>The scope of the work<br>Activations: (" Serbia" : 10)<br>Example 2:  from Cambodia, China, Indonesia, Malaysia,<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>, Thailand, Turkey, and Vietnam:<br>"<br>Activations: (" Serbia" : 9)<br>Example 3:  maintains excellent relations with the Republic of Montenegro, which gained its independence after the dissolution of the<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span><br>Activations: (" Serbia" : 8)<br>Example 4: , and<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> will be joining the March, and support was also received from environmental and civil society organisations<br>Activations: (" Serbia" : 8)<br>Example 5: <|endoftext|> (before 1992 Ukraine participated as part of the Soviet Union). With the exception of<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> – according<br>Activations: (" Serbia" : 8)<br>Example 6: <|endoftext|>), China (11,700 claims),<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> [and Kosovo: Security Council Resolution 1244]<br>Activations: (" Serbia" : 8)<br>Example 7:  Ukrainians of Slovenia belong to the local Bishop of the Patriarchate of<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>. There is no circumstance in<br>Activations: (" Serbia" : 8)<br>Example 8:  people travel by train or coach from neighbouring countries, such as<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> and Croatia, to use Budapest�<br>Activations: (" Serbia" : 7)<br>Example 9:  and support for NATO's air campaign against<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> and has provided military units to serve in Kosovo as part<br>Activations: (" Serbia" : 7)<br>Example 10:  a proposal to support Austria-Hungary against<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> even if this led to war with both France and<br>Activations: (" Serbia" : 7)<br>Example 11: , Ghana.<br>4. IEEE Communication Society 16th Telecommunication Forum, Belgrade,<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>,<br>Activations: (" Serbia" : 7)<br>Example 12: <br>Zivadin Jovanovic, an international relations expert based in Belgrade,<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>, said<br>Activations: (" Serbia" : 7)<br>Example 13:  and<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>.It was proclaimed on 13 April 2015 by Czech libertarian politician and activist Vít Jed<br>Activations: (" Serbia" : 7)<br>Example 14:  by contemporary artists from Italy, Romania, Russia and<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> – the countries that Austria-Hungary fought<br>Activations: (" Serbia" : 7)<br>Example 15:  25 and forced thousands more to evacuate. Some 95,000 homes in<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> are without electricity as a<br>Activations: (" Serbia" : 7)<br>Example 16: hall Astra VXR, and<span style="background-color:rgba(57,212,155, 1.0)"> Renault</span> Megane RS. It follows in the footsteps of these<br>Activations: (" Renault" : 7)<br>Example 17: <|endoftext|> Russia entered and occupied the Metropolis of Kiev without ever having been granted it, while<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> has<br>Activations: (" Serbia" : 7)<br>Example 18: <|endoftext|> July 28, 1914, when the Austro-Hungarian Empire declared war on<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>. The<br>Activations: (" Serbia" : 7)<br>Example 19:  (Russia,<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>, Romania, Bulgaria, Georgia, Athens, Warsaw, Tirana and Presov<br>Activations: (" Serbia" : 7)<br>Example 20:  against 11th-seeded Ana Ivanovic of<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>. The winner advances to the round of 16<br>Activations: (" Serbia" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The country "Serbia" when mentioned in a text, often in a list of countries or in a geographical context.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The country &quot;Serbia&quot; when mentioned in a text, often in a list of countries or in a geographical context.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span>diesel proponent Carlos Ghosn, the CEO of<span style="background-color:rgba(57,212,155, 1.0)"> Renault</span> (Charts) and Nissan (Ch</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> ready for their most important match in over How to watch<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> v Scotland free on Sky Sports: TV</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> the Balkan peninsula in southern Europe,<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span> enjoys a continental climate that brings about wonderful summers and winters</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>, Korean, Portuguese, Russian,<span style="background-color:rgba(57,212,155, 1.0)"> Serbian</span>, Spanish, Swedish or Turkish
+Extension's interface</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> celebrate together the 800-year anniversary of the elevation of Saint Sava as Archbishop of<span style="background-color:rgba(57,212,155, 1.0)"> Serbia</span>. We</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>.
+2 Pub bosse What channel is<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Serbia</span> v Scotland on? Supporters can watch the match live</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Tesla Museum
+A prime tourist attraction that cannot be missed on a trip to<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Serbia</span> lies in the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Serbia</span>, Turkmenistan, Tajikistan, Uzbekistan.)
+The UNDP programme countries</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Serbia</span> to access northern Europe.Days of War now on steam! come join us in the fight</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> considered a beloved bird in<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Serbia</span> and was near extinction until the reserve was made a sanctuary. They soar</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> New Cars
+The<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Renault</span> Triber is a premium offering in the subcompact MPV segment but</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> trip or are already packing your bags before heading out to<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Serbia</span>, here��s five things to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> wars too.<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Serbia</span> is ripe for this kind of nationalistic self-pity considering that they view</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> of Ohrid (headed by Archbishop Ioannis, who belongs to the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Serbian</span> Orthodox Church), would like</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> some cases it has been turbulent, but overall<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Serbia</span> can be defined as a nation that is majestic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> Serbian</span>, American, and French troops.
+In accordance with the Treaty of Bucharest, upon leaving</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> Church is constantly repeated in the<span style="background-color:rgba(57,212,155, 0.76)"> Serbian</span> media, and readers are fully familiar with them. With this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> Renault</span> 4 production car series, the latter sponsored by Marlboro, proved extremely popular, helping to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> declaration came exactly one month after<span style="background-color:rgba(57,212,155, 0.76)"> Serbian</span> nationalist Gavrilo Princip assassinated Austrian Archduke Franz</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> can be contacted at email@example.com and<span style="background-color:rgba(57,212,155, 0.76)"> Renault</span> SAS, Direction juridique – D</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> which was designed by famed<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Serbian</span> architect, Dragiša Brašovan and built in 1927</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> looking for a singer. Gabe<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Serbian</span> (Locust, Skinwalker, Holy Molar) replied</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Serbian</span> Church keep their distance from Ukraine, fearing that what has been done there will be repeated in Monteneg</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Senegal</span>, Mali, The Gambia, Malawi, Zambia, Madagascar, and Rwanda)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>Oman, Pakistan, Papua/New Guinea, Poland, Romania, Rwanda,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Senegal</span>, Sey</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>ue de Barbarie in<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Senegal</span> – not all that far from where John, Paul and I were watching</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Senegal</span> international is targeting a victory to progress as group winners. "For us it is very important</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>. While Tesla was by citizenship Austrian, he was an ethnic<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Serbian</span>. Ten years past his death in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> many workshops and performances with internationally renowned companies such as the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Senegal</span> National Dance Company,Les Ballets</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>.
+That��s why you will find African intellectuals in<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Senegal</span> who speak better French than white</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>|Bulgaria - Sofia Neighboring Countries:
+Ser<span style="background-color:rgba(57,212,155, 0.52)">bia</span> - Montenegro 1.5</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>, Latvia, Lithuania, Luxembourg,<span style="background-color:rgba(57,212,155, 0.52)"> Malta</span>, Netherlands, Poland, Portugal, Romania, Slovakia, Slovenia</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> (Ser<span style="background-color:rgba(57,212,155, 0.52)">bian</span> Autonomous Province), close to Belgrade. It was the largest sporting event ever</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> Hungary, Latvia, Lithuania,<span style="background-color:rgba(57,212,155, 0.52)"> Malta</span>, Estonia, Australia, Greece, Portugal, Cyprus, Slovenia,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>
+Born in 1979 in Belgrade (Ser<span style="background-color:rgba(57,212,155, 0.52)">bia</span>) is a filmmaker with passion for social change.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>st37 2 ser<span style="background-color:rgba(57,212,155, 0.44)">bia</span> cold working. Name:* Email:* Phone:* Message:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> like Bel<span style="background-color:rgba(57,212,155, 0.44)">grade</span> and the countryside in striking scenes of snowfall. This doesn��t even</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>billlion by the year
+Regulation is well in place in certain jurisdictions such as<span style="background-color:rgba(57,212,155, 0.44)"> Malta</span> and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> left to become<span style="background-color:rgba(57,212,155, 0.44)"> Malta</span> men's coach, replaced by 1982 FIFA World Cup winner Antonio Cabrini.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>, Tanzania, Sudan, Kenya, Somalia, Uganda,<span style="background-color:rgba(57,212,155, 0.44)"> Rwanda</span> and Zanzibar, as well</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>H. Schultze. This particular book, which never received a great deal of attention in<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Denmark</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> US, despite hiccups and occasional poor communication from utilities. Italy and<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Malta</span> both already have essentially</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> (incomplete case file)
+To date,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Malta</span> has ratified and signed the following treaties.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>atch/Hook Front|
+Q<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Suzuki</span> Springwood
+3344 Pacific Highway Springwood Q</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>iser had great enthusiasm for military adventures, including proposals to invade<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Denmark</span> and America. It was the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>. "The Nazis control Europe: Austria, Czechoslovakia, Holland, Belgium, France,<span style="background-color:rgba(57,212,155, 0.28)"> Denmark</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> (e.g. GB, Ireland, Netherlands, Sweden,<span style="background-color:rgba(57,212,155, 0.28)"> Denmark</span>, Poland, most federal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> territories were agreed to sacrifice the land to<span style="background-color:rgba(57,212,155, 0.28)"> Lithuania</span>, Poland, and new nations such as Estonia or Latvia</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> found to exist in the ancient cultures of India,<span style="background-color:rgba(57,212,155, 0.28)"> Denmark</span>, Greece, Belgium, Tibet, Gaul</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> capital Bel<span style="background-color:rgba(57,212,155, 0.28)">grade</span>.
+Also known as a ��Schwellenpflug��</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>The Brooklyn Heights Association (BHA) is responding with concern and cautious optimism to the Brooklyn Public Library</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> who earlier this year earned his doctoral degree in sports psychology. With his college career approaching its twilight,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> another piece of luck I noticed: the flashing symptoms that sent me to the optometrist in the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>he and discomfort – even after a number of every day rowing train classes.
+- EASY</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> as U.S. defense secretary began with the sound of a suicide bombing about a kilometer away</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> treat myself, and I��ll bet you wouldn��t either. We treat ourselves merciless</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>Bus, RPMfusion
+- We do hands on training for FREE of charge any where in Sri</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> series of ports and/or jacks are typically provided in system base 102. For example, a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>SUAF Management Tool.
+Manage Project Access.
+Display process status for all or selected processes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> social justice activism and politics in Israel. Yael graduated from the faculty of Law at Hebrew University in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> might support an Aust<span style="background-color:rgba(57,212,155, 0.2)">ro</span>-Hungarian attack on Serbia. In December, Lichnowsky, the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, Bulgaria, Czech<span style="background-color:rgba(57,212,155, 0.2)"> Republic</span>, Finland, Hungary, Latvia, Lithuania, Malta, Estonia, Australia,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> experienced and encountered on<span style="background-color:rgba(57,212,155, 0.2)"> our</span> previous visits to Serbia, and our prayer is to see very soon the complete</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> from the Serbian government.<span style="background-color:rgba(57,212,155, 0.2)"> To</span> be perfectly honest I don't really have a real philosphical objection</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>entity Protection is only<span style="background-color:rgba(57,212,155, 0.2)"> available</span> for US, UK, Canada, Denmark, Germany, France, Ireland and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>. Vespa quit North<span style="background-color:rgba(57,212,155, 0.2)"> America</span> to concentrate its efforts on Europe and the Far East. The late 1980</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Austrians. As<span style="background-color:rgba(57,212,155, 0.2)"> the</span> church had to be rebuilt after being devastated in World
+War I, Serbian</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> of which is<span style="background-color:rgba(57,212,155, 0.2)"> located</span> on a narrow island in the Senegal River. Saint-Louis was established in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>F Malta have thought it<span style="background-color:rgba(57,212,155, 0.2)"> is</span> opportune to organise an international one day conference in Munich on the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>ater driver and<span style="background-color:rgba(57,212,155, 0.2)"> former</span> test and reserve driver for three Formula 1 teams, including Lotus Renault GP in</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

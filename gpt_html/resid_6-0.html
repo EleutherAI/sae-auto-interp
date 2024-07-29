@@ -1,0 +1,700 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-0</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-0</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> a single-cylinder two-stroke engine. Weighing just about 12.<span style="background-color:rgba(57,212,155, 1.0)">6</span> lbs<br>Activations: ("6" : 10)<br>Example 2:  single-cylinder and air-cooled engine producing maximum power of 13.<span style="background-color:rgba(57,212,155, 1.0)">8</span>bhp at<br>Activations: ("8" : 8)<br>Example 3:  can fetch after launch.<br>It is a compact device at 10.<span style="background-color:rgba(57,212,155, 1.0)">6</span> inches long by 10.<br>Activations: ("6" : 8)<br>Example 4:  Survey Agency (USGS) warned a tremor measuring 9.<span style="background-color:rgba(57,212,155, 1.0)">8</span> could happen anytime between tomorrow and<br>Activations: ("8" : 8)<br>Example 5:  6.<span style="background-color:rgba(57,212,155, 1.0)">3</span> inches of travel. The SC-4 Rear Suspension has 15 inches of travel with<br>Activations: ("3" : 8)<br>Example 6: . Constructed of aluminum, the cup weighs 8.<span style="background-color:rgba(57,212,155, 1.0)">7</span> oz.<br>Simply boil water in your<br>Activations: ("7" : 8)<br>Example 7:  Edition was lighter still, with a carbon-fiber hood that was 10.<span style="background-color:rgba(57,212,155, 1.0)">6</span> pounds lighter than<br>Activations: ("6" : 8)<br>Example 8:  hold your small electronics and accessories. The case measures 9.<span style="background-color:rgba(57,212,155, 1.0)">5</span>×5.25×1.<br>Activations: ("5" : 7)<br>Example 9:  solar power plant at the Türk Telekom stadium will have a capacity of 4.<span style="background-color:rgba(57,212,155, 1.0)">1</span><br>Activations: ("1" : 7)<br>Example 10: ensions: 9.<span style="background-color:rgba(57,212,155, 1.0)">5</span>: X 6" X 8"One thing that stirred discussion was the Mus<br>Activations: ("5" : 7)<br>Example 11: <|endoftext|><br>AMG naturally aspirated V8 with 6.<span style="background-color:rgba(57,212,155, 1.0)">3</span> liters displacement and 386 kW/<br>Activations: ("3" : 7)<br>Example 12:  during cooking. Constructed of aluminum, the cup weighs 7.<span style="background-color:rgba(57,212,155, 1.0)">2</span> oz.<br>Connecting directly<br>Activations: ("2" : 7)<br>Example 13:  can carry its full 6.<span style="background-color:rgba(57,212,155, 1.0)">6</span> ton capacity in waste material as it re-enters Earth�<br>Activations: ("6" : 7)<br>Example 14: <|endoftext|> summit caldera about 6.<span style="background-color:rgba(57,212,155, 1.0)">5</span> kms wide. The caldera underwent a collapse<br>Activations: ("5" : 7)<br>Example 15: .<span style="background-color:rgba(57,212,155, 1.0)">8</span> km/h, and young sea lions have an initial defecation time averaging 4.<br>Activations: ("8" : 7)<br>Example 16:  New York Measures approximately 9.<span style="background-color:rgba(57,212,155, 1.0)">5</span>�� long, with 4�� extension chain $640<br><br>Activations: ("5" : 7)<br>Example 17: agonally, the screen size is 6.<span style="background-color:rgba(57,212,155, 1.0)">6</span>" in the full rectangle and 6.4"<br>Activations: ("6" : 7)<br>Example 18: . This trail is single track and approximately 5.<span style="background-color:rgba(57,212,155, 1.0)">5</span> miles in length. Designation: Most difficult<br>Activations: ("5" : 7)<br>Example 19: .<span style="background-color:rgba(57,212,155, 1.0)">9</span> and triggered a deadly tsunami that crashed into Japan��s east coast, leaving a massive<br>Activations: ("9" : 7)<br>Example 20: R coaches, powered by Volvo D8K 350hp 7.<span style="background-color:rgba(57,212,155, 1.0)">7</span> litre engines. The latest<br>Activations: ("7" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Decimal digits in numerical values, often representing measurements or quantities.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Decimal digits in numerical values, often representing measurements or quantities.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> is made from 4.<span style="background-color:rgba(57,212,155, 1.0)">8</span> plastic bottles and 0.26 pounds of scrap fabric saving an amazing 63</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> a 4.<span style="background-color:rgba(57,212,155, 1.0)">8</span>″ screen and as mentioned earlier, can be a nice option for mobile warriors that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> scree/scramble involved) Distance: 8.<span style="background-color:rgba(57,212,155, 1.0)">9</span> KM (5.<span style="background-color:rgba(57,212,155, 1.0)">5</span> miles) Duration</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> 9.<span style="background-color:rgba(57,212,155, 1.0)">5</span>MB of your storage space, this cannot be guaranteed. Under the sections, it will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> third-largest in the portfolio. PBJ has generated annualized total returns of 8.<span style="background-color:rgba(57,212,155, 1.0)">8</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> averaged 27.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">7</span> points per game and saw that average grow to 29.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">1</span> by the end of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> just 43 (or 7.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">6</span>%) of the languages surveyed, but the distribution of these languages is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>7 inch LCD screen, you can do just that.
+Sensor Resolution Actual: 16.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">44</span> Meg</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> muskmelons (except cantaloupe): 10° to 12.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">5</span>° C (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">5</span>".
+- 95% Modal, 5% Spandex. Machine wash. Im</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> that the infographic will print on three 8.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">5</span> x 11 sheets. If not, adjust the scale</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> sec.
+Bench Press: 7
+Vertical Jump: 38.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">5</span>"
+Broad Jump:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> million acres (5.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">4</span> million hectares).
+Meanwhile, the size of the area that experienced fires</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> this is the first time the school has received the honor, as they finished with 305.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">5</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>Is own 7.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">7</span>% of Enel��s total outstanding shares (5.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">9</span>%</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> of $30.<span style="background-color:rgba(57,212,155, 0.76)">4</span> million.
+GMP executives will host a conference call and live audio web</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> of 2013 at Perth Metro was February with 0.<span style="background-color:rgba(57,212,155, 0.76)">8</span> mm, though November only fell one day short</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>,707 parcels totaling 1.<span style="background-color:rgba(57,212,155, 0.76)">4</span> million acres in onshore oil and gas leases last year.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> average, ICU-acquired BSIs occurred in 4.<span style="background-color:rgba(57,212,155, 0.76)">4</span>% of patients staying in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>Lyrup 34.25 (229) d Wunkar 6.<span style="background-color:rgba(57,212,155, 0.76)">6</span> (42).
+Best</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> sign, parking is not allowed between 7.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">30</span> am and 6.30 pm. Near the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>:18:08.347568, 188.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">8</span>.131.52, tft</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> his wife Diane bought the home in 2012 for $1.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">78</span> million. The Davie property features</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> for 2.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">8</span>% of exports. Re-exports made up $1.2 billion</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> 500,000 in the Philippines.
+- The cost of autism over the lifespan is 3.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">2</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>PS: 20°54'37.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">8</span>"N 107°11'03.1"E</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> or to
+this Winchester Lake page.Floor Exercise - 15.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">25</span>
+Rings - 14</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> incidence rate of 17.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">4</span> per 1000 patient days. A total of 118 DAIs were found</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> before – Sponsor Content The refinance share of mortgage activity decreased to 46.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">4</span>% of total applications</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> at about 3 1/<span style="background-color:rgba(57,212,155, 0.6000000000000001)">2</span> pounds and is about the size of a coconut. A growth spurt</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> Santos signed a contract with the Sox that guaranteed him $8.<span style="background-color:rgba(57,212,155, 0.52)">25</span> million over the next three</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> obtain gauge
+Small – Finished Chest 36.<span style="background-color:rgba(57,212,155, 0.52)">75</span>��/93.25cm
+Medium –</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>.<span style="background-color:rgba(57,212,155, 0.52)">5</span> million/0.8 rating), which was followed by encores of The $100,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>, USA - JUN 10, 2004
+3.<span style="background-color:rgba(57,212,155, 0.52)">8</span> AROMA 7/10 APPE</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> Box.
+$ 69.<span style="background-color:rgba(57,212,155, 0.52)">9</span> / € 52.43
+£ 44.04 / HK</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> are targeted the most often.
+It was also found that 48.<span style="background-color:rgba(57,212,155, 0.44)">5</span> percent of recorded phishing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> (21) Width (10) Depth (8.<span style="background-color:rgba(57,212,155, 0.44)">7</span>)
+If you are sensitive to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> the county of Waldo. It covers a total area of 101.<span style="background-color:rgba(57,212,155, 0.44)">09</span> sq. km. Business</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Durban, Pretoria and East London.
+Prices from only £10.<span style="background-color:rgba(57,212,155, 0.44)">62</span> per day</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>(It is a 1681.<span style="background-color:rgba(57,212,155, 0.44)">7</span> km distance from Koror with 2 hours, 48 minutes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> category was significantly lower, at just 2.<span style="background-color:rgba(57,212,155, 0.36000000000000004)">68</span>.
+This award is seen as particularly prestigious</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> financials, the Financial Select Sector SPDR Fund (XLF) is up 1.<span style="background-color:rgba(57,212,155, 0.36000000000000004)">75</span>%,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ive programs attended by 12.<span style="background-color:rgba(57,212,155, 0.36000000000000004)">6</span> million visitors. At launch, the website offered more than 700 lesson</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> While compensation of employees (EUR 1,180 billion) was up 2.<span style="background-color:rgba(57,212,155, 0.36000000000000004)">6</span>% on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> 0.<span style="background-color:rgba(57,212,155, 0.36000000000000004)">005</span>mm allowed in too little light that the light rays overlapped each other causing diffraction</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> 9:<span style="background-color:rgba(57,212,155, 0.28)">30</span> a.m. to 1 p.m. in the Kent Student Center Kiva</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> 0.<span style="background-color:rgba(57,212,155, 0.28)">5</span>-mm-thick sheets, called aluminosilicate because they contain</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>. Council then pared down that list to end up at the $14.<span style="background-color:rgba(57,212,155, 0.28)">7</span> million they deemed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> watts, 1800 running watts and runs for up to 12 hours on a 1.<span style="background-color:rgba(57,212,155, 0.28)">2</span> gal.Enhanced</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> from the previous year to $176.<span style="background-color:rgba(57,212,155, 0.28)">6</span> million.
+Mr Selway's temporary replacement,</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> I can tether without paying Ting any extra fees).
+I was actually included in the second round</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>Wren Scott, looked dramatic on her way into the show while funny woman Amy Poehler kept it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>,nd Trevor Bowen, it was announced "
+'esterday, have purchased the drug "
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> their search engine rankings and subsequently improve the amount of traffic their website receives. If you��re</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>52Tips for Paying Off Holiday Credit Card Debt
+The holiday season is probably the most joyous</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to email@example.com. Although not necessary, it's interesting to have a first name,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>oo can't wait to cancel my next wax or I plan to exposed to a 100% total perfection</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>. Confronting the misuse of power, unearthing the roots of violence and coercion, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> new faces, so as good a time as any!
+I'm not going to repost all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> factor is the assessment of the wife regarding his continued behavior. A counselor would be wise to take the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> phone. The case<span style="background-color:rgba(57,212,155, 0.2)">�</span>�s<span style="background-color:rgba(57,212,155, 0.2)"> dimensions</span> are 3.75″wide x 6.75″ tall</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> in a Read Only<span style="background-color:rgba(57,212,155, 0.2)"> Memory</span>, the<span style="background-color:rgba(57,212,155, 0.2)"> size</span> of the memory would be 2231, or 3.4</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> 12.1% Hero<span style="background-color:rgba(57,212,155, 0.2)">ine</span>: 14<span style="background-color:rgba(57,212,155, 0.2)">,</span> best steroid for solid muscle gain.5% Other drugs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>.
+All<span style="background-color:rgba(57,212,155, 0.2)"> in</span> all,<span style="background-color:rgba(57,212,155, 0.2)"> it</span> was a week defined by a 67.5 scoring average—</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> 1.2 lakh<span style="background-color:rgba(57,212,155, 0.2)"> employees</span> across various<span style="background-color:rgba(57,212,155, 0.2)"> businesses</span>. The company has said that the move to terminate employees</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> cities. Within 240<span style="background-color:rgba(57,212,155, 0.2)"> commuting</span> days,<span style="background-color:rgba(57,212,155, 0.2)"> LA</span> drivers spent an average of 104.1 hours behind the wheel</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>90) d<span style="background-color:rgba(57,212,155, 0.2)"> East</span> Murray 9<span style="background-color:rgba(57,212,155, 0.2)">.</span>4 (58)
+Goals – Moorook Kingston:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>6074 m)<span style="background-color:rgba(57,212,155, 0.2)"> and</span> his neighbor<span style="background-color:rgba(57,212,155, 0.2)"> the</span> Chearoco (6.127 m). Very few offered</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Atrox at<span style="background-color:rgba(57,212,155, 0.2)"> 5</span>:04 PM<span style="background-color:rgba(57,212,155, 0.2)">The</span> nature of social networking often tries to enhance our social lives</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Hollow. With more<span style="background-color:rgba(57,212,155, 0.2)"> than</span> 300 acres<span style="background-color:rgba(57,212,155, 0.2)">
+</span>of lakes and ponds, ranging in size from 0.4</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -4,30 +4,41 @@ from dataclasses import dataclass
 @dataclass
 class FeatureConfig(Serializable):
     
-    width: int = 131_072
+    width: int
+    """Number of features in the autoencoder"""
 
-    n_splits: int = 2
+    min_examples: int
+    """Minimum number of examples for a feature to be included"""
 
-    n_train: int = 20
+    max_examples: int
+    """Maximum number of examples for a feature to included"""
 
-    n_test: int = 50
+    ctx_len: int
+    """Length of each example"""
 
-    n_quantiles: int = 10
+    n_splits: int
+    """Number of splits that features were devided into"""
+
+    n_train: int 
+    """Number of examples for generating an explanation"""
+
+    n_test: int
+    """Number of examples for evaluating an explanation, per quantile"""
+
+    n_quantiles: int
+    """Number of quantiles to draw test examples from"""
 
 @dataclass
 class CacheConfig(Serializable):
 
-    width: int = 131_072
-    """Number of features in the autoencoder"""
-
-    batch_size: int = 128
+    batch_size: int
     """Number of sequences to process in a batch"""
 
-    seq_len: int = 64
-    """Context length of the autoencoder. Each batch is shape (batch_size, seq_len)"""
+    ctx_len: int
+    """Context length of the autoencoder. Each batch is shape (batch_size, ctx_len)"""
 
-    n_tokens: int = 15_000_000
+    n_tokens: int
     """Number of tokens to cache"""
 
-    n_splits: int = 4
+    n_splits: int
     """Number of splits to divide .safetensors into"""

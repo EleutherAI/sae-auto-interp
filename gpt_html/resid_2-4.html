@@ -1,0 +1,731 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-4</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-4</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> photos on social media and credit Alloy<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>. You can write us a little testimonial, which<br>Activations: (" Images" : 10)<br>Example 2: <|endoftext|> are Stock<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> of War @ James Fuentes (New York) and International House of Co<br>Activations: (" Images" : 9)<br>Example 3: <|endoftext|>05-19 at 01:53 / Affiliate links /<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> from Amazon Product Advertising APIJoin<br>Activations: (" Images" : 9)<br>Example 4: <|endoftext|>on/Getty week 5 nfl player projections<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> Akron (3-3)) at Western Michigan<br>Activations: (" Images" : 9)<br>Example 5: <|endoftext|>ne Dean (New Earth)<br>- 1<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> featuring Daphne Dean (New Earth)<br>Activations: (" Images" : 9)<br>Example 6: Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>]We are lucky to live less than an hour from the north entrance of Yellowstone National Park<br>Activations: (" Images" : 9)<br>Example 7: EL MIHAILESCU/AFP/Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>)<br>WASHINGTON, DC - APRIL 29<br>Activations: (" Images" : 9)<br>Example 8: <|endoftext|>!<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> do though lift a piece of writing. They break it up, make it more accessible<br>Activations: (" Images" : 9)<br>Example 9: <span style="background-color:rgba(57,212,155, 1.0)"> Images</span> used in this listing description are for reference only and indicate the quality of the item you will receive<br>Activations: (" Images" : 9)<br>Example 10:  Commission: Prohibited Employment Policies/Practices<br>- Jupiterimages/Stockbyte/Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span><br><br>Activations: (" Images" : 9)<br>Example 11:  Taylor: in the runs, with 111 of them in Lincoln.<br>©Action<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> / Andrew Boy<br>Activations: (" Images" : 9)<br>Example 12: /AP<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> for Stride Rite Children's Group<br>Last April, I posted about how Stride<br>Activations: (" Images" : 9)<br>Example 13: <|endoftext|> the Available<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> to the list.<br>Add</span>: When single or multiple images are selected and<br>Activations: (" Images" : 9)<br>Example 14: <|endoftext|> programming on SPEED.<br>The cooperation between NASCAR<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> and SPEED resulted in fantastic shows that<br>Activations: (" Images" : 9)<br>Example 15: <|endoftext|><br>Photo: Charl Devenish/Gallo<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>Dr Ruban's CV<br>Hair<br>Activations: (" Images" : 9)<br>Example 16: Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>)<br>392389 02: U.S. President George W. Bush meets with<br>Activations: (" Images" : 9)<br>Example 17: <|endoftext|>-Gaudens (1848 - 1907) This listing uses "Stock<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>" The Stock<br>Activations: (" Images" : 9)<br>Example 18: <|endoftext|> to come back to Shelly's<span style="background-color:rgba(57,212,155, 1.0)"> Images</span> on Thursday when we will have another FUN challenge to share<br>Activations: (" Images" : 9)<br>Example 19: <|endoftext|>EDEI!)<br>Photo Credit: Ker Robertson/Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>Anyone with half an attention span<br>Activations: (" Images" : 9)<br>Example 20: /Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>)<br>CAMBRIDGE, MA - MAY 24: Former Vice President Joseph<br>Activations: (" Images" : 9)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The token "Images" in a context related to image credits, licensing, or references.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The token &quot;Images&quot; in a context related to image credits, licensing, or references.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>Namee/Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>)
+WASHINGTON, DC - JUNE 30: (AFP OUT) U</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>OLAS KAMM/AFP/Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>)
+US Vice President Joe Biden waves upon arrival</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> PHOTO/CLAUDIO REYES (Photo credit should read Claudio Reyes/AFP/Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> should read PETRAS MALUKAS/AFP/Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>)
+US Vice President Joe</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> you would normally.
+- Brand X Pictures/Brand X Pictures/Getty<span style="background-color:rgba(57,212,155, 1.0)"> Images</span>The client contacted us</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> North Carolina. (Photo by Steve Exum/Getty<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Images</span>)Moons of the Solar System
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Barack Obama. (Photo by Nancy Shia/Archive Photos/Getty<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Images</span>)
+American politician</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>otta/Getty<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Images</span>)
+CAMBRIDGE, MA - MAY 24: Former Vice</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Images</span> appear pin sharp, leveraging the Vibe Z��s 20/20 Vision display with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> un Nabi<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Images</span>, Photos and Wallpaper
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">Images</span>, photos, and wallpapers are so important</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> activities... The Unforget-table<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Images</span> photography business, 2501 W Colorado Ave #109,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> Andrew Bret Wallis/Getty<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Images</span> History & Culture Genealogy Vital Records Around the World Basics S</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Images</span>) Lionel Messi celebrates scoring a goal as Cristiano Ronaldo looks dejected during the La Liga match</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>Photo by Mark Wilson/Getty<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Images</span>)
+UNITED STATES - MARCH 08: Joe Biden during</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>/Getty<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Images</span>) Uruguay's Luis Suarez holds his teeth after biting Italy's Giorgio Chie</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>.egfi-k12.org
+Create 3-D<span style="background-color:rgba(57,212,155, 0.76)"> Images</span>- www.tinkerc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> Inc. grants accredited media full permission to reproduce these photographs according to the following guidelines:<span style="background-color:rgba(57,212,155, 0.76)"> Images</span> cannot</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>-Pool/Getty<span style="background-color:rgba(57,212,155, 0.76)"> Images</span>)
+Discover More Like This
+BACK TO SLIDE
+"We're</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Australian Antarctic Division.
+"IMAGEAntarctica Database - A Catalogue of Antarctic<span style="background-color:rgba(57,212,155, 0.76)"> Images</span> by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Bowl level.|Message from Wildlife<span style="background-color:rgba(57,212,155, 0.76)"> Images</span>
+Welcome to the Image Library component of Wildlife<span style="background-color:rgba(57,212,155, 0.76)"> Images</span>. Our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Photos and Sex<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Images</span>. Leggy model Emily Addison wants you to join her in bed with a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>.
+All<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Images</span>: © Alejandro Gálvez, Cristina Ananias, Edu</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>16-969-1800.[< Gallery Home | Latest<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Images</span> | Top 100 | Submit Picture ></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> also support templates.
+-<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Images</span> can be selected from the Material Design Icons choices supported by the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> real problems if you don't do that right.<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Images</span> can be very tricky in auto-layout.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Scott Cunningham/NBAE via Getty<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Images</span>)
+Joe Biden, former Vice President of the US tours</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>: Getty<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Images</span>Trusted X Window System Security Policy
+Window, property, and pixmap objects</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Reinstein (Photo by Mark Reinstein/Corbis via Getty<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Images</span>)
+Sens. Joe</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>
+- Graphics &<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Images</span>
+- Handouts & References
+- Lab Resources
+- Learning Games
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>Featured image courtesy of Jorge Guerrero via Getty<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Images</span>.
+Know before you go.
+News and deals</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>ingers crossed!
+<span style="background-color:rgba(57,212,155, 0.52)">Images</span>: Jerid LownWhy is Mentoring Necessary?
+When</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> (Photo by Bastiaan Slabbers/NurPhoto via Getty<span style="background-color:rgba(57,212,155, 0.52)"> Images</span>)
+WASHINGTON,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>, philanthropy and media. Photographer: David Paul Morris/Bloomberg via Getty<span style="background-color:rgba(57,212,155, 0.52)"> Images</span>
+WASHINGTON, DC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>ry.ca/blog
+<span style="background-color:rgba(57,212,155, 0.52)">Images</span> Courtesy Of:
+HopeStreamRadio is a perfect blend of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> episode
+(<span style="background-color:rgba(57,212,155, 0.52)">Images</span> courtesy of WENN and NBC)Hi. I'm new here and just compiled</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>
+<span style="background-color:rgba(57,212,155, 0.44)">Images</span> give you a perspective that you might not be able to see on your own, allowing you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> sometimes for academic conferences<span style="background-color:rgba(57,212,155, 0.44)">Images</span>: Parris Island recruits learn Marine Corps martial arts to fight with honor [</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>.
+<span style="background-color:rgba(57,212,155, 0.44)">Images</span> are always a great part of the storytelling, and Aronson incorporates some powerful images,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> you think of this hat on its second outing?
+<span style="background-color:rgba(57,212,155, 0.44)">Images</span> from Getty as indicatedContact us to inquire</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> similar statue that already lost its head.
+<span style="background-color:rgba(57,212,155, 0.44)">Images</span> hosted on Flickr.Much like customers, partners also</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>ting. Getting your work noticed.<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Pictures</span> on the World Wide Web. Building your own site. How</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> is so very much better.
+Edit: Better<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Pictures</span>
+|Colt Series 80 Gov't Model</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ingly? What do you think?"Columbia<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Pictures</span> has revealed the trailer for director Florian Hen</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>, 2011
+Scott Lawson has been the only Scotland player to suffer any injury © PA<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Photos</span>
+Scotland</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Pictures</span> at Mulligans Milfs updated hourly. Watch Milf with hot love bubbles taking part in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> the Cardinal<span style="background-color:rgba(57,212,155, 0.28)"> Signs</span> begin on the equinoxes and the solstices. The equinox</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> WHAT HULANICKI TOLD US ABOUT HER OBE
+© PA<span style="background-color:rgba(57,212,155, 0.28)"> Photos</span>
+© PA</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> to hold it.
+Grab an Install<span style="background-color:rgba(57,212,155, 0.28)"> Image</span>
+Debian has several install images available. I usually</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>NASA<span style="background-color:rgba(57,212,155, 0.28)"> News</span>] [Bake Sale for NASA] [Telescopes]MS Circles Back to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> and New York Jackie:<span style="background-color:rgba(57,212,155, 0.28)"> Pictures</span> from Her Life in the City. With fifteen years of experience in the</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the munchies, maybe?)
+Anyone with information should call 863-577-1600 or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and Jan, an expert witness in RGH matters. All documents on hand, RTMC witnesses present</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>without pictures, videos, and a few links that GLP won't let me make).
+If</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>� (AC-DC-DC-AC) system.
+In an online UPS, when the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> encouragements. It almost seems as if Hawkins has been waiting his chance, and he takes it eloqu</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Newburg, and Kewaskum.
+All of the 2020-21 events are listed in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with ingredients to help skin maintain moisture – so there��s no excuse for not having time to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> implore investors to ��investigate before you invest,�� and encourage investors to contact the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> (FASB) have argued the above approach in a contrary opinion: No individual or corporation would</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> He recounts his 26-year career at the company and what he learned along the way. In his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>03-27 /<span style="background-color:rgba(57,212,155, 0.2)"> Aff</span>iliate links / Images from Amazon Product Advertising APIThis week, Ira spoke</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>. Photo by Getty Images<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Related: Learn about 15 clever uses for household items.
+1.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Design Pictures Interior Also<span style="background-color:rgba(57,212,155, 0.2)"> Lux</span>ury Staircase Design Interior Images Interior Stairs
+File Type: image</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> your feeling could well<span style="background-color:rgba(57,212,155, 0.2)"> be</span> beneficial.- About Me
+- My Presentations
+- Images: Creative</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> PM
+Here's<span style="background-color:rgba(57,212,155, 0.2)"> an</span> option:Kel Tec CNC
+Posted in thread: Pictures on 07</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> situation and believe that Pictures<span style="background-color:rgba(57,212,155, 0.2)"> of</span> sexy Staten Island girls is something suggestively Sex in Stamford sula about</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> a Google Images search for<span style="background-color:rgba(57,212,155, 0.2)"> �</span>�hibernation��. Ha!
+Post King-West</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> MOVIE - PER<span style="background-color:rgba(57,212,155, 0.2)">F</span>ECT STRANGER|Jared Wickerham/ Getty Images|
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>. 17, at<span style="background-color:rgba(57,212,155, 0.2)"> 10</span> p.m.Images » Arsenal » Arsenal
+PHOTO UPLOAD</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>YNSKI<span style="background-color:rgba(57,212,155, 0.2)">/</span>AFP/Getty Images)
+US Vice President Joe Biden arrives for a St</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

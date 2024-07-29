@@ -1,0 +1,699 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-45</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-45</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  to enter the U.S. along the southern border, creating what<span style="background-color:rgba(57,212,155, 1.0)"> many</span> are now calling a humanitarian<br>Activations: (" many" : 10)<br>Example 2:  he also defied the administration by saying Mr. Padilla was entitled to legal counsel.<br><span style="background-color:rgba(57,212,155, 1.0)">Some</span> critics<br>Activations: ("Some" : 9)<br>Example 3: , giving them extra time to work on an unprecedented project that<span style="background-color:rgba(57,212,155, 1.0)"> some</span> state and local leaders fear was being<br>Activations: (" some" : 8)<br>Example 4: ."<br>Five days after what<span style="background-color:rgba(57,212,155, 1.0)"> some</span> have dubbed Beijing's "air-mageddon," the sunshine has<br>Activations: (" some" : 8)<br>Example 5:  him.<br><span style="background-color:rgba(57,212,155, 1.0)">Some</span> conservative activists have called on the House to oust Boehner following the passage of a deal<br>Activations: ("Some" : 8)<br>Example 6: uls running for a position that<span style="background-color:rgba(57,212,155, 1.0)"> some</span> insist is significantly more powerful than that of MPs and most ministers.<br>Activations: (" some" : 8)<br>Example 7:  in October.<br>Since Zoe was snatched, there has been mixed reaction from Beach residents.<br><span style="background-color:rgba(57,212,155, 1.0)">Some</span><br>Activations: ("Some" : 8)<br>Example 8:  in the immediate aftermath, had led<span style="background-color:rgba(57,212,155, 1.0)"> some</span> to conclude that the film-friendly Disney folks would pass "<br>Activations: (" some" : 8)<br>Example 9:  Dayak as the chief minister if Pakatan Rakyat (PR) wins the state,<span style="background-color:rgba(57,212,155, 1.0)"> many</span><br>Activations: (" many" : 8)<br>Example 10:  MPC decided to hold rates earlier this month, but<span style="background-color:rgba(57,212,155, 1.0)"> many</span> economists expect it to cut again very soon<br>Activations: (" many" : 8)<br>Example 11:  could possibly do between law enforcement and between the citizens."<br><span style="background-color:rgba(57,212,155, 1.0)">Some</span> Democrats argued that the proposal should include<br>Activations: ("Some" : 8)<br>Example 12:  before the presidential election after new evidence emerged.<br>Clinton was cleared before election day, but<span style="background-color:rgba(57,212,155, 1.0)"> many</span> Democrats<br>Activations: (" many" : 8)<br>Example 13: <span style="background-color:rgba(57,212,155, 1.0)">Some</span> Republican leaders sought to distance themselves from Greene over the summer after Politico unearthed Facebook videos showing her making<br>Activations: ("Some" : 8)<br>Example 14:  contract," he said.<br>Even though Johnson will likely get a max contract,<span style="background-color:rgba(57,212,155, 1.0)"> many</span> observers think he<br>Activations: (" many" : 8)<br>Example 15:  who is not related to the legendary Massachusetts political family, remained on the sidelines.<br><span style="background-color:rgba(57,212,155, 1.0)">Some</span> of the<br>Activations: ("Some" : 8)<br>Example 16:  is assembling the new government, has said he opposes the siege of Fallujah, leading<span style="background-color:rgba(57,212,155, 1.0)"> some</span> lawmakers to<br>Activations: (" some" : 8)<br>Example 17: <br>While most parents and students said they appreciate the steps the school is taking,<span style="background-color:rgba(57,212,155, 1.0)"> many</span> are worried that<br>Activations: (" many" : 7)<br>Example 18:  members faulted the block schedule system used by the district for the reduction in credits, while<span style="background-color:rgba(57,212,155, 1.0)"> some</span> argued<br>Activations: (" some" : 7)<br>Example 19:  be beholden to public inquiry or FOIA requests —<span style="background-color:rgba(57,212,155, 1.0)"> many</span> privatization-weary Chicagoans braced for<br>Activations: (" many" : 7)<br>Example 20:  Justice Department official told The Associated Press the amendment "essentially reflects DOJ policy."<br><span style="background-color:rgba(57,212,155, 1.0)">Some</span> Democrats have<br>Activations: ("Some" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Indefinite pronouns ("some", "many") used to introduce or quantify a group or subset of people.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Indefinite pronouns (&quot;some&quot;, &quot;many&quot;) used to introduce or quantify a group or subset of people.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>-year drought since their last championship.
+<span style="background-color:rgba(57,212,155, 1.0)">Some</span> of the biggest issues facing the Patriots this offseason</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> newly adopted left flank, in any potential re-election bid.
+<span style="background-color:rgba(57,212,155, 1.0)">Some</span> folks are asking who he</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Plc (ADR) (NASDAQ:VOD), which<span style="background-color:rgba(57,212,155, 1.0)"> some</span> analysts have speculated may sell</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> physically assaulted.<span style="background-color:rgba(57,212,155, 1.0)"> Some</span> witnesses have reported seeing Brown's arms in the air before the shooting in an act</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>ye, returned to Hawaii and rose to prominent positions in business and politics. But<span style="background-color:rgba(57,212,155, 1.0)"> many</span> of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> the doula��s role at homebirth. While the responses were more varied,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> many</span> women</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> fully open up their borders to travel and tourism.
+While<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> some</span> countries are still operating emergency flights in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> in order to deliver to you even more targeted advertisements.
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">Some</span> would say this is too much spying</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> bank. However,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> many</span> of the larger resilience actions that are required to effectively adapt communities to the impacts</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>, those freshmen Democrats were right to be nervous in 1993.<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Many</span> of them were tossed out by voters</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> by<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> some</span> teammates, the 6-4 nose guard weighs 330 pounds -- but reported to camp in what</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> by a Republican activist from downstate who wanted Brady to stand up for his conservative values. For<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> many</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, especially in office buildings. I understand that<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> some</span> of it is helpful, and some of it is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">Many</span> a time you would have noticed that the prospect doesn��t talk about other vendors</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> Manager Bill Cargo said.<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Many</span> of the industrial business along 172nd Avenue in the township would be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.76)">Some</span> may argue that not all stories need to be character driven. While maybe this is true,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> to investors for years to come.
+Anyone for a smoke?
+<span style="background-color:rgba(57,212,155, 0.76)">Many</span> investors, myself included</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> citizens stuck abroad, and<span style="background-color:rgba(57,212,155, 0.76)"> some</span> are still operating cargo flights, for the most part, international air</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.76)">Some</span> countries – notably Germany and Italy – are courting disaster by allowingtheir human capital to stagn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> compatibility. If the major version number is incremented to 7.0,<span style="background-color:rgba(57,212,155, 0.76)"> many</span> applications written to work</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> pioneer.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">Many</span> lesbian, gay, bi, and trans rock musicians were in the closet for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> Rhotenberry could offer a timeline for full removal,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> other</span> than said it will take months.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> of the regime but more reluctant about its allies.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">Most</span> Russian soldiers can be seen in the commercial</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> vandalism connected with political statements.<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Many</span> visitors are often surprised by her modest size (1.25 m</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>ée to share his love of teaching everywhere he goes.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">Some</span> meals get etched into our memory banks</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> that sex-abuse scandals happened, that they were more widespread than<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> many</span> at first believed, that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> of Scorpio, the full Moon arrives. For<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> many</span> around the world who celebrate Christmas, this full</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> numbered. This world is finite, all of its days are numbered.
+<span style="background-color:rgba(57,212,155, 0.6000000000000001)">Some</span> are taking a chance</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>. That specific potential was highlighted by The Economist magazine a couple of years ago and<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> other</span> high-profile</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> to get them to do math."<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Some</span> of the assignments were "I took a nap in a bog</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>ers.
+<span style="background-color:rgba(57,212,155, 0.52)">Many</span> modern online games require that players be creative by adding colors, designs or styles</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> the Sha of Fear attacked,<span style="background-color:rgba(57,212,155, 0.52)"> many</span> of the complex's guardians turned on each other in fits of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Kramer once touted its use and I��ve heard that<span style="background-color:rgba(57,212,155, 0.52)"> some</span> winemakers and others use the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> all-Japanese unit, with Japanese enlisted men and Caucasian officers.
+<span style="background-color:rgba(57,212,155, 0.52)">Most</span> of the volunteers came from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> some</span> of these heirs have cashed in on their family names, many are striking out on their own</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> so familiar with this story and knows what's happening - and<span style="background-color:rgba(57,212,155, 0.44)"> many</span> people knew her - I think</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> grave concern to the Catholic Church is that<span style="background-color:rgba(57,212,155, 0.44)"> many</span> of its clerics and religious are now beginning to share</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> for the 5E3)
+<span style="background-color:rgba(57,212,155, 0.44)">Many</span> of their letters can be found at: http://www.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>.
+��The vast<span style="background-color:rgba(57,212,155, 0.44)"> majority</span> of the people who supported marijuana continue to support it and the vast</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> that<span style="background-color:rgba(57,212,155, 0.44)"> many</span> people will consider the objections to this type of programming as over reactive and unwarranted.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Among them are<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> many</span> small private colleges, such as DePauw, Juniata College and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> reliable hand gesture recognition system will make the remote control become obsolete. However,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> many</span> of the new</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> hearing so that they can review the paper work and ask you any questions that they might have.<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Many</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> perks were valued close to<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> the</span> price of the cruise itself.
+The best way to compare offers or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> said.
+<span style="background-color:rgba(57,212,155, 0.36000000000000004)">Both</span> Stern and Hamilton were civil engineering majors. After graduating in 2003, they worked as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>�t that<span style="background-color:rgba(57,212,155, 0.28)"> many</span> companies that do Palm firewalls, one of those companies is Bluefire</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> in<span style="background-color:rgba(57,212,155, 0.28)"> some</span> ways and at times spouts feminist drivel of the worst kind, such as, �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> least then it would ��exist�� and could be treated as an issue, and<span style="background-color:rgba(57,212,155, 0.28)"> some</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> gay
+- Voters believe the rich should pay more in taxes
+- In<span style="background-color:rgba(57,212,155, 0.28)"> many</span> areas, voters</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> Many</span> good talks by many good speakers. I enjoyed catching up with friends from all over the world.</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> tilt between champion Jon Jones (Pictured) and Dan Henderson headlines the festivities.
+Here is the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> I was Jewish too.
+Back in the mid-seventies, our community in Silver Spring</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> If you are heading towards Hawaii, why not check out this spectacular site? Surrounded by lava cliffs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Giovanni Boccaccio in the mid-14th century; structured as a frame narrative the book</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> are sprinkled all over the city. You can see the great turn out during the annual Martin Luther King</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> are an easy error to make that can screw up the HTML parser within a browser.
+Code:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>attended XP CD'. MSFN's Unattended XP CD - Introduction
+February 23, 2005</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Heights, camping, respectable 27yr old black male.
+Want to visit a Black singles in Tem</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> one image while working on another.After the first human West Nile virus (WNV) case was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Oddities, Psychedelia, Rock, Singer Songwriter, Weird – Format: LP
+*</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>, and the Federal<span style="background-color:rgba(57,212,155, 0.2)"> Deposit</span> Insurance Corporation.
+As Reuters reported, some think RBS may settle for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> that is the<span style="background-color:rgba(57,212,155, 0.2)"> mistake</span> many make. While fear is in each persons life, just as in the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> hour, it<span style="background-color:rgba(57,212,155, 0.2)"> was</span> apparent to many that
+this virgin land was a spiritual void ministered to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> said.
+Before<span style="background-color:rgba(57,212,155, 0.2)"> the</span> economy tanked, several hotels were interested in the site, which is appealing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> a breakthrough; some<span style="background-color:rgba(57,212,155, 0.2)"> light</span> is shed on the CDC��s recent re-definition of �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> definitely has it.<span style="background-color:rgba(57,212,155, 0.2)"> It</span> is absolutely adorably over the top tacky wonderful! Stuff stuff everywhere</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the state gas tax<span style="background-color:rgba(57,212,155, 0.2)"> admitted</span> Tuesday his "timing was unfortunate" when he referred to some of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> and leaders.<span style="background-color:rgba(57,212,155, 0.2)"> He</span> recognizes, as many of us do, that access to opportunities must be open</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> other methods to regulate<span style="background-color:rgba(57,212,155, 0.2)"> emissions</span>. Giving the EPA this type of discretion over program creation is troublesome to certain</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> this season that some fans<span style="background-color:rgba(57,212,155, 0.2)"> have</span> come to view the striker��s demotion to the bench as</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

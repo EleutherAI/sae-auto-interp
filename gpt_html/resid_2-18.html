@@ -1,0 +1,715 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-18</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-18</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: M use for a barometer now that it��s part of the SEC?Ricken<span style="background-color:rgba(57,212,155, 1.0)">backer</span><br>Activations: ("backer" : 10)<br>Example 2: <|endoftext|> / Maple Glow / Guitar For Sale<br>1966 Ricken<span style="background-color:rgba(57,212,155, 1.0)">backer</span> 335 Maple-Glow including Case<br>Activations: ("backer" : 9)<br>Example 3: <span style="background-color:rgba(57,212,155, 1.0)">backer</span> David Griggs died in 1995 in a car accident at age 28.<br>The 1994 Chargers were<br>Activations: ("backer" : 9)<br>Example 4: <|endoftext|> as seven seconds remained before the intermission.<br>Line<span style="background-color:rgba(57,212,155, 1.0)">backer</span> Devon Kennard intercepted Rees early<br>Activations: ("backer" : 9)<br>Example 5: . Ricken<span style="background-color:rgba(57,212,155, 1.0)">backer</span> hardshell case, black with blue lining.<br>Located in the little town called<br>Activations: ("backer" : 9)<br>Example 6: <|endoftext|>. Line<span style="background-color:rgba(57,212,155, 1.0)">backer</span> Will Compton (shoulder) and defensive lineman Barry Cofield Jr. (<br>Activations: ("backer" : 9)<br>Example 7: <|endoftext|>��s momentum all alongside smart support from Middle Line<span style="background-color:rgba(57,212,155, 1.0)">backer</span> Afia Law, who��<br>Activations: ("backer" : 9)<br>Example 8: <|endoftext|>le Revis at 13 and center Nick Mangold at 48), as did the Dolphins (line<span style="background-color:rgba(57,212,155, 1.0)">backer</span><br>Activations: ("backer" : 9)<br>Example 9: . Line<span style="background-color:rgba(57,212,155, 1.0)">backer</span> James Anderson, a third-round pick in 2006, currently leads all NFL defenders in<br>Activations: ("backer" : 9)<br>Example 10:  GB Line<span style="background-color:rgba(57,212,155, 1.0)">backer</span> Phoebe Schecter rested for this match-up – having lead the tackle<br>Activations: ("backer" : 9)<br>Example 11:  this team. In no special order they are, Guard, Running Back, Cornerback, Line<span style="background-color:rgba(57,212,155, 1.0)">backer</span><br>Activations: ("backer" : 9)<br>Example 12:  Lions�� defense was rubber-stamped when Line<span style="background-color:rgba(57,212,155, 1.0)">backer</span> Alice-Mary Smith grabbed a pick-<br>Activations: ("backer" : 8)<br>Example 13:  than 3-4 teams, so the element of surprise is on the 3-4 outside<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span>�<br>Activations: (" linebacker" : 7)<br>Example 14:  the AP��s offensive player of the year, Michigan<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> Devin Bush Jr. was the defensive<br>Activations: (" linebacker" : 7)<br>Example 15: , to<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> where he��ll be asked to work more often in coverage. Reed, who<br>Activations: (" linebacker" : 7)<br>Example 16: , as a 3-4 outside<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> he will make more tackles in coverage. On 6.2<br>Activations: (" linebacker" : 7)<br>Example 17:  year, and by far was the most dominant 3-4 outside<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> in the run game with a<br>Activations: (" linebacker" : 7)<br>Example 18:  vulnerable to being sacked.<br>Terrell Suggs, outside<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span><br>He��s fully<br>Activations: (" linebacker" : 7)<br>Example 19:  the half.<br>It stayed that way for most of the second half as<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> Toby Coleman and defensive<br>Activations: (" linebacker" : 7)<br>Example 20:  (toe) and<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> Keenan Robinson (knee) were all ruled out for the game.<br>Activations: (" linebacker" : 7)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The token "backer" or "linebacker", likely related to American football positions.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The token &quot;backer&quot; or &quot;linebacker&quot;, likely related to American football positions.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> tries. Senior<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> Korey Jones tells the Wyoming Tribune Eagle that the defense is frustrated and disappointed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>�,�� said<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> Eric Blake. ��We knew we were gonna make a play it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> from short-term IR and waived<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> Jackson Jeffcoat, the team announced. Cofield suffered</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> complete with Playstation juke on<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span>? Yes sir. A cold as ice game winning drive in said</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> possible when<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> Chris Galippo intercepted quarterback Tommy Rees.
+A true freshman, Rees</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> linemen and four<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> linebackers</span>). Purdue has long used a base 4-3 defensive front.
+T</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> defensive tackle Brandon Mebane returned from a calf injury last week, but Seattle's<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> linebackers</span> will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>
+Outside<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> linebacker</span> Von Miller, Texas A&M (6-2 1/2, 237):</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> crying.��<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> LB</span> said, ��she was fine while I was talking to her.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> saw almost this exact same thing happen with the defense. NU's young<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> linebackers</span> struggled at times</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> game. USC's<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> linebackers</span> are so fast, that slow developing plays will be eaten alive, so</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> were synchronized with peak insulin but not increased<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> LB</span>F, while later changes in MFV and MB</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, TE Martell Webb, TE Keavon Milton, DE Cam Henderson,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> LB</span> Caleb McS</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> carrera como cantante.
+foto:<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> LB</span> Events Tendencias para decoracion</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> ; 24 cm
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">LB</span>1584.B77 2014
+- Unknown<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> LB</span>1584.B77</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>. It has no effect on r<span style="background-color:rgba(57,212,155, 0.76)">inger</span>, notification or system volume settings.
+- Immediate on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>Tweets.Farley R<span style="background-color:rgba(57,212,155, 0.76)">inger</span> T-shirts are an Idakoos specialtiy!</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>With 34 players on varsity and 68 total in the program, Kill<span style="background-color:rgba(57,212,155, 0.76)">inger</span> said he is excited to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>, Luca Faccio, Ursula Feuers<span style="background-color:rgba(57,212,155, 0.76)">inger</span>, Eva Fischer, Michael Fischer, Jeremy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> independence.
+F<span style="background-color:rgba(57,212,155, 0.76)">inger</span> independence is a success key factor for playing the uttermost difficult works written for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> gulls. (I mean it, this poor thing went through the r<span style="background-color:rgba(57,212,155, 0.6799999999999999)">inger</span>. But don�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>G<span style="background-color:rgba(57,212,155, 0.6799999999999999)">inger</span>bread) and will be updated to Android 3.0 (Honeycomb) when it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> Your Essential Self (New Harb<span style="background-color:rgba(57,212,155, 0.6799999999999999)">inger</span>, 2010)
+This post currently has
+You can read</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>.
+Julie D<span style="background-color:rgba(57,212,155, 0.6799999999999999)">inger</span>, who was on the funeral procession route, said she remembered Riggen</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> an accomplishment, as Chile represents for us a very important market with a solid group<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> footprint</span> and excellent</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>rend continuation) divergences. It has moving average, RSI/Boll<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span>, AD</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> ago this month. It was to be his last tour as a "folks<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span>". He was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>D experience. Built with the Android 2.3 operating system (G<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span>bread), HTC EV</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> group is Jeff W<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span> (Joel McHale, The Soup), a fast-talkin</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> deeply into this, but this sticks out from that article:
+"Getz<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span> suffered multiple broken</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> a 2012 TED Talk. The blue stencil is often accompanied by a<span style="background-color:rgba(57,212,155, 0.52)"> footprint</span> that reads ��Long</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> book to guide the visual effects?
+Gell<span style="background-color:rgba(57,212,155, 0.52)">inger</span>: When we started on the show, we</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> beef, Daz Dill<span style="background-color:rgba(57,212,155, 0.52)">inger</span> and Kurupt have led two of the most turbulent careers in rap</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> in the December issue of Kipl<span style="background-color:rgba(57,212,155, 0.52)">inger</span>��s Personal Finance magazine, its third consumer-focused</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> just stop at the Batman movie and Getz<span style="background-color:rgba(57,212,155, 0.52)">inger</span> though- there are theorists who say that both lone</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> greater confidence. For example, there are several<span style="background-color:rgba(57,212,155, 0.44)"> footprint</span> cases that are very well documented. These are considered</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>s<span style="background-color:rgba(57,212,155, 0.44)">inger</span>
+– Van Wert County – Shane Williams and Eric Renner
+Annual Meetings</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> this round of funding, we will be able to focus on expanding our<span style="background-color:rgba(57,212,155, 0.44)"> footprint</span> and use technology to provide</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> Faulk
+18 Catcher in the Rye JD Sal<span style="background-color:rgba(57,212,155, 0.44)">inger</span>
+19 The Time Traveler��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> of installation (small<span style="background-color:rgba(57,212,155, 0.44)"> footprint</span>)
+- Easy upgrades (scalable up to 475 kW)
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>, the new buses combine high passenger capacity with low environmental<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> footprint</span>.
+��We have created a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>
+I Am Searching Sw<span style="background-color:rgba(57,212,155, 0.36000000000000004)">inger</span> Couples
+If this is a problem for you, that is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> Split of Peas," as the product of a "s<span style="background-color:rgba(57,212,155, 0.36000000000000004)">inger</span> and songwriter" is to suggest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>Seeger, Folk-s<span style="background-color:rgba(57,212,155, 0.36000000000000004)">inger</span> and Environmentalist
+Sidel, Prof. of Sociol.,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>
+5 years ago8:54A sw<span style="background-color:rgba(57,212,155, 0.36000000000000004)">inger</span>'s date night at the gloryhole clubWeird</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> footprint</span>," Mr Woodhead said.
+A 300kw Quantima could cut carbon dioxideemissions by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>. Making the switch today reduces your carbon<span style="background-color:rgba(57,212,155, 0.28)"> footprint</span> and the environmental costs associated with transporting water around the globe</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> commercial side press wr<span style="background-color:rgba(57,212,155, 0.28)">inger</span> made from industrial tubular steel and structured moulded plastic.
+- W</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> you.
+Reduce plastic today and reduce your carbon<span style="background-color:rgba(57,212,155, 0.28)"> footprint</span> by purchasing our Floor Cleaner refill pod</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> carbon<span style="background-color:rgba(57,212,155, 0.28)"> footprint</span> significantly. But campus makes waste with different products, ones filled with sugar and chemicals.
+</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> was comparable. Nearly every action we studied resulted in significantly higher spreads one year later in the EU and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> were just a month ago so I remember them well. the first was a small barn fire. since</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>12-2013, 12:54 PM
+I have to wonder how people would feel if you had</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to become one of the world's leading steel companies.
+Both Arcelor and Mittal originated</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Greek yogurt
+1/4 cup of milk
+1 can cream of mushroom soup
+1 shallot</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Murray State managed to match the run in the third with a home run of its own, but</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> has been in a vegetative state for a minimum of 12 months, it may be recommended that nutritional</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> advice to the mentally challenged...*
+Ladies, if you can't handle heels, go with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>:
+- The skill to promote oneself with savvy and authenticity
+- An understanding of the workplace dynamics</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> I estimated that we could earn between 2.30% and and 2.70% in dividends on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> great attitude and would<span style="background-color:rgba(57,212,155, 0.2)"> make</span> a top-notch 3-4 outside linebacker who can rush, hold</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> along the rail
+<span style="background-color:rgba(57,212,155, 0.2)">4</span> - Single layer PVC
+5 - PVC stringer patch
+6 - High</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> off Interstate 30 and<span style="background-color:rgba(57,212,155, 0.2)"> just</span> minutes from Highway 80 or the LBJ Freeway.
+The friendly staff</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> ning to move<span style="background-color:rgba(57,212,155, 0.2)"> to</span> Antioch the first part of next week..r Mrs. James Ringer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>. Spectrum kindly maintains<span style="background-color:rgba(57,212,155, 0.2)"> a</span> careers website for young engineers here. The Selinger article is part of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> may be the<span style="background-color:rgba(57,212,155, 0.2)"> worst</span> on record," he said.
+" They are a harbinger of things</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> body treatments
+#<span style="background-color:rgba(57,212,155, 0.2)">zer</span>ona body slimming reviewsMore ��Finger tattoos�� :
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> strange coincidence, but<span style="background-color:rgba(57,212,155, 0.2)"> then</span> I recently learned of the actual prop master from Batman, Scott Getzinger</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Fellowship of the<span style="background-color:rgba(57,212,155, 0.2)"> Society</span> of Biology in 2009.
+John Grainger BSc PhD CBiol F</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> week. But the<span style="background-color:rgba(57,212,155, 0.2)"> Bengals</span> linebacker took a step further on Monday, making it clear the NFL Films'</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

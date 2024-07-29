@@ -1,0 +1,690 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-38</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-38</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: .<br>Tom Landry's widow stole the show at the<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> of the 1971 Cowboys on Monday,<br>Activations: (" reunion" : 10)<br>Example 2: , whether you��re planning a birthday party, a<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span>, a graduation, a wedding,<br>Activations: (" reunion" : 9)<br>Example 3: <|endoftext|> keeping your class engaged in the years in between. You chaired the<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> committees for your class�<br>Activations: (" reunion" : 9)<br>Example 4:  the Caverly Family Association, and receive the latest newsletters and<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> information, please send $3<br>Activations: (" reunion" : 9)<br>Example 5: , Greg Massi announced in his podcast maudlin of the Well would be playing a<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> show<br>Activations: (" reunion" : 9)<br>Example 6:  lunch, the<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> fee is $5. You can also donate a favorite dessert. After lunch there<br>Activations: (" reunion" : 9)<br>Example 7: <|endoftext|>os Catering Menu<br>Planning a corporate event, birthday party, graduation,<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> or wedding<br>Activations: (" reunion" : 9)<br>Example 8:  speak for themselves. As cochair for the 25th<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span>, outreach chair for the 30th<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span><br>Activations: (" reunion" : 9), (" reunion" : 9)<br>Example 9: <|endoftext|> Fund, the class set the record for a 30th<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> and was the fourth largest for any<br>Activations: (" reunion" : 9)<br>Example 10:  famous tech people.<br>First the old ��The ScreenSavers�� crew created a<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span><br>Activations: (" reunion" : 9)<br>Example 11:  future!This 25 September 2010 the Caverly Family Association has scheduled a<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> at the Bow Lake<br>Activations: (" reunion" : 9)<br>Example 12:  Class Award of Merit—twice!—in the process. For your 30th<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span>,<br>Activations: (" reunion" : 9)<br>Example 13:  Girls<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span>, she's pretty much unemployed right? Talk about a golden egg!<br>To quote a<br>Activations: (" reunion" : 9)<br>Example 14: <|endoftext|>-breaking 15th<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span>. You have also been a member of the Homecoming Host Committee and<br>Activations: (" reunion" : 9)<br>Example 15:  gathering was a blockbuster. Nearly 800 classmates showed up, breaking attendance records for a 25th<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> and<br>Activations: (" reunion" : 9)<br>Example 16: <|endoftext|>1,000 during the<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> and Mary Stroebel Rodriguez (��63) presented the<br>Activations: (" reunion" : 9)<br>Example 17: le Johnson Krekler.<br>Krekler and four Johnson sibling graduates participated in the<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> including<br>Activations: (" reunion" : 9)<br>Example 18: <|endoftext|> my family invited our relatives, neighborhood friends, and teachers to join us for a<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> at a<br>Activations: (" reunion" : 9)<br>Example 19:  are talking Led Zeppelin here. Check out this video promoting the release of Celebration Day. The<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span><br>Activations: (" reunion" : 9)<br>Example 20:  Award for Excellence in Class Communications and the Class of 1917 Award for the most successful<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> fundraising.<br><br>Activations: (" reunion" : 9)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The word "reunion" in various contexts, often related to events or gatherings.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The word &quot;reunion&quot; in various contexts, often related to events or gatherings.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> now ClubsNSW and Illawarra Steelers chairman.
+"We had a Mercury<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>. We just had our 50-year<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> at Garfield High School this year. That is the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>At your last<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> luncheon, held, appropriately enough, in the Class of 1949 Auditorium</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> book, said that in ten years he would bring the 2010-2011 team together for a<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> said.
+Part 2 of the<span style="background-color:rgba(57,212,155, 1.0)"> reunion</span> show airs Wednesday, and things didn��t end quite</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> a school<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> reunion</span> in conjunction with the Gathering for past pupils who left the school between 1942 and 2002</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> reunion</span> class.
+You work for all alumni, too, assuming key roles on the Penn Alumni</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> reunion</span> dinner is another case in point. In olden days, wives prepared the New Year's Eve</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>.
+The next Brady all-school<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> reunion</span> will be during Brady Days in August 2015.Va</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> family) scheduled for a week in August (which is kicked off by a family<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> reunion</span>) our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> by ��Finding Nemo�� helmer Andrew Stanton, the film<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> reun</span>ites Dory with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> the end of a family<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> reunion</span>. On one side of the sidewalk was a man in his late thirty</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> the Coachella 2013 headliners will feature<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> reun</span>ions for bands like Blur, The Stone Roses</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> name.
+Band you'd most like to see<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> reun</span>ite in 2013?
+Fleetwood with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> of their swagger during their occasional<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> reun</span>ions and on underrated comeback albums like 1992's Right Now</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> of Philly!), what inspires her designs + the<span style="background-color:rgba(57,212,155, 0.76)"> revival</span> of artisan craftsmanship in the Brandywine Valley</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>ayed in shape.
+UNCW became attractive because it offered an opportunity to<span style="background-color:rgba(57,212,155, 0.76)"> reun</span>ite with Chris Dixon</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>� Association) took over the park. The casino saw a bit of a<span style="background-color:rgba(57,212,155, 0.76)"> revival</span> during the big band</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> you<span style="background-color:rgba(57,212,155, 0.76)"> reun</span>ite.
+Store Your Images Digitally
+If you just have too many images to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> Sarah hopes to<span style="background-color:rgba(57,212,155, 0.76)"> reun</span>ite. But assuming Beth's life -- Sarah eventually learns that Beth was her</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> rescue is attempted that could either end in Solomon��s death or restore his freedom and<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> reun</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>IDAL SILVER, an antibacterial substance used for thousands of years and experiencing a<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> revival</span> today as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>
+That��s the last gift they have to give before they get to<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> reun</span>ify with this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Advani in the lead roles. Even as Honey and Monika<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> reun</span>ite, he goes home and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> may have come on the heels of the Mod<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> revival</span> in Britain, but it felt every bit as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>, PA associated with the early 1960s folk<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> revival</span> in the Philadelphia area. His photographs of the Philadelphia</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> reun</span>ions in Hong Kong and the population policy aimed at rejuvenating the ageing population, the court</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> kind of multiple personality disorder. Another suggestion, particularly arising out of 19th Century<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> revival</span>ism, is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> Thelonious Monk and modern jazz. Reed and company are not beholden to sounding like Monk<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> revival</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> and also where to check in with each other, and to also to<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> reun</span>ite at the end of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> ensuring youths�� access to family<span style="background-color:rgba(57,212,155, 0.52)"> reun</span>ification, housing, education, employment training, health care,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> modern minimalism in Scandinavian kitchens.
+Raw wood is seeing a major<span style="background-color:rgba(57,212,155, 0.52)"> revival</span> in the design world</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> a centuries-long slumber that the reptilian foursome must<span style="background-color:rgba(57,212,155, 0.52)"> reun</span>ite to save New York</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> that we could not define a common enemy. We turned a blind eye to the<span style="background-color:rgba(57,212,155, 0.52)"> revival</span> of Mide</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> once in the last six elections. That dismal track record followed a party<span style="background-color:rgba(57,212,155, 0.52)"> revival</span> in the 1980s,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>.
+The modern<span style="background-color:rgba(57,212,155, 0.44)"> revival</span> of the ancient Greek Olympic Games became a reality in 1896 under the influence of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>'. The duo<span style="background-color:rgba(57,212,155, 0.44)"> reunited</span> in 1964 for Wednesday Morning 3AM, which included an acoustic reading of '</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> old ones that have<span style="background-color:rgba(57,212,155, 0.44)"> reunited</span>. The site claims Ryan Gosling and Rachel Mcadams have gotten back</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> nine months and 15,000 miles between Alaska and Argentina, the three of us have<span style="background-color:rgba(57,212,155, 0.44)"> reunited</span> with family</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> so far as Machiavelli in proposing a<span style="background-color:rgba(57,212,155, 0.44)"> revival</span> of pagan cults, but he does propose</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> and was fortunate to escape with just three runs...Danny Salazar continued his second-half<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> resurgence</span>,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> waterfront area of Brooklyn. Red Hook, an old manufacturing and shipping district now enjoying a<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> resurgence</span>, is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> reunited</span> on a major league team and it was going to be something!
+You would have thought</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> of Grief
+Your head and your heart are two split personalities right now. Until they are<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> reunited</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> albeit with new uncertainty about a possible<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> resurgence</span> (even if the results are positive).
+Is there progress</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> reconciliation</span>, and recurring reports of Gisele��s exasperation at Leo��s woman</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> as property. If a misplaced pet is not<span style="background-color:rgba(57,212,155, 0.28)"> reunited</span> with an proprietor inside a number of days it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>.
+��The driving force behind this<span style="background-color:rgba(57,212,155, 0.28)"> resurgence</span> in sharing is the renewed belief in community,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> the court case will swing sympathy and support towards Lim and arrest the<span style="background-color:rgba(57,212,155, 0.28)"> resurgence</span> of support for Barisan</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>s, a<span style="background-color:rgba(57,212,155, 0.28)"> resurgence</span> of the art began in Peru, due in large part to the research and philanthrop</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> over the tank, which then nested snuggly into the black firefly plunger shaft.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> two things. 1: not killing zaraki and leaving him to become the baddest beast as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>).Check out my BodhiBuddy App
+which integrates with WorldOfSoka and much more</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>see video) shows this, while his goal against Wolves at the weekend shows that he can use his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Claus would come at Christmas with gifts, but we had to be good children. We had to go</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> personal data for marketing or have your personal data removed at any time. If you wish for this to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> if there were any recent recalls of the product due to lead content.
+Take your parrot to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Lab instruments, scanners, cameras, card readers, bar code scanners, PDAs, USB keys and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> response. "July 15, give or take a tantrum." The Prior-Wood responses were fairly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> cause any improved roadways in any park, playground or pavilion area to be closed, locked or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Jean spoke of<span style="background-color:rgba(57,212,155, 0.2)"> reconciliation</span>, Hill remained tight-lipped on the prospect of a reunion—until</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>. Family-based<span style="background-color:rgba(57,212,155, 0.2)"> admission</span> helps reunify families after one member has legally established residence in the United States</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Zerbe.
+<span style="background-color:rgba(57,212,155, 0.2)">On</span> stage, Bergere appeared in several notable productions, including a revival of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>.The Metropolitan<span style="background-color:rgba(57,212,155, 0.2)"> Opera</span> says it has replaced next season��s revival of Robert LePage�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> is experiencing resurgence of development<span style="background-color:rgba(57,212,155, 0.2)"> in</span> the 21st century. The areas of greatest hydroelectric growth are the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> second chance with the<span style="background-color:rgba(57,212,155, 0.2)"> Clippers</span> and Mo Williams will be reunited with Utah. The person spoke on condition of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> spiritual songs,<span style="background-color:rgba(57,212,155, 0.2)"> singing</span> and making melody in your heart to the Lord.A historic deal to reun</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> reunite to the same<span style="background-color:rgba(57,212,155, 0.2)"> network</span> whenever you just like. Then, you��re here ready to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> employment reached its highest<span style="background-color:rgba(57,212,155, 0.2)"> level</span> since German reunification in 2007. According to provisional results of the labour force</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> quiet on which<span style="background-color:rgba(57,212,155, 0.2)"> films</span> exactly but fingers-crossed the Cruz-Alonzo reunion is part</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

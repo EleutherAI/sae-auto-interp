@@ -85,3 +85,4 @@ class Outlines(Client):
 
         logger.error("All retry attempts failed.")
         raise RuntimeError("Failed to generate text after multiple attempts.")
+    

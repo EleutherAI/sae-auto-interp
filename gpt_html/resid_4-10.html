@@ -1,0 +1,706 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-10</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-10</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: tank analysts.<br>The incident<span style="background-color:rgba(57,212,155, 1.0)"> offers</span> an indication of just how desperate the U.S. command in<br>Activations: (" offers" : 10)<br>Example 2:  in recent weeks from farms in Iowa and Minnesota. The thefts<span style="background-color:rgba(57,212,155, 1.0)"> add</span> up to millions of dollars in losses<br>Activations: (" add" : 9)<br>Example 3:  by Edward Snowden��s revelations. The event<span style="background-color:rgba(57,212,155, 1.0)"> gains</span> its scale because of the collision between state security<br>Activations: (" gains" : 9)<br>Example 4: <|endoftext|> the faith, abducting Christian women, and destroying churches. The cleric's comments<span style="background-color:rgba(57,212,155, 1.0)"> stand</span> in contrast<br>Activations: (" stand" : 9)<br>Example 5:  met with a fierce and intense response by the President and civil society in Ukraine. The backlash<span style="background-color:rgba(57,212,155, 1.0)"> points</span> to<br>Activations: (" points" : 9)<br>Example 6:  that, for example, is estimated to be barely seen on weekends.<br>The data<span style="background-color:rgba(57,212,155, 1.0)"> throws</span> up more<br>Activations: (" throws" : 9)<br>Example 7: <span style="background-color:rgba(57,212,155, 1.0)"> flies</span> in the face of the science," said Dr. Donald Abrams, a professor of clinical medicine at<br>Activations: (" flies" : 8)<br>Example 8:  were?), but her hurling stats<span style="background-color:rgba(57,212,155, 1.0)"> meet</span> and often exceed the likes of those of Selden,<br>Activations: (" meet" : 8)<br>Example 9:  with 150,000 landing that day. The veterans remembrances of the events<span style="background-color:rgba(57,212,155, 1.0)"> give</span> the famous day<br>Activations: (" give" : 8)<br>Example 10: institutional firms running small and medium-sized funds. The new rules<span style="background-color:rgba(57,212,155, 1.0)"> stream</span>line the regulatory matters facing<br>Activations: (" stream" : 8)<br>Example 11: unofficial) for the next World Cup to be held in South Africa in 2010. The identity<span style="background-color:rgba(57,212,155, 1.0)"> wraps</span><br>Activations: (" wraps" : 8)<br>Example 12: <|endoftext|>��s work. His scenes<span style="background-color:rgba(57,212,155, 1.0)"> gain</span> a haunting uncanniness not from their place in social<br>Activations: (" gain" : 8)<br>Example 13:  have a chance to get the football."<br>The trends<span style="background-color:rgba(57,212,155, 1.0)"> point</span> toward Chicago here. The Bears are an<br>Activations: (" point" : 8)<br>Example 14: -hour visit<span style="background-color:rgba(57,212,155, 1.0)"> promises</span> to delve into the facts and folklore of a cluster of small burial grounds between First<br>Activations: (" promises" : 8)<br>Example 15: <|endoftext|> own when it comes to playoff success for the Blackhawks. His 52 postseason victories<span style="background-color:rgba(57,212,155, 1.0)"> rank</span> first on Chicago<br>Activations: (" rank" : 8)<br>Example 16: <|endoftext|> these sudden inundations<span style="background-color:rgba(57,212,155, 1.0)"> rank</span> first among North American weather hazards -- ahead of lightning, tornadoes,<br>Activations: (" rank" : 8)<br>Example 17: <|endoftext|> energy.<br>The discovery<span style="background-color:rgba(57,212,155, 1.0)"> challenged</span> my entire approach to cooking and eating. I had to reinvent my<br>Activations: (" challenged" : 8)<br>Example 18: ide as a potential treatment for heart failure patients.<br>Analyst David Webber said the results<span style="background-color:rgba(57,212,155, 1.0)"> add</span><br>Activations: (" add" : 8)<br>Example 19:  second "older" vehicle was uninsured, and the accidents<span style="background-color:rgba(57,212,155, 1.0)"> ate</span> up any profits the couple may have made<br>Activations: (" ate" : 8)<br>Example 20:  riffs. The lyrics<span style="background-color:rgba(57,212,155, 1.0)"> suffer</span> in some cases, but on other songs are very clever and deep.<br>Activations: (" suffer" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Verbs that indicate a change, addition, or effect, often in a formal or objective tone.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Verbs that indicate a change, addition, or effect, often in a formal or objective tone.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> Ninety-Plus Coffee, said the price<span style="background-color:rgba(57,212,155, 1.0)"> stems</span> from the coffee's preparation.
+"It</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> that its suspension policy<span style="background-color:rgba(57,212,155, 1.0)"> conforms</span> with Education Law and current judicial decisions. On May 28, 1997</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> equivalent of Crimes against Humanity if judged before the International
+Court of Justice today.
+His travels<span style="background-color:rgba(57,212,155, 1.0)"> remind</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Lord��s Supper or baptism. The July 12 revelation<span style="background-color:rgba(57,212,155, 1.0)"> supports</span> that distinction in a number of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)"> offer</span> remedies of health and hygiene chiefly because these
+are half therapy. Yogic therapy<span style="background-color:rgba(57,212,155, 1.0)"> contributes</span> to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> sets</span> a six month time frame during which Iran��s nuclear program will be frozen in place and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> 2011 •
+Monday, February 14, 2011
+The conclusion of the transaction<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> marks</span> Robocom��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> accepted this complaint for processing because the allegation<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> falls</span> under Title IX. Title IX prohibits discrimination on the basis</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> six years. His mature style<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> owes</span> more, however, to the work of Thomas Gainsborough</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>ousse au Chocolat and apple Tarte Tartin. Both desserts<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> leaned</span> heavy towards the sweet side</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> the satisfaction you��ve seen all that you should. In short, these guides<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> act</span> as a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> seats. He incorporated our company theme into his act, and his audience participation<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> tricks</span> gave us some moments</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Crush<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> provide</span> a lush ground to explore the pathology of young women��s sexuality. Stephen King�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> a witness in Parliament.
+But the pressure<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> increased</span> in recent weeks as the focus of revelations<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> shifted</span> from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> As June rolled around, and the weather<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> warmed</span>, impeachment<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> talk heated</span> up, too.
+Here�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>. The aforementioned indigenous sweet-smelling<span style="background-color:rgba(57,212,155, 0.76)"> combines</span> are basically answerable for the sweet loss when your body</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> significant benefits at six months. Dr. Enlander reports its effects<span style="background-color:rgba(57,212,155, 0.76)"> range</span> from highly dramatic to minimal.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> headquarters.
+The newest trail<span style="background-color:rgba(57,212,155, 0.76)"> extends</span> a mile off the auto tour��s Rookery</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> exclusively for short films. The festival<span style="background-color:rgba(57,212,155, 0.76)"> screens</span> approximately 300 shorts in competition, focus and thematic programs.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> what prayers should be offered?��
+The hearing<span style="background-color:rgba(57,212,155, 0.76)"> ended</span>, but the debate<span style="background-color:rgba(57,212,155, 0.76)"> goes</span> on.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> decorating romance continues to this day, happily ever after. Its longevity (14 years)<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> shows</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> questions that remain to be answered, but my thesis<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> provides</span> an excellent foundation to continue studying physical changes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> so everyone will be able to prepare, as well as know where to go!
+The cards<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> feature</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> and Getty��s Quire. The markdown approach<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> relies</span> on a simplest-possible</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> who exploited the poor masses for selfish gains.
+The view immediately above<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> mirrors</span> a topical goal of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> print a certificate for later. Either way, your gift<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> supports</span> local bookstores and lets you share a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Profits from the shirts<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> go</span> directly to help the fire fighters.
+Hops in the Saddle</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>
+The mixed messages from officials<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> led</span> one citizen journalist --- an OccupySF live video streamer who</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> turns</span> out.
+Not to be confused with Metal Slug Advance, a port of the original arcade Metal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> the senators�� declaration.
+If the fledgling bipartisan plan<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> provides</span> a jolt of momentum toward</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> out of 5 stars
+The festival<span style="background-color:rgba(57,212,155, 0.52)"> presents</span> a special screening of Unrest, a documentary about people</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> trees. The movie<span style="background-color:rgba(57,212,155, 0.52)"> brings</span> to mind these horrific sights and sounds from within the realm of a disease-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> going to die."
+The words<span style="background-color:rgba(57,212,155, 0.52)"> hung</span> in the air. Elijah said nothing.
+"I was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>itz and glamour of the fame��s<span style="background-color:rgba(57,212,155, 0.52)"> promise</span> was shining as bright as our stage lights we</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Support, Cancer Research UK and the Department of Health also provide funding.
+Our aims and objectives<span style="background-color:rgba(57,212,155, 0.52)"> cover</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>s calming, respectful, and welcoming towards the entire family. Our wide array of services<span style="background-color:rgba(57,212,155, 0.44)"> spans</span> from cosmetic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>vers said the news<span style="background-color:rgba(57,212,155, 0.44)"> signaled</span> a defeat for Microsoft.
+"Consumers have voted; OneCare</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>��s Festival Hall, 600 East Grand Avenue, Chicago. This celebration<span style="background-color:rgba(57,212,155, 0.44)"> offers</span> an exclusive first look</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>
+Celebrating its 15th year in 2013, the well-established auction<span style="background-color:rgba(57,212,155, 0.44)"> saw</span> an incredible roster</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> himself.
+Many of these problems<span style="background-color:rgba(57,212,155, 0.44)"> take</span> a long time to manifest. It's often only possible to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> asks the question: "What if these two women met?"From there the story<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> unfolds</span>: two strong</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> that hospital region for at least 18 years.
+The decision<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> tree</span> model<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> consists</span> of 10 probability steps</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>super eloquent) copies of yourself. The combinatorics of 3+ stakeholders<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> spins</span> out of control</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> well as getting to hear some fabulous work by some lovely local ladies, the evening<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> gave</span> me the chance</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> height adjustment of the cot bed<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> lets</span> you decide the depth of the cot. It is simple</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> from 2012<span style="background-color:rgba(57,212,155, 0.28)"> list shows</span> that there are more donors under 40 giving away more than ever before. Here are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> said her research into the play<span style="background-color:rgba(57,212,155, 0.28)"> led</span> to her emphasis on a lighter touch, which she believes Chekh</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> and deed-in-lieu transactions<span style="background-color:rgba(57,212,155, 0.28)"> contribute</span> to the decline in the homeownership rate to the extent</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> As requested the cost<span style="background-color:rgba(57,212,155, 0.28)"> failed</span> Gaucher Disease - A Medical Dictionary the request. approaches in 25-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Obama budgets<span style="background-color:rgba(57,212,155, 0.28)"> envision</span> federal spending continuing at such levels more or less indefinitely.
+This is an inevitable result</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> On the bottom right hand screen, home movies show children at play, and then visits to the doctor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>.Deciding on stakes is easy, just ask around before hand how much people are willing to invest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>owment for the Humanities, the American Philosophical Society and the Spanish Ministry of Culture. In 1992</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> detoxify the body and provide oxidizing enzymes to
+assist in the rehabilitation of the liver.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> player, and when two teammates join efforts in guarding a single opponent.
+Down Court or down the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to save the world.'
+Given this sounded like the party conference speech of our collective dreams, could</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with its head inside a glass Hellman`s Mayonnaise jar on a farm in Readington</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> misshapen ghouls. Dustin Hoffman has yet to turn into his 121-year-old character</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> few weeks later and sentenced to 21 months in the Jerusalem Central Prison.
+Jabotinsky suspected</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> entirely uncommon event and that it shouldn��t hinder the test too much.
+Clever bu</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> teach students how to<span style="background-color:rgba(57,212,155, 0.2)"> search</span> for information<span style="background-color:rgba(57,212,155, 0.2)"> and</span> use resources. Because these standards connect so strongly to what a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>re just like Heroes<span style="background-color:rgba(57,212,155, 0.2)"> in</span> that we<span style="background-color:rgba(57,212,155, 0.2)"> focus</span> just on artists and writers. The convention runs over two days</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> will take effect<span style="background-color:rgba(57,212,155, 0.2)"> Dec</span>. 14<span style="background-color:rgba(57,212,155, 0.2)">.</span>
+The adopted option changes the parcel of record date to Oct</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> difficult to recruit.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>The report<span style="background-color:rgba(57,212,155, 0.2)"> stated</span> China has excellent investment opportunities.
+The blood pressure adder</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> 2002. The<span style="background-color:rgba(57,212,155, 0.2)"> song</span> became a tribute<span style="background-color:rgba(57,212,155, 0.2)"> to</span> the victims of the September 11, 2001 attacks on America</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> The concert features Christian Re<span style="background-color:rgba(57,212,155, 0.2)">if</span> conducting the<span style="background-color:rgba(57,212,155, 0.2)"> S</span>FS in works by Haydn, Stravinsky,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> an ever greater focus<span style="background-color:rgba(57,212,155, 0.2)"> on</span> administrative desp<span style="background-color:rgba(57,212,155, 0.2)">ot</span>ism. The 1835 text offered a theory and even the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the instrument of le<span style="background-color:rgba(57,212,155, 0.2)">pro</span>sy for<span style="background-color:rgba(57,212,155, 0.2)"> many</span> sentimentalism. The letter procured is tied by 50 morality</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> chain from source to<span style="background-color:rgba(57,212,155, 0.2)"> consumer</span>.
+<span style="background-color:rgba(57,212,155, 0.2)">�</span>�Secretary Clinton��s engagement on this issue provides the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> any point in<span style="background-color:rgba(57,212,155, 0.2)"> time</span>.
+<span style="background-color:rgba(57,212,155, 0.2)">I</span> had great fun presenting our sales enablement (SE) execution</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -1,0 +1,729 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-26</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-26</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|>outstanding tickets you've reported elsewhere.<br>Requestor.id = '__Current<span style="background-color:rgba(57,212,155, 1.0)">User</span>__<br>Activations: ("User" : 10)<br>Example 2: <|endoftext|><br>runAs<span style="background-color:rgba(57,212,155, 1.0)">User</span> set to 222 and its<br>fsGroup to be 7777, then the<br>Activations: ("User" : 9)<br>Example 3: <|endoftext|>ums.com Staff|<br>|<span style="background-color:rgba(57,212,155, 1.0)">User</span> Rating||(1 Votes)|<br>Popular Search Terms<br>Activations: ("User" : 9)<br>Example 4:  to myself!<br><span style="background-color:rgba(57,212,155, 1.0)">User</span> since: November 2009<br>--- Robert Schmeiser, Dec 29, 2010<br>Activations: ("User" : 9)<br>Example 5: <|endoftext|> further analysis or whatever use you can think up.<br><span style="background-color:rgba(57,212,155, 1.0)">User</span> since: February 2007<br>--- George<br>Activations: ("User" : 9)<br>Example 6: <|endoftext|>131.254.<br>��<span style="background-color:rgba(57,212,155, 1.0)">User</span>�� or ��you��: Every natural<br>Activations: ("User" : 9)<br>Example 7: |Posted by:||India-Forums.com Staff|<br>|<span style="background-color:rgba(57,212,155, 1.0)">User</span> Rating||(3<br>Activations: ("User" : 9)<br>Example 8:  that's far from the only good song on the album!<br><span style="background-color:rgba(57,212,155, 1.0)">User</span>: Halon Title: Posted<br>Activations: ("User" : 9)<br>Example 9: <|endoftext|> that just about everything is recognized any more.<br><span style="background-color:rgba(57,212,155, 1.0)">User</span> Account Setup<br>Next you��ll<br>Activations: ("User" : 9)<br>Example 10: .From = new MailAddress(frm.txtBx<span style="background-color:rgba(57,212,155, 1.0)">User</span>.Text + "@email.<br>Activations: ("User" : 9)<br>Example 11: <|endoftext|> Ann Marie Brown (Foghorn Press)<br>Best Seasons: Year-Round<br><span style="background-color:rgba(57,212,155, 1.0)">User</span> Groups<br>Activations: ("User" : 9)<br>Example 12: <|endoftext|>SCar<br>OSCar At a Glance<br><span style="background-color:rgba(57,212,155, 1.0)">User</span> rating: 4.3/5 |<br>Activations: ("User" : 9)<br>Example 13: <|endoftext|> 1998, so well known around these parts.<br><span style="background-color:rgba(57,212,155, 1.0)">User</span>: Suskie Title: Posted: March<br>Activations: ("User" : 9)<br>Example 14: <|endoftext|> one<br><span style="background-color:rgba(57,212,155, 1.0)">User</span> Control Panel<br>Hello, welcome to RenoServices.ca Forum.<br>Introduce<br>Activations: ("User" : 9)<br>Example 15: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)">User</span> Content and any other writings or materials on this Site are provided to you ��AS-<br>Activations: ("User" : 9)<br>Example 16: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)">User</span> Alert System provided by Advanced User Tagging (Pro) - vBulletin Mods &<br>Activations: ("User" : 9)<br>Example 17:  Yeah, it's a great song, IMO.<br><span style="background-color:rgba(57,212,155, 1.0)">User</span>: darketernal Title: Posted<br>Activations: ("User" : 9)<br>Example 18:  bad that's their only single that made the mainstream.<br><span style="background-color:rgba(57,212,155, 1.0)">User</span>: zippdementia Title<br>Activations: ("User" : 8)<br>Example 19: m.txtBx<span style="background-color:rgba(57,212,155, 1.0)">User</span>.Text + " " + "typed a word deemed inappropriate.<br>Activations: ("User" : 8)<br>Example 20:  special, the 2015 Fit is the better car.Madisonville Community College<br>Skip to Content<br><span style="background-color:rgba(57,212,155, 1.0)">User</span><br>Activations: ("User" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The token "User" in a context related to user profiles, accounts, or authentication.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The token &quot;User&quot; in a context related to user profiles, accounts, or authentication.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">User</span>-led interventions, which typically exist outside of clinical environments, are able to offer significant and effective</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> owners.
+<span style="background-color:rgba(57,212,155, 1.0)">User</span> Responsibility. You assume all responsibility for your use of the Website. You waive all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span>50 drivers xp
+etherlink vista driver
+<span style="background-color:rgba(57,212,155, 1.0)">User</span> reviews truline post driver
+great anti</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> solutions in the future. That is, it lets...|
+|<span style="background-color:rgba(57,212,155, 1.0)">User</span> Reviews for Responsive Time</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>' AND QueueAdminCc.id!= '__Current<span style="background-color:rgba(57,212,155, 1.0)">User</span>__' AND
+(Status</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)">User</span> since: February 2007
+--- Lars Mohlin, May 5, 2009 - WindsorHillsR</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Mods & Addons Copyright © 2016 DragonByte Technologies Ltd.
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">User</span> Alert System provided by Advanced User</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> extent after you stop using GRID´s services.
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">User</span> accounts and service levels
+Anyone</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> retained in connection with the provision of our Services.
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">User</span> Content. Our Services enable you to share</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> a STR Home.
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">User</span> since: November 2009
+--- Karl Frusher, Dec 13, 2010</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>Byte Technologies Ltd.
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">User</span> Alert System provided by Advanced User Tagging v3.1.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> up some tips from ��<span style="background-color:rgba(57,212,155, 0.8400000000000001)">User</span> Testing: Adapt to Fit Your Needs,�� a presentation</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> with a vacation rental condo.
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">User</span> since: January 2010
+--- Marge Tendler,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> to help when I have questions.
+I reccomend this service highly.
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">User</span> since</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> run rake spec instead, I get:
+> ActiveRecord::StatementInvalid in '<span style="background-color:rgba(57,212,155, 0.8400000000000001)">User</span> in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>B are external users and are essentially equivalent to User 2 shown in FIG. 1.
+<span style="background-color:rgba(57,212,155, 0.76)">User</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Third-Party Services does not include Scripted services or Writer Services.
+��<span style="background-color:rgba(57,212,155, 0.76)">User</span>��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>'s well worth the yearly fee. Thank you.
+<span style="background-color:rgba(57,212,155, 0.76)">User</span> since: January 2007
+--- Angela Bravo</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> called (<span style="background-color:rgba(57,212,155, 0.76)">User</span> 1). After making the identification, the ISP 800 sends a ��voice channel open</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> I get up again by tub thumping. Great song.
+<span style="background-color:rgba(57,212,155, 0.76)">User</span>: honestgamer Title:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> journal, adjusting entries and other options.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">User</span>-level security features enable role-based restrictions on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>, Magic-<span style="background-color:rgba(57,212,155, 0.6799999999999999)">User</span>, and Cleric. The terms were intentionally vague and much research was done</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> business without it.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">User</span> since: July 2010
+--- Rick Sias, Dec 12, 2010</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> in a sustainable way, it is recommended to start in-depth discussion on the g<span style="background-color:rgba(57,212,155, 0.6799999999999999)">User</span> Recovery</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> to get a quick Market Analysis on your property.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">User</span> Post (6 total)
+rockstar Sal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> ECHA website, the person (hereinafter the ��<span style="background-color:rgba(57,212,155, 0.6000000000000001)">User</span>��) fully agrees to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> day ago. LTU-<span style="background-color:rgba(57,212,155, 0.6000000000000001)">User</span>, 23 hrs ago. Fastest real world speed – Real</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> to your use of or activities on this Site.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">User</span> Conduct - Online Communities and Other Interactive Areas
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> reception of this message, SVD modem 600 simulates a ring to User 1.
+<span style="background-color:rgba(57,212,155, 0.6000000000000001)">User</span> 1</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>ized by Advertising and by "><span style="background-color:rgba(57,212,155, 0.6000000000000001)">User</span> Donations; we ask that if you find this site helpful</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>ute "<span style="background-color:rgba(57,212,155, 0.52)">User</span>ControlEditor.exe" which is under the GeneXus installation directory and then press</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)">User</span> License Agreement.
+A bundle that includes the 5 high quality sound libraries that I created in 2019</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)">User</span> Recovery Principleh and we expect that discussions surrounding this proposal will broadened. 5) Build a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> sustainably beyond generations, NGOs suggested to establish the g<span style="background-color:rgba(57,212,155, 0.52)">User</span> Recovery Principleh, which is centered</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> provide you with access to your ��<span style="background-color:rgba(57,212,155, 0.52)">User</span> Profile,�� which will include certain Personal Information you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> Artist/Album, or Album/<span style="background-color:rgba(57,212,155, 0.44)">Artist</span>. Otherwise, the output audio will be saved into one</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>? - The benefits of leasing for all organizations.
+End-<span style="background-color:rgba(57,212,155, 0.44)">User</span> Financing - A look at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> - The Slim Shady Lp. Mp3
+<span style="background-color:rgba(57,212,155, 0.44)">Artist</span>: Eminem Album: The Slim</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> as normal.
+<span style="background-color:rgba(57,212,155, 0.44)">Artist</span> : Anson MaddocksAustralia's official interest rate has now been on hold</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>
+<span style="background-color:rgba(57,212,155, 0.44)">Artist</span>'s Statement:Contemplative Photographic Images
+"...innocence of eye</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>�<span style="background-color:rgba(57,212,155, 0.36000000000000004)">Artist</span> X likes Artist Y and he thinks all other Artists are terrible!�� Here is an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> the years by patiently answering all my questions about the 4-3 Defense.Type: Posts;<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> User</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>Moving With Your Cat<span style="background-color:rgba(57,212,155, 0.36000000000000004)">Artist</span> Insight: Uzo
+Meet…Uzo, world renowned make-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> Reno (at the national championships in July).��
+<span style="background-color:rgba(57,212,155, 0.36000000000000004)">Artist</span> Jack McGilvry: This</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> signed up for an ATC (<span style="background-color:rgba(57,212,155, 0.36000000000000004)">Artist</span> Trading Card) swap and they are due very soon. This</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> display usage statistics pertaining to database tables
+sp_help<span style="background-color:rgba(57,212,155, 0.28)">user</span>: Used to display available user accounts
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> undergraduate and applying them in the future.
+<span style="background-color:rgba(57,212,155, 0.28)">Artist</span> in residence Lori Larusso helps students explore the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> as shown.<span style="background-color:rgba(57,212,155, 0.28)"> User</span> 1 has a digital communication device, e.g., a terminal 10 and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> cupboard under his sink.
+<span style="background-color:rgba(57,212,155, 0.28)">Artist</span> Grayson Perry is searching for the pots he sold for ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> User</span> 1 to call User 2 and completes the connection by dialing User 2. As with the</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>"(Obama) really has to try to get something out of this issue; he's staked so</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>MotoGP followers might remember what happened at Jerez. The Doc was struggling to carry speed into</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, methionine, lysine, and tryptophan The anesthesi- o</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> it as a punch line for jokes.
+At a pancake breakfast recently, he said he had</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>."
+Jodi Schafer, the University of Iowa's director of MBA admissions and financial aid,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> snapped back to reality, kicked his dog and snapped: ��Yes, the mad are in God</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Video by viewing the download link.
+Enjoy movie with title Donnie Darko full and free movie</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> over here.FULL LINE-UP ANNOUNCED!
+Click above for Facebook event page</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> share the use of the arena at F&M for high school graduation.
+Click here for draft</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> I used, the window pane print with the stars and hearts, was fabric my mom purchased to make</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>Password authentication password authUser<span style="background-color:rgba(57,212,155, 0.2)"> authentication</span> user name backgroundVisible. I am creating a dynamic PDF in Cold</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Size
+-<span style="background-color:rgba(57,212,155, 0.2)"> End</span>-User Trend, Preferences, and Budget Impact of Iron Powder Atomization Market</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> more accurate shot.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>User Reviews (1)
+Top line performance at a decent price
+Blade</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> it will diminish my<span style="background-color:rgba(57,212,155, 0.2)"> advantage</span>.
+User since: May 2010
+--- Francisco Norman, Dec 12,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> #4Registered User<span style="background-color:rgba(57,212,155, 0.2)">
+</span>- Join Date
+- Jun 2005
+- Thanked 2 Times in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> painting "Artist's<span style="background-color:rgba(57,212,155, 0.2)"> Bed</span>room in Ritterstrasse" by Adolf Menzel. The rendering</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> the Caller-<span style="background-color:rgba(57,212,155, 0.2)">Id</span> equipment 804 identifies the party calling (User 2) and the party being</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> than 100%<span style="background-color:rgba(57,212,155, 0.2)"> satisfied</span> with Neil's services.
+User since: December 2006
+--- Marcie</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>-User, 22 hrs<span style="background-color:rgba(57,212,155, 0.2)"> ago</span>. Didn��t find what you were looking for? TUR</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>erved By'.Email<span style="background-color:rgba(57,212,155, 0.2)"> =</span> currentUser.Email && 'Check Out From Number' >= Value(
+</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

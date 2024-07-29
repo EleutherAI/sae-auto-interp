@@ -3,6 +3,9 @@
 SYSTEM = """You are a meticulous AI researcher conducting an important investigation into a certain neuron in a language model. Your task is to analyze the neuron and provide an explanation that thoroughly encapsulates its behavior.
 {prompt}
 Guidelines: 
+
+You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like <<this>>. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters <<just like this>>. The activation value of the example is listed after each example in parentheses.
+
 - Try to produce a concise final description. Simply describe the text features that activate the neuron, and what its role might be based on the tokens it predicts. 
 - If either the text features or the predicted tokens are completely uninformative, you don't need to mention them.
 - The last line of your response must be the formatted explanation."""
@@ -10,16 +13,12 @@ Guidelines:
 COT = """
 (Part 1) Tokens that the neuron activates highly on in text
 
-You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like <<this>>. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters <<just like this>>.
-
 Step 1: List a couple activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any. Don't list more than 5 tokens.
 Step 2: Write down general shared features of the text examples.
 """
 
 ACTIVATIONS = """
 (Part 1) Tokens that the neuron activates highly on in text
-
-You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like <<this>>. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters <<just like this>>. The activation value of the example is listed after each example in parentheses.
 
 Step 1: List a couple activating and contextual tokens you find interesting. Search for patterns in these tokens, if there are any.
 Step 2: Write down several general shared features of the text examples.
@@ -45,11 +44,11 @@ Example 3:  thought Scotland was boring, but really there's more <<than meets th
 
 EXAMPLE_1_ACTIVATIONS = """
 Example 1:  and he was <<over the moon>> to find
-Activation: (9)
+Activations: ("over the moon", 9)
 Example 2:  we'll be laughing <<till the cows come home>>! Pro
-Activation: (5)
+Activations: ("till the cows come home", 5)
 Example 3:  thought Scotland was boring, but really there's more <<than meets the eye>>! I'd
-Activation: (8)
+Activations: ("than meets the eye", 8)
 """
 
 EXAMPLE_1_LOGITS = """
@@ -115,11 +114,11 @@ Example 3:  the hole was small<<er>> but deep<<er>> than the
 
 EXAMPLE_2_ACTIVATIONS = """
 Example 1:  a river is wide but the ocean is wid<<er>>. The ocean
-Activation: (8)
+Activations: ("er", 8)
 Example 2:  every year you get tall<<ish>>," she
-Activation: (2)
+Activations: ("ish", 2)
 Example 3:  the hole was small<<er>> but deep<<er>> than the
-Activation: (9)
+Activations: ("er", 9), ("er", 9)
 """
 
 EXAMPLE_2_LOGITS = """
@@ -190,15 +189,15 @@ Example 4:  Patrick: "why are you getting in the << way?>>" Later,
 
 EXAMPLE_3_ACTIVATIONS = """
 Example 1:  something happening inside my <<house>>", he
-Activation: (7)
+Activations: ("house", 7)
 Example 2:  presumably was always contained in <<a box>>", according
-Activation: (9)
+Activations: ("a box", 9)
 Example 3:  people were coming into the <<smoking area>>".
 
 However he
-Activation: (3)
+Activations: ("smoking area", 3)
 Example 4:  Patrick: "why are you getting in the << way?>>" Later,
-Activation: (2)
+Activations: (" way?", 2)
 """
 
 EXAMPLE_3_LOGITS = """

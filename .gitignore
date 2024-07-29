@@ -7,6 +7,13 @@
 keys.py
 
 results/*
+!results/gpt2_explanations
+!results/gpt2_recall
+!results/gpt2_fuzz
 raw*
 
 .nfs*
+
+processed_features/
+
+output_html/
