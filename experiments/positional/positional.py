@@ -32,13 +32,13 @@ def main(args):
         args.seq_len,
     )
     cache.run(args.n_tokens, tokens)
-    _ = cache.save()
+    _ = cache.save(threshold=0.06)
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--layer", type=int, default=10)
     parser.add_argument("--n_tokens", type=int, default=100000)
-    parser.add_argument("--seq_len", type=int, default=1024)
+    parser.add_argument("--seq_len", type=int)
     parser.add_argument("--minibatch_size", type=int, default=16)
 
     return parser.parse_args()
@@ -46,6 +46,8 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     main(args)
+
+
 
 # # %%
 

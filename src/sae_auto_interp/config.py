@@ -2,43 +2,53 @@ from simple_parsing import Serializable
 from dataclasses import dataclass
 
 @dataclass
+class ExperimentConfig(Serializable):
+
+    train_type: str = "top"
+    """Type of sampler to use"""
+
+    n_examples_train: int = 10
+    """Number of examples to sample for training"""
+
+    n_examples_test: int = 5
+    """Number of examples to sample for testing"""
+
+    n_quantiles: int = 10
+    """Number of quantiles to sample""" 
+
+    n_random: int = 5
+    """Number of random examples to sample"""
+
+
+@dataclass
 class FeatureConfig(Serializable):
     
-    width: int
+    width: int = 131072
     """Number of features in the autoencoder"""
 
-    min_examples: int
+    min_examples: int = 200
     """Minimum number of examples for a feature to be included"""
 
-    max_examples: int
+    max_examples: int = 10000
     """Maximum number of examples for a feature to included"""
 
-    ctx_len: int
+    ctx_len: int = 64
     """Length of each example"""
 
-    n_splits: int
+    n_splits: int = 5
     """Number of splits that features were devided into"""
-
-    n_train: int 
-    """Number of examples for generating an explanation"""
-
-    n_test: int
-    """Number of examples for evaluating an explanation, per quantile"""
-
-    n_quantiles: int
-    """Number of quantiles to draw test examples from"""
 
 @dataclass
 class CacheConfig(Serializable):
 
-    batch_size: int
+    batch_size: int = 32
     """Number of sequences to process in a batch"""
 
-    ctx_len: int
+    ctx_len: int = 64
     """Context length of the autoencoder. Each batch is shape (batch_size, ctx_len)"""
 
-    n_tokens: int
+    n_tokens: int = 10_000_000
     """Number of tokens to cache"""
 
-    n_splits: int
+    n_splits: int = 5
     """Number of splits to divide .safetensors into"""

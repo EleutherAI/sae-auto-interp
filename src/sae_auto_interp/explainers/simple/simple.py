@@ -1,7 +1,5 @@
 import re
-import orjson
 import torch
-import math
 from .prompt_builder import build_prompt
 from ..explainer import (
     Explainer, 
@@ -14,6 +12,7 @@ class SimpleExplainer(Explainer):
         self,
         client,
         tokenizer,
+        verbose: bool = False,
         cot: bool = False,
         logits: bool = False,
         activations: bool = False,
@@ -23,6 +22,7 @@ class SimpleExplainer(Explainer):
 
         self.client = client
         self.tokenizer = tokenizer
+        self.verbose = verbose
 
         self.cot = cot
         self.logits = logits
@@ -34,15 +34,12 @@ class SimpleExplainer(Explainer):
     def normalize_examples(self, record, train):
         
         max_activation = record.examples[0].max_activation
-
-        def _normalize(example):
-            example.normalized_activations = \
-                10 * torch.floor(
-                    example.activations / max_activation
-                )
             
         for example in train:
-            _normalize(example)
+            example.normalized_activations = \
+                torch.floor(
+                    10 * example.activations / max_activation
+                )
 
     async def __call__(
         self,
@@ -72,7 +69,13 @@ class SimpleExplainer(Explainer):
 
         explanation = self.parse_explanation(response)
 
-        return messages[-1]['content'], response, ExplainerResult(
+        if self.verbose:
+            return messages[-1]['content'], response, ExplainerResult(
+                record=record,
+                explanation=explanation
+            )
+        
+        return ExplainerResult(
             record=record,
             explanation=explanation
         )

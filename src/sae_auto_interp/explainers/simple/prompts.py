@@ -44,11 +44,11 @@ Example 3:  thought Scotland was boring, but really there's more <<than meets th
 
 EXAMPLE_1_ACTIVATIONS = """
 Example 1:  and he was <<over the moon>> to find
-Activation: (9)
+Activations: ("over the moon", 9)
 Example 2:  we'll be laughing <<till the cows come home>>! Pro
-Activation: (5)
+Activations: ("till the cows come home", 5)
 Example 3:  thought Scotland was boring, but really there's more <<than meets the eye>>! I'd
-Activation: (8)
+Activations: ("than meets the eye", 8)
 """
 
 EXAMPLE_1_LOGITS = """
@@ -114,11 +114,11 @@ Example 3:  the hole was small<<er>> but deep<<er>> than the
 
 EXAMPLE_2_ACTIVATIONS = """
 Example 1:  a river is wide but the ocean is wid<<er>>. The ocean
-Activation: (8)
+Activations: ("er", 8)
 Example 2:  every year you get tall<<ish>>," she
-Activation: (2)
+Activations: ("ish", 2)
 Example 3:  the hole was small<<er>> but deep<<er>> than the
-Activation: (9)
+Activations: ("er", 9), ("er", 9)
 """
 
 EXAMPLE_2_LOGITS = """
@@ -189,15 +189,15 @@ Example 4:  Patrick: "why are you getting in the << way?>>" Later,
 
 EXAMPLE_3_ACTIVATIONS = """
 Example 1:  something happening inside my <<house>>", he
-Activation: (7)
+Activations: ("house", 7)
 Example 2:  presumably was always contained in <<a box>>", according
-Activation: (9)
+Activations: ("a box", 9)
 Example 3:  people were coming into the <<smoking area>>".
 
 However he
-Activation: (3)
+Activations: ("smoking area", 3)
 Example 4:  Patrick: "why are you getting in the << way?>>" Later,
-Activation: (2)
+Activations: (" way?", 2)
 """
 
 EXAMPLE_3_LOGITS = """
