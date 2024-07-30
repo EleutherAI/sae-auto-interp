@@ -3,22 +3,32 @@
 import os
 import orjson
 import pandas as pd
-
-explanation_dir = "results/gpt2_top/gpt2_explanations"
-recall_dir = "results/gpt2_top/gpt2_recall"
-fuzz_dir = "results/gpt2_top/gpt2_fuzz"
+from sklearn.metrics import balanced_accuracy_score
+explanation_dir = "results/gpt2_explanations"
+recall_dir = "results/gpt2_recall"
+fuzz_dir = "results/gpt2_fuzz"
 
 scores = []
 
-def _balanced_accuracy(data):
+def calculate_balanced_accuracy(data):
+    ground_truths = [d['ground_truth'] for d in data]
+    predictions = []
+    
+    for truth, d in zip(ground_truths, data):
+        if truth:
+            if d['prediction']:
+                predictions.append(True)
+            else:
+                predictions.append(False)
 
-    score = 0
+        else:
+            if d['prediction']:
+                predictions.append(False)
+            else:
+                predictions.append(True)
 
-    for d in data:
-        if d['prediction']:
-            score += 1
-
-    return score / len(data)
+    score = balanced_accuracy_score(ground_truths, predictions)
+    return round(score, 2)
 
 
 layers = range(0, 12, 2)
@@ -44,9 +54,9 @@ for layer in layers:
                 "layer": layer,
                 "feature": feature,
                 "explanation": explanation['explanation'],
-                "recall": round(_balanced_accuracy(recall), 2),
-                "fuzz": round(_balanced_accuracy(fuzz), 2),
-                "combined": round((_balanced_accuracy(recall) + _balanced_accuracy(fuzz)) / 2, 2)
+                "recall": round(calculate_balanced_accuracy(recall), 2),
+                "fuzz": round(calculate_balanced_accuracy(fuzz), 2),
+                "combined": round((calculate_balanced_accuracy(recall) + calculate_balanced_accuracy(fuzz)) / 2, 2)
             })
 
         except Exception as e:
@@ -64,4 +74,4 @@ for layer in layers:
 
 data = pd.DataFrame(scores)
 
-data.to_csv("top_heatmap.csv", index=False)
+data.to_csv("random_heatmap.csv", index=False)
