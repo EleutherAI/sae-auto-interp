@@ -94,7 +94,7 @@ class Classifier(Scorer):
         )
         array = self._parse(selections)
 
-        print(selections, array)
+        #print(selections, array)
 
         results = []
 
