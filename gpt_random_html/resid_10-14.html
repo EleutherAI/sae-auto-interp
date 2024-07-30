@@ -1,0 +1,713 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-14</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-14</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> Potter - Rated: T -<span style="background-color:rgba(57,212,155, 1.0)"> English</span> - Family/Drama - Chapters: 87 - Words:<br>Activations: (" English" : 1)<br>Example 2:  computer's hard drive.<br>We use the following cookies:<br>Strict<span style="background-color:rgba(57,212,155, 1.0)">ly</span> necessary cookies. These<br>Activations: ("ly" : 1)<br>Example 3:  led you here, you may wish to change the link<span style="background-color:rgba(57,212,155, 1.0)"> to</span> point directly to the intended article.June<br>Activations: (" to" : 2)<br>Example 4: <|endoftext|></blockquote> <blockquote<span style="background-color:rgba(57,212,155, 1.0)"> class</span>="pull alignright">A bolder blockquote that<br>Activations: (" class" : 0)<br>Example 5: <|endoftext|> it better portrays the site content and the direction I want to take<span style="background-color:rgba(57,212,155, 1.0)"> it</span>. As I produce more<br>Activations: (" it" : 1)<br>Example 6: <|endoftext|> - Rated: T -<span style="background-color:rgba(57,212,155, 1.0)"> English</span> - Friendship/Drama - Chapters: 44 - Words: 298<br>Activations: (" English" : 1)<br>Example 7: <|endoftext|>walls.org/wow- unchained.<br>GD Star Rating<br><span style="background-color:rgba(57,212,155, 1.0)">This</span> past weekend three<br>Activations: ("This" : 0)<br>Example 8:  Images used in this listing<span style="background-color:rgba(57,212,155, 1.0)"> description</span> are for reference only and indicate the quality of the item you will receive<br>Activations: (" description" : 1)<br>Example 9:  The Elderly<br>Rating:<span style="background-color:rgba(57,212,155, 1.0)"> 4</span>.<span style="background-color:rgba(57,212,155, 1.0)">5</span> stars 10 10 reviews<br>3710 Cedar St Box 2<br>Activations: ("5" : 1)<br>Example 10: <|endoftext|> weekly tips for free just go to the homepage<span style="background-color:rgba(57,212,155, 1.0)"> of</span> this website!While it might be easy to<br>Activations: (" of" : 1)<br>Example 11: /1.1 200 OK Content-Type: application/x-www<span style="background-color:rgba(57,212,155, 1.0)">-form-</span>urlenc<br>Activations: ("-" : 1)<br>Example 12: <|endoftext|>2 o3 o4 o5 o6 o7 o8 o9<span style="background-color:rgba(57,212,155, 1.0)"> o</span>10 | Current<br>Activations: (" o" : 1)<br>Example 13: <br>Sherlock Holmes - Rated: T -<span style="background-color:rgba(57,212,155, 1.0)"> English</span> - Mystery/Crime - Chapters: 5 - Words<br>Activations: (" English" : 1)<br>Example 14: <|endoftext|> may visit plan B https://t<span style="background-color:rgba(57,212,155, 1.0)">.</span>co/DSSJqiVQRK to<br>Activations: ("." : 0)<br>Example 15:  is the designer��<span style="background-color:rgba(57,212,155, 1.0)">s</span> first concern. This application will delete all client logs for data security.<br>Activations: ("s" : 0)<br>Example 16: .36 (KHTML,<span style="background-color:rgba(57,212,155, 1.0)"> like</span> Gecko) Chrome/83.0.4103.116<br>Activations: (" like" : 3)<br>Example 17:  -<span style="background-color:rgba(57,212,155, 1.0)"> English</span> - Adventure/Drama - Chapters: 36 - Words: 211,722 - Reviews<br>Activations: (" English" : 1)<br>Example 18:  for Language and Violence.<br>Harry Potter - Rated: T -<span style="background-color:rgba(57,212,155, 1.0)"> English</span> - Adventure/Romance -<br>Activations: (" English" : 1)<br>Example 19: <|endoftext|>-conditioning units.<br>guest reviews rated the hotel 4<span style="background-color:rgba(57,212,155, 1.0)">.</span>2 out of 5 with<br>Activations: ("." : 0)<br>Example 20: <|endoftext|> views and opinions expressed by contributors of the product reviews<span style="background-color:rgba(57,212,155, 1.0)"> are</span> their own and not necessarily those of Lucky<br>Activations: (" are" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Function words and short tokens in metadata, URLs, and formatting, often indicating a transition or connection between elements.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Function words and short tokens in metadata, URLs, and formatting, often indicating a transition or connection between elements.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">description" content</span>="%s">' % html_quote(description)
+> > if keywords</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>-www-<span style="background-color:rgba(57,212,155, 1.0)">form-</span>urlencoded;charset=UTF-8 error=invalid</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> '<meta<span style="background-color:rgba(57,212,155, 1.0)"> name="keywords" content</span>=" html_quote(keywords)<span style="background-color:rgba(57,212,155, 1.0)"> "</span>></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+<meta name<span style="background-color:rgba(57,212,155, 1.0)">="keywords" content</span>="computing, computer studies, computer">
+<span style="background-color:rgba(57,212,155, 1.0)"><</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> sharing a link to this site or any page on this site, please<span style="background-color:rgba(57,212,155, 1.0)"> include the</span> caveat that<span style="background-color:rgba(57,212,155, 1.0)"> the</span> data</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> Hotel is rated "<span style="background-color:rgba(57,212,155, 0.9200000000000002)">Good</span>" by our guests. Take a look through our photo library, read reviews</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>, & Retain High-<span style="background-color:rgba(57,212,155, 0.9200000000000002)">Pot</span>ential Employees
+Proper data collection and analysis play a crucial role</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> by adding the following code to the sites on which the author is posting<span style="background-color:rgba(57,212,155, 0.9200000000000002)">.</span> The author must link</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> you cry ;)... Lol, thank you so much! Report Review
+Terms of Service<span style="background-color:rgba(57,212,155, 0.9200000000000002)">
+</span>c</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>
+><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> </span>> tree_info=None):
+> > """
+> > <html>
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>ewpewtactical.com) to purchase an item, the reader<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> buys</span> the item directly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>: T -<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> English</span> - Chapters: 49 - Words: 218,570 - Reviews: 5895 -</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> - Rated: T -<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> English</span> - Chapters: 30 - Words: 96,943 - Reviews</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> to the Network Advertising Initiative website (opens in a new window, we aren't responsible for<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> the</span> content</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> tag</span> elements are VERY similar or identical with only minor changes on pages within your site.
+You don</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> External Content
+To ensure that links to content outside the course open correctly, change your browser preferences<span style="background-color:rgba(57,212,155, 0.76)"> to</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> Rated: T -<span style="background-color:rgba(57,212,155, 0.76)"> English</span> - Mystery/Adventure - Chapters: 30 - Words: 139,9</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> X-overs - Rated: T -<span style="background-color:rgba(57,212,155, 0.76)"> English</span> - Drama/Sci-Fi - Chapters:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Use keywords in your ad title<span style="background-color:rgba(57,212,155, 0.76)">.</span> You can find your keywords with Google keywords research tool
+- Use</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>will not be published) Website XHTML: You can use these tags<span style="background-color:rgba(57,212,155, 0.76)">: <</span>a href="" title</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>STERS!</p> <p>Reference: http://meta<span style="background-color:rgba(57,212,155, 0.6799999999999999)">.</span>stackoverflow.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>MRtist page. No ratings on<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> this</span> post yet. How would you rate this?Hello</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> reviews. These reviews should not be taken<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> as</span> recommendations but rather customer opinions of the products that they may</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> The West has it totally wrong on Lee Kuan Y<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ew</span>
+- 5 #FreeTheNipple</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> for the content of linked third party sites and does not make any representations regarding<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> the</span> content or accuracy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> meta<span style="background-color:rgba(57,212,155, 0.6000000000000001)">-</span>information is available for that delivery context, the adaptation is accordingly customized.
+The following members</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> change that characterizes "contemporary" Search Engine Optimization. Organic SEO focuses on<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> advertising</span> websites on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> recipe
+Calories 1757 Calories from Fat 914
+% Daily<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Value</span>*
+Total Fat</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> can finally get away from Privet Drive.
+Harry Potter - Rated: T -<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> English</span> -</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> set out below. These<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> terms</span> and conditions are without prejudice to any more specific terms and conditions applicable</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>emar(fut. AU)
+Harry Potter - Rated: T -<span style="background-color:rgba(57,212,155, 0.52)"> English</span> - Adventure</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> you want to see all document types, enter KFS as the<span style="background-color:rgba(57,212,155, 0.52)"> document</span> type.
+- Working</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>They say that necessity is the �<span style="background-color:rgba(57,212,155, 0.52)">�</span>Mother of Invention��, but over the years we�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Rated 4.5<span style="background-color:rgba(57,212,155, 0.52)"> stars</span>
+- Affirm-a-Life Masterclass
+- Reviewed by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>variant: inherit; font-weight:<span style="background-color:rgba(57,212,155, 0.52)"> inherit</span>; font-stretch: inherit; line-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> a low-cost 90nm LP process - around one-third of the<span style="background-color:rgba(57,212,155, 0.44)"> energy</span> of any 8-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>HA Alex Rider Classified Mission?
+*These<span style="background-color:rgba(57,212,155, 0.44)"> descriptions</span> are for guidance only. Once a booking</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.44)"> media</span> type according to the delivery context, and the resultant selection of the style to apply, should be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> advise you to continue optimizing your<span style="background-color:rgba(57,212,155, 0.44)"> ads</span> until you turn a profit. And that might work. I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> which can be expensive. Don��t just check the weight allowance, careful attention<span style="background-color:rgba(57,212,155, 0.44)"> must</span> be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> would depend on the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> search</span> engine options that the user would select from the Preferences menu.
+The official</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Wanting to look glamorous and mature, I must say i over<span style="background-color:rgba(57,212,155, 0.36000000000000004)">pl</span>ucked my eyebrows not fully</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> style</span>="color:#F30;">The free version only allows 100 photos!</<span style="background-color:rgba(57,212,155, 0.36000000000000004)">strong</span>>
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> many games
+You can Change meta<span style="background-color:rgba(57,212,155, 0.36000000000000004)">-</span>tags keywords, and description from the
+Many more other features</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>). Organic Search Engine Optimization, if you truly consider is a "purist<span style="background-color:rgba(57,212,155, 0.36000000000000004)">"</span> technique to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> compensated for this<span style="background-color:rgba(57,212,155, 0.28)"> review.</span>Call in to speak with the host
+Ethnic Cleansing in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>o senza mod<span style="background-color:rgba(57,212,155, 0.28)">ific</span>are le impostazioni dei cookie o cliccando su</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>,184), which builds on the<span style="background-color:rgba(57,212,155, 0.28)"> we</span> reviewed last year and adds text-to-speech functionality,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> hardest challenges organizations face. Developing high-<span style="background-color:rgba(57,212,155, 0.28)">pot</span>ential employees is crucial for priming future leaders and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> demonstration or reproduce...
+PoC: Add Directory
+<span style="background-color:rgba(57,212,155, 0.28)"><strong</span> style="position:absolute; color</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>hed up a fishy Catch of the Day at Wena's mum-mum.
+On</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> his efforts to establish an academic major in Chinese.
+Shirin's doctoral research focuses on the role</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> own admired adolescence amateur with a kid and they don��t accept the appeal, don��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Israel��s national Holocaust memorial and museum, to collect artifacts from aging survivors, she reluctantly handed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>aeontologica Polonica, is a sauropod - the family of dinosaurs famous for their</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> full of life.
+Types of businesses that fit well here are handmade and artisan products, natural and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with them. He was a sniper meant to hunt and kill wolves that would attack the men working on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�t have the budget, that doesn��t mean you cannot have the function and the where</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>3509|
+|Complete devakanyalu||477 kb/s||1 day ago</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> recurring sessions for Endodontics. Root canal treatment is a routine dental procedure.
+Regular D</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>=""> <ab<span style="background-color:rgba(57,212,155, 0.2)">br</span> title="<span style="background-color:rgba(57,212,155, 0.2)">"</span>> <acronym title=""> <b> <block</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> keywords=None<span style="background-color:rgba(57,212,155, 0.2)">,
+</span>> > description=None,
+> > meta_info=None,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> be fixed
+TV<span style="background-color:rgba(57,212,155, 0.2)"> X</span>-overs<span style="background-color:rgba(57,212,155, 0.2)"> -</span> Rated: T - English - Drama/Sci-Fi</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>meta> tags used in<span style="background-color:rgba(57,212,155, 0.2)"> today</span>'s Web pages<span style="background-color:rgba(57,212,155, 0.2)"> to</span> supply information for Web search engines using web craw</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>m's my<span style="background-color:rgba(57,212,155, 0.2)"> dos</span> centav<span style="background-color:rgba(57,212,155, 0.2)">os</span>.<br><br>
+<blockquote><font size</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> with medications.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>��<span style="background-color:rgba(57,212,155, 0.2)">These</span> statements have not been evaluated by the Food & Drug Administration.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> English - Chapters: 46<span style="background-color:rgba(57,212,155, 0.2)"> -</span> Words:<span style="background-color:rgba(57,212,155, 0.2)"> 392</span>,449 - Reviews: 7090 - Favs:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> views expressed within them<span style="background-color:rgba(57,212,155, 0.2)">.</span> Links to<span style="background-color:rgba(57,212,155, 0.2)"> external</span> sites should not be taken as endorsement of any kind. We</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> affiliate links.<span style="background-color:rgba(57,212,155, 0.2)"> Read</span> our disclosure<span style="background-color:rgba(57,212,155, 0.2)"> here</span>.
+Here is a great Groupon deal for anyone who</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> eye recognition at<span style="background-color:rgba(57,212,155, 0.2)"> greater</span> distances.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>2. Improved Auto Focus (AF) performance helps the camera</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

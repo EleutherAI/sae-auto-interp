@@ -12,6 +12,7 @@ class SimpleExplainer(Explainer):
         self,
         client,
         tokenizer,
+        verbose: bool = False,
         cot: bool = False,
         logits: bool = False,
         activations: bool = False,
@@ -21,6 +22,7 @@ class SimpleExplainer(Explainer):
 
         self.client = client
         self.tokenizer = tokenizer
+        self.verbose = verbose
 
         self.cot = cot
         self.logits = logits
@@ -67,7 +69,13 @@ class SimpleExplainer(Explainer):
 
         explanation = self.parse_explanation(response)
 
-        return messages[-1]['content'], response, ExplainerResult(
+        if self.verbose:
+            return messages[-1]['content'], response, ExplainerResult(
+                record=record,
+                explanation=explanation
+            )
+        
+        return ExplainerResult(
             record=record,
             explanation=explanation
         )

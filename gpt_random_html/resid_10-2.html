@@ -1,0 +1,699 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-2</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-2</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> right.<br><span style="background-color:rgba(57,212,155, 1.0)">Jeff</span>rey Runge served as assistant secretary for health affairs and chief medical officer at<br>Activations: ("Jeff" : 2)<br>Example 2:  71, and<span style="background-color:rgba(57,212,155, 1.0)"> Roy</span> J. Tracey Sr.,76. Autopsies were performed the same day<br>Activations: (" Roy" : 1)<br>Example 3: <|endoftext|> Facts, pictures and data about Mavericks from<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span> Clark<br>Christy Davis's Mavericks Homepage Good<br>Activations: (" Jeff" : 6)<br>Example 4:  Michael Ennis,<span style="background-color:rgba(57,212,155, 1.0)"> Mitch</span> Rein and - if he's not rested - Kurt Gidley in the<br>Activations: (" Mitch" : 0)<br>Example 5:  belonging to Big Bang Theory star<span style="background-color:rgba(57,212,155, 1.0)"> Wil</span> Wheaton; in an interview we asked him why he thought craft<br>Activations: (" Wil" : 2)<br>Example 6: <|endoftext|>podcast<br>Talking Toys With Taylor and<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span><br>Taking a look back at the glory days of toys<br>Activations: (" Jeff" : 3)<br>Example 7:  concern," said<span style="background-color:rgba(57,212,155, 1.0)"> Roy</span> LaVoise, director of job development for Communities in Schools, noting that the<br>Activations: (" Roy" : 1)<br>Example 8:  to<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span> Varasano, people still believe that Patsy's uses a starter and that sourd<br>Activations: (" Jeff" : 4)<br>Example 9: <|endoftext|> and pointed a shotgun at her in a dispute, W<span style="background-color:rgba(57,212,155, 1.0)">F</span>TV reports. He then pushed her<br>Activations: ("F" : 1)<br>Example 10: <|endoftext|>'s Glenn Stewart is tipped to miss out although another veteran,<span style="background-color:rgba(57,212,155, 1.0)"> Beau</span> Scott, is a likely starter<br>Activations: (" Beau" : 1)<br>Example 11: <|endoftext|> went LA Park (attacked by<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span> & Karen Jarrett, who also took his mask), Dr<br>Activations: (" Jeff" : 5)<br>Example 12: <|endoftext|>ones, Black-Eyed Peas collaborators George Pajon Jr. and<span style="background-color:rgba(57,212,155, 1.0)"> Keith</span> Harris,<br>Activations: (" Keith" : 1)<br>Example 13: .<br><span style="background-color:rgba(57,212,155, 1.0)">Jeff</span>rey Sandusky is a state prison guard and knew the girls through their mother.<br><br>Activations: ("Jeff" : 2)<br>Example 14: <|endoftext|>��s Interview: Tom<span style="background-color:rgba(57,212,155, 1.0)"> Wil</span>helmsen (Vol. 2)<br>We should be<br>Activations: (" Wil" : 0)<br>Example 15: ,<span style="background-color:rgba(57,212,155, 1.0)"> Wil</span>ner was struck by its style: ��rhythmic, compact, it practically jumped<br>Activations: (" Wil" : 0)<br>Example 16:  "The battle — if you can call it that — between senior<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span> Tuel and redshirt sophomore<br>Activations: (" Jeff" : 5)<br>Example 17: , Jordan Staal, Eric Staal and<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span> Skinner replied for the Hurricanes (13-13-<br>Activations: (" Jeff" : 6)<br>Example 18: <|endoftext|>� Delp, jockey Eldon Nelson, owners Mr. and Mrs. Walter<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span>ords<br>Activations: (" Jeff" : 1)<br>Example 19:  it in order to understand.<br>From: Alexis: Montreal, Quebec<span style="background-color:rgba(57,212,155, 1.0)">,</span> Canada<br>Comments: i<br>Activations: ("," : 1)<br>Example 20: <|endoftext|> Executive<span style="background-color:rgba(57,212,155, 1.0)"> Rupert</span> Murodch will serve as chairman of both companies. He will also be CEO<br>Activations: (" Rupert" : 0)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: First names, especially "Jeff", and occasionally other proper nouns or titles, typically preceding a surname or a descriptive phrase.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>First names, especially &quot;Jeff&quot;, and occasionally other proper nouns or titles, typically preceding a surname or a descriptive phrase.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Carlos, today I checked in with our pitching coach<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span> Andrews. He gave me the game plan for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>districts in Farmers Branch.<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span> Fuller has been on city council for a year, and showed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> by prosecutor Brian Welch and released Friday by District Attorney<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span> Rosen.
+The officer-involved shooting</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> oil refineries in Ohio and Michigan, was shut down within 20 minutes, Sunoco spokesman<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> star Heidi Armbruster, Brian Avers,<span style="background-color:rgba(57,212,155, 1.0)"> Jeff</span> Biehl and Katie Kressler.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> team that kind of comes out of left field this year.
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">Jeff</span>: Ichiro will make</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> and used books that St. John has written!NASCAR® K'NEX<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Jeff</span> Gordon</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> side.Equipped with keen intelligence and a big heart, lawyer<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Jeff</span>ery Robinson educates and challenges</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> volumes 1-3; Carmen Electra's Aerobic Striptease;<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Jeff</span> Costa's Card</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> and collectors. With the director<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Jeff</span> Hoone��s help, I was given more visibility than</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> first report of the White House Task Force to Protect Students from Sexual Assault. (Photo by<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Win</span> Mc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>out), (SF) KZ Okpala (out), (PF) Markie<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ff</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> also make it into that category.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">Jeff</span> Crawford (Singer)
+Mark Collins (Guit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> history. First of all,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Jeff</span>ry Sachs��s approach to economic geography has been criticized and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>ment.com; and at Facebook.com/ActionTrackUSA.
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">Jeff</span>reyHogue</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> is great. Take classes. See shows. You'll be happy you did.
+<span style="background-color:rgba(57,212,155, 0.76)">Jeff</span> F</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>emu Tainio and center back<span style="background-color:rgba(57,212,155, 0.76)"> Wil</span>man Conde, two thirds of the side��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>. The Greeks and Romans taught him that a man could make productive use of his demons.
+<span style="background-color:rgba(57,212,155, 0.76)">Jeff</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>Earlier today host<span style="background-color:rgba(57,212,155, 0.76)"> Greg</span> Boyed acknowledged there had already been criticism from some quarters, but said people needed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Challenger mission (back row from left): Ellison S. Onizuka, Christa McAuliffe,<span style="background-color:rgba(57,212,155, 0.76)"> Greg</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> on<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> exchange</span> at Michigan State University. He��s covering the US elections for upstart. You</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Level 1 with Tim Mayse. I look forward to learning and listening.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">Jeff</span> G.King</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>14.15]
+Detrick Johnson – 36 yrs old – J<span style="background-color:rgba(57,212,155, 0.6799999999999999)">EFF</span>ERSON COUNTY, AR</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> of Paul O��Neill, Derek Jeter,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Bernie</span> Williams, and Tino Martinez. O</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> finishing as national runner up on vault in 2009 behind Ash<span style="background-color:rgba(57,212,155, 0.6799999999999999)">leigh</span> Clare-Kearney, Jackson went</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>D Chess.
+To further ridicule themselves, they called upon retired General Barry McC<span style="background-color:rgba(57,212,155, 0.6000000000000001)">aff</span>rey to ask</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> mean you will never feel sadness again. It just means you can move forward. As psychologist<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Connie</span> B</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Charles Owens on Harmonica, Michael Wh<span style="background-color:rgba(57,212,155, 0.6000000000000001)">itt</span>aker on Accordion, Susie Vaters and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>
+Rookie sensation Der<span style="background-color:rgba(57,212,155, 0.6000000000000001)">win</span> James continues to make big plays. James quickly identified a Raiders' screen</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Roy</span> Stone of New York for a federally funded interstate network.
+The file on the World's Columb</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> ripe and wet if I leave them in their original containers<span style="background-color:rgba(57,212,155, 0.52)"> after</span> a couple days. During the same time</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> Ritson and Bill<span style="background-color:rgba(57,212,155, 0.52)">ie</span> Piper.
+General criticisms in the media seem to be that it was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> after reading this book.
+Virgin River was written by #1 New York Times bestselling author Rob<span style="background-color:rgba(57,212,155, 0.52)">yn</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> and culture than all of their attackers combined,�� Vice President of Communications<span style="background-color:rgba(57,212,155, 0.52)"> Greg</span> Scott tells Rolling</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Sheerin and our Bower Princess Caitlin George along with their deputies Harry Davey and<span style="background-color:rgba(57,212,155, 0.52)"> Beau</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Resources Director<span style="background-color:rgba(57,212,155, 0.44)"> Greg</span> Sheehan ordered that all boats leaving Lake Powell be decontaminated to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> by<span style="background-color:rgba(57,212,155, 0.44)"> Clive</span> Finkelstein, James Martin and others in the early 1980s (See CA Gen History</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> story.
+Marvel producer<span style="background-color:rgba(57,212,155, 0.44)"> Nate</span> Moore, has teased what fans can expect from Larson��s solo</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> life on Earth and Mars.
+Dr<span style="background-color:rgba(57,212,155, 0.44)"> Greg</span> Holland, of Lancaster Environment Centre at Lancaster University, along</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>up among these:
+Tom Hooper ("Les Miserables"),<span style="background-color:rgba(57,212,155, 0.44)"> Quentin</span> Tarantino ("D</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>, guest<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Ben</span> Stein said: "We've got to raise taxes. There is just no way around</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> by<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Sue</span> Fabisch, manages to deliver.
+The central problem is that nothing is at stake</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> it produced 2,020 in the previous seven days.
+By<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Dana</span> HullThis is the last week</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Ray McDonald, and chorus,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Per</span>formed by June Allyson, Peter Lawford, and chorus</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> motion, authority member<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Gene</span> Burman said that he did not hear anything that spoke negatively to the need</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>: Future Author Extraordinaire by Susan Tan; illustrated by<span style="background-color:rgba(57,212,155, 0.28)"> Dana</span> WulfekotteFiction</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> at Liberty and Govan, and at the University of Saskatchewan in Saskatoon. He married<span style="background-color:rgba(57,212,155, 0.28)"> Dor</span>is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>. With actors William Russell and Peter Purves,
+script editor Donald Tosh, writers<span style="background-color:rgba(57,212,155, 0.28)"> Brian</span> Cle</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>. This in turn reminded me of a talk I attended a few weeks ago by<span style="background-color:rgba(57,212,155, 0.28)"> Brian</span> Welle,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>Luck of the Draw�� program,�� says owner<span style="background-color:rgba(57,212,155, 0.28)"> Chuck</span> Hoover. ��When guests check</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Screens in Nigeria is yet to Number 200 for a population of a 160 Million people. Thus,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> A rebel battery ha been
+. ed In position within one block of
+t. rnlt</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the list?
+��Absolutely,�� he said. ��Business is power, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> upper right corner. While in Student Preview mode, the faculty member can interact with the course as a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, preferring instead to be conscious at work today. I did, however, don my Slytherin</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> To get the squash to lay flat in the baking dish, carefully slice a bit off of the sides</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of questions about LeBron's willingness to dominate throughout this season, these playoffs and even the early games of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> one wire. Repeat with the shorter (negative) legs. (see pictures)
+- Wrap the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Conversely, if the teeth are too big, then most likely you��ll experience crowding.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> vessels which results in reduced blood flow to the brain. This inflammation will also inhibit the neurotransmitters</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>
+- Joseph M.<span style="background-color:rgba(57,212,155, 0.2)"> Brown</span> Jr.,
+- George W. Finkbohner III,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Mayor,��<span style="background-color:rgba(57,212,155, 0.2)"> Bow</span>ker wrote.
+The former candidate also endorsed Doug Anderson, Jeff Steele and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>
+[d<span style="background-color:rgba(57,212,155, 0.2)">af</span>] that is wonderful, Jeff
+[daf] I want to use</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> off running and<span style="background-color:rgba(57,212,155, 0.2)"> tried</span> to shovel a pass to Jeff Cumberland, who had the ball tip off</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> This is Democracy Now<span style="background-color:rgba(57,212,155, 0.2)">!,</span> democracynow.org, The War and Peace Report. I��m</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> in treatment for<span style="background-color:rgba(57,212,155, 0.2)"> about</span> two weeks, and she's taking it very, very seriously, according to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> of his conversion to<span style="background-color:rgba(57,212,155, 0.2)"> the</span>ism (which includes a section by co-author Roy Abraham Varghese</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Josef Newg<span style="background-color:rgba(57,212,155, 0.2)">arden</span> – He��s young, he��s the reigning series</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> is too problematic.<span style="background-color:rgba(57,212,155, 0.2)"> We</span>��ve worked really, really hard to establish ourselves as an innovation hub</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> of San Antonio<span style="background-color:rgba(57,212,155, 0.2)">,</span> Texas, was officially sworn in on July 28. (Photo by Win Mc</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

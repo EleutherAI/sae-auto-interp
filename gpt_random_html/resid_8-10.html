@@ -1,0 +1,687 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-10</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-10</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  front-load and Maytag® Bravos® top-load<span style="background-color:rgba(57,212,155, 1.0)"> was</span>hers and dryers. May<br>Activations: (" was" : 1)<br>Example 2:  additional<br>languages will be included sometime in the future. Same goes for the watch<span style="background-color:rgba(57,212,155, 1.0)"> as</span> the firmware<br>Activations: (" as" : 4)<br>Example 3: <|endoftext|> I pick a salad recipe to use<span style="background-color:rgba(57,212,155, 1.0)"> as</span> inspiration for a meal all can enjoy. All these recipes<br>Activations: (" as" : 3)<br>Example 4:  will have you want this<span style="background-color:rgba(57,212,155, 1.0)"> as</span> a favorite tomato in your garden. A rare tomato variety.First aid<br>Activations: (" as" : 6)<br>Example 5:  are affiliates of Univision and Telemundo –<span style="background-color:rgba(57,212,155, 1.0)"> the</span> leading Spanish-language networks in the USA.<br>Activations: (" the" : 2)<br>Example 6: <span style="background-color:rgba(57,212,155, 1.0)"> as</span> a prospect last year and is having a great rookie season. Brown does not look as big as<br>Activations: (" as" : 2)<br>Example 7: <|endoftext|> to small formats and small capacities (micropower)<span style="background-color:rgba(57,212,155, 1.0)"> as</span> well as to commercial scale (kil<br>Activations: (" as" : 3)<br>Example 8:  on Debra Winger or Julia Roberts<span style="background-color:rgba(57,212,155, 1.0)"> as</span> his leading lady.<br>Should��ve been:<br>Activations: (" as" : 1)<br>Example 9:  best avoided<span style="background-color:rgba(57,212,155, 1.0)"> as</span> the best hedge funds are usually only available to the super rich.<br>Jeremy Granth<br>Activations: (" as" : 4)<br>Example 10: <span style="background-color:rgba(57,212,155, 1.0)"> as</span> a local small business. Premium business directories can help amplify your online presence and help you become more<br>Activations: (" as" : 1)<br>Example 11: <span style="background-color:rgba(57,212,155, 1.0)"> as</span> well as seabirds and songbirds, the total extinction toll is likely to have been around<br>Activations: (" as" : 2)<br>Example 12: <|endoftext|> useful for these hams,<span style="background-color:rgba(57,212,155, 1.0)"> as</span> they require more strength while cutting and thus, increasing the risk<br>Activations: (" as" : 1)<br>Example 13:  therapist basically whenever and it includes unrestricted text audio and video messaging<span style="background-color:rgba(57,212,155, 1.0)"> as</span> well as a weekly live session now<br>Activations: (" as" : 2)<br>Example 14:  recently approved the first commercially available medicine derived from cannabis, which has Cannabidiol<span style="background-color:rgba(57,212,155, 1.0)"> as</span> its main<br>Activations: (" as" : 1)<br>Example 15: <|endoftext|> table is used for the purpose of receiving compensation under the program<span style="background-color:rgba(57,212,155, 1.0)"> as</span> well as to educated parents and<br>Activations: (" as" : 1)<br>Example 16:  this sauce<span style="background-color:rgba(57,212,155, 1.0)"> as</span> much as we do!Learning Bridge��s newly formed, Robotics club includes grades<br>Activations: (" as" : 5)<br>Example 17:  if you are buying a Gerbing��s item<span style="background-color:rgba(57,212,155, 1.0)"> as</span> a gift -- be sure to ask about<br>Activations: (" as" : 3)<br>Example 18: Ys. These products are backward compatible to slower speeds and lower powers<span style="background-color:rgba(57,212,155, 1.0)"> as</span> needed.<br>|Features<br>Activations: (" as" : 3)<br>Example 19: .<br>I always use 2 bags per cup<span style="background-color:rgba(57,212,155, 1.0)"> as</span> I like this blend strong. I love it<span style="background-color:rgba(57,212,155, 1.0)"> as</span><br>Activations: (" as" : 5), (" as" : 5)<br>Example 20:  the PS3 version, you'll be able to play on your PC too via Steam<span style="background-color:rgba(57,212,155, 1.0)"> as</span> the PS<br>Activations: (" as" : 3)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The conjunctions "as" and "was", and the definite article "the", often used to indicate a role, function, or relationship.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The conjunctions &quot;as&quot; and &quot;was&quot;, and the definite article &quot;the&quot;, often used to indicate a role, function, or relationship.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> ClickFunnels<span style="background-color:rgba(57,212,155, 1.0)"> as</span> well as not make use of a third party software, the Etison Suite is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>-to-steel interfaces<span style="background-color:rgba(57,212,155, 1.0)"> as</span> for such debonding failure, the design theory can be established based on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Illinois relies on the Mahomet Aquifer system<span style="background-color:rgba(57,212,155, 1.0)"> as</span> a source of the drinking water.
+EPA will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Seminar,<span style="background-color:rgba(57,212,155, 1.0)"> as the</span> required UCA Core capstone.
+[3.1.2]</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> in tote boxes. Tote Boxes are best used<span style="background-color:rgba(57,212,155, 1.0)"> as</span> gifts on birthdays, picn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>- Most EmailedMilwaukee Electric Tool Corporation introduces the Voltage Detector with Work Light<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> as</span> a part</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>ute nitric acid<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> as</span> the container material whenever possible. Avoid glass<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> due</span> to the possibility of contamination with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> because we are following the PNC<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> as</span> it is suggested by the PNC claim. The Taylor-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>s with Toshiba's A19nm TLC,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> as</span> their successors based on Toshiba's 15</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> don't mind the Bronies or the show<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> as</span> long as they don't try to force you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> ��Pair Of Musical Hacks Use Sensor Arrays<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> As</span> Keyboards��This online training</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> the other side, done. Shin to wall is my current favorite<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> as</span> it helps relieve tension in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> isn��t used<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> as</span> much, but there are some interesting things you could do with it.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> 2013does whatsaap work on nokia 501??nokia<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> as</span>ha 501 is good mobile</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> sites with its drag and also decline editor<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> as</span> well as integrated subscription website templates.
+- One</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>CHWING,HIH,SANY,ZOOMLINE,SERMAC)<span style="background-color:rgba(57,212,155, 0.76)"> as</span> well</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Floor Cleaning and Restoration<span style="background-color:rgba(57,212,155, 0.76)"> as</span> a Specialist Floor Cleaning Service for Business South Croydon CR2</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> with images receive almost 40% more interaction than those without. This holds true on Twitter<span style="background-color:rgba(57,212,155, 0.76)"> as</span> well:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> question. Why can't I just buy it<span style="background-color:rgba(57,212,155, 0.76)"> as</span> DLC? Jerks!!! I'll never buy a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> bar<span style="background-color:rgba(57,212,155, 0.76)"> as</span> well as law school exams. Sample admissions essays accepted by harvard for undergraduate, graduate and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> touched, hence the name. Soapstone has been used in India for centuries<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> as</span> a soft medium</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> any GPS application<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> as</span> they would like and would only pay the company for their subscription, not Sprint.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>. The other is still working with him. He is now unwilling to hire anyone<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> as</span> he fears he</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>iphonespeeddaten e-matching, in astronomy and sql server<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> as</span> back to as to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> can be made with just one or with layers of scents. Use this introduction to perfume<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> as</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> tiny bit.
+I chose ee, not ff,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> because</span> the URL below suggests that decimal 248</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> the bathroom designs,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> as</span> follows: Breathtaking home depot light fixtures kitchen with a minimalist, Charming</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> LPS treatment, used<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> as</span> a trigger for inflammasome platform activation. We then examined c</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>&D insider,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> as</span> long as you don't distribute it to the whole world. I'd just</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> not a good idea—and<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> neither</span> is doing crunches or Russsian twists.
+Are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> recommended ��clear and conspicuous�� disclosures<span style="background-color:rgba(57,212,155, 0.52)"> as</span> provided by the FTC.The Association of Field Orn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>ijuana)<span style="background-color:rgba(57,212,155, 0.52)"> as</span> well as sponsored doctor symposiums (Feb 2016, Oct 2016, Feb 2017).</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>. Play with the pause button<span style="background-color:rgba(57,212,155, 0.52)"> as</span> needed so you have time to write the sentences down.
+Good</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> design a range of kids�� futons<span style="background-color:rgba(57,212,155, 0.52)"> as</span> the ideal alternative to extra guest beds or blow</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> you use @stellarnet.com<span style="background-color:rgba(57,212,155, 0.52)"> as</span> your primary email address, or you will get</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> functions such as the cost of maintaining Zipcar<span style="background-color:rgba(57,212,155, 0.44)"> as a</span> publicly traded company.
+"Avis</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>- Catholic moral principles regarding the conservation of health and life do not promote physical life<span style="background-color:rgba(57,212,155, 0.44)"> as</span> the absolute good</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> All this means PHP does not scale well<span style="background-color:rgba(57,212,155, 0.44)"> as</span> teams get larger and more heterogeneus. Being a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>�s interior is fitted with Carbon matte trim<span style="background-color:rgba(57,212,155, 0.44)"> as</span> well as Tobago Brown nappa leather up</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>, showing the previous Eurostat estimates based on the Monthly Telephone Survey<span style="background-color:rgba(57,212,155, 0.44)"> as</span> well as the revised estimates based</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> reaches out to the public and policy makers who haven't considered geo power<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> as</span> the U.S</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> production of testosterone. This is when anabolic steroids become dangerous,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> as</span> they can increase an athlete</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> game<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> as</span> a whole, I'm not convinced Mercenaries mode -- four players against waves of undead --</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> or at Glastonbury, or at the Edinburgh French Festival,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> as</span> well as local music venues</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>- Do it in the sun.
+- Do it with<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> as</span> many friends as possible.
+-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> and<span style="background-color:rgba(57,212,155, 0.28)"> a</span> half weeks,'' coach Bill Belichick said Monday after returning to Foxborough, Mass. ``I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>asted ok to me since I loath almond essence taste.
+I prefer the coconut tarts<span style="background-color:rgba(57,212,155, 0.28)"> more</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> freshly cooked pasta for dinner (no pasta sauce needed.)<span style="background-color:rgba(57,212,155, 0.28)"> As</span> an appetizer, this shrimp will serve</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> of any teas,<span style="background-color:rgba(57,212,155, 0.28)"> as</span> well as a slightly higher level of catechin (a poly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> Note: Although it is possible to manually remove Supreme Savings,<span style="background-color:rgba(57,212,155, 0.28)"> such</span> activity can permanently damage your system if</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Antisana. This reserve is used to supply water to the city. This kind of arrangement allows</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of drawing and painting to ��civilize�� the foundling constitutes an early example of art</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> year
+2004-12-30 22:39:13... andrew
+2003 Awards Tracker
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>getic blockage release, energy healing and nourishing aftercare advice and guidance. This is the perfect</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Copy TBD.
+V -- "Fruition" - After a violent attack on someone very close</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Ronald Roberts must have known that his claim to be Sachem Golden Eagle, leader of a lost tribe</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, context. I'm sorry to say that
+several prizewinning books that have come</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> are accounts that are filled with details of fasting, the appearance of Satan, more robust descriptions of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> funders who believe in and support the mission of access to education for all. The Root Network has</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> In one way or another, you kind of think, ��I��m probably the exception</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>™ because of its higher<span style="background-color:rgba(57,212,155, 0.2)"> density</span>. Pre<span style="background-color:rgba(57,212,155, 0.2)">fer</span>ably, the peritoneum layer 228 is about 0</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> -- up to 12<span style="background-color:rgba(57,212,155, 0.2)">-</span>feet tall<span style="background-color:rgba(57,212,155, 0.2)"> --</span> perennial as a privacy screen throughout summer and then enjoy its crown</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> eating of sesame<span style="background-color:rgba(57,212,155, 0.2)"> and</span> jag<span style="background-color:rgba(57,212,155, 0.2)">gery</span> is considered beneficial to health as they are warm foods.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> time to use air as<span style="background-color:rgba(57,212,155, 0.2)"> your</span> medicine,<span style="background-color:rgba(57,212,155, 0.2)"> and</span> practice deeper breathing and relaxation. Vata also governs the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> farmed Cat<span style="background-color:rgba(57,212,155, 0.2)">fish</span> or Pacific<span style="background-color:rgba(57,212,155, 0.2)"> Hal</span>ibut as a great substitute.
+My favorite recipes for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> the ultrasonic guidance<span style="background-color:rgba(57,212,155, 0.2)"> system</span> as well as<span style="background-color:rgba(57,212,155, 0.2)"> the</span> GPS system. Both guidance systems can be easily retrofitted</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> style dishes,<span style="background-color:rgba(57,212,155, 0.2)"> the</span> Macke<span style="background-color:rgba(57,212,155, 0.2)">rel</span> braises equally as well as the Eel and is great</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> example, I recently<span style="background-color:rgba(57,212,155, 0.2)"> purchased</span> some new<span style="background-color:rgba(57,212,155, 0.2)"> basketball</span> shoes, and I intended to keep my old ones as casual</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> them in the gulf as<span style="background-color:rgba(57,212,155, 0.2)"> a</span> "wolf<span style="background-color:rgba(57,212,155, 0.2)"> Pack</span> to attach shipping. Also how big are these things?</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> browser settings or<span style="background-color:rgba(57,212,155, 0.2)"> contact</span> your system<span style="background-color:rgba(57,212,155, 0.2)"> administrator</span>.The MintyBoost reigns high as one of the</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

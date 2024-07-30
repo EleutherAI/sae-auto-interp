@@ -1,0 +1,692 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-21</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-21</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> would have lived if they had never joined a<span style="background-color:rgba(57,212,155, 1.0)"> religious</span> community in the first place,�� said<br>Activations: (" religious" : 2)<br>Example 2: <|endoftext|> on<span style="background-color:rgba(57,212,155, 1.0)"> Religion</span> and Democracy, with whom the AAC/Network shared office space, board members and wealthy<br>Activations: (" Religion" : 1)<br>Example 3: <span style="background-color:rgba(57,212,155, 1.0)"> religious</span> conscience. Bollocks. She��s being compared (if one can believe it) to<br>Activations: (" religious" : 5)<br>Example 4: <|endoftext|> stores, through the publishers, and online in print or eBook.<br>A<span style="background-color:rgba(57,212,155, 1.0)"> Catholic</span> Gardener�<br>Activations: (" Catholic" : 0)<br>Example 5: <|endoftext|> serving at epikos played an important role in his coming to<span style="background-color:rgba(57,212,155, 1.0)"> faith</span>.THE BIG GATHER<br>Activations: (" faith" : 1)<br>Example 6:  comply with the statute requiring reports of known or suspected child abuse as well as Ohio��s<span style="background-color:rgba(57,212,155, 1.0)"> parental</span><br>Activations: (" parental" : 2)<br>Example 7: <|endoftext|> support the<span style="background-color:rgba(57,212,155, 1.0)"> church</span> and the seminary, for alumni/ae who care deeply about our mission and<br>Activations: (" church" : 0)<br>Example 8: Ch<span style="background-color:rgba(57,212,155, 1.0)">urches</span> have been actively involved in many recent controversial ballot initiatives and referenda in numerous states across the<br>Activations: ("urches" : 2)<br>Example 9: <|endoftext|> read at its website,<span style="background-color:rgba(57,212,155, 1.0)"> atheist</span>alliance.org.<br>Carlos A. Diaz<br>A<br>Activations: (" atheist" : 0)<br>Example 10: <|endoftext|>ism and bigotry. If a man of<span style="background-color:rgba(57,212,155, 1.0)"> religious</span> belief passed from blind belief to real knowledge and pract<br>Activations: (" religious" : 1)<br>Example 11:  is overlap that makes differentiating between those homeschooling for<span style="background-color:rgba(57,212,155, 1.0)"> religious</span> and secular reasons can be complicated and<br>Activations: (" religious" : 3)<br>Example 12: <|endoftext|> Bart Stupak<br>prohibiting federal money from funding abortion. For the<span style="background-color:rgba(57,212,155, 1.0)"> Catholic</span> Cao,<br>Activations: (" Catholic" : 1)<br>Example 13: -long courtship and positioning as the candidate of<span style="background-color:rgba(57,212,155, 1.0)"> Christian</span> conservatives.<br>��The reason that Ted<br>Activations: (" Christian" : 1)<br>Example 14:  More College in Crestview Hills, Kentucky has announced the formation of the Institute for<span style="background-color:rgba(57,212,155, 1.0)"> Religious</span> Liberty. The<br>Activations: (" Religious" : 4)<br>Example 15: PHOENIX — A homeless ex-convict has been formally charged with beating a<span style="background-color:rgba(57,212,155, 1.0)"> Catholic</span> priest<br>Activations: (" Catholic" : 1)<br>Example 16: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> faith</span> statement. Sometimes letters have to be adjusted to fit in a particular space. When a letter<br>Activations: (" faith" : 0)<br>Example 17: <|endoftext|> substitute for other forms of authority that had previously governed human action, such as<span style="background-color:rgba(57,212,155, 1.0)"> religion</span>, superstition<br>Activations: (" religion" : 2)<br>Example 18: <|endoftext|>� has decided to take the<span style="background-color:rgba(57,212,155, 1.0)"> religion</span> as law and anyone that does not follow the rules can be<br>Activations: (" religion" : 1)<br>Example 19: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> Catholic</span> who��s made some startling predictions about dire events in the near future. Is he<br>Activations: (" Catholic" : 0)<br>Example 20: <|endoftext|> at the foundation of the<span style="background-color:rgba(57,212,155, 1.0)"> Catholic</span> healthcare mission is the belief that the healing relationship is a mutually red<br>Activations: (" Catholic" : 0)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Adjectives and nouns related to religion, faith, and spirituality.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Adjectives and nouns related to religion, faith, and spirituality.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> freedom of speech that we must allow for everyone, including but not especially the<span style="background-color:rgba(57,212,155, 1.0)"> religious</span>.
+On</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)"> religious</span> inclinations show that the Democratic party is just out touch with people. If they ever expect to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> mandatory for<span style="background-color:rgba(57,212,155, 1.0)"> religious</span> leaders - alongside police, teachers, medical practitioners and early childhood workers - to report suspicions</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>, to demand that the state take resolute steps to protect atheists and<span style="background-color:rgba(57,212,155, 1.0)"> religious</span> minorities from real and pressing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> on<span style="background-color:rgba(57,212,155, 1.0)"> religious</span> grounds to a provision of the Obamacare health insurance law requiring employers to provide coverage for birth control</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>, and thousands of mosques have been demolished. Any type of unsanctioned<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> religious</span> activity in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> enshrines freedom of speech, freedom of assembly, freedom of<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> religion</span>, freedom of the press and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> police said there was no evidence of a racial of<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> religious</span> motivation.
+Martin told reporters that Kelley was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> countries. A member of the Council for<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Christian</span> Colleges and Universities, JBU is accredited by the Higher</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> dislike:
+willful ignorance.<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> religious fundamental</span>ism. The Man.
+Why are you here</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> the five stages of interfaith dialogue, the major ways<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> religious</span> traditions stray, and confronting our major obstacles</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>Most<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> religious</span> leaders who speak in favour of marriage as an institution should be interested in increasing the numbers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> nation over 150 years of strong<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Christian</span> biblical influence. But that is rapidly declining. People still attend<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> religious</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> faith</span> and credit of the United States, that would be the first default in history caused purely by insanity</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>. However,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> religious</span> significance, and flavour and taste.Russell, P. Its classified as an and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>
+- If a<span style="background-color:rgba(57,212,155, 0.76)"> religion</span> grows, as christianity has grown, it must, as a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> the neighborhoods during the summer months. Mayor Lightfoot, Chicago Police Department commanders,<span style="background-color:rgba(57,212,155, 0.76)"> faith</span> leaders and community</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>capitalism, pro-life, pro-<span style="background-color:rgba(57,212,155, 0.76)">God</span>, pro-marriage, and so on.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> separate them in the culture at large: generational, socioeconomic, political,<span style="background-color:rgba(57,212,155, 0.76)"> religious</span>. They report that On</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> School District violated students<span style="background-color:rgba(57,212,155, 0.76)">' constitutional</span> rights by holding some past graduation ceremonies in a<span style="background-color:rgba(57,212,155, 0.76)"> church</span>.
+A three</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> mom, a business owner, a Pittsburgh native—and a board member of the group American<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Athe</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> Bridgeway Evangel<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ical</span> Church in Kendallville. She worked at G.C. Murphy Co</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>. citizen, he's not<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Christian</span>, he's a socialist, he's Hitler. It's ugly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> the Tibetan people, including their political, social,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> religious</span> and cultural rights are trampled upon by the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)">based</span> organizations share many characteristics with their secular counterparts and this article identifies some of these similarities as well as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Ambassador come to your workplace, school,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> church</span> or event, fill out this form or email matt.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> religious</span> values develops strength of purpose in the individual, and how knowledge of the US Constitution provides support for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>ly being mashed up by fanatical Christian<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> fundamental</span>ists to create a whole new anti-science,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> and About Others,�� ��The<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Religious</span> Life of College Students,�� and ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> — an unprecedented interfaith team of business, political and<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> religious</span> leaders — is launching an initiative sending Jewish</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>le and Co. passed for 399 yards<span style="background-color:rgba(57,212,155, 0.52)"> and</span> three touchdowns last week, but the passing game definitely wasn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> wrong, or simply engage in a moral critique of<span style="background-color:rgba(57,212,155, 0.52)"> religion</span> that implicitly presupposes a universal moral standard</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> secular individuals who are white. I think this is a function of the fact that<span style="background-color:rgba(57,212,155, 0.52)"> secular</span> blacks are embedded</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> 4.
+This Father<span style="background-color:rgba(57,212,155, 0.52)">'s</span> Day, and for all the rest to come, here's what they</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> compensation after her two girls were abused by a Catholic priest, pointed to the case of<span style="background-color:rgba(57,212,155, 0.52)"> priest</span> Michael Mc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>.
+DEBORAH AMOS, BYLINE: The<span style="background-color:rgba(57,212,155, 0.44)"> Christian</span> exodus from Mosul weighs heavily</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> smaller event. Very loosely organized. Much more radical self-<span style="background-color:rgba(57,212,155, 0.44)">rel</span>iance since there is nothing provided.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Bishop James V. Johnston Jr. has been installed as the new leader of the<span style="background-color:rgba(57,212,155, 0.44)"> Catholic</span> Diocese of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> have shown that federal policies of redlining — racial<span style="background-color:rgba(57,212,155, 0.44)"> discrimination</span> in housing policies for more than a quarter</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.44)"> religion</span> would dwindle away as a factor in human conflict. The road would be long and winding.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> are reserved by the respective copyright owner. Fotolog<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> is</span> a website of Doutissima.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> wards. But one difference between the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Church</span> welfare program and Circling the Wagons is that with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> that this book talks about, but how<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> religion</span> is seen, when a group of people called the �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> has always been with extreme views like quote: "<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> evangelical</span> Christians, totalitarian Muslims or segregationist Jews."</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> population that cares about how we keep<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> faith</span> with veterans.
+I think Virginia is wide open 2004</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> Christians</span> acquired their theological and metaphysical ideas. True believers don��t seem to understand that all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)">structed</span> views in all directions!
+On the roof you will see a few finds: a stainless</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> Catholic</span> in Pennsylvania and whom he had befriended years earlier in an online game forum. She now</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> Christian</span> dating sites abound on the Internet. Whether you're married or still searching for the one, get</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>Treasurer-Auburn), and Jessica Richardson.
+<span style="background-color:rgba(57,212,155, 0.28)">Hay</span>den Lee, a member of</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>|
+|- Secondary IDs||NL41498.018.12 / 2012_211; CC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Free Hugs / Shiftivism Tutorial Videos
+> Brendon's Career Path Achievement Mission, Patreon Page</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> 'Yo what's happenin'
+Oh, you don't know me no more when ya pass</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>��I��ve never seen apologies in that world. I thought, ��Oh well</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> so they can't float away from the boat.... [more]
+|Is is a Sub?</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> below to see it in action:
+You May Also Like
+Make All the Things Part 3:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>chools.net/domain/1454
+My office hours today will be from about 12:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>arlow Platts Park – 1360 Gillaspie Drive
+Foothills Community Park – 800</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with them, an individual? ll have to pay to them. Even if you decide to perform all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> note: look at the Records Page to see census records for the family at 200 Argyle Ave</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> doubt on claims by Koch<span style="background-color:rgba(57,212,155, 0.2)"> Industries</span> that it<span style="background-color:rgba(57,212,155, 0.2)"> has</span> no interest in the controversial pipelineI often get e-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> have banned all religious<span style="background-color:rgba(57,212,155, 0.2)"> symbols</span> in the<span style="background-color:rgba(57,212,155, 0.2)"> public</span> sector and fired people who didn��t respect the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> County WI.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>About Interfaith<span style="background-color:rgba(57,212,155, 0.2)"> Care</span>givers of Polk County
+PO Box 65, 133</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> by parents. And<span style="background-color:rgba(57,212,155, 0.2)"> these</span> topics,<span style="background-color:rgba(57,212,155, 0.2)"> they</span> do stray into the realm of religion,�� said Johnson</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> religion, and due process<span style="background-color:rgba(57,212,155, 0.2)"> of</span> law.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Clinton can waive this if it is in US national security</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> signing and defending her<span style="background-color:rgba(57,212,155, 0.2)"> state</span>��<span style="background-color:rgba(57,212,155, 0.2)">s</span> racial-profiling bill, SB 1070. In Ohio,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> choosing the right variables<span style="background-color:rgba(57,212,155, 0.2)"> to</span> control or<span style="background-color:rgba(57,212,155, 0.2)"> if</span> being an atheist or agnostic really causes one to be more</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> religion, being the primary<span style="background-color:rgba(57,212,155, 0.2)"> obstacle</span> to the<span style="background-color:rgba(57,212,155, 0.2)"> pursuit</span> of the appetites, will always be a primary target</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> stakeholders involved, it<span style="background-color:rgba(57,212,155, 0.2)"> can</span>'t be<span style="background-color:rgba(57,212,155, 0.2)"> changed</span> overnight. Because you have cultural, you have religious issues,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> has criticized the secularization<span style="background-color:rgba(57,212,155, 0.2)"> of</span> Christmas in<span style="background-color:rgba(57,212,155, 0.2)"> the</span> past, said parade organizers were "using all the themes</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

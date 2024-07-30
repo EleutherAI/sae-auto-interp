@@ -12,7 +12,7 @@ class Example:
         return hash(tuple(self.tokens.tolist()))
 
     def __eq__(self, other: 'Example') -> bool:
-        return self.tokens == other.tokens
+        return self.tokens.tolist() == other.tokens.tolist()
     
     @property
     def max_activation(self):

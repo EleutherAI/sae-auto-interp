@@ -1,0 +1,728 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-41</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-41</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  flavor to this wheat ale.<br>ABV<span style="background-color:rgba(57,212,155, 1.0)">:</span> 5.25% IBU<span style="background-color:rgba(57,212,155, 1.0)">:</span> 13.3<br>Activations: (":" : 4), (":" : 3)<br>Example 2: <|endoftext|>ric Vibes: 8 of 10 TOTAL Vibes<span style="background-color:rgba(57,212,155, 1.0)">:</span> 8 of 10<br>Originally posted<br>Activations: (":" : 3)<br>Example 3: <|endoftext|><br>Votes: 222,888 | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $116.59M<br>46. G<br>Activations: (":" : 7)<br>Example 4:  6th August at 10 PM on Zee Classic) IMDB rating<span style="background-color:rgba(57,212,155, 1.0)">:</span> 8.3/10<br>Activations: (":" : 2)<br>Example 5: roscope range: ±2000 dps<br>Resolution<span style="background-color:rgba(57,212,155, 1.0)">:</span> 0.02 degrees<br>Max output rate<br>Activations: (":" : 3)<br>Example 6: V<span style="background-color:rgba(57,212,155, 1.0)">:</span> 5.78 IBU<span style="background-color:rgba(57,212,155, 1.0)">:</span> 20<br>Raspberry Wit – ��Speak to the<br>Activations: (":" : 3), (":" : 4)<br>Example 7:  Diva�<span style="background-color:rgba(57,212,155, 1.0)">�</span>s division back to its former glory;<br>The Diva��s Championship<br>Activations: ("�" : 2)<br>Example 8: 1,226 | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $107.50M<br>16. Avatar (2009)<br>PG<br>Activations: (":" : 5)<br>Example 9: <|endoftext|> customer you can always reserve your rental car through us at a competitive rate.<br>Average rating<span style="background-color:rgba(57,212,155, 1.0)">:</span><br>Activations: (":" : 3)<br>Example 10: <|endoftext|> Game Winning Streak]<br>Overtime Record<span style="background-color:rgba(57,212,155, 1.0)">:</span> 5-3 [2-3 Shoot<br>Activations: (":" : 2)<br>Example 11:  | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $78.80M<br>36. World War Z (2013)<br>PG-<br>Activations: (":" : 6)<br>Example 12: .Length: 46:07 Difficulty<span style="background-color:rgba(57,212,155, 1.0)">:</span> 2.5 Members Only<br>DJ Phillips provides a lesson on<br>Activations: (":" : 2)<br>Example 13: .<br>Overall<span style="background-color:rgba(57,212,155, 1.0)">:</span> 29" h x 60" w x 24" d<br>Desk surface weight capacity<br>Activations: (":" : 3)<br>Example 14: <|endoftext|>ET PRICE<span style="background-color:rgba(57,212,155, 1.0)">:</span> Free<br>Rayburn Blake – Guitarist<br>Frankie Hart – Guitarist<br>Activations: (":" : 2)<br>Example 15: 202 | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $108.64M<br>29. Transformers (2007)<br>PG-13<br>Activations: (":" : 6)<br>Example 16:  ultimate power held by a teenager.<br>Votes: 512,090 | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $318.<br>Activations: (":" : 7)<br>Example 17: <|endoftext|> Joist (RSJ) – Total Cost<span style="background-color:rgba(57,212,155, 1.0)">:</span> £2,500<br>Waste Removal £<br>Activations: (":" : 3)<br>Example 18:  comedy<br>Rating<span style="background-color:rgba(57,212,155, 1.0)">:</span> PG-13 for some sexual content and brief strong language<br>Running Time: 89<br>Activations: (":" : 2)<br>Example 19: <|endoftext|> measured<br>- Current<span style="background-color:rgba(57,212,155, 1.0)">:</span> current value<br>- Worst: the worst value which has been recorded since<br>Activations: (":" : 2)<br>Example 20: <|endoftext|> accept deliveries.<br>The system might compare the buyer�<span style="background-color:rgba(57,212,155, 1.0)">�</span>s phone number with a database of<br>Activations: ("�" : 3)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Colon (:) or similar punctuation marks used to indicate a label or a key, often in a data-like or informative context.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Colon (:) or similar punctuation marks used to indicate a label or a key, often in a data-like or informative context.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>otes: 1,213,580 | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $171.38M
+22. Jupiter Asc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>Votes: 883,999 | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $760.51M
+17. X-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>ous Ultron from enacting his terrible plans.
+Votes: 458,994 | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>,883 | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $533.32M
+8. Jurassic World (2015)
+PG</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> known as the Winter Soldier.
+Votes: 493,547 | Gross<span style="background-color:rgba(57,212,155, 1.0)">:</span> $259</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>636 | Gross<span style="background-color:rgba(57,212,155, 0.9200000000000002)">:</span> $304.36M
+50. Armageddon (1998)
+PG-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>, but he has six home runs and nine RBIs against them. Mikolas has an ERA<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> of</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>: Toei Animation
+Duration: 23 min. per ep.
+Rating<span style="background-color:rgba(57,212,155, 0.9200000000000002)">:</span> R - 17+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> President from his kidnappers.
+Votes: 202,414 | Gross<span style="background-color:rgba(57,212,155, 0.9200000000000002)">:</span> $98.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>otes: 742,504 | Gross<span style="background-color:rgba(57,212,155, 0.9200000000000002)">:</span> $204.84M
+39. The A</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> with cascade hops to make this a unique and exceptional lager.
+ABV<span style="background-color:rgba(57,212,155, 0.8400000000000001)">:</span> 5.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>.
+Employer minimum contribution: 3%
+Total minimum contribution<span style="background-color:rgba(57,212,155, 0.8400000000000001)">:</span> 8%
+Where the employer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> to investigate the activities at a mining encampment.
+Votes: 31,279 | Gross<span style="background-color:rgba(57,212,155, 0.8400000000000001)">:</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>Now please write a (short) review....(min. 200, max<span style="background-color:rgba(57,212,155, 0.8400000000000001)">.</span> 2000 characters)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> 19.90 + 3.50<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> =</span> $23.40
+- 3 books 29.85 +</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>YEAR BUILT<span style="background-color:rgba(57,212,155, 0.76)">:</span> 1848
+ADDRESS: Slam Gate Road
+NEIGHB</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>Total subjective score<span style="background-color:rgba(57,212,155, 0.76)">:</span> 87/1002003: A reserve corner man who appeared in 23 games, making</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>
+Nolasco has had four straight seasons with an ERA<span style="background-color:rgba(57,212,155, 0.76)"> of</span> at least 4.48 and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Shipping on orders $140+ (worth<span style="background-color:rgba(57,212,155, 0.76)">:</span> $11.00)
+Coupon Code:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>591
+Average daily submissions<span style="background-color:rgba(57,212,155, 0.76)">:</span> 6
+Most recent submissions:
+2010-06-21 15</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> matches for a total<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> of</span> 23 points; runner-up Tombstone Yellow Jackets had 16, while the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>, rearrange, associate and, above all<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,</span> they learn. Any associative network can learn anything</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> 170 - 75 grams
+Recon Flat Top Plastic in weights 170 - 75 gramsAverage Rating<span style="background-color:rgba(57,212,155, 0.6799999999999999)">:</span> 5</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>||12 MP||10 MP|
+|4K Resolution||max<span style="background-color:rgba(57,212,155, 0.6799999999999999)">.</span> 60fps||max</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>.50 billion during the quarter, compared to analysts�<span style="background-color:rgba(57,212,155, 0.6799999999999999)">�</span> expectations of $2.57 billion.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> The work I had to do was count out the bills and hand �<span style="background-color:rgba(57,212,155, 0.6000000000000001)">�</span>em over. H</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>. Becky and Frank will be there to sign on opening night; if you can�<span style="background-color:rgba(57,212,155, 0.6000000000000001)">�</span>t make</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> (+195) | MIA: (-235)
+Point Spread<span style="background-color:rgba(57,212,155, 0.6000000000000001)">:</span> TOR: +6 (-110)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Mississauga massage Mississauga may vary according to technician. Avg<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Rating</span> Serves in many locations all over</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> an overall grade point average<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> of</span> 3.0. The remainder of prerequisite courses must be completed prior to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>.98, 118 ERA+)<span style="background-color:rgba(57,212,155, 0.52)"> /</span> Tim Wakefield (4.31, 110 ERA+)
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> descriptions that supplement<span style="background-color:rgba(57,212,155, 0.52)"> or</span> replace the content of Web documents. Thus, content may manifest as descriptive data stored</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> historically were average<span style="background-color:rgba(57,212,155, 0.52)"> to</span> high, relative to other business segments. The average multiple for a US manufacturer in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>
+The Pacific Palms Accommodation team are highly trained professionals, all<span style="background-color:rgba(57,212,155, 0.52)"> of</span> whom are locals.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> a smile!
+Reference Number: Q29864
+Total Price<span style="background-color:rgba(57,212,155, 0.52)">:</span> £12.95
+Now</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> 37.3% in 2013 compared with the OECD average<span style="background-color:rgba(57,212,155, 0.44)"> of</span> 35.9%. Norway was ranked 18</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>Rock 'N' Roll Fantasy" by Bad Company.Length: 20:04 Difficulty<span style="background-color:rgba(57,212,155, 0.44)">:</span> 2</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> standard CRT 's TV are incredibly good value<span style="background-color:rgba(57,212,155, 0.44)"> at</span> the moment, but ultimately the producers want</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> on Zee Classic) IMDB Rating<span style="background-color:rgba(57,212,155, 0.44)">:</span> 7.4/10
+Salim Langde Pe</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>Length: 41:30 Difficulty<span style="background-color:rgba(57,212,155, 0.44)">:</span> 3.0 Members Only
+DJ returns to his song lesson</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> and policies, earn a stellar average annual salary<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> of</span> $108,600. According to the B</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>Overall rating<span style="background-color:rgba(57,212,155, 0.36000000000000004)">:</span> 3.5/5
+3. Aprilskin Turn-up Colour Treatment
+Prom</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> F.3d<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> at</span> 494 n. 24.10
+We affirm. There were no trial</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> like a mofo, blocks like a dream.
+Total cost<span style="background-color:rgba(57,212,155, 0.36000000000000004)">:</span> six United States dollars</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>Required Skills & Experience
+- Excellent written and oral communication skills
+- Patient, compassionate<span style="background-color:rgba(57,212,155, 0.36000000000000004)">,</span> and consum</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> �� ��есь ���<span style="background-color:rgba(57,212,155, 0.28)">�</span>��о�� ��о�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>��екстот ��е см<span style="background-color:rgba(57,212,155, 0.28)">е</span>е ��а</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> [max<span style="background-color:rgba(57,212,155, 0.28)">.</span> 3 - 1 for each name] Name Top 3 of Most Tournaments Completed!</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>Equity<span style="background-color:rgba(57,212,155, 0.28)">:</span> Equity comes by subtracting the value of the assets and the total expenses on the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> average<span style="background-color:rgba(57,212,155, 0.28)">,</span> they are old with a mean age of 58 years old with a household size of 5</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>-lasting unless we do something about it.
+In order to talk about self-esteem, it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> as if for one awful second she'd laid him absolutely bare; the smile was wiped from his face</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> any sense of closure nearly two years after one the deadliest fire disasters in history.
+��There</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>i – and encouraged its smaller Asian allies to do the same.
+Related: See my recent piece</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Exe Code Greek with Crack is a simple application to make your computer in one place. It also</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> that in many ways démocratie was more compatible with tyranny than with liberty.
+But ultimately</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> an equally tough grilling at a House hearing Wednesday morning that will be chaired by Democrat Barney Frank,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to vast stretches of empty sand, wilderness that has been entirely untouched, sporting and cultural activities galore</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> their acoustic guitars the same day in London and quickly put them to use at a session for "Love</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>/tag/5e/
+Also, more updates to come here: http://waronsoc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> over the nine-<span style="background-color:rgba(57,212,155, 0.2)">month</span> period: $<span style="background-color:rgba(57,212,155, 0.2)">94</span>.16.
+��But wait!��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> | MIA: -<span style="background-color:rgba(57,212,155, 0.2)">6</span> (-112<span style="background-color:rgba(57,212,155, 0.2)">)</span>
+Total: 207.5 — Over: (-110)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Jacksonville, OR and<span style="background-color:rgba(57,212,155, 0.2)"> 7</span> Retirement Communities<span style="background-color:rgba(57,212,155, 0.2)"> nearby</span>.
+Average Cost: $4,500
+Pione</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>Fred III C<span style="background-color:rgba(57,212,155, 0.2)">actus</span> Train
+<span style="background-color:rgba(57,212,155, 0.2)">February</span> 26, 1994
+Avg. queue length:
+Cram</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>]|
+by<span style="background-color:rgba(57,212,155, 0.2)"> Lyn</span>ne H<span style="background-color:rgba(57,212,155, 0.2)">inton</span>
+Rating: Weighted - 7.2 / Average -</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>Average brix: 19<span style="background-color:rgba(57,212,155, 0.2)">
+</span>What a<span style="background-color:rgba(57,212,155, 0.2)"> vintage</span>! Frost, high daily temperatures, rain and hail,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> spectacular seems like an<span style="background-color:rgba(57,212,155, 0.2)"> understatement</span> budget for<span style="background-color:rgba(57,212,155, 0.2)"> a</span> holiday wedding Stern... While you �� ll find a tour</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>banzo soup<span style="background-color:rgba(57,212,155, 0.2)">.</span>
+VALUE:<span style="background-color:rgba(57,212,155, 0.2)"> More</span> than competitive in the pricey realm of "real" Champ</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> at home with an<span style="background-color:rgba(57,212,155, 0.2)"> ERA</span> of 4.<span style="background-color:rgba(57,212,155, 0.2)">18</span> while on the road his ERA was a full run higher</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Shoe For Hip<span style="background-color:rgba(57,212,155, 0.2)"> Pain</span> currently on<span style="background-color:rgba(57,212,155, 0.2)"> the</span> market!
+- Brand Value: What happens when you go</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

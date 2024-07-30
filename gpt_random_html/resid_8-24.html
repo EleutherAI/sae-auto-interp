@@ -1,0 +1,707 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-24</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-24</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: . He studies in the Institute for Film and Photography ��Gjon<span style="background-color:rgba(57,212,155, 1.0)"> M</span>ili�� Kosovo with<br>Activations: (" M" : 6)<br>Example 2:  NATO allies during the Ukraine crisis. AFP PHOTO / PETRAS<span style="background-color:rgba(57,212,155, 1.0)"> M</span>ALUKAS (Photo credit<br>Activations: (" M" : 4)<br>Example 3: <|endoftext|> no better example of this than Ryan<span style="background-color:rgba(57,212,155, 1.0)"> M</span>eara, the New York Red Bulls goalkeeper who should<br>Activations: (" M" : 8)<br>Example 4: .<br>With David Gilmour��s Big<span style="background-color:rgba(57,212,155, 1.0)"> M</span>uff tones in mind – you don�<br>Activations: (" M" : 0)<br>Example 5: <|endoftext|>8/2015 - Harry P., Draco<span style="background-color:rgba(57,212,155, 1.0)"> M</span>. - Complete<br>by BloodRedDemon reviews<br><br>Activations: (" M" : 1)<br>Example 6:  Craig<span style="background-color:rgba(57,212,155, 1.0)"> M</span>.A. (Oxford University Press, 1916). http://oll.libertyfund<br>Activations: (" M" : 5)<br>Example 7: -2/. Accessed 11 May 2017.<br>- Young, I.<span style="background-color:rgba(57,212,155, 1.0)"> M</span>. (1990). Justice<br>Activations: (" M" : 0)<br>Example 8:  Zauberflöte, Wolfgang Sawallisch, Kurt<span style="background-color:rgba(57,212,155, 1.0)"> M</span>oll, Edita Gruber<br>Activations: (" M" : 6)<br>Example 9: <|endoftext|>�<br>Davis,<span style="background-color:rgba(57,212,155, 1.0)"> M</span>.R., (2013, June 11), Computer Coding Lessons Exp<br>Activations: (" M" : 0)<br>Example 10: /G<br>Harry Potter - Rated:<span style="background-color:rgba(57,212,155, 1.0)"> M</span> - English - Adventure - Chapters: 18 - Words:<br>Activations: (" M" : 0)<br>Example 11: <|endoftext|>up among these:<br>Tom Hooper ("Les<span style="background-color:rgba(57,212,155, 1.0)"> M</span>iserables"), Quentin Tarantino ("D<br>Activations: (" M" : 3)<br>Example 12: Nick<span style="background-color:rgba(57,212,155, 1.0)"> M</span>argevicius/Chris Paddack/Adrian Sampson/Shelby Miller<br>Activations: (" M" : 7)<br>Example 13:  Richard<span style="background-color:rgba(57,212,155, 1.0)"> M</span>. Daley likely will remain hospitalized in an intensive care unit for several days as doctors conduct<br>Activations: (" M" : 5)<br>Example 14: <|endoftext|> Fradis<span style="background-color:rgba(57,212,155, 1.0)"> M</span>, Boss JH. Angiolymphomatoid hyperplasia<br>Activations: (" M" : 4)<br>Example 15: <|endoftext|><br>Vera Copias Test John<span style="background-color:rgba(57,212,155, 1.0)"> M</span>ARTYN C.Court<br>Sarah SMITHs Will<br>Activations: (" M" : 7)<br>Example 16: ated the Les<span style="background-color:rgba(57,212,155, 1.0)"> M</span>oulins defenses. The ship��s huge guns were silent. The naval<br>Activations: (" M" : 3)<br>Example 17: <|endoftext|> eight native Hawaiian female educational leaders on transforming the University of Hawai��i at<span style="background-color:rgba(57,212,155, 1.0)"> M</span>āno<br>Activations: (" M" : 0)<br>Example 18:  where 260 members of the Corps are buried, including Lance Corporal Frank<span style="background-color:rgba(57,212,155, 1.0)"> M</span>fana, son of<br>Activations: (" M" : 5)<br>Example 19: <|endoftext|>, Core<span style="background-color:rgba(57,212,155, 1.0)"> M</span> Performance, 18 Core Xeons and much more news from IDF!<br>Subject<br>Activations: (" M" : 1)<br>Example 20:  elect for a full-on smartphone push.<br>Anthony<span style="background-color:rgba(57,212,155, 1.0)"> Mic</span>hell, author of ��Samsung Electronics<br>Activations: (" Mic" : 0)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Initial "M" in proper nouns, often in names or abbreviations.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Initial &quot;M&quot; in proper nouns, often in names or abbreviations.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Alfred<span style="background-color:rgba(57,212,155, 1.0)"> M</span>. Scales, David G. Fowle, and Thomas H. Holt (18</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> I have read several articles about the photographic text of Robert<span style="background-color:rgba(57,212,155, 1.0)"> M</span>applethorpe—especially his inscription</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>
+On Thursday 16 February 2006 23:23, Jason<span style="background-color:rgba(57,212,155, 1.0)"> M</span>ollman wrote:
+> I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>by Dan<span style="background-color:rgba(57,212,155, 1.0)"> M</span>ihoerck on
+Did you enjoy this video?Sign In to Up</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> "The Brian<span style="background-color:rgba(57,212,155, 1.0)"> M</span>cknight Show"
+The weekly entertainment show, due this fall, will "</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> National Institutes of Health Building 1 in Bethesda, Maryland, and the Gov. Mario<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> M</span>. Cuomo Bridge</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> properties throughout Los Angeles County, Las Vegas, and Europe.
+Kristin<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> M</span>. Bergstrom,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Carolina Railroad Company, signed by N.C. Governor Alfred<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> M</span>. Scales (1886);</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>21Dukes Casino presents exclusive $25 free chip bonus codeKate<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> M</span>ccGwire is an artist</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>:30 | Live Reptiles | Ed<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> M</span>oll, Tucson Herpetological Society
+10:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>��t expect him to be Johnny<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> M</span>ambo.
+6)ADVANCED DANC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> of the road without being able to move. Godfrey<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> M</span>rouongwana one of the protest leaders</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>waniki and Andrew<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> M</span>wangi, who are also Certified CTP Trainers and will grow the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>."
+Dr. Eileen<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> M</span>. Wilkinson and Adjunct Professor Angela Tauro, from Fair</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> his PhD at Xavier University.
+Dr. Jeanette<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> M</span>owery joined the faculty of the MAT</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>ing, E. T. Kibble, A., S.<span style="background-color:rgba(57,212,155, 0.76)"> M</span>ote, W. H</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>.
+Since the army deposed Islamist President Mohamed<span style="background-color:rgba(57,212,155, 0.76)"> M</span>ursi after mass protests.
+"Arab</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>.<span style="background-color:rgba(57,212,155, 0.76)"> M</span>. Steen. 2007. Going beyond the internal-external dichotomy in clinical psychology:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> co-author for the fourth hard copy edition of Physical Chemistry published by Houghton<span style="background-color:rgba(57,212,155, 0.76)"> M</span>ifflin</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> thought it would be much more difficult than it really is. But Per<span style="background-color:rgba(57,212,155, 0.76)"> M</span>ertesacker gave me</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Canaan. See C.<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> M</span>. Carmichael, ��Some Sayings in Genesis 49,�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>.: Sinauer Associates, 2016. Print.
+- Galinsky, Adena<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> M</span>. ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> by the bravery of a garrison of 400 men, under the command of Colonel<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> M</span>oultrie. The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> then Garcia-<span style="background-color:rgba(57,212,155, 0.6799999999999999)">M</span>olina blessed us all with Hello, Love, Goodbye—starring Bernardo</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>.�� – Célimène, played by Armande Béjart-<span style="background-color:rgba(57,212,155, 0.6799999999999999)">M</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>37-3 (2 vol.))
+Translation by W.V. Cooper (J.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">M</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> D'Angeli I, Truscelli G, De Maio<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> M</span>, et al</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> in trouble: issey<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> m</span>iyake head to toeMaritime forces encounter a wide range of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> problems. The American Beau<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> m</span>onde ofAnesthesiologists has processed a coloring paperback entitled My Pere</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> da<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> M</span>otta Competition, the 1988 Greater Palm Beach Symphony Competition and won first prize at the 1990 Leeds</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> vol. 18(2), pages 181-206.
+- Hurvich, Clifford<span style="background-color:rgba(57,212,155, 0.52)"> M</span>.,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> and Reeder, D.<span style="background-color:rgba(57,212,155, 0.52)"> M</span>. 1993. Mammal Species of the World. A Tax</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>2 cup Peanut<span style="background-color:rgba(57,212,155, 0.52)"> M</span>&Ms (yellow and orange), chopped
+1/2 cup Reese Pieces</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>/2 oz d'orange liqueur (cointreau, grand<span style="background-color:rgba(57,212,155, 0.52)"> m</span>arnier...)
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> the finest grain-fed beef, Omaha Steaks Filet<span style="background-color:rgba(57,212,155, 0.52)"> M</span>ignon is aged to peak</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>, Amtrak, Credo Mobile, Eagle Eye Tours, Bic, Yakima<span style="background-color:rgba(57,212,155, 0.44)"> M</span>TC and Butter</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Sundarbans, having vanished from the central, northeast and southeast regions (<span style="background-color:rgba(57,212,155, 0.44)">M</span>d Anwarul</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>,C.C.<span style="background-color:rgba(57,212,155, 0.44)">M</span>.T.I would like to inform you guys of a new service</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> advance!
+Gwyneth<span style="background-color:rgba(57,212,155, 0.44)"> L</span>lewelyn 00:35, 8 October 2009 (UTC)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> he still put a bag of Peanut<span style="background-color:rgba(57,212,155, 0.44)"> M</span>&M's in front of me tonight. Meanie</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Hawai��i at<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> M</span>ānoa into a Hawaiian place of learning
+|Lipe Kai</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>-7), Flyweight (8-9), Mighty<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> M</span>ite (10-11), Junior V</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Book Group, 1290 Avenue of the Americas, New York 10104.LEARNING<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> M</span>ADE</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ode.
+JEFFREY<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> SM</span>ITH, KERRY CAMPAIGN FOREIGN POL</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> E, Slater<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> M</span>
+Abstract. Previous studies have examined the experience of owning a virtual surrogate body or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>bi.nlm.nih.gov/pubmed/29676641.
+Martens<span style="background-color:rgba(57,212,155, 0.28)"> M</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> visit the team, in an attempt to connect with a younger audience
+@<span style="background-color:rgba(57,212,155, 0.28)">m</span>ashable: often</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> of a rotational system at the guard spot — Connolly spent time spelling both<span style="background-color:rgba(57,212,155, 0.28)"> M</span>ankins</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> a nose to re-take second ahead of the Competition Yellow.
+Mc<span style="background-color:rgba(57,212,155, 0.28)">M</span>ullen was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Pro Tempore; Representative Viriato Manuel de<span style="background-color:rgba(57,212,155, 0.28)">M</span>acedo (R-Plymouth);</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> hairstyles to do, but it looks awesome, so it's worth the effort!
+You may</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> DeLay is a textbook example of an authoritarian personality.
+Altemeyer has conducted extensive research</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> East Greenville PA – Call us when you look for guaranteed locksmith services at: 215-695</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> The following event I was required in the pool to do water ballet to heavy metal music. I think</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> island, transforming it into a focal point.
+Feature pendant lighting
+Placing a bulkhead</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> taking. How long does the pain last? I hope I will be ok to go to work Tuesday</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the real money quote is near the end: "By the time he announced her as his choice,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Unlike Mr. Gonzales, Mr. Mukasey is not a close confidant of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> were also used as numbers: and there has never been a cipher in history solved as often as that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>|Chronological and Political Information|
+|Skills and Abilities|
+Standard issue sidear</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> of the prestigious<span style="background-color:rgba(57,212,155, 0.2)"> Stanford</span> University. M<span style="background-color:rgba(57,212,155, 0.2)">aint</span>aining a modest acceptance rate of only 5%, enrollment at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> contribute to the Mary M<span style="background-color:rgba(57,212,155, 0.2)">.</span> Danos<span style="background-color:rgba(57,212,155, 0.2)"> Theater</span> renovation fund, call 985-448-4134</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> other guitarist might<span style="background-color:rgba(57,212,155, 0.2)"> be</span> using.<span style="background-color:rgba(57,212,155, 0.2)"> A</span> Big Muff is a Big Muff, true, but</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>
+- Joseph M.<span style="background-color:rgba(57,212,155, 0.2)"> Brown</span> Jr.,<span style="background-color:rgba(57,212,155, 0.2)">
+</span>- George W. Finkbohner III,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Mazzilli Reed<span style="background-color:rgba(57,212,155, 0.2)"> Griff</span>ey Jr<span style="background-color:rgba(57,212,155, 0.2)">.</span> Dunn 52 DL KCR Jeff Mazzilli Clement Hernandez,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Lester, Joe M Long<span style="background-color:rgba(57,212,155, 0.2)">.</span> W L<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Crouch, B W Crouch, W F Hu</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> fairy guardian of mt<span style="background-color:rgba(57,212,155, 0.2)"> m</span>akiling<span style="background-color:rgba(57,212,155, 0.2)"> is</span> probably the most famous.
+Maria makiling is a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> and work with feelings<span style="background-color:rgba(57,212,155, 0.2)"> and</span> behaviours associated<span style="background-color:rgba(57,212,155, 0.2)"> with</span> it.
+I recently did an interview with Pam Mert</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>OADCASTER<span style="background-color:rgba(57,212,155, 0.2)"> B</span>UCK MART<span style="background-color:rgba(57,212,155, 0.2)">INE</span>Z.
+His long–ago partner — Cheek</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>Equine | Light<span style="background-color:rgba(57,212,155, 0.2)"> Wa</span>/orship<span style="background-color:rgba(57,212,155, 0.2)"> |</span> Noise Pelican
+Eve Maret | Stars Aligned</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

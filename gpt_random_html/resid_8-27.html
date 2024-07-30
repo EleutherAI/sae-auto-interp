@@ -1,0 +1,687 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-27</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-27</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  receive letters. Meetings and even exchanges of information<span style="background-color:rgba(57,212,155, 1.0)"> with</span> my lawyers have encountered much interference from the Chinese<br>Activations: (" with" : 2)<br>Example 2:  old friend for lunch and then meet up<span style="background-color:rgba(57,212,155, 1.0)"> with</span> about 12 women for a bachelorette party.<br>Activations: (" with" : 2)<br>Example 3:  Todd forms a sinister partnership<span style="background-color:rgba(57,212,155, 1.0)"> with</span> Mrs Lovett. Todd's thirst for blood inspires the addition of a<br>Activations: (" with" : 5)<br>Example 4: <|endoftext|> was Bedford's daughter, who had seen a YouTube video<span style="background-color:rgba(57,212,155, 1.0)"> of</span> the song, "Thank You,<br>Activations: (" of" : 1)<br>Example 5: <|endoftext|>. You snuggled<span style="background-color:rgba(57,212,155, 1.0)"> with</span> me in bed for about an hour before I laid you down in<br>Activations: (" with" : 2)<br>Example 6:  and less<span style="background-color:rgba(57,212,155, 1.0)"> for</span> herself. But she learns that the apple doesn't fall far from the tree when she<br>Activations: (" for" : 3)<br>Example 7: <|endoftext|> their child waving<span style="background-color:rgba(57,212,155, 1.0)"> to</span> the camera. Too painful. That child's gone.<br>But a ten<br>Activations: (" to" : 2)<br>Example 8:  the part<span style="background-color:rgba(57,212,155, 1.0)"> of</span> his spouse that it is safe to move forward. Phase 3 could include going out on<br>Activations: (" of" : 3)<br>Example 9: <|endoftext|> shaking the hand<span style="background-color:rgba(57,212,155, 1.0)"> of</span> the President from the opposing party (just ask ex-Florida Governor Charlie Christ<br>Activations: (" of" : 2)<br>Example 10:  with it. The damage begins when information is shared, thoughts or feelings that should have been kept<span style="background-color:rgba(57,212,155, 1.0)"> between</span><br>Activations: (" between" : 2)<br>Example 11: <|endoftext|>�s name. After asking him a baseball memory he shared<span style="background-color:rgba(57,212,155, 1.0)"> with</span> his dad, Stoney gave<br>Activations: (" with" : 4)<br>Example 12:  mocked<span style="background-color:rgba(57,212,155, 1.0)"> by</span> William Hartnell's first Doctor, played by David Bradley. They will appear together in the<br>Activations: (" by" : 2)<br>Example 13:  to fall in love<span style="background-color:rgba(57,212,155, 1.0)"> with</span> the girl he meets for the first time in the series. Meanwhile, the<br>Activations: (" with" : 2)<br>Example 14: <|endoftext|>les and take sides, and you shouldn't ask them to. Making romantic overtures<span style="background-color:rgba(57,212,155, 1.0)"> toward</span> a<br>Activations: (" toward" : 1)<br>Example 15:  discussion<span style="background-color:rgba(57,212,155, 1.0)"> with</span> the children. These can also be used during Children's Week to encourage children to understand how<br>Activations: (" with" : 4)<br>Example 16: <|endoftext|> to work on the production of their hunting videos.<br>One day, when he was talking<span style="background-color:rgba(57,212,155, 1.0)"> with</span><br>Activations: (" with" : 5)<br>Example 17:  in one of the large VIP seats in the front row<span style="background-color:rgba(57,212,155, 1.0)"> with</span> a glass of brandy and lose himself<br>Activations: (" with" : 2)<br>Example 18: ibility that they arranged a job<span style="background-color:rgba(57,212,155, 1.0)"> for</span> him in Reynosa.<br>Bernier is just one<br>Activations: (" for" : 2)<br>Example 19:  red flower clusters were jeweled ornaments around the neck<span style="background-color:rgba(57,212,155, 1.0)"> of</span> the hunger angel.<br>Leop<br>Activations: (" of" : 1)<br>Example 20: <|endoftext|>."<br>The sight of him had a paralyzing effect<span style="background-color:rgba(57,212,155, 1.0)"> upon</span> Laodice. She saw,<br>Activations: (" upon" : 2)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Prepositions indicating association, accompaniment, or relation between entities or actions.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Prepositions indicating association, accompaniment, or relation between entities or actions.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> were hardly any Indians in the audience, Rohan recalls the fan moment as a lady along<span style="background-color:rgba(57,212,155, 1.0)"> with</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> cosmic being trying to make our world a midnight snack." John tried a joke<span style="background-color:rgba(57,212,155, 1.0)"> with</span> his dry sense</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> "Here's a clue," he said, and he handed it<span style="background-color:rgba(57,212,155, 1.0)"> to</span> Digby.
+Dig</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span>...if you want to." Flash said looking at the faces<span style="background-color:rgba(57,212,155, 1.0)"> of</span> all the other members of the League</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> At the age of thirteen, after an argument<span style="background-color:rgba(57,212,155, 1.0)"> with</span> his father, he left home and made his way</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> president of the IOC, who then delivers it<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> to</span> the organizers of the next Games. In addition to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> with</span> one another, whether they are in small groups or are sitting in the large circle. What�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> their fingers. Partners should communicate<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> with</span> each other to find an appropriate pace and amount of pressure.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> he had a conversation<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> with</span> the Folly Beach mayor and city administrator in which they told him F</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>, that evening, been sealed to their parents. As the sisters bade their farewell<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> to</span> the children</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> in the game and took a selfie<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> with</span> an Olympiacos player. He was escorted out after</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> and also where to check in<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> with</span> each other, and to also to reunite at the end of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> you hit it off, you have a good time, so you want to meet and chat<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> with</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>ate Moon. Keeping Silver nails in the feet<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> of</span> the bed is also recommended in the Lal Kitab</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> disappointed to see the camera and immediately gets down from the truck and walks away, turning his back<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> on</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> of</span> the human body. This sweat has a certain type of smell. And this smell is unpleasant as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>, and his jaw tightened. "I'll have to talk<span style="background-color:rgba(57,212,155, 0.76)"> to</span> Bats directly then...not something</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>, she fears her secrets<span style="background-color:rgba(57,212,155, 0.76)"> from</span> the past will surface. And she might be the one to break his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> looked over<span style="background-color:rgba(57,212,155, 0.76)"> at</span> Kate and mouthed, "You're hairy too". Kate nodded and raised her</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> high school girlfriend of Beckett's, share an attraction. Meanwhile, Beckett's relationship<span style="background-color:rgba(57,212,155, 0.76)"> with</span> Detective</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> ��Consider Yourself.�� This woman then began to sing the song<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> to</span> herself. Consider yourself</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>, where Riley teams up<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> with</span> a young FBI agent to stop Garrick from returning to his own time</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> time sitting outside an animal's habitat and watching them, without trying to interact<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> with</span> them in any way</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> go into why I believe this would be a good thing but after my conversation<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> with</span> someone today I'll</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> safety. Usually this submissive is not approachable by another Dominant without the permission<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> of</span> the protecting</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> with</span> this other guy and we were busy trying to crack into this safe. The safe was huge,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> quick note<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> for</span> each baby.
+I finished these up in April, but just recently had the chance</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> did not notice anything until a friend pointed out<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> to</span> him its existence. Excited at its discovery</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> 10-minute audience<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> with</span> the Mouse himself.
+The next day, thanks to a helpful cast member</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> and veils. Some of the women are conversing<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> with</span> one another, some are solitary figures,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> One hundred ten online viewers participated in the session. These viewers were able to interact<span style="background-color:rgba(57,212,155, 0.52)"> with</span> the panel via</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> before throttling back - more than enough<span style="background-color:rgba(57,212,155, 0.52)"> for</span> the passing Vulcans to detect them. Cochrane</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> with</span> 2 blue doors and a red door. There are a lot of battle
+droids here to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> me, while I remained under the command and control<span style="background-color:rgba(57,212,155, 0.52)"> of</span> the aircrew culture which collectively had no regard</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> run about in panic followed<span style="background-color:rgba(57,212,155, 0.52)"> by</span> his lizard warriors frantically running in circles.
+The text-only ep</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>.
+Drew came around to the side<span style="background-color:rgba(57,212,155, 0.44)"> of</span> the chair and bent over her. ��Give</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> us....... I liked David Johanson a lot - still do. I never really talked at length<span style="background-color:rgba(57,212,155, 0.44)"> with</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> he vows to deny his feelings/attraction for Bertie and keep his relationship<span style="background-color:rgba(57,212,155, 0.44)"> with</span> his boss strictly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> commanders were summoned to Spa and asked about the attitudes<span style="background-color:rgba(57,212,155, 0.44)"> of</span> soldiers. They answered that few were willing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>.
+We popped along to check it out and were greeted<span style="background-color:rgba(57,212,155, 0.44)"> by</span> many happy faces and it was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> lap six. Fortin then started to edge away just slightly, while the battle for second<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> between</span> W</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>�� I was going to get<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> from</span> swinging a weighted ball around.
+We start with skipping,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> to get Liesel��s diary back that��s been thrown in there<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> by</span> their nem</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> him, giving Danvers time to flee. Danvers returns, as Supergirl, to<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> rescue</span> Mer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> the quality would hold up. I have been getting compliments<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> from</span> everyone who has seen the windows. As</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Be sure that she will battle and celebrate<span style="background-color:rgba(57,212,155, 0.28)"> with</span> you and be your backup no matter what occurs.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>
+JS: It was overwhelming. I looked over<span style="background-color:rgba(57,212,155, 0.28)"> at</span> Cate at one point - we were</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> what they said was meth<span style="background-color:rgba(57,212,155, 0.28)"> to</span> customers at a Turkey Hill Market on West Front Street Monday evening, police</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> not for the Russian intervention. At the request<span style="background-color:rgba(57,212,155, 0.28)"> of</span> the Austrian emperor Franz Joseph, the Russians invaded with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>He was<span style="background-color:rgba(57,212,155, 0.28)"> with</span> the 8th field artillery of the 25th Infantry Division, commonly known as Tropic</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> vary etiologies, to have similar adverse effects profiles, and to improve quality-of-life</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> who plays John McBain as Caleb the vampire. with McBain and Sam, I was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the restart lap, Smith got halfway spun around and put up onto the inside burm at turn two</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> it happen to be so? why?: You haven't any desire to go? How so?
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the manufacturing of bullets and shotgun pellets for hunting or recreation.
+The use of such ammo by hunters</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>a rhymes' lyrics haha "God Rap, God persona, God Scrilla, God Body</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>EL,BG,NL,SV,DA,RO,PL,
+- Cast of movie</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to pinpoint what the scent is but it does not linger It smells sort of floral.
+Have you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> fight for ourselves.
+Then I got a phone call from Global Services. This, I quickly learned</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> He��s angry, badmouthed and needlessly onerous. People often see him</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the aircraft, the<span style="background-color:rgba(57,212,155, 0.2)"> rush</span> of the<span style="background-color:rgba(57,212,155, 0.2)"> wind</span>, and the presence of captain James Bigglesworth was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>. He took<span style="background-color:rgba(57,212,155, 0.2)"> the</span> call even<span style="background-color:rgba(57,212,155, 0.2)"> though</span> he was out of breath, and spoke with Brian as if</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> responsive, efficient and<span style="background-color:rgba(57,212,155, 0.2)"> knowledgeable</span> about the<span style="background-color:rgba(57,212,155, 0.2)"> area</span>.
+The hotel's value was also praised by some lod</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> into trouble. News<span style="background-color:rgba(57,212,155, 0.2)">day</span> verified the<span style="background-color:rgba(57,212,155, 0.2)"> student</span>'s identity and spoke with the student's father, who supported</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> his candidate��<span style="background-color:rgba(57,212,155, 0.2)">s</span> positive side<span style="background-color:rgba(57,212,155, 0.2)"> —</span> not bothering to explain away the reactions of Milkien and Sch</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> the part of the wizard<span style="background-color:rgba(57,212,155, 0.2)"> presumably</span>, like<span style="background-color:rgba(57,212,155, 0.2)">,</span> yes, I am a wizard, how dare you blah</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> a Democrat,<span style="background-color:rgba(57,212,155, 0.2)"> is</span> summoned to<span style="background-color:rgba(57,212,155, 0.2)"> the</span> Oval Office for impromptu meetings with the president up to five</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> to getting inside<span style="background-color:rgba(57,212,155, 0.2)"> customers</span>��<span style="background-color:rgba(57,212,155, 0.2)"> heads</span>. First came an exchange of information with ACNielsen.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> was just crystal clear<span style="background-color:rgba(57,212,155, 0.2)"> when</span> we all<span style="background-color:rgba(57,212,155, 0.2)"> had</span> that conversation with then-Senator Obama, and I think people</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> his power was not<span style="background-color:rgba(57,212,155, 0.2)"> enough</span>, apologizing to<span style="background-color:rgba(57,212,155, 0.2)"> Y</span>hwach-sama.
+Want to discuss the Bleach</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

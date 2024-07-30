@@ -1,0 +1,737 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-11</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-11</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <br>-<span style="background-color:rgba(57,212,155, 1.0)"> Join</span> Date<br>- Feb 2013<br>- Picton NSW<br>Well done and nice job.<br>Activations: (" Join" : 2)<br>Example 2:  liability risk using 10b5-1 plans, and litigation and SEC enforcement actions. Brad was<span style="background-color:rgba(57,212,155, 1.0)"> joined</span><br>Activations: (" joined" : 1)<br>Example 3: ��ve<span style="background-color:rgba(57,212,155, 1.0)"> joined</span> an online casino along with a no deposit bonus, your bank account is along with<br>Activations: (" joined" : 5)<br>Example 4: <|endoftext|>ated with attendees throughout the Forum.<br>Joanne Moretti from Jabil<span style="background-color:rgba(57,212,155, 1.0)"> joined</span> us next to<br>Activations: (" joined" : 0)<br>Example 5: <|endoftext|> often to water tomatoes in a raised bed is<span style="background-color:rgba(57,212,155, 1.0)"> usually</span> a major source of concern for people who grow<br>Activations: (" usually" : 1)<br>Example 6: <|endoftext|> education community can help advance the Next Generation Science Standards!<br>Matt Krehbiel<span style="background-color:rgba(57,212,155, 1.0)"> joined</span> Achieve<br>Activations: (" joined" : 1)<br>Example 7: <|endoftext|> 1935. Now, Drake has<span style="background-color:rgba(57,212,155, 1.0)"> joined</span> forces with Telle Tire & Auto Centers—another family-<br>Activations: (" joined" : 0)<br>Example 8:  Posts: 1556<br>-<span style="background-color:rgba(57,212,155, 1.0)"> Joined</span>: Thu 01.10.2008 9:20 pm<br>-<br>Activations: (" Joined" : 2)<br>Example 9: <|endoftext|> that is contained to Facebook has<span style="background-color:rgba(57,212,155, 1.0)"> joined</span> us. The Topps Traded 1975 Project will also be<br>Activations: (" joined" : 0)<br>Example 10: <|endoftext|> Dec 6, 2017 8:38 am EST. You are<span style="background-color:rgba(57,212,155, 1.0)"> now</span> receiving e-mail alerts for<br>Activations: (" now" : 0)<br>Example 11: <|endoftext|> Tue Jan 04 2000 - 12:33:19 ESTMIG<span style="background-color:rgba(57,212,155, 1.0)"> members</span> discuss product development, integration<br>Activations: (" members" : 1)<br>Example 12: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> joined</span> Alpha Xi Delta, played clarinet and tenor sax in a dance band, and sang<br>Activations: (" joined" : 2)<br>Example 13: 06-2013, 11:19 PM<br>-<span style="background-color:rgba(57,212,155, 1.0)"> Join</span> Date<br>- Jun 2008<br>Good thing it<br>Activations: (" Join" : 1)<br>Example 14:  report that on February 21st one of our most active<br>girls Solveig Larsen<span style="background-color:rgba(57,212,155, 1.0)"> joined</span> the<br>Activations: (" joined" : 1)<br>Example 15: <|endoftext|> has<span style="background-color:rgba(57,212,155, 1.0)"> joined</span> its staff as director of municipal finance. In that capacity, Schimmel will work<br>Activations: (" joined" : 2)<br>Example 16: 's up braj?<br><span style="background-color:rgba(57,212,155, 1.0)">Join</span> Date: Jun 2008<br>Casino cash: $11649<br><br>Activations: ("Join" : 1)<br>Example 17: <|endoftext|>lol<br>sroseman has<span style="background-color:rgba(57,212,155, 1.0)"> left</span> the chat.<br>[elderbob] I said<br>Activations: (" left" : 0)<br>Example 18: 02-2013, 06:58 PM #553<br>-<span style="background-color:rgba(57,212,155, 1.0)"> Join</span> Date<br>- Jun 2012<br>-<br>Activations: (" Join" : 1)<br>Example 19: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> join</span> us this October in Tel Aviv!<br>Stay tuned for more info!This post was sponsored<br>Activations: (" join" : 0)<br>Example 20: !<br>Joined<span style="background-color:rgba(57,212,155, 1.0)">:</span> Oct 13, 2005<br>I think I have given the impression that static variables are<br>Activations: (":" : 0)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The verb "join" or its variations ("joined", "Join"), often in the context of membership, registration, or affiliation.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The verb &quot;join&quot; or its variations (&quot;joined&quot;, &quot;Join&quot;), often in the context of membership, registration, or affiliation.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> joined</span> to a domain, EFS issues EFS recovery certificates to the local Administrator user account as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> Blizzard game again. NEVER!!!!
+@msauce32<span style="background-color:rgba(57,212,155, 1.0)"> join the</span> club
+i used to get</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>peproject_activities.htm
+doliver has<span style="background-color:rgba(57,212,155, 1.0)"> joined</span> the chat.
+[d</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> joined</span> the reserves and started college, repressing all of the sexual harassment, the personal attacks,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)"> joined</span> the chat.
+[buth] ok, I'm sorry, friends, gtg,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>||#3|
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">Join</span> Date: June 25, 2008
+Location: Central, Southern NY,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Directory<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> joined</span> issuing CA and copy the all three of the files from the offline CA to somewhere accessible</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> join here was Kermit the frog. and<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> joined</span> this week was cookie monster.Bert. Er</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> joined</span> a panel on cosmology with five other physicists. In a cringe inducing exchange, the panel</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> joined</span> the detective division. He spent seven years specializing in child abuse and sex crimes. One of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">join</span> the discord!
+Stay up to date and follow us to stay alerted when we first release</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> 2012, 11:40 AM #3Senior Member
+-<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Join</span> Date
+- Aug 2012
+I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> flyboys.
+28-02-2013, 03:56 PM #548
+-<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Join</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>fman have<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> joined</span> its national board of directors. Sutton and Dorfman bring considerable experience scaling… Learn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>cher<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Joined</span> 4 months, 2 weeks ago United States
+Im Katsuki Bakugou, Im</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>
+by error 13 September 05, 2006<span style="background-color:rgba(57,212,155, 0.76)">Join</span> with us
+Donate now and your tax-ded</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>
+28-02-2013, 12:41 PM #545
+-<span style="background-color:rgba(57,212,155, 0.76)"> Join</span> Date
+-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>ys and gals...for a good morning.
+elderbob has<span style="background-color:rgba(57,212,155, 0.76)"> left</span> the chat</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>IM with respect to what a Data Resource is.aaron_mciver Senior Member<span style="background-color:rgba(57,212,155, 0.76)"> Joined</span>:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>, 09:22 AM #556
+-<span style="background-color:rgba(57,212,155, 0.76)"> Join</span> Date
+- Nov 2012
+Good work everyone</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> Amateur Lesbian · Amateur MILF ·<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Amateur</span> Teen (18/19). Wicked thick milf swall</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>weet!
+Shoot swords, teleport and don't mess with the turtles
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">Join</span> Marko</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>12-05-2012, 04:34 PM
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">Join</span> Date: Mar 2011
+Originally Posted by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> tom byron Milf catches teens fucking and<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> joins</span> in
+So they had permanently pleading eyes immobile</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>
+-<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Join</span> Date
+- Nov 2006
+- New Zealand
+- PSN ID
+- Rep</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> has already<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> joined</span> the production as Captain Hook.
+Said Robert Greenblatt, chairman of NBC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>, 2008, 07:11 AM
+<span style="background-color:rgba(57,212,155, 0.6000000000000001)">Join</span> Date: 11-09-05
+Location:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>or browse other items.Political Analyst, India Research
+Amitabh<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> joined</span> TS Lombard</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>��d<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> participated</span> and I only knew of two ways to meet guys: get drunk or get</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> attend a Journey of Generosity with your friends.
+Blake<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> joined</span> HOPE as a regional representative in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> mind):- I guess i am not late
+Just then lift opens and kabeer<span style="background-color:rgba(57,212,155, 0.52)"> enters</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>playing games.
+Gygax and Don Kaye, later<span style="background-color:rgba(57,212,155, 0.52)"> joined</span> by Blume and Ar</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> :3<span style="background-color:rgba(57,212,155, 0.52)"> Join</span> if you are in the guild xD
+We are a new cocept for guild</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>�re going to be great wherever they go.��Sally Law<span style="background-color:rgba(57,212,155, 0.52)"> joined</span> Ropes & Gray</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>@example.com to<span style="background-color:rgba(57,212,155, 0.52)"> join</span> our weekly email update list.
+Talking Radical Radio is brought to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>:04 PM
+<span style="background-color:rgba(57,212,155, 0.44)">Join</span> Date: Feb 2012
+You're toooo funny!! We call Add</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> them another bath, so I licked my cum off of Desi and Torry<span style="background-color:rgba(57,212,155, 0.44)"> joined</span> in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> forum.
+<span style="background-color:rgba(57,212,155, 0.44)">Join</span> our World Community Team My efforts against childhood cancerMouse-over any button or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.44)"> join</span> your hands, and with your hands, your hearts.��
+– William Shakespeare
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> unions should all be considered equal to marriage.11 Apr 2019
+<span style="background-color:rgba(57,212,155, 0.44)">Join</span> with IAP2 BC &</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>llo Buckaroos rejo<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ined</span> the ranks of 1A athletics. Their first year back at the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ary and Jacob<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> joined</span> us from Toronto. Rosary got in on the 2 man Hand drum singing contest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> to him to be<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> worthy</span> of such devotion.
+View Public Profile
+Find all posts by Flatroc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>
+Actually, neither the number of posts or time since<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> joining</span> would support that attempt to refute the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>roos is<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> now</span> promoting DagCoin with identical sales pitches to the ones he used to promote One</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>88276398 visitors from all over the world
+3515932922 to<span style="background-color:rgba(57,212,155, 0.28)"> join</span> our global network</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> a couple of Rickeys.
+Even waaaay before Rickey<span style="background-color:rgba(57,212,155, 0.28)"> joined</span> the Mets, he was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>arrollar otra.<span style="background-color:rgba(57,212,155, 0.28)"> Join</span> 5 million traders with eToro! Search for: Thank com</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> a bullpen session. (Matt Garza<span style="background-color:rgba(57,212,155, 0.28)"> participated</span> in the PFPs).
+Meanwhile, three</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> tv</span> than normal...but until we are into a better routine, sometimes the tv is what we both</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Tufts�� existing strengths in interdisciplinary research and graduate education.
+Under President Monaco��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Last edited by Psychonaut; 02-20-2012 at 10:47 PM.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> have a moisture problem. And you know what excessive moisture causes- mold problems. The good news is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ai atingir
+Become a Friendlier Person / Win People to Your Way of Thinking /</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> be interpersonal with some other children. You may also take advantage of group of people charges beyond doubt places</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with moderate to profound hearing loss. Products include hearing solutions for cochlear, bone conduction and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> said to thaw for 30 minutes - me, not knowing what thaw meant at that age,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> a razor with 10 blades. These innovations promised a better, closer, smoother shave. The faulty logic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> scene there. It is not a typical postal-stamp place that is affordable. It is about</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>. "It gets right at the First Amendment," he said. When I asked him whether it was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>s Spencer Gomez<span style="background-color:rgba(57,212,155, 0.2)"> is</span> now chef de<span style="background-color:rgba(57,212,155, 0.2)"> cuisine</span> at Holeman & Finch Public House, offering a new</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> see a Hero Class<span style="background-color:rgba(57,212,155, 0.2)"> solution</span> for veterans<span style="background-color:rgba(57,212,155, 0.2)">,</span> possibly via the Cash Shop.Amy joined the Prechter</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> join with her in<span style="background-color:rgba(57,212,155, 0.2)"> helping</span> the Foundation<span style="background-color:rgba(57,212,155, 0.2)"> fulfil</span> its mission of erasing hate.
+The goal of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>ccw entered the scene<span style="background-color:rgba(57,212,155, 0.2)"> and</span> offered cable<span style="background-color:rgba(57,212,155, 0.2)"> and</span> wireless pccw stock and us$11 billion</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>geschw<span style="background-color:rgba(57,212,155, 0.2)">ader</span> 26 by<span style="background-color:rgba(57,212,155, 0.2)"> Will</span>y Fronhofer. Your download The Ugly joined</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Join Date
+- Mar<span style="background-color:rgba(57,212,155, 0.2)"> 2004</span>
+-<span style="background-color:rgba(57,212,155, 0.2)"> Maple</span> Bluff, Wisconsin
+My first fire
+Just had</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Episode 3 with a<span style="background-color:rgba(57,212,155, 0.2)"> chaotic</span>/evil<span style="background-color:rgba(57,212,155, 0.2)"> alignment</span>.
+Noose and Razor Fellow
+This player joined the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>04-07-<span style="background-color:rgba(57,212,155, 0.2)">2012</span>, 12<span style="background-color:rgba(57,212,155, 0.2)">:</span>42 AM||#1|
+Join Date: Nov 2005</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> T. V<span style="background-color:rgba(57,212,155, 0.2)">.</span> Mohand<span style="background-color:rgba(57,212,155, 0.2)">as</span> Pai joined the wave of criticism created by offended people who v</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Amateur Lesbian ·<span style="background-color:rgba(57,212,155, 0.2)"> Amateur</span> MILF<span style="background-color:rgba(57,212,155, 0.2)"> ·</span> Amateur Teen (18/19). Hot Milf Pictures -</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

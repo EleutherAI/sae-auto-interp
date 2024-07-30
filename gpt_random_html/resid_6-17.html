@@ -1,0 +1,688 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-17</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-17</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|>о��о��ь�� �<span style="background-color:rgba(57,212,155, 1.0)">�</span>ммуностим<br>Activations: ("�" : 9)<br>Example 2: <|endoftext|>��������<span style="background-color:rgba(57,212,155, 1.0)">�</span>�� ������ा�<br>Activations: ("�" : 8)<br>Example 3: <|endoftext|>�� �������������� �<span style="background-color:rgba(57,212,155, 1.0)">�</span>�<br>Activations: ("�" : 9)<br>Example 4:  -> (I) have many things to do.<br>����� ��<span style="background-color:rgba(57,212,155, 1.0)">�</span>�<br>Activations: ("�" : 0)<br>Example 5: � ��� �<span style="background-color:rgba(57,212,155, 1.0)">�</span>���� ��� ��� �� �<br>Activations: ("�" : 7)<br>Example 6: ��<span style="background-color:rgba(57,212,155, 1.0)">�</span>��� ���������.( casual) : Of<br>Activations: ("�" : 8)<br>Example 7: �����<span style="background-color:rgba(57,212,155, 1.0)">�</span>��������������<br>Activations: ("�" : 9)<br>Example 8: оры �<span style="background-color:rgba(57,212,155, 1.0)">�</span> �<span style="background-color:rgba(57,212,155, 1.0)">�</span>ммуно��о��улято<br>Activations: ("�" : 8), ("�" : 7)<br>Example 9: <|endoftext|>�ывается �<span style="background-color:rgba(57,212,155, 1.0)">�</span>ммуно��е��<br>Activations: ("�" : 9)<br>Example 10: <|endoftext|>��<span style="background-color:rgba(57,212,155, 1.0)">�</span>��������ा����), Brahmas<br>Activations: ("�" : 8)<br>Example 11: ���<span style="background-color:rgba(57,212,155, 1.0)">�</span>��½����º��������<br>Activations: ("�" : 8)<br>Example 12: <|endoftext|>�оро��а — ��осква �<span style="background-color:rgba(57,212,155, 1.0)">�</span> ��и<br>Activations: ("�" : 9)<br>Example 13:  person, ��������: to not know��<span style="background-color:rgba(57,212,155, 1.0)">�</span> ����<br>Activations: ("�" : 8)<br>Example 14: <|endoftext|> iPhone game, which will absolutely sate your "Fallout" thirst until<span style="background-color:rgba(57,212,155, 1.0)"> then</span>.Making of<br>Activations: (" then" : 0)<br>Example 15: �������<span style="background-color:rgba(57,212,155, 1.0)">�</span>������������<br>Activations: ("�" : 8)<br>Example 16:  < �<span style="background-color:rgba(57,212,155, 1.0)">�</span> < 90° then relation between a and b is —<br>Given an equilateral �<br>Activations: ("�" : 6)<br>Example 17: ²������€�����<span style="background-color:rgba(57,212,155, 1.0)">�</span>�� ����<br>Activations: ("�" : 7)<br>Example 18: �����������������<span style="background-color:rgba(57,212,155, 1.0)">�</span>��<br>Activations: ("�" : 9)<br>Example 19: <|endoftext|> last.<br><span style="background-color:rgba(57,212,155, 1.0)">Page</span> 1 of 1<br>New flavours – Sour Apple and Raspberry Lemonade<br>Enh<br>Activations: ("Page" : 1)<br>Example 20: ы�� �<span style="background-color:rgba(57,212,155, 1.0)">�</span> ��е��а��аритны�<br>Activations: ("�" : 9)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Non-ASCII characters, particularly the Unicode character �, which often represents an unknown or unprintable character.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Non-ASCII characters, particularly the Unicode character �, which often represents an unknown or unprintable character.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> �<span style="background-color:rgba(57,212,155, 1.0)">�</span> т.��.). ��еле��но��ор</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">�</span> ��то слу��ил ради ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>���я��ательные �<span style="background-color:rgba(57,212,155, 1.0)">�</span> ��а</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>ерны�� �<span style="background-color:rgba(57,212,155, 1.0)">�</span>��р Tomb Raider ��о����а</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>� сим��ио�� �<span style="background-color:rgba(57,212,155, 1.0)">�</span>н��енерн</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>к ��о��ысить �<span style="background-color:rgba(57,212,155, 0.9200000000000002)">�</span>ммунитет</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>�<span style="background-color:rgba(57,212,155, 0.9200000000000002)">�</span>������������ �����</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>���������<span style="background-color:rgba(57,212,155, 0.9200000000000002)">�</span>����������</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>сть �<span style="background-color:rgba(57,212,155, 0.9200000000000002)">�</span>с��о��ь��о��ать �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>�� ���� ���<span style="background-color:rgba(57,212,155, 0.9200000000000002)">�</span>مت �������</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> (Park Sinhye)
+������ ��<span style="background-color:rgba(57,212,155, 0.8400000000000001)">�</span>��� �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Mikoyan MiG-29 (��икоян �<span style="background-color:rgba(57,212,155, 0.8400000000000001)">�</span> ��у</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>は����に�<span style="background-color:rgba(57,212,155, 0.8400000000000001)">�</span>��され��、����</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>ути �<span style="background-color:rgba(57,212,155, 0.8400000000000001)">�</span>�� —арони��еско�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>��� �����<span style="background-color:rgba(57,212,155, 0.8400000000000001)">�</span>��������� 42)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>eshwara Sphujidhwaja (�<span style="background-color:rgba(57,212,155, 0.76)">�</span>��������</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>��� / ��� to the stem
+��<span style="background-color:rgba(57,212,155, 0.76)">�</span>: that, �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>�������������<span style="background-color:rgba(57,212,155, 0.76)">�</span>-�����</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>����<span style="background-color:rgba(57,212,155, 0.76)">�</span>� 253��<span style="background-color:rgba(57,212,155, 0.76)">�</span>������ ����</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>, and ��th�� sounds. (It does not distinguish between voiceless �<span style="background-color:rgba(57,212,155, 0.76)">�</span> and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>����. Actually ���/��<span style="background-color:rgba(57,212,155, 0.6799999999999999)">�</span>/���/�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>� �<span style="background-color:rgba(57,212,155, 0.6799999999999999)">�</span>��� ��Once a mortal, soon to be in Heaven,�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>��� �<span style="background-color:rgba(57,212,155, 0.6799999999999999)">�</span>������� �������</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> will soon exhaust all our reserves.
+14 ��� ����<span style="background-color:rgba(57,212,155, 0.6799999999999999)">�</span>� ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> I would come home.
+����������� ��<span style="background-color:rgba(57,212,155, 0.6799999999999999)">�</span>�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> ��<span style="background-color:rgba(57,212,155, 0.6000000000000001)">�</span> ���/ ��<span style="background-color:rgba(57,212,155, 0.6000000000000001)">�</span>/ ��� /��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>����������<span style="background-color:rgba(57,212,155, 0.6000000000000001)">�</span>STREET BATTLES���</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> followers, tweeted September 7:
+# ����� ����<span style="background-color:rgba(57,212,155, 0.6000000000000001)">�</span>� �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>. (formal) = Mike ��� ����<span style="background-color:rgba(57,212,155, 0.6000000000000001)">�</span>� ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>�� : Korean language, ��� : well
+��<span style="background-color:rgba(57,212,155, 0.6000000000000001)">�</span>�����</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>Mike ��� �������<span style="background-color:rgba(57,212,155, 0.52)">�</span>���� ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> 200 Sticks & Holder
+- ����<span style="background-color:rgba(57,212,155, 0.52)">�</span>: 1.3 x 2.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> �<span style="background-color:rgba(57,212,155, 0.52)">�</span> Top stories today via @RookieMag 2192 days ago
+- NextGreatGen Daily</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>GM4HKWYA4k �<span style="background-color:rgba(57,212,155, 0.52)">�</span> Top stories today via @TrendsBoston 2196 days</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>º. ��š��°��.���<span style="background-color:rgba(57,212,155, 0.52)">�</span>��½�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>�°��.���<span style="background-color:rgba(57,212,155, 0.44)">�</span>��½���� ���</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>out) with
+����<span style="background-color:rgba(57,212,155, 0.44)">�</span>� ���������</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> ����<span style="background-color:rgba(57,212,155, 0.44)">�</span>� ��� ����� ������ �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>URE ��<span style="background-color:rgba(57,212,155, 0.44)">�</span>: MODEL @aneesasheikhofficial and BRAND @</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>���<span style="background-color:rgba(57,212,155, 0.44)">�</span>IPO���� ����������</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>Friendly girls �<span style="background-color:rgba(57,212,155, 0.36000000000000004)">�</span>� Prostate massage �<span style="background-color:rgba(57,212,155, 0.36000000000000004)">�</span>�
+LisaDarlin Sexy Island Goddess</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> to come ������: this (time) ���<span style="background-color:rgba(57,212,155, 0.36000000000000004)">�</span>�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.36000000000000004)">�</span>���� 77 ��±����������</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> partner �<span style="background-color:rgba(57,212,155, 0.36000000000000004)">�</span>�. Doulike is a popular daytona beach dating service, which specializes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>� ���/ ��<span style="background-color:rgba(57,212,155, 0.36000000000000004)">�</span>/ ��� / ���</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> changing torque limits/calculations in the flash, etc<span style="background-color:rgba(57,212,155, 0.28)">,.</span> Short of disabling misfire detection in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>III] �<span style="background-color:rgba(57,212,155, 0.28)">�</span>5007 ��, based on data obtained with TAURUS-2</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> by page by<span style="background-color:rgba(57,212,155, 0.28)"> page</span> of my dialogue. I'm going to read the line the way that I read</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> cot �<span style="background-color:rgba(57,212,155, 0.28)">�</span>) = 1, sin �<span style="background-color:rgba(57,212,155, 0.28)">�</span> + cos �<span style="background-color:rgba(57,212,155, 0.28)">�</span> = b with 0°</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>) ��� ��������.
+��<span style="background-color:rgba(57,212,155, 0.28)">�</span>��:</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the end of the legislative session.On crypto as a store of value, Bitcoin��s incentives</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Information: Fiberglass reinforced nylon body blocks CNC machined & zinc plated steering extension Laser cut</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> think in a way, introverts are full of creativity and they produce such thoughts that are admired by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Hopes are fading for a West Australian surfer who was taken by a shark on Friday.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> was a transformation between 1966 and 1967 of the notion of ��black power��, which was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> than Vincent?
+Leader of the Pack: Yeah, Scully had Queequeg on "The X</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> validity or suitability for certain uses. Hettich supplies any information or contents without any kind of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Service Inc maintained at the RBC Royal Bank (Barbados) Limited via a false cheque</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> lefty going today it gives us an opportunity to get Tejada and Johnson some at-bats</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to email@example.com. Although not necessary, it's interesting to have a first name,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>ロジック!<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Voc<span style="background-color:rgba(57,212,155, 0.2)">abulary</span> is more complex than using a dictionary and finding the first</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>���<span style="background-color:rgba(57,212,155, 0.2)">�</span>��<span style="background-color:rgba(57,212,155, 0.2)">�</span>��� ���� �����</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>���<span style="background-color:rgba(57,212,155, 0.2)">�</span> ��<span style="background-color:rgba(57,212,155, 0.2)">�</span>��� �� ����� �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>�����<span style="background-color:rgba(57,212,155, 0.2)">�</span>��<span style="background-color:rgba(57,212,155, 0.2)">�</span>�����-�����</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>����<span style="background-color:rgba(57,212,155, 0.2)">�</span>��<span style="background-color:rgba(57,212,155, 0.2)">�</span>�����������ा</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> lipstick.
+Oh<span style="background-color:rgba(57,212,155, 0.2)"> I</span> am so<span style="background-color:rgba(57,212,155, 0.2)"> bad</span> with flower names… ������
+What</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> course, I didn<span style="background-color:rgba(57,212,155, 0.2)">'t</span> know that<span style="background-color:rgba(57,212,155, 0.2)">.</span>
+������ �����</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>�����<span style="background-color:rgba(57,212,155, 0.2)">�</span>��<span style="background-color:rgba(57,212,155, 0.2)">�</span>ा). Bhattotpala, besides commenting on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>��:<span style="background-color:rgba(57,212,155, 0.2)"> let</span>'s V<span style="background-color:rgba(57,212,155, 0.2)"> �</span>��������: right side �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>�����<span style="background-color:rgba(57,212,155, 0.2)">�</span>: that<span style="background-color:rgba(57,212,155, 0.2)"> thing</span> (that)
+������ �</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

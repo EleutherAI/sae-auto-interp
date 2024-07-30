@@ -1,0 +1,692 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-9</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-9</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|>ing and fro-<span style="background-color:rgba(57,212,155, 1.0)">ing</span> around restrictions imposed by COVID-19, the Forest Industry Engineering Association<br>Activations: ("ing" : 0)<br>Example 2:  accompaniment) with: He added insult to injury. They<span style="background-color:rgba(57,212,155, 1.0)"> danced to</span> the music. Where is the<br>Activations: (" danced" : 0), (" to" : 0)<br>Example 3: <|endoftext|> with every intention of<span style="background-color:rgba(57,212,155, 1.0)"> singing</span> it.<br>All these years later, we��re still waiting<br>Activations: (" singing" : 8)<br>Example 4:  of the late Bowie��s hit Heroes.<br>They<span style="background-color:rgba(57,212,155, 1.0)"> sang</span> Cooper��s signature hit �<br>Activations: (" sang" : 7)<br>Example 5:  a Sunday, etc. is what lands you in hell, and doing things like<span style="background-color:rgba(57,212,155, 1.0)"> singing</span> religious hym<br>Activations: (" singing" : 9)<br>Example 6:  filmed by a high quality camera, r<span style="background-color:rgba(57,212,155, 1.0)">apping</span> against some other guy dressed up as Justin Beiber.<br>Activations: ("apping" : 3)<br>Example 7:  a stick-figure cartoon of someone on the toilet?<br>I��m<span style="background-color:rgba(57,212,155, 1.0)"> sing</span>ling out R<br>Activations: (" sing" : 5)<br>Example 8: Win a Pair of Tim McGraw Headphones<br>You many never<span style="background-color:rgba(57,212,155, 1.0)"> sing</span> like Tim McGraw, but<br>Activations: (" sing" : 8)<br>Example 9:  out of Oregon and a surpir<span style="background-color:rgba(57,212,155, 1.0)">sing</span> top spot in dark lager for Rogue��s Chat<br>Activations: ("sing" : 1)<br>Example 10: <|endoftext|> the student rebels, lead by Weston Wells Olson,<span style="background-color:rgba(57,212,155, 1.0)"> sing</span> "Drink With Me to Days Gone<br>Activations: (" sing" : 8)<br>Example 11: <span style="background-color:rgba(57,212,155, 1.0)">ing</span>�� Middle C by practicing the 3-note ornament around that single note only before I move<br>Activations: ("ing" : 1)<br>Example 12:  1, Leader Resource 2, "Now Let Us<span style="background-color:rgba(57,212,155, 1.0)"> Sing</span>," Hymn 368 in Sing<span style="background-color:rgba(57,212,155, 1.0)">ing</span> the<br>Activations: (" Sing" : 2)<br>Example 13:  dead when you<span style="background-color:rgba(57,212,155, 1.0)"> speak</span> so don't be dead when you read. Stop killing your listeners and they will<br>Activations: (" speak" : 0)<br>Example 14:  gym and classroom.<br>Enjoyed through<span style="background-color:rgba(57,212,155, 1.0)"> singing</span>, rhythm activities and listening.How to Prevent Acne<br>Activations: (" singing" : 6)<br>Example 15:  / Into Simon Pure��<span style="background-color:rgba(57,212,155, 1.0)">s</span> plain dealing every day shop, / To look out for a hat<br>Activations: ("s" : 1)<br>Example 16: <|endoftext|>meau Park in Belfast in 2012. It only came to light from BTO<span style="background-color:rgba(57,212,155, 1.0)"> ringing</span> reports and<br>Activations: (" ringing" : 0)<br>Example 17:  any mikey taking... Sconey was catching crucians and ended up<span style="background-color:rgba(57,212,155, 1.0)"> singing</span> a song about<br>Activations: (" singing" : 8)<br>Example 18: <span style="background-color:rgba(57,212,155, 1.0)"> singing</span> in tandem. Separately but together, these two fit the tone of the song gently.<br>Activations: (" singing" : 7)<br>Example 19:  successful, that person will then begin whistling or<span style="background-color:rgba(57,212,155, 1.0)"> singing</span> your song minutes later.<br>I whistled<br>Activations: (" singing" : 7)<br>Example 20: <|endoftext|> square with both outdoor and indoor seating and proper<span style="background-color:rgba(57,212,155, 1.0)"> Sing</span>ha beers to wash down your Thai curry.<br>Activations: (" Sing" : 0)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Verbs ending in "-ing" or "-ing" suffix, often related to music or sound.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Verbs ending in &quot;-ing&quot; or &quot;-ing&quot; suffix, often related to music or sound.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>kulele and<span style="background-color:rgba(57,212,155, 1.0)"> singing</span> ��kumbaya��. It��s ok. I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> guitar and<span style="background-color:rgba(57,212,155, 1.0)"> sang</span> loud and crisp, I have pulled my yoga mat out, and the funk I was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)"> singing</span> ��Amazing Grace.�� As he puts it: ��Fishing for a line</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>"Rudolph the red nosed reindeer. Would you like me to<span style="background-color:rgba(57,212,155, 1.0)"> sing</span> it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>.
+There are 11 million undocumented immigrants like me. They pledge allegiance to the flag,<span style="background-color:rgba(57,212,155, 1.0)"> sing</span> the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>- I like to<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> sing</span> in the car. Especially if it's "Bohemian Rhaps</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> your taste in wallpaper can<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> sing</span> back to you in monotone magnolia, 'Time Won't</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> still<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> singing</span> and fighting
+In Case You Missed It
+��A clarion call��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>�� at one point, Lucy gets onstage and<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> sings</span> about a corporate robot who watches too much</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>y went to South Africa in 1964,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> sang</span> to integrated audiences, had her visa revoked. Apart</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> we started a small business together. And we just love<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> singing</span> together. Our musical sensibilities are similar.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> The people are church.
+In the next hour we<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> sing</span> and pray and listen and speak.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> crowd<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> sang</span> the Australian anthem followed by chants for Robinson, with hecklers yelling at the crowd nearby.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>But the surest way to tell these cousins apart is to listen to them<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> singing</span>. Compared to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>-lot pickup band wanted to learn after hearing Sparks<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> sing</span> it, and Sparks tended to focus on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>
+For every song she received endless bolts of silk.
+She<span style="background-color:rgba(57,212,155, 0.76)"> sang</span>, she beat time,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> woke up this morning feeling in a great mood, what with the sun shining and the birds<span style="background-color:rgba(57,212,155, 0.76)"> singing</span> and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>. Anoop can<span style="background-color:rgba(57,212,155, 0.76)"> sing</span>, but I don't understand how his performances thus far have been anything but</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>, only a singer/<span style="background-color:rgba(57,212,155, 0.76)"> singing</span> beautiful songs."
+With no offense intended toward the goldsmiths of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>Queen of Disco��. He started off<span style="background-color:rgba(57,212,155, 0.76)"> singing</span> gospel music in church. He was also influenced by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>, Ivan Lins<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> sang</span> about darkness and night time, but the song was really about what the dictatorship</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> Why Can��t I Find You?�� That song appears in the film,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> sung</span> by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>�Background checks save lives.��
+The rally ended with a candlelight vigil and the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> singing</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> and<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> sing</span>-a-longs. There will be even more money collected for the families of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>5 ��House Oratorio�� is just plain fun.<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Singing</span> appliances simply needed to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> just a good read
+Wednesday, 8 February 2012
+The unaccompanied<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> singing</span> of the Gaelic Psalms</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> singing</span> career that has spanned more than five decades. "Eventually, we started taking Saturdays and Sundays</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> sung</span> mainly in English, but there was a bit of Spanish and French<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> singing</span> too, and West</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> with Isaiah saying ��Rejoice my brother!<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Sing</span> my sister�� for we are indeed the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>) and auditory arts (music,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> singing</span>). The third part may be practical arts which are done for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>, did we serve your hoes
+'Cause you're on TV r<span style="background-color:rgba(57,212,155, 0.52)">apping</span> like ya knew me</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>S<span style="background-color:rgba(57,212,155, 0.52)">inging</span> in the Rain.�� Both of those musicals have wonderful film interpretations and I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> list which includes wine,<span style="background-color:rgba(57,212,155, 0.52)"> sang</span>ria and soft drinks like Sanpellegrino.
+We went</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>s… LiveWire!�� Now we<span style="background-color:rgba(57,212,155, 0.52)"> chant</span> it with the conditioned ease of Pavlov��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Bach, which is on right now. (He could stop<span style="background-color:rgba(57,212,155, 0.52)"> humming</span>.) The speakers handle all of this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>ooley's while he DJ-<span style="background-color:rgba(57,212,155, 0.44)">ed</span>. "Supposedly she drank blood, but, yeah</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> the provinces; I gat me men<span style="background-color:rgba(57,212,155, 0.44)"> singers</span> and women<span style="background-color:rgba(57,212,155, 0.44)"> singers</span>, and the delights of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>e with a man.
+Adult<span style="background-color:rgba(57,212,155, 0.44)"> Sing</span>les' Ministry - Murrieta. Test winner for free</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> Company in North Charleston.
+Caldwell performs regularly in Charleston with the Magnolia<span style="background-color:rgba(57,212,155, 0.44)"> Sing</span>ers at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> church before suddenly showing up for choral even<span style="background-color:rgba(57,212,155, 0.44)">song</span>?
+Thousands of people are attending choral</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>umi® W Fly<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Sing</span>let :: Easy, breezy, beautiful top, the W Fly Singlet</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> fanatic, idol, idols, idolise, idolize, idolising, idol<span style="background-color:rgba(57,212,155, 0.36000000000000004)">izing</span>, christian</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> that you have much respect for. You<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> speak</span> in Honorifics when you are speaking to someone older</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>th February 2020
+Casting has been announced for Naked Boys<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Sing</span>ing playing at the King��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Rosetta Tharpe remained active in the 60s,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> performing</span> alongside musicians like Muddy Waters.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>S OLD, ADAMS RECALLS that his DJ'<span style="background-color:rgba(57,212,155, 0.28)">ing</span> tendencies manifested themselves at an early</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> more musical sounding solos? Do you want to<span style="background-color:rgba(57,212,155, 0.28)"> play</span> solos with more emotion behind them?</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> that u see you can useully get inhigh end sm<span style="background-color:rgba(57,212,155, 0.28)">sung</span> phones only)
+raj</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> performs</span> Christmas songs and classical ballads in both Icelandic and English, accompanied by some of the finest musicians</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> dancing and<span style="background-color:rgba(57,212,155, 0.28)"> performing</span> make me quite memorable), and I got dancing with someone I recognised from the Mov</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> blush or eye shadow, consider switching to cream makeup instead. Around the day, powder is more inclined</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> still learning about bath time, a process the pigs don��t enjoy much. Despite stereotypes,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of the blind skiers, along with their guides and coaches. I assumed that the skiers,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>inctions in society will always exist under every just government. Equality of talents, of education, or of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> too, and we want to make sure they are heard, and their efforts are multiplied.��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Whiteley
+By this time His Majesty's Mail was stamping his feet and brooming the snow</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+The RENCI system which serves as the UNC NARA node enjoys 7TB of disk space</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in the destruction of a Soviet mechanized group at the Battle of Debrecen. But this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�Riders have hit this season, which is already 35 more than the club��s season</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> played between Galle and Colombo. Both the team will lock horns for the first time in the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>, as well<span style="background-color:rgba(57,212,155, 0.2)"> as</span> truck drivers<span style="background-color:rgba(57,212,155, 0.2)">.</span>
+Wah Sing died in l952. Not long after</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> to sing at the premiere<span style="background-color:rgba(57,212,155, 0.2)"> of</span> a documentary<span style="background-color:rgba(57,212,155, 0.2)"> about</span> her voice.
+"We could do five sessions in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>amael if he<span style="background-color:rgba(57,212,155, 0.2)"> has</span> "the<span style="background-color:rgba(57,212,155, 0.2)"> Voice</span>" so as to participate in "the Singing"). This</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> You" from The<span style="background-color:rgba(57,212,155, 0.2)"> Jungle</span> Book.<span style="background-color:rgba(57,212,155, 0.2)"> The</span> scene where it is sung is one of my favorites and I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>. She would<span style="background-color:rgba(57,212,155, 0.2)"> w</span>ail when<span style="background-color:rgba(57,212,155, 0.2)"> she</span> was singing about lost love, sexism and pain. In this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> and performed country<span style="background-color:rgba(57,212,155, 0.2)"> music</span> and she<span style="background-color:rgba(57,212,155, 0.2)"> soon</span> began singing in talent contests under his tutelage.H</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> out tracks �<span style="background-color:rgba(57,212,155, 0.2)">�</span>Sing To You<span style="background-color:rgba(57,212,155, 0.2)">�</span>� and a super charged cover of Miley Cyrus�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> number awareness. Can<span style="background-color:rgba(57,212,155, 0.2)"> she</span> sing and recite<span style="background-color:rgba(57,212,155, 0.2)"> the</span> alphabet and recognize some letters? Can she count to 10</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> perfect for ice water<span style="background-color:rgba(57,212,155, 0.2)">,</span> lemonade<span style="background-color:rgba(57,212,155, 0.2)"> or</span> sangria!
+3. My favorite soap for the sink</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> by western media<span style="background-color:rgba(57,212,155, 0.2)"> from</span> the show<span style="background-color:rgba(57,212,155, 0.2)"> that</span> we watch to the nursery rhymes we sang. KL is</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

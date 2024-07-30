@@ -1,0 +1,695 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-26</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-26</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: : Baker Academic, 2017), 770<br> Thomas Aquinas. Summa<span style="background-color:rgba(57,212,155, 1.0)"> The</span>ologiae, I.<br>Activations: (" The" : 2)<br>Example 2: <|endoftext|> congealed blood)<br>3. Read! And your Lord is<span style="background-color:rgba(57,212,155, 1.0)"> the</span> most generous<br>4<br>Activations: (" the" : 1)<br>Example 3: , where the feast of the sun god on December 25 was replaced with a celebration of God<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Son<br>Activations: (" the" : 5)<br>Example 4: <|endoftext|><br>moments have included performances for the late Christopher Reeve and Pope<span style="background-color:rgba(57,212,155, 1.0)"> John</span><br>Paul II.<br>Activations: (" John" : 0)<br>Example 5: <|endoftext|>lit sequels to two other hit rom-coms — The Kissing Booth and To All<span style="background-color:rgba(57,212,155, 1.0)"> the</span><br>Activations: (" the" : 1)<br>Example 6: ,17; 28:19; II Co. 13:14).<br>A. God<span style="background-color:rgba(57,212,155, 1.0)"> The</span> Father<br>Activations: (" The" : 1)<br>Example 7:  to mark the beginning of the year.<br>In the 12th century, Ari<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Wise pegged the<br>Activations: (" the" : 0)<br>Example 8: QUESTION: When did any Pope of the Catholic Church denied that Jesus is<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Christ?<br>and<br>Activations: (" the" : 2)<br>Example 9: . After a five year hiatus, the band re-united to record their latest album, Part<span style="background-color:rgba(57,212,155, 1.0)"> the</span><br>Activations: (" the" : 0)<br>Example 10: <|endoftext|> You are<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Sheepdog!<br>Use your finger to herd your sheep to the safety of their<br>Activations: (" the" : 0)<br>Example 11:  this,<span style="background-color:rgba(57,212,155, 1.0)"> the</span> what and where and how and wherefore of the church, and only by observing these<br>Activations: (" the" : 0)<br>Example 12: ��<br>We Are We<span style="background-color:rgba(57,212,155, 1.0)"> The</span> People<br>�� Tea Party stalwart Sen. Ted Cruz has<br>Activations: (" The" : 1)<br>Example 13: <|endoftext|>ized security forces down, we<span style="background-color:rgba(57,212,155, 1.0)"> as</span> reporters on on the ground and guerrillas continue to expose<br>Activations: (" as" : 0)<br>Example 14:  with a new bridge club I just joined...Yes, I remember it well. Vlad<span style="background-color:rgba(57,212,155, 1.0)"> the</span><br>Activations: (" the" : 2)<br>Example 15:  He himself is<span style="background-color:rgba(57,212,155, 1.0)"> the</span> way. His life in the flesh was the perfect example of how a life should<br>Activations: (" the" : 1)<br>Example 16: <|endoftext|> God is<span style="background-color:rgba(57,212,155, 1.0)"> the</span> starting point for the understanding of anything profound in the universe. He describes the foundational<br>Activations: (" the" : 1)<br>Example 17: <span style="background-color:rgba(57,212,155, 1.0)"> the</span> Son of God�� (Matthew 14:33). This was the first time the disciples had<br>Activations: (" the" : 4)<br>Example 18:  to Jesus: Are you<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Messiah, or Elijah,<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Prophet?�� John responds by quoting<br>Activations: (" the" : 1), (" the" : 1)<br>Example 19: <|endoftext|> then the<br>> Preacher's eyes just stopped at one of the names. You,<span style="background-color:rgba(57,212,155, 1.0)"> the</span><br>Activations: (" the" : 0)<br>Example 20: <|endoftext|> the full faith and credit of<span style="background-color:rgba(57,212,155, 1.0)"> the</span> United States. In fact, Democrats and Republicans should all agree<br>Activations: (" the" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The definite article "the".
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The definite article &quot;the&quot;.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> over the weekend when called upon.
+��We<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Volta Regional House of chiefs…</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> DHABI an ANONYMOUS CONTENT Production
+God<span style="background-color:rgba(57,212,155, 1.0)"> the</span> fake taglines are just too</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Israel together and say to them, ��The Lord,<span style="background-color:rgba(57,212,155, 1.0)"> the</span> God of your fathers,<span style="background-color:rgba(57,212,155, 1.0)"> the</span> God</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> for the list)
+Russian River Pliny<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Younger – By now, we are all familiar with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> the witness of John<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Baptist. The Jews sent ��priests and Levites�� to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> and read:
+Received of Julian of Ephesus<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the</span> appended salvage in good repair.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>. First Timothy 4:10 says, ��God is<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the</span> Savior of all men.��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Oscar Issac, Adam Driver, and Domhnall Gleeson. Enjoy, and May<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> the Almighty,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the</span> single and natural God of the universe. --- "And then, will someone say</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> up to 1977��s The Many Adventures of Winnie<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> the</span> Pooh, which was actually a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> the only</span> path to forgiveness, salvation, and eternal life. We believe that servanthood is the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> His Reverence<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> the</span> 14th Dalai Lama, a Nobel Peace Prize laureate, in 2018. This year</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> the</span> designer, work on both y axis and x axis. Moreover, the design can be changed in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> such authority. Meanwhile, the demons knew who he was and boldly confessed that he was<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> the</span> Son of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> give heed to you rather than to God, you be<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> the</span> judge.�� You judge whether we</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>.C. Society of the Sons of<span style="background-color:rgba(57,212,155, 0.76)"> the</span> Revolution, and an 1896 Southern Historical Association brochure.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> 3: 'Thus saith<span style="background-color:rgba(57,212,155, 0.76)"> the</span> Lord God unto Jerusalem: Thy birth and thy nativity is of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> the</span> most is minor shirkâ. Dear Brother / Sister, Dear Brother / Sister, SHIR</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> my own Divine Presence, I know God as<span style="background-color:rgba(57,212,155, 0.76)"> the</span> Source and Fulfillment of all my good</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>, God will be glorified and souls saved when you follow His leading.
+Praise<span style="background-color:rgba(57,212,155, 0.76)"> the</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> save one, the First Savior,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> the</span> men wished to start their return and get away from this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> receive Him as<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> the</span> Messiah. The traditions of the elders in Jerusalem determined that the Messiah would be a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> acquisition through its new entertainment umbrella. Mattel acquired Hit Entertainment, the company behind Bob<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> the</span> Builder,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>. We believe that when Jesus said, ��Take, eat,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> this</span> is my body...�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> simply say ��I couldn��t do what you, Stephen<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> our</span> Duan did�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> priveledged duplicitous status of neither sovereignty nor statehood, neither Latinos nor gr<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ing</span>os</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> we ask god to forgive us--yes us,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> the</span> collective, the community, all Jews--for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> to<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> the</span> point, the white subject remains the central reference point in the power ploys of multicultural policy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>, held in the rotunda of the Great Hall of<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> the</span> People, highlighted the social as well</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> with reference to the actual case.…Walk therefore in Christ, and sing rejoicing,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> sing</span> as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> to a wide range of listeners, whether<span style="background-color:rgba(57,212,155, 0.52)"> that</span>��s within Hip Hop or not.
+Jason</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> a free account to set your preferred Bible and rate books.
+17 And the Spirit and h<span style="background-color:rgba(57,212,155, 0.52)">the</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> that means you<span style="background-color:rgba(57,212,155, 0.52)"> the</span> job.
+Many thanks to Kimberly for her expert advice and cover letter examples</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>e - Fall & Thanksgiving - Praise<span style="background-color:rgba(57,212,155, 0.52)"> the</span> Lord (Pack of 100)
+"Praise</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Chatter
+- Space, It Is Everywhere! | Kansa Muse
+- May<span style="background-color:rgba(57,212,155, 0.52)"> The</span> Force</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> known for its artistic history, the white-domed Basilica of<span style="background-color:rgba(57,212,155, 0.44)"> the</span> Sacre-C</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>K YOU<span style="background-color:rgba(57,212,155, 0.44)">RS</span>ELF ARE THEY THUGS AND GANSTAS.
+More information about</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Jesus�� chest at the meal and asked, ��Lord, who is<span style="background-color:rgba(57,212,155, 0.44)"> the</span> one who</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> their transactions quickly and efficiently. That gives you,<span style="background-color:rgba(57,212,155, 0.44)"> the</span> seller, a unique opportunity to delight your</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>us
+I If the new schedule Is put in effect
+I<span style="background-color:rgba(57,212,155, 0.44)"> the</span> eigden Portland C</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> I think this is his best album yet.
+Do yourself<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> a</span> favor, if you like punk music</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> "to eat" list.
+529 N Trade St, Winston Salem, NC<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 27</span>101
+W</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> error cases when Twitter is offline.Hugh Pickens writes "Thomas Jefferson,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> the</span> author of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> tells us that God goes with us all<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> the</span> way through suffering even into death. But death does</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> on May 13 at 7:30 p.m. at the Hilton Garden Inn,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> 15</span>01</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> we see that this page was created, with some possibility of truth, we<span style="background-color:rgba(57,212,155, 0.28)"> as</span> wiki users need</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> obey him, not only as Peter, but as<span style="background-color:rgba(57,212,155, 0.28)"> the</span> Savior Himself
+When the pope of Rome</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> of how Robin<span style="background-color:rgba(57,212,155, 0.28)"> the</span> robin gets excited when he sees traditional Christmas celebrations was told by 34 children at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> her much-anticipated sophomore novel, Where<span style="background-color:rgba(57,212,155, 0.28)"> the</span> Stars Still Shine, will be released sooner than originally</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> 7 May 1945, General Alfred Jodl,<span style="background-color:rgba(57,212,155, 0.28)"> the</span> German Chief of Staff, signed the document</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> anybody … Emmet Davitt: No that was the interim Police Chief that took over. Taya</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Johnny Cash
+Sam Quinn, whose music is so good, and so not very available to share with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> 33 years in prison for treason, Pakistani officials told Reuters. Shakil Afridi was also accused</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> peoples in this context. (f) Support the empowerment of local government: There is a necessity to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of Politics at Birkbeck College, University of London and Senior Fellow at Policy ExchangeFeatures a scratch</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> walk in agreement with God.
+BeBe concludes that ��Whitney��s life serves</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> - log on to whl.ca for details and pricing. Fan can also drop by Pop's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> all done with the best intentions, but it has produced some bad results.
+Modern fathers face new</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> often does it hurt? 7. Have you ever had this problem before? When? 8. Do</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>-class citizens and their goals, like sending a child to college in fact, it confirms the government</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> have related languages<span style="background-color:rgba(57,212,155, 0.2)">,</span> cultural practices<span style="background-color:rgba(57,212,155, 0.2)"> and</span> religious expressions. We as Afurakani/Afur</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> 7th (<span style="background-color:rgba(57,212,155, 0.2)">in</span> honor of<span style="background-color:rgba(57,212,155, 0.2)"> St</span>. John the Baptist), the fast is relaxed and we may</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> God, and the<span style="background-color:rgba(57,212,155, 0.2)"> love</span> of our<span style="background-color:rgba(57,212,155, 0.2)"> neighbour</span>. The Apostle spent more; for, though it was allowed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Son, and God the<span style="background-color:rgba(57,212,155, 0.2)"> Holy</span> Spirit (<span style="background-color:rgba(57,212,155, 0.2)">I</span> Jo. 5:7; Mt. 3:16</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> From Harry Harrison�<span style="background-color:rgba(57,212,155, 0.2)">�</span>s Bill the<span style="background-color:rgba(57,212,155, 0.2)"> Galactic</span> Hero to Carl Hiaasen��s w</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>��
+Wh<span style="background-color:rgba(57,212,155, 0.2)">oso</span>ever understands<span style="background-color:rgba(57,212,155, 0.2)"> Lord</span> Krishna as being the origin of all as well as being transcend</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> decision was given to<span style="background-color:rgba(57,212,155, 0.2)"> me</span> and her<span style="background-color:rgba(57,212,155, 0.2)">,</span> the new Adam and Eve, resetting the population, so</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> thrive, Edmund the base<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Shall<span style="background-color:rgba(57,212,155, 0.2)"> top</span> the legitimate. I grow; I prosper:
+Now</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> GOD THE FATHER<span style="background-color:rgba(57,212,155, 0.2)"> because</span> he is<span style="background-color:rgba(57,212,155, 0.2)"> good</span> and loving, generously giving the Son and the Spirit to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> word of the Lord<span style="background-color:rgba(57,212,155, 0.2)"> and</span> have not<span style="background-color:rgba(57,212,155, 0.2)"> kept</span> the command that the Lord your God commanded you,
+22</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

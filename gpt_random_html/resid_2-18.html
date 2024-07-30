@@ -1,0 +1,701 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-18</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-18</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: , OG Eric Beaton, DE Jake Jones,<span style="background-color:rgba(57,212,155, 1.0)"> LB</span> Jay York, SS Brent Willard and PK<br>Activations: (" LB" : 3)<br>Example 2: <|endoftext|><br>Small FootprintThe small<span style="background-color:rgba(57,212,155, 1.0)"> footprint</span> of the Veefil-PK makes it ideal for any<br>Activations: (" footprint" : 2)<br>Example 3: Burke speaks out. he started nine of 15 regular at<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> and finished http://www.authent<br>Activations: (" linebacker" : 7)<br>Example 4: ous Gender and Catholic Discipline. She released her first solo album in 1985 called Folks<span style="background-color:rgba(57,212,155, 1.0)">inger</span>. It<br>Activations: ("inger" : 1)<br>Example 5:  Voice activator<br>Flip r<span style="background-color:rgba(57,212,155, 1.0)">inger</span> switch twice - voice activator<br>Voice activator - launch<br>Activations: ("inger" : 3)<br>Example 6: <|endoftext|>year redshirts CB Brent Willard and<span style="background-color:rgba(57,212,155, 1.0)"> LB</span> Greg Neale were part of the Azusa Pacific<br>Activations: (" LB" : 3)<br>Example 7:  in double-figures. Reggie Holl<span style="background-color:rgba(57,212,155, 1.0)">inger</span> led all scorers with 21 points.<br>The Falcons<br>Activations: ("inger" : 2)<br>Example 8:  one senior<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> who has just begun to hit his stride halfway through the season. We have another senior<br>Activations: (" linebacker" : 6)<br>Example 9:  Dresses Hoodies & Sweatshirts Jeans Kimonos Knitwear L<span style="background-color:rgba(57,212,155, 1.0)">inger</span>ie<br>Activations: ("inger" : 2)<br>Example 10: <|endoftext|>.kipl<span style="background-color:rgba(57,212,155, 1.0)">inger</span>.com. The American Association for Long-Term Care Insurance has posted the<br>Activations: ("inger" : 2)<br>Example 11:  would have been a top-5 outside<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span>.<br>Assuming Porter leaves to sign his last ginorm<br>Activations: (" linebacker" : 7)<br>Example 12: <|endoftext|> 1.0, boll<span style="background-color:rgba(57,212,155, 1.0)">inger</span> low band indicator of 1.0, a central kelt<br>Activations: ("inger" : 2)<br>Example 13:  truck like a group of St<span style="background-color:rgba(57,212,155, 1.0)">inger</span> missiles with a radar lock on a Bogie. To my pleasant<br>Activations: ("inger" : 3)<br>Example 14:  engineers will get a leg up if they understand the complex dynamics of the workplace." by Carl Sel<span style="background-color:rgba(57,212,155, 1.0)">inger</span><br>Activations: ("inger" : 2)<br>Example 15:  Polamalu would miss the Tennessee game after aggravating his strained right calf and<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> LaM<br>Activations: (" linebacker" : 7)<br>Example 16:  from short-term IR and waived<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> Jackson Jeffcoat, the team announced. Cofield suffered<br>Activations: (" linebacker" : 7)<br>Example 17:  motors and making more power."<br>Noffs<span style="background-color:rgba(57,212,155, 1.0)">inger</span> hit on an area where Salazar stresses smart race<br>Activations: ("inger" : 2)<br>Example 18:  far too serious, and isn��t even reacting realistically to the super-hot Kim Bass<span style="background-color:rgba(57,212,155, 1.0)">inger</span><br>Activations: ("inger" : 2)<br>Example 19:  as our global<span style="background-color:rgba(57,212,155, 1.0)"> footprint</span> of more than 40 offices.<br>For more than 50 years, we have been<br>Activations: (" footprint" : 2)<br>Example 20: <|endoftext|>uguna||F<span style="background-color:rgba(57,212,155, 1.0)">inger</span>print sensor using a spectral filter and a holographic optical element|<br><br>Activations: ("inger" : 3)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The suffix "-inger" or the abbreviation "LB" in a noun, often related to a person's occupation, position, or a product's characteristic.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The suffix &quot;-inger&quot; or the abbreviation &quot;LB&quot; in a noun, often related to a person&#x27;s occupation, position, or a product&#x27;s characteristic.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> complete with Playstation juke on<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span>? Yes sir. A cold as ice game winning drive in said</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> odds, football les, pro football betting lnes offensive line:<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span>: quarterback: defensive nba</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>le Revis at 13 and center Nick Mangold at 48), as did the Dolphins (line<span style="background-color:rgba(57,212,155, 1.0)">backer</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Lions�� defense was rubber-stamped when Line<span style="background-color:rgba(57,212,155, 1.0)">backer</span> Alice-Mary Smith grabbed a pick-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> possible when<span style="background-color:rgba(57,212,155, 1.0)"> linebacker</span> Chris Galippo intercepted quarterback Tommy Rees.
+A true freshman, Rees</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> week. But the Bengals<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> linebacker</span> took a step further on Monday, making it clear the NFL Films'</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>57:47 -0800
+The Tampa Bay Buccaneers re-signed free-agents<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> LB</span> Jeremy Gr</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> spoke to Steelers<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> linebacker</span> LaMarr Woodley��s comments that the Ravens will not win a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>43:21 -0700
+Tampa Bay Buccaneers CB Marc Anthony,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> LB</span> Nate Askew</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> eight of its players die before reaching the age of 45.
+Six months ago we noted that<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> linebacker</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>s<span style="background-color:rgba(57,212,155, 0.8400000000000001)">LB</span>: USC��s Junior Seau<span style="background-color:rgba(57,212,155, 0.8400000000000001)">LB</span>: Arizona��s Ricky Hunley<span style="background-color:rgba(57,212,155, 0.8400000000000001)">LB</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> DE Cam Henderson, DB Jamoris Slaughter,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> LB</span> Justin Staples, WR Conner Vernon and OL</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> The Mets took him 18th, right after the Jays took Cooper.
+Mi<span style="background-color:rgba(57,212,155, 0.8400000000000001)">LB</span>.com</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> in a loss at Crest.
+Deion Jones,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> LB</span>, South Point Tallied 11 tackles</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, 11am. $10-12.
+Hey, hey,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> LB</span>J! Lady Bird,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> LB</span>'s site (myspace.com/lolitablackprovidence), following an August announcement</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> elements of<span style="background-color:rgba(57,212,155, 0.76)"> LB</span>J and the Democratic party he can��t abide — its modern, clinical quality</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> a higher number of stingers (jellyfish). The st<span style="background-color:rgba(57,212,155, 0.76)">inger</span> season occurs usually from November to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>|US7903242||8 Mar 2011||Identification International, Inc.||F<span style="background-color:rgba(57,212,155, 0.76)">inger</span>print</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> the one responsible for making this happen.
+F<span style="background-color:rgba(57,212,155, 0.76)">inger</span> Shepherd is an interesting puzzle type of game</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>Wald<span style="background-color:rgba(57,212,155, 0.6799999999999999)">inger</span>, M., Quinn, P., Dilleen, M., Mundayat</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> accounting was hired to be a r<span style="background-color:rgba(57,212,155, 0.6799999999999999)">inger</span> on the company softball team.An arrest for driving while</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> in st<span style="background-color:rgba(57,212,155, 0.6799999999999999)">inger</span> nets, and wear st<span style="background-color:rgba(57,212,155, 0.6799999999999999)">inger</span> suits when offered or available. Luckily most of the sting</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> pass protection with multiple hurries surrendered. Miller gave up an opening drive sack to Chargers'<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Ingram</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6799999999999999)">inger</span>��s close confidante could be imprisoned in the Vatican for 30 years for revealing financial</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> on Debra W<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span> or Julia Roberts as his leading lady.
+Should��ve been:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> isolator for augmented safety within the heavy infrastructure sector. The lightweight charger has a correspondingly small<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> footprint</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>Debra W<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span>, involved in producing the documentary: ��I��ve lived Upstate</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Ratz<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span> in 1996; by that time Murphy was elderly and ill, and had had a stroke</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Wurz<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span>
+Liz Wurz<span style="background-color:rgba(57,212,155, 0.6000000000000001)">inger</span> BA studied Graphic and Media Design in her</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> CBiol FRSB, Dr John Gra<span style="background-color:rgba(57,212,155, 0.52)">inger</span> CBiol FRSB, Peter Jackson AM</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> include tax information. Click here for article in Kipl<span style="background-color:rgba(57,212,155, 0.52)">inger</span>.com.
+Go2Income</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> a discussion about what you can do to be more charismatic. Then they chat with Jordan Harb<span style="background-color:rgba(57,212,155, 0.52)">inger</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> in the United States and Canada. Our readers will meet George Feil<span style="background-color:rgba(57,212,155, 0.52)">inger</span> (��Confessions</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> addition, Kipl<span style="background-color:rgba(57,212,155, 0.52)">inger</span>��s will promote long-term care awareness on the publication��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> environmental impact of consumption per capita (ecological<span style="background-color:rgba(57,212,155, 0.44)"> footprint</span>).
+This corresponds to the indicator, the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>, 1998||Ens<span style="background-color:rgba(57,212,155, 0.44)">inger</span> Gmbh & Co.||Composite section for frames of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> retailer trying to get rid of str<span style="background-color:rgba(57,212,155, 0.44)">inger</span> pallets.�� Block rental pallets are generally</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.44)">inger</span> · Wife In Threesome · MILF. Well help your whole team - or any part</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> of 29.58635, lower boll<span style="background-color:rgba(57,212,155, 0.44)">inger</span> band of 31.29, a boll<span style="background-color:rgba(57,212,155, 0.44)">inger</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Page 298, The Decline and Fall of Nazi Germany and Imperial Japan, Hans Doll<span style="background-color:rgba(57,212,155, 0.36000000000000004)">inger</span>,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>enaing trolley
+The WaveBrake® mop bucket and wr<span style="background-color:rgba(57,212,155, 0.36000000000000004)">inger</span> system reduces spl</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> we have a waste stream, we import products, we export products so with all of that greater<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> footprint</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ons, illustrated by Lynn Muns<span style="background-color:rgba(57,212,155, 0.36000000000000004)">inger</span>, Knopf, 1988.
+The Secret Keeper,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> and lead-s<span style="background-color:rgba(57,212,155, 0.36000000000000004)">inger</span> derring do. He is still an amazing performer, as well as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> a huge gain in terms of your carbon<span style="background-color:rgba(57,212,155, 0.28)"> footprint</span>, that 10 percent gain in efficiency,�� Gos</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> vehicles thereby limiting our carbon<span style="background-color:rgba(57,212,155, 0.28)"> footprint</span>, catch rainwater for use in watering our dogs)
+- Support</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> to reduce your carbon<span style="background-color:rgba(57,212,155, 0.28)"> footprint</span>, and a disk with all of the toolkit materials.
+The proposed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> efficient and reducing an organization��s carbon<span style="background-color:rgba(57,212,155, 0.28)"> footprint</span>.
+While technology holds a promise of a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> her, including Ada��s Algorithom, a new biography by James Ess<span style="background-color:rgba(57,212,155, 0.28)">inger</span>.�</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Scorpio, joining Saturn here at 01:25 am PST. This transit amplifies themes around creativity</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>:
+- The skill to promote oneself with savvy and authenticity
+- An understanding of the workplace dynamics</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+I simple interest had the law not
+have computed for compouud.
+Your oflic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> disrupted the industry - e.g. Buzzfeed, well-established online platforms like Yahoo! or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> were just a month ago so I remember them well. the first was a small barn fire. since</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> be taken to an electronics recycling center every month or two. Styrofoam can be brought to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, Ohio, after Schiele had completed his second year of high school at Glenbard High School</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> work, to make sure they are protected and aren't going to get damaged.
+At this installation</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Murray State managed to match the run in the third with a home run of its own, but</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>12-2013, 12:54 PM
+I have to wonder how people would feel if you had</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>. [online<span style="background-color:rgba(57,212,155, 0.2)">]</span> URL:<span style="background-color:rgba(57,212,155, 0.2)"> http</span>://link.springer.com/content/pdf/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> and Tecarro look<span style="background-color:rgba(57,212,155, 0.2)"> to</span> add some<span style="background-color:rgba(57,212,155, 0.2)"> depth</span> to the linebacker corps on defense along with linebacker Jonathan Diaz who</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> be directed by<span style="background-color:rgba(57,212,155, 0.2)"> Matthew</span> Grotzinger<span style="background-color:rgba(57,212,155, 0.2)">,</span> a Scranton School District elementary music teacher. This</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> ; 24 cm
+LB<span style="background-color:rgba(57,212,155, 0.2)">15</span>84.<span style="background-color:rgba(57,212,155, 0.2)">B</span>77 2014
+- Unknown LB1584.B77</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> came in and scored<span style="background-color:rgba(57,212,155, 0.2)"> the</span> winning touchdown<span style="background-color:rgba(57,212,155, 0.2)">.</span> Then Dietz returned to the game.
+Air Force linebacker</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> we had for our<span style="background-color:rgba(57,212,155, 0.2)"> business</span>.
+<span style="background-color:rgba(57,212,155, 0.2)">A</span> superb CC LB 4X4, GM HD Diesel, air</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> ways we can recycle<span style="background-color:rgba(57,212,155, 0.2)"> waste</span> and reduce<span style="background-color:rgba(57,212,155, 0.2)"> our</span> footprint on the world. During the tour you��ll</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> that ports may<span style="background-color:rgba(57,212,155, 0.2)"> face</span> as security<span style="background-color:rgba(57,212,155, 0.2)"> is</span> enhanced nationwide. RTR��s role in the LB</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>- Small footprint
+-<span style="background-color:rgba(57,212,155, 0.2)"> Dual</span>-process<span style="background-color:rgba(57,212,155, 0.2)"> load</span>lock
+- Optional Robot designed for particulate-free</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> classroom or at home<span style="background-color:rgba(57,212,155, 0.2)">,</span> easy-<span style="background-color:rgba(57,212,155, 0.2)">to</span>-follow ideas for reducing your plastic footprint and curriculum links for</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

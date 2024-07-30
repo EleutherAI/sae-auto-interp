@@ -1,0 +1,716 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-37</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-37</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  young King Louis<span style="background-color:rgba(57,212,155, 1.0)"> XIV</span> (1638-1715) approved orders that banned some of Molière<br>Activations: (" XIV" : 3)<br>Example 2: , / But riddle-like lives sweetly where she dies�� [I:<span style="background-color:rgba(57,212,155, 1.0)">iii</span>].<br>Activations: ("iii" : 2)<br>Example 3:  L<span style="background-color:rgba(57,212,155, 1.0)">XX</span>; P.S.B.A.<br>In the reformed Churches the word "b<br>Activations: ("XX" : 7)<br>Example 4:  Type<span style="background-color:rgba(57,212,155, 1.0)"> IV</span> multi-story construction, also known as Heavy Timber, is growing in interest.) Each building<br>Activations: (" IV" : 0)<br>Example 5:  Cover-up by Charles C Thompson<span style="background-color:rgba(57,212,155, 1.0)"> II</span> and Explosion Aboard the Iowa by Richard L Schwoeb<br>Activations: (" II" : 1)<br>Example 6: i. Martha Quintilla (1861-)<br><span style="background-color:rgba(57,212,155, 1.0)">ii</span>. Buel (1863-)<br><span style="background-color:rgba(57,212,155, 1.0)">iii</span><br>Activations: ("ii" : 3), ("iii" : 3)<br>Example 7: :17 (N<span style="background-color:rgba(57,212,155, 1.0)">IV</span>)<br>Wednesday, November 12, 2014<br>Even though the visit was brief<br>Activations: ("IV" : 4)<br>Example 8: <|endoftext|> found( cf. Kant tofu Internet( LHP<span style="background-color:rgba(57,212,155, 1.0)"> III</span>: 477). card are allowed approximately<br>Activations: (" III" : 0)<br>Example 9: <|endoftext|> home.<br>Historical Sketches of Landisville By the Editor - Chapter<span style="background-color:rgba(57,212,155, 1.0)"> II</span><br><br>Activations: (" II" : 2)<br>Example 10: <|endoftext|> every infirmity, of every sickness of mind and body.<br>Xxx<span style="background-color:rgba(57,212,155, 1.0)">iii</span>.), where<br>Activations: ("iii" : 5)<br>Example 11: ) (Albatros D.Va, Pfalz D.<span style="background-color:rgba(57,212,155, 1.0)">III</span>a, Fokker<br>Activations: ("III" : 2)<br>Example 12:  over Ue nation as a whole.<br>Fears sre next v.<span style="background-color:rgba(57,212,155, 1.0)">ii</span>h 1114<br>Activations: ("ii" : 2)<br>Example 13: m 104:33;<span style="background-color:rgba(57,212,155, 1.0)"> II</span> Corinthians 4:6-1; Act 4:13; Proverbs<br>Activations: (" II" : 6)<br>Example 14:  h'I, Chleaio.<br>A. MtrcaB<span style="background-color:rgba(57,212,155, 1.0)">ii</span>., Of n<br>Activations: ("ii" : 2)<br>Example 15:  the little Nicaraguan<br>boat..•■': ; •..'■<span style="background-color:rgba(57,212,155, 1.0)">..</span> ' '.<br>Activations: (".." : 0)<br>Example 16:  not satisfy the elements of equitable estoppel.<br><span style="background-color:rgba(57,212,155, 1.0)">II</span>. The Dock Case<br>A. Standard<br>Activations: ("II" : 3)<br>Example 17:  episodes—from during and just after world war<span style="background-color:rgba(57,212,155, 1.0)"> ii</span>—in the trinidad village of bonasse<br>Activations: (" ii" : 1)<br>Example 18: <span style="background-color:rgba(57,212,155, 1.0)">iii</span>] This group arrived in Sydney on 26 April 1855.<br>Closer inspection of the Lists<br>Activations: ("iii" : 1)<br>Example 19: <span style="background-color:rgba(57,212,155, 1.0)"> II</span> Ti. 3:16). The infallible interpretation of Scripture is to use Scripture to interpret Scripture<br>Activations: (" II" : 6)<br>Example 20:  the social and political fabric of Italy in the second half of<span style="background-color:rgba(57,212,155, 1.0)"> XX</span> century (even if also its worst<br>Activations: (" XX" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Roman numerals in text, often used for enumeration, titles, or references.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Roman numerals in text, often used for enumeration, titles, or references.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Walker, book<span style="background-color:rgba(57,212,155, 1.0)"> iv</span>., chap.<span style="background-color:rgba(57,212,155, 1.0)"> vi</span>.; Roscher's Political Economy, book<span style="background-color:rgba(57,212,155, 1.0)"> iii</span>., chap.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>unt. Ferdinando<span style="background-color:rgba(57,212,155, 1.0)"> VI</span> Hispaniarum Regi Catholico, Nuncup</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>; Ac. 15:15,16;<span style="background-color:rgba(57,212,155, 1.0)"> II</span> Co. 2:10-12). We use</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> from the Lodge, and his Relation to it remains indefeasible.
+<span style="background-color:rgba(57,212,155, 1.0)">III</span>- Of Lod</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>and Ireland, Edward<span style="background-color:rgba(57,212,155, 1.0)"> VII</span>, will he
+held tonight at Trinity Episcopal
+church, commencing at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> French Court. The dance form developed during the reign of Louis<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> XIV</span>. By 1850, ballet has reached</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> to bring me down / Must answer for your raising?�� [<span style="background-color:rgba(57,212,155, 0.9200000000000002)">II</span>:<span style="background-color:rgba(57,212,155, 0.9200000000000002)">iii</span>]), in a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> a tablet made out of some valuable material and used in religious rites (<span style="background-color:rgba(57,212,155, 0.9200000000000002)">III</span>.vi.35).</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> nob.|
+|Devil and the Lady (1930)<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> III</span> i 55: I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>m-missio<span style="background-color:rgba(57,212,155, 0.9200000000000002)">iii</span>-vs do not know who is circu lating it, although they</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> —John 1:1-3 (N<span style="background-color:rgba(57,212,155, 0.8400000000000001)">IV</span>)
+Only God is self-existent and has</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> lake late 1916 (Albatros D.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">II</span>, Halberstadt D.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">II</span>, F</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>. x<span style="background-color:rgba(57,212,155, 0.8400000000000001)">iii</span>-<span style="background-color:rgba(57,212,155, 0.8400000000000001)">xxiii</span>). Montréal: Thémis.
+Edelman, M</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> or possibly King Henry<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> VIII</span> of England would be the topic of discussion. Yet, any reformation does</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> way that Diana is wrong when she calls him simply ��not honest�� [<span style="background-color:rgba(57,212,155, 0.8400000000000001)">III</span>:v</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)">ii</span> to go with
+htm to sec Jttdgo Ilroi. For year past
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>���<span style="background-color:rgba(57,212,155, 0.76)"> II</span>
+���������������</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>, but insisted it had not complained about the hoax. King Edward<span style="background-color:rgba(57,212,155, 0.76)"> VII</span>'s Hospital said it did</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> (<span style="background-color:rgba(57,212,155, 0.76)">III</span>);...
+(<span style="background-color:rgba(57,212,155, 0.76)">iii</span>) 50 grams or more of a mixture or substance described in clause</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>�d. [<span style="background-color:rgba(57,212,155, 0.76)">III</span> 131]
+ ��John Fryer (d. 1733)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> the WCD figures were inconsistent, even within themselves, and (<span style="background-color:rgba(57,212,155, 0.6799999999999999)">iii</span>) there was no way</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>talrt.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">II</span>. WAKDNElt, M. D.
+Office and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> to one field goal, which was made by<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> ii</span>,lis, playing at the center position. Ur</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>iktig allroundkamera The Canon EOS 5D Mark<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> IV</span> is the latest update in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> (1868-1901)
+vi. Charles T (1869-)
+v<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ii</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> of War and Exile, 1900–1941, Cambridge University Press, 2014, p.<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> xx</span>v</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> designate the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> adj</span>utant general, the director of civil defense, the secretary of labor and workforce development</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> government [Kentucky Resolution, 1798].����(Vol.<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> II</span>, p</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>ella allroundkamera 5D Mark<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> III</span> ��r förväntningarna h</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>!e stnmgthcnhig '
+i mcdic<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ii</span>icArhichia</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> Inch mortar.
+A largo quantlt, about<span style="background-color:rgba(57,212,155, 0.52)"> III</span> tons, ol ten
+inch</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> and skirting around the excise men, right?
+No. Louis<span style="background-color:rgba(57,212,155, 0.52)"> XVI</span> died in 1793</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>Chapter<span style="background-color:rgba(57,212,155, 0.52)"> VIII</span> - Wikisource
+Spinifex and Sand/Part V/Chapter V</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>os<span style="background-color:rgba(57,212,155, 0.52)"> II</span>£6
+- Rules for refighting Ancient Battles by Philip SabinStrategos (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> probably to the south.
+Stone Cross and Draffehaven are place-names (xv<span style="background-color:rgba(57,212,155, 0.52)">ii</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>. loqui<span style="background-color:rgba(57,212,155, 0.44)"> ib</span>i Apostolum de judæorum tantum festis. [�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Beats Humans at Feeling TexturesView Full Version : Gate<span style="background-color:rgba(57,212,155, 0.44)"> VII</span> - Sanctuary
+07-19-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>, on the first day and the last day of the previous year;
+(<span style="background-color:rgba(57,212,155, 0.44)">iii</span>) an amount</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> named ��The Pars<span style="background-color:rgba(57,212,155, 0.44)">ii</span>�� populated Paris from around the middle of the 3rd century BC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> days instituted by God, with opinion of necessity, much more does he condemn the<span style="background-color:rgba(57,212,155, 0.44)"> observing</span> of days instituted</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>
+Loading content...
+jT THE AMHERST NEWS-TIMES VOL.<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> III</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> sustainable development through greening of finance. v<span style="background-color:rgba(57,212,155, 0.36000000000000004)">iii</span>) Disseminate environmentally sound technologies and products</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>:
+"Yea, be thou blessed, O thou Redeemer, that g<span style="background-color:rgba(57,212,155, 0.36000000000000004)">iv</span>est</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Internet community as constituted by its members collectively; (v<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ii</span>) responsible for the registration, administration and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> mine<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> vi</span>
+disaster of 1917, is in court today br
+trying to collect $22</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> behavior. In Part<span style="background-color:rgba(57,212,155, 0.28)"> II</span>, we explore the factors that lead industries to cluster in the first place,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>"Habu<span style="background-color:rgba(57,212,155, 0.28)"> II</span>" was targeted TWICE and fired upon by SAs. He dodged both</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>box in detail Part X covers Step 22
+A Fantasy Sandbox in detail Part<span style="background-color:rgba(57,212,155, 0.28)"> XI</span> covers Step 23</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> at political and technical level of the Paris Agreement and the corresponding national commitments, (<span style="background-color:rgba(57,212,155, 0.28)">iii</span>) Est</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> the criteria requested by the Buyer, such as, style, expertise, tone etc.; (<span style="background-color:rgba(57,212,155, 0.28)">iii</span></span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>MP camera, fingerprint sensor in September?
+Rumours about the upcoming Sony Xperia Z5 have surfaced</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, Jun 1- Nov 14
+Minimum stay at least for 3 nights is necessary
+- During peak</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, Barbara Bel Geddes
+North by Northwest (1959) – Cary Grant, Eva Marie Saint</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in mind the end goal to update their instructive
+capabilities alongside a vocation, they incl</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ates contents from the mail system and RSS from some known sources; private messages, an alternative method for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> custom designed memorials. Please contact us to speak with one of our consultants who can guide you through</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> more snow patches down to a low level, some of them huge. As I climbed the long gl</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> possibly get sophisticated, that��s why we want to arm you With all the expertise to help</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Nashville Predators would have won the NHL Title, Tiger Woods would have won the U.S. Open</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> from today I found and purchased my wedding dress!
+Last Tuesday, my mom and wonderful Maid of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>. Part II:<span style="background-color:rgba(57,212,155, 0.2)"> Inter</span>acting Part<span style="background-color:rgba(57,212,155, 0.2)">icles</span>
+(Letters in Mathematical Physics, 2016-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>III:ii]? She<span style="background-color:rgba(57,212,155, 0.2)"> does</span> not cheat<span style="background-color:rgba(57,212,155, 0.2)"> on</span> her husband; she cheats with her husband.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>estry cushion with<span style="background-color:rgba(57,212,155, 0.2)"> be</span>ige velvet<span style="background-color:rgba(57,212,155, 0.2)"> back</span> in William Morris The Forest II - facing left - design.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>JiuTci<span style="background-color:rgba(57,212,155, 0.2)">i</span>Kii and<span style="background-color:rgba(57,212,155, 0.2)"> Dealer</span> in all Kinds or
+I Corner Ninktr</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>ia Catherine (<span style="background-color:rgba(57,212,155, 0.2)">18</span>55-)<span style="background-color:rgba(57,212,155, 0.2)">
+</span>viii. Lewis W (1856-)
+ix.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>605:5505<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Luke ii.<span style="background-color:rgba(57,212,155, 0.2)"> 14</span>.605:5506
+Luke xix. 8</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> it, the<span style="background-color:rgba(57,212,155, 0.2)"> organ</span> was to<span style="background-color:rgba(57,212,155, 0.2)"> be</span> one of the last entirely new instruments that Willis III was to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>,
+ti h<span style="background-color:rgba(57,212,155, 0.2)">.</span>e ii I<span style="background-color:rgba(57,212,155, 0.2)"> t</span> make iaiitls
+I igh it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>, 1881.<span style="background-color:rgba(57,212,155, 0.2)"> 7</span>41 2<span style="background-color:rgba(57,212,155, 0.2)">w</span>
+ATPUNAIIOU, A NEW
+IDU</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Summmering<span style="background-color:rgba(57,212,155, 0.2)"> Canon</span> EOS<span style="background-color:rgba(57,212,155, 0.2)"> 5</span>D Mark IV Legenden fortsätter - f</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -1,0 +1,690 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-7</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-7</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  starting line in this class.<br>The ever-<span style="background-color:rgba(57,212,155, 1.0)">growing</span> popularity of the J/70 class will again<br>Activations: ("growing" : 5)<br>Example 2: <span style="background-color:rgba(57,212,155, 1.0)"> Growing</span> trends such as dynamic pricing and demand side management are emphasized. Our domain dominance within the energy value<br>Activations: (" Growing" : 4)<br>Example 3: <span style="background-color:rgba(57,212,155, 1.0)"> growing</span> and dynamic team at Allianz. We are recognised as a leading UK insurer, winning both<br>Activations: (" growing" : 8)<br>Example 4:  more popular student loan<span style="background-color:rgba(57,212,155, 1.0)"> growth</span> companies are Good Credit and Lite Lender.<br>Good Credit is a web<br>Activations: (" growth" : 0)<br>Example 5:  by traditional publishers.<br>An<span style="background-color:rgba(57,212,155, 1.0)"> emerging</span> genre of writing tools—exemplified by Jupyter<br>Activations: (" emerging" : 1)<br>Example 6:  further explorations of this nature and contribute to the ever-<span style="background-color:rgba(57,212,155, 1.0)">growing</span> corpus of research in subtitling<br>Activations: ("growing" : 5)<br>Example 7: �s fastest<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> terminal tractor manufacturer, announced an expansion of its ever-<span style="background-color:rgba(57,212,155, 1.0)">growing</span> dealer network with the<br>Activations: (" growing" : 5), ("growing" : 6)<br>Example 8: <|endoftext|> the Songs of<span style="background-color:rgba(57,212,155, 1.0)"> Growing</span> as the Song, as the Song is something far more based in ideals,<br>Activations: (" Growing" : 2)<br>Example 9:  clinically underweight, a sign of severe malnutrition. This is happening in spite of a rapidly<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> economy<br>Activations: (" growing" : 7)<br>Example 10:  to the<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> and assumedly limitless capacity of science to explain the universe and everything in it. Hit<br>Activations: (" growing" : 4)<br>Example 11:  Canadian Placemaking Overview.<br>Across Canada,<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> numbers of placemaking initiatives are changing<br>Activations: (" growing" : 3)<br>Example 12:  placement, and relative and. Although some scholars still strongly dissent with Steadman's arguments, a<span style="background-color:rgba(57,212,155, 1.0)"> growing</span><br>Activations: (" growing" : 7)<br>Example 13: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> growing</span> under my sink from a leaky faucet and called SERVPRO because so many people<br>Activations: (" growing" : 2)<br>Example 14: <|endoftext|> in the company being the worst employees.<br>Example 1: The Heretic<br>Any<span style="background-color:rgba(57,212,155, 1.0)"> sizable</span> company<br>Activations: (" sizable" : 0)<br>Example 15:  schools of excellence is an area of huge<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> concern for Save The Children,�� says Heather Kerr<br>Activations: (" growing" : 5)<br>Example 16: utsch Content of new PDF here. Adobe ColdFusion has a<span style="background-color:rgba(57,212,155, 1.0)"> large</span> exqmple of functions<br>Activations: (" large" : 0)<br>Example 17:  proposal of Rs.33 crore was submitted to Government to ensure adequate drinking water facility for the rapidly<span style="background-color:rgba(57,212,155, 1.0)"> developing</span><br>Activations: (" developing" : 1)<br>Example 18:  bright for the Tennessee native, and quick stardom (not to mention a<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> bank account)<br>Activations: (" growing" : 7)<br>Example 19:  maps. I always have.<span style="background-color:rgba(57,212,155, 1.0)"> Growing</span> up in a small Australian sheep shearing community with less than 1<br>Activations: (" Growing" : 0)<br>Example 20:  exciting to be a part of a<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> company that focuses on solving and streamlining many of the operational<br>Activations: (" growing" : 8)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Verbs or adjectives related to increase, expansion, or development, often in the context of growth or progress.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Verbs or adjectives related to increase, expansion, or development, often in the context of growth or progress.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> difficulty of finding the talent needed to staff a<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> company, the sheer geography of the country makes it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> to a<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> client base. Her dedication to healthcare payers and deep knowledge of their business will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+Skreened offers a<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> variety of merchandise including t-shirts from American Apparel and An</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>and discovery to elucidate the functions of a rapidly<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> number of newly characterized molecules and their modified states</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> ample processing power, and a<span style="background-color:rgba(57,212,155, 1.0)"> growing</span> number of applications, pads offer a computing experience comparable to netbooks</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> but fast-<span style="background-color:rgba(57,212,155, 0.9200000000000002)">growing</span> IT sector in order to build a knowledge-based economy. Conventional approaches using</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Improvement.
+· if you want to be part of a fast-<span style="background-color:rgba(57,212,155, 0.9200000000000002)">growing</span> practice with a strong global</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> satisfaction guarantee has proved to be a simple yet effective strategy for the constantly<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> growing</span> online secondary ticket market.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>ization Team, partnership structures between<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> growing</span> and plateaued churches within LRBA; and facilitates the coordination of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> it cannot forecast a<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> growing</span> trend. However, we can apply gradient boosting methodology to any algorithm.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> the past several years, thanks to its<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> growing</span> popularity among consumers who have gained awareness of pistachio</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> efficiently. Discover thousands more in the Mac App Store.
+Keep your<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> growing</span> library organised and accessible</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>, the Naval Criminal Investigative Service were quick to respond to the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> growing</span> calls for justice, launching an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> built an ever-<span style="background-color:rgba(57,212,155, 0.8400000000000001)">growing</span> fan base in their home town of Phoenix, Az. They combine a strong</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> mentors to help new and<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> growing</span> technology businesses.
+- Encourage state policy to support angel tax credits</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Inc. 5000 list, the most prestigious ranking of the nation��s fastest-<span style="background-color:rgba(57,212,155, 0.76)">growing</span> private companies</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>-<span style="background-color:rgba(57,212,155, 0.76)">growing</span> and most-prized markets for most industries. Insurance is no different. The Indian government</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>, in part because of the rising demand for biofuels and the<span style="background-color:rgba(57,212,155, 0.76)"> growing</span> appetite for meat in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> in view of his<span style="background-color:rgba(57,212,155, 0.76)"> growing</span> popularity as a breakout choice. John makes an unconventional choice by tabbing Randy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> burned is largely offset by C02 absorbed by<span style="background-color:rgba(57,212,155, 0.76)"> growing</span> the crop. The International Energy Agency says bio</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> growing</span> palm frond " jungle " drying.
+Each frond leaf being further trimmed before being glued</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> from our website: www.xculture.orgBookTalk.org is a<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> thriving</span> book discussi</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>The School of Architecture & the Built Environment is an active and<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> thriving</span> area within the University with good industrial</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> have been supplying our customers with an ever<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> increasing</span> selection of Award-Winning Specialty Sausages</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>USDA, 2011). Maize production in Brazil in the 2009/2010<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> growing</span> season was 56</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> growing</span> number of nanomaterials and their property variants requiring assessment for potential human health impacts.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> arts colony with a<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> thriving</span> gay community and boasts an almost even man-woman ratio. Do they</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> may be needed if you area has an<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> increasing</span> number of heat waves. Or you may have people answers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> observed: ��In a rapidly<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> changing</span> world, innovation is no longer an option, it is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> growing</span> a business requires managerial competence. An unusual entrepreneur relies on both competencies to effectively and efficiently function</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> lot into a<span style="background-color:rgba(57,212,155, 0.52)"> thriving</span> garden.
+��You give me a closed... parking lot, and I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> not to offers no big solutions.
+I find 1 (2<span style="background-color:rgba(57,212,155, 0.52)"> expanding</span> into Asia with to buy a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> application materials at datcp.wi.gov/Pages/<span style="background-color:rgba(57,212,155, 0.52)">Growing</span>_WI/DairyDevelopment.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> get a 2% discount at checkout. font>Have you noticed that an<span style="background-color:rgba(57,212,155, 0.52)"> increasing</span> number of formerly �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> "Mexico of the Midwest" and is home to a<span style="background-color:rgba(57,212,155, 0.52)"> sizeable</span> Hispanic community.
+The bullet hit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>. Open to form a<span style="background-color:rgba(57,212,155, 0.44)"> massive</span> broadcast compound.
+For this year's Open Championship, NEP supplied</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>ventory management is a<span style="background-color:rgba(57,212,155, 0.44)"> mature</span> and logical business practice. The best practices can be drawn from tried and tested</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> focus on News Corp's<span style="background-color:rgba(57,212,155, 0.44)"> booming</span> film and television assets, including 20th Century Fox film studio, Fox</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> the key steel markets, from emerging to<span style="background-color:rgba(57,212,155, 0.44)"> mature</span>. ArcelorMittal will be looking to develop</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> and national companies a strong livestock business platform in Latin America��s<span style="background-color:rgba(57,212,155, 0.44)"> emerging</span> market.
+��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> but in Lenny��s eyes, his<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> grown</span>-up children are certainly not even from the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> greater disparities and inequity, and<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> shrinking</span> community resilience.
+Children continue to bear the brunt of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> recommended that reference to quality documentation is required for reliable detailed information....
+|Use<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ful</span> Related Links||</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Blue General was "Red��s Foed". To the east, in Dubai, a<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> sizable</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> suggest that a conservative woman who is a<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> rising</span> star is exactly who the left and the media doesn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> factory in the Balkans. The city also has a<span style="background-color:rgba(57,212,155, 0.28)"> large</span> retail sector with many modern malls. Plov</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> and gas, retail, agriculture, and smart cities.
+The<span style="background-color:rgba(57,212,155, 0.28)"> rising</span> adoption of a private network for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> to promote local manufacturing to a<span style="background-color:rgba(57,212,155, 0.28)"> larger</span> variety of industries. There is a huge need for producing goods and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>ers have answered such questions satisfactorily and come to Homer. There is a<span style="background-color:rgba(57,212,155, 0.28)"> sizable</span> movement to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> compromise—especially given that yet<span style="background-color:rgba(57,212,155, 0.28)"> larger</span> changes seem likely.
+The question of formalization of the</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in VIC, post code 3213. The previous headquarters were located in VIC 3212 (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the belief that the healing relationship is a mutually redemptive experience. The commitment to healthcare embodies the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> me to double the taxes; the Dutch business to add more; the Nootka humbug gave</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the cultural level: their relation to macro-social and macro-economic tural values to that developed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the result! Much less expensive than similar cashmere evening coats!!
+100% pure cashmere,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and will be back next time. Date of review: October 19, 2009
+In short: A</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> his prompts. More in apush day 6 (columbus dbq prep) columbus</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, sea-facing windows in both the living room and the master bedroom. The open-plan lounge</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ulos with Ursaria name. In the end you have found the Copper Age sites that give witness</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>certified by WSU to be qualified adjunct faculty. As in a traditional
+student-university</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>VR), 22 diminishing<span style="background-color:rgba(57,212,155, 0.2)"> returns</span>, law of, 371 direct mail, 289 disasters, business, 335</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> state social responsibility and<span style="background-color:rgba(57,212,155, 0.2)"> a</span> growing list of companies and states are announcing dates for when they intend to become</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>: "With Vi<span style="background-color:rgba(57,212,155, 0.2)">Print</span>, we want to strengthen our presence in the fast-growing shower tray market</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> of those involved<span style="background-color:rgba(57,212,155, 0.2)"> in</span> these growing partnerships, and they serve as another method to show the Iraqi people</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> deal in as many<span style="background-color:rgba(57,212,155, 0.2)"> years</span> and indicative of Microsoft��s growing commitment to renewable energy and sustainability.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> to meet an increasing demand<span style="background-color:rgba(57,212,155, 0.2)"> for</span> the test services.
+To ensure the safety of pipelines, refineries</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, but unfortunately,<span style="background-color:rgba(57,212,155, 0.2)"> necessary</span> and growing service that requires certified meth inspections to both residential and commercial properties.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> a part of the<span style="background-color:rgba(57,212,155, 0.2)"> California</span> life, and his growing expertise in matters of Mexican law and custom were later</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> capita incomes and growing manufacturing<span style="background-color:rgba(57,212,155, 0.2)"> outputs</span>.
+Sales in Turkey, Mexico and Russia also are expected to be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> she has to hide<span style="background-color:rgba(57,212,155, 0.2)"> her</span> growing love for Arin.
+But he, too, has a secret</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

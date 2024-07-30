@@ -1,0 +1,238 @@
+layer,feature,explanation,recall,fuzz,average
+0,3,"The organization ""Human Rights Watch"".",0.52,0.51,0.515
+0,11,"The token ""body"", often in a technical or HTML context.",0.62,0.5,0.56
+0,5,"The substring ""ipers"" in various words, often related to nouns or objects.",0.5,0.92,0.71
+0,0,"The word ""Everybody"".",0.87,0.71,0.79
+0,6,"The adjective ""fluorescent"" or the verb ""lashed"", often describing a vivid or intense quality.",0.59,0.53,0.56
+0,9,"The word ""Heard"" or ""hearings"" in various contexts, often related to names, quotes, or official proceedings.",0.85,0.79,0.8200000000000001
+0,7,"The Greek letter ""Mu"" (μ) in various proper nouns, such as names, titles, and words of Greek origin.",0.55,0.52,0.535
+0,4,"The proper noun ""Sutherland"" (and occasionally ""Skinner""), often referring to a geographic location or a person's surname.",0.55,0.49,0.52
+0,10,"The suffixes ""-aid"", ""-assistants"", or ""-supplementation"" in nouns, often related to support or help.",0.91,0.74,0.825
+0,12,"The number ""480"" in various contexts, often related to technical specifications, resolutions, or step numbers in a process.",0.8,0.56,0.68
+0,14,"The token ""webpage"" in various contexts, likely related to online content or websites.",0.66,0.65,0.655
+0,16,"The token ""tie"" in various compound words or phrases, often related to binding, connection, or unity.",0.75,0.63,0.69
+0,15,"The suffix ""-holder"" in nouns, often referring to individuals or groups with a vested interest or responsibility.",0.59,0.5,0.5449999999999999
+0,24,"The prefix ""ruth"" or the word ""disreg"".",0.58,0.45,0.515
+0,21,"The suffix ""-URES"" in various nouns, often related to measurements, collections, or structures.",0.54,0.81,0.675
+0,18,"The surname ""Hubbard"", often referring to a specific person, particularly L. Ron Hubbard, the founder of Scientology.",0.54,0.48,0.51
+0,13,"Ordinal numbers (e.g., ""fourth"", ""fifth"") and the suffix ""-ugal"" in words related to music, mathematics, or physics.",0.71,0.81,0.76
+0,25,"The word ""fail"" or its variations, often in the context of evaluation, assessment, or outcome.",0.72,0.62,0.6699999999999999
+0,27,"The state ""Massachusetts"" in various contexts, often as part of a location or institution name.",0.89,0.57,0.73
+0,26,"The token ""Gears"" or ""robotic"" in a context related to technology, gaming, or robotics.",0.56,0.49,0.525
+0,31,"The noun ""manufacturing"" in various industrial and technical contexts.",0.82,0.69,0.7549999999999999
+0,33,"The token ""Images"" in a Getty Images photo credit.",0.75,0.57,0.6599999999999999
+0,34,"The surname ""Silver"" or the word ""Silver"" in a proper noun.",0.66,0.5,0.5800000000000001
+0,35,"The word ""lounge"" or ""Studio"" in a context describing a physical space or facility.",0.87,0.52,0.6950000000000001
+0,39,"The prefix ""tid"" in various words, often related to tidbits of information or tidying up.",0.65,0.54,0.595
+0,29,"The hyphen (-) symbol, often used in scientific or technical contexts to indicate a range, a chemical bond, or a prefix/suffix in a word.",0.89,0.72,0.8049999999999999
+0,36,"The word ""pageant"" or related terms like ""contestants"", often in the context of a competition or event.",0.54,0.5,0.52
+0,41,"The prefix ""Mans"" in proper nouns, often referring to surnames or place names.",0.56,0.63,0.595
+0,42,"The verb ""include"" in a sentence, often indicating a list of items or options that are part of a larger set.",0.77,0.59,0.6799999999999999
+0,45,"The word ""apple"" in various contexts, often related to food, technology, or idioms.",0.97,0.7,0.835
+0,48,"The substring ""yll"" in proper nouns, typically in people's names or scientific terms.",0.71,0.62,0.665
+0,46,"The words ""immature"" and ""begging"", often used to describe a state or action of vulnerability or dependence.",0.55,0.53,0.54
+2,0,"The word ""like"" used for comparison or similarity.",0.93,0.64,0.785
+2,2,"Verb suffixes (-ing, -ed, -s) indicating action or state.",0.55,0.76,0.655
+2,3,"The prefix ""pr"" in words, often indicating a sense of pride or precedence.",0.95,0.55,0.75
+2,4,"The token ""Images"" in a context related to image credits, licensing, or references.",0.86,0.63,0.745
+2,1,"The token ""Other"" in categorical lists or forms, often indicating a miscellaneous or unspecified category.",0.86,0.75,0.8049999999999999
+2,7,"The token ""am"" (or ""AM"") in proper nouns, often as part of a person's name or an acronym.",0.68,0.78,0.73
+2,6,"Two- or three-digit numbers, often representing statistics or scores in sports-related contexts.",0.92,0.79,0.855
+2,11,"The token ""pool"" in various contexts, often related to a collection or accumulation of something.",0.92,0.71,0.815
+2,13,"The prefix ""Por"" in various proper nouns, often indicating a person's surname or a location.",0.73,0.67,0.7
+2,5,"Terms related to sports, competitions, or events, such as ""card"", ""round"", ""ref"", ""point"", ""side"", ""wing"", ""final"", ""dismissed"", ""takedown"", ""title"", and ""singles"", as well as quotation marks and punctuation marks.",0.83,0.61,0.72
+2,19,"The word ""injury"".",0.94,0.87,0.905
+2,18,"The token ""backer"" or ""linebacker"", likely related to American football positions.",0.63,0.57,0.6
+2,15,A double angle quotation mark (>>) used to separate sections or introduce a list in instructional or informative text.,0.64,0.84,0.74
+2,20,"The word ""maid"" in various contexts, often referring to a female domestic worker or servant.",0.55,0.49,0.52
+2,21,"The word ""throat"" in various contexts, often related to physical actions, injuries, or medical conditions.",0.82,0.62,0.72
+2,23,"Prefixes or suffixes of English words, often indicating grammatical function or word formation.",0.64,0.58,0.61
+2,22,"The token ""websites"" in a context related to online security, governance, or usage.",0.79,0.7,0.745
+2,26,"The comparative conjunction ""than"" in phrases indicating a quantitative comparison.",0.98,0.91,0.9450000000000001
+2,25,"Geographic locations, specifically ""City"" and ""Canal"", often referring to Panama City or the Panama Canal.",0.54,0.52,0.53
+2,24,"The abbreviation for ""United States"" (U.S.), including individual letters ""U"" and ""S"" when part of this abbreviation.",0.89,0.55,0.72
+2,28,"The suffix ""-enda"" in various words, often in proper nouns or loanwords.",0.72,0.8,0.76
+2,32,"The token ""Let"" at the beginning of a sentence, often introducing a suggestion or permission.",0.94,0.82,0.8799999999999999
+2,29,"The adjective ""robust"" in various contexts, often describing study summaries, growth, analysis, or systems.",0.98,0.89,0.935
+2,35,"The suffix ""-ing"" in nouns related to computing, hosting, and networking.",0.74,0.69,0.715
+2,31,"The word ""measure"" or ""measures"" in a financial or economic context, often related to assessment, evaluation, or quantification.",0.79,0.68,0.7350000000000001
+2,36,"The prefix ""ad"" in various words, often related to technology, education, or proper nouns.",0.61,0.74,0.675
+2,37,"Roman numerals (I, II, III, IV, etc.) in text, often used for chapter or verse references.",0.89,0.86,0.875
+2,38,"The word ""reunion"" in various contexts, often related to events or gatherings.",0.81,0.65,0.73
+2,40,"The suffixes ""Laure"", ""Pri"", or ""el"" in Nobel-related titles, such as Nobel Laureate, Nobel Prize, or Pulitzer Prize.",0.75,0.59,0.6699999999999999
+2,39,"First-person singular pronouns (""I"") and other first-person and third-person pronouns (""he"", ""they"", ""we"") in sentences, often used to express personal thoughts or opinions.",0.87,0.7,0.7849999999999999
+2,41,"The team name ""Broncos"", likely referring to the Denver Broncos, an American football team.",0.51,0.51,0.51
+2,44,"The adjective ""new"" describing a possession, relationship, or situation.",0.97,0.83,0.8999999999999999
+2,49,"The verb ""spent"" in the context of time allocation or duration.",0.73,0.68,0.7050000000000001
+2,45,"The word ""knee"" in various contexts, often related to body parts, health, or clothing.",0.79,0.55,0.67
+2,47,"The suffixes ""-ing"" and ""-hing"" in technical or formal writing, often related to diagrams or figures.",0.61,0.72,0.665
+2,42,"The token ""line"" (or ""lines"") in various contexts, often referring to a physical or metaphorical boundary, division, or path.",0.92,0.8,0.8600000000000001
+4,3,"The infinitive ""to"" in phrases indicating direction or intention.",0.71,0.93,0.8200000000000001
+4,4,"The word ""couple"" indicating a small, indefinite number of items or a pair of people.",0.96,0.7,0.83
+4,1,"The noun ""emergence"", often in an academic or technical context, referring to the process of something coming into existence or prominence.",0.89,0.81,0.8500000000000001
+4,0,"Suffixes ""-er"", ""-ager"", or ""-itter"" in nouns, often indicating a person's occupation, role, or relationship.",0.69,0.79,0.74
+4,5,"Punctuation marks (commas, ""of"", ""or"") in numerical or descriptive contexts, often indicating a list or a part of a whole.",0.76,0.83,0.7949999999999999
+4,7,"Brand names or product-related nouns, such as ""Capcom"", ""charger"", ""Panasonic"", or ""joystick"", often in the context of technology or gaming.",0.59,0.69,0.6399999999999999
+4,6,"The prefix ""reat"" or ""reat-"" in a word, often related to wreaths or treats.",0.61,0.62,0.615
+4,8,"Honorific suffixes or endings of surnames, such as ""hon"", ""ek"", ""ls"", ""ham"", ""ze"", ""ault"", ""stein"", ""bes"", and ""au"", typically found in names of philosophers, economists, or historical figures.",0.82,0.75,0.7849999999999999
+4,9,"Official names of organizations, countries, or concepts related to Islam, often with a noun or adjective suffix.",0.83,0.6,0.715
+4,2,"The neuron activates on suffixes or prefixes of words related to ""store"", such as ""-bought"", ""store-"", or ""y"" in ""storey"", indicating a connection to commerce or retail.",0.84,0.72,0.78
+4,12,"The word ""only"" in a sentence, often indicating a restriction or limitation.",0.9,0.77,0.835
+4,10,"Verbs that indicate a change, addition, or effect, often in a formal or objective tone.",0.64,0.77,0.7050000000000001
+4,14,Period (.) and numbers in the context of US court case citations.,0.74,0.48,0.61
+4,11,"The verb ""are"" in a sentence, often used to connect two nouns or phrases, indicating a state of being or equality.",0.76,0.68,0.72
+4,15,"The word ""mastery"" in various contexts, often related to expertise, skill, or achievement.",0.65,0.67,0.66
+4,13,"The token ""ROM"" in the context of technology and computing, often referring to read-only memory or a custom firmware.",0.67,0.6,0.635
+4,16,"The dash (-) punctuation mark, often used to indicate a break or separation in text.",0.77,0.92,0.845
+4,19,"The word ""selection"" in technical or formal contexts, often related to electronics, computing, or scientific fields.",0.66,0.7,0.6799999999999999
+4,17,"The middle name ""Luther"" in a person's full name, particularly in reference to Martin Luther King Jr.",0.55,0.51,0.53
+4,20,"The words ""audience"" and ""crowd"", referring to a group of people gathered for a specific purpose or event.",0.65,0.53,0.5900000000000001
+4,23,"The auxiliary verb ""should"" indicating obligation, recommendation, or advisability.",0.88,0.47,0.675
+4,21,"The proper noun ""Boone"" or ""Charlie"", likely referring to a person's name.",0.58,0.53,0.5549999999999999
+4,22,"The adverbs ""formerly"", ""lately"", and ""afterwards"" indicating a time or state in the past.",0.7,0.43,0.565
+4,25,"Units of time (month, year, decade, century, day, week) or related phrases (today, next).",0.86,0.85,0.855
+4,24,"The names of specific organizations, particularly those related to progress or protection, such as ""Center for American Progress"" and ""Environmental Protection Agency"".",0.7,0.62,0.6599999999999999
+4,26,"The token ""User"" in a context related to user profiles, accounts, or authentication.",0.88,0.72,0.8
+4,27,"Function words and short phrases that introduce or connect clauses, often indicating a transition or relationship between ideas.",0.74,0.72,0.73
+4,29,"Currency symbols, such as ""$"" or ""£"", indicating prices or monetary values.",0.93,0.58,0.755
+4,30,"The suffix ""-y"" in words, often indicating an adjective or a proper noun.",0.59,0.87,0.73
+4,28,"The acronym ""BIT"" in EBITDA (Earnings Before Interest, Taxes, Depreciation, and Amortization), a financial metric.",0.51,0.5,0.505
+4,31,"The suffix ""let"" in a noun, often referring to a pallet.",0.8,0.71,0.755
+4,38,"The adversative conjunction ""however"".",0.85,0.53,0.69
+4,36,"The preposition ""of"" in a phrase, often indicating possession or belonging.",0.74,0.96,0.85
+4,32,"The suffix ""mony"" in words related to formal events or rituals, such as ceremonies.",0.72,0.76,0.74
+4,33,"The suffix ""-ings"" in proper nouns, often indicating surnames or place names.",0.72,0.77,0.745
+4,37,"The noun ""refusal"" in various contexts, often indicating a deliberate choice or action of not doing something.",0.65,0.65,0.65
+4,34,"The idiomatic phrase ""part and parcel"" or the word ""parcel"" in general, often related to something being an integral component or a package.",0.8,0.53,0.665
+4,39,"The adverb ""just"" used to convey a sense of simplicity, exactness, or minimalism.",0.98,0.75,0.865
+4,40,"The prefix ""Jab"" in various proper nouns, such as names, places, and organizations.",0.63,0.59,0.61
+4,42,"The suffixes ""-allergy"" and ""-obia"" in medical or health-related contexts.",0.68,0.59,0.635
+4,47,"The comparative conjunction ""than"".",0.92,0.81,0.865
+4,44,"The preposition ""in"" indicating a location, context, or membership.",0.9,0.85,0.875
+4,48,"The phrase ""per"" in financial or statistical contexts, often indicating a rate or ratio.",0.95,0.72,0.835
+4,43,"The colon (:) punctuation mark, often used to indicate a relationship or connection between entities, lists, or explanations.",0.92,0.58,0.75
+4,49,"The verb ""ming"" (likely a typo or variation of ""mingling"") indicating social interaction or mixing of people/things.",0.53,0.51,0.52
+4,46,"Punctuation marks and short function words (e.g. ""is"", ""by"", ""at"") that connect or separate clauses, phrases, or items in a list.",0.54,0.65,0.595
+6,0,"Decimal digits in numerical values, often representing measurements or quantities.",0.99,0.69,0.84
+6,6,"The prefix ""Con-"" in various words, often indicating a connection or conjunction.",0.8,0.84,0.8200000000000001
+6,8,"The adjective ""serious"" in a sentence, often used to emphasize genuine intent or commitment.",0.84,0.72,0.78
+6,5,"Punctuation marks and special characters, such as colons, dashes, and percentage signs, often used in HTML or formatting codes.",0.65,0.52,0.585
+6,9,"The prefix ""tint"" in words related to coloring or shading.",0.74,0.68,0.71
+6,4,"Phrases expressing gratitude or politeness, typically involving words like ""enough"", ""to"", ""gracious"", or ""sufficient"", indicating a sense of appreciation or courtesy.",0.78,0.66,0.72
+6,2,"Auxiliary verbs and linking verbs (e.g. ""have"", ""is"", ""are"", ""be"") in formal or instructional text, often used to form the present perfect or simple present tenses.",0.51,0.52,0.515
+6,3,"The suffix ""-istry"" in various nouns, often related to professions or fields of study.",0.92,0.74,0.8300000000000001
+6,7,"The suffix ""-rans"" or ""-RAN"" in a word, often indicating an action of forcefully taking or searching something.",0.59,0.77,0.6799999999999999
+6,10,"Left parenthesis in formatted text, often indicating a rating, score, or timestamp.",0.9,0.56,0.73
+6,16,Days of the week.,0.81,0.58,0.6950000000000001
+6,13,"Military-related terms, including ranks, branches, and statuses (e.g., reserve, enlisted, active duty).",0.86,0.76,0.81
+6,11,"The phrase ""up"" in the context of setting or lining up for an action or position, often in sports.",0.75,0.61,0.6799999999999999
+6,12,"Punctuation marks, specifically delimiters and separators (/, ||, ,, #, :, _, �) in structured data, such as lists, tables, or technical notation.",0.68,0.57,0.625
+6,14,"Prepositions and conjunctions indicating exceptions or contrasts, often used in phrases like ""except for"", ""but"", ""save for"", or ""with only"".",0.56,0.44,0.5
+6,15,"The digit ""2"" in various contexts, often related to R2-D2, a Star Wars character, or as part of a model/series number.",0.79,0.53,0.66
+6,18,"The first name ""Brian"" in a sentence, often referring to a specific person.",0.94,0.62,0.78
+6,17,"Non-ASCII characters, specifically Cyrillic characters or unknown Unicode characters, which may indicate non-English text or corrupted data.",0.93,0.52,0.7250000000000001
+6,20,"The neuron activates on nouns representing abstract concepts, particularly those related to effects, principles, and hypotheses.",0.71,0.72,0.715
+6,19,"The word ""what"" in phrases expressing curiosity or inquiry, often in the context of experimentation or exploration.",0.76,0.59,0.675
+6,21,"The word ""mythology"".",0.65,0.53,0.5900000000000001
+6,22,"The adverb ""exactly"" indicating precise knowledge or understanding.",0.85,0.65,0.75
+6,24,"The prefix ""End"" in a word, often indicating the end or conclusion of something.",1.0,0.78,0.89
+6,29,"The suffix ""alty"" in real estate-related words, such as ""Realty"".",0.61,0.52,0.565
+6,27,"The prefix ""Engine"" in various words related to engineering, such as ""Engineering"" or ""Engineer"".",0.87,0.73,0.8
+6,26,"The verb ""influenced"" or its synonyms (""shaped"", ""informed"") in a sentence, indicating a causal relationship between two entities or concepts.",0.71,0.69,0.7
+6,28,"The prefix ""pall-"" or ""pal-"" in a word, often related to medical or aesthetic contexts.",0.81,0.73,0.77
+6,31,"The word ""To"" indicating the start of an infinitive phrase, often preceding a verb or action.",0.9,0.7,0.8
+6,32,"Periods (.) at the end of sentences, often indicating the end of a quotation or a statement.",0.43,0.93,0.68
+6,30,"The token ""area"" or ""areas"" (or ""region"") referring to a geographic location, often in the context of conflict, crisis, or humanitarian issues.",0.93,0.61,0.77
+6,37,"The suffix ""ral"" in words related to Australia.",0.55,0.67,0.6100000000000001
+6,34,"The suffix ""-ell"" or ""-ellie"" in proper nouns, typically names.",0.73,0.64,0.685
+6,36,"Exclamation marks (!) at the end of a sentence or phrase, often indicating excitement or emphasis.",0.98,0.6,0.79
+6,40,"The verb ""lived"" in the context of describing a person's past or current residence.",0.92,0.65,0.785
+6,39,"Ordinal suffixes (""nd"" or ""rd"") in numbers (e.g., 2nd, 3rd).",0.83,0.61,0.72
+6,42,"Single-digit or double-digit numbers, often appearing in citations or references, typically enclosed in square brackets.",0.9,0.59,0.745
+6,41,"The phrase ""with the exception"" or the word ""exception"" in a sentence, indicating a specific exclusion or exemption.",0.86,0.58,0.72
+6,43,"Adverbs and adverbial phrases indicating uncertainty, addition, or confirmation, often used in informal writing or spoken language.",0.52,0.7,0.61
+6,45,"The term ""distribution"" or ""distributions"" in the context of Linux operating systems.",0.64,0.6,0.62
+6,44,"The neuron activates on the prefixes ""siph"" and ""Cah"", which are parts of specific words, often proper nouns or technical terms.",0.48,0.55,0.515
+6,49,"The name ""Leon"" in various contexts, often referring to a person.",0.57,0.49,0.53
+6,46,"The geographical region ""Kashmir"", often referring to the disputed territory between India and Pakistan.",0.52,0.48,0.5
+6,48,"The conjunction ""and"" in geographic or anatomical contexts, often connecting two parts of a whole.",0.75,0.72,0.735
+8,2,"The definite article ""the"".",0.69,0.77,0.73
+8,5,"The adjective ""busy"" describing a location or area with high activity.",0.72,0.55,0.635
+8,7,"The adjective ""growing"" in a phrase indicating an increasing quantity or trend.",0.82,0.74,0.78
+8,10,"The preposition ""as"" indicating a role, function, or purpose.",0.92,0.72,0.8200000000000001
+8,6,"The adverb ""often"" in first-person sentences, indicating a frequent or habitual action.",0.68,0.59,0.635
+8,3,"Proper nouns, names of specific entities, or common nouns that refer to distinct objects, concepts, or categories.",0.33,0.8,0.5650000000000001
+8,11,"The verb ""join"" or ""joined"" in the context of entering or becoming a part of a group, chat, or organization.",0.91,0.71,0.81
+8,4,"The verb ""wrote"" or ""writes"" indicating authorship or attribution of a text or quote.",0.84,0.61,0.725
+8,9,"The word ""cannibal"" or its variations, often in the context of discussing or referencing cannibalism.",0.58,0.58,0.58
+8,12,"Suffixes ""-piration"", ""-oration"", and ""-synthesis"" in scientific or technical contexts, often related to biological or chemical processes.",0.65,0.59,0.62
+8,13,"The token ""ro"" in words, often indicating a prefix or part of a verb.",0.53,0.86,0.6950000000000001
+8,14,"Single-digit numbers, often part of a section or statute reference in legal or legislative text.",0.88,0.84,0.86
+8,18,"The term ""binding"" in various scientific, technical, and bibliographic contexts.",0.87,0.79,0.8300000000000001
+8,17,"The prefix ""tre"" in English words, often indicating a sense of three, trembling, or treasure.",0.88,0.68,0.78
+8,16,"The token ""plate"" or ""plates"" in various contexts, often related to objects or structures with a flat surface.",0.91,0.63,0.77
+8,20,"The token ""t"" in a URL, specifically in the ""t.co"" domain, indicating a Twitter link.",0.53,0.51,0.52
+8,19,"The country ""Serbia"" when mentioned in a text, often in a list of countries or in a geographical context.",0.75,0.6,0.675
+8,24,"The middle initial ""M"" in a person's full name.",0.82,0.63,0.725
+8,23,"The ""/"" symbol in a date, indicating a separator between month, day, and year.",0.95,0.59,0.77
+8,21,"The verb ""raise"" or its variations (""raised"", ""raises"", ""raising"") in various contexts, often indicating physical movement or action.",0.82,0.63,0.725
+8,27,"Prepositions (""with"", ""to"", ""between"") indicating interaction or communication between entities.",0.86,0.78,0.8200000000000001
+8,26,"The auxiliary verb ""have"" in conditional sentences, typically indicating a hypothetical or uncertain situation.",0.91,0.74,0.825
+8,25,"The preposition ""of"" and sometimes ""the"" in percentage or proportion phrases, indicating a part-to-whole relationship.",0.97,0.79,0.88
+8,31,"The word ""space"" in the context of outer space or a vacuum.",0.82,0.6,0.71
+8,28,"The preposition ""against"" in the context of sports, indicating a team or entity competing or playing a match/game.",0.76,0.41,0.585
+8,29,"Single digits or single letters, often in a sequence, typically in the context of codes, IDs, or technical information.",0.91,0.59,0.75
+8,30,"Tokens representing file formats, protocols, or technical terms, often in the context of HTTP headers or file paths.",0.65,0.55,0.6000000000000001
+8,32,"The word ""past"" in a sentence, often indicating a time period prior to the present.",0.97,0.76,0.865
+8,33,"The ""Rh"" prefix in proper nouns, often indicating a person's name or a geographical location.",0.74,0.57,0.655
+8,34,"Period (.) in abbreviations, typically indicating a state or direction (e.g., N.W., N.E., etc.) in addresses or geographic locations.",0.74,0.74,0.74
+8,35,"The abbreviation ""AMA"", often referring to the American Medical Association or Ask Me Anything.",0.62,0.65,0.635
+8,41,"The preposition ""to"" in idiomatic expressions.",0.73,0.71,0.72
+8,39,"Honorific titles (""Mr."", ""Mr"") followed by a surname or a title.",0.92,0.68,0.8
+8,37,"Adverbs and adverbial phrases indicating degree or manner, often used to modify verbs or adjectives.",0.55,0.58,0.565
+8,44,"Prepositions ""in"" or ""on"" indicating location or presence within a space or vehicle.",0.86,0.85,0.855
+8,36,"The neuron is activated by phrases related to discovering or learning information, such as ""find out"" or ""learn"", often in the context of future events or revelations.",0.76,0.62,0.69
+8,47,"The auxiliary verbs ""would"" and ""will"" in conditional or hypothetical sentences.",0.89,0.62,0.755
+8,45,"Multimedia and digital content types (e.g., video, clip, file, shot, scan, recording, copy, edition, cast, diagram, footage).",0.66,0.63,0.645
+8,49,"Two-digit numbers, often percentages or prices, in a numerical context.",0.47,0.51,0.49
+8,48,"The prefix ""nont"" or ""antit"" in a word, often indicating negation or opposition.",0.89,0.57,0.73
+10,9,"The verb ""sing"" in various contexts, often related to music or vocal performance.",0.83,0.73,0.78
+10,1,"The surname ""Benson"" or ""enson"" in various contexts, often referring to a specific person.",0.59,0.63,0.61
+10,10,"Part of a brand name, abbreviation, or numeral in a proper noun, often related to technology or media.",0.72,0.65,0.685
+10,2,"The first name ""Jeff"" in a professional or formal context, often referring to a person of authority or expertise.",0.65,0.52,0.585
+10,6,"Linking verbs (""is"", ""'s"", ""was"") in sentences, often used to establish a state or condition.",0.76,0.87,0.815
+10,7,"Punctuation marks (commas, dashes) and conjunctions (""then"", ""so"", ""but"") that connect clauses or items in a list, often in explanatory or mathematical contexts.",0.63,0.67,0.65
+10,0,"The suffix ""et"" in proper nouns, typically surnames.",0.7,0.65,0.675
+10,5,"The abbreviations ""DR"" (Doctor), ""STR"" (Abstract), ""MIN"" (Min), and ""V"" (Advanced) in formal or official contexts, often related to addresses or administrative information.",0.57,0.6,0.585
+10,4,"Period (.) punctuation mark, often indicating the end of a sentence or a pause in dialogue.",0.55,0.99,0.77
+10,8,"Geographical locations, words related to togetherness, and suffixes (-after, -ies, -fully, -side, -here, -our) indicating a sense of place or unity.",0.78,0.66,0.72
+10,13,"The preposition ""of"".",0.74,0.64,0.69
+10,17,"The preposition ""of"" in phrases indicating family relationships or possession.",0.76,0.58,0.6699999999999999
+10,19,"The word ""sexual"" in the context of abuse, assault, or exploitation.",0.77,0.65,0.71
+10,12,"The names of cities, specifically Osaka and Istanbul, often in the context of geographic locations or events related to those cities.",0.68,0.56,0.6200000000000001
+10,11,"The token ""email"" or similar tokens (""post"", ""shipping"", ""customer"") in the context of online forms, subscriptions, or login credentials.",0.78,0.72,0.75
+10,20,"The token ""pouch"", often referring to a container or enclosure.",0.68,0.54,0.6100000000000001
+10,18,"The pronoun ""this"" preceding a hyperlink or URL, often used to direct the reader to additional information or resources.",0.87,0.73,0.8
+10,21,"The adjective ""religious"" in various contexts, often related to freedom, expression, or exemptions.",0.72,0.55,0.635
+10,23,"Sentence-ending periods (.) in written text, often following a statement of death or a factual event.",0.75,0.92,0.835
+10,14,"Special characters and symbols, often used in HTML, XML, or other markup languages, such as quotation marks, equals signs, and angle brackets, as well as some common words and phrases that appear in metadata or technical contexts.",0.77,0.48,0.625
+10,30,The trademark symbol (™).,0.9,0.5,0.7
+10,26,"The definite article ""the"" preceding a proper noun, typically a person's name or title.",0.87,0.73,0.8
+10,28,"Period (.) in URLs, often preceding a domain or subdomain.",0.84,0.76,0.8
+10,24,"The word ""This"" in a formal or legal context, often preceding a statement of rights, disclaimers, or copyright information.",0.89,0.45,0.67
+10,34,"The token ""Score"" in various contexts, often related to ratings, evaluations, or results.",0.93,0.62,0.775
+10,31,"The phrase ""X <<times>>"" where X is a quantity (e.g. few, several, a couple, numerous), indicating repetition or frequency.",0.86,0.72,0.79
+10,33,"Punctuation marks ("","", ""."", ""-"", ""–"") and the conjunction ""and"" in text, often used to connect or list items, especially in the context of politics and government.",0.64,0.49,0.565
+10,35,"Punctuation marks, especially those used to separate clauses or items in a list, as well as proper nouns, particularly names.",0.64,0.58,0.61
+10,36,"Ellipsis (...) or ""continue reading"" prompts, indicating a continuation or separation of text, often used to truncate or separate content.",0.88,0.69,0.7849999999999999
+10,37,"Nouns or phrases indicating time, location, or general categories, often used to provide context or specify a particular instance.",0.47,0.62,0.5449999999999999
+10,38,"The infinitive verb ""to"" in instructional or procedural text, often indicating a necessary action.",0.83,0.66,0.745
+10,39,"The word ""accounting"" in a formal or technical context, often related to financial reporting, principles, or standards.",0.87,0.71,0.79
+10,41,"The colon (:) symbol, often used to indicate a ratio or separation of values, typically in the context of data or statistics.",0.78,0.64,0.71
+10,42,"Capital city names, often at the end of a sentence or phrase, indicating a specific location.",0.89,0.9,0.895
+10,46,"The prefix ""over-"" in a word, often indicating excess or too much of something.",0.93,0.74,0.835
+10,45,"Indefinite pronouns (""some"", ""many"") used to introduce or quantify a group or subset of people.",0.95,0.81,0.88
+10,44,"The comma (,) punctuation mark, often used to separate clauses or items in a list, typically preceding descriptive information about a person or entity.",0.81,0.87,0.8400000000000001
+10,49,"Past tense or past participle verb forms, often indicating a desired or sought-after state.",0.45,0.86,0.655
+10,47,"Non-ASCII characters, diacritics, or special characters, often in the context of non-English words or brand names.",0.85,0.42,0.635
+10,48,"The word ""die"" in various contexts, including as a prefix in compound adjectives (""die-hard""), as a noun referring to a metal stamp or mold, or as part of a phrase (""die cut"").",0.8,0.65,0.7250000000000001

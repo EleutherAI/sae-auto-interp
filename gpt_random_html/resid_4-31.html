@@ -1,0 +1,709 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-31</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-31</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: May 18, 2014). "Ath<span style="background-color:rgba(57,212,155, 1.0)">let</span>ics pick up Jeff Francis off waivers from the Reds".<br>Activations: ("let" : 5)<br>Example 2: <|endoftext|>-de<span style="background-color:rgba(57,212,155, 1.0)">let</span>ion. Only the primary key column values are send to the database.<br>An<br>Activations: ("let" : 4)<br>Example 3: <|endoftext|>S marking. The next step is for the pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> industry to come together to get PIM<br>Activations: ("let" : 9)<br>Example 4: <|endoftext|> Mike Leavitt.<br>- Craig Wil<span style="background-color:rgba(57,212,155, 1.0)">let</span>, Wil<span style="background-color:rgba(57,212,155, 1.0)">let</span> and Associates, Provo.<br>Activations: ("let" : 1), ("let" : 1)<br>Example 5:  BET YOUR LIFE THE STAKES ARE HIGHT FOR ATH<span style="background-color:rgba(57,212,155, 1.0)">LET</span>ES AND OTHER STUDENTS WHO<br>Activations: ("LET" : 2)<br>Example 6:  inside a suitable pal<span style="background-color:rgba(57,212,155, 1.0)">let</span>. There are many different types of pallets, but they all operate […]<br>Activations: ("let" : 4)<br>Example 7:  Ozone Dep<span style="background-color:rgba(57,212,155, 1.0)">let</span>ion<br>Ozone is a shield to protect living organisms and humans on earth from<br>Activations: ("let" : 1)<br>Example 8: <|endoftext|>letart #pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> #recycling #upcycling #refurnish #recycl<br>Activations: ("let" : 6)<br>Example 9: <|endoftext|> price tag or only well-known varietals, unless hom<span style="background-color:rgba(57,212,155, 1.0)">ogen</span>ized predictability is the<br>Activations: ("ogen" : 0)<br>Example 10: <|endoftext|>�s not go there. Evil lurks in the hearts of goblins.) In the Gob<span style="background-color:rgba(57,212,155, 1.0)">let</span><br>Activations: ("let" : 1)<br>Example 11:  ��Retailers have advocated for rental pal<span style="background-color:rgba(57,212,155, 1.0)">lets</span> in the past, but they have accepted other<br>Activations: ("lets" : 3)<br>Example 12:  well-balanced IPA will warm your pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> with a spectacularly fresh floral hop character.<br>AB<br>Activations: ("let" : 7)<br>Example 13: What��s the impact on pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> users? The mandate won��t have much of<br>Activations: ("let" : 4)<br>Example 14:  tickets for all non-ath<span style="background-color:rgba(57,212,155, 1.0)">let</span>ic events on campus like concerts, plays, musicals, and<br>Activations: ("let" : 3)<br>Example 15:  a dock lift wide enough to allow side-by-side pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> loading.<br>HVLS<br>Activations: ("let" : 8)<br>Example 16:  hadn't really learned the subt<span style="background-color:rgba(57,212,155, 1.0)">let</span>ies and nuances of the signals that her kitties were saying<br>Activations: ("let" : 3)<br>Example 17: ABLE LAW MAY NOT ALL<span style="background-color:rgba(57,212,155, 1.0)">OW</span> THE EXCLUSION OF IMPLIED WARRANTIES, SO THE ABO<br>Activations: ("OW" : 1)<br>Example 18:  in that people have pal<span style="background-color:rgba(57,212,155, 1.0)">lets</span> on their radar screen,�� he says. ��Too many<br>Activations: ("lets" : 4)<br>Example 19:  – i.e. if ordering 2 x 130gsm Gloss A4 Book<span style="background-color:rgba(57,212,155, 1.0)">let</span>, one file<br>Activations: ("let" : 1)<br>Example 20:  for scientific fraud. Else<span style="background-color:rgba(57,212,155, 1.0)">where</span>, two different research groups (one backed by Geron, the other<br>Activations: ("where" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The suffix "-let" in various words, often related to nouns or objects.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The suffix &quot;-let&quot; in various words, often related to nouns or objects.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>place announces TPG is new equity partner More News
+What is the pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> industry watching?</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> a solitary place where rugs from some looted house had been folded up for a pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> and spread</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>ycle Record, two newsletters that cover issues of interest to pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> manufacturers and end users alike.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> wood pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> will act out as the table which you can set in your living room areas. Apart</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> companies come together once the regulatory approvals are over is of potential interest to every pal<span style="background-color:rgba(57,212,155, 1.0)">let</span> user since CH</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>.unitedpacificpal<span style="background-color:rgba(57,212,155, 0.9200000000000002)">let</span>.com/resources/files/CostcoPal<span style="background-color:rgba(57,212,155, 0.9200000000000002)">let</span>SpecAdd</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> MP Box is a collapsible/foldable pal<span style="background-color:rgba(57,212,155, 0.9200000000000002)">let</span> cage of reliable and solid construction which consists of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>- Vertical side sputtering systems
+- 13�� x 13�� pal<span style="background-color:rgba(57,212,155, 0.9200000000000002)">let</span> size
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> diy wooden pal<span style="background-color:rgba(57,212,155, 0.9200000000000002)">let</span> coffee table. The tutorial (found here) has simple to follow instructions</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>th<span style="background-color:rgba(57,212,155, 0.9200000000000002)">let</span>ics.com|converted to 1.6 markup
+|De<span style="background-color:rgba(57,212,155, 0.9200000000000002)">let</span>ions are marked</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>.Ath<span style="background-color:rgba(57,212,155, 0.8400000000000001)">let</span>ic Registration & Fees
+Student athletic participation fees for 2019-2020 are $100</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> companies and many more. We provide Cold Fire concentrate from pails to pal<span style="background-color:rgba(57,212,155, 0.8400000000000001)">lets</span>, and from tot</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> same time, Brindley acknowledges that the issue has put a spotlight on pal<span style="background-color:rgba(57,212,155, 0.8400000000000001)">lets</span> in the purchasing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> du Châte<span style="background-color:rgba(57,212,155, 0.8400000000000001)">let</span> because of her intellectual genius (most probably far greater than his). Despite all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> kid��s shows are a little strange, but these are nothing compared to the Te<span style="background-color:rgba(57,212,155, 0.8400000000000001)">let</span>ub</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>1. Industrial tube packing + cartons + pal<span style="background-color:rgba(57,212,155, 0.76)">lets</span>
+2. Individual colorful or white box</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>igno<span style="background-color:rgba(57,212,155, 0.76)">let</span>
+The Belgian has been one of the most consistent new signings for the club this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>mable Message Delivery System for VMS MAIL.
+Directory Tree De<span style="background-color:rgba(57,212,155, 0.76)">let</span>ion.
+Assign</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>Ouel<span style="background-color:rgba(57,212,155, 0.76)">let</span>, F. (ed.) (2004). Quelle formation pour l��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> on 48 x 40-block pal<span style="background-color:rgba(57,212,155, 0.76)">lets</span>. The club store will accept shipments on rental pal<span style="background-color:rgba(57,212,155, 0.76)">lets</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>. You know, you hear about….
+SECOND DE<span style="background-color:rgba(57,212,155, 0.6799999999999999)">LET</span>ED SECTION: TOP CAB</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>4 Book<span style="background-color:rgba(57,212,155, 0.6799999999999999)">let</span> printing – and all with the guarantee of unlimited revisions to ensure the design we create</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>edpal<span style="background-color:rgba(57,212,155, 0.6799999999999999)">let</span> #reclaimed #repurposed #reused #restore #upcycle #</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> information on this process in the Michigan Business Taxes Registration Book<span style="background-color:rgba(57,212,155, 0.6799999999999999)">let</span>.
+- Whenever you hire an employee</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>ole are examples of antiplate<span style="background-color:rgba(57,212,155, 0.6799999999999999)">let</span> medicines.
+- Anticoagulants. Also called blood</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>FIRST BATCH OF ��DE<span style="background-color:rgba(57,212,155, 0.6000000000000001)">LET</span>ED�� AUDIO: POP MUSIC PROP</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> thinners, these medicines work differently from antiplate<span style="background-color:rgba(57,212,155, 0.6000000000000001)">let</span> medicines to decrease the ability of the blood to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> mal<span style="background-color:rgba(57,212,155, 0.6000000000000001)">let</span> players. This makes for a great option for recitals, juries, lessons, or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> useless eaters�� right up to the moment…
+THIRD DE<span style="background-color:rgba(57,212,155, 0.6000000000000001)">LET</span>ED SECTION OF THE</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Woman Administrator... Jim Crawley, Faculty Athletic
+www.chargerath<span style="background-color:rgba(57,212,155, 0.6000000000000001)">let</span>ics.com/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Deterioration and Dep<span style="background-color:rgba(57,212,155, 0.52)">let</span>ion of Natural Capital: Humanity is ushering in the depletion and degradation</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>.
+130gsm Gloss A4 Book<span style="background-color:rgba(57,212,155, 0.52)">let</span>
+Bespoke Design: 4-20</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>imespo, At<span style="background-color:rgba(57,212,155, 0.52)">let</span>, Buescher, Willecke, Jungheinrich</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>SR, Pro<span style="background-color:rgba(57,212,155, 0.52)">can</span>bid), amiodarone (Cordarone), and sotal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>Comments on Web Experience Factory, WebSphere Port<span style="background-color:rgba(57,212,155, 0.52)">let</span> Factory, and the new mobile features
+I'm</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> to give blood or plate<span style="background-color:rgba(57,212,155, 0.44)">lets</span> each weekday to meet hospital demands.
+With blood drives held every week</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>CH DAMAGES. APPLICABLE LAW MAY NOT ALL<span style="background-color:rgba(57,212,155, 0.44)">OW</span> THE LIMITATION OR EXCLUSION OF</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>sm Gloss A4 Book<span style="background-color:rgba(57,212,155, 0.44)">let</span> printing Artwork Guide section.
+I require artwork, how do I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>.
+*** BENEFITS BOOK<span style="background-color:rgba(57,212,155, 0.44)">LET</span> ***
+The Secondary KPRDSB Benefits booklet has</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Sport Cabrio<span style="background-color:rgba(57,212,155, 0.44)">let</span> - $990,000
+7. 1966 Shelby 427 Cobra - $836</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>!
+IN<span style="background-color:rgba(57,212,155, 0.36000000000000004)">LET</span> SQUARE MALL
+10125 Highway 17 Bypass
+Murrells</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Bowl, Kalash, Gob<span style="background-color:rgba(57,212,155, 0.36000000000000004)">let</span>, Candle Stand, Tea Set, Hanging Crystal Lamp,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> on the spot where the two planes meet,�� says Bel<span style="background-color:rgba(57,212,155, 0.36000000000000004)">let</span>, owner of Manhattan-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)">let</span> Sheet Medical.
+Type 1 Diabetes Genetics Consortium
+��The T1DGC originally focused</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Referred to as a ��pel<span style="background-color:rgba(57,212,155, 0.36000000000000004)">let</span>izer,�� the recycled filament is reduced to a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> in close conjunction with each Out<span style="background-color:rgba(57,212,155, 0.28)">let</span> Manager, Annual operating budgets which will form part of the business plan</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> processed.
+BACK TO EDUCATION ALL<span style="background-color:rgba(57,212,155, 0.28)">OW</span>ANCE (BTEA)
+When you have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> brokers, agents and others in the industry work more professionally with buyers, sellers,<span style="background-color:rgba(57,212,155, 0.28)"> appra</span>isers, inspectors</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> of the proposition by MM. Pail<span style="background-color:rgba(57,212,155, 0.28)">let</span>, Saint-Priest and Corsan. Other</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> a fil<span style="background-color:rgba(57,212,155, 0.28)">let</span> or chamfer. We can do this by using modify tool. However, in</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> iPad minis in first week of salesAs the first iPad mini preorders are being delivered and the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> avoided the army and completed his Habilitation thesis on Trigonometrical equations. Mollwe</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> will find free parking at the majority of our
+hotels, except in London and some major city</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> 2012 was actually going to happen in 2017.
+I hid that data because, unfortunately, part of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> deaf and can't hear it, the radar in the P-3 and various helicopters will see it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> comes with economies of scale due to the way Bitcoin is designed. In other words, Bitcoin is designed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, a misdemeanor and he was taken to Forsyth County Detention Center.Archive provides a comprehensive line</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> while avoiding an economically-ruinous fiscal contraction. But I am sceptical about whether he really wanted</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> The ��why�� partner
+The ��yes to everything�� partner follows the simple</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Females do not become receptive until 21 days after the pups are born, thus the males do not</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>b made his big<span style="background-color:rgba(57,212,155, 0.2)">screen</span> debut in 2004 with the compelling gangland saga ��Bullet Boy.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> of that includes<span style="background-color:rgba(57,212,155, 0.2)"> installing</span> new metal machinery throughout the plant, whether it's automatic palletizers using</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> 8 background)
+<span style="background-color:rgba(57,212,155, 0.2)">|</span>Athletics||6 + 3||9|
+|Gather</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>ed #woodwork<span style="background-color:rgba(57,212,155, 0.2)"> #</span>woodworking
+Have a look at the reclaimed wood pallet entrance table,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Turkish Gulet each<span style="background-color:rgba(57,212,155, 0.2)"> evening</span>.
+Cappadocia is a surreal landscape of conical</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> features associated with some<span style="background-color:rgba(57,212,155, 0.2)"> of</span> these mutations still remain to be elucidated...
+- Decreased platelet</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> or sanitation can be<span style="background-color:rgba(57,212,155, 0.2)"> an</span> issue.�� Those are both issues that the pallet users and suppliers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>ooters in India<span style="background-color:rgba(57,212,155, 0.2)"> 2022</span>
+Hoping to purchase an electric vehicle in India? Get subtleties</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, this fun and<span style="background-color:rgba(57,212,155, 0.2)"> historically</span> significant collection is scored for snare drum soloist and mallet quintet</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>. See full<span style="background-color:rgba(57,212,155, 0.2)"> Terms</span> and Conditions.
+|Fits||Forster Collet Bullet Puller</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

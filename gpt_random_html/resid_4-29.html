@@ -1,0 +1,729 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-29</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-29</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  price$2,595$1,595$499 (half)<span style="background-color:rgba(57,212,155, 1.0)"> $</span>999 (full)$<br>Activations: (" $" : 3)<br>Example 2: .<br>Meal total $14.67<br>Total servings 8 at<span style="background-color:rgba(57,212,155, 1.0)"> $</span>1.83/person<br>Activations: (" $" : 3)<br>Example 3: <|endoftext|> (620<span style="background-color:rgba(57,212,155, 1.0)"> $</span>300 price drop to $2,199: Canon EOS-5D Mark<br>Activations: (" $" : 6)<br>Example 4: <span style="background-color:rgba(57,212,155, 1.0)">$</span>39/$29 Iridopelma hirsutum 3/4-1″ #<br>Activations: ("$" : 2)<br>Example 5: <|endoftext|>st��Free Shipping 99<span style="background-color:rgba(57,212,155, 1.0)">$</span> and Over. Have Questions? Call Us 833-900<br>Activations: ("$" : 3)<br>Example 6: ||1 in 19||<span style="background-color:rgba(57,212,155, 1.0)">€</span>3 (fixed)||€3 (fixed)|<br>|0 +<br>Activations: ("€" : 3)<br>Example 7:  Pink Toe) 3″ FEMALE #419<br><span style="background-color:rgba(57,212,155, 1.0)">$</span>39/37 Avicularia vers<br>Activations: ("$" : 2)<br>Example 8:  1 –<span style="background-color:rgba(57,212,155, 1.0)"> $</span>888 WSOP Crazy Eights 1A<br>July 6 –<span style="background-color:rgba(57,212,155, 1.0)"> $</span>1,000 WS<br>Activations: (" $" : 4)<br>Example 9: 4||50%||50% Sign Up Bonus - Up to<span style="background-color:rgba(57,212,155, 1.0)"> $</span>1000||REVIEW||PLAY<br>Activations: (" $" : 3)<br>Example 10:  Aeroplan Miles $1000, 6000miles, Class S or below 5000 6000<span style="background-color:rgba(57,212,155, 1.0)"> $</span>1000, 8000<br>Activations: (" $" : 2)<br>Example 11: chra (Brazilian black) 1″+ #422<br><span style="background-color:rgba(57,212,155, 1.0)">$</span>14/$9 Grammostola<br>Activations: ("$" : 5)<br>Example 12: <br>|4/16/2019 1:58:00 PM||New Value:<span style="background-color:rgba(57,212,155, 1.0)"> $</span>880,<br>Activations: (" $" : 2)<br>Example 13:  varies depending on the instructor's costs and funding - this course will be $130, with 30<span style="background-color:rgba(57,212,155, 1.0)">$</span><br>Activations: ("$" : 3)<br>Example 14: ��� ����� ������ 60<span style="background-color:rgba(57,212,155, 1.0)"> �</span>�����<br>Activations: (" �" : 2)<br>Example 15: 000 WSOP NLHE<br>June 20 –<span style="background-color:rgba(57,212,155, 1.0)"> $</span>1,500 Summer Solstice<br>June 25 –<br>Activations: (" $" : 6)<br>Example 16: <|endoftext|>|<br>|$500,000 - $600,000||$600,000 -<span style="background-color:rgba(57,212,155, 1.0)"> $</span><br>Activations: (" $" : 2)<br>Example 17:  E-17<span style="background-color:rgba(57,212,155, 1.0)"> $</span>10<br>Each day across the country, when the sun reaches six degrees below the<br>Activations: (" $" : 2)<br>Example 18: <|endoftext|> 22,069 =<span style="background-color:rgba(57,212,155, 1.0)"> $</span>4780 ($3500 in rebates and $1280 discount<br>Activations: (" $" : 2)<br>Example 19: 687<br><span style="background-color:rgba(57,212,155, 1.0)">$</span>45/$39 Lampropelma sp. ��Borneo Black��<br>Activations: ("$" : 3)<br>Example 20: $10.01 -<span style="background-color:rgba(57,212,155, 1.0)"> $</span>30||$5.95|<br>|$30.01 -<br>Activations: (" $" : 3)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Currency symbols, specifically "$" and "€", indicating prices or monetary values.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Currency symbols, specifically &quot;$&quot; and &quot;€&quot;, indicating prices or monetary values.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>OP TAG Team
+July 8 –<span style="background-color:rgba(57,212,155, 1.0)"> $</span>1,000 WSOP Ladies Event
+July 11 –<span style="background-color:rgba(57,212,155, 1.0)"> $</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>G Royal Mail 48<span style="background-color:rgba(57,212,155, 1.0)"> £</span>2.50.
+NI - M, L, XL Max 10K</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>acey Matrazzo (Author), Nancy Bissett (Author)- 28<span style="background-color:rgba(57,212,155, 1.0)">$</span>
+Gil Nelson,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>.
+UK - S < 0.75KG Royal Mail 48<span style="background-color:rgba(57,212,155, 1.0)"> £</span>2.50.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)"> $</span>87
+June<span style="background-color:rgba(57,212,155, 1.0)"> $</span>1,000 10.6<span style="background-color:rgba(57,212,155, 1.0)"> $</span>94
+July<span style="background-color:rgba(57,212,155, 1.0)"> $</span>1,000 10</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>923 Hancock St
+Abington, Massachusetts, 02351<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> $</span>171,000
+List</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>362||19.10 - 23.11.2018<span style="background-color:rgba(57,212,155, 0.9200000000000002)">$</span>992|
+|November 2018||01</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> betway casino cruise! May 18, 2021<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> $</span>25 No Deposit for Royal Ace Casino. No Deposit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Carnation Bouquet
+$ 63.9 / € 47.93<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> £</span> 40.26 /</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> isn`t worth the 23<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> $</span> I payed for it, what a PoS, now you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>||$2,640.00 |
+From<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> $</span>25.00 to $2,640.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>oon) 3/4-1″ #732
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">$</span>14/$9 Nhandu chrom</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> $</span>300,000||$300,000 -<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> $</span>400,000||$400,000 -</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, Kilkenny and Wexford
+2020 -<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> €</span>9,600
+2021 -<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> €</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>'S MORNING SONG (CD) E-22<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> $</span>10
+Hempton took</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>69 -<span style="background-color:rgba(57,212,155, 0.76)"> $</span>179
+Queen bedroom with private bathroom with a tub, telephone, Free Wi-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> /<span style="background-color:rgba(57,212,155, 0.76)"> €</span> 66.68
+/ HK$ 688.98
+Classic Red and White Flowers Ar</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> places
+Organized sightseeing nearby, Car rental nearby
+Pet friendly (25<span style="background-color:rgba(57,212,155, 0.76)"> €</span>/night),</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Bonus - Up to<span style="background-color:rgba(57,212,155, 0.76)"> $</span>250||REVIEW||PLAY NOW|
+|#2||50%</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> NOW|
+|#5||50%||50% Sign Up Bonus - Up to<span style="background-color:rgba(57,212,155, 0.76)"> $</span>1000</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> each
+Use 2<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> $</span>1/1 Carmex Lip Care Moisture Plus manufacturer��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>s, 1 Yard, Green Brown. 3.9 out of 5 stars 7.<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> $</span>13.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>45.99|
+|6||140||35+ lbs (16+ kg)||<span style="background-color:rgba(57,212,155, 0.6799999999999999)">$</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>
+- — $730, was $830
+- —<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> $</span>850, was $1,000</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>Mon-Fri)
+Before & After<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> $</span>80.00 per week (20 hours week. 1</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> the company at year end amounted to € 201.0 million (2018:<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> €</span> 146.2 million</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>) finished second for Le Mars while Mason Cook (119<span style="background-color:rgba(57,212,155, 0.6000000000000001)">#</span>) and Chris Stevenson (285<span style="background-color:rgba(57,212,155, 0.6000000000000001)">#</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> deposit 777 bitcoin casino. These are those games. May 25, 2021<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> $</span>28 No Deposit for Jack</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Bonus - Up to<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> $</span>300||REVIEW||PLAY NOW|
+|View moreView less|</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>. 7,625 traded (79 percent Ask). Jan 1.5, Jan12<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> $</span>1,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>
+<span style="background-color:rgba(57,212,155, 0.52)">$</span>15/$9 Grammostola porteri/rosea (pink) 1/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>||Rs.1,000 to Rs.10,000||Rs.20,000 –<span style="background-color:rgba(57,212,155, 0.52)"> Rs</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>.50Trending at £20.12
+-<span style="background-color:rgba(57,212,155, 0.52)"> £</span>9.22Trending at £11</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>||0||$ 480,000||<span style="background-color:rgba(57,212,155, 0.52)">$</span> 2,954,887|
+|2010||Pitt</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)">$</span>18/$14 Grammostola rosea (Rose-hair RCF) 1/2-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>...v...;...'...............-.. fOiVa 7
+<span style="background-color:rgba(57,212,155, 0.44)">$</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>5
+Josefina��s Christmas Dress Item# D5932<span style="background-color:rgba(57,212,155, 0.44)"> $</span>22 (various</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> FEMALE #715
+<span style="background-color:rgba(57,212,155, 0.44)">$</span>135/$119 Brachypelma boehmei (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> x 12 =<span style="background-color:rgba(57,212,155, 0.44)"> $</span>35.40 beginning today as well as by the time you enter your 13</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>.95 Maintenance Fee if average balance falls below $100
+-<span style="background-color:rgba(57,212,155, 0.44)"> $</span>1.95 fee in excess</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> #28
+<span style="background-color:rgba(57,212,155, 0.36000000000000004)">$</span>34/$25 Hapalopus sp. Colombia ��Pumpkin</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Four Options
+-<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> $</span>55 for a glass screen repair for iPhone 5, 5S, or 5</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> White Striped Bird-eater) 1/4�� #741
+<span style="background-color:rgba(57,212,155, 0.36000000000000004)">$</span>24</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>|5||172||27+ lbs (12+ kg)||<span style="background-color:rgba(57,212,155, 0.36000000000000004)">$</span>0.27||$</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> of Rs. 1800=Rs. 1800 +<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Rs</span>.
+So, now the balance which has been</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>map.php FEES: 1)<span style="background-color:rgba(57,212,155, 0.28)"> $</span>65.00=two nights lodging, ScrubFest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>. 68) In 1825<span style="background-color:rgba(57,212,155, 0.28)"> £</span>44 12s. 9d. was spent in repairs to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> White) 3 1/2-4″ FEMALE #710
+<span style="background-color:rgba(57,212,155, 0.28)">$</span>89/$69</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>an Giant) 4 1/2- 5″ FEMALE #662
+<span style="background-color:rgba(57,212,155, 0.28)">$</span>29/$22</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>ink) 3-4″ FEMALE #653
+<span style="background-color:rgba(57,212,155, 0.28)">$</span>59/$54 Grammostola pul</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+> forever lose faith in the process of deciding leaders by pulling papers
+> out of hats.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>t the tables turn in that case?
+Indeed, it would. For this to happen, one</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the fuck oot so my advice would be to just mug anyone wearing a wrestling t-shirt over</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�t know why you��re in here. I have no idea what you��re</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> refuse to apply what they know to their own behavior.
+Overcoming this attitude and making safe behaviors</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>-to-face with important donors, apply for government grants and organize fundraising events. Coursework and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> local media were in attendance -- in addition to RFT Music, there was the Post-Dispatch,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Charleston Christmas Special�� at Charleston Music Hall; & January 16 with the Mark Sterbank Jazz Group</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the subject as well as doing certain homework and assignments. These homework and assignments carry valuable marks which are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>switches configured to sense a change in radio-wave reception that occurs when the switch is touched by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>/14/2019<span style="background-color:rgba(57,212,155, 0.2)"> 7</span>:58<span style="background-color:rgba(57,212,155, 0.2)">:</span>12 PM||New Value: $849,000|</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> 10 $100
+February<span style="background-color:rgba(57,212,155, 0.2)"> $</span>1,<span style="background-color:rgba(57,212,155, 0.2)">000</span> 10 $100
+March $1,000 10.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> E-25 $15<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Another sound<span style="background-color:rgba(57,212,155, 0.2)">-</span>tracker, working on the East Coast, Peter A</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>700,000||<span style="background-color:rgba(57,212,155, 0.2)">$</span>700,<span style="background-color:rgba(57,212,155, 0.2)">000</span> - $800,000|
+|$800,000</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>miles, Class<span style="background-color:rgba(57,212,155, 0.2)"> S</span> or below<span style="background-color:rgba(57,212,155, 0.2)"> 5000</span> 8000 $1800, 6000miles, Class W or above</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>) – 360 �<span style="background-color:rgba(57,212,155, 0.2)">�</span>uros<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Price from 280 €
+Cost of individual tour
+The tour</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>) SI 96/<span style="background-color:rgba(57,212,155, 0.2)">L</span>TE $70<span style="background-color:rgba(57,212,155, 0.2)">,</span>554, Progeny Race Earnings of over $</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>900 + $169<span style="background-color:rgba(57,212,155, 0.2)"> -</span> Trade
+<span style="background-color:rgba(57,212,155, 0.2)">Hope</span> this helps. Like I said maybe November will get you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>,
+Sharon<span style="background-color:rgba(57,212,155, 0.2)"> Hodg</span>son MP<span style="background-color:rgba(57,212,155, 0.2)"> and</span>
+Jude Kirton-Darling MEP.
+We</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>125.00 –<span style="background-color:rgba(57,212,155, 0.2)"> Otherwise</span> 7 to<span style="background-color:rgba(57,212,155, 0.2)"> 3</span> at $110.00.. Except July 3rd! Saving</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

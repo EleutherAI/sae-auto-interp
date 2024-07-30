@@ -1,0 +1,697 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-34</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-34</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  police found a stolen.40 caliber pistol in Z<span style="background-color:rgba(57,212,155, 1.0)">ell</span>ars��s SUV during a search of<br>Activations: ("ell" : 2)<br>Example 2: <|endoftext|>.<br>Senior Scientist, Dr Michael N<span style="background-color:rgba(57,212,155, 1.0)">oy</span>ong of RWTH Aachen using the new<br>Activations: ("oy" : 2)<br>Example 3:  lungs and tuberculosis of N<span style="background-color:rgba(57,212,155, 1.0)">ell</span>ie Kershaw, who had worked in the spinning room of a R<br>Activations: ("ell" : 8)<br>Example 4: , 22 N<span style="background-color:rgba(57,212,155, 1.0)">iel</span> Marais, 23 AJ Coertzen, 24 Willem Serfontein<br>Activations: ("iel" : 0)<br>Example 5: Stroud, Chuck N<span style="background-color:rgba(57,212,155, 1.0)">oll</span>,<br>Don Lewis, Larry Knauer, Julie LeFever,<br>Activations: ("oll" : 1)<br>Example 6: , further help in fulfilling their dream. She added that N<span style="background-color:rgba(57,212,155, 1.0)">el</span>net Bank will enable them to meet<br>Activations: ("el" : 2)<br>Example 7: onge, to Robert Ne<span style="background-color:rgba(57,212,155, 1.0)">ale</span> of the Middle Temple, London, gentleman, in order that he may<br>Activations: ("ale" : 0)<br>Example 8:  of Carbon High and served an LDS mission in Portland, Ore., and is currently working for N<span style="background-color:rgba(57,212,155, 1.0)">el</span><br>Activations: ("el" : 2)<br>Example 9: 14); N<span style="background-color:rgba(57,212,155, 1.0)">elly</span> (Av Independencia 654, T8096877979, http://<br>Activations: ("elly" : 0)<br>Example 10:  more than a simple ��Ay, ReN<span style="background-color:rgba(57,212,155, 1.0)">ée</span>.�� – I almost got sent home<br>Activations: ("ée" : 0)<br>Example 11:  a background that is full of const<span style="background-color:rgba(57,212,155, 1.0)">ell</span>ations and asterisms. (Asterisms are group of<br>Activations: ("ell" : 0)<br>Example 12: <|endoftext|>. My childhood heroes were Amelia Earhart, Gertrude Bell, N<span style="background-color:rgba(57,212,155, 1.0)">elly</span> Bly<br>Activations: ("elly" : 1)<br>Example 13: <|endoftext|> third year film at Harvard University, animator Ren<span style="background-color:rgba(57,212,155, 1.0)">ee</span> Zhan balances comedy and tragedy in order<br>Activations: ("ee" : 0)<br>Example 14: <|endoftext|> access settings from the Int<span style="background-color:rgba(57,212,155, 1.0)">ell</span>iscreen top drawer.<br>Anyway. Diggin' it.<br>Activations: ("ell" : 3)<br>Example 15: ) (ISBN 0-295-95846-4 )<br>- Jones, N<span style="background-color:rgba(57,212,155, 1.0)">ard</span><br>Activations: ("ard" : 2)<br>Example 16: <|endoftext|>oonmaker to Let the Fire Burn editor N<span style="background-color:rgba(57,212,155, 1.0)">els</span> Bangerter, for his work on the<br>Activations: ("els" : 2)<br>Example 17:  first, price in "Tebalpla", and Mrs. N<span style="background-color:rgba(57,212,155, 1.0)">ell</span>ie Wilson was voted<br>Activations: ("ell" : 8)<br>Example 18:  N<span style="background-color:rgba(57,212,155, 1.0)">ard</span>one, finding out something like that, never mind doing anything about it, can take weeks<br>Activations: ("ard" : 1)<br>Example 19: <|endoftext|>, ��Ay, ReN<span style="background-color:rgba(57,212,155, 1.0)">ée</span>…��<br>Other memories from her class: March<br>Activations: ("ée" : 0)<br>Example 20: <|endoftext|> a 14/1 boilover from the Helen N<span style="background-color:rgba(57,212,155, 1.0)">el</span>mes stable.One of the biggest difficulties<br>Activations: ("el" : 2)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: French or English surnames or words containing the "ell", "el", "oy", "ee" or "ard" sequences, often in proper nouns.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>French or English surnames or words containing the &quot;ell&quot;, &quot;el&quot;, &quot;oy&quot;, &quot;ee&quot; or &quot;ard&quot; sequences, often in proper nouns.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Drew N<span style="background-color:rgba(57,212,155, 1.0)">ell</span>es looks at the issue over at The Walrus. Also spotted at the Walrus</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> Martha Patmore, N<span style="background-color:rgba(57,212,155, 1.0)">ell</span>ie Wilson, Blanch Prettyman, L. S. Adams</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>
+He alleges in his complaint that
+N<span style="background-color:rgba(57,212,155, 1.0)">ell</span>ie Eisenbauer employed him int G
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> you have kids who spend time on your boat, consider a 'N<span style="background-color:rgba(57,212,155, 1.0)">ett</span>lenet' which</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> of my favorite Tildas.
+I featured her on Magnolia papers and a N<span style="background-color:rgba(57,212,155, 1.0)">ell</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> post on it should be up later today)Finished: Some Prefer N<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ett</span>les by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> bank. which was provisionally accepted in March 2020
+The main focus of N<span style="background-color:rgba(57,212,155, 0.9200000000000002)">el</span>net Bank is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> be led by Willie N<span style="background-color:rgba(57,212,155, 0.9200000000000002)">el</span>ms, retired from the Sheppard Memorial Library. The series is sponsored</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>, they could in certain circumstances be vastly superior to more traditional technologies."
+In Int<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ell</span>ia's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> N<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ett</span>uno.Tweet Us A Story: You Can Co-Author A Story With Junot D</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> 31st of March 2015 at Centre for Water Education, Kerala Water Authority, V<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ell</span>ayambalam</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> And Cost Treehouse Education Technology Western Technology Center Sayre Ok What Is Jet Int<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ell</span>agence</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)">ell</span> Beckham Jr. looks like he��s on the verge of asking for a trade, the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, Doug Engelbart, Robert N<span style="background-color:rgba(57,212,155, 0.8400000000000001)">oy</span>ce, Bill Gates, Steve Wozniak, Steve</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> individualize their cabals nest plane meekly. N<span style="background-color:rgba(57,212,155, 0.8400000000000001)">els</span> depositional Schlepp coaches relentlessly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> the Großglockner High Alpine Road, only a 10-minute drive from Z<span style="background-color:rgba(57,212,155, 0.76)">ell</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> receiver who some personnel people believe should be in that conversation. LSU's Od<span style="background-color:rgba(57,212,155, 0.76)">ell</span> Beckham Jr. may</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> Z<span style="background-color:rgba(57,212,155, 0.76)">ell</span>weger is considering starring in "Down With Love," as a feminist writer who becomes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>"The new system can work bottom up or top down," says N<span style="background-color:rgba(57,212,155, 0.76)">ard</span>one.
+The software</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> from his wounds in nearby S. Spirito hospital.
+Elder and Nat<span style="background-color:rgba(57,212,155, 0.76)">ale</span>-H</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> JUSTICE N<span style="background-color:rgba(57,212,155, 0.6799999999999999)">EL</span>SON delivered the opinion of the Court.
+This is a writ of error to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>ing
+Sentimental Sundays - V<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ell</span>um and Stitching
+Love to Create - Colour Inspiration</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>. D., N<span style="background-color:rgba(57,212,155, 0.6799999999999999)">oll</span>, R. G., & Weingast, B. R. (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> N<span style="background-color:rgba(57,212,155, 0.6799999999999999)">els</span>onna Potts Barnes set out the evidence presented, contentions of the parties, and her</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>).
+V<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ell</span>ore Institute of Technology offers Admission to B.Tech. Degree Programme based on V</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> a catalog of large nebulae discovered by George Ab<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ell</span> in 1966, is a beautiful example</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> arrest, a photo showing Nat<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ale</span>-Hjorth blindfolded and restrained at a police</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>ered Architects according to designs by the Italian architect Cavaliere Rudolfo N<span style="background-color:rgba(57,212,155, 0.6000000000000001)">oll</span>i, who had</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> 9 livestream with N<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ICK</span>L Entertainment—and guess what, she is in talks for a much-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> of Wandering Griffin Brewery & Pub.Canary Yellow Translucent V<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ell</span>um Wrap - 7</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>�t want to do.��
+God, as spoken to Ne<span style="background-color:rgba(57,212,155, 0.52)">ale</span> Donald Walsch</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>oria di quella grande storia resti
+fisata n<span style="background-color:rgba(57,212,155, 0.52)">el</span> tempo".
+D</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> might have been the most danced-to song of the entire festival. N<span style="background-color:rgba(57,212,155, 0.52)">elly</span> made a point</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> N<span style="background-color:rgba(57,212,155, 0.52)">ees</span>on as an aging mentor who dies in the first 30 minutes of a film? Then step</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Dance-Friendly: N<span style="background-color:rgba(57,212,155, 0.52)">elly</span>!
+Everyone knew it was coming, but ��Hot in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>se<span style="background-color:rgba(57,212,155, 0.44)">el</span>��s parents (who had gone to the demonstration to bring him home) saw</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>.8?If using whole or pr<span style="background-color:rgba(57,212,155, 0.44)">ure</span>e add it to the fv after primary, about</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> We were all down on the field—the Y<span style="background-color:rgba(57,212,155, 0.44)">ell</span> Squad, the Rally Squad, the Cou</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>, recognizing excellence in entertainment reporting.
+"Nancy O'D<span style="background-color:rgba(57,212,155, 0.44)">ell</span> is a highly accomplished entertainment</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>"All ticket restrictions will be removed for valid Ab<span style="background-color:rgba(57,212,155, 0.44)">ell</span>io Greater Anglia ticket holders from 5pm</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>�N<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ee</span> nee ooo, nee nee ooo��, a tune</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Knowles (The Inn at Little Washington, Washington, Virginia), Philip Nat<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ale</span> (Winewood</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>rund<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ell</span>, will run two Group 5 Cortina Lotuses in the Championship races. Because</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>physical damage to cellular organ<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ell</span>es) and lack specificity. To complicate it further, a nanom</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>. It could have been more creative and more subtle, but it works, largely due to N<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ees</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>uffles AIDS
+by Richard Nat<span style="background-color:rgba(57,212,155, 0.28)">ale</span>
+"Hollywood often leads the way for America."</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> like this��. Similarly, Liam N<span style="background-color:rgba(57,212,155, 0.28)">ees</span>on acting his way through a charity advert as hamm</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>Small business valuation and exit strategy experts
+Max<span style="background-color:rgba(57,212,155, 0.28)">ell</span> Consulting has been helping small business owners for more than</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>right, never up or down... I guess they programmed it that<span style="background-color:rgba(57,212,155, 0.28)"> way</span> so that no matter what,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> FLAC na M4A dost��pny na systemie Mac to n<span style="background-color:rgba(57,212,155, 0.28)">iew</span>�</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> disciplined like soldiers, cach these landlords who never do anything often ready to obey orders, to risk</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�мерами само��о ��о��ви</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> imagery analysis for the insurance, investment and corporate sectors. Their product combines satellite imagery with video, positioning</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> smartwatch, as well as Garmin has actually included decent smarts. Fitness tracking is amazing as well</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> PE, TAPSE value ≤16 mm identifies high risk while value of >20 mm identifies v</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> year and 3 years after youths enrolled in the study. The analysis found statistically significant positive impacts of approximately</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> ago, I decided to take off for eight months on a ��round the world ticket. First</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to become our Trusted Partners and build their brand. We will connect you to a targeted audience both</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> grown in five years, it is quite remarkable. He has went from an outcast who got given</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>��s bodily return
+For the fundamentalists, the Virgin Birth is a consequence of belief in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> who wrote the film<span style="background-color:rgba(57,212,155, 0.2)">,</span> also kept the dialogue pretty lame. But fortunately, Neeson gets one</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>
+Geagon<span style="background-color:rgba(57,212,155, 0.2)"> and</span> Canning are attot neys
+for Nellie Eis;</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Nels depositional Sch<span style="background-color:rgba(57,212,155, 0.2)">le</span>pp coaches relentlessly Vicenza. Daggers Apostolos unexpressed,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> company press release,<span style="background-color:rgba(57,212,155, 0.2)"> Int</span>ellia's president and CEO John Leonard swiftly declared that its mRNA-based</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Control and Prevention<span style="background-color:rgba(57,212,155, 0.2)"> about</span> this," says Nardone.
+This complex new data analytics system may</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>arina Mayrh<span style="background-color:rgba(57,212,155, 0.2)">ofer</span>, David BrüllIrene E Chittim (Nee Qu</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Tim Nett was<span style="background-color:rgba(57,212,155, 0.2)"> the</span> first person in line. He predicted a big voting turnout everywhere this year</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Baz Luhrmann<span style="background-color:rgba(57,212,155, 0.2)"> and</span> Renee Zellweger. Miuccia Prada took one of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> performance significantly.�<span style="background-color:rgba(57,212,155, 0.2)">�</span>
+John Nardone, CEO, [x+1]
+�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Briggs overbook inc<span style="background-color:rgba(57,212,155, 0.2)">ong</span>ruous with the unapprovingly corks. Nels depositional</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

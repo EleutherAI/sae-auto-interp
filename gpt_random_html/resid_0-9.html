@@ -1,0 +1,708 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_0-9</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_0-9</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: errilla movement and who obviously takes a<span style="background-color:rgba(57,212,155, 1.0)"> liking</span> to Chuck.<br>The thing about "American Guerrilla in<br>Activations: (" liking" : 5)<br>Example 2: <|endoftext|> baking potatoes. I find other varieties to be too sweet for my<span style="background-color:rgba(57,212,155, 1.0)"> liking</span> or too small to make<br>Activations: (" liking" : 5)<br>Example 3: <|endoftext|>s longest serving mayor said Sunday.<br>Jackie<span style="background-color:rgba(57,212,155, 1.0)"> Heard</span>, Daley��s longtime spokeswoman<br>Activations: (" Heard" : 8)<br>Example 4:  religious institutions are exempt from city noise ordinances.<br>"So many in the community have enjoyed<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> the<br>Activations: (" hearing" : 2)<br>Example 5:  for its Ocean Street, Hyannis location.<br>At the April 14<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span>, the Barnstable licensing<br>Activations: (" hearing" : 3)<br>Example 6: <|endoftext|> tablespoon sriracha-style hot sauce (or to your<span style="background-color:rgba(57,212,155, 1.0)"> liking</span>)<br>arm the oil in<br>Activations: (" liking" : 5)<br>Example 7:  judge at the appeal<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span>, Justice Wyn Williams, remarked that the case was unprecedented. ��There<br>Activations: (" hearing" : 2)<br>Example 8: oons or enough to season to your<span style="background-color:rgba(57,212,155, 1.0)"> liking</span><br>- In a 12 inch or larger cast iron skillet pour<br>Activations: (" liking" : 6)<br>Example 9: <br>peded by<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> a loose horse gallop<br>ins: down the road. Don't let<br>Activations: (" hearing" : 1)<br>Example 10:  that will be recognised by many just by<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> the name.<br>Whether you��re a beginner<br>Activations: (" hearing" : 2)<br>Example 11: <|endoftext|>. Brad Schwartz opens the book with the dramatic account of a Manhattan couple who,<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> Welles<br>Activations: (" hearing" : 0)<br>Example 12: <|endoftext|> released on bond and is scheduled to be in court again on March 13 for a<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span>.Online<br>Activations: (" hearing" : 4)<br>Example 13:  are not interested, perhaps<br>after<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> me out, you could refer me to another suitable candidate.<br>Activations: (" hearing" : 1)<br>Example 14:  It is something we've been<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> for the past few weeks. Cornelia thinks maybe he wants more<br>Activations: (" hearing" : 0)<br>Example 15: <br>LSO St Luke's has personal receivers for use with our infrared system with or without a<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span><br>Activations: (" hearing" : 6)<br>Example 16: warw will be easier to use and configure to my<span style="background-color:rgba(57,212,155, 1.0)"> liking</span>.Today the Board of Trustees for<br>Activations: (" liking" : 5)<br>Example 17:  was an oral argument, not an evidentiary<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span>. As Grajales concedes in his motion,<br>Activations: (" hearing" : 4)<br>Example 18:  the pace at which these<span style="background-color:rgba(57,212,155, 1.0)"> hearings</span> are held. Typically, asylum claims can take up to a year to<br>Activations: (" hearings" : 7)<br>Example 19: <|endoftext|> of "flowers and birds" paintings such as this one on either side.Despite our<span style="background-color:rgba(57,212,155, 1.0)"> dislike</span><br>Activations: (" dislike" : 4)<br>Example 20:  bored. The Hungarian language is also very beautiful. Simply<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> voices pass on the street adds an elegant<br>Activations: (" hearing" : 2)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The neuron is activated by words related to personal preferences or perceptions, such as "liking", "hearing", or "dislike", often in the context of personal opinions or sensory experiences.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The neuron is activated by words related to personal preferences or perceptions, such as &quot;liking&quot;, &quot;hearing&quot;, or &quot;dislike&quot;, often in the context of personal opinions or sensory experiences.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>tonyms for toper
+Seen and<span style="background-color:rgba(57,212,155, 1.0)"> Heard</span>
+What made you want to look up to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> request them to inform the target that you've taken a<span style="background-color:rgba(57,212,155, 1.0)"> liking</span> to them and if it is okay for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> fourteen days before the<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> in order to be used as evidence at a<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span>.
+The protesting party</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> albums Mellow Madness, I<span style="background-color:rgba(57,212,155, 1.0)"> Heard</span> That and The Dude finished out his contract with A&M</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> the first Made for iPhone<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> aids. Smart bimodal solutions will improve<span style="background-color:rgba(57,212,155, 1.0)"> hearing</span> outcomes and experiences</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> hearings</span>. The MLB drug policy has a "strict liability" provision in which players</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> subpoena. The ARB must establish a procedure for a good cause<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> hearing</span> for issuing a subpoena. The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> liking</span> to the aesthetic of Giant Sparrow��s charming art house title The Unfinished Swan. The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> the 1/4 cup of olive oil, kosher salt and black pepper to your<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> liking</span>. Mix well</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> basically flipped when voters are asked if the Senate should hold<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> hearings</span> on his nominee – 53% say</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> reader-supported, so if you enjoyed this piece please consider sharing it around,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> liking</span> me on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>aganlal Yogi was originally an atheist with a virulent<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> dislike</span> of swamis and g</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> installed a<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> hearing</span> loop so that people with<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> hearing</span> aids and cochlear implants with telecoil</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> liking</span> it.
+HH: I definitely want to talk a bit about Supreme: Blue Rose that you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> and<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> dislike</span> toward us, David Koch said, so theres a huge security concern.
+The threat</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> pretty well overall I think. I didn��t<span style="background-color:rgba(57,212,155, 0.76)"> dislike</span> anything I got in particular, and liked</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> feeling of intense<span style="background-color:rgba(57,212,155, 0.76)"> dislike</span>
+the trait of lacking enthusiasm for or interest in things generally
+sharing of feelings</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> dislike</span> about the status quo?
+It is usually related to something important to you, like education.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> find something to<span style="background-color:rgba(57,212,155, 0.76)"> dislike</span>
+For anyone who loves the old bands like Deep Purple, Led Zeppelin,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> warrant a<span style="background-color:rgba(57,212,155, 0.76)"> hearing</span> on the motion. State v. Jackson, 255 Kan. 455, 463,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>ciplinary Administrator cleared Kline of any wrong-doing in 2008.
+During the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> hearing</span> today, K</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> to the chief appraiser at least 14 days before the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> hearing</span>;
+- the appraisal was performed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> The other party shall have the opportunity to present to the Directors reasons why the arbitration<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Hearing</span> Panel��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> for the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> hearing</span> impaired.Thursday, June 21, 2012
+My work week sabotaged by distractions
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> trial court abused its discretion in denying the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> hearing</span>. Estes v. State, 221 Kan.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> ARB may postpone a protest<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> hearing</span>. A property owner who has not designated an agent under Tax</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> with<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> hearing</span> loss. This collaborative offering will help us change the lives of so many more people.�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> a March Senate<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> hearing</span>, U.S. Assistant Secretary of State for Africa Johnnie Carson referred to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> a<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> hearing</span> was warranted, I would appoint him counsel. No testimony or other evidence was admitted at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> hearing</span>.
+That won��t happen again, Deputy County Attorney Bill DeBraal said</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> questioning in the nomination<span style="background-color:rgba(57,212,155, 0.52)"> hearing</span> for Barrett, which the California senator has used to not only question the nominee</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> look to today's witnesses for help in that analysis.
+We are holding this<span style="background-color:rgba(57,212,155, 0.52)"> hearing</span> at a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>. Rep. Robert Wexler, D-Fla., in a<span style="background-color:rgba(57,212,155, 0.52)"> hearing</span> relating to the controversy over</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>. Although after<span style="background-color:rgba(57,212,155, 0.52)"> hearing</span> your irritable, self-righteous comments for the 10th time, I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>
+Simply, a step of red.
+Thank you for<span style="background-color:rgba(57,212,155, 0.52)"> hearing</span> me.Vienna, March</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> the next six months.
+The<span style="background-color:rgba(57,212,155, 0.44)"> hearing</span> took a total of four hours, with a break for lunch</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> club wants to stop<span style="background-color:rgba(57,212,155, 0.44)"> hearing</span> boos at Toyota Park, things need
+to change quickly. Optim</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>
+The list could keep getting longer before his plea<span style="background-color:rgba(57,212,155, 0.44)"> hearing</span> on Jun. 1.
+If convicted,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>
+Lesley Goldberg contributed to this report.Woman waives<span style="background-color:rgba(57,212,155, 0.44)"> hearing</span> in Easter stabbing
+The West</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> emotional shock and gravity of people<span style="background-color:rgba(57,212,155, 0.44)"> hearing</span> so much of this upsetting material all at once.
+I have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>bob] Why dont you put a forum up?
+[leeb] Are you all<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> hearing</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>
+A 2008 congressional<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> hearing</span> chaired by Senator Akaka on the potential role of the GAO in intelligence</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> denial of the certificate of need, but Encompass pursued the case in the Division of Administrative<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Hear</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> hearing</span> you say RUDE really loudly in the morning while I��m still in bed��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ik appeared at the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> hearing</span> Monday, the court closed its doors and conducted its business in complete secrecy,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> What I'm<span style="background-color:rgba(57,212,155, 0.28)"> hearing</span> about the Rita-Buth project is really exciting.
+[daf</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> he says, ��I remember<span style="background-color:rgba(57,212,155, 0.28)"> hearing</span> about the first anti-Park Geun-hye protest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> both Paulson and Bernanke will surely get an equally tough grilling at a House<span style="background-color:rgba(57,212,155, 0.28)"> hearing</span> Wednesday</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> hearing</span> comes from the preached Word of God.
+God established and set the local church into being for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>
+17-year-old me recalls turning on the news in mid-April of 1989 and<span style="background-color:rgba(57,212,155, 0.28)"> hearing</span></span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> propensity to save. This way of life has lead these nations to further develop and enable incomes to rise</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Dean had Buffy in his lap. She was kissing his lips, his jaw, his neck and murm</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>? How bad is mold in attic? How can you treat mold in attic?
+Often neglected yet</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Emree Andre.
+Yes, that is her face covered in Marshmallow Santa (not poo</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> as long as it can.
+Happy to be alive. Happy to know its potential still to come</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> parliament to pass necessary laws with respect to indigenous peoples, and incorporation of a requirement that indigenous peoples get</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> his 8 year old son, Sam Flynn, heir of his Encom computer empire. As adult Sam</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of war and how success requires making the winning play, which in turn, requires limiting the cost of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> concluded, ��are even more distasteful in light of his status as a married man.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and that as the semester progresses, that more students will take advantage of the 24-hour service offered</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> the State Office<span style="background-color:rgba(57,212,155, 0.2)"> of</span> Administrative Hearings, about 30 officers received full probation of their suspensions, meaning</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>resound.com<span style="background-color:rgba(57,212,155, 0.2)">.</span>
+About Cochlear Limited
+As the global leader in implantable hearing solutions</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>��m<span style="background-color:rgba(57,212,155, 0.2)"> really</span> liking what I��ve seen so far.
+I am really impressed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> More
+Bet the<span style="background-color:rgba(57,212,155, 0.2)"> first</span> one that came to liking was Christmas, and oh ya, we have abandon</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> food that has large<span style="background-color:rgba(57,212,155, 0.2)"> pieces</span>, and lastly, 4) I personally dislike the smell. I've</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>��s loss<span style="background-color:rgba(57,212,155, 0.2)"> is</span> San Francisco��s gain. We look forward to hearing about their new</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> straight to the bike<span style="background-color:rgba(57,212,155, 0.2)"> shop</span> with dust all over it) and customize it to my liking...
+This</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> you would like<span style="background-color:rgba(57,212,155, 0.2)"> or</span> dislike, those will most likely be a good set of guidelines for your own</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> the Comments section.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>How should a parent react to hearing that their child is being a bully?</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> listed for a<span style="background-color:rgba(57,212,155, 0.2)"> chamber</span> hearing on October 26, which was, incidentally, the last day of the</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

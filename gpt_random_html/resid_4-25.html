@@ -1,0 +1,692 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-25</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-25</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> next<span style="background-color:rgba(57,212,155, 1.0)"> weekend</span>.<br>River Plate were 3-0 road winners over Racing, but only made sure<br>Activations: (" weekend" : 3)<br>Example 2: HPAppDataLocaluts. At this<span style="background-color:rgba(57,212,155, 1.0)"> time</span>, the Shadowplay not recording issue should be fixed<br>Activations: (" time" : 3)<br>Example 3: <|endoftext|> final match took place 23<span style="background-color:rgba(57,212,155, 1.0)"> days</span> later on 1 July 2012 at the Olympic Stadium in Kiev, where<br>Activations: (" days" : 4)<br>Example 4:  only earn. Our Oracle exam question answers are fully verified by IT professionals that have number of<span style="background-color:rgba(57,212,155, 1.0)"> year</span>'s<br>Activations: (" year" : 2)<br>Example 5: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> week</span> included 425 voters Saturday, September 20; Monday, 355; Tuesday, 346 voters; Wednesday<br>Activations: (" week" : 2)<br>Example 6: <|endoftext|>ala this<span style="background-color:rgba(57,212,155, 1.0)"> week</span> honouring Paul McCartney, performing a version of No More Lonely Nights.<br>All<br>Activations: (" week" : 3)<br>Example 7: <|endoftext|> this<span style="background-color:rgba(57,212,155, 1.0)"> month</span>, the Treo 700p is Palm��s fastest PalmOS-based Tre<br>Activations: (" month" : 2)<br>Example 8:  AMD [Advanced Micro Devices] next<span style="background-color:rgba(57,212,155, 1.0)"> year</span>," May said. However, Intel chip rival AMD has reportedly<br>Activations: (" year" : 3)<br>Example 9: <|endoftext|> video games and hardware soared 18 percent from the same month a year<span style="background-color:rgba(57,212,155, 1.0)"> ago</span>, according to data released<br>Activations: (" ago" : 2)<br>Example 10:  a great way to start a discussion with children on one of India's biggest festivals of the<span style="background-color:rgba(57,212,155, 1.0)"> year</span>.<br>Activations: (" year" : 2)<br>Example 11: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> Sunday</span>, its a<br>small group usually between 6-10 people at a time.<br>The<br>Activations: (" Sunday" : 1)<br>Example 12: <|endoftext|>Brno will take on Gorzow in Poland this<span style="background-color:rgba(57,212,155, 1.0)"> week</span> in Europe's elite club competition.<br>Activations: (" week" : 2)<br>Example 13: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> Monday</span> of each month at 7:00 pm. Most lectures last an hour, and you are<br>Activations: (" Monday" : 1)<br>Example 14: <|endoftext|>, though he seems content to wait out other offers. Earlier this<span style="background-color:rgba(57,212,155, 1.0)"> week</span>, we took a look<br>Activations: (" week" : 1)<br>Example 15: <|endoftext|> championships taking place this<span style="background-color:rgba(57,212,155, 1.0)"> week</span> in Bremen.<br>Does globalisation make Karl Marx a "<br>Activations: (" week" : 3)<br>Example 16: <|endoftext|> nearly 17% by the close of the<span style="background-color:rgba(57,212,155, 1.0)"> week</span>.<br>Credit Suisse downgraded MetroPCS<br>Activations: (" week" : 3)<br>Example 17: <|endoftext|> interest) collection later in November this<span style="background-color:rgba(57,212,155, 1.0)"> year</span>, in both Singapore and Shanghai.<br>SORAV<br>Activations: (" year" : 2)<br>Example 18: <|endoftext|> Manchester Arena attack<span style="background-color:rgba(57,212,155, 1.0)"> late</span> on 22 May.<br>In terms of conventional electioneering wisdom, defence and<br>Activations: (" late" : 4)<br>Example 19:  not submitted a solution in the past<span style="background-color:rgba(57,212,155, 1.0)"> week</span> are not shown.|<br>|If you're curious:<br>Activations: (" week" : 2)<br>Example 20: <|endoftext|> that experienced the highest rates of emigration in the country over the previous<span style="background-color:rgba(57,212,155, 1.0)"> decade</span> of a weak agricultural<br>Activations: (" decade" : 2)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Units of time, including days, weeks, months, years, and decades, often in the context of scheduling or referencing a specific point in time.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Units of time, including days, weeks, months, years, and decades, often in the context of scheduling or referencing a specific point in time.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> base rate cut earlier this<span style="background-color:rgba(57,212,155, 1.0)"> month</span>. As a result, the odds of winning a prize with each</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> for about one third ($4 billion) of<span style="background-color:rgba(57,212,155, 1.0)"> year</span> revenue. The iTunes bread and butter of years past</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Middleton, was being treated for acute morning sickness this<span style="background-color:rgba(57,212,155, 1.0)"> week</span>.
+Police have made no connection between</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>hampton to assist during the pending flooding crisis expected to hit the beef capital later this<span style="background-color:rgba(57,212,155, 1.0)"> week</span>.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>AL
+At JD.Com��s online shopping festival this<span style="background-color:rgba(57,212,155, 1.0)"> month</span>, Chinese brands�� sales</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> every one of these animals.
+Last Working<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> day</span> on Earth can be a cost-free zombie survival</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> between Williams internal IT and outsourcing provider.
+Pres<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ales</span> Engineer / Product Manager (Web Hosting,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> the seat until the ��next general November election, at which<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> time</span> a successor is elected and qualified</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>2014)This<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> year</span> I feel like I got fewer presents overall than previous years, though I do</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> in<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> week</span> five or six, we stay one step ahead of the curve by switching gears before it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> after the 14<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> days</span> cooling off period. The fee would be based on the work done at the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> and online event marketing, won the top Stevie® prize for company of the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> year</span> at this<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> week</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> to four years is opening in Lewes, Uckfield and Crowborough from this<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> month</span>.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>.
+Charlie went from strength to strength in 2018. Last<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> year</span> he picked up gold in the team</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> provides fast track leadership to the very best graduates. The one and half<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> year</span> program provides extensive training,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>AS, NV This<span style="background-color:rgba(57,212,155, 0.76)"> year</span>, SWOP-LV will hold a memorial march down Fremont Street</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> you can opt in for free revision within 14-30<span style="background-color:rgba(57,212,155, 0.76)"> days</span>, depending on your paper��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> on Web 2.0 this<span style="background-color:rgba(57,212,155, 0.76)"> week</span> in London, Jim Cicconi, vice president of legislative affairs for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> work this<span style="background-color:rgba(57,212,155, 0.76)"> month</span>:What do you do with all the information you gather on your family history?</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> year-earlier<span style="background-color:rgba(57,212,155, 0.76)"> period</span>. Revenue of $5.9 billion beat forecasts and the company gave a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> get another road test in Seattle next<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> week</span>. The schedulers just love us. And for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> this<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> week</span>.
+The 2012 budget calls for no property tax increase. The operating budget will be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> longer. Please add this item to your wishlist to keep posted on its availability.Last<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> month</span> developer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> — in which it could enrich uranium to weapons grade before being caught by inspectors — by next<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> year</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> this<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> week</span>, he has reached out to other senators from both parties, including Sen. Cassidy,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> week</span> for Ben, a teacher at South Elgin High School.
+Hundreds of students surprised him</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> week</span> than just 5 years ago. This dynamic obviously changes how effective television is for advertising the Gospel</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> week</span> (excluding Good Friday and Christmas Day) since June 1861, interrupted only during the world wars</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> week</span>-long immersion staying with a local famliy or a few days of project work to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> week</span> with a look at how the friends list will work on Xbox One. Watch the above video</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> test flights can be carried out later this<span style="background-color:rgba(57,212,155, 0.52)"> year</span>. Until then, if you��re interested</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.52)"> week</span> Riki Rachtman tells us how great "Headbanger's Ball" was ten</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.52)"> week</span> after the downpours we��ve had!
+Take care, stay safe and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.52)"> week</span> we collect the latest news, music and arts stories — along with film and food reviews and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>ni Muslim woman mistaken for an arsonist on the<span style="background-color:rgba(57,212,155, 0.52)"> night</span> that. By contrast, Muslim women and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> at this<span style="background-color:rgba(57,212,155, 0.44)"> time</span>.Coming to Christ: Resting In His Love
+"Come to Me" --</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> a single-family that flew to Auckland for a wedding earlier this<span style="background-color:rgba(57,212,155, 0.44)"> month</span>. The so-called �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> This<span style="background-color:rgba(57,212,155, 0.44)"> week</span>��s big ��maybe�� revolves a lot around whether we are getting</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> A Frontrunner, While Lincoln Surprises New York
+This<span style="background-color:rgba(57,212,155, 0.44)"> week</span> marks the wide release of one</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> and United Nations officials said 30 people have been killed and 278 wounded since clan fighting broke out<span style="background-color:rgba(57,212,155, 0.44)"> last</span> week</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>. Last<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> year</span> we were to the point where the only in-depth conversation had would be over</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> you? That is what matters most! Not the 3 trips to Europe Stacey went on last<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> year</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Monday</span> nights at Mercato
+A local jazz icon for the past decade, percussionist Quentin Baxter</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> on enabling connectivity for all devices, handsets and beyond. Last<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> year</span>, we gained market share in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> this<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> month</span> by the Leadership Council Southwestern Illinois – shows the total value of projects announced, under</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> Monday</span> by Public Policy Polling had Gingrich with a 38-33 lead over Romney. Another put</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>o and much more.
+This<span style="background-color:rgba(57,212,155, 0.28)"> week</span>��s show, we rebroadcast an interview</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> Monday</span> morning, voices from the Ignatian network will reflect to explore response to injustice through the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> Sunday</span>'s booking rates. Subject to minimum 5 x booths taken per day, otherwise we would not</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> was hospitalised with Covid-19 on Monday after participating in an anti-government protest last<span style="background-color:rgba(57,212,155, 0.28)"> week</span></span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, diminuiu o número de anos em que a cultura foi mort</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> arrival of the cargo. After the war had ended and the forces withdrew from the islands, the locals</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>Competes.org.I need a mobile site. I would like it designed and built.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>- VIC - Melbourne
+Fantasy World Play Centre & Cafe
+Fantasy World Play Centre offers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>menu in Screen 4 can be selected by pressing "ALT" plus one of the keys 0 to 9</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> canopy of trees really makes this trail something special. It is just gorgeous; you'll see quite a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> tons of coal equivalent and a coal consumption cap target of 4.2 billion tons for 2020. This</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>. Nowhere is this more evident that the two great 'red scares' of 1919-20 and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> teaching, planning and program development positions. She has also been an active participant in many local community organizations</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> collection being put together by Newt Gingrich. I like to think that a couple of the candidates pulled out</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Monday, allowing a<span style="background-color:rgba(57,212,155, 0.2)"> chilly</span> airmass to drop south over us. But that doesn��t</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>ame by today��<span style="background-color:rgba(57,212,155, 0.2)">s</span> standards, the drama demonstrates how times have changed.
+NDSU</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> decade than seen before.<span style="background-color:rgba(57,212,155, 0.2)"> As</span> of now only ten percent of jobs than can be automated are taken by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> weekend to seek r<span style="background-color:rgba(57,212,155, 0.2)">appro</span>chement with Syria.
+U.S. officials said that Mrs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> later this year for PC<span style="background-color:rgba(57,212,155, 0.2)"> and</span> PS3 users, I have no information yet as to whether we will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> vote.
+<span style="background-color:rgba(57,212,155, 0.2)">The</span> Senate is expected to vote in the coming days on a spending bill that would</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Edwin Poots to<span style="background-color:rgba(57,212,155, 0.2)"> establish</span> a minimum price per unit of alcohol by the end of this year.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the transits article<span style="background-color:rgba(57,212,155, 0.2)"> for</span> this month. In this chart, however, it is still in the 1</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> on the scheme to<span style="background-color:rgba(57,212,155, 0.2)"> make</span> it effective from next month,�� Mr Dar said.
+He said</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the Augmented World<span style="background-color:rgba(57,212,155, 0.2)"> Expo</span> in Santa Clara this week. Find us at booth 606.
+Glass</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

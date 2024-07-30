@@ -1,0 +1,699 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-33</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-33</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> just seems bad form to complain that Pres. Obama<span style="background-color:rgba(57,212,155, 1.0)">—</span>the custodian-in-<span style="background-color:rgba(57,212,155, 1.0)">chief</span>—<br>Activations: ("chief" : 2)<br>Example 2:  54 ha. Bay South Garden of the massive Gardens by the Bay was officially opened by<span style="background-color:rgba(57,212,155, 1.0)"> Prime Minister</span> Lee<br>Activations: (" Minister" : 2)<br>Example 3: : Ronald Wilson Reagan, the 40th<span style="background-color:rgba(57,212,155, 1.0)"> president</span> of the United States. He died at age 93 of<br>Activations: (" president" : 4)<br>Example 4: <|endoftext|> people were previously (<span style="background-color:rgba(57,212,155, 1.0)">ie</span> the economy can still grow even with a reducing workforce). This is one<br>Activations: ("ie" : 1)<br>Example 5:  on the sub base,�� said Tony Sheridan, former Waterford first select<span style="background-color:rgba(57,212,155, 1.0)">man</span> and current president<br>Activations: ("man" : 1)<br>Example 6:  Ronald Reagan takes the reader behind the scenes of his extraordinary career, from his first political experiences as<span style="background-color:rgba(57,212,155, 1.0)"> president</span><br>Activations: (" president" : 2)<br>Example 7: <span style="background-color:rgba(57,212,155, 1.0)"> and</span> his son, Marc, are advisers to Mr. Giuliani's presidential campaign.<br>But Mr.<br>Activations: (" and" : 1)<br>Example 8:  through a court discovery, but a different year. The document showed that<span style="background-color:rgba(57,212,155, 1.0)"> Republican</span> presidential<span style="background-color:rgba(57,212,155, 1.0)"> candidate</span> Mitt Romney donated<br>Activations: (" Republican" : 2), (" candidate" : 2)<br>Example 9: ian solution by American<span style="background-color:rgba(57,212,155, 1.0)"> conservative</span> elites to promote a ��Cold War�� that could put the country<br>Activations: (" conservative" : 1)<br>Example 10: <|endoftext|> members<br>By Tracy Brown Wright<br>As part of first<span style="background-color:rgba(57,212,155, 1.0)"> lady</span> Michelle Obama��s Joining<br>Activations: (" lady" : 1)<br>Example 11:  the<span style="background-color:rgba(57,212,155, 1.0)"> president</span> of Guinea, and a host of politicians allied with the Burmese junta were all<br>Activations: (" president" : 1)<br>Example 12: <br>Northam<span style="background-color:rgba(57,212,155, 1.0)">,</span> for his part, said in an interview broadcast Monday on "CBS This Morning"<br>Activations: ("," : 1)<br>Example 13:  India<span style="background-color:rgba(57,212,155, 1.0)"> and</span> General Ayub Khan of Pakistan in 1960. It was brokered by the World Bank.<br>Activations: (" and" : 3)<br>Example 14: - Global Review & Legal Analysis<br>- Executive & St<span style="background-color:rgba(57,212,155, 1.0)">ake</span>holder Briefings<br>Contact Us About Our<br>Activations: ("ake" : 2)<br>Example 15: <|endoftext|> second act, set in Thatcher<span style="background-color:rgba(57,212,155, 1.0)">-</span>era London, the characters all reappear. They've aged<br>Activations: ("-" : 2)<br>Example 16: <span style="background-color:rgba(57,212,155, 1.0)">,</span> Bill Clinton<span style="background-color:rgba(57,212,155, 1.0)">,</span> it doesn��t matter who it is, he says be subject, you<br>Activations: ("," : 2), ("," : 3)<br>Example 17:  former State Bar director, Jo Ann Merica, special counsel<span style="background-color:rgba(57,212,155, 1.0)"> to</span> McGinnis Lochridge in Austin<br>Activations: (" to" : 2)<br>Example 18: <|endoftext|> a measly Supervisor when he was a VP<span style="background-color:rgba(57,212,155, 1.0)">,</span> the value of class, design, value to<br>Activations: ("," : 1)<br>Example 19: <span style="background-color:rgba(57,212,155, 1.0)">,</span> in the election after their last election, the nomination went to their vice<span style="background-color:rgba(57,212,155, 1.0)"> president:</span> Mond<span style="background-color:rgba(57,212,155, 1.0)">ale in</span><br>Activations: (" president" : 2), (":" : 2), ("ale" : 2)<br>Example 20:  1982 at Stanford�<span style="background-color:rgba(57,212,155, 1.0)">�</span>s Law and Business Graduate Program when his value investment professor brought in one of<br>Activations: ("�" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Punctuation marks and titles/honorifics (e.g. "chief", "president", "prime minister", "lady") in formal or official contexts.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Punctuation marks and titles/honorifics (e.g. &quot;chief&quot;, &quot;president&quot;, &quot;prime minister&quot;, &quot;lady&quot;) in formal or official contexts.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Pres., Labor Heritage Fdtn, &
+<span style="background-color:rgba(57,212,155, 1.0)">former Dir.,</span> Strategic Campaigns, AFL-C</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> after Hurricane Katrina wiped out the city
+-<span style="background-color:rgba(57,212,155, 1.0)"> President</span> Obama<span style="background-color:rgba(57,212,155, 1.0)"> and</span> Vice<span style="background-color:rgba(57,212,155, 1.0)"> President</span> Biden were criticized for playing golf</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> couldn't Nixon just say that his predecessors Kennedy<span style="background-color:rgba(57,212,155, 1.0)"> and</span> Johnson had comitted troops in good faith, but</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>cottage" that was home to our first prime minister<span style="background-color:rgba(57,212,155, 1.0)">,</span> Sir John A. Macdonald,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> pursued during the Nixon<span style="background-color:rgba(57,212,155, 1.0)"> and</span> Ford administrations.
+<span style="background-color:rgba(57,212,155, 1.0)">Both</span> Professor Taylor and Mr. Rauh are concerned</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> to a tie<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> with</span> George H.W. Bush by the end of October.: It��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> Reagan years<span style="background-color:rgba(57,212,155, 0.9200000000000002)">,</span> people. Everyone in this bracket is making tons of money off of a system they<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> were</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> the international community. Indus Waters Treaty was signed<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> by Prime Minister</span> Jawaharlal Neh<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ru</span> of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> watch</span>.
+Trump said in a statement, ��if I wasn��<span style="background-color:rgba(57,212,155, 0.9200000000000002)">t President</span>, you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> as prominent in the next major battle over a court seat, the 1991 nomination of Clarence Thomas<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> by</span> George</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> 22-year Microsoft veteran has enlisted the help of company<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> founder</span> and first<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> CEO</span> Bill Gates, who is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>.) "drug user" is attested from 1945.The four<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Republican and four Democratic</span> senators arrived at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> decisions, including limiting the extraterritorial application of US securities laws.
+A graduate of Princeton<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> and</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>.
+Bush<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> and</span> the Hail Mary Candidate
+Gail Collins has a great graf on Bush's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>�
+Boston Fed president Eric Rosengren and Chicago��<span style="background-color:rgba(57,212,155, 0.8400000000000001)">s</span> Charles Evans, both voting<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> members</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> the ��second�� circumnavigation of the globe after Ferdinand Magellan<span style="background-color:rgba(57,212,155, 0.76)"> and</span> his crew</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> some care<span style="background-color:rgba(57,212,155, 0.76)">.</span>
+Here's his weekly address of today:
+This signals that Obama doesn't intend</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> Turkmenistan and Ukraine. Bakai would go on to<span style="background-color:rgba(57,212,155, 0.76)"> be</span> the first Head of Ukraine's state</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> sent a petition to<span style="background-color:rgba(57,212,155, 0.76)"> President</span> Bill Clinton<span style="background-color:rgba(57,212,155, 0.76)">,</span> showing how<span style="background-color:rgba(57,212,155, 0.76)"> his</span> great-great-grandfather<span style="background-color:rgba(57,212,155, 0.76)">, the</span> Reverend</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> a lifelong Democrat<span style="background-color:rgba(57,212,155, 0.76)"> and</span> fervent Obama supporter to realize. But helpful nonetheless.
+I realized I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>, legislation signed into law<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> by President</span> Bush in July allows Road Home recipients who took a casualty loss</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> 2020 goals.
+��On greenhouse gas emissions, California has always been an A<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> student</span>,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> to get the same support from major candidates<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> that</span> her measure had gotten previously. … ��I haven</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>ling to use immigration reform to their advantage as House Speaker John Boehner (R-Ohio) and<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Senate</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>ailed against the Contract With America, which of course<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> was</span> the big Newt Gingrich GOP revolution that year</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Speaker of the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> House</span>.
+Event to honor President Pro Tempore Richard T. Moore and Representative Vir</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> fatal to society than to the individual. It was decreed in France, by the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> law</span> of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>
+The Great Peyton Manning<span style="background-color:rgba(57,212,155, 0.6000000000000001)">,</span> of course, is No. 2 on the win-loss differential list</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> public in 1910 under the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> administration</span> of<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> the</span> Fairmount Park Commission. The front entrance is currently not used</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> in the War Between the States. Serving under General Sherman<span style="background-color:rgba(57,212,155, 0.6000000000000001)">,</span> Halleck earned himself the reputation of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> causing elements.
+Under the Safe Drinking Water Act, which<span style="background-color:rgba(57,212,155, 0.52)"> was</span> passed by the EPA in 1974</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> that view? Certainly not<span style="background-color:rgba(57,212,155, 0.52)"> congressional</span> Republicans, who believe that through reasonable tax cuts, fiscal restraint, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> been instrumental. Indeed, their outspoken, principled pushback is part of the reason that<span style="background-color:rgba(57,212,155, 0.52)"> President</span> Barack Obama</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>, the United<span style="background-color:rgba(57,212,155, 0.52)"> States</span> government. There was also extensive evidence as to petitioner's own dysfunctional family and traumatic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> argument to be made — and we're hearing it a lot from President Obama<span style="background-color:rgba(57,212,155, 0.52)"> and</span> his re-election</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>. Note this was before Nixon��s attempt to do price and wage controls which<span style="background-color:rgba(57,212,155, 0.44)"> were</span>,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>," he said.
+Scott joined Majority<span style="background-color:rgba(57,212,155, 0.44)"> Leader</span> Mike Mansfield (D-Mont<span style="background-color:rgba(57,212,155, 0.44)">.),</span> three other</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> countries such as USA, Ceanada, China, United Kingdom, France<span style="background-color:rgba(57,212,155, 0.44)">,</span> Singapore, Germany</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>, and chicanery, the Democrats<span style="background-color:rgba(57,212,155, 0.44)">,</span> in breach of their oath to preserve and protect the Constitution</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> good he'd be after getting coached up by Pete Carroll, a<span style="background-color:rgba(57,212,155, 0.44)"> guy</span> who has almost never failed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> the point where he was unable to resist signing a "confession."
+McCain<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> and</span> his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Obama</span> Administration. From 1995-1997, Mr. Bosworth was the Executive Director of the Korean</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> denominated in US dollars. Thomas Jefferson<span style="background-color:rgba(57,212,155, 0.36000000000000004)">, a</span> lifelong champion of ��sound money��,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>presidential<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> candidate</span> off the hook.
+Actually, there was one, at least one, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)">,</span> Argentina, Brazil, Russia, Hungary, the Philippines, and many more. However, there's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> the interview, Ryan had declared his support for Republican presidential<span style="background-color:rgba(57,212,155, 0.28)"> candidate</span> Mitt Romney.
+��Here�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> were increasingly wary of her.
+It was in that environment that current<span style="background-color:rgba(57,212,155, 0.28)"> President</span> of the University of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>hood USA President<span style="background-color:rgba(57,212,155, 0.28)">,</span> 4/3/14]
+- Rand Paul, The Senate Sponsor Of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> LOVE teaching. But alienating people that I<span style="background-color:rgba(57,212,155, 0.28)">,</span> for the most part, look up to-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Hughes, the professor at Wellington<span style="background-color:rgba(57,212,155, 0.28)"> and</span> an important early influence on Routley's development, appointed him to</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Festival…
+Disney has released the first trailer for ��Saving Mr. Banks,��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> learned that as long as there is empathy and truth, people could open themselves up to each other.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the game on SportSouth or listen on WFNZ. Follow the game on your smartphone or at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of the average for the last
+! ten years over Ue nation as a whole.
+F</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>RIKES DEAL WITH CBS
+Nick Turturro -- who rose from officer to detective</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�� 140 million liters a day of ��clean, treated�� water from its Bul</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> weeks of Dickinson's death and noted he remained on campus - potentially in possession of her keys, which</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> �� are escalating the pressure against the company.â
+âG4S clients in the region</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, ��prohibit state contractors from directly or indirectly financially supporting the election campaigns of state officials.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> cigarette packs.
+Staff members at the four trial shops, two below 3,000sq ft and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> things. He<span style="background-color:rgba(57,212,155, 0.2)"> recently</span> went on<span style="background-color:rgba(57,212,155, 0.2)"> Rick</span> Wiles�� TruNews and claimed that President Obama killed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> it can't<span style="background-color:rgba(57,212,155, 0.2)"> get</span> worse and<span style="background-color:rgba(57,212,155, 0.2)"> then</span> it does. It can't get worse than Reagan, you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> many brands have been inspired<span style="background-color:rgba(57,212,155, 0.2)"> by</span> the FB<span style="background-color:rgba(57,212,155, 0.2)">T</span> and all the other NAKAMU RA designs.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> chairman of the Scientific Research<span style="background-color:rgba(57,212,155, 0.2)"> Corporation</span>, an<span style="background-color:rgba(57,212,155, 0.2)"> advanced</span> science and engineering company based in Atlanta.
+A 1959</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> of the Indianapolis Board<span style="background-color:rgba(57,212,155, 0.2)"> of</span> School Commissioners<span style="background-color:rgba(57,212,155, 0.2)"> from</span> 1966 to 1970, serving as president in 1969 and 1970.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> better than Australia and<span style="background-color:rgba(57,212,155, 0.2)"> those</span> other places<span style="background-color:rgba(57,212,155, 0.2)">�</span>�. A former Prime Minister even declared ��New Zealand</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> in the halls of<span style="background-color:rgba(57,212,155, 0.2)"> Congress</span>."
+<span style="background-color:rgba(57,212,155, 0.2)">California</span>'s medical marijuana law, passed by voters in 1996, allows</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> reforms. In 1989<span style="background-color:rgba(57,212,155, 0.2)">,</span> he joined<span style="background-color:rgba(57,212,155, 0.2)"> the</span> Bank of Palestine as its Foreign Relations Manager; and as such</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> bill this session rests<span style="background-color:rgba(57,212,155, 0.2)"> on</span> Gov.<span style="background-color:rgba(57,212,155, 0.2)"> Andrew</span> Cuomo, a supporter of the bill. ��Working behind</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>Adrian Cola<span style="background-color:rgba(57,212,155, 0.2)"> R</span>ienzi<span style="background-color:rgba(57,212,155, 0.2)"> agitation</span> agricultural Apex appointed Arthur Association Augustine Britain capital Caribbean cent Chancellor to</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

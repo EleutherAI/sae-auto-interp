@@ -1,0 +1,704 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-6</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-6</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  infant sw<span style="background-color:rgba(57,212,155, 1.0)">add</span>led in a blanket.<br>It is her third child with her rapper husband, Mario<br>Activations: ("add" : 1)<br>Example 2:  which to lay her little w<span style="background-color:rgba(57,212,155, 1.0)">reath</span>. It irritates me beyond belief that Hughes exploited his power in<br>Activations: ("reath" : 1)<br>Example 3: andy, wrapping paper, cookie dough, popcorn, candle, fruit, w<span style="background-color:rgba(57,212,155, 1.0)">reat</span>hs, or any<br>Activations: ("reat" : 9)<br>Example 4: <|endoftext|>USE DAY AND NIGHT<br>IN CHOOSING CL<span style="background-color:rgba(57,212,155, 1.0)">OTH</span>ES<br>Do not confuse day and night<br>Activations: ("OTH" : 0)<br>Example 5:  drawer full of adorable sw<span style="background-color:rgba(57,212,155, 1.0)">add</span>les that I refuse to get rid of because they are cute — and<br>Activations: ("add" : 1)<br>Example 6:  pictures. I bring along a few sw<span style="background-color:rgba(57,212,155, 1.0)">add</span>les and props, but it��s always special<br>Activations: ("add" : 1)<br>Example 7: <|endoftext|>ob Samuel (The Poodles), Pontus Egberg (T<span style="background-color:rgba(57,212,155, 1.0)">reat</span>), Robban Back<br>Activations: ("reat" : 0)<br>Example 8: <|endoftext|> unionism. Rioting occurred in central Belfast at Sh<span style="background-color:rgba(57,212,155, 1.0)">aft</span>esbury Square tonight as well as<br>Activations: ("aft" : 1)<br>Example 9: <|endoftext|> killing its enemies.<br>And when some American soldiers do abuse and terribly mist<span style="background-color:rgba(57,212,155, 1.0)">reat</span> their enemies,<br>Activations: ("reat" : 1)<br>Example 10: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)">reat</span> Frouping Includes:<br>- Loveseat in White Lloyd Loom Wicker with<br>Activations: ("reat" : 1)<br>Example 11:  are helping out.<br>February 21, 2016<br>H<span style="background-color:rgba(57,212,155, 1.0)">reat</span> place to live!<br>February 05,<br>Activations: ("reat" : 3)<br>Example 12:  w<span style="background-color:rgba(57,212,155, 1.0)">reath</span> has been laid at the memorial shrine in the first vestibule to this Grand Temple,<br>Activations: ("reath" : 0)<br>Example 13: <|endoftext|>, the 80-kilometer mining belt between the two cities is riddled by deep-sh<span style="background-color:rgba(57,212,155, 1.0)">aft</span><br>Activations: ("aft" : 1)<br>Example 14: <|endoftext|> in surgically rese<span style="background-color:rgba(57,212,155, 1.0)">ct</span>ed brain concatenation from patients with pharmaco-resistant epileps<br>Activations: ("ct" : 0)<br>Example 15:  snowflakes, w<span style="background-color:rgba(57,212,155, 1.0)">reat</span>hs and reindeer. Whatever your family holiday tradition may be,<br>Activations: ("reat" : 9)<br>Example 16: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)">reat</span>hs at his tomb stone.<br>Until the gatherings were banned in 2005, German paper Der<br>Activations: ("reat" : 1)<br>Example 17:  Christmas Tree.<br>Built on a 24" round red grapevine w<span style="background-color:rgba(57,212,155, 1.0)">reath</span>.<br>Size: Approximately<br>Activations: ("reath" : 0)<br>Example 18: <|endoftext|> camsh<span style="background-color:rgba(57,212,155, 1.0)">aft</span>(s) position - the engines will be specially prepared by BRM. They<br>Activations: ("aft" : 0)<br>Example 19: <br>Myopic discomfort shall per the ongoing stumper.<br>Persistent wherewithal may sw<span style="background-color:rgba(57,212,155, 1.0)">add</span><br>Activations: ("add" : 1)<br>Example 20:  end (lower esophageal sph<span style="background-color:rgba(57,212,155, 1.0)">inct</span>er [LES]) that closes after the.<br><br>Activations: ("inct" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Prefixes or suffixes of English words, particularly those related to "reat", "add", "aft", and "ct".
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Prefixes or suffixes of English words, particularly those related to &quot;reat&quot;, &quot;add&quot;, &quot;aft&quot;, and &quot;ct&quot;.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> for a fresh scent, hang to let dry to create dried arrangements and w<span style="background-color:rgba(57,212,155, 1.0)">reat</span>hs or hang in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> by Pedronet
+Switch by javez
+Nine W<span style="background-color:rgba(57,212,155, 1.0)">reat</span>hs by Creativity+, Timothy K</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>�Why do you need two w<span style="background-color:rgba(57,212,155, 1.0)">reat</span>hs?�� The Marine looked up at him, held</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> once stood in an area where someone was handing out holiday w<span style="background-color:rgba(57,212,155, 1.0)">reat</span>hs. He did not indicate whether</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">reat</span>he as a symbol to the death of democracy. It seems our council would rather serve the interests</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> sw<span style="background-color:rgba(57,212,155, 0.9200000000000002)">athed</span> in Merino Opal White leather with the company logo embroidered in the headrests</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> 347-3428.
+Ove<span style="background-color:rgba(57,212,155, 0.9200000000000002)">reat</span>ers Anonymous information, call (231) 547-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>2|The Shadow Fold, a sw<span style="background-color:rgba(57,212,155, 0.9200000000000002)">athe</span> of impenetrable darkness, crawling with monsters that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> cheeky, curvy bottles in a suggestive nude hue are sw<span style="background-color:rgba(57,212,155, 0.9200000000000002)">athed</span> in a nautical striped sailor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>al sph<span style="background-color:rgba(57,212,155, 0.9200000000000002)">inct</span>er, the valve that.La Chatelaine Ultra-Rich hand cre</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> department stores. The company relocated its production facility to Sh<span style="background-color:rgba(57,212,155, 0.8400000000000001)">aft</span>sbury in 2005. Based in New</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>., Sh<span style="background-color:rgba(57,212,155, 0.8400000000000001)">aft</span>sbury — VEDA approved a small business loan, in conjunction with TD Bank</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>ageal sph<span style="background-color:rgba(57,212,155, 0.8400000000000001)">inct</span>er, a ring-like muscle at the entrance of your stomach stays open</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> out of. Tried huggies, Kirkland and pampers sw<span style="background-color:rgba(57,212,155, 0.8400000000000001)">add</span>lers and none</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> 30 days and w<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ount</span> give credit for returns.
+She stated that the product was not a drug</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>. From Contributor separated by comma. Surprised naked girl with the colorful w<span style="background-color:rgba(57,212,155, 0.76)">reath</span> Indian woman</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> of fun!A w<span style="background-color:rgba(57,212,155, 0.76)">reath</span> is perfect for all occasions.
+I think every door needs door cout</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> a guide to the rain forests. Come all you babes in sw<span style="background-color:rgba(57,212,155, 0.76)">add</span>ling out there and suck</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> is like a w<span style="background-color:rgba(57,212,155, 0.76)">reath</span> of freshly-plucked greenery on the Native dating Gateshead of this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>.
+Printed in Australia.
+Beautiful had drawn pastel w<span style="background-color:rgba(57,212,155, 0.76)">reath</span> of flowers personalised</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>, Wells built an oxygen reb<span style="background-color:rgba(57,212,155, 0.6799999999999999)">reat</span>her from surplus aircraft respirator parts by looking at diagrams in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>, and handed him a w<span style="background-color:rgba(57,212,155, 0.6799999999999999)">reath</span>.
+The older storyteller was now leaning his back against</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> of Carols is like a w<span style="background-color:rgba(57,212,155, 0.6799999999999999)">reath</span> of freshly-plucked greenery on the top of this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>ophagus, past the ring of muscle at the top (upper esophageal sph<span style="background-color:rgba(57,212,155, 0.6799999999999999)">inct</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> opportunity to approach the w<span style="background-color:rgba(57,212,155, 0.6799999999999999)">reath</span> giver. A young Marine in uniform worked his way to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> demonstrated on either the ventilatory response to reb<span style="background-color:rgba(57,212,155, 0.6000000000000001)">reat</span>hing CO2 in hyperoxia,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> we've got you, well, covered.A beautiful w<span style="background-color:rgba(57,212,155, 0.6000000000000001)">reath</span> featuring a smaller version of our funky</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> 2 in sw<span style="background-color:rgba(57,212,155, 0.6000000000000001)">add</span>lers, 3 in baby dry. bought them for overnite - don't</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> when going out I use the sw<span style="background-color:rgba(57,212,155, 0.6000000000000001)">add</span>lers.
+On a side note... I'm very impressed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> condition of w<span style="background-color:rgba(57,212,155, 0.6000000000000001)">reath</span>
+of roads. mud
+H Mils, mountain passes, should he en</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>
+Ravin Premium Crossbow Bolts
+Arrows & Sh<span style="background-color:rgba(57,212,155, 0.52)">aft</span>s
+Add description and links</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>
+sh<span style="background-color:rgba(57,212,155, 0.52)">aft</span> that operated a smaller pinion wheel shaft. From this horizontal
+lay shaft several rows</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> and reb<span style="background-color:rgba(57,212,155, 0.52)">reat</span>her training at the US Navy Mine Defense Lab in Panama City, Florida. Later that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> a w<span style="background-color:rgba(57,212,155, 0.52)">reath</span> outside the town hall before holding rallying speeches at Queens Gardens.
+Shasha Khan,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>88.98
+W<span style="background-color:rgba(57,212,155, 0.52)">reath</span> ( Seasonal Flowers )....
+$ 102.9 / €</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> to buy 1 pair please rese<span style="background-color:rgba(57,212,155, 0.44)">lect</span> the qty to 1 ( 1 means 1 pair = 2 lenses</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> coming ashore after dark and w<span style="background-color:rgba(57,212,155, 0.44)">add</span>ling to their burrows, having had a good feed. I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> malice bears down truth. And, I beseech you,
+W<span style="background-color:rgba(57,212,155, 0.44)">rest</span> once the law</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Kids and Mobi Minors Clothing ONLY. Excludes Sw<span style="background-color:rgba(57,212,155, 0.44)">add</span>les. For Heavy items the above</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.44)"> '.</span>
+Boston ' " wi'M,,
+St. I'ul and all point</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Treaty of Guadalupe Hidalgo exchanged at Queretaro. (T<span style="background-color:rgba(57,212,155, 0.36000000000000004)">reat</span>y was originally</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> backside. Still love 'em though!
+sw<span style="background-color:rgba(57,212,155, 0.36000000000000004)">add</span>lers much softer. my baby is a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> inf<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ront</span> of me, I was getting caught, don��t know how she came here</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> play<span style="background-color:rgba(57,212,155, 0.36000000000000004)">thing</span>/friend, but some are beginning to have some amount of anxiety about me being in the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>otallyfakenews.com, decided that this Simon Purdue would be a fantastic mudw<span style="background-color:rgba(57,212,155, 0.36000000000000004)">rest</span>ler</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> threw some dirty water on Him again. The Saint went back to bat<span style="background-color:rgba(57,212,155, 0.28)">he</span> in the river,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)">shaped</span> control panel beneath your feet. In this room, there are
+pillars covering 3 corners</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Z<span style="background-color:rgba(57,212,155, 0.28)">ect</span>o Drive ProOk groupies this is what I made for Quilter momma</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)">shaped</span> sensory organ inside the masseter muscle "Muscle spindleThis is because the sensory nerves</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>ard and Sentry (Lady Macbeth of Mtsensk), Sw<span style="background-color:rgba(57,212,155, 0.28)">allow</span> (Peter Grimes</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, offering funding to thousands of new companies with £320 million of committed funding as of 2015.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> for some, but science works.If major indexes are getting back on their feet, which names could</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> remove the gray wolf from Endangered Species Act protection raises questions about the trade-offs between science-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>B]ecause its director, Tom Vaughan, brings nothing of interest to the movie, including filmmaking,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>View Retirement Community
+Hilltop Lodge, 20 Blueberry Lane, Falmouth, Maine
+June 1</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>inosaurs are a diverse group of animals of the clade Dinosauria. They first appeared during the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>Challenges to implementing the AOP framework for nanomaterial research and risk assessment
+As detailed in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> kick things back into gear than "Done is better than said". Come join us at the new home</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> zone for a safety as time expired.
+Tucson running back Mike Jones is tied with Fr</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> is not the only factor to consider when you are looking to purchase the right brand of probiotics supplements</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>eat grand sons of Aqu<span style="background-color:rgba(57,212,155, 0.2)">illa</span> Downs.
+Mr. Comer resides at the intersection of Brewster</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> make great wreat<span style="background-color:rgba(57,212,155, 0.2)">hs</span>.
+It is back to school time!
+This year we have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>ritz can swathe you<span style="background-color:rgba(57,212,155, 0.2)"> in</span> comfort and soothe frazzled nerves, transport you instantaneously to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> is a tall bespect<span style="background-color:rgba(57,212,155, 0.2)">ac</span>led academic who usually only turns up at academic conferences. He was very</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> blanket, both he<span style="background-color:rgba(57,212,155, 0.2)"> and</span> the deformed girl protected by the enshrouding night. And sometimes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Page 9: Lav<span style="background-color:rgba(57,212,155, 0.2)">ender</span> round wreath
+- Page 10: Birdsong kati mugCan't</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> pampers.<span style="background-color:rgba(57,212,155, 0.2)"> My</span> son is 5 weeks old and we have used only pampers swadd</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Great diaper.<span style="background-color:rgba(57,212,155, 0.2)"> BUT</span> size 2 baby dry is the same size as size 1 swaddlers.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Caribbean. While the<span style="background-color:rgba(57,212,155, 0.2)"> air</span> in most of the region��s capitals has become almost unbreathe</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> over her. She<span style="background-color:rgba(57,212,155, 0.2)"> remembers</span> her life as a bespectacled schoolgirl, bullied for being smart</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

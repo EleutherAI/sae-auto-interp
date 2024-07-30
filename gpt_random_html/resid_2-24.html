@@ -1,0 +1,696 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-24</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-24</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> said the world still smelled of sulfur, referring to his comments about President Bush at the<span style="background-color:rgba(57,212,155, 1.0)"> United</span> Nations<br>Activations: (" United" : 0)<br>Example 2: amine oxidase inhibitors were introduced in the 1950s, but were withdrawn from the market in the<span style="background-color:rgba(57,212,155, 1.0)"> United</span><br>Activations: (" United" : 1)<br>Example 3: awa to be closer to Tokyo. He traveled overseas to the<span style="background-color:rgba(57,212,155, 1.0)"> United States</span> and Europe in Born: Mun<br>Activations: (" States" : 3)<br>Example 4: <|endoftext|> their newfound wealth to buy Western assets, which could become problematic for relations with the<span style="background-color:rgba(57,212,155, 1.0)"> U</span>.<span style="background-color:rgba(57,212,155, 1.0)">S</span><br>Activations: (" U" : 2), ("S" : 2)<br>Example 5: .<span style="background-color:rgba(57,212,155, 1.0)">S</span>. Homeland.�� They also reminded Clinton that the group has killed more than 900 people<br>Activations: ("S" : 5)<br>Example 6:  a leading shale franchise. Global has experience on every continent, the United<span style="background-color:rgba(57,212,155, 1.0)"> States</span> market looks to have enough<br>Activations: (" States" : 1)<br>Example 7: High Court of<span style="background-color:rgba(57,212,155, 1.0)"> American</span> Samoa<br>CA No. 62-97<br>February 9, 1998<br>Before R<br>Activations: (" American" : 2)<br>Example 8:  2012, after the acquisition was completed, CFIUS halted and<span style="background-color:rgba(57,212,155, 1.0)"> US</span> President Barack Obama subsequently ordered R<br>Activations: (" US" : 3)<br>Example 9:  of the leading Umrah and Hajj travel agents based in London,<span style="background-color:rgba(57,212,155, 1.0)"> UK</span>, able of meeting any<br>Activations: (" UK" : 1)<br>Example 10:  found that Facebook is cited in one in five divorces in the United<span style="background-color:rgba(57,212,155, 1.0)"> States</span>. Also, more than<br>Activations: (" States" : 3)<br>Example 11: <|endoftext|> a CommentFamilies of Dublin and Monaghan bombings to take civil procedings against<span style="background-color:rgba(57,212,155, 1.0)"> British</span><br><br>Activations: (" British" : 1)<br>Example 12: <|endoftext|> being discovered via Instagram and gaining work as a ring girl in<span style="background-color:rgba(57,212,155, 1.0)"> American</span> boxing.<br>In some cases<br>Activations: (" American" : 1)<br>Example 13: <span style="background-color:rgba(57,212,155, 1.0)">.</span> occupation, that would be a state of affairs effectively relegated to the past; the perks of propriet<br>Activations: ("." : 1)<br>Example 14:  accruing millions in foreign lands invaded and threatened by the<span style="background-color:rgba(57,212,155, 1.0)"> US</span>. It matters to anyone meaningfully<br>Activations: (" US" : 2)<br>Example 15:  end of September. Netflix streaming subscription prices in the<span style="background-color:rgba(57,212,155, 1.0)"> US</span> range from US$9 to US$16<br>Activations: (" US" : 1)<br>Example 16:  these rankings of the best in the U.<span style="background-color:rgba(57,212,155, 1.0)">S</span>.<br>Katy Perry talks about Russell Brand and<br>Activations: ("S" : 1)<br>Example 17: <|endoftext|> Civil Rights at the U.<span style="background-color:rgba(57,212,155, 1.0)">S</span>. Department of Education defines ��accessible�� to mean<br>Activations: ("S" : 4)<br>Example 18:  less than one percent of American��s 30 million companies export outside the U.<span style="background-color:rgba(57,212,155, 1.0)">S</span>. There<br>Activations: ("S" : 2)<br>Example 19:  After living in Switzerland until 1935, he immigrated to the<span style="background-color:rgba(57,212,155, 1.0)"> United States</span> and became a<span style="background-color:rgba(57,212,155, 1.0)"> U</span>.<span style="background-color:rgba(57,212,155, 1.0)">S</span><br>Activations: (" United" : 2), (" States" : 2), (" U" : 2), ("S" : 2)<br>Example 20:  were acting like authoritative dictators."<br><span style="background-color:rgba(57,212,155, 1.0)">American</span> Airlines defended the decision to remove Davis and her son from the<br>Activations: ("American" : 0)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Country or nationality names, abbreviations, or adjectives, often in the context of official organizations or geographic locations.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Country or nationality names, abbreviations, or adjectives, often in the context of official organizations or geographic locations.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> a violation of those statutes,�� he asked, citing 18<span style="background-color:rgba(57,212,155, 1.0)"> US</span> Code 241 and 18<span style="background-color:rgba(57,212,155, 1.0)"> US</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> defected during a Mexican tour and made their way to the<span style="background-color:rgba(57,212,155, 1.0)"> United States</span>.April 5, 2013</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> April. The 22-year-old intelligence analyst is accused of disclosing a classified video showing<span style="background-color:rgba(57,212,155, 1.0)"> U</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> than a year.
+According to Bloomberg News, a<span style="background-color:rgba(57,212,155, 1.0)"> U.S.</span> Trustee from the Justice</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>,�� said Vance Luce, deputy special agent in charge of the<span style="background-color:rgba(57,212,155, 1.0)"> U.S.</span> Secret</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> was that George's parents had lived in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> U.S.</span> at a certain time and that he</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> buy from<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> US</span> suppliers.
+Pemex had raised $6.03 billion through December of last</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> confirmation of a fifth conservative juror to the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> United States</span> Supreme Court in the form of nominee Amy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>
+Since 1980, the top 10 institutional investors have increased fourfold their investments in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> US</span> stocks,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> a syndicate of international banks in relation to a<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> US</span>$154.5 million revolving loan facility granted</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> mergers and acquisitions shape the future. Brock will share legislative lobbying efforts happening in the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> US</span>, Europe</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> odds with one another over cyber security. Earlier this year,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> U</span>.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">S</span>. officials warned the country</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> US</span> shipping.
+To order please go HERE.The Labconco CentriVap System uses</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>s databases. When we went back to the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Pentagon</span> with that statement from Moore, the officer laughed out</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> M-Pesa platform.
+Earlier this year, Safaricom collaborated with<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> US</span>-based</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Reviews, maps & directions to Dollar Tax Services Top in Dallas and more from Yahoo<span style="background-color:rgba(57,212,155, 0.76)"> US</span> Local. Find</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>,
+Your inflamed murderers yearning to breathe death upon<span style="background-color:rgba(57,212,155, 0.76)"> America</span>,
+Send these, the human</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> was muted, with most roughly flat on the day as the U.<span style="background-color:rgba(57,212,155, 0.76)">S</span>. dollar steadied and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> a March Senate hearing, U.<span style="background-color:rgba(57,212,155, 0.76)">S</span>. Assistant Secretary of State for Africa Johnnie Carson referred to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>, to traveling to their child's country of origin, to life in the United<span style="background-color:rgba(57,212,155, 0.76)"> States</span> afterward.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> the start of the financial crisis. LCB was one of the last banks in<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> America</span> to get a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> highest levels of the agency within hours of an ambush that killed a U.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">S</span>. border patrol</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Honolulu Advertiser.
+Take an interactive tour of Saddam's hide-out and capture at<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> US</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> America</span>, there is another bigger problem coming from Libya. Obama is desperate to try and be reelected</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> 2022. Specify deadlines will vary. California state tax filing. Not all<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> US</span> states require that you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>
+- We are the largest independent research firm in Canada covering a broad range of U.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">S</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>� Fair use is a loosely defined and complicated legal concept (here is a summary from the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> U</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Saneha, who couldn��t make it to LA for she was denied an<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> American</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> to Cairo. ��It is in Israel��s interest that the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> U</span>.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">S</span>. maintain</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> character Briony accuses McAvoy instead. The<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> British</span> actor has been working steadily for years in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> data sets and facilitate interaction with mentors from U.<span style="background-color:rgba(57,212,155, 0.52)">S</span>. Government and academia. These interactions will provide</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Mexican healer. My grandfather was always very proud that he was born an<span style="background-color:rgba(57,212,155, 0.52)"> American</span>.
+Mexicans are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> by a qualified independent appraiser. Donors might also consult the listing provided by the<span style="background-color:rgba(57,212,155, 0.52)"> American</span> Society of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> page from the Honests Ads legislation proposed in the<span style="background-color:rgba(57,212,155, 0.52)"> United States</span> Congress. That bill basically aims to make</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> lady told me that I was in the wrong terminal. Although my ticket said<span style="background-color:rgba(57,212,155, 0.52)"> American</span> Airlines, I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> are $236bn in the US and $47.5bn in the<span style="background-color:rgba(57,212,155, 0.44)"> UK</span>."
+However</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> trade and that decrease market opportunities for United States exports or otherwise distort United<span style="background-color:rgba(57,212,155, 0.44)"> States</span> trade;
+(3</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> United States. The<span style="background-color:rgba(57,212,155, 0.44)"> US</span> has stringent rules and regulations to follow, which doesn��t leave</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Day of Prayer, which is May 6.
+U.<span style="background-color:rgba(57,212,155, 0.44)">S</span>. District Court Judge Barbara Crabb</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> editing a four volume encyclopedia on U.<span style="background-color:rgba(57,212,155, 0.44)">S</span>. immigration history," he said. "It covers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> former Canadian foreign service officer, he has advised various governments and<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> international</span> agencies on issues related to climate</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> UK</span>. The group, which earlier this year said it was cutting more than 5,000 jobs,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>��s a privilege to be seen as a<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> US</span>GA champion.��
+Hunk</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>-per-view channel broadcasting the fight in the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> UK</span>.There��s an article titled �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>. The<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> U</span>.N. envoy for West Africa, Mohammed Ibn Chambas, told Reuters that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>ushing Meadows in Queens, New York City, The U.<span style="background-color:rgba(57,212,155, 0.28)">S</span>. Open attracts the attention of players</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> wisely.<span style="background-color:rgba(57,212,155, 0.28)"> U</span>ptime and server management may seem like a commodity these days. However, you get</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> influential woman in the United<span style="background-color:rgba(57,212,155, 0.28)"> States</span>.
+In 1980, President Jimmy Carter appointed Ann Landers to serve</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Billingsley of
+the U.<span style="background-color:rgba(57,212,155, 0.28)">S</span>. Geological Survey (USGS), the large amount of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> or evasion is so severe and disproportionate that it constitutes persecution.
+<span style="background-color:rgba(57,212,155, 0.28)">UN</span>HCR says that over 80 percent</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>,.We tell you about what is ASIC (application-specific integrated circuit), how it works with Bitcoin</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> our increasingly rushed and abrupt world, guess what - manners still matter!•
+- Don't interrupt</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> as to provide them with the tools and opportunities to thrive tomorrow.
+Every person has a right to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>6 DOI: 10.4419/86788570download
+It is a very well-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> green product, created using basic earth components and natural pigments. This type of tile is called En</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> many parts of the world and is one of the most important agricultural crop worldwide because of its nutritional qualities</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> home.
+Writing by Hannah Forsdike // Illustration by Ayelen Lujan // An</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�s bookings are reflected online as the slots fill up. ��The experience is personalised</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> you work at in Diagon Alley.��
+��Oh, you don��t</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> as if some unspeakable disaster had taken place when someone tries something off-beat and a little</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> at the Milken<span style="background-color:rgba(57,212,155, 0.2)"> Institute</span> Global Conference<span style="background-color:rgba(57,212,155, 0.2)"> in</span> Beverly Hills, California, U.S., on Wednesday,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> to Mexico and then<span style="background-color:rgba(57,212,155, 0.2)"> to</span> the US.<span style="background-color:rgba(57,212,155, 0.2)"> I</span> was in the closet when I left and the economic situation</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> on select US exports representing<span style="background-color:rgba(57,212,155, 0.2)"> similar</span> dollar volumes<span style="background-color:rgba(57,212,155, 0.2)"> of</span> steel, aluminum, and other, unrelated products.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> unique. In the<span style="background-color:rgba(57,212,155, 0.2)"> United</span> States, especially<span style="background-color:rgba(57,212,155, 0.2)"> on</span> the East Coast, there seems to be a pattern of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> is a standing advisory<span style="background-color:rgba(57,212,155, 0.2)"> group</span> of the<span style="background-color:rgba(57,212,155, 0.2)"> United</span> States Sentencing Commission pursuant to 28 U.S.C</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> stop eroding<span style="background-color:rgba(57,212,155, 0.2)"> Hong</span> Kong�<span style="background-color:rgba(57,212,155, 0.2)">�</span>s sovereignty & halt attacks on protesters, the US must consider</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> birth certificate.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>As we<span style="background-color:rgba(57,212,155, 0.2)">'ve</span> reported, claims that Obama is not really an American have been</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> serial paedophile in British<span style="background-color:rgba(57,212,155, 0.2)"> history</span>, took<span style="background-color:rgba(57,212,155, 0.2)"> centre</span> stage in the media firestorm for three damaging weeks.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>ar prism|
+<span style="background-color:rgba(57,212,155, 0.2)">|</span>US200401<span style="background-color:rgba(57,212,155, 0.2)">14</span>785 *||3 Dec 2003||17 Jun 2004||</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> added to the US Constitution<span style="background-color:rgba(57,212,155, 0.2)"> in</span> 1791<span style="background-color:rgba(57,212,155, 0.2)">.</span> While most American knew what their rights were back then,</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

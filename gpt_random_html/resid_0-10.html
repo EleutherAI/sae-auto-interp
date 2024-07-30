@@ -1,0 +1,691 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_0-10</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_0-10</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> is a research<span style="background-color:rgba(57,212,155, 1.0)"> assistant</span> professor with the Northwestern University Clinical and Translational Sciences Institute.HD compression<br>Activations: (" assistant" : 4)<br>Example 2:  is for little result and (could be deemed) as wasted energy," Nuggets<span style="background-color:rgba(57,212,155, 1.0)"> assistant</span> coach Chad Iske<br>Activations: (" assistant" : 4)<br>Example 3:  awareness of the importance of<span style="background-color:rgba(57,212,155, 1.0)"> assisting</span> businesses, industries, and communities across the state. These two groups will<br>Activations: (" assisting" : 6)<br>Example 4: <|endoftext|> at night and keeps you more focused during the daytime. It is an all-natural sleep<span style="background-color:rgba(57,212,155, 1.0)"> aid</span><br>Activations: (" aid" : 1)<br>Example 5: <|endoftext|> and<span style="background-color:rgba(57,212,155, 1.0)"> assistance</span> regarding the following legislation:<br>Sydney & New South Wales Building & Construction Debt<br>Activations: (" assistance" : 2)<br>Example 6:  and<span style="background-color:rgba(57,212,155, 1.0)"> assist</span> you with having the smoothest experience conceivable.<br>Not keep client logs: Customer data security<br>Activations: (" assist" : 4)<br>Example 7:  all the churches in McDuffie County to<span style="background-color:rgba(57,212,155, 1.0)"> assist</span> Manna, Inc. in our efforts. M<br>Activations: (" assist" : 5)<br>Example 8:  together a recipe for you.As a dietary<span style="background-color:rgba(57,212,155, 1.0)"> supplement</span> for adults, take one (1) vegetable capsule<br>Activations: (" supplement" : 0)<br>Example 9: <|endoftext|> of the carotid arteries, usually caused by atherosclerosis. Cambodia community justice<span style="background-color:rgba(57,212,155, 1.0)"> assistance</span> partnership<br>Activations: (" assistance" : 3)<br>Example 10:  at the top end of the sport,<span style="background-color:rgba(57,212,155, 1.0)"> assisting</span> with muscle recovery and metabolism.<br>We have used Han<br>Activations: (" assisting" : 5)<br>Example 11: <|endoftext|> CDC will provide technical<span style="background-color:rgba(57,212,155, 1.0)"> assistance</span> and support – directly and through funding for its capacity-building partners –<br>Activations: (" assistance" : 4)<br>Example 12: <|endoftext|> needs, and offers affordable technical<span style="background-color:rgba(57,212,155, 1.0)"> assistance</span> to ensure that organizations run effectively.<br>Over the last 50<br>Activations: (" assistance" : 4)<br>Example 13:  to be used in Euro 2012, including the<span style="background-color:rgba(57,212,155, 1.0)"> assistant</span> referees, the additional<span style="background-color:rgba(57,212,155, 1.0)"> assistant</span> referees, and the four<br>Activations: (" assistant" : 5), (" assistant" : 5)<br>Example 14:  game, firing three on Nabokov.<br>- Turco earned an<span style="background-color:rgba(57,212,155, 1.0)"> assist</span> on Ott��<br>Activations: (" assist" : 3)<br>Example 15: the Opera House on Tuesdi y evening,<br>September the Hrd,to<span style="background-color:rgba(57,212,155, 1.0)"> aid</span> them in buy<br>Activations: (" aid" : 1)<br>Example 16:  were incapable of self-representation and ordered legal<span style="background-color:rgba(57,212,155, 1.0)"> aid</span> to take on all three cases.<br>Cr<br>Activations: (" aid" : 4)<br>Example 17: <|endoftext|> download. You will Pick the<span style="background-color:rgba(57,212,155, 1.0)"> aid</span> art of your developer&rsquo or presentation concept.<br>Activations: (" aid" : 1)<br>Example 18:  accounts can be opened with the<span style="background-color:rgba(57,212,155, 1.0)"> assistance</span> of our local partners, on a personal basis or in conjunction with<br>Activations: (" assistance" : 2)<br>Example 19: atophores, which are aerial roots that<span style="background-color:rgba(57,212,155, 1.0)"> assist</span> with the supply of oxygen to the trees. I<br>Activations: (" assist" : 6)<br>Example 20: <|endoftext|> in the area rushed to offer St. Clair<span style="background-color:rgba(57,212,155, 1.0)"> assistance</span>. Henry Lloyd was shot, and John O<br>Activations: (" assistance" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Verbs or nouns related to helping, supporting, or providing aid, often in a professional or formal context.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Verbs or nouns related to helping, supporting, or providing aid, often in a professional or formal context.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> uses proven processes and products to<span style="background-color:rgba(57,212,155, 1.0)"> assist</span> our service provider customers in deploying their networks. We provide market analysis</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> and Support
+We provide ad-hoc / on demand support, and can<span style="background-color:rgba(57,212,155, 1.0)"> assist</span> in upsk</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>. These coordinators interact daily with district directors and employees, participate at district functions,<span style="background-color:rgba(57,212,155, 1.0)"> assist</span> with personnel</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> aim of the present study was to determine the effects of probiotic<span style="background-color:rgba(57,212,155, 1.0)"> supplementation</span> on glycaemic control and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> quote. Our private building surveyor professionals can<span style="background-color:rgba(57,212,155, 1.0)"> assist</span> builders in throughout the Perth Metro Area, so if</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> amolatina's dating database she's a laboratory<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> assistant</span> that likes to play chess in other words</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>s goal is<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> assist</span> students living in that region—donating to […]
+The Inter-Professional Collabor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> date for the draft.
+Ahead of Google Calendar will<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> assist</span> you to save the development, you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> source of power.
+And it could help the broader grid in the area that would<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> assist</span> with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> their lectures with visual<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> aids</span>.
+GIHE has also been designated as a centre for theory and practical</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> mom, wife, daughter, professor, book reviewer, editor, and personal<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> assistant</span>. Yep, all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>About Corporate Law in the Netherlands, our Firm provides qualified legal<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> assistance</span> in drafting international contracts, mergers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> the room #13 that I was previously in and two more ER docs and an<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> assistant</span> came in shortly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> best corporate catering recommendations and concepts have been broken down into types to<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> assist</span> you to greater strategy on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> regulatory driven solutions to clients. James works with customers to collaborate all programmatic requirements and strategies to<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> aid</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> would like financial<span style="background-color:rgba(57,212,155, 0.76)"> assistance</span> to help purchase protective equipment for their employees.
+In the past couple of weeks</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>.
+Prior to that she was an<span style="background-color:rgba(57,212,155, 0.76)"> assistant</span> city editor who oversaw breaking news and the courts and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> the FBI<span style="background-color:rgba(57,212,155, 0.76)"> assistant</span> special agent in charge for counterterrorism, refused to bug the mosque. She said the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>no<span style="background-color:rgba(57,212,155, 0.76)"> assistant</span> or apprentice) and I wanted to make sure there was an extra pair of hands/extra</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> of events before they occur can<span style="background-color:rgba(57,212,155, 0.76)"> aid</span> with choice making procedure, implying the choice manufacturer is able to get</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>, Vol. 4,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Supplement</span> 4, pp. 2-10.
+Disability Rights Commission (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>, its government will request<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> assistance</span> from other nearby states. If that is also insufficient, the federal government</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> also ranked as one of the world��s top 100 universities by the Times Higher Education<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Supplement</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> who answer calls at the monitoring center are trained to handle medical emergencies and will provide instant<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> assistance</span>. Users</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> water-resistant<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> aids</span>, making them a great choice for those constantly on the move. Phonak</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> parking<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> assist</span>, a 6-month subscription to SiriusXM Satellite Radio, memory-enabled power front</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> the developing nations are in huge debt to the world relief organizations that were actually meant to<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> aid</span> their development</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> device researcher to reach out to NH-ISAC for<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> assistance</span> in connecting to manufacturers, as needed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>�s new online platform which helps computer users to find<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> assistance</span> from knowledgeable IT individuals. This differs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> military<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> assistance</span> to Israel, extend war reserve stockpile authority and authorize the transfer of defense articles to Israel in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> makeup</span>. Last week, I tried to get the eye<span style="background-color:rgba(57,212,155, 0.52)"> makeup</span> debuted at the SS16 Margiela</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> Pierre Hardy x NARS summer 2013<span style="background-color:rgba(57,212,155, 0.52)"> makeup</span> collection made
+it to the planning board, we were stoked</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> the<span style="background-color:rgba(57,212,155, 0.52)"> makeup</span> products as resisting them will be quite difficult!
+This summer season pigments ranging from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> an exceptionally detailed, high contrast view of images and menu settings. The LCD is<span style="background-color:rgba(57,212,155, 0.52)"> supplemented</span> by a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>, CBD Oil may<span style="background-color:rgba(57,212,155, 0.52)"> aid</span> you obtain a more satisfying as well as significant lifestyle. Aside from providing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Andreas Salomé, who wore no<span style="background-color:rgba(57,212,155, 0.44)"> makeup</span> and discussed philosophy, and Cora Pearl, who</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> check into the Grand Budapest, we checked in with<span style="background-color:rgba(57,212,155, 0.44)"> makeup</span>, hair and prosthetics designer Frances Hannon</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> as a dental<span style="background-color:rgba(57,212,155, 0.44)"> assistant</span> since 1995. Because of my love of kids, I have primarily worked in ped</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> wage was<span style="background-color:rgba(57,212,155, 0.44)"> supplemented</span> by a required package of benefits, including social security and health care. While this total</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> coach could simply help with supervision, training and game organization, first<span style="background-color:rgba(57,212,155, 0.44)"> aid</span>, etc. Some adults will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>
+Check out our SARMS products here – https://bmm-supp<span style="background-color:rgba(57,212,155, 0.36000000000000004)">lements</span>.com/shop</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> the firefighter requesting<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> assistance</span> to facilitate the initial contact, and then allow the firefighters to work out the necessary</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>• Make product presentations to distributors and end-users.
+•<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Assist</span> management with development of sales plans</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> they��d done in some detail. By a process of elimination,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> assisted</span> by information from former</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Aid</span> Administrators - NJASFAA, the professional association for the state of New Jersey. A</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> terrible conclusion when he panics and fails in his duty. He's shipped back to the<span style="background-color:rgba(57,212,155, 0.28)"> aid</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> goes away to<span style="background-color:rgba(57,212,155, 0.28)"> aid</span> a neighboring kingdom in a war and when he returns, he proposes to Cat</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> Finance. ��The most recent educational<span style="background-color:rgba(57,212,155, 0.28)"> supplement</span> from the AALTCI, which ran in our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> in either condoning this tragedy or<span style="background-color:rgba(57,212,155, 0.28)"> aiding</span> in its implementation.
+Wall Street is being targeted because the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> aid</span> their own cause. "I'm a big fan of the Old Firm, a massive fan</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>," she says.
+She joined A Working Future in 2014 and became the treasurer of her local savings</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Top 100 bestselling author. Being a multi-published author in the
+romance genre, Alta</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>up show at an undisclosed New York location tomorrow (September 22).
+Fugees broke out with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Harpachia pulchripes is my current favorite sling. I like to keep my</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>). I like this TIME recap of the study and this quote from the author Dr. Jenny Rades</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the organization include Apple Store, Apple Card, Apple Music, Apple TV, Apple Books, iCloud,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, I spent many hours in meditation, reentering the dreams, which were actually a past-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> outcome document emerging from the Rio+20, in order to encourage more local governments to participate actively.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> this
+> unfortunate person -- this greenish toad like person -- do you have it
+></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> trafficking. The two ministries, in cooperation with the Ministry of Foreign Affairs and the Ministry of Territorial</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> are met. Your<span style="background-color:rgba(57,212,155, 0.2)"> team</span> may also<span style="background-color:rgba(57,212,155, 0.2)"> choose</span> to provide accessibility guidance to supplement the accessibility requirement language. This</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> In the Crowd<span style="background-color:rgba(57,212,155, 0.2)">.</span>
+Having<span style="background-color:rgba(57,212,155, 0.2)"> the</span> auctioneer and the assistants working the crowd before hand talking to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>60 Pavehawk<span style="background-color:rgba(57,212,155, 0.2)"> rescue</span> helicopters are<span style="background-color:rgba(57,212,155, 0.2)"> ready</span> to respond if called upon for assistance, surveillance, search and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> and assist.
+�<span style="background-color:rgba(57,212,155, 0.2)">�</span>We are<span style="background-color:rgba(57,212,155, 0.2)"> begging</span> everybody, most especially President Buhari, please help</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> planner they also<span style="background-color:rgba(57,212,155, 0.2)"> have</span> a spread<span style="background-color:rgba(57,212,155, 0.2)"> of</span> calculators that can assist you determine how a lot paint you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>homicide prompts<span style="background-color:rgba(57,212,155, 0.2)"> Beck</span>ett to<span style="background-color:rgba(57,212,155, 0.2)"> invite</span> Demming to assist on a case, giving Castle a rings</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>down' process must<span style="background-color:rgba(57,212,155, 0.2)"> be</span> supplemented with a<span style="background-color:rgba(57,212,155, 0.2)"> '</span>bottom-up' engagement of civil society that includes city</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>s assist gave him 60<span style="background-color:rgba(57,212,155, 0.2)"> points</span> on the<span style="background-color:rgba(57,212,155, 0.2)"> season</span>. The Maple Leafs are the second NHL team to have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, I am not<span style="background-color:rgba(57,212,155, 0.2)"> on</span> any kind<span style="background-color:rgba(57,212,155, 0.2)"> of</span> government assistance and, other than low-interest student loans,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> including providing assistance in<span style="background-color:rgba(57,212,155, 0.2)"> obtaining</span> financial aid and<span style="background-color:rgba(57,212,155, 0.2)"> cert</span>ifying enrollment for the Montgomery GI Bill, and the</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -1,0 +1,726 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-46</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-46</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|>. The good news for Hotline faithful<span style="background-color:rgba(57,212,155, 1.0)">: I</span>��ve secured a discount: 12 cents<br>Activations: (":" : 6), (" I" : 4)<br>Example 2: <br>Egypt<span style="background-color:rgba(57,212,155, 1.0)"> is</span> home to the Giza Pyramids and Sphinx with an extensive collection of tombs<br>Activations: (" is" : 5)<br>Example 3: <|endoftext|> attacks.Wednesday, February 4, 2009<br>Cabin Fever Reigns<br><span style="background-color:rgba(57,212,155, 1.0)">Here we</span> are<span style="background-color:rgba(57,212,155, 1.0)">,</span><br>Activations: ("Here" : 7)<br>Example 4: <|endoftext|> from us<br><span style="background-color:rgba(57,212,155, 1.0)">The</span> WP Elevation Blueprint<span style="background-color:rgba(57,212,155, 1.0)"> is a</span> system designed to help you build an exceptional business<br>Activations: ("The" : 3), (" is" : 5), (" a" : 4)<br>Example 5: <|endoftext|>�USA! USA!��<br>It didn't used to belong to the right<span style="background-color:rgba(57,212,155, 1.0)">.</span> In<br>Activations: ("." : 5)<br>Example 6: <|endoftext|>, May 13, 2010<br>Photos 365 week 19<br>Rachel and Philip<span style="background-color:rgba(57,212,155, 1.0)"> went</span> to a RiverD<br>Activations: (" went" : 6)<br>Example 7: <|endoftext|> to the conference home page<br><span style="background-color:rgba(57,212,155, 1.0)">The</span> conference program<span style="background-color:rgba(57,212,155, 1.0)"> is up</span> on the website - http://assl<br>Activations: ("The" : 4), (" is" : 5)<br>Example 8: Link, 866-642-0444<br>Garbage pickup<span style="background-color:rgba(57,212,155, 1.0)"> is</span> provided by Dan��s<br>Activations: (" is" : 6)<br>Example 9: <|endoftext|> as KP & Freddie Flintoff<span style="background-color:rgba(57,212,155, 1.0)"> …</span> now boom into our lounge rooms as comics, entertainers and<br>Activations: (" …" : 5)<br>Example 10: <|endoftext|>, Pink …Read more<br>Breathable<span style="background-color:rgba(57,212,155, 1.0)"> And</span> Comfy<span style="background-color:rgba(57,212,155, 1.0)"> camouflage</span> fabric - Alibaba.com<br><br>Activations: (" And" : 5)<br>Example 11: <br>Super Kommandant Extreme<span style="background-color:rgba(57,212,155, 1.0)"> is</span> based around two main ideas, Light as a limited resource and<br>Activations: (" is" : 6)<br>Example 12: .07<br>View All Messages in rec.photo.darkroom<br>Precipitate<span style="background-color:rgba(57,212,155, 1.0)"> in</span> fix<br>Activations: (" in" : 5)<br>Example 13: <|endoftext|> Jason Kreis likes what he has seen from the newcomers<br>early in<span style="background-color:rgba(57,212,155, 1.0)"> the</span> preseason<span style="background-color:rgba(57,212,155, 1.0)">.</span> Fitting<br>Activations: ("." : 5)<br>Example 14:  headlines<span style="background-color:rgba(57,212,155, 1.0)"> about</span> immigrants and refugees daily,<span style="background-color:rgba(57,212,155, 1.0)"> but</span> what are their experiences really like<span style="background-color:rgba(57,212,155, 1.0)">?</span> Join us for our first<br>Activations: (" about" : 4), ("?" : 5)<br>Example 15:  Urban Development (HUD) has<span style="background-color:rgba(57,212,155, 1.0)"> one</span> of the largest portfolios of homes in the country<span style="background-color:rgba(57,212,155, 1.0)">. For</span> real estate<br>Activations: ("." : 5), (" For" : 3)<br>Example 16: <|endoftext|><br>The hottest video<span style="background-color:rgba(57,212,155, 1.0)"> is</span> Wife swap home made. And there is 1, more Wife swap free<br>Activations: (" is" : 5)<br>Example 17: <|endoftext|><br>greater impact on submission scores<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>Foamy and Germaine Go Crazy Beatnik<br>Activations: ("!" : 6)<br>Example 18: <|endoftext|> with Mastodon and Kvelertak<span style="background-color:rgba(57,212,155, 1.0)">, which</span> kicks off on January 14<span style="background-color:rgba(57,212,155, 1.0)">th</span> in Belfast,<br>Activations: ("," : 5)<br>Example 19:  3506<br>In a former Philips<span style="background-color:rgba(57,212,155, 1.0)"> factory in</span> Eindhoven<span style="background-color:rgba(57,212,155, 1.0)"> children are</span> playfully enthused<br>Activations: (" factory" : 5), (" in" : 5), (" children" : 5), (" are" : 7)<br>Example 20: AA_bpywW&index=4<br>��What Would<span style="background-color:rgba(57,212,155, 1.0)"> You</span> Do<span style="background-color:rgba(57,212,155, 1.0)">?</span>��<br>Activations: (" You" : 4), ("?" : 5)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Punctuation marks and short function words (e.g. "I", "is", "a", "the", "in", "and", "but", "for") that connect or separate clauses, phrases, or sentences.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Punctuation marks and short function words (e.g. &quot;I&quot;, &quot;is&quot;, &quot;a&quot;, &quot;the&quot;, &quot;in&quot;, &quot;and&quot;, &quot;but&quot;, &quot;for&quot;) that connect or separate clauses, phrases, or sentences.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+Abbott<span style="background-color:rgba(57,212,155, 1.0)"> is about the power</span> of health<span style="background-color:rgba(57,212,155, 1.0)">. For</span> more than 125 years, Abbott has been helping</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+James Rogers<span style="background-color:rgba(57,212,155, 1.0)"> is a</span> Sickle Cell Educ<span style="background-color:rgba(57,212,155, 1.0)">ator. He</span> is associated with North Carolina Sickle Cell</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span>am Rotary<span style="background-color:rgba(57,212,155, 1.0)"> Club
+The W</span>alth<span style="background-color:rgba(57,212,155, 1.0)">am</span> Rot<span style="background-color:rgba(57,212,155, 1.0)">ary Club has</span> proudly served<span style="background-color:rgba(57,212,155, 1.0)"> the</span> Waltham community</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>17-2008, 01:10 PM
+By Witchy1<span style="background-color:rgba(57,212,155, 1.0)"> in</span> forum Tournament Disc<span style="background-color:rgba(57,212,155, 1.0)">ussions</span>Repl</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">, has</span> signed<span style="background-color:rgba(57,212,155, 1.0)"> an</span> agreement with the Electricity Generating Authority of Thailand (EGAT) to supply and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>by<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Sp</span>ikyStar reviews
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">He</span> controlled the elements<span style="background-color:rgba(57,212,155, 0.9200000000000002)">,</span> it wasn't enough. He was the powerful</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>rouwer.<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> This</span> is...Free LessonSeries Details
+Lesson 7<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> is all</span> about ar</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>"Silent Night<span style="background-color:rgba(57,212,155, 0.9200000000000002)">" is a</span> popular Christmas carol, composed in 1818 by Franz X</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)">.</span> MedCap unites the strengths of a larger the company with the smaller companies' entrepreneurial power,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>atrum Anatomicum (<span style="background-color:rgba(57,212,155, 0.9200000000000002)">and</span> Other Performance Lectures<span style="background-color:rgba(57,212,155, 0.9200000000000002)">))</span>
+Following<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> a</span> car accident<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> in 1944</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)">' Published</span> Search from the Rapra Polymer Library provides<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> a</span> comprehensive review<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> of the</span> most current literature available</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>GreatGen Daily is out<span style="background-color:rgba(57,212,155, 0.8400000000000001)">!</span> http://t.co/GM4HKWYA4k</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> this information and provide you with valuable statistics<span style="background-color:rgba(57,212,155, 0.8400000000000001)">!</span>
+Real-time tracking<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> let</span>��s you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> as part of an experie
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">A professional</span>, highly experienced, multi-disciplinary engineering consultancy<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> are</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>handle<span style="background-color:rgba(57,212,155, 0.8400000000000001)">.</span>
+On<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Wednesday, September</span> 29<span style="background-color:rgba(57,212,155, 0.8400000000000001)">,</span> she will observe a candidate forum sponsored by WEPM-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>1-5)
+Clover Clover tried to<span style="background-color:rgba(57,212,155, 0.76)"> become</span> on the-demand kind of internet dating<span style="background-color:rgba(57,212,155, 0.76)">:</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>nicles<span style="background-color:rgba(57,212,155, 0.76)"> is</span> struggling to come to terms with<span style="background-color:rgba(57,212,155, 0.76)"> the</span> death of his wife Fiona and his gay son Neil</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> server.
+Jitsi<span style="background-color:rgba(57,212,155, 0.76)"> Meet</span> Install
+By<span style="background-color:rgba(57,212,155, 0.76)"> default</span>,<span style="background-color:rgba(57,212,155, 0.76)"> J</span>itsi Meet is not available in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> has been</span> designated as Production Technology Alliance Products (PTAP) by Netflix, the world's leading internet</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> most studied emotional expressions<span style="background-color:rgba(57,212,155, 0.76)">. We</span> generally accept smiles as a universal indication of happiness.
+In many other</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> seen her emerge as one of the most sought out entrepreneurs<span style="background-color:rgba(57,212,155, 0.6799999999999999)">. According</span> to<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Wikipedia</span>.org, the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>ra/Focus rival
+19 March 2007
+Hyundai<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> is</span> hoping for big things from its new</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)">) brings together companies, technology</span> centres and research groups in the photonics and optics sector<span style="background-color:rgba(57,212,155, 0.6799999999999999)">.</span> SECPh</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>
+the Ideals of Justice<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> and</span> liberty of your
+country,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> has</span> sympathized with<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> '.</span>he</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>North Carolina)<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> on November 7,</span> 2012
+I. MACHADO (Florida) on September</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>style hubs in Iraq<span style="background-color:rgba(57,212,155, 0.6000000000000001)">:</span> officer,�� Reuters, 6/11/15
+Til</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>Only in Marfa<span style="background-color:rgba(57,212,155, 0.6000000000000001)">: "</span>We're an arts community, so a lot of renowned artists come</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> of your life<span style="background-color:rgba(57,212,155, 0.6000000000000001)">."</span>
+"A garden isn't meant to be useful. It's for joy."</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> and Attorneys
+Best group in town<span style="background-color:rgba(57,212,155, 0.6000000000000001)">!</span>- Jamie
+I can��t thank you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> movement<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> has been</span> awakened again<span style="background-color:rgba(57,212,155, 0.6000000000000001)">. But</span> this time it��s not the Tea Party reacting to healthcare</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> the</span> BoardWaterfront<span style="background-color:rgba(57,212,155, 0.52)"> are</span> committed to giving our clients a high quality professional service<span style="background-color:rgba(57,212,155, 0.52)">.</span>
+<span style="background-color:rgba(57,212,155, 0.52)">In</span> the event</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>� at Lightsey Chapel Auditorium
+A founder<span style="background-color:rgba(57,212,155, 0.52)"> of the</span> New Music Collective<span style="background-color:rgba(57,212,155, 0.52)"> (see</span> page 72),</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> Asscmby in
+the world that is afraid of its own
+people<span style="background-color:rgba(57,212,155, 0.52)">. If</span> wo are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>The Last of the Firedrakes<span style="background-color:rgba(57,212,155, 0.52)"> by</span> Farah Oomerbhoy<span style="background-color:rgba(57,212,155, 0.52)"> has</span> such a beautiful cover</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>
+<span style="background-color:rgba(57,212,155, 0.52)">The</span> 2windy.com<span style="background-color:rgba(57,212,155, 0.52)"> sponsor.</span>SrfSnoSk8. are organizing a Surf</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>.AMSTERDAM--June 5, 2013: TomTom Business Solutions<span style="background-color:rgba(57,212,155, 0.44)"> today</span> unveils<span style="background-color:rgba(57,212,155, 0.44)"> the</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> White, Counsel, Boyden Gray & Associates
+Several<span style="background-color:rgba(57,212,155, 0.44)"> private</span> parties<span style="background-color:rgba(57,212,155, 0.44)"> and</span> state attorneys general<span style="background-color:rgba(57,212,155, 0.44)"> have</span> brought a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>ppies Records
+Fantaisie de Concert for viola and piano<span style="background-color:rgba(57,212,155, 0.44)">,</span> Op. 18</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>
+star<span style="background-color:rgba(57,212,155, 0.44)"> or</span> a fictional character<span style="background-color:rgba(57,212,155, 0.44)">.</span> In Shipping News each week, I'll break down for
+you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>etting ma
+chine which bore his name,<span style="background-color:rgba(57,212,155, 0.44)"> is</span> dead.
+Popuar Eleotion</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> for an inde
+terminate term for living off i the
+earnings of fallen women<span style="background-color:rgba(57,212,155, 0.36000000000000004)">.</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Increase from Last Year
+According<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> to</span> Second District Commander Michael Reese, burglaries and automobile related theft rates</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> week, I looked</span> into the Jazz��s recent struggles and concluded that the team��s</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>bridge is the largest in its category.
+The brand devoted to megayachts<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> is</span> sure to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> will be the highest points scorer again<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> this</span> season<span style="background-color:rgba(57,212,155, 0.36000000000000004)">!</span> They won��t concede many, but</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>ES THIS WEEK<span style="background-color:rgba(57,212,155, 0.28)">!</span> They were even on the same day<span style="background-color:rgba(57,212,155, 0.28)">!</span>
+The Bunny Biscornu</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> Marl<span style="background-color:rgba(57,212,155, 0.28)"> has been designed</span> to compliment the extensive range of the ever popular pure wool Windsor DK. Each</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>) SUSTAINABILITY
+A research<span style="background-color:rgba(57,212,155, 0.28)"> project called</span> The Embedding Project<span style="background-color:rgba(57,212,155, 0.28)"> is a</span> global public</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> entrancing hybrid<span style="background-color:rgba(57,212,155, 0.28)"> of</span> a Junji Ito<span style="background-color:rgba(57,212,155, 0.28)"> manga</span> and industrial psychedelic doom<span style="background-color:rgba(57,212,155, 0.28)">.</span>
+Jarv Is |</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> of the Year<span style="background-color:rgba(57,212,155, 0.28)"> this</span> season<span style="background-color:rgba(57,212,155, 0.28)"> considering</span> that the Belgium looks set to occupy an advanced position for the Blues</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> programs for corporate and community groups of all types and sizes for over 30 years!
+Communicating,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>'s intentions are truly peaceful, what's to negotiate?
+TIME magazine has assembled some of the more</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> can setup payment with credit, debit, or direct deposit. Click here to create an account.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Strait Islander origin.
+(b) Includes persons who speak only some Indigenous words.
+(</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with 10:23 left in
+the opening stanza.
+From that point the Quakers erased</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of their dramaturgy.
+More often, though, Latinists may simply want to know a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and sent back to Rikers. He says he expressed interest in attending school while he was there,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>igers - mom's a liger and dad's a lion. (Photos)
+The pope invited</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> about, especially with two babies to care for, ages 2 and 6.��
+Her doctor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> something not welded that's even better. Even if it doesn't require stainless, they're er</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"><|endoftext|</span>>I felt I<span style="background-color:rgba(57,212,155, 0.2)"> had</span> killed my<span style="background-color:rgba(57,212,155, 0.2)"> mate</span>' - Private Paul Warren
+- From: news.com</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)">is</span> together in ways unexpected. It<span style="background-color:rgba(57,212,155, 0.2)">��</span>s a fragile moment for everyone to look inwards.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"> industrial</span> zone class<span style="background-color:rgba(57,212,155, 0.2)">
+Jul</span> 21, 2015 at 11:29 AM
+The township is creating a new</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"><|endoftext|</span>>
+An idea<span style="background-color:rgba(57,212,155, 0.2)"> to</span> put forward is that<span style="background-color:rgba(57,212,155, 0.2)">,</span> no matter what the substance, too much of one</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)">6</span>. The Year of<span style="background-color:rgba(57,212,155, 0.2)"> the</span> Ox
+<span style="background-color:rgba(57,212,155, 0.2)">A</span>riel Gade was born in the Year of the Ox</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"> of</span> the Seventh Sister<span style="background-color:rgba(57,212,155, 0.2)">,</span> is pleased to<span style="background-color:rgba(57,212,155, 0.2)"> present</span> ��The Matchmaker: A Tale Drawn from �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)">)</span> we are humbled by<span style="background-color:rgba(57,212,155, 0.2)"> the</span> men and<span style="background-color:rgba(57,212,155, 0.2)"> women</span> who are courageous and committed, who choose sacrifice and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)">Pre</span>aching to the choir,<span style="background-color:rgba(57,212,155, 0.2)"> columnist</span> John Ju<span style="background-color:rgba(57,212,155, 0.2)">erg</span>ens offers a few tips on surviving the hedon</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"> model</span> of formative<span style="background-color:rgba(57,212,155, 0.2)"> assessment</span> is empirically<span style="background-color:rgba(57,212,155, 0.2)"> examined</span> and the formative assessment practice in German lessons is described</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.2)"> clues</span> as to who<span style="background-color:rgba(57,212,155, 0.2)"> took</span> nearly two<span style="background-color:rgba(57,212,155, 0.2)"> dozen</span> cell phones from a Mitchell County School. Pictures of the Bac</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

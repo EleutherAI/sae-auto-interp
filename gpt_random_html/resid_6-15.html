@@ -1,0 +1,700 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-15</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-15</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  up to R<span style="background-color:rgba(57,212,155, 1.0)">4</span>,000. This would be a big relief for the lower income group.<br><br>Activations: ("4" : 4)<br>Example 2:  futuristic, exciting, imperfect, flagship notebook<br>- 4 Oppo R<span style="background-color:rgba(57,212,155, 1.0)">15</span> Pro review: A compelling<br>Activations: ("15" : 2)<br>Example 3: , but the total paid units had a better R<span style="background-color:rgba(57,212,155, 1.0)">2</span>, so I stuck with that.<br>What<br>Activations: ("2" : 8)<br>Example 4:  to offset the weight of the heavier higher-performance elements.<br>The Corvette ZR<span style="background-color:rgba(57,212,155, 1.0)">1</span> uses the<br>Activations: ("1" : 0)<br>Example 5:  energy costs decreasing by 1.5% to R<span style="background-color:rgba(57,212,155, 1.0)">40</span>.4 billion (September 2015: R<span style="background-color:rgba(57,212,155, 1.0)">41</span><br>Activations: ("40" : 3)<br>Example 6:  and went turned towards Dash, some shots were fired at R<span style="background-color:rgba(57,212,155, 1.0)">3</span> but no serious damage was taken.<br>Activations: ("3" : 5)<br>Example 7: atech steering damper to your BMW R<span style="background-color:rgba(57,212,155, 1.0)">1200</span>GS. While the R1200GS is an inherently stable<br>Activations: ("1200" : 1)<br>Example 8:  maintenance stream is at for instance origin/R<span style="background-color:rgba(57,212,155, 1.0)">3</span>_1.<br>- 1 Complete Use Cases<br><br>Activations: ("3" : 6)<br>Example 9:  (DR400/180), Remorqueur (DR400/180R). R-<span style="background-color:rgba(57,212,155, 1.0)">3</span><br>Activations: ("3" : 3)<br>Example 10:  still later period, apparently after the middle of the r<span style="background-color:rgba(57,212,155, 1.0)">6</span>th century, the practice of Benediction<br>Activations: ("6" : 2)<br>Example 11: <|endoftext|>morning press release that it will be selling the standard PlayStation 4 bundle for R<span style="background-color:rgba(57,212,155, 1.0)">5</span>,599<br><br>Activations: ("5" : 7)<br>Example 12: <|endoftext|>- 10.1186/gb-2008-9-10-r<span style="background-color:rgba(57,212,155, 1.0)">148</span><br>Rav<br>Activations: ("148" : 1)<br>Example 13: <|endoftext|> – R<span style="background-color:rgba(57,212,155, 1.0)">35</span>k p/m|<br>|Education||IT related education|<br>Our client<br>Activations: ("35" : 3)<br>Example 14: ised the motorcycle industry, heavily investing in R<span style="background-color:rgba(57,212,155, 1.0)">&</span>D and in production. The four cylinder, 750<br>Activations: ("&" : 0)<br>Example 15: 32<br>- Annualized ROE<span style="background-color:rgba(57,212,155, 1.0)">1</span> of 3.7% compared with 33.6%<br><br>Activations: ("1" : 0)<br>Example 16: <|endoftext|>C had an r<span style="background-color:rgba(57,212,155, 1.0)">2</span> of 0.84 (16), although Blonde noted that it appears<br>Activations: ("2" : 7)<br>Example 17: IXIFY<br>Adventure Club, Tommy Trash, R<span style="background-color:rgba(57,212,155, 1.0)">3</span>HAB, Tritonal, Ar<br>Activations: ("3" : 9)<br>Example 18: <|endoftext|> patients. Crit Care 2006;10(1):R<span style="background-color:rgba(57,212,155, 1.0)">22</span>.<br>21. Nichol AD<br>Activations: ("22" : 2)<br>Example 19: analysis. Crit Care 2011;15:R<span style="background-color:rgba(57,212,155, 1.0)">103</span>.<br>Hellenkamp K, Prusz<br>Activations: ("103" : 2)<br>Example 20: <|endoftext|>.<br>I Kaleidoscope (Radio<span style="background-color:rgba(57,212,155, 1.0)"> 4</span>. Sat 7. 7.20pm)<br>Activations: (" 4" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Numerical values, often part of a model number, code, or identifier, typically in a technical or product-related context.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Numerical values, often part of a model number, code, or identifier, typically in a technical or product-related context.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> BMW 528s for the Mpumalanga executive at a cost of R<span style="background-color:rgba(57,212,155, 1.0)">2</span>.3</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> options available for download range from R<span style="background-color:rgba(57,212,155, 1.0)">2</span>-D2's bleeps and Chewbacca's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">2</span>Pleasent
+Posted 9 months agoCity Of Orange Water Division
+The City of Orange</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> this particular product is shaped like R<span style="background-color:rgba(57,212,155, 1.0)">2</span>-D2 from Star Wars.
+The driod</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+R<span style="background-color:rgba(57,212,155, 1.0)">2</span>Pleasent Gold prides itself in providing OSRS Gold at the cheapest rate</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> tax bracket of below R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">8</span> lakh. This may provide a tax relief of R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">28</span>00 per ann</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">7</span> Cores Kaveri Desktop. Can��t install the applcation.
+AMD</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> pushes the performance above that of the R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">9</span> 290X of the same family. If you can find</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> keep within R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">1</span> until I took a punt and did a 3 turn away. By this point we</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> two leaders - Trans/R<span style="background-color:rgba(57,212,155, 0.9200000000000002)">2</span>K, settled -0.3% and +0.2</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> terms, to have ��chowed�� (with her help) R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">6</span>m for four</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>2 (#1723) DS8000 LMC R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">6</span>.3 (#1724) DS8000</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> video card. We put this head-to-head with the ASUS ROG R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">9</span> 290X</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, I was anxious to test the new Canon EOS R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">5</span> and Canon EOS R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">6</span> mirror</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>: 2421-951 Code: 2421-951 DS8000 LMC R<span style="background-color:rgba(57,212,155, 0.8400000000000001)">6</span>.2</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>. The
+surfaces of this lens have radii of curvature RI 20 and R<span style="background-color:rgba(57,212,155, 0.76)">2</span> respectively</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> am using WinXP, R.<span style="background-color:rgba(57,212,155, 0.76)">2</span>.12, eclipse 3.6.2 and statet</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>�250��).|
+|IO-540-R<span style="background-color:rgba(57,212,155, 0.76)">1</span>A5||Piper Aircraft</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> and Internet Learning Technologies
+R<span style="background-color:rgba(57,212,155, 0.76)">25</span>RR015650 : 09/30/2000 - 08</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>R<span style="background-color:rgba(57,212,155, 0.76)">01</span>GM086412 and AR058681) and a NSF grant (DBI</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Registrar:Network Solutions LLC (R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">63</span>-LROR)
+Status:CLIENT TRANSFER PR</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> Best Practices SAP Consulting Existing Environment SAP R/<span style="background-color:rgba(57,212,155, 0.6799999999999999)">3</span>® (now available in mySAP</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> be hung. Caulking and R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">13</span> walls & roof insulation installation was begun. HVAC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> spent an additional R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">150</span> 000 on a series of features which can only be described as frivolous and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> increased from R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">6</span>.5 billion to R<span style="background-color:rgba(57,212,155, 0.6799999999999999)">9</span>.2 billion. The utility is considering prepaid billing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>
+Hire Resolve offers a R<span style="background-color:rgba(57,212,155, 0.6000000000000001)">1000</span> for any candidate that is referred and placed through H</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>/NZ$34.23/R<span style="background-color:rgba(57,212,155, 0.6000000000000001)">329</span>.11/zł91.08/R$</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> asked them if they thought 5R<span style="background-color:rgba(57,212,155, 0.6000000000000001)">1</span> and 5.04 were equivalent.
+We tried one more</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>-951 Code: 2424-951 DS8000 LMC R<span style="background-color:rgba(57,212,155, 0.6000000000000001)">6</span>.2 (#1723)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Robin: Aiglon (R-<span style="background-color:rgba(57,212,155, 0.6000000000000001)">11</span>80T).|
+|O-360-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>.R.<span style="background-color:rgba(57,212,155, 0.52)"> 2</span>.
+Sec. 1107. – Cooperative Watershed Management Program (Rep</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> the RS<span style="background-color:rgba(57,212,155, 0.52)">3</span> community. Mobile is just a win-win for everybody.
+Written by R</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> Ravin R<span style="background-color:rgba(57,212,155, 0.52)">500</span>E
+TenPoint Siege RS410 Crossbow Package ACUslide
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>o Brasileiro SA (PBR, PETR<span style="background-color:rgba(57,212,155, 0.52)">4</span>.BR), Statoil ASA (ST</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>.
+return to topRB<span style="background-color:rgba(57,212,155, 0.52)">2</span> DLC-Rockin' the Holidays 2008 Pack
+December</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> walking encyclopaedia of modern tennis, knows what to expect. He recently watched R<span style="background-color:rgba(57,212,155, 0.44)">ola</span> lose</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> vitamin D). Patients with these triple HR-positive tumors (HR<span style="background-color:rgba(57,212,155, 0.44)">3</span>) were up to seven times</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>C (UNII: 7SEV7J4R<span style="background-color:rgba(57,212,155, 0.44)">1</span>U) FERRIC O</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>R.<span style="background-color:rgba(57,212,155, 0.44)">13</span>96) — Reprints of the Original Watch Tower and Herald of Christ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> and decent speed.
+M 6" AR 3 R<span style="background-color:rgba(57,212,155, 0.44)"> 12</span>"
+AC 3+ D 1d</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> not a lot of grey matter, in this amiable buddy action comedy directed by R<span style="background-color:rgba(57,212,155, 0.36000000000000004)">enny</span> Har</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> drivers to refuel at Q<span style="background-color:rgba(57,212,155, 0.36000000000000004)">8</span>Easy gas stations.
+Members Only Content
+This content is available to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> accelerated in subjects with type 2 diabetes (T<span style="background-color:rgba(57,212,155, 0.36000000000000004)">2</span>D). </jats:p> <j</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> anatomic locations of bite wounds (��<span style="background-color:rgba(57,212,155, 0.36000000000000004)">2</span> = 15.18; P<0.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Our local South Croydon CR<span style="background-color:rgba(57,212,155, 0.36000000000000004)">2</span> cleaners are fully trained and professionally equipped. So don't wait</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> of the R<span style="background-color:rgba(57,212,155, 0.28)">SP</span>CA��s Special Operations Unit, said dog-fighting is up 400</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> created by -- the artistic process.
+The future of R<span style="background-color:rgba(57,212,155, 0.28)">-</span>Rated comedy is in the hands of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> will allow them, completely to Wii.
+Today T<span style="background-color:rgba(57,212,155, 0.28)">3</span> actually went on a hunger strike,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> Table Talk: Trust Me, I��m A Doctor (Radio<span style="background-color:rgba(57,212,155, 0.28)"> 3</span>. Sat 7. 1</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> not got to write many words! But today's trail was a r<span style="background-color:rgba(57,212,155, 0.28)">*</span>n through the crowds</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> front of the ICW who��ve seen them grow up in front of them. This crowd</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> back was the current pandemic. It will also be available on many platforms like Hulu, Vud</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the war in Iraq or definitively reject Bush governance or elect a black man named Barack Hussein Obama president,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, became problem-free. His soundboards ensured that the required pipes would deliver the anticipated sounds only</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> kids frolic amidst the bounce houses and slides, parents enjoy grownup distractions such as free WiFi,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Ford tells it like it is with no apologies. A refreshing contrast to the mealy mouthed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+Regional Focused Cookbooks
+A wonderful introduction to the Bengali kitchen focusing on the met</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> gratifying. One of your assets may temporarily become irrelevant. But the trade-off is worth it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>.6m high (including the Yoni-shaped stone pedestal). The statue has ten hands</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> improving the nowcasting/forecasting of high-impact weather events! @SINOPTICA</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>R34MDkE<span style="background-color:rgba(57,212,155, 0.2)"> )</span> step by<span style="background-color:rgba(57,212,155, 0.2)"> step</span> but I still cannot get it to work. It pops</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> R1 is the<span style="background-color:rgba(57,212,155, 0.2)"> measurement</span> of the<span style="background-color:rgba(57,212,155, 0.2)"> source</span> intensity when the filter wheel is open. R2 is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>%||Rs<span style="background-color:rgba(57,212,155, 0.2)">.</span>50,000<span style="background-color:rgba(57,212,155, 0.2)">-</span> Rs.7.5 lakh||1-5 Years</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Graphics Card Review @<span style="background-color:rgba(57,212,155, 0.2)"> Tech</span>gage
+<span style="background-color:rgba(57,212,155, 0.2)">-</span> Sapphire ITX Compact R9 285 OC Review @ OCC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>48GWh generated<span style="background-color:rgba(57,212,155, 0.2)"> by</span> independent power<span style="background-color:rgba(57,212,155, 0.2)"> producers</span> at a cost of R8.7 billion (September 2015</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>: R6.5<span style="background-color:rgba(57,212,155, 0.2)"> billion</span>).
+<span style="background-color:rgba(57,212,155, 0.2)">The</span> group��s liquidity position has improved significantly, with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Dosage 1.<span style="background-color:rgba(57,212,155, 0.2)">Even</span>son,<span style="background-color:rgba(57,212,155, 0.2)"> K</span>. 31, where r e2 2. This was important</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>8800 (MT<span style="background-color:rgba(57,212,155, 0.2)"> 242</span>x)<span style="background-color:rgba(57,212,155, 0.2)"> DS</span>8000 LMC R6.2 - Replacement availableIBM</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> at The Butcher and<span style="background-color:rgba(57,212,155, 0.2)"> Grill</span> in April<span style="background-color:rgba(57,212,155, 0.2)">;</span>
+R5 409 on one sitting at Beverley Hills in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> 36 kg (80<span style="background-color:rgba(57,212,155, 0.2)"> lbs</span>) weight<span style="background-color:rgba(57,212,155, 0.2)"> limit</span>.
+• Approved ECE R44 rev.4</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    
