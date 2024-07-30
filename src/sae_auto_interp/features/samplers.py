@@ -81,6 +81,77 @@ def top_and_activation_quantiles(
     record.train = train_examples
     record.test = test_examples
 
+def top_sample(
+    record: FeatureRecord,
+    n_examples=10,
+    type="train",
+    seed=22,
+):
+    random.seed(seed)
+
+    examples = record.examples[:n_examples]
+
+    if type == "train":
+        record.train = examples
+    else:
+        record.test = examples
+
+def random_sample(
+    record: FeatureRecord,
+    n_examples=10,
+    type="train",
+    seed=22,
+):
+    random.seed(seed)
+
+    examples = random.sample(record.examples, n_examples)
+
+    if type == "train":
+        record.train = examples
+    else:
+        record.test = examples
+
+def quantiles_sample(
+    record: FeatureRecord,
+    n_quantiles=4,
+    n_examples=10,
+    type="train",
+    seed=22,
+):
+    random.seed(seed)
+
+    quantiles = split_quantiles(record.examples, n_quantiles)
+    examples = []
+    for quantile in quantiles:
+        check_quantile(quantile, n_examples)
+        examples.append(random.sample(quantile, n_examples))
+
+    if type == "train":
+        record.train = examples
+    else:
+        record.test = examples
+
+def random_and_quantiles(
+    record: FeatureRecord,
+    n_train=10,
+    n_test=10,
+    n_quantiles=4,
+    seed=22,
+):
+    random.seed(seed)
+
+    train_examples = random.sample(record.examples, n_train)
+    quantiles = split_quantiles(record.examples, n_quantiles)
+
+    test_examples = []
+
+    for quantile in quantiles:
+        check_quantile(quantile, n_test)
+        test_examples.append(random.sample(quantile, n_test))
+
+    record.train = train_examples
+    record.test = test_examples
+
 
 def top_and_quantiles(
     record: FeatureRecord,
@@ -94,9 +165,9 @@ def top_and_quantiles(
     examples = record.examples
 
     train_examples = examples[:n_train]
-    remaining_examples = examples[n_train:]
+    
 
-    quantiles = split_quantiles(remaining_examples, n_quantiles)
+    quantiles = split_quantiles(examples[n_train:], n_quantiles)
 
     test_examples = []
 
