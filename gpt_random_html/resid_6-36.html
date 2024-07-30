@@ -1,0 +1,726 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-36</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-36</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|>��s in the pantry today, a packet of goan sausage<span style="background-color:rgba(57,212,155, 1.0)">!</span> I could probably<br>Activations: ("!" : 5)<br>Example 2:  sweet. Some make good Pies and others tasty Treats<span style="background-color:rgba(57,212,155, 1.0)">!</span> Our staff will be in front of<br>Activations: ("!" : 4)<br>Example 3: <|endoftext|> the heart of your home with attractive, affordable custom kitchen cabinetry<span style="background-color:rgba(57,212,155, 1.0)">!</span> Your Ocoee custom<br>Activations: ("!" : 7)<br>Example 4:  a good baker, you don��t even have to turn the oven on for this one<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>Activations: ("!" : 3)<br>Example 5:  a so inviting pasta<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>Net weight: 250 g<br>Ideal quantity for 4 servings<br>Cook<br>Activations: ("!" : 5)<br>Example 6:  cookies NOW with the ALPHABET COOKIE STAMP<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>Material/s: Food<br>Activations: ("!" : 5)<br>Example 7:  added benefit of a hug<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>|Sue Simpson, myself and Crystal Neubaur|<br><br>Activations: ("!" : 4)<br>Example 8: , carpool and have some fun with it<span style="background-color:rgba(57,212,155, 1.0)">!</span> You may be surprised at how much volunteering can really<br>Activations: ("!" : 6)<br>Example 9: ....<br>Apply Today, Start Tomorrow<span style="background-color:rgba(57,212,155, 1.0)">!</span> Entry Level Sales & Customer Service Rep<br>Are you looking<br>Activations: ("!" : 4)<br>Example 10:  about you and your bike<span style="background-color:rgba(57,212,155, 1.0)">!</span> Click here for more informationAngel or devil games<br>It was supposed to<br>Activations: ("!" : 4)<br>Example 11: , reviving your tastebuds and making them ready for another round<span style="background-color:rgba(57,212,155, 1.0)">!</span> And the weakest link family<br>Activations: ("!" : 6)<br>Example 12: <br>There is plenty of free parking at the museum.<br>Save this post for later with Pinterest<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>Activations: ("!" : 4)<br>Example 13: ous<span style="background-color:rgba(57,212,155, 1.0)">!</span> i love the pin-up feel of ankle strap, platform sandals, these are like<br>Activations: ("!" : 3)<br>Example 14: 07 from So comfy<span style="background-color:rgba(57,212,155, 1.0)">!</span> I have had these boots for two years now and I still love them<br>Activations: ("!" : 5)<br>Example 15:  yourself or using a friendly local<span style="background-color:rgba(57,212,155, 1.0)">!</span>Linguistics is an art form that I particularly enjoy, especially<br>Activations: ("!" : 3)<br>Example 16:  before us. It smelled heavenly<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>More vino<span style="background-color:rgba(57,212,155, 1.0)">!</span> I tried to keep my pours small<br>Activations: ("!" : 3), ("!" : 3)<br>Example 17:  garage with internal access<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>- Large driveway<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>- Ducted air conditioning throughout<span style="background-color:rgba(57,212,155, 1.0)">!</span><br><br>Activations: ("!" : 6), ("!" : 5)<br>Example 18: <|endoftext|>. Report and more pics to come<span style="background-color:rgba(57,212,155, 1.0)">!</span><br>3 Time Oceania Champion and 2009 Australian Open<br>Activations: ("!" : 3)<br>Example 19: <|endoftext|> a great shower<span style="background-color:rgba(57,212,155, 1.0)">!</span> We��re feeling ready for another baby in this family. Just about<br>Activations: ("!" : 7)<br>Example 20: <span style="background-color:rgba(57,212,155, 1.0)">.</span><br>Available in Rich Burgundy, Light Blue and Dark Navy.An award-winning author,<br>Activations: ("." : 3)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Exclamation marks (!) or periods (.) used to express strong emotions or emphasize a statement.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Exclamation marks (!) or periods (.) used to express strong emotions or emphasize a statement.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> to make your chicken dinner a little more exciting. And it can be made ahead<span style="background-color:rgba(57,212,155, 1.0)">!</span>
+Moroc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> business days ��� Trackable package<span style="background-color:rgba(57,212,155, 1.0)">!</span>- The wonderful cathedral
+- Monasterio de San</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>itizer is the best<span style="background-color:rgba(57,212,155, 1.0)">!</span>
+The sanitizer doesn't leave my hands tacky or dry</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>iser works as your personal travel protection kit that can safeguard you against all germs. Stay safe<span style="background-color:rgba(57,212,155, 1.0)">!</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Lemon sprinkled on top gives this recipe a little extra yumminess<span style="background-color:rgba(57,212,155, 1.0)">!</span> Soooo good<span style="background-color:rgba(57,212,155, 1.0)">!</span>
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> tons of free online slot and table games. Play casino games wherever you are<span style="background-color:rgba(57,212,155, 0.9200000000000002)">!</span> Free slots no download</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> is also a great way to use up almond pulp from making almond milk<span style="background-color:rgba(57,212,155, 0.9200000000000002)">!</span>
+Close up view</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> for me to wear under anything, gym tights, jeans, dresses<span style="background-color:rgba(57,212,155, 0.9200000000000002)">!</span>��Imagine you have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>'s back<span style="background-color:rgba(57,212,155, 0.9200000000000002)">!</span> Italian brand releases first supercar for 15 years
+- Mercedes-Benz shows how hands</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> a teenage stand-up comic?
+Use your teenage angst for good<span style="background-color:rgba(57,212,155, 0.9200000000000002)">!</span>
+You could spend 9</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> white headscarf, 50��s style<span style="background-color:rgba(57,212,155, 0.8400000000000001)">!</span>
+Invitations and signage were crafted by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> gifts for any special occasion, or treat yourself<span style="background-color:rgba(57,212,155, 0.8400000000000001)">!</span>
+|Home Is Where My
+Bernese Mt</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> who'll enjoy it and keep the author on your radar.
+Romance is sexy<span style="background-color:rgba(57,212,155, 0.8400000000000001)">!</span>
+Next</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> FS10
+- 10% Off Your Entire Order<span style="background-color:rgba(57,212,155, 0.8400000000000001)">!</span> Ends Aug 22nd!
+-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> coffee was visually recreated with so different layers all surprising in texture and in taste. Fantastic<span style="background-color:rgba(57,212,155, 0.8400000000000001)">!</span>
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>RGZ10886 In Stock Absolutely No Delay on Personalization<span style="background-color:rgba(57,212,155, 0.76)">!</span>
+This Five Stone Sterling Silver</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>Shipping is free<span style="background-color:rgba(57,212,155, 0.76)">!</span>
+Ships within 2 business days from the date of purchase unless otherwise noted.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Sale
+- The Walking Company - New & Exclusive Dansko Styles + Free Shipping<span style="background-color:rgba(57,212,155, 0.76)">!</span>
+The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> workers can speak three or four languages. Journey. Relax<span style="background-color:rgba(57,212,155, 0.76)">.</span> Enjoy<span style="background-color:rgba(57,212,155, 0.76)">!</span> You'll have a wonderful</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> will take almost 2 hours just to make the crepes alone<span style="background-color:rgba(57,212,155, 0.76)">!</span>
+Mind you, it��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>... Milan<span style="background-color:rgba(57,212,155, 0.6799999999999999)">!</span>
+Let's create, restore and reconstruct.
+This treatment infuses moisture, proteins</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> listings and searches – also receive email updates when listings you like come on the market for free<span style="background-color:rgba(57,212,155, 0.6799999999999999)">!</span> *</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)">!</span> Round up the biggest bovines and party like the cows cake home<span style="background-color:rgba(57,212,155, 0.6799999999999999)">!</span>The most awaited 2021</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> minimally<span style="background-color:rgba(57,212,155, 0.6799999999999999)">!</span>
+- Step up your preferred method of detox such as salt water baths, infrared sa</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>Arrived too early for check in? No worries<span style="background-color:rgba(57,212,155, 0.6799999999999999)">!</span> Most hotels and casinos have free luggage service where</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>- Don't rush to use explosives too quickly<span style="background-color:rgba(57,212,155, 0.6000000000000001)">!</span> If a bomb parcel is set apart from a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Kidspot<span style="background-color:rgba(57,212,155, 0.6000000000000001)">!</span>
+Zoos and Animal attractions in Tasmania
+National Zoos & Animals A State by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>�t forget to use a heat-protective spray<span style="background-color:rgba(57,212,155, 0.6000000000000001)">!).</span> Bend forwards and scrunch a little</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Postage is free too so, you could grab a bargain<span style="background-color:rgba(57,212,155, 0.6000000000000001)">!</span>
+Girl Gamers would like</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> a flexible and easy to use event management interface.
+- K2 - Joomla<span style="background-color:rgba(57,212,155, 0.6000000000000001)">!</span>�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> area Chrysler, Dodge, Jeep and Ram dealership today.
+Leasing is back<span style="background-color:rgba(57,212,155, 0.52)">!</span> Our experienced finance</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> easy carry<span style="background-color:rgba(57,212,155, 0.52)">.</span>
+Zippered carry pouch for maximum security<span style="background-color:rgba(57,212,155, 0.52)">.</span>
+PACKAGE CONTENTS</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> you<span style="background-color:rgba(57,212,155, 0.52)">!</span>
+About the Author
+Bob McIntosh, CPRW
+, is a career trainer at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>ama happy<span style="background-color:rgba(57,212,155, 0.52)">!</span>
+These little buggers are life-savers for binky-aholics</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> the right wing chair for your home. You��ll be glad you did<span style="background-color:rgba(57,212,155, 0.52)">!</span> And remember,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>��s mead-like ale, when it gets filtered through Saaz hops<span style="background-color:rgba(57,212,155, 0.44)">!</span> Can you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> prices<span style="background-color:rgba(57,212,155, 0.44)">!</span>
+- At ShopNBC, as in any ShopNBC store, you'll find a strong</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> signed up for the classics read<span style="background-color:rgba(57,212,155, 0.44)">!</span> Wonderful<span style="background-color:rgba(57,212,155, 0.44)">!</span>
+I have finished three of my classics: The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>. Casey Calverty sucks her drivers cock at the car wash<span style="background-color:rgba(57,212,155, 0.44)">!</span> Petite teenage babe stuffed with huge</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> The Taking<span style="background-color:rgba(57,212,155, 0.44)">!</span>
+M.I.A. Bashes Oprah Winfrey And Her Former Boyfriend</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> this week. That's it. Wash and wear<span style="background-color:rgba(57,212,155, 0.36000000000000004)">.</span> All week long. Underwear & socks don</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> when you are dodging volatile vodka, rival dogs, and the rare and dangerous Subway Bear<span style="background-color:rgba(57,212,155, 0.36000000000000004)">!</span>
+Whether</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ofs" on the toes are so charming<span style="background-color:rgba(57,212,155, 0.36000000000000004)">!</span> The shoes are extraordinarily well-made and comfortable,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Puff Balls on Jellybean." It was a natural conclusion.
+Have a Happy Day<span style="background-color:rgba(57,212,155, 0.36000000000000004)">!</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> certainly. With us, you will solve your trouble in twenty-four hours<span style="background-color:rgba(57,212,155, 0.36000000000000004)">!</span> We are serious!</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> eye — we would love to bring home some of their decor<span style="background-color:rgba(57,212,155, 0.28)">!</span> If we did, here��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> London and Senior Fellow at Policy ExchangeFeatures a scratch-resistant acrylic insert. Comes ready to hang<span style="background-color:rgba(57,212,155, 0.28)">.</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> be catered for here. Why not celebrate an engagement, wedding anniversary or birthday with us<span style="background-color:rgba(57,212,155, 0.28)">?</span>
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>MARY. Or September favorites, whatever you want to call it<span style="background-color:rgba(57,212,155, 0.28)">!</span> Some sort of wrap up of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> give you to prevent ingrown hairs is…. Follow our aftercare<span style="background-color:rgba(57,212,155, 0.28)">!!!!!</span>
+exfoliating (prev</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and growth.
+ERGP is an economic plan that builds on the 2016 Strategic Implementation Plan (S</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>I presume the reason why he is said to have an "infinite earned run average" is that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the booth while undergoing chemotherapy and called a number of Blue Jays home home games in the final 1½</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>Best: Cobdogla – L Fridd, D Tilbrook, N Hart, B Thomas,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, there's the matter of finances. County agents must draw a salary, ami there was no</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of human behavior.
+Intelligence can be employed to Indicate the amount of knowledge available and the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> is a woman unprecedented in Rash��s other novels. She is a woman of strength and intelligence</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> information about
+the format of this option's argument.
+-r response Identify a file or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ender County's government offices. The town boasts ample economic opportunities and offers convenient access to the amenities of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Really Tired T-Shirt
+Very cute shirt. The material is very nice too
+Just</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>you just have to<span style="background-color:rgba(57,212,155, 0.2)"> hunt</span>!
+Remember<span style="background-color:rgba(57,212,155, 0.2)"> that</span> your ultimate goal is to go home to a place that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>:
+- Spiritual<span style="background-color:rgba(57,212,155, 0.2)"> –</span> Connect with<span style="background-color:rgba(57,212,155, 0.2)"> your</span> spirit! Use ways that are meaningful to you: whether that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> information with our Perfect<span style="background-color:rgba(57,212,155, 0.2)"> Small</span> Business series<span style="background-color:rgba(57,212,155, 0.2)"> of</span> guidebooks and reports. Small can be huge!
+Purchase</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>cko – so enjoy<span style="background-color:rgba(57,212,155, 0.2)"> it</span>!A Texas<span style="background-color:rgba(57,212,155, 0.2)"> man</span> who spent his career painting buildings was awarded $11 million</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> cabinet space!
+Select<span style="background-color:rgba(57,212,155, 0.2)"> a</span> hydrogen per<span style="background-color:rgba(57,212,155, 0.2)">oxide</span> solution that is diluted down to 3%, as this level</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> and tacos! So it<span style="background-color:rgba(57,212,155, 0.2)"> must</span> be good!<span style="background-color:rgba(57,212,155, 0.2)"> It</span> is the color, Stellar. Check out my live</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>eering! A Sprint is<span style="background-color:rgba(57,212,155, 0.2)"> an</span> orienteering<span style="background-color:rgba(57,212,155, 0.2)"> course</span> with relatively shorter distances between flags than you would find on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> for a customized menu<span style="background-color:rgba(57,212,155, 0.2)"> you</span> plan with<span style="background-color:rgba(57,212,155, 0.2)"> the</span> Golden Gate to! Soleil on Facebook, Instagram, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>8934 on our<span style="background-color:rgba(57,212,155, 0.2)"> websites</span>, such<span style="background-color:rgba(57,212,155, 0.2)"> as</span>
+3582868221 a mobile phone or tablet!
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> your school!
+Class<span style="background-color:rgba(57,212,155, 0.2)"> Pack</span> Includes:<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Class Pack Festival Guide: This digital guide provides guidance,</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

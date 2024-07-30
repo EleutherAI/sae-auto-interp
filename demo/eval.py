@@ -12,7 +12,7 @@ from sae_auto_interp.utils import (
     load_tokenizer,
 )
 from defaults import default_constructor
-from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
+from sae_auto_interp.features import random_and_quantiles, FeatureLoader, FeatureDataset
 from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
 from sae_auto_interp.config import FeatureConfig
 
@@ -53,14 +53,14 @@ def main(cfg):
         dataset=dataset,
         constructor=partial(
             default_constructor, 
-            n_random=10, 
+            n_random=20, 
             ctx_len=20, 
             max_examples=5_000
         ),
         sampler=partial(
-            top_and_quantiles,
+            random_and_quantiles,
             n_train=20,
-            n_test=6,
+            n_test=7,
             n_quantiles=10
         ),
     )
@@ -99,6 +99,7 @@ def main(cfg):
     explainer_pipe = process_wrapper(
         SimpleExplainer(
             client, 
+            verbose=True,
             tokenizer=tokenizer,
             activations=True, 
             max_tokens=500,
@@ -156,7 +157,7 @@ def main(cfg):
         scorer_pipe,
     )
 
-    asyncio.run(pipeline.run(max_processes=10))
+    asyncio.run(pipeline.run(max_processes=5))
 
 
 if __name__ == "__main__":

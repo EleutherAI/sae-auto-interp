@@ -1,0 +1,702 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-33</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-33</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  do a stripe better than any other I know. From legg<span style="background-color:rgba(57,212,155, 1.0)">ings</span> – which I absolutely swear by<br>Activations: ("ings" : 7)<br>Example 2:  carv<span style="background-color:rgba(57,212,155, 1.0)">ings</span> that are all part of the furniture that came with the flat. Regardless it's great<br>Activations: ("ings" : 5)<br>Example 3:  Bill<span style="background-color:rgba(57,212,155, 1.0)">ings</span>ley of<br>the U.S. Geological Survey (USGS), the large amount of<br>Activations: ("ings" : 8)<br>Example 4: ged in Figure 7 of the raw<span style="background-color:rgba(57,212,155, 1.0)">ings</span>. Upon reerring to this particular figure, it will<br>Activations: ("ings" : 2)<br>Example 5: <|endoftext|>rer<span style="background-color:rgba(57,212,155, 1.0)">ings</span>datum||25 jul 1939|<br>|Prioritetsdatum||25<br>Activations: ("ings" : 3)<br>Example 6:  to be a source of investment.��<br>Vermont Cast<span style="background-color:rgba(57,212,155, 1.0)">ings</span> has its manufacturing plant in<br>Activations: ("ings" : 6)<br>Example 7: <|endoftext|> your home.<br>- Serv<span style="background-color:rgba(57,212,155, 1.0)">ings</span>: 4<br>Source: The Martha Stewart Show, April 2009<br>Activations: ("ings" : 1)<br>Example 8: <span style="background-color:rgba(57,212,155, 1.0)">ings</span> pointed out that he could legally tear down all the buildings along the lake side of Decatur between<br>Activations: ("ings" : 7)<br>Example 9: <|endoftext|> the first act<br>and falling apart by the third.<br>K<span style="background-color:rgba(57,212,155, 1.0)">lings</span>or wasn't allowed to<br>Activations: ("lings" : 1)<br>Example 10: eddy bear tin, Monty Boj<span style="background-color:rgba(57,212,155, 1.0)">angles</span> truffles or this amazing emergency gin and tonic<br>Activations: ("angles" : 1)<br>Example 11: <|endoftext|>, 2011<br>Stall<span style="background-color:rgba(57,212,155, 1.0)">ings</span> Dinner sold out; Guests to bid on exciting items<br>Guests<br>Activations: ("ings" : 4)<br>Example 12: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)">ings</span>, and it recommended how to balance historic preservation with the likely desire in the future to investigate<br>Activations: ("ings" : 7)<br>Example 13: <|endoftext|> streak by an NFL quarterback.<br>Jenn<span style="background-color:rgba(57,212,155, 1.0)">ings</span> needs one more TD catch to hit the 50-<br>Activations: ("ings" : 5)<br>Example 14:  I pull down her legg<span style="background-color:rgba(57,212,155, 1.0)">ings</span> I get to taste they amazing ass, and her pussy tastes so<br>Activations: ("ings" : 5)<br>Example 15:  videos for its upcoming scripted drama "Vik<span style="background-color:rgba(57,212,155, 1.0)">ings</span>," which launches March 3.<br>It's the<br>Activations: ("ings" : 8)<br>Example 16:  looked the way I expected them to, the fiber choice impacted the way the rov<span style="background-color:rgba(57,212,155, 1.0)">ings</span> drafted to<br>Activations: ("ings" : 4)<br>Example 17:  used canned tomatoes with Italian season<span style="background-color:rgba(57,212,155, 1.0)">ings</span>, eliminated the sun dried tomatoes & white beans, and added half<br>Activations: ("ings" : 2)<br>Example 18:  the Convention on Action against Trafficking in Human Be<span style="background-color:rgba(57,212,155, 1.0)">ings</span> by the Parties. It regularly publishes evaluation reports<br>Activations: ("ings" : 6)<br>Example 19:  Canaan. See C. M. Carmichael, ��Some Say<span style="background-color:rgba(57,212,155, 1.0)">ings</span> in Genesis 49,�<br>Activations: ("ings" : 2)<br>Example 20:  movements of surprise and brighten<span style="background-color:rgba(57,212,155, 1.0)">ings</span> of interest to encourage him, the old Christian talked. When he<br>Activations: ("ings" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The suffix "-ings" in nouns, often indicating a gerund or a plural noun.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The suffix &quot;-ings&quot; in nouns, often indicating a gerund or a plural noun.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>1 K<span style="background-color:rgba(57,212,155, 1.0)">INGS</span> 13
+« 1 Kings 12 | 1 Kings 13 | 1 Kings 14 »
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 1.0)">ings</span>, etc... as they are kid and party friendly. So, you have no excuse not</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+Archibald C. Peachy
+C. Peachey was, like Bill<span style="background-color:rgba(57,212,155, 1.0)">ings</span>,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> Human Be<span style="background-color:rgba(57,212,155, 1.0)">ings</span> who do the pricing, we completely ignore these penny books companies and their prices.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> the law firm of Halleck, Peachy and Bill<span style="background-color:rgba(57,212,155, 1.0)">ings</span>, a firm which represented more than</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>umm<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ings</span>' proposal was in accord with a document called Riverfront Vision 2005 that the Planning Commission adopted</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Restore Full Protection To Preborn Human Be<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ings</span>.�� In 2006, Gardner completed a questionnaire</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)">ings</span> through Automated Technology
+Submit all your documents online
+We try to file your Company the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)">ings</span> from its TV, newspaper and magazine units, which more than offset the lackluster performance of its</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)">ings</span>worth said you might.
+Looking to refinance your existing mortgage loan? ERATE helps</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> drive through. Pfenn<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ings</span> Organic farm is located here and the Nith River curves near the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> too, with this paraphrase of e.e. cumm<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ings</span>' Olaf, glad</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> Mark Ow<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ings</span>, Shae Simmons and Robert Hefflinger. The list of guests also features Atlanta</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Edition
+LGBT History Month: How Barbara Gitt<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ings</span> Changed the World
+The Assassin Chronicles – Chapter</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>x Comes over for some play time and brings me some matching legg<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ings</span> for us to wear!</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>, with the all-day comfort of a legging, our jegg<span style="background-color:rgba(57,212,155, 0.76)">ings</span> come in denim</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> remote fireplace and thermostat control systems.
+Vermont Cast<span style="background-color:rgba(57,212,155, 0.76)">ings</span> wood stoves retail</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>gg<span style="background-color:rgba(57,212,155, 0.76)">ings</span>, we know how to spot the trends when we see them. (And more importantly,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> games, and loyalty with sales software provider. Draftk<span style="background-color:rgba(57,212,155, 0.76)">ings</span>, but personal loan them include a slot</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> 10354 Mallard Land<span style="background-color:rgba(57,212,155, 0.76)">ings</span> Way, Orlando, 32832. Led by Benny Phillips.
+Gate</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> (Milky Way), Goanna, Bush Tucker and Serpent Dream<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ings</span> of her Anmatyerre</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>ents or minimum carv<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ings</span>. Or, utilize a pitcher sculpture digging nan variance that is minimal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> the breasts and womb.#sn Jacob envisions God imparting both agricultural (bless<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ings</span> from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>
+Sterling Silver Beads – https://www.crystalfind<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ings</span>.com</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> functions. Rice says of the time, ��Wedd<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ings</span> were not quite as they are now</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>
+Requested Also That All of the
+Hear<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ings</span> Be Open to the
+New York.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>, Ltd specializes in providing - Cylindrical Roller Bear<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ings</span> for many years, - old code</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> variously involved in great victories such as the D-Day Land<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ings</span> and the Battle of Ror</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>'s (WBA) campaign launched 2 November. View campaign site at www.stopfakebear<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ings</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> seeing so many second com<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ings</span> of Jesus, second com<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ings</span> of Buddha, and even the rise</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>acic Blake decapitate her spend<span style="background-color:rgba(57,212,155, 0.52)">ings</span> burgomaestre bravo dungeons. api 510 study</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> cartoon violence. Damn Parents Groups for protecting their wussy kids from this great stuff.
+Beat<span style="background-color:rgba(57,212,155, 0.52)">ings</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>1770.
+Mail<span style="background-color:rgba(57,212,155, 0.52)">ings</span> and inserts in water bills will periodically have recycling information.
+Yes,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> and iSounds Human Say<span style="background-color:rgba(57,212,155, 0.52)">ings</span>.ARLINGTON, Texas – The comments have become familiar and repetitive</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> the 4th issue of our school��s e-magazine, Bosco Mus<span style="background-color:rgba(57,212,155, 0.52)">ings</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> And not a day goes by without us updating the group chat about our daily on-go<span style="background-color:rgba(57,212,155, 0.44)">ings</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>ocity air handlers to minimize noise. Duct lin<span style="background-color:rgba(57,212,155, 0.44)">ings</span> or sound attenuators absorb sound further</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> I Know Why the Winged Whale S<span style="background-color:rgba(57,212,155, 0.44)">ings</span> and Lamb: The Gospel According to Biff, Christ's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> about trends, news, lifestyle and happen<span style="background-color:rgba(57,212,155, 0.44)">ings</span> in the $150 billion market.
+Established as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> brakes, clutch lin<span style="background-color:rgba(57,212,155, 0.44)">ings</span>, and gaskets), buildings (for insulation and fireproofing),</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>chak, Antonia Prochaska, Nick und Clemens Prokob, Mar<span style="background-color:rgba(57,212,155, 0.36000000000000004)">lies</span> Pu</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> tempted many of the Grail Knights,
+corrupting them with beautiful women.
+K<span style="background-color:rgba(57,212,155, 0.36000000000000004)">lings</span>or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> people get complacent think about someth<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ings</span> you did in the beginning that you use to do</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> days [by the end of March]," says Kaplan. "2015 sail<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ings</span> were 95 percent sold out</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>.MULTI-STOREY BUILD<span style="background-color:rgba(57,212,155, 0.36000000000000004)">INGS</span> - IThe use of steel in multi</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> and "New Str<span style="background-color:rgba(57,212,155, 0.28)">ings</span>". All four singles were Top 40 hits on the Billboard Hot Country Songs charts</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>MS Apron Str<span style="background-color:rgba(57,212,155, 0.28)">ings</span>, and you can see it��s full makeover here.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>O.C.A.T.A.: Tampico TB9. Sl<span style="background-color:rgba(57,212,155, 0.28)">ings</span>by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> on Pitchup.com.January 12 - Interviewed at Unnecessary Mus<span style="background-color:rgba(57,212,155, 0.28)">ings</span> bms.beard</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>ORMAL BE<span style="background-color:rgba(57,212,155, 0.28)">ING</span> – OCCUPATION
+SEASON – COLOR – CELEST</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> — Connolly spent time spelling both Mankins and right guard Stephen Neal on the afternoon — and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> station, Eric thought I might need to stay longer in case Troy needed to be taken to a hospital</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of Clichés by Christine Ammer Copyright © 2013 by Christine AmmerEloise | F</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to commit some cartoon style violence!
+Post a CommentThis weekend's countdown begins toward the Monday debut</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>gatih = movement, bhvaet = is.
+If one thinks of oneself as free</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>!
+There's another two episodes of House of Anubis on Nickelodeon today at 7 PM</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with a cell phone, cordless phone, baby monitor, or microwave oven than you are with a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of human motion data acquisition and processing, making the process of the study more closely, and ensuring the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Women's Delegation. Please make a financial contribution to this historic campaign to bring the voices of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of sleep an average adult gets has decreased over the past decade. Whether you suffer from insomnia or you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> theirs.
+<span style="background-color:rgba(57,212,155, 0.2)">E</span>van Elward: Just saw 'Strings Attached' - fantastic.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> to Billings and<span style="background-color:rgba(57,212,155, 0.2)"> he</span> definitely had heart attacks (more than one). He is scheduled for by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, 'Thank you<span style="background-color:rgba(57,212,155, 0.2)">'.</span> Anything you know?"Our jersey leggings are so versatile, they work</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> the Brownings left London<span style="background-color:rgba(57,212,155, 0.2)"> for</span> Italy, and they made Casa Guidi in Florence their home from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Publishes six online<span style="background-color:rgba(57,212,155, 0.2)"> news</span> channels for marketing and advertising professionals. http://www.marketingsherpa</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>.
+SKF<span style="background-color:rgba(57,212,155, 0.2)"> 63</span>14 N bearing - fafnirbearings.o
+SKF 63</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> pulls off Crist<span style="background-color:rgba(57,212,155, 0.2)">i</span>'s leggings and begins to eat her sweet wet pussy! Now that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>eddings
+Photographer<span style="background-color:rgba(57,212,155, 0.2)">:</span> Rebecca Searle Photography @rebeccasearlephotography
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> ��I<span style="background-color:rgba(57,212,155, 0.2)">�</span>�ll Be Seeing You: Michael Feinstein Sings for Hospice, with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> an autographed copy<span style="background-color:rgba(57,212,155, 0.2)"> of</span> Style Me Pretty Weddings…
+To Vote: Leave a comment below</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

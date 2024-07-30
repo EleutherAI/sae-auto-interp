@@ -1,0 +1,735 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-42</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-42</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <br>[<span style="background-color:rgba(57,212,155, 1.0)">19</span>13 Webster] +PJC<br>A capful of wind (Naut.), a<br>Activations: ("19" : 5)<br>Example 2: <|endoftext|><br>[<span style="background-color:rgba(57,212,155, 1.0)">x</span>] Part 5 -- Do you...[x]Sing well:<br>AH D<br>Activations: ("x" : 2)<br>Example 3: <|endoftext|> 669.<br>[<span style="background-color:rgba(57,212,155, 1.0)">4</span>. ]Also, in France during the late 1830s any legislative<br>Activations: ("4" : 7)<br>Example 4: <|endoftext|><br>[<span style="background-color:rgba(57,212,155, 1.0)">Image</span> by KieraDocherty]I am currently doing my research in ��cloud<br>Activations: ("Image" : 1)<br>Example 5: <br>Bravo spins the numbers for the month of February.<br>|[<span style="background-color:rgba(57,212,155, 1.0)">02</span>/24/<br>Activations: ("02" : 3)<br>Example 6:  was a pleasure to work with School Editing and The Hive.<br>[<span style="background-color:rgba(57,212,155, 1.0)">15</span>s cut-down from<br>Activations: ("15" : 5)<br>Example 7: .<br>[<span style="background-color:rgba(57,212,155, 1.0)">d</span>af] Yes, Lee we can arrange a meeting<br>[daf] sorry<br>Activations: ("d" : 1)<br>Example 8: <|endoftext|>.<br>|[<span style="background-color:rgba(57,212,155, 1.0)">02</span>/24/09 - 09:19 AM]<br>Live to Tell<br>Activations: ("02" : 6)<br>Example 9: <|endoftext|> [<span style="background-color:rgba(57,212,155, 1.0)">18</span>41-1926], A Commentary on St. Paul��s Epistle to<br>Activations: ("18" : 2)<br>Example 10:  on direct taxes for revenue rather than indirect taxes.<br>(<span style="background-color:rgba(57,212,155, 1.0)">16</span>) TEXTILE NEGOTI<br>Activations: ("16" : 2)<br>Example 11: . [2ASR3d134]<br>[<span style="background-color:rgba(57,212,155, 1.0)">1</span>-5] A.S.C<br>Activations: ("1" : 7)<br>Example 12: org]<br>25- The now infamous Vicki Soto tribute page on facebook:<br>[<span style="background-color:rgba(57,212,155, 1.0)">link</span><br>Activations: ("link" : 1)<br>Example 13: <|endoftext|> [<span style="background-color:rgba(57,212,155, 1.0)">1</span>.22.15]<br>Fredrick Crutchfield – 63 yrs old –<br>Activations: ("1" : 4)<br>Example 14:  afraid.<br>[<span style="background-color:rgba(57,212,155, 1.0)">d</span>oliver] Shukran, shukran, shukran for<br>Activations: ("d" : 0)<br>Example 15: <|endoftext|> oath mentioned above in 21:1, 7, and 18.<br>* [<span style="background-color:rgba(57,212,155, 1.0)">21</span>:25<br>Activations: ("21" : 1)<br>Example 16: <|endoftext|>VIa, tome 4.<br>[<span style="background-color:rgba(57,212,155, 1.0)">40</span>. ]In Tocqueville�<br>Activations: ("40" : 7)<br>Example 17:  establishment or operations of service suppliers.<br>(<span style="background-color:rgba(57,212,155, 1.0)">3</span>) FOREIGN INVESTMENT.-Recogn<br>Activations: ("3" : 0)<br>Example 18: ardin and Lesourd, 13:1, pp. 407–12.<br>[<span style="background-color:rgba(57,212,155, 1.0)">10</span><br>Activations: ("10" : 8)<br>Example 19: )<br>[<span style="background-color:rgba(57,212,155, 1.0)">b</span>uth] :-) ok<br>buth has left the chat.<br>[elder<br>Activations: ("b" : 2)<br>Example 20: �4.1.2_Ubuntu��, good!<br>[<span style="background-color:rgba(57,212,155, 1.0)">2011</span>-12-<br>Activations: ("2011" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Tokens that appear to be part of a reference, label, or identifier, often enclosed in brackets, and typically consisting of numbers, letters, or a combination of both.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Tokens that appear to be part of a reference, label, or identifier, often enclosed in brackets, and typically consisting of numbers, letters, or a combination of both.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>ille��s Duality: Describing America and Thinking of Europe.��
+[<span style="background-color:rgba(57,212,155, 1.0)">49</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> the 1835 volumes, pp. 253–54, 396.
+[<span style="background-color:rgba(57,212,155, 1.0)">32.</span> ]Final</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+[<span style="background-color:rgba(57,212,155, 1.0)">11.</span> ]Drafts, Yale, CVa, cahier unique, p.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>, Democracy (Mayer), p. 252.
+[<span style="background-color:rgba(57,212,155, 1.0)">45.</span> ]In the 1835</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>; cf. Democracy (Mayer), p. 670.
+[<span style="background-color:rgba(57,212,155, 1.0)">30.</span> ]Democracy (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>[<span style="background-color:rgba(57,212,155, 0.9200000000000002)">42</span>. ]Ibid., pp. 55–56. Cf. Democracy (Mayer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Ms., Yale, CVIa, tome 4.
+[<span style="background-color:rgba(57,212,155, 0.9200000000000002)">28.</span> ]See Democracy (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> 21.
+|[<span style="background-color:rgba(57,212,155, 0.9200000000000002)">02</span>/24/09 - 08:59 AM]
+Ion</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>�s draft, ��self-government�� appears in English.
+[<span style="background-color:rgba(57,212,155, 0.9200000000000002)">41.</span> ]</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> figured it was time to stretch my legs," said Keoghan.
+|[<span style="background-color:rgba(57,212,155, 0.9200000000000002)">02</span>/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> third.
+|[<span style="background-color:rgba(57,212,155, 0.8400000000000001)">02</span>/27/09 - 01:26 PM]
+Spike TV</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>49
+Oxygen spins the numbers for the month of February.
+|[<span style="background-color:rgba(57,212,155, 0.8400000000000001)">02</span>/24</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>ille��s earlier 1835 description of administrative despotism.
+[<span style="background-color:rgba(57,212,155, 0.8400000000000001)">24</span>. ]</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> Thursdays (9:00-10:00 PM ET/PT).
+|[<span style="background-color:rgba(57,212,155, 0.8400000000000001)">02</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>-life couples in the midst of a classic marital dispute."
+|[<span style="background-color:rgba(57,212,155, 0.8400000000000001)">02</span>/26/09</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> [<span style="background-color:rgba(57,212,155, 0.76)">12</span>.<span style="background-color:rgba(57,212,155, 0.76)">3</span>.15]
+Maria Torres – 57 yrs old – Gridley,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>…
+[<span style="background-color:rgba(57,212,155, 0.76)">2011</span>-12-29 17:21:56,703] [VirtualMachine</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> [<span style="background-color:rgba(57,212,155, 0.76)">22</span>:44] | New York - Redden [24:05]
+Dallas:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>-(
+[<span style="background-color:rgba(57,212,155, 0.76)">d</span>oliver] I had some kind of virus / nasty cold last week.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>.
+[<span style="background-color:rgba(57,212,155, 0.76)">d</span>ave] this has not been a great computer day here in pei
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> nice camera work and screen-shattering fun.
+[<span style="background-color:rgba(57,212,155, 0.6799999999999999)">*</span> Note: Wired claims that the Griffin</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>[<span style="background-color:rgba(57,212,155, 0.6799999999999999)">b</span>uth] but will be on Monday..inshalla
+[elderbob]</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>:21:56,470] [Core.Init] INFO: Started.
+[<span style="background-color:rgba(57,212,155, 0.6799999999999999)">2011</span>-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)">.</span> ]Concerning Tocqueville��s advice to Kergolay and especially</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>[<span style="background-color:rgba(57,212,155, 0.6799999999999999)">x</span>] Part 2 -- Describe... [x]Your heritage/nationality:
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>#<span style="background-color:rgba(57,212,155, 0.6000000000000001)">02</span>||Descent||#10||Let There Be Light||#18||Love on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> for discerning motive in this case, reports NBC.��
+[<span style="background-color:rgba(57,212,155, 0.6000000000000001)">link</span> to www.bell</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> fact, he devoted an entire post to this point on June 16, 2005:
+[<span style="background-color:rgba(57,212,155, 0.6000000000000001)">S</span>]</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>].
+|Table<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> 4</span>: Diagnostic value of various echocardiography signs of right vent</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> America��s annual conference.
+[<span style="background-color:rgba(57,212,155, 0.6000000000000001)">k</span>ad_vimeo url=��https://</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> Rope
+USA spins the numbers for the month of February.
+|[<span style="background-color:rgba(57,212,155, 0.52)">02</span>/25/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>.<span style="background-color:rgba(57,212,155, 0.52)">17</span>. Cognitive meditation is accompanied by reasoning, discrimination, bliss and the sense of ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> a lot of stuff out there.
+[<span style="background-color:rgba(57,212,155, 0.52)">d</span>oliver] It sounds to me like a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> CPU Count: 1 Core/s
+[<span style="background-color:rgba(57,212,155, 0.52)">2011</span>-12-29 20:27:17,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>.<span style="background-color:rgba(57,212,155, 0.52)">23</span> There seems to be plenty of room for growth.
+What if some upstart company</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> one prepares you for this part.
+[<span style="background-color:rgba(57,212,155, 0.44)">T</span>ears of guilt; tears of jealousy; tears of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>.<span style="background-color:rgba(57,212,155, 0.44)">24</span>.15]
+Porsche Nicole Cartee – 25 yrs old – SPART</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>.<span style="background-color:rgba(57,212,155, 0.44)">27</span>85
+1.Click the Chrome menu button on the browser toolbar.
+2.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>10,<span style="background-color:rgba(57,212,155, 0.44)">13</span>; Jo. 16:14). It is He that calls and enables, through</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> not shown).
+Table<span style="background-color:rgba(57,212,155, 0.44)"> 3</span> and Figure 1 present results for more detailed levels of inhalation. Here</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>75. This amount does not include the buyer��s fee.
+[<span style="background-color:rgba(57,212,155, 0.36000000000000004)">C</span>arson & Jenkins</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> table equipment.
+FY-<span style="background-color:rgba(57,212,155, 0.36000000000000004)">300</span>1A/3001B Side Operating Universal Table Performance:
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>[<span style="background-color:rgba(57,212,155, 0.36000000000000004)">–</span>]grauenwolf 0 points1 point2 points 2 years ago (2 children)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> over $<span style="background-color:rgba(57,212,155, 0.36000000000000004)">100</span> in a single calendar year are against the law. And that Los Angeles has a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>.
+[<span style="background-color:rgba(57,212,155, 0.36000000000000004)">Image</span> Via Phys.Org]The Federal Energy Regulatory Commission (FERC) has</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>
+...Sorry sugah.Person you've known the longest:
+[<span style="background-color:rgba(57,212,155, 0.28)">x</span>] Part 8</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>, but presumptuous mush:
+[<span style="background-color:rgba(57,212,155, 0.28)">T</span>]oday��s most influential atheists would</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> $<span style="background-color:rgba(57,212,155, 0.28)">100</span> will also be awarded to each 10 students from the winning school for a combined total of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>$<span style="background-color:rgba(57,212,155, 0.28)">40</span>,000 in seed money from StartUp Chile.
+This is not the first time</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> $<span style="background-color:rgba(57,212,155, 0.28)">108</span>
+If you could predict the future, you��d have invested it all in</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Committee
+Quality Service and Communication
+Residential International Student Engagement (RISE)
+Student Staff</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> release and high-resolution photographs (with full names and hometowns) of guests. Please include your</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> storm my grandchildren put away their books, play stations, everything and huddled close to me. That</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+These woollen ballerina slippers for women are both very pretty, with a pleasant hearts</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>. Wednesday, June 4, at Baldwin Theatre. Advance tickets are $30, available at Stagec</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�� the previous Kiwi skipper mentioned of Gill in an interview in KKR web site.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Tries to not
+Do Right. cot
+"Because a girl has fallen once. c</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> with Vincent van Gogh and subsequently, when private difficulties caused him to become restless, embarked on a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>. I have a fair degree of difficulty in concentrating when I want to. I have a lot of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, it's perfect for Tomato & Smoked Mozzarella Sandwich.
+Trader Joe's Spr</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>���的<span style="background-color:rgba(57,212,155, 0.2)">�</span>��<span style="background-color:rgba(57,212,155, 0.2)">�</span>������。大����</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> instead, the threat<span style="background-color:rgba(57,212,155, 0.2)"> of</span> personal rule<span style="background-color:rgba(57,212,155, 0.2)"> by</span> Louis-Philippe.
+[5. ]For elabor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> diabetes as the higher<span style="background-color:rgba(57,212,155, 0.2)"> their</span> Hb<span style="background-color:rgba(57,212,155, 0.2)">A</span>1c value, the greater the risk of developing serious</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>02/24/09<span style="background-color:rgba(57,212,155, 0.2)"> -</span> 12:<span style="background-color:rgba(57,212,155, 0.2)">56</span> PM]
+'Heroes,' 'Biggest Los</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>, CVc,<span style="background-color:rgba(57,212,155, 0.2)"> Pa</span>quet 6<span style="background-color:rgba(57,212,155, 0.2)">,</span> p. 60.
+[36. ]Democracy (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> [8, 9<span style="background-color:rgba(57,212,155, 0.2)">].</span> A detailed<span style="background-color:rgba(57,212,155, 0.2)"> A</span>OP development guidance is established by the OECD  and a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> economic opportunities, will<span style="background-color:rgba(57,212,155, 0.2)"> meet</span> the challenges<span style="background-color:rgba(57,212,155, 0.2)"> of</span> the twenty-first century.
+(3) Support for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>" on The<span style="background-color:rgba(57,212,155, 0.2)"> CW</span>.
+<span style="background-color:rgba(57,212,155, 0.2)">|</span>[02/25/09 - 04:32 PM]</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>doliver] Yes<span style="background-color:rgba(57,212,155, 0.2)">,</span> it's<span style="background-color:rgba(57,212,155, 0.2)"> early</span>, but I normally get up pretty early.
+[</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>02/27/09<span style="background-color:rgba(57,212,155, 0.2)"> -</span> 06:<span style="background-color:rgba(57,212,155, 0.2)">56</span> PM]
+Development Update: Friday, February 27
+</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

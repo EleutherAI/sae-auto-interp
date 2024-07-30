@@ -1,0 +1,706 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-48</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-48</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> of Human Rights<br>A number of domestic<span style="background-color:rgba(57,212,155, 1.0)"> and</span> international human rights groups generally operated without government restriction,<br>Activations: (" and" : 0)<br>Example 2:  a significant export base. The long-term goals are to capture internal<span style="background-color:rgba(57,212,155, 1.0)"> and</span> external economies of scale,<br>Activations: (" and" : 3)<br>Example 3:  specifies six procedures, including hip<span style="background-color:rgba(57,212,155, 1.0)">/</span>knee joint replacement, and gives the Secretary of Health and Human<br>Activations: ("/" : 2)<br>Example 4:  the Graduate School of Primary<span style="background-color:rgba(57,212,155, 1.0)"> and</span> Secondary Education is 18. Representing Reitaku University I would like<br>Activations: (" and" : 5)<br>Example 5:  held in 2002; domestic<span style="background-color:rgba(57,212,155, 1.0)"> and</span> international observers characterized both elections as generally free, fair, and without evident<br>Activations: (" and" : 1)<br>Example 6: <|endoftext|> manufacturer that sells indoor<span style="background-color:rgba(57,212,155, 1.0)"> and</span> outdoor furniture providing home decor and antique primitive art at Denpasar,<br>Activations: (" and" : 1)<br>Example 7:  Massachusetts, with Hawaii and Connecticut close behind in second<span style="background-color:rgba(57,212,155, 1.0)"> and</span> third. Dietitian salaries in Jamaica range<br>Activations: (" and" : 2)<br>Example 8: ] $75K+, well educated and who work in managerial<span style="background-color:rgba(57,212,155, 1.0)"> and</span> professional occupations. The majority of our<br>Activations: (" and" : 1)<br>Example 9:  take considerable time to implement them and their effects emerge only over the medium<span style="background-color:rgba(57,212,155, 1.0)"> and</span> long term. U.<br>Activations: (" and" : 3)<br>Example 10: ater knowledge of workers�� rights<br>Outcome 4: Laws and policies are implemented in origin<span style="background-color:rgba(57,212,155, 1.0)"> and</span><br>Activations: (" and" : 1)<br>Example 11:  The front was destroyed, the rear was crushed, and every fender<span style="background-color:rgba(57,212,155, 1.0)"> and</span> door was bashed in<br>Activations: (" and" : 1)<br>Example 12: <|endoftext|>-life issues<br>Financial<span style="background-color:rgba(57,212,155, 1.0)"> and</span> Legal<br>Specialist information e.g. childcare<br>24 hours<br>Activations: (" and" : 0)<br>Example 13: <span style="background-color:rgba(57,212,155, 1.0)"> and</span> pull a minimum of 25 lbs<br>- Requires walking, standing or sitting for lengthy periods of time<br>Activations: (" and" : 1)<br>Example 14:  that happened to us many times. When staffing issues, parent issues, licensing issues, financial<span style="background-color:rgba(57,212,155, 1.0)"> or</span> energy<br>Activations: (" or" : 1)<br>Example 15: CA Core requirements) and complete upper<span style="background-color:rgba(57,212,155, 1.0)">-</span>division UCA Core requirements using designation major, minor, or<br>Activations: ("-" : 0)<br>Example 16:  this series:'THE WHOLE PACKAGE' Delgado, front<span style="background-color:rgba(57,212,155, 1.0)"> and</span> center.<br>Olney<br>Activations: (" and" : 3)<br>Example 17: <span style="background-color:rgba(57,212,155, 1.0)"> and</span> Western hemispheres on a time sensitive basis to all corners of the earth.<br>ITEM<br>Activations: (" and" : 2)<br>Example 18: <|endoftext|>3) | 0 |<br>Biological processes are generally based on events at the molecular<span style="background-color:rgba(57,212,155, 1.0)"> and</span> cellular<br>Activations: (" and" : 2)<br>Example 19: <|endoftext|>.<br>SRP offers rebates for interior<span style="background-color:rgba(57,212,155, 1.0)"> and</span> exterior LEDs, lighting controls, unitary air<br>Activations: (" and" : 4)<br>Example 20: , as long as the primary<span style="background-color:rgba(57,212,155, 1.0)"> and</span> mirror instance for a segment are on different hosts. Each host must<br>Activations: (" and" : 2)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Conjunctions ("and", "or", "/") connecting words or phrases in a sentence.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Conjunctions (&quot;and&quot;, &quot;or&quot;, &quot;/&quot;) connecting words or phrases in a sentence.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> Emotional Support; Illinois, Indiana, and Michigan are below the Regional<span style="background-color:rgba(57,212,155, 1.0)"> and</span> National averages for Class</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> better life.
+We provide scholarships to over 100 secondary<span style="background-color:rgba(57,212,155, 1.0)"> and</span> post-secondary students, thanks to our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> any weather and any lighting condition, to long, mid<span style="background-color:rgba(57,212,155, 1.0)"> and</span> short ranges. Its radar detects cars</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> a range of needs and ultimately keep firefighters in their own homes and communities.
+��During<span style="background-color:rgba(57,212,155, 1.0)"> and</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> and west, warm elsewhere.
+Friday Showers along the southern<span style="background-color:rgba(57,212,155, 1.0)">/</span>central coasts. Chance storms in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> on issues specific to their professional practices and he has devoted a substantial portion of his practice to federal<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> and</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>-Plucking of the lace frontal<span style="background-color:rgba(57,212,155, 0.9200000000000002)">,</span> 360 frontal<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> or</span> lace closure
+-Laying down baby hairs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>us abdominis, transverse abdominis, and internal<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> and</span> external obliques are higher during the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> emphasis on the special needs of low<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> and</span> moderate-income clients.
+NHBA Annual Meeting
+June</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> is on the southern<span style="background-color:rgba(57,212,155, 0.9200000000000002)">,</span> or Asian, side of the Caucasus mountain range that is one of the boundaries</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> basis of universal suffrage.
+Elections and Political Participation
+Presidential<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> and</span> legislative elections were last</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> organizing to help expand the ways in LEE can support its members in leading<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> and</span> organizing to end educational</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> a, labor manner allows be dubbed. At may files humanities. Students, general<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> and</span> etc the a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> of oral<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> and</span> paraoral structure. In: Shafer's textbook of oral pathology. 6 th</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>. Talk with the doctor.
+- This drug will not cure genital<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> or</span> perianal warts</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> when the pop star showed up because instant crowds poured in for a peek.
+National<span style="background-color:rgba(57,212,155, 0.76)"> and</span> local sports</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> in Dallas. Parcel Pending��s customizable indoor<span style="background-color:rgba(57,212,155, 0.76)">,</span> outdoor<span style="background-color:rgba(57,212,155, 0.76)"> and</span> refrigerated lockers help</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> and maintaining the Federal Government��s national security interests.English coffeehouses in the 17th<span style="background-color:rgba(57,212,155, 0.76)"> and</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> gave more than 50 invited lectures and plenary speeches to national<span style="background-color:rgba(57,212,155, 0.76)"> and</span> international conferences, and she is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> commands, the database covers many topics for beginners, intermediate<span style="background-color:rgba(57,212,155, 0.76)"> and</span> advanced users.
+Version 2.1</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> of blunt impact trauma of head<span style="background-color:rgba(57,212,155, 0.6799999999999999)">,</span> neck and torso.
+News of Riordan's death was first</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> The professors�� study also found that 47 percent of juniors<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> and</span> seniors are regularly awakened by texts</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> by companies were malware attacks.
+Command<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> &</span> control cyber-attacks are also a major concern. Threat</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> 30-year period, standard<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> and</span> intervention approaches beginning with pre-diabetes cost 56,000</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> that treatment may also affect mental<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> and</span> emotional health.
+ADT, which suppresses the production of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> ST (Corner of 100 South<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> and</span> Main ST), �� 435-259-6555,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> running neck<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> and</span> neck. They go so far and run so fast that eventually the Greyhounds call</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Reviews
+Backpack by Nike Lightweight outer Drawstring opening<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> and</span> straps Front logo print Wipe clean</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> the water suitable for irrigation of alh crops, while neither total<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> nor</span> any individual concentrations present health hazards</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> to grow its travel business in the region.
+She has experience across the wholesale<span style="background-color:rgba(57,212,155, 0.6000000000000001)">,</span> airline, T</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> the water column.
+Black Bass (Small<span style="background-color:rgba(57,212,155, 0.52)"> and</span> Large) were very scarce for us this week</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> teach you how. We have salsa lessons in the very basic<span style="background-color:rgba(57,212,155, 0.52)">,</span> beginner salsa dance fundamentals, up to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> offered wildlife and fisheries as a major<span style="background-color:rgba(57,212,155, 0.52)">,</span> my decision was further influenced to commit as soon as possible</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>Mon.<span style="background-color:rgba(57,212,155, 0.52)"> to</span> Thu.: 8:00 a.m – 4:30 p.m.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> that men and women faced when forming<span style="background-color:rgba(57,212,155, 0.52)"> and</span> maintaining formal groups back in the day.
+Another example</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> facing rooms with twin<span style="background-color:rgba(57,212,155, 0.44)"> or</span> double beds, onyx shower room with swarovski fittings and balcony</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> offer third party products or services on our Site. These third party sites have separate<span style="background-color:rgba(57,212,155, 0.44)"> and</span> independent privacy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> from another bank.
+A hold relating to either an inbound<span style="background-color:rgba(57,212,155, 0.44)"> or</span> outbound wire was marked</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> discuss what is being done at the EU level to help small<span style="background-color:rgba(57,212,155, 0.44)"> and</span> big businesses. She will also</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> second<span style="background-color:rgba(57,212,155, 0.44)"> and</span> third in the tenth and Milk Dud GIDP'd to end the eleventh. After</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>
+Concrete is a major<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> and</span> distinctive component. It is a combination of cement (itself</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> student at Yale University in Connecticut.Terms<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> &</span> Conditions.
+Price matching does not apply to this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>- Tips to guide<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> and</span> driver. (Tiping standard: USD 8/person/day.)
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Radio Sarawak and wrote the school radio lessons for Primaries One<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> and</span> Two. Her work included</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> of the basketball tipsters specialise in specialized current market types these as to occasion within<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> or</span> higher</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> readiness through increased awareness of and training toward national<span style="background-color:rgba(57,212,155, 0.28)"> and</span> international maritime standards," said Jim Johnson, the Navy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Street<span style="background-color:rgba(57,212,155, 0.28)"> and</span> Melrose Avenue, one of the guys tapped him on the arm and asked if they</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> upper<span style="background-color:rgba(57,212,155, 0.28)">-</span>class Cumbres students. They act as mentors and role models for incoming Cumbres</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> for social<span style="background-color:rgba(57,212,155, 0.28)"> and</span> emotional skills. These skills are valuable across a person��s lifetime, regardless of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> In the current climate, consumers are bombarded with hundreds of advertising messages each<span style="background-color:rgba(57,212,155, 0.28)"> and</span> every day,</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ly done!
+I will add, a couple of the scary underwater scenes made me feel totally cla</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> This Assignment:
+- integrate management theories and principles into management practices
+In Part One of this case</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> follows through in her writing. She has exhibited an ability to write varying genre, children's literature,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ed That 73 Airport Employees May be Terrorists
+November 19, 2015, 2:16 PM
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, argued that homeschooling parents were divided into two camps, which she called ��ideolog</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ource. When dealing with a delimited file, the datasource is the delimited file's directory</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and sew with the needle at the desired point and then vithout shitting his hand at all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>NElt, M. D.
+Office and Residence 111 Commercial avc
+nue,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> that which was right in my eyes,
+9 but you have done evil above all who were before</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> her final public talk Feb. 26.
+Historian Nell Irvin Painter interacts with USF</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Street and 428 Columbus<span style="background-color:rgba(57,212,155, 0.2)"> Avenue</span>.
+Polarn O. Pyret, a clothing store founded in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> both front and rear-<span style="background-color:rgba(57,212,155, 0.2)">facing</span> cameras; so you can let your photos and selfies run wild. Plus</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> cohorts than among younger<span style="background-color:rgba(57,212,155, 0.2)"> age</span> cohorts. The High and Low estimates are roughly proportional to the observed homeownership</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> offered during the first and<span style="background-color:rgba(57,212,155, 0.2)"> second</span> month of every testing window:
+- January – February
+- April</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> with integument<span style="background-color:rgba(57,212,155, 0.2)">ary</span>, respiratory, cardiovascular, gastrointestinal, musculoskeletal and diagnostic findings</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> absorb CO2 from<span style="background-color:rgba(57,212,155, 0.2)"> the</span> atmosphere and store it as carbon both above and below ground.
+The preparation</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> small electric and petrol<span style="background-color:rgba(57,212,155, 0.2)"> vehicles</span>, as well as providing short and long term rental packages for the golf and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> mysterious odors in<span style="background-color:rgba(57,212,155, 0.2)"> the</span> house. The best way to combat the smell is to clean from top to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> service member may<span style="background-color:rgba(57,212,155, 0.2)"> title</span>, register, and maintain, a car in their home state, their spouse</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> and ��flies<span style="background-color:rgba(57,212,155, 0.2)">,</span>�� party lingo for officials high and low. Few in China actually</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

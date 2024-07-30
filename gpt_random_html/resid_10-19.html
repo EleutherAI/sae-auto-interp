@@ -1,0 +1,697 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-19</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-19</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  first known case of clergy<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> abuse allegedly began, when you were promoting your book of the same name<br>Activations: (" sexual" : 4)<br>Example 2: <|endoftext|>risk,<span style="background-color:rgba(57,212,155, 1.0)"> sexually</span> active men who have<span style="background-color:rgba(57,212,155, 1.0)"> sex</span> with men.��Practice report, 4/<br>Activations: (" sex" : 3)<br>Example 3: 't returned a call seeking comment.<br>Jerry Sandusky is serving decades in prison on convictions of<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span><br>Activations: (" sexual" : 7)<br>Example 4:  other interpersonal struggles to<span style="background-color:rgba(57,212,155, 1.0)"> dating</span> violence […]<br>Topics of Interest<br>- AlongMarch 30, 2022 -<br><br>Activations: (" dating" : 1)<br>Example 5: <|endoftext|> Chlamydia and<span style="background-color:rgba(57,212,155, 1.0)"> gon</span>orrhea can cause infertility.<br>Eating a healthy diet can promote<br>Activations: (" gon" : 1)<br>Example 6:  experienced chest pain during<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> activity.<span style="background-color:rgba(57,212,155, 1.0)"> Sexual</span> activity may be a strain on your heart, especially if you<br>Activations: (" sexual" : 3), (" Sexual" : 3)<br>Example 7: <|endoftext|> or burglars. And drug enforcement is more closely linked with<span style="background-color:rgba(57,212,155, 1.0)"> violent</span> crime than drug use. Meanwhile<br>Activations: (" violent" : 1)<br>Example 8:  study. In a survey of adults who had experienced stalking or<span style="background-color:rgba(57,212,155, 1.0)"> dating</span> violence as adults, the CDC found<br>Activations: (" dating" : 4)<br>Example 9:  law criminalizes<span style="background-color:rgba(57,212,155, 1.0)"> rape</span>, but spousal rape is not illegal. Reports of rape were rare,<br>Activations: (" rape" : 1)<br>Example 10: oup their birthright of<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> sovereignty.<br>Men, too, will prosper. The seductress<br>Activations: (" sexual" : 1)<br>Example 11: , value or viability of another person.<br><span style="background-color:rgba(57,212,155, 1.0)">Sexual</span> violence and abuse would end because no one would find<br>Activations: ("Sexual" : 2)<br>Example 12:  offer clinical support — and those experiencing<span style="background-color:rgba(57,212,155, 1.0)"> mental</span> health issues should contact professional healthcare — that doesn��t<br>Activations: (" mental" : 1)<br>Example 13: <span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> orientation, gender identity, national origin, disability, veteran status, or any other characteristic protected by<br>Activations: (" sexual" : 5)<br>Example 14:  sending<span style="background-color:rgba(57,212,155, 1.0)"> sexually explicit</span> images, opening them up to something as serious as<span style="background-color:rgba(57,212,155, 1.0)"> potential</span> child pornography charges may not be<br>Activations: (" sexually" : 3), (" potential" : 2)<br>Example 15:  people with mental problems and<span style="background-color:rgba(57,212,155, 1.0)"> violent</span> tendencies who often refuse to take their medications should be monitored and kept away<br>Activations: (" violent" : 2)<br>Example 16:  falsely accused of child<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> assault? Are you screaming and banging your head proclaiming your innocence and it is<br>Activations: (" sexual" : 6)<br>Example 17:  have heart disease. If you experience chest pain, dizziness, or nausea during<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> activity, call<br>Activations: (" sexual" : 2)<br>Example 18:  and possibly<span style="background-color:rgba(57,212,155, 1.0)"> ethnic</span> cleansing.<br>Myanmar��s delegation, referring to the resolution, said that<br>Activations: (" ethnic" : 1)<br>Example 19:  are FALSE! You are being accused of<span style="background-color:rgba(57,212,155, 1.0)"> sexually</span> abusing or molesting a child. Perhaps your own child<br>Activations: (" sexually" : 3)<br>Example 20:  discrimination for<span style="background-color:rgba(57,212,155, 1.0)"> sex</span> and gender diverse people."Australian buyers of digital products from Apple, Adobe, and Microsoft<br>Activations: (" sex" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Tokens related to sensitive or controversial topics, such as sexuality, violence, and mental health.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Tokens related to sensitive or controversial topics, such as sexuality, violence, and mental health.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> color, religion, gender, pregnancy,<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> orientation/preference, age, national origin, marital</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> that happens, the current movement toward unprecedented accountability for<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> harassers will probably start to peter</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>. CONCLUSION: MSM and FSW experienced a similarly high incidence of<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> assault in coastal Kenya</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> do if you are raped
+Report the rape in person at a police station,<span style="background-color:rgba(57,212,155, 1.0)"> Sexual</span> Assault Referral</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> people who say they are victims of<span style="background-color:rgba(57,212,155, 1.0)"> sexual</span> assault, but both women have come forward voluntarily.
+W</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> during 2011.
+Less than half the HFP teens who were eligible based on age and<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> sexual</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> of erectile problems are due to mental issues. These emotional factors could be related to childhood<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> sexual</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>, adult content,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> violent sexual</span> content, and gratuitous gore. This content is not allowed to be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>, and other<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> sex</span> crimes. They believe in the criminal justice system; however, an innocent person behind</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> criminal and homosexual. To take the latter first, the move from describing<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> sexual</span> conduct as ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> has a very high level of drug use,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> sex</span> work, human trafficking and migration, all of which</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Criminalisation of Hom<span style="background-color:rgba(57,212,155, 0.8400000000000001)">osexual</span>ity in Uganda: A Flawed Narrative / Empirical evidence and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>ers get the right to obtain information on employees' previous<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> sex</span> offences.
+Internet Service Providers,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> experience, only a tiny percentage of the men arrested had any real predisposition to engage in<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> sex</span> with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> been repeated calls for Benedict's arrest over<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> sexual</span> abuse within his Church, he is currently not named specifically</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> sexually</span> suggestive messages on their phone, reports Science Daily. More than two-thirds of students owned up</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> to the support groups, the center also provides victims of<span style="background-color:rgba(57,212,155, 0.76)"> domestic</span> abuse with emergency shelter, crisis intervention,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> STEAM fields, and to prevent and respond to<span style="background-color:rgba(57,212,155, 0.76)"> gender-based</span> violence.
+For more information on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> to the victims and witnesses of<span style="background-color:rgba(57,212,155, 0.76)"> violent fel</span>onies," said Mike Doucette, past president and legislative</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> medical conditions like depression or diabetes. The discolouration can.
+If you have any<span style="background-color:rgba(57,212,155, 0.76)"> sex</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> against LaSalle Corrections. The lawsuit alleges she was repeatedly<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> sexually</span> assaulted at the facility and goes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> 18 or 3 years after they have discovered injuries caused by<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> the</span> assault. This is a very small window</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> sexual</span> pleasure, the video pushes the importance of safe sex.
+(Plus it��s fun</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> comply with the statute requiring reports of known or suspected<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> child</span> abuse as well as Ohio��s parental</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>: a growing alcoholism and lots of adulterous<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> sex</span>. Shortly after he was elected to congress in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> domestic</span> and<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> family</span> violence in regional, rural and remote communities
+Domestic and family violence in pregnancy and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> is more complex: Dallas takes a hard line, firing officers convicted of<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> drunken</span> driving. Other departments,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> with an offensive or inappropriate username.
+If you suffer serious abuse such as receiving<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> racist</span> remarks, harassment</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>
+Her mother was a recent victim of<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> domestic</span> abuse.
+��Educating people about the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> have players of all genders,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> sexual</span> orientations, religions, ethnicities, socio-economic positions and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> schooling and experiencing financial stress, couples can find themselves at a crisis point in their relationship and seek<span style="background-color:rgba(57,212,155, 0.52)"> professional</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.52)"> sexual</span> excitation. Several poignant snippets like ��What else is a crush but a repository for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> a<span style="background-color:rgba(57,212,155, 0.52)"> far</span>-fetched dream. Perhaps I should��ve realized how crazy my dreams were.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> has trouble reconciling the two. He has called his<span style="background-color:rgba(57,212,155, 0.52)"> sexual</span> orientation unnatural. The original lyrics of his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> guns to prohibited persons is critical to the mission of ATF in preventing<span style="background-color:rgba(57,212,155, 0.52)"> violent</span> crime and protecting the nation.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Be Legal In Your Domain To View
+Nudity,<span style="background-color:rgba(57,212,155, 0.44)"> Sexual</span> Situations, Adult Content And/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> toolkit.�� – Kurt Nimmo
+Child<span style="background-color:rgba(57,212,155, 0.44)"> Sex</span> Trafficking Through ��Child Protection</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> most societies. Sexuality as it relates to<span style="background-color:rgba(57,212,155, 0.44)"> homophobic</span> relations is generally perceived as undesirable in modern day</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>afil does not prevent pregnancy or the spread of<span style="background-color:rgba(57,212,155, 0.44)"> sexually</span> transmitted diseases such as human immunodeficiency</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> have labeled him as openly gay, his death likely had nothing to do with his<span style="background-color:rgba(57,212,155, 0.44)"> sexual</span> orientation.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ims of<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> child</span> abuse are either too young or too afraid to talk about the pain of abusive trauma.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> information. It also does<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> sexual</span> drive. But it could make diarrhea, stomach upset, dazzling,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> opposition to gender has arisen over the last years in Europe. It particularly targets women��s<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> sexual</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>-Americans and men are more likely to be arrested for a<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> violent</span> crime.
+When Berk brings up</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> violent</span> video games and real-life violence don��t relate.
+Too much gaming can make</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)"> gay</span> marriage. I don't know if that's relevant for the president. I'm mentioning it,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Lack of education and poverty in rural areas leads to<span style="background-color:rgba(57,212,155, 0.28)"> gender</span> bias.
+- A common belief in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> (e.g. race,<span style="background-color:rgba(57,212,155, 0.28)"> gender</span>, age, education), geography and language barriers. Thus,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> about their<span style="background-color:rgba(57,212,155, 0.28)"> sex</span> lives, and the result is a book everyone is buzzing about. How to take your</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> an erection that is satisfactory for completion of<span style="background-color:rgba(57,212,155, 0.28)"> sexual</span> activity. The vacuum device may be the only therapy that</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> its where living your dreams is abruptly cut off.
+posted on Nov. 23, 2009
+Love</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and radical college professors in the Marxist Progressive Philosophy.
+Unfortunately for the last 10 years, students have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> don't forget it) and you see a woman that possibly may be drawn to you. By this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Pankratz said the criminal case and its outcome didn't affect the administrative case. No hearing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>57 countries have a serious shortage of life-saving childhood immunizations, safe pregnancy measures, prevention for</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>Red Dawn�� Remake? For The Money, Of Course. (forbes.com)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the galactic disturbance we see. There must have been something else. Something big clearly went sailing through,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> freeze-dried bacteria will die very quickly in gastric acid, says Noam, so this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the nuts and bolts for lawyers handling the transaction.
+The process for claiming compensation for a breach of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> sections were removed. Fortunately they were saved on the blog post Painting the Whole Group with the Same Broad</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> where she taught Family<span style="background-color:rgba(57,212,155, 0.2)"> Law</span> and a<span style="background-color:rgba(57,212,155, 0.2)"> seminar</span> on Children of LGBT Parents. In 1976, Prof. Pol</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> she would then<span style="background-color:rgba(57,212,155, 0.2)"> have</span> to report<span style="background-color:rgba(57,212,155, 0.2)"> the</span> case as rape and sexual abuse.
+She told the girl</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>� But Alexander said<span style="background-color:rgba(57,212,155, 0.2)"> he</span> hasn�<span style="background-color:rgba(57,212,155, 0.2)">�</span>t decided whether to support a bill that would require dating violence</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> (when the uterus<span style="background-color:rgba(57,212,155, 0.2)"> obstruct</span>s the<span style="background-color:rgba(57,212,155, 0.2)"> free</span> flow of urine) and minor trauma during sexual intercourse. Thirty</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>effect chain for any sexual<span style="background-color:rgba(57,212,155, 0.2)"> orientation</span>, the<span style="background-color:rgba(57,212,155, 0.2)"> Toronto</span> group, led by psychologists Ray Blanchard and James</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>s race, gender<span style="background-color:rgba(57,212,155, 0.2)">,</span> ethnicity, sexual<span style="background-color:rgba(57,212,155, 0.2)"> orientation</span>, age or faith.
+"People who are feeling</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> vegetarians, homeless<span style="background-color:rgba(57,212,155, 0.2)">,</span> GLBT<span style="background-color:rgba(57,212,155, 0.2)">,</span> children, racial issues, as only a few examples – will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>ibly accused of sexually abusing<span style="background-color:rgba(57,212,155, 0.2)"> more</span> than 1<span style="background-color:rgba(57,212,155, 0.2)">,</span>000 children over seven decades.
+The Pennsylvania report further</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> engage in culturally un<span style="background-color:rgba(57,212,155, 0.2)">approved</span> sexual behavior.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>As society exerted its power in order to educate people that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> need any of the following<span style="background-color:rgba(57,212,155, 0.2)">:</span>
+-<span style="background-color:rgba(57,212,155, 0.2)"> Blood</span> tests are used to check for HCV antibodies made by</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

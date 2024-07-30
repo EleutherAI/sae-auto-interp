@@ -1,0 +1,689 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-30</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-30</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: Wanaka Coastguard volunteers patrolled Lake Wanaka to maintain safety in<span style="background-color:rgba(57,212,155, 1.0)"> areas</span> where heli copters<br>Activations: (" areas" : 3)<br>Example 2:  from combat to stability operations. But they have kept several combat battalions assigned to urban<span style="background-color:rgba(57,212,155, 1.0)"> areas</span> and hoped<br>Activations: (" areas" : 2)<br>Example 3:  Elemun outpost in the border<span style="background-color:rgba(57,212,155, 1.0)"> region</span> of Uludere, ��ırnak. One major<br>Activations: (" region" : 6)<br>Example 4: and some have become severe. These storms will continue to form and move across the<span style="background-color:rgba(57,212,155, 1.0)"> area</span> through this evening<br>Activations: (" area" : 1)<br>Example 5:  half a dozen temblors in the Alamo and Danville<span style="background-color:rgba(57,212,155, 1.0)"> area</span> that struck Saturday and Sunday.<br>Activations: (" area" : 3)<br>Example 6: ga, the Kurdistan security forces." On the issue of the Kurdish<span style="background-color:rgba(57,212,155, 1.0)"> region</span>, professional friend to the Kurdistan<br>Activations: (" region" : 3)<br>Example 7: <|endoftext|> way local authorities can visualize and make assessments of their<span style="background-color:rgba(57,212,155, 1.0)"> areas</span>, and with centralized digital context-models<br>Activations: (" areas" : 2)<br>Example 8: <|endoftext|>-target man, inside the<span style="background-color:rgba(57,212,155, 1.0)"> area</span> powering in crosses. But that's not what Crouch's<br>Activations: (" area" : 4)<br>Example 9:  refuse uplift service will come to an end.<br>At the moment people from the Kelso<span style="background-color:rgba(57,212,155, 1.0)"> area</span><br>Activations: (" area" : 2)<br>Example 10: <|endoftext|> and to the northwest of Al Bayda Governor<span style="background-color:rgba(57,212,155, 1.0)">ate</span> in the central highlands, with an area<br>Activations: ("ate" : 2)<br>Example 11:  system was tested again during the parliamentary by-election in<span style="background-color:rgba(57,212,155, 1.0)"> zone</span> 26 (Shijak) on March<br>Activations: (" zone" : 4)<br>Example 12: <|endoftext|> China is battling what it says are Uighur extremists operating in its far western<span style="background-color:rgba(57,212,155, 1.0)"> region</span> of Xin<br>Activations: (" region" : 2)<br>Example 13: <|endoftext|> who are determined to break the hold of criminal networks throughout the<span style="background-color:rgba(57,212,155, 1.0)"> region</span>.<br>Organised crime has<br>Activations: (" region" : 3)<br>Example 14:  for the US and Japan to outmanoeuvre China in the<span style="background-color:rgba(57,212,155, 1.0)"> region</span>, which pointedly hasn�<br>Activations: (" region" : 1)<br>Example 15:  close to a school, especially during class hours? Is this common for the<span style="background-color:rgba(57,212,155, 1.0)"> area</span> considering Gene Rosen first<br>Activations: (" area" : 1)<br>Example 16:  battle tank is patrolling the immediate<span style="background-color:rgba(57,212,155, 1.0)"> area</span>. Directly across<br>from you is a white fence. If<br>Activations: (" area" : 4)<br>Example 17: i Arab Democratic Republic (SADR) which exercises effective control over the<span style="background-color:rgba(57,212,155, 1.0)"> area</span> east of Moroccan Wall<br>Activations: (" area" : 6)<br>Example 18: <br>A leader of the violent MS-13 gang in the Middle Atlantic<span style="background-color:rgba(57,212,155, 1.0)"> region</span> pleaded guilty in U.<br>Activations: (" region" : 2)<br>Example 19: <|endoftext|> Winston-Salem<span style="background-color:rgba(57,212,155, 1.0)"> area</span>. Letters related to the railroad matter include one from James W. Wilson<br>Activations: (" area" : 2)<br>Example 20:  caution.<br>As deflation continues, strong earthquakes in the<span style="background-color:rgba(57,212,155, 1.0)"> area</span> around Kilauea Volcano��<br>Activations: (" area" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Geographical nouns or phrases indicating a specific location or region.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Geographical nouns or phrases indicating a specific location or region.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>jorth fled the scene but were tracked down the next day to a hotel, in the same<span style="background-color:rgba(57,212,155, 1.0)"> area</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> until the PLA had fully occupied the<span style="background-color:rgba(57,212,155, 1.0)"> region</span>.
+One notable Uyghur leader who was not</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span>iamanagement who both lobby for control of the<span style="background-color:rgba(57,212,155, 1.0)"> area</span>.
+The heaviest acrimony towards the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> a large presence in the<span style="background-color:rgba(57,212,155, 1.0)"> area</span> driving around the streets in convoys sometimes stopping and searching for weapons and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> the earthquake, NGOs in the affected<span style="background-color:rgba(57,212,155, 1.0)"> areas</span> as disaster volunteers made huge contributions in the<span style="background-color:rgba(57,212,155, 1.0)"> area</span> where the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> audience.
+Mr. Gandhi will next travel to central Gujarat<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> areas</span> of Kheda, Anand</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>.
+According to Staff Sergeant Gord Stewart, charges in the Broadview RCMP Detachment<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> area</span> were up</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> today, two with monsoon buckets and a third transporting firefighters to hard to access<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> areas</span>.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> to reach a fringe of the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> area</span> and I saw dead pashmina goats lying all around,"</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>igon, we stopped in an<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> area</span> of rubber plantations. Due to past bombing, most of the rubber</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>buktu, and Kidal. The cabinet also had two representatives of the northern<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> regions</span>: the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> occurring in Dendera<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> area</span> of Kwekwe District is investigated, with the object of providing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> regional council<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> area</span> at noon Thursday, two hours into the five-hour UN-brokered Hamas</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> and the Knights accepted Polish suzerainty over the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> area</span> they retained. Calling (1467)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> a map, showed it to the mama-san, and pointed to the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> area</span> around Nightmare Range</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> the puck outside the trapezoid<span style="background-color:rgba(57,212,155, 0.76)"> area</span> behind the net.
+- Despite allowing one power play goal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> out our handy guide!
+We offer quality fire extinguisher maintenance in Leicester and the surrounding<span style="background-color:rgba(57,212,155, 0.76)"> areas</span>,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> bumping into an object, can develop a spider naevus in the traumatised<span style="background-color:rgba(57,212,155, 0.76)"> area</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> to the shoulder and head<span style="background-color:rgba(57,212,155, 0.76)"> area</span> from Lions defensive end Odell Willis. Collaros stayed in the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> the International Finance Corporation (IFC), and so on. In the regional<span style="background-color:rgba(57,212,155, 0.76)"> area</span>, there are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> up the list and I will agree that it deserves this spot. In a remote<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> area</span> of Holland,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> regions</span> in a way that might have also brought a political solution to Afghanistan. OK, Nazir was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> north toward the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> area</span>, but due to the hazards of the terrain and constant ambushes by the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>ffected and High-Risk<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Areas</span> the following: ��Conflict-affected and high</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> about 8 floors of things to look through.
+The Asakusabashi<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> area</span> is great</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> region</span> it swallowed up a big chunk of the former park. It also effectively split Grimsby into</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> nearby municipality of La Trinidad.
+The cheapest vegetables can be bought at the Hangar<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> area</span> of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> area</span> and; therefore, would require a permit for utilization from the South Carolina Department of Health and Environmental</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> 1960. For the great masses of workers and peasants throughout the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> region</span>, conditions of life are worse than</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>," Housman said.
+Half-acre parcels could be carved out of the woodland<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> area</span> of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> before crews returned early tomorrow morning.
+Tomorrow, firefighters would make sure the<span style="background-color:rgba(57,212,155, 0.52)"> perimeter</span> was tightly contained</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> painful<span style="background-color:rgba(57,212,155, 0.52)"> area</span>.
+Will acupressure, muscle-relaxation therapy, or TENS</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> paragraph P1 would dive south into this<span style="background-color:rgba(57,212,155, 0.52)"> area</span> and add to the activity...which indeed is beginning to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> in and around Rotherham, these include;||Also in the surrounding<span style="background-color:rgba(57,212,155, 0.52)"> areas</span> such as:|</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> an attempt to shatter the racial barriers that continued to grip the<span style="background-color:rgba(57,212,155, 0.52)"> region</span> after the Civil War.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Xinjiang Uyghur Autonomous<span style="background-color:rgba(57,212,155, 0.44)"> Region</span> on 1 October 1955. Tensions and resentment, despite</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> and that Rome should have jurisdiction. India says the ship was in Indian territorial<span style="background-color:rgba(57,212,155, 0.44)"> waters</span>.
+One former</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> for the first time (it seems that I��ve always walked the<span style="background-color:rgba(57,212,155, 0.44)"> area</span>), and that experience</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> positions within an organization. He or she bears overall responsibility for the<span style="background-color:rgba(57,212,155, 0.44)"> area</span> of information security. This includes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>ajeev Classes best coaching institute in<span style="background-color:rgba(57,212,155, 0.44)"> area</span> top institute. Rajeev Classes best facility in coaching</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> slurry-carrying steel pipe runs overground in a remote<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> area</span> where it is believed to be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> a toll on<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> area</span> roads. And it��s not just piles of snow that are causing problems</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> lightning and can be exacerbated by low rainfall and high winds. If a fire breaks out in your<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> area</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>, and other equipment used in a local<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> area</span> network. Each terminal T1, T2 usually</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> the loaded<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> area</span>. Thus, the balls perform infinite rolling motion. Two types of nuts are available:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> all around the garden and the entry grounds
+Inside the main<span style="background-color:rgba(57,212,155, 0.28)"> area</span> resp. building there are long corridors</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> general<span style="background-color:rgba(57,212,155, 0.28)"> area</span>. The number of fish being reported has been declining in the area, partially due to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> two-hour bus ride to Palm Beach, the most northern suburb of Sydney. Although the<span style="background-color:rgba(57,212,155, 0.28)"> area</span> is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> to a continuing dilemma affecting our<span style="background-color:rgba(57,212,155, 0.28)"> area</span> which could have significant implications for the progress of our ambition to benefit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> there will be 1,000 extra docking points at high-demand<span style="background-color:rgba(57,212,155, 0.28)"> areas</span> across the capital, such as</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> All infants, infants, and teens must receive at least 400 UI of vitamin D a day. To</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to understand developments of the American novel throughout the twentieth century.Got a LinkedIn account? Change your password</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the Laramie Outlaws Hockey Facebook page)
+The Laramie High School Mountain Bike Team</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> occurs from late June until early November. Hatchlings reach sexual maturity in 10-11 months (M</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>25 for $45 worth of adult toys and accessories
+- $35 for $65 worth of adult</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>, VAKING OF THE NERDS New Episode: "Nerdy Dancing" - Thursday,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> business as a whole.. Lucy is probably the one you will be in contact with when you email us</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> is also curious to know what this family does during dinner time, only to find that they practice the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ted 0resh) at the time of burning, only with more plants surviving at higher fuel loads and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> peril when a Barrow-wight captures them.
+Tom proves the saviour, but what</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> to pop up around<span style="background-color:rgba(57,212,155, 0.2)"> the</span> area, the<span style="background-color:rgba(57,212,155, 0.2)"> dive</span> sites are well spaced out and the only way to truly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>�generated a large<span style="background-color:rgba(57,212,155, 0.2)"> pool</span> of skilled<span style="background-color:rgba(57,212,155, 0.2)"> and</span> battle-hardened fighters who remain dispersed throughout the region.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>ent. A tiny<span style="background-color:rgba(57,212,155, 0.2)"> mesh</span> coil is<span style="background-color:rgba(57,212,155, 0.2)"> expanded</span> inside the blocked artery to open the blocked area and is left</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> region because their fodder is<span style="background-color:rgba(57,212,155, 0.2)"> buried</span> under unusually<span style="background-color:rgba(57,212,155, 0.2)"> heavy</span> snow, said Rigzin Spalbar, who heads</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> president also denounced the<span style="background-color:rgba(57,212,155, 0.2)"> recent</span> bloodshed in<span style="background-color:rgba(57,212,155, 0.2)"> the</span> South Caucasus, which he said threatened the entire region and beyond</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Vietnam
+-<span style="background-color:rgba(57,212,155, 0.2)"> ·</span> In or<span style="background-color:rgba(57,212,155, 0.2)"> near</span> the Korean demilitarized zone anytime between April 1,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> to be a<span style="background-color:rgba(57,212,155, 0.2)"> few</span> hundred yards<span style="background-color:rgba(57,212,155, 0.2)"> away</span> from the area I expect the fox to be in, I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> and construction is<span style="background-color:rgba(57,212,155, 0.2)"> underway</span> around the<span style="background-color:rgba(57,212,155, 0.2)"> beach</span> area and around the Km 64 area. Revised 22 June</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Weather Service meteor<span style="background-color:rgba(57,212,155, 0.2)">ologist</span> Kyle Fred<span style="background-color:rgba(57,212,155, 0.2)">in</span> said some rain was expected in the fire zone Saturday evening,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, it is wide<span style="background-color:rgba(57,212,155, 0.2)"> open</span>. It<span style="background-color:rgba(57,212,155, 0.2)"> is</span> largely a peaceful area, but in recent years it has become</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

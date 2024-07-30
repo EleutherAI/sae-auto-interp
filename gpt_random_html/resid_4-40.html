@@ -1,0 +1,706 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_4-40</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_4-40</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  auction of the season, ��Property from<span style="background-color:rgba(57,212,155, 1.0)"> Jose</span>ff of Hollywood: Treasures from the Vault,<br>Activations: (" Jose" : 5)<br>Example 2: <br>Another win seems likely tonight with their stud ace on the mound.<span style="background-color:rgba(57,212,155, 1.0)"> Kers</span>haw's numbers so far<br>Activations: (" Kers" : 5)<br>Example 3:  application. It uses the Open Source<span style="background-color:rgba(57,212,155, 1.0)"> Jab</span>ber service and you can interact with its users from other clients<br>Activations: (" Jab" : 8)<br>Example 4: <span style="background-color:rgba(57,212,155, 1.0)">ji</span> works to address health inequality in their local communities: Brewarrina, Bourke, Coome<br>Activations: ("ji" : 2)<br>Example 5: ishore had a heros voice, last but not least Mukesh<span style="background-color:rgba(57,212,155, 1.0)">ji</span> had a soulful emotional<br>Activations: ("ji" : 3)<br>Example 6: Photo by: Alakija Studios<br><span style="background-color:rgba(57,212,155, 1.0)">Jose</span> Graterol has been designing awe-inspiring events<br>Activations: ("Jose" : 5)<br>Example 7:  that former leaders<span style="background-color:rgba(57,212,155, 1.0)"> Jiang</span> Zemin and Hu Jintao are now asking him to slow the effort,<br>Activations: (" Jiang" : 0)<br>Example 8: <|endoftext|> Douglas Landaeta/LF,<span style="background-color:rgba(57,212,155, 1.0)"> Jose</span> Rivero/CF, AJ Kirby-Jones/<br>Activations: (" Jose" : 5)<br>Example 9:  huge manga list.<br>Kai<span style="background-color:rgba(57,212,155, 1.0)">ji</span> 22 released in manga panda fastest, recommend your friends to<br>Activations: ("ji" : 2)<br>Example 10:  in Psychology and a Masters of Business Administration.<br>Following her retirement, Susan chaired the 2010 San<span style="background-color:rgba(57,212,155, 1.0)"> Jose</span><br>Activations: (" Jose" : 4)<br>Example 11: <|endoftext|> be watching to see creations by<span style="background-color:rgba(57,212,155, 1.0)"> Jays</span>on Brunsdon, Aurelio Costarella and Manning Cart<br>Activations: (" Jays" : 6)<br>Example 12: ....<span style="background-color:rgba(57,212,155, 1.0)"> Kers</span>haw, who has made 151 regular-season starts, posted consecutive complete games only once<br>Activations: (" Kers" : 5)<br>Example 13:  a MFA in Photography from San<span style="background-color:rgba(57,212,155, 1.0)"> Jose</span> State University in California and a BA in Photojournalism from<br>Activations: (" Jose" : 4)<br>Example 14: <|endoftext|> villages: ��in one village in<span style="background-color:rgba(57,212,155, 1.0)"> Guang</span>dong, on average only one man was able<br>Activations: (" Guang" : 7)<br>Example 15:  in the San<span style="background-color:rgba(57,212,155, 1.0)"> Jose</span> metro area was 95.3 percent, down nearly a percent from a month ago<br>Activations: (" Jose" : 4)<br>Example 16:  total investment of more than 1.2 billion yuan, a high-alcohol brewing base, Jiang<span style="background-color:rgba(57,212,155, 1.0)">ji</span><br>Activations: ("ji" : 2)<br>Example 17:  home ownership counselors such as<span style="background-color:rgba(57,212,155, 1.0)"> Jose</span>lyn Torres know the downside of that widespread optimism, where the exuber<br>Activations: (" Jose" : 5)<br>Example 18:  his person at all times. Many army personnel that came to see Pandit<span style="background-color:rgba(57,212,155, 1.0)">ji</span> before China war (<br>Activations: ("ji" : 3)<br>Example 19:  (fat) and the Dyno<span style="background-color:rgba(57,212,155, 1.0)">Jet</span> needle (skinny)<br>Share to Twitter<br>Share to<br>Activations: ("Jet" : 1)<br>Example 20: <span style="background-color:rgba(57,212,155, 1.0)"> Jays</span><br>- Lackey helps Red Sox clinch playoff berth with 2-hitter against Orioles<br>-<br>Activations: (" Jays" : 3)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Names or honorifics (e.g. "ji", "Jose") at the beginning of a proper noun, often referring to a person or place.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Names or honorifics (e.g. &quot;ji&quot;, &quot;Jose&quot;) at the beginning of a proper noun, often referring to a person or place.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>ised a private limited company on its financing for acquiring a target group which holds a shopping mall in<span style="background-color:rgba(57,212,155, 1.0)"> Guang</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>; in the second, we stayed in the large and thriving southern city of<span style="background-color:rgba(57,212,155, 1.0)"> Guang</span>zhou with all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> hoga bhalaa,<span style="background-color:rgba(57,212,155, 1.0)"> Jab</span> tak naa ho, bhalay ka buraa</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>, the Benjaminite king of Israel. See 1 Sm 11, where Saul rescues<span style="background-color:rgba(57,212,155, 1.0)"> Jab</span>esh</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>, the book is autobiographical. It is about my family��s journey from<span style="background-color:rgba(57,212,155, 1.0)"> Guang</span>zhou</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>; but you can��t ignore Wang��s record against the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Jays</span>. Lay $100</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> league campaign left<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Jose</span> Mourinho's team in third place 15 points adrift of Barcelona.
+Mad</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> myself. I watched through a transparent curtain as they pulled out of the driveway, headed to<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Fresno</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>ran didn��t make it to the field,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Jose</span> Reyes was sidelined for 3 weeks, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Jays</span> fan this weekend.
+You should celebrate the other J.P., too
+In the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> ��When the Angels Rest�� (12,000 copies in circulation),<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Jose</span>p Tassies</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> of Antarctica by using satellite images 3.<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Jose</span> Bejar Cruz Jr. - known internationally in the field</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> which was reported by AP.
+Earlier in October, the former European Commission (EC) president<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Jose</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, the government said.
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">Jose</span>, with the help of Matsunaga, kicked through the gr</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> MC,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Jose</span>lin Mane (@<span style="background-color:rgba(57,212,155, 0.8400000000000001)">Jose</span>linmane) kicked it off with great intros and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> (Clayton<span style="background-color:rgba(57,212,155, 0.76)"> Kers</span>haw, Zack Greinke, Hyun-Jin Ryu); and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>ernails.
+The dress - This is one of my all time favorite outfits for<span style="background-color:rgba(57,212,155, 0.76)"> Jose</span>fina</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> Asian cultures,<span style="background-color:rgba(57,212,155, 0.76)"> Sina</span> CEO Charles Chao said.
+Sina's target is to go beyond 200 million</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> a hotly contested Memorial Day Criterium presented by San<span style="background-color:rgba(57,212,155, 0.76)"> Jose</span> Bicycle Club.
+After a race filled</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>."
+And that's how we found ourselves on a plane out of San<span style="background-color:rgba(57,212,155, 0.76)"> Jose</span> International on a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> already married and had children. Every once in a while, when Pandit<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ji</span> would be baffled by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>kerage Services was the download advances. San<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Jose</span> British Motors Jaguar, San<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Jose</span>, Calif. Volvo</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> Hopkins Blue<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Jays</span> men��s lacrosse team is consistently dominant in the NCAA Division I; other</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> movies as Call of the Wild and Dark Water.
+Family: She was raised in San<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Jose</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> and input.
+For more information on the San<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Jose</span> Evergreen Community College District Mission, Vision and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>antly bringing up Ne<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ji</span> was annoyin though, yeah.
+I think it made sense that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>, a team supported by both groups traveled 917 km by bike from San<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Jose</span> to Panama City in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> the floor, as a part of the remedy.
+3. Dev<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ji</span> Maharaj Mandir,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> said, to my having witnessed every inning of every game in Blue<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Jays</span> history. It was a classy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> spin the bottle. Alexander Skarsgard's Ben<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ji</span>, with his sharp good looks and enormous frame</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> from Vrindavan and thus called as Govind Dev<span style="background-color:rgba(57,212,155, 0.52)">ji</span> Temple. Moti Dungri</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> a land of about 1,300 acres of ecological planting demonstration base, Jiang<span style="background-color:rgba(57,212,155, 0.52)">ji</span> Agriculture, a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> — never stood a chance.
+When engineer Bruce Brenner of the Blue<span style="background-color:rgba(57,212,155, 0.52)"> Jays</span> radio network observed Tom</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> need more explanation. Pandit<span style="background-color:rgba(57,212,155, 0.52)">ji</span> simply did not have the time to do that in the Lal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>. Som<span style="background-color:rgba(57,212,155, 0.52)">ji</span> explains that it is your responsibility to develop a good bond with your hair transplant specialist</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Raised in Atlanta and Montreal. Tools of the trade are Cort, Mu<span style="background-color:rgba(57,212,155, 0.44)">ji</span> Notebooks, BlackBerry</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.44)">ji</span>��s story not only overlaps with the boy��s quest; she becomes a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> 10-5 game.
+The Blue<span style="background-color:rgba(57,212,155, 0.44)"> Jays</span> scored five straight before Bellando's second goal of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>), page 464.
+ Michel J. Crozier, Samuel P. Huntington and Jo<span style="background-color:rgba(57,212,155, 0.44)">ji</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> only by appointment. Pandit<span style="background-color:rgba(57,212,155, 0.44)">ji</span>��s day would still start quite early. Even during winters</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Connie L. Lurie School of Education, San<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> José</span> State University; Emeritus Regents�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>med/12383722.
+Baner<span style="background-color:rgba(57,212,155, 0.36000000000000004)">jee</span> RR. Interactions between hematological derivatives</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> to delete.
+Rashoumon event (Ibaraki Dou<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ji</span> event)
+Murder</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> his habit, Pandit<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ji</span> did not ask the young man who he was, where he lived etc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> certification stamp the buyer in San<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> José</span> or in other countries can be sure that they were produced organically</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>o<span style="background-color:rgba(57,212,155, 0.28)">Jet</span> treatment... a 160 main jet, and the slimmer DJ needle.
+The factory needle</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> can try surprise me link at top of page or select another manga like Kai<span style="background-color:rgba(57,212,155, 0.28)">ji</span> 22 from our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> produced a 159.
+Potters win tournament
+BYESVILLE - The East<span style="background-color:rgba(57,212,155, 0.28)"> Liverpool</span> golf team continued</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> designer from the amazing people at – TokyoFlash. The model is the BASIK Watch by<span style="background-color:rgba(57,212,155, 0.28)"> José</span> Manuel</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> Annual Conference and seminars.<span style="background-color:rgba(57,212,155, 0.28)">Jet</span>radar will find you the cheapest airfare for Khabarovsk</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> defeated. Despite the large number of Benjaminites killed in the final battle (20:46) and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>:00 AM
+- Hotel Transport Included
+- Mobile Ticket Included
+- Offered in English,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> over. Most of these shots also were short, but one shell hit a water supply and another hit</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> better; more like 10 to 20% better. The biggest difference is that I have to turn the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Cruz.
+The History of El Monasterio
+Not actually a monastery at all, the volcanic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> what yarn it is, and I foolishly didn't write it in the blog post anywhere. Anyway</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in this litigation. Halleck rejoined the U.S. Army in 1861, and served</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> There wasn��t anything Mike couldn��t do – from mechanics to welding. He said</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> As far as I'm concerned, that makes you a part of this evil
+> vanishing LNH</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>land along the South Waterfront, but what sort of wetland should occur on that unnatural shoreline</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>jiu��<span style="background-color:rgba(57,212,155, 0.2)"> (</span>A study of outside labour and migrant management in villages in developed regions),</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Very strong political ties<span style="background-color:rgba(57,212,155, 0.2)"> existed</span> between the people of Jabesh-gilead and the Benjaminites,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> my list. Martinez<span style="background-color:rgba(57,212,155, 0.2)">,</span> like Jose Altuve, is in the big leagues now, but he is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Rodriguez sent down
+<span style="background-color:rgba(57,212,155, 0.2)">Corp</span>us Christi's Albers recalled to bolster bullpen
+By Jose de Jesus</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>Phoenix Coyotes Vs<span style="background-color:rgba(57,212,155, 0.2)"> OFF</span>
+San Jose Sharks Vs OFF
+Sunday 8th - vs Nashville - 5</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Justice Khilji Ar<span style="background-color:rgba(57,212,155, 0.2)">if</span> Hussain, hearing a suo motu case and two identical petitions filed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> when adversaries have left<span style="background-color:rgba(57,212,155, 0.2)"> us</span> no alternative, it is individuals like Jose Jimenez who answered the call to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>?
+- Major<span style="background-color:rgba(57,212,155, 0.2)"> tech</span> land sale in San Jose's Edenvale
+- First look at Facebook's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Jose del Cabo
+<span style="background-color:rgba(57,212,155, 0.2)">Tel</span>/Fax: (624) 143-0712
+Paloma</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> the Brainerd<span style="background-color:rgba(57,212,155, 0.2)">-</span>Bemidji winner facing the Buffalo-STMA winner at 6 p</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

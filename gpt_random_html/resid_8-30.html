@@ -1,0 +1,697 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-30</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-30</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: /POLITICS/12/24/health.<span style="background-color:rgba(57,212,155, 1.0)">care</span>/index.html Washington (CNN)<br>Activations: ("care" : 4)<br>Example 2: ) Looking for footfetish<br>AT GOAL NAKED! #oilshow/ #<span style="background-color:rgba(57,212,155, 1.0)">oil</span><br>Activations: ("oil" : 3)<br>Example 3: -www-<span style="background-color:rgba(57,212,155, 1.0)">form</span>-urlencoded;charset=UTF-8 error=invalid<br>Activations: ("form" : 6)<br>Example 4: <|endoftext|><br>File Type: image/<span style="background-color:rgba(57,212,155, 1.0)">j</span>peg<br>Living Room — This living room, is one of<br>Activations: ("j" : 2)<br>Example 5: .bmj.com/content/360/<span style="background-color:rgba(57,212,155, 1.0)">bm</span>j.k1116/rapid-<br>Activations: ("bm" : 3)<br>Example 6: <|endoftext|> in field!<br>You can demand any translations of texts, articles, technical and<span style="background-color:rgba(57,212,155, 1.0)"> professional</span> translations,<br>Activations: (" professional" : 4)<br>Example 7:  ��That��s a sound he has<span style="background-color:rgba(57,212,155, 1.0)"> not</span> heard too often in this ballpark. That sound<br>Activations: (" not" : 3)<br>Example 8: bbc.com/news/<span style="background-color:rgba(57,212,155, 1.0)">world</span>-middle-east-24657713.<br>K<br>Activations: ("world" : 5)<br>Example 9:  - English - Drama/<span style="background-color:rgba(57,212,155, 1.0)">S</span>ci-Fi - Chapters: 46 - Words: 161,121 -<br>Activations: ("S" : 3)<br>Example 10: <|endoftext|> audio files; convert video to<span style="background-color:rgba(57,212,155, 1.0)"> audio</span>; rip audio CD to audio formats; convert and burn audio<br>Activations: (" audio" : 3)<br>Example 11:  Humanities/Fine Arts, News/<span style="background-color:rgba(57,212,155, 1.0)">Current</span> Events, Sciences, and Social Sciences. Use the down<br>Activations: ("Current" : 5)<br>Example 12: <|endoftext|> movies<span style="background-color:rgba(57,212,155, 1.0)">,</span> you should probably also know that the studios are the ones in charge. Which is partially<br>Activations: ("," : 3)<br>Example 13:  company. Mel is an author and is currently one of CNN��<span style="background-color:rgba(57,212,155, 1.0)">s</span> on-air commentators and<br>Activations: ("s" : 3)<br>Example 14: <|endoftext|> Papers on<span style="background-color:rgba(57,212,155, 1.0)"> recent</span> advances, and review articles, particularly in regard to fundamental properties and the structural and<br>Activations: (" recent" : 2)<br>Example 15: doc/whirr-in-5-minutes.xml, src/site/<span style="background-color:rgba(57,212,155, 1.0)">site</span><br>Activations: ("site" : 7)<br>Example 16:  the All Roads Film Project for indigenous and<span style="background-color:rgba(57,212,155, 1.0)"> minority</span> filmmakers at the National Geographic Society in Washington.<br>Pur<br>Activations: (" minority" : 3)<br>Example 17:  smartphones, tablets, and laptops. You can then wirelessly stream music<span style="background-color:rgba(57,212,155, 1.0)"> --</span> or any audio -- to<br>Activations: (" --" : 3)<br>Example 18: <span style="background-color:rgba(57,212,155, 1.0)"> Pack</span><br>Easy CD-DA Extractor, the Swiss Army Knife Of Digital Audio, is CD R<br>Activations: (" Pack" : 2)<br>Example 19: Serve with rice. Enjoy!Your Cart is Empty<br>translation missing: en.products.<span style="background-color:rgba(57,212,155, 1.0)">not</span><br>Activations: ("not" : 3)<br>Example 20:  Cache||4 MB||4 MB|<br>|Graphics /<span style="background-color:rgba(57,212,155, 1.0)"> Comp</span>ute Units||Vega 11 (<br>Activations: (" Comp" : 3)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Tokens related to technology, media, and formats, often appearing in URLs, file types, or technical descriptions.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Tokens related to technology, media, and formats, often appearing in URLs, file types, or technical descriptions.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> in Voice over<span style="background-color:rgba(57,212,155, 1.0)"> Internet Protocol</span> communication solutions and featuring intuitive user interfaces, Simoco Xd Dispatch Solutions</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span> due to guidelines for past and<span style="background-color:rgba(57,212,155, 1.0)"> present</span> player names. Please create a new entry.Honda K20</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">Current</span> Events. Click the button next to the subject area you want to search. Click the heading,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">x</span>-www-<span style="background-color:rgba(57,212,155, 1.0)">form</span>-urlencoded;charset=UTF-8 code=g</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>/1.1 200 OK Content-Type:<span style="background-color:rgba(57,212,155, 1.0)"> application</span>/<span style="background-color:rgba(57,212,155, 1.0)">x</span>-www-<span style="background-color:rgba(57,212,155, 1.0)">form</span>-urlenc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Y / N Policy/<span style="background-color:rgba(57,212,155, 0.9200000000000002)">Group</span> # Name of Insured Social Security # - - Insurance Company Phone</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>:darkslategray;" href="http://www.usatoday.com/story/<span style="background-color:rgba(57,212,155, 0.9200000000000002)">money</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> salt: 107264 c/s real, 107264 c/<span style="background-color:rgba(57,212,155, 0.9200000000000002)">s</span> virtual
+Using the same</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> and<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> market</span> analysis.
+Take a free two-week trial now for the latest news, data and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> : image/<span style="background-color:rgba(57,212,155, 0.9200000000000002)">jpg</span>
+Resolution : 860x898 Pixel
+Image Gallery of Nyc</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Other Back-End/ Data/<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Transaction</span> Processing, Backend Executive Computer Operator required with good typing skills</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> 53% disapprove; NBC/<span style="background-color:rgba(57,212,155, 0.8400000000000001)">WS</span>J: 45% approve - 53% disapprove; NPR/<span style="background-color:rgba(57,212,155, 0.8400000000000001)">P</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> wav, webcasting, mp3 broadcast, audio broadcast, radio,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> radio</span> station, audio player</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>669546460/6/7005/<span style="background-color:rgba(57,212,155, 0.8400000000000001)">700</span>5/<span style="background-color:rgba(57,212,155, 0.8400000000000001)">700</span>2/7002/700</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>'s difficult."
+Reprinted from Climatewire with permission from Environment &<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Energy</span> Publishing, LLC.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span>�ve vetoed this, remember. So, no.��Material from State House News Service<span style="background-color:rgba(57,212,155, 0.76)"> was</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> the nation.
+Information from the Associated Press<span style="background-color:rgba(57,212,155, 0.76)"> was</span> used in this story.
+Notice about comments:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>/ Process – Associate, Other Back-End/ Data/<span style="background-color:rgba(57,212,155, 0.76)"> Transaction</span> Processing, Backend Executive Computer Operator</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>/<span style="background-color:rgba(57,212,155, 0.76)">picture</span>/<span style="background-color:rgba(57,212,155, 0.76)">movie</span> messages despatched from Canada to your Canadian wireless quantity and gained texts from any</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>Type: ||text/<span style="background-color:rgba(57,212,155, 0.76)">plain</span>; charset=ISO-8859-1|
+You will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> For end users of Internet services, e-mail is e-<span style="background-color:rgba(57,212,155, 0.6799999999999999)">mail</span> and Web-based delivery of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> via screen, I can get something like the following:
+> screen /dev/<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ob</span>d</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>irection scripts to point straight to the final URL.
+Youtube MP3, convert videos to<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> mp</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>64/<span style="background-color:rgba(57,212,155, 0.6799999999999999)">iso</span>-cd/debian-7.6.0-amd64-netinst.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>423-i430. 10.1093/bioinformatics/<span style="background-color:rgba(57,212,155, 0.6799999999999999)">bt</span>i1020</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> X-overs - Rated: T - English - Drama/<span style="background-color:rgba(57,212,155, 0.6000000000000001)">S</span>ci-Fi - Chapters:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>iling with Chrome Pipe Over the White Countertop
+File Type: image/<span style="background-color:rgba(57,212,155, 0.6000000000000001)">j</span>peg
+F</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>. This R2 unit also supports MP3/WMA/JPEG/<span style="background-color:rgba(57,212,155, 0.6000000000000001)">MP</span>4 and Div</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>testing awaite$ time /Applications/<span style="background-color:rgba(57,212,155, 0.6000000000000001)">john</span>-1.7.6-jumbo-12</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> 789-794. 10.1093/bioinformatics/<span style="background-color:rgba(57,212,155, 0.6000000000000001)">bt</span>k046</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> https://indieauth.com/auth HTTP/1.1 Content-Type:<span style="background-color:rgba(57,212,155, 0.52)"> application</span>/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>art #nailsofinstagram #manicure #nail #beauty #<span style="background-color:rgba(57,212,155, 0.52)">gel</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> tool that lets users share on-screen action over<span style="background-color:rgba(57,212,155, 0.52)"> the</span> internet in real time, meaning others can watch</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>/<span style="background-color:rgba(57,212,155, 0.52)">bu</span>ying.
+These charges are normally collected by the delivering freight (shipping) company</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> be in front of my tv on<span style="background-color:rgba(57,212,155, 0.52)"> those</span> two nights.
+Just finished my first: The Strange Case</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>ion\<span style="background-color:rgba(57,212,155, 0.44)">Gold</span>\Coins".coin" and is located in Huntington Beach, California. This item</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>news.<span style="background-color:rgba(57,212,155, 0.44)">yahoo</span>.com/s/ap/20070213/ap_on_re</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> record my own radio shows on<span style="background-color:rgba(57,212,155, 0.44)"> cass</span>ettes and send them to my girlfriend in the West Country"</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>Thunderbird 220.127.116.11 (X11/<span style="background-color:rgba(57,212,155, 0.44)">200</span>70604)
+El</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> /usr/X11/lib/X11/<span style="background-color:rgba(57,212,155, 0.44)">x</span>server.
+These sections describe the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>/<span style="background-color:rgba(57,212,155, 0.36000000000000004)">kg</span> (calculated); 70 kcal per patty
+Crude Protein (min) 38</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> only the text. The four nouns on this time period are a human being, matter,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> position</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>/dist-packages/keepnote/gui/<span style="background-color:rgba(57,212,155, 0.36000000000000004)">__</span>init__.py", line 469,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>@example.com.
+For more options, visit https://<span style="background-color:rgba(57,212,155, 0.36000000000000004)">groups</span>.google.com/d</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>14053484 http ://www.dailymotion.com/video/<span style="background-color:rgba(57,212,155, 0.36000000000000004)">x</span>4j</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> (7): 4395-4407. 10.1074/j<span style="background-color:rgba(57,212,155, 0.28)">bc</span>.M70</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>-rebase-merge-requests-in-the-<span style="background-color:rgba(57,212,155, 0.28)">web</span>-ui.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>nl.com/artio-<span style="background-color:rgba(57,212,155, 0.28)">global</span>-investors-art/. Levi & Korsinsky is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.28)">mail</span>orderbrides.net/thai-brides/ percentage of those men, marriage follows</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Bosco on NBC��<span style="background-color:rgba(57,212,155, 0.28)">s</span> hybrid show Third Watch, here playing a character name Joe;</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> or because they want to have sex someday or because they want to protect their bodies. When you dem</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> credentials of a design to understand the financial implication of following different strategies. This means more design solutions can</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>--above the FCC defined minimum for broadband speed--with around 5-10 Mbps downstream. Out of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> who will go out and make the case for language learning in whatever small way they can.
+So</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> elected to membership in Robots.
+Professional Leadership Honor Society, formerly Management Honor Society. This organization is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Service could be in the form of educational outreach, knowledge and skills at public star parties or other astronomical</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> violence by women means that it can be understood as a ��stock story�� that perpetuates</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> was and what it meant to follow this messiah.
+IV. During Jesus Time in Jerusalem,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> also enjoying her dog, crocheting, or reading a good book. She was Commander of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> [crew chief Chad Knaus] and all the guys. It's been a great offseason.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> culture, celebrity gossip<span style="background-color:rgba(57,212,155, 0.2)">,</span> movies,<span style="background-color:rgba(57,212,155, 0.2)"> music</span>, books mafch tv reviews. quot;We saw</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> example error response:<span style="background-color:rgba(57,212,155, 0.2)">
+</span>HTTP/<span style="background-color:rgba(57,212,155, 0.2)">1</span>.1 404 Not Found Content-Type: application/x</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>BS News/Marist<span style="background-color:rgba(57,212,155, 0.2)">:</span> 43%<span style="background-color:rgba(57,212,155, 0.2)"> approve</span> - 53% disapprove.]
+GOT A WILD</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Associated Press
+P<span style="background-color:rgba(57,212,155, 0.2)">EW</span> Research Center<span style="background-color:rgba(57,212,155, 0.2)"> for</span> The People & The Press McCain 49% Gore 41% Bush</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>: 2840<span style="background-color:rgba(57,212,155, 0.2)">K</span> c/<span style="background-color:rgba(57,212,155, 0.2)">s</span> real, 2840K c/s virtual
+Benchmark</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> these Interwebs.<span style="background-color:rgba(57,212,155, 0.2)"> If</span> anyone knows<span style="background-color:rgba(57,212,155, 0.2)"> the</span> source of this quote, please send me a link.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> out there. The<span style="background-color:rgba(57,212,155, 0.2)"> gate</span>keepers are<span style="background-color:rgba(57,212,155, 0.2)"> the</span> police rather than gallery owners. Now with the internet, artists</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Asia��s �<span style="background-color:rgba(57,212,155, 0.2)">�</span>Squawk<span style="background-color:rgba(57,212,155, 0.2)"> Box</span>�� on Friday. ��So I think at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>messages/clinical_<span style="background-color:rgba(57,212,155, 0.2)">data</span>_sets<span style="background-color:rgba(57,212,155, 0.2)">/</span>data_sets/mental_health_minimum_data</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>j.com/<span style="background-color:rgba(57,212,155, 0.2)">content</span>/360<span style="background-color:rgba(57,212,155, 0.2)">/</span>bmj.k1116/rr
+ Jär</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -1,0 +1,697 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-1</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-1</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  overlooking Cabo San Lucas Bay. Includes lounge, restaurant, pool, exercise room and<span style="background-color:rgba(57,212,155, 1.0)"> other</span> facilities.<br>Activations: (" other" : 0)<br>Example 2: <|endoftext|> packages where they need to be every day of the week.<br>Connect With Us And<span style="background-color:rgba(57,212,155, 1.0)"> Other</span> Small<br>Activations: (" Other" : 3)<br>Example 3: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> other</span> state flags with the exception of Ohio are rectangular.<br>Although the Legislature modeled the state flag<br>Activations: (" other" : 1)<br>Example 4: <|endoftext|>2D6 inhibitors.<br>7.2 Effects of Ranolazine on<span style="background-color:rgba(57,212,155, 1.0)"> Other</span> Drugs<br>In<br>Activations: (" Other" : 6)<br>Example 5: <|endoftext|> is the<span style="background-color:rgba(57,212,155, 1.0)"> other</span> three girls seem less enthusiastic.<br>Bridget (Lively) is off<br>Activations: (" other" : 1)<br>Example 6: <|endoftext|> for six consecutive weeks with both daytime and evening groups available.<span style="background-color:rgba(57,212,155, 1.0)"> Other</span> services include individual and family counseling<br>Activations: (" Other" : 1)<br>Example 7: <|endoftext|> 9<span style="background-color:rgba(57,212,155, 1.0)"> other</span> bloggers. To read our collective Hong Kong Travel Blog entries, please click on the icon<br>Activations: (" other" : 2)<br>Example 8: <|endoftext|> singing with<span style="background-color:rgba(57,212,155, 1.0)"> other</span> senior students. Rehearsals are Friday morning before school at 8am in<br>Activations: (" other" : 1)<br>Example 9: <|endoftext|> Marine Pollution by Dumping of Wastes and<span style="background-color:rgba(57,212,155, 1.0)"> Other</span> Matter, 1996 Protocol to the Convention on<br>Activations: (" Other" : 3)<br>Example 10: <|endoftext|><br>Premiums are generally calculated on your age and geographic location, as well as<span style="background-color:rgba(57,212,155, 1.0)"> other</span> additional Coverage<br>Activations: (" other" : 0)<br>Example 11:  completely.<br>…as if neither of us could truly exist until the<span style="background-color:rgba(57,212,155, 1.0)"> other</span> disappeared completely.<br>Nothing<br>Activations: (" other" : 1)<br>Example 12:  to buy efficiently. I buy too much of some things.<span style="background-color:rgba(57,212,155, 1.0)"> Other</span> things I buy planning to use them<br>Activations: (" Other" : 0)<br>Example 13: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> other</span> things and it's easy to figure out of this shoes is good for running, training or<br>Activations: (" other" : 1)<br>Example 14: <|endoftext|> the<span style="background-color:rgba(57,212,155, 1.0)"> remaining</span> pieces of dough.<br>- Heat the olive oil in a large nonreactive skillet<br>Activations: (" remaining" : 0)<br>Example 15:  Representative Judy Biggert (R-IL) and 26<span style="background-color:rgba(57,212,155, 1.0)"> other</span> co-sponsors. On May<br>Activations: (" other" : 0)<br>Example 16:  for the<span style="background-color:rgba(57,212,155, 1.0)"> Other</span> Guy billboard campaign to Oakland, CA, Wilmington, DE and Camden, NJ. They<br>Activations: (" Other" : 4)<br>Example 17: <|endoftext|>oids article.<br><span style="background-color:rgba(57,212,155, 1.0)">Other</span> Proposed Natural Treatments for Nosebleeds<br>Related chemicals called anth<br>Activations: ("Other" : 2)<br>Example 18: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> other</span>. In the lack of support and encouragement from the peers within a group often the most innovative<br>Activations: (" other" : 1)<br>Example 19: <|endoftext|> today!- Craft: Cross Stitch, Needlepoint, Embroidery and<span style="background-color:rgba(57,212,155, 1.0)"> Other</span><br>Activations: (" Other" : 5)<br>Example 20: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> other</span> communities develop their trauma/emergency services.<br>Stormont Vail Emergency & Trauma<br>Activations: (" other" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The word "other" in various contexts, often indicating a category or a list of items.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The word &quot;other&quot; in various contexts, often indicating a category or a list of items.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> Other</span> Trading and LinkedIn Buffet can seem more advanced than that multi-level account. Hitting</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>.
+- Performs assigned duties with minimal supervision.
+-<span style="background-color:rgba(57,212,155, 1.0)"> Other</span> duties as assigned
+- Excellent</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>isition: Regular Clearance Level Must Be Able to Obtain: None Public Trust/<span style="background-color:rgba(57,212,155, 1.0)">Other</span> Required</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> posts: Shared Custody If the Shoe Was On the<span style="background-color:rgba(57,212,155, 1.0)"> Other</span> Foot Yesterday I read the most</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>|
+|<span style="background-color:rgba(57,212,155, 1.0)">Other</span> Ingredients: Cellulose (capsule shell), gum arabic, cellul</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>, Clothing and<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> Other</span> Products at Best Price in India. Free Shipping and Cash on Delivery Available
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> | performing arts | sports & outdoors | visual arts |<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> other</span> | comedy | shopping | education/campus</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Value In Land
+View Canyon, Hills, Neighborhood, Valley
+Square Feet 59174
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">Other</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> JOURN, CAAP, APR
+<span style="background-color:rgba(57,212,155, 0.9200000000000002)">Other</span> known (and less known) facts about Howard</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.9200000000000002)">Other</span> groups that may be eligible for discounted prices include pensioners, colleges, students and vulnerable people</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> other</span> hand, someone who is facing addiction to something like tobacco or marijuana may not necessarily need this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> other</span> ventures he hath, squandered abroad. But ships are but boards, sailors but men</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> Shame.��)
+<span style="background-color:rgba(57,212,155, 0.8400000000000001)">Other</span> celebrities have also come under scrutiny because gifts received were not clearly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> products in Malaysia.<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> Other</span> Xiaomi products you would be interested are:
+- Redmi Note (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.8400000000000001)"> other</span> jewels of Florence.
+The Ponte Vecchio is lined with jewellery stores. My</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.76)"> other</span> sources of law, such as the writings of the most highly qualified publicists or scholars,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.76)"> other</span> sports did you play as a child? Volleyball, Basketball.
+- If you</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.76)"> other</span>, or with an adult, they can be in the space (but not playing chase in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.76)"> other</span> hand aims to open one��s mind to different universal cultures that have contributed towards enrichment</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.76)"> other</span> e-mail marketing platform, Actionetics is so much extra.
+I like Actionetics</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Holiday Weekend.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">Other</span> accolades include America��s blues bible saying ��vast talent</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> $6 million per year, just for you.<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Other</span> liability insurance policies, like AMTA��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Mann.
+<span style="background-color:rgba(57,212,155, 0.6799999999999999)">Other</span> alumni committee members Charlotte Palmer and Carol Reddick (��78) helped put</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> to you.<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Other</span> Permitted and Required Uses and Disclosures That May Be Made Without Your Authorization</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> from<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> other</span> institutions attended are on file in the Office of the Registrar before you submit your graduation application</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6000000000000001)"> else</span> of value.
+- Co-ordinating public and private drug coverage (smallbizad</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> bebida<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> other</span> than Red Stripe for jerk snacks!
+THIS SHIT RIGHT HERE.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Icons Link To New Pages Of Worksheets Such As The Famous Quotes<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> Others</span> Are Basic Alphabet</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> other</span> hand are all science fiction: Philip K. Dick, Harlon Ellison. Old School</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> out for<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> others</span> to enjoy.
+In the Florida panhandle, Ella is trying to keep</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> to<span style="background-color:rgba(57,212,155, 0.52)"> other</span> Croatian companies, as it includes farming on about 20,000 ha, diverse stock breeding</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> is writing for<span style="background-color:rgba(57,212,155, 0.52)"> other</span> kids, that really wouldn��t be fair. Rick Reilly finished out</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> her<span style="background-color:rgba(57,212,155, 0.52)"> other</span> friends, though after the Calamity had run its course she ceased to exist and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> can hope that you stumble over Galleon with 39<span style="background-color:rgba(57,212,155, 0.52)"> other</span> people in Valley of the Four Winds.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> updates, making it one of the most secure phones on the market.<span style="background-color:rgba(57,212,155, 0.52)"> Other</span> Google services include Google Assistant</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>as well as<span style="background-color:rgba(57,212,155, 0.44)"> other</span> related material technologies) will be described.
+Energy Harvesting and Sensing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>�� is at the same time to ��lead��<span style="background-color:rgba(57,212,155, 0.44)"> others</span> and a way of behaving within</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>, there��d be<span style="background-color:rgba(57,212,155, 0.44)"> other</span> bonuses. Shortly after Krystal landed the role, the script</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> with issues of<span style="background-color:rgba(57,212,155, 0.44)"> other</span> local Churches. What is claimed, that every local Church can grant autoce</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>that end up inside of<span style="background-color:rgba(57,212,155, 0.44)"> other</span> keyboards. Keyboard makers such as Cooler Master, Corsair, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>, and<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> other</span> nuts she has written elsewhere she did not know of any Jewish 'heritage'</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> like Skype and<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> other</span> video-conferencing services. With so many using their iPhones and iPads</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> recommendation or endorsement of any specific products, procedures, tests, diagnosis, opinions, or<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> other</span> information</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> defence |
+|All<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> other</span> industries(a) |
+|(a) Excluding ownership of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> antagonist from the series, as well as<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> other</span> characters like Sheik, Princess Ruto, Yuga</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> people to us more so than one in our state.��
+The<span style="background-color:rgba(57,212,155, 0.28)"> other</span> major talking point against</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>, sister companies or any company associated with us, directors, affiliates, agents, employees, and<span style="background-color:rgba(57,212,155, 0.28)"> other</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> there with you every step of the way, every meal, providing fantastic feedback.<span style="background-color:rgba(57,212,155, 0.28)"> Other</span> professionals have the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> all the<span style="background-color:rgba(57,212,155, 0.28)"> other</span> rich cross-section of fellow bikers has given me a rare opportunity to spend</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> of the<span style="background-color:rgba(57,212,155, 0.28)"> other</span> local activities as well. After all, running around the world is about more than</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>�ve decided to allow schools to recruit unqualified teachers to fill the gaps. The final nail in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Trying to Sleep in a Scary Animal Shelter on a Cold Concrete Floor
+By Susan Rosenberg,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and I feel like I will have a lot of success.��
+Tennessee secondary coach Willie</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of the trail. You can choose to walk the well marked Lycian Way on a guide or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Crappy game show comes to your front door and you compete in front of your neighbors. Lame</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> a concussion is a bleed within the brain. If you have any neurologic findings on exam, this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> cock, or riding on top, and being taken from behind. I saw texts from him to her</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to reach into a box and just pull out an idea, and let that fuel me? It�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> was going to write a travel story about fans making Alabama pilgrimages to Jimmy Buffett��s birth</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> every year of the contest's existence. He is principal partner at Tactical Intelligence, and a security analyst</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> show a difference<span style="background-color:rgba(57,212,155, 0.2)"> between</span> no risk<span style="background-color:rgba(57,212,155, 0.2)"> and</span> at risk) suggests that other factors might better explain the association</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Men $46<span style="background-color:rgba(57,212,155, 0.2)"> (</span>includes $<span style="background-color:rgba(57,212,155, 0.2)">1</span>.00 NC Point Series fee)
+Other Advanced Divisions</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> 1 Design: Different<span style="background-color:rgba(57,212,155, 0.2)"> from</span> other kids art<span style="background-color:rgba(57,212,155, 0.2)"> eas</span>el, this kids educational toy not only serves as the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> other words, even<span style="background-color:rgba(57,212,155, 0.2)"> applying</span> ��<span style="background-color:rgba(57,212,155, 0.2)">analy</span>tical�� methods involves interpretation, often even a strong</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> bit healthier now<span style="background-color:rgba(57,212,155, 0.2)"> without</span> these �<span style="background-color:rgba(57,212,155, 0.2)">�</span>guests.�� Other benefits of doing this work have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> other rose species?<span style="background-color:rgba(57,212,155, 0.2)">
+</span>That�<span style="background-color:rgba(57,212,155, 0.2)">�</span>s it! ��Micro�� this was meant</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>, as in other<span style="background-color:rgba(57,212,155, 0.2)"> membr</span>anous<span style="background-color:rgba(57,212,155, 0.2)"> tissue</span>, and is bonded to silicone blend 220 by the same</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> role. Other actors involved<span style="background-color:rgba(57,212,155, 0.2)"> include</span> Mike D<span style="background-color:rgba(57,212,155, 0.2)">op</span>ud (Varro or ruggedly handsome Lucian as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> from other messages.<span style="background-color:rgba(57,212,155, 0.2)"> In</span> the latter<span style="background-color:rgba(57,212,155, 0.2)"> case</span> we could think: it is not my business. But</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> toward others could indicate<span style="background-color:rgba(57,212,155, 0.2)"> that</span> we need<span style="background-color:rgba(57,212,155, 0.2)"> to</span> remain steady in the Word. It's the 'doing</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -1,0 +1,696 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-44</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-44</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: , Jeff Gerla, 47, and Amanda Bain, 39, were all found shot to death<span style="background-color:rgba(57,212,155, 1.0)"> in</span><br>Activations: (" in" : 3)<br>Example 2:  accept it and do nothing. He asks why her dad was<span style="background-color:rgba(57,212,155, 1.0)"> at the</span> court. Feride says that<br>Activations: (" at" : 2), (" the" : 2)<br>Example 3: <|endoftext|> York to Los Angeles. 192 passengers and crew<span style="background-color:rgba(57,212,155, 1.0)"> on board</span>. Each one with a different reason for<br>Activations: (" on" : 5)<br>Example 4: <|endoftext|> where I could see that breathtaking view, there were around 35<span style="background-color:rgba(57,212,155, 1.0)"> people</span> there including Boo Boo, the<br>Activations: (" people" : 1)<br>Example 5:  the straight man who has unprotected sex would be able to donate blood, but the gay man<span style="background-color:rgba(57,212,155, 1.0)"> in</span> a<br>Activations: (" in" : 2)<br>Example 6: , this gentleman did his burnout while making eye contact with the police officer sitting<span style="background-color:rgba(57,212,155, 1.0)"> on</span> the median.<br>Activations: (" on" : 3)<br>Example 7: The residents<span style="background-color:rgba(57,212,155, 1.0)"> of</span> a Kitsilano apartment building were evacuated for the second time in as many weeks after<br>Activations: (" of" : 1)<br>Example 8: auer��s fly ball for the final out of the first inning, fans<span style="background-color:rgba(57,212,155, 1.0)"> in</span> the left-<br>Activations: (" in" : 3)<br>Example 9:  flame. As we got<span style="background-color:rgba(57,212,155, 1.0)"> on</span> scene we see our canary (police officer) exiting the house.<br>Activations: (" on" : 1)<br>Example 10: Also<span style="background-color:rgba(57,212,155, 1.0)"> in</span> the report:<br>A 20-year-old man reported that the two men asked him<br>Activations: (" in" : 1)<br>Example 11: <|endoftext|>, they joined seven other families traveling west<span style="background-color:rgba(57,212,155, 1.0)"> in</span> a caravan for protection, to Washington State and Oregon<br>Activations: (" in" : 2)<br>Example 12: <|endoftext|> hasn��t ever prepared for a storm this early.<br>Sandbags also were distributed<span style="background-color:rgba(57,212,155, 1.0)"> in</span><br>Activations: (" in" : 1)<br>Example 13: el and there were now 12 pups<span style="background-color:rgba(57,212,155, 1.0)"> in</span> the litter. They all seemed healthy. 6 males and<br>Activations: (" in" : 4)<br>Example 14:  of the 14 who had travelled<span style="background-color:rgba(57,212,155, 1.0)"> with</span> Blue, he saw only three and himself. Red, on the<br>Activations: (" with" : 2)<br>Example 15:  troops still stationed<span style="background-color:rgba(57,212,155, 1.0)"> in</span> Iraq.<br>But this fledgling government, regardless of how powerful, could cause real<br>Activations: (" in" : 2)<br>Example 16: 's entrance. People<span style="background-color:rgba(57,212,155, 1.0)"> in</span> pairs. "Mac, don't beat yourself up. Anyone would be nervous<br>Activations: (" in" : 4)<br>Example 17: <|endoftext|> of kids, like the fourth-graders<span style="background-color:rgba(57,212,155, 1.0)"> in</span> my daughter's class from Alice Maxwell Elementary School<br>Activations: (" in" : 2)<br>Example 18: <|endoftext|><br>Psaki said Haitians who have been<span style="background-color:rgba(57,212,155, 1.0)"> in</span> the US from a certain point have access to<br>Activations: (" in" : 1)<br>Example 19: <|endoftext|> feat as the girls<span style="background-color:rgba(57,212,155, 1.0)"> in the</span> 4x100 and 200 medley relay, breaking the previous school<br>Activations: (" in" : 3)<br>Example 20:  those serving<span style="background-color:rgba(57,212,155, 1.0)"> in</span> government were somehow exempt from misgiving in just this instance, however incriminating the circumstances<br>Activations: (" in" : 2)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Prepositions indicating location or presence, often in a specific context or phrase.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Prepositions indicating location or presence, often in a specific context or phrase.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> to Castries.��
+��I was not physically<span style="background-color:rgba(57,212,155, 1.0)"> in</span> Dennery at all during</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> his girls boarding, and one of them was even<span style="background-color:rgba(57,212,155, 1.0)"> in the</span> photo! I tried to find an online</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> officer arrived and saw five people<span style="background-color:rgba(57,212,155, 1.0)"> in the</span> lobby; he saw one boy huffing a can of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> and creation of what is now the Federal Aviation Administration.
+The crash killed all 128 people<span style="background-color:rgba(57,212,155, 1.0)"> aboard</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> spot and have the other 5 people<span style="background-color:rgba(57,212,155, 1.0)"> in</span> their party have to push their way in front to join them</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> an investigation on one of their soldiers.
+Soldiers and families<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> in</span> need of crisis assistance can</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>��s fitted with motion sensors. These will stop the machine shooting when someone is<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> in the</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> 35,440 fans<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> in</span> attendance were all aware that no Met had ever tossed a no-h</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> 2 contestants left<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> in</span> the Wing of the Moth race. Me and the one who started the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> of us got ready at the hotel, we both stayed<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> in</span> the hotel the night before to make it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Bear Hill in Alvechurch just before 3.20am today (Wednesday) after a woman<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> in</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>.m., according to Grand Junction Police spokesperson Kate Porras. Two people were<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> inside</span> the house when</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> for students who finish their classes early or those who are required to remain<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> in</span> the college after normal college</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> her superiors about it and received apologies from everyone involved<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> in</span> the production.
+'They are not</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Only
+*First Picture of 4 Girls<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> on</span> HayBale Available
+*Little Twin Brindle Girls</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> cops<span style="background-color:rgba(57,212,155, 0.76)"> in</span> the rear mirror
+I slow flows all to death, so ya'll ho's know wh</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> you doin?"
+Officer 1: "Is there anyone else<span style="background-color:rgba(57,212,155, 0.76)"> with</span> you?"
+Driver:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> felt traveling in the fashion we were. A few diapers were<span style="background-color:rgba(57,212,155, 0.76)"> in</span> the backpack, along with a cup</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> we packed up and loaded the boys<span style="background-color:rgba(57,212,155, 0.76)"> in the</span> car. Collin got in the car, looked at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)"> on</span> the list was.
+The ratio of numbers of boys to the number of girls<span style="background-color:rgba(57,212,155, 0.76)"> in</span> a school</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> support from gawkers and see dozens of fans posing for pictures<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> in</span> front of the home, often</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> playing near the lifeguard stand while his older brother was taking part<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> in</span> the tournament when it happened,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>cues�� him from some bandits (though he wasn��t really<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> in</span> danger). He</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> Werner just happened to be<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> in the</span> Power Station at the same time as I was. He asked</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> set of performance figures. As soon as all involved<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> in</span> the chain have defaulted to a short</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>ian, three men-servants<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> in</span> all the panoply and state of a coming princess</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> didn't want anybody getting<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> in</span> trouble." Matt Millham (Stars and Stripes) explained in August</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> 5<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> on</span> the back of a bike, the woman riding sideways because of her sari.
+One</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> mentions interpreting remainders. If there are 55 students and 16 can fit<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> on</span> a bus,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> facilities management at the data center. ��The manufacturers didn��t have anyone left<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> on</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> families residing<span style="background-color:rgba(57,212,155, 0.52)"> in</span> the area, and saw the large wooden boats that take months to carve for their many</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> and goblins<span style="background-color:rgba(57,212,155, 0.52)"> in</span> the stands at Ryan Field for Northwestern's Halloween game against Penn State. But for the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> on the older adults<span style="background-color:rgba(57,212,155, 0.52)"> in</span> your life to help keep them from feeling isolated! #ElderAbuse</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> the fine people<span style="background-color:rgba(57,212,155, 0.52)"> in</span>
+#code on the Core Intuition Slack. I made no progress</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>. One soldier was killed<span style="background-color:rgba(57,212,155, 0.52)"> in</span> action due to a roadside bomb in Iraq. The parliament refused to extend</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Dan had taken a seat right beside Sally.
+Ricky, Paula, and<span style="background-color:rgba(57,212,155, 0.44)"> I</span> placed three</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> and people<span style="background-color:rgba(57,212,155, 0.44)"> in</span> distress at sea are now the things that wake me up in the middle of the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> year that is for the people<span style="background-color:rgba(57,212,155, 0.44)"> in</span> Hull, that will aim to set fire to their expectations of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> when another stylist and client walked<span style="background-color:rgba(57,212,155, 0.44)"> into</span> the room. The client, a young guy, sat down</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> our relationships. Find out how the connections you have to the people<span style="background-color:rgba(57,212,155, 0.44)"> in</span> your life are linked to well</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> able to get some amazing photos!
+Day 5 – As none of my group decided to<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> visit</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>exist harmoniously with others.
+Jinsha director Chen Deming was<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> in</span> town recently for a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>, and cradled by every mother<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> in</span> the entire universe… in the entire 13.8 billion</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> percentages of christian converts<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> in</span> 1900. But the model was run for a range of likely values,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>At that time, there were four Vespa dealers<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> in</span> the Vancouver area, but that changed when</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> Executive Director Kay Sim and others<span style="background-color:rgba(57,212,155, 0.28)"> in</span> representing Texas during a meeting of the ABA Coordinating Committee</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> The Bros are still asleep at that time of day.
+- The absence of cyclists<span style="background-color:rgba(57,212,155, 0.28)"> on</span> the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> As you are well aware, I was not thrilled to be<span style="background-color:rgba(57,212,155, 0.28)"> in</span> O-Hi-O and we</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> can were discovered<span style="background-color:rgba(57,212,155, 0.28)"> in</span> the bathroom shortly after by a school resource officer.
+In interviews with several other</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>. Sophomore Patrick Dougherty swam in<span style="background-color:rgba(57,212,155, 0.28)"> the</span> championship finals of the event, and came in</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> they have. I��ve always been with very strong women.
+Your first wife, Ch</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> or maybe I rented it at Videoport, Portland��s early and unmatched Tyrannosaurus Rex</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> broadcasters should look for there?
+We will be showcasing end-to-end workflows within the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> (worked great!) add in the whole cabbage. TRotate it in the water until the first</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> not contain any FAQ page
+PHGH claims to be a good product having natural ingredients and provides numerous</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> wide range of sex services. Just to confess; due to secracy i haven't make all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the button on the right
+and RUN up the circular ramp to the door (and moving tube)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> — noun phrase in a sentence. How can the answer be improved.
+A noun phrase is any</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> by Spider-Man��s webbing�� — earned him the job, but it also</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Agency and the Italian Space Agency. The Jet Propulsion Laboratory, a
+division of the California Institute</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>, and few<span style="background-color:rgba(57,212,155, 0.2)"> people</span> in between.<span style="background-color:rgba(57,212,155, 0.2)"> There</span> are the soldiers and the pro-democracy activists, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> from it, where<span style="background-color:rgba(57,212,155, 0.2)"> it</span> will be<span style="background-color:rgba(57,212,155, 0.2)"> easier</span> to see the people on the beach and I can really get</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>ia Halvern,<span style="background-color:rgba(57,212,155, 0.2)"> who</span> was chosen<span style="background-color:rgba(57,212,155, 0.2)"> to</span> take part in the Imperial survey of the Unknown Regions. As</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> all U.S<span style="background-color:rgba(57,212,155, 0.2)">.</span> forces in the<span style="background-color:rgba(57,212,155, 0.2)"> area</span>. General Edmund P. Gaines and 1100 men reached</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> beautiful beaches.<span style="background-color:rgba(57,212,155, 0.2)"> In</span> addition,<span style="background-color:rgba(57,212,155, 0.2)"> there</span> are approximately 1600 people in four fishing villages - Cua Van</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>. John 6:<span style="background-color:rgba(57,212,155, 0.2)">20</span>
+P<span style="background-color:rgba(57,212,155, 0.2)">raise</span> the Lord!
+The disciples were in a boat struggling because</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> was among about five people<span style="background-color:rgba(57,212,155, 0.2)"> who</span> jumped a<span style="background-color:rgba(57,212,155, 0.2)"> backyard</span> fence and ran after officers arrived to break up a loud</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> seventh to make it<span style="background-color:rgba(57,212,155, 0.2)"> 11</span>-0<span style="background-color:rgba(57,212,155, 0.2)"> N</span>ats in from of a crowd of 37,238 in the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>etta in the fridge,<span style="background-color:rgba(57,212,155, 0.2)"> although</span> my mar<span style="background-color:rgba(57,212,155, 0.2)">j</span>oram plant died, but I will try it with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> as the man fell<span style="background-color:rgba(57,212,155, 0.2)">,</span> with several people<span style="background-color:rgba(57,212,155, 0.2)"> rushing</span> to the employee's aide.
+In video from the</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

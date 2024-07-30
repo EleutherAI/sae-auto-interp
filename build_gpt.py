@@ -6,9 +6,9 @@ import re
 import html
 from collections import defaultdict
 
-explanation_dir = "results/gpt2_explanations"
-recall_dir = "results/gpt2_recall"
-fuzz_dir = "results/gpt2_fuzz"
+explanation_dir = "results/gpt2_top/gpt2_explanations"
+recall_dir = "results/gpt2_top/gpt2_recall"
+fuzz_dir = "results/gpt2_top/gpt2_fuzz"
 
 data = defaultdict(dict)
 
@@ -176,8 +176,8 @@ def generate_score_html(recall_scores, fuzz_scores):
         s['recall'] = score['prediction']
 
     sorted_scores = sorted(list(results.values()), key=lambda x: x['distance'])
-    sorted_scores += recall_wrong
-    sorted_scores += fuzz_wrong
+    sorted_scores += recall_wrong[:10]
+    sorted_scores += fuzz_wrong[:10]
 
     score_html = ""
     correct = True
@@ -200,7 +200,6 @@ def generate_score_html(recall_scores, fuzz_scores):
                 recall = "true"
 
         recall_circle = f'<span class="circle {recall}"></span>'
-
 
         match (score["fuzz"]):
             case None:
@@ -261,7 +260,7 @@ def edit(path):
     # return f"{module}-{feature}"
 
 def build_html_page(data):
-    os.makedirs("gpt_html", exist_ok=True)
+    os.makedirs("gpt_top_html", exist_ok=True)
     for feature, feature_data in data.items():
         html_content, feature_name = create_html_content(
             feature,
@@ -269,9 +268,9 @@ def build_html_page(data):
             feature_data['recall'],
             feature_data['fuzz']
         )
-        with open(f"gpt_html/{feature_name}.html", "w", encoding="utf-8") as f:
+        with open(f"gpt_top_html/{feature_name}.html", "w", encoding="utf-8") as f:
             f.write(html_content)
-    print(f"HTML files have been created in the 'gpt_html' directory.")
+    print(f"HTML files have been created in the 'gpt_top_html' directory.")
 
 # Process all files
 for file in os.listdir(explanation_dir):

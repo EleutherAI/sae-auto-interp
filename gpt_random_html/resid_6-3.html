@@ -1,0 +1,699 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-3</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-3</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: ), the University of Michigan School of Dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span>��s Bachelor of Science in Dental Hygiene<br>Activations: ("istry" : 6)<br>Example 2:  you decide on the best course of action.<br>How Do I Locate Cosmetic Dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span> Near Me<br>Activations: ("istry" : 6)<br>Example 3: .�� In the box attached, she had<br>Reg<span style="background-color:rgba(57,212,155, 1.0)">istry</span> #158��. In the<br>Activations: ("istry" : 8)<br>Example 4: <|endoftext|> mid-Atlantic.<br>Prior to entering private practice, Chris cler<span style="background-color:rgba(57,212,155, 1.0)">ked</span> for the Honorable Herbert<br>Activations: ("ked" : 1)<br>Example 5: <span style="background-color:rgba(57,212,155, 1.0)">istry</span> is planned.The Hadassah members will be able to make ceramic bowls or hamsas<br>Activations: ("istry" : 5)<br>Example 6:  Dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span> at the University of Connecticut School of Dental Medicine and is board certified. Dr. St<br>Activations: ("istry" : 6)<br>Example 7: <|endoftext|> were no less momentous...among them, the art<span style="background-color:rgba(57,212,155, 1.0)">istry</span> of Monticello and the University<br>Activations: ("istry" : 6)<br>Example 8:  ART GALL<span style="background-color:rgba(57,212,155, 1.0)">ERY</span><br>HARRISON REAL ESTATE GROUP<br>THE TUBAC DELI &<br>Activations: ("ERY" : 0)<br>Example 9: .<br>SEA and experience<br>Firewheel Dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span> for Kids.In a letter today to Treasury Secretary<br>Activations: ("istry" : 6)<br>Example 10: <|endoftext|>, your gift will help the work of the College of Music continue to inspire art<span style="background-color:rgba(57,212,155, 1.0)">istry</span> and discovery<br>Activations: ("istry" : 7)<br>Example 11:  failure because evangelism is not about us—but about God. "<br>Min<span style="background-color:rgba(57,212,155, 1.0)">istry</span>: International Journal<br>Activations: ("istry" : 6)<br>Example 12: Here��s what our Director of Dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span>, Catherine Tannahill, had to say about<br>Activations: ("istry" : 6)<br>Example 13:  Profile Appliance purchase, and $50 on a GE Art<span style="background-color:rgba(57,212,155, 1.0)">istry</span> or GE Series Appliance purchase.<br>Activations: ("istry" : 7)<br>Example 14:  their work.<br>A competent dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span> facility is the one which will effortless to access the services<br>Activations: ("istry" : 6)<br>Example 15: , chair of Inorganic Chemistry and Electrochem<span style="background-color:rgba(57,212,155, 1.0)">istry</span>, focuses on the synthesis, characterization and assembly of<br>Activations: ("istry" : 3)<br>Example 16:  training near Helena AL is an important first step toward launching your new career in dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span>. But before<br>Activations: ("istry" : 6)<br>Example 17: <|endoftext|> an email to: PastoralMin<span style="background-color:rgba(57,212,155, 1.0)">istry</span>@Moeller.orgDANANG, Vietnam (<br>Activations: ("istry" : 4)<br>Example 18:  dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span> services including dental implants, porcelain veneers, and dental crowns; just<br>Activations: ("istry" : 5)<br>Example 19:  of BACE1 expression. Journal of neurochem<span style="background-color:rgba(57,212,155, 1.0)">istry</span>. 2006, 96 (6): 1696<br>Activations: ("istry" : 4)<br>Example 20: . August 6, 2015 atreg<span style="background-color:rgba(57,212,155, 1.0)">istry</span> setting change, and everything worked perfectly. LikeThanks. 4<br>Activations: ("istry" : 9)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Suffix "-istry" in various nouns, often related to professions, fields of study, or institutions.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Suffix &quot;-istry&quot; in various nouns, often related to professions, fields of study, or institutions.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 1.0)">istry</span> has made her very knowledgeable in all the different facets of dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span>. She is our �</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> in numerous dental publications, including Dental Economics magazine��s Dent<span style="background-color:rgba(57,212,155, 1.0)">istry</span> IQ Video series and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 1.0)">istry</span> with Chris Cheeseman at the University of Alberta in Canada and Kelle Moley at</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Consciously attending to the art<span style="background-color:rgba(57,212,155, 1.0)">istry</span> will bring more balance to our work and is likely to enhance nursing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>, became my hobby.
+��He�� combined the knowledge of palm<span style="background-color:rgba(57,212,155, 1.0)">istry</span> and the birth</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> on 1300 041 125 for your obligation-free quote today.Firewheel Dent<span style="background-color:rgba(57,212,155, 0.9200000000000002)">istry</span> for Kids provides</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> introduced the concept of modern Cosmetic Dent<span style="background-color:rgba(57,212,155, 0.9200000000000002)">istry</span> as a fusion of Artistic practice with Scientific methods. In</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>?
+Our cosmetic dental office is your top resource for cosmetic dent<span style="background-color:rgba(57,212,155, 0.9200000000000002)">istry</span> in Northern Virginia. Our cosmetic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Dent<span style="background-color:rgba(57,212,155, 0.9200000000000002)">istry</span>?
+In most cases, dental insurance plans don��t cover cosmetic procedures because they</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Cosmetic Dentist perform Diagnostic mock-up to design smiles. Cosmetic dent<span style="background-color:rgba(57,212,155, 0.9200000000000002)">istry</span> creates attractive smiles that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> cosmetic dent<span style="background-color:rgba(57,212,155, 0.8400000000000001)">istry</span>. My practice is called ��Marc J. Beshar Dent<span style="background-color:rgba(57,212,155, 0.8400000000000001)">istry</span>��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> the signs is important.
+Sleep disorder dent<span style="background-color:rgba(57,212,155, 0.8400000000000001)">istry</span> can help
+ADD and ADHD can commonly be a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> years of enrollment in the School of Dent<span style="background-color:rgba(57,212,155, 0.8400000000000001)">istry</span>. During the three years in the School of Dent<span style="background-color:rgba(57,212,155, 0.8400000000000001)">istry</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> to nothing else in mind, but it's harder to appreciate the art<span style="background-color:rgba(57,212,155, 0.8400000000000001)">istry</span> and
+the artist when</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> to complete the Registered Dental Assistant Program. She has been working in dent<span style="background-color:rgba(57,212,155, 0.8400000000000001)">istry</span> for over 15</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)">istry</span>|
+|Sport Management||Union County Courts|
+Volunteer Income Tax Assistance
+Account</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> education program in Washington. Dr. Nazari holds memberships with the Academy of General Dent<span style="background-color:rgba(57,212,155, 0.76)">istry</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>, massages, makeup art<span style="background-color:rgba(57,212,155, 0.76)">istry</span> and a full-service hair salon. Revel in the spa's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> come to life with the innate art<span style="background-color:rgba(57,212,155, 0.76)">istry</span> of Kala Ramnath, a virtuoso from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> medicine, and dent<span style="background-color:rgba(57,212,155, 0.76)">istry</span> is no exception. Stressing the need to prevent decay and periodont</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> team of doctors around China teaching and giving lectures about topics in dent<span style="background-color:rgba(57,212,155, 0.6799999999999999)">istry</span>, e.g., tempor</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> in the State of Texas. Royella has been working in dent<span style="background-color:rgba(57,212,155, 0.6799999999999999)">istry</span> for over 18 years, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> all the […]
+Cosmetic Dent<span style="background-color:rgba(57,212,155, 0.6799999999999999)">istry</span> in Northern Virginia, VA
+Stained teeth, broken en</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> with sleep disorder dent<span style="background-color:rgba(57,212,155, 0.6799999999999999)">istry</span>, such as using a personal dental orthotic like a DNA appliance, the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>– The creativity, art<span style="background-color:rgba(57,212,155, 0.6799999999999999)">istry</span> & presentation of your look
+– The amount of likes your video receives</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>aves is also a Diplomate of the American Board of Pediatric Dent<span style="background-color:rgba(57,212,155, 0.6000000000000001)">istry</span>.
+Dr. St</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>, cosmetic dent<span style="background-color:rgba(57,212,155, 0.6000000000000001)">istry</span> and dental implants. Dental implants preserve a patient��s jawbone</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> University in 1991. He then switched career paths and graduated from the University of Texas School of Dent<span style="background-color:rgba(57,212,155, 0.6000000000000001)">istry</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> followed by two residency programs at the Medical University of South Carolina: one in pediatric dent<span style="background-color:rgba(57,212,155, 0.6000000000000001)">istry</span> and one</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> our cosmetic dental office, our goal is to provide affordable cosmetic dent<span style="background-color:rgba(57,212,155, 0.6000000000000001)">istry</span> that delivers beautiful smiles without</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>�s Dent<span style="background-color:rgba(57,212,155, 0.52)">istry</span> doctors with any questions. We are your partners in oral health through this crazy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>ist since 2007. She finds dent<span style="background-color:rgba(57,212,155, 0.52)">istry</span> both challenging and rewarding.
+Shaista fell in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> and The London School of Medicine and Dent<span style="background-color:rgba(57,212,155, 0.52)">istry</span> – at Queen Mary, University of London - offers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>, don��t count yourself out for dental implants. At Park South Dent<span style="background-color:rgba(57,212,155, 0.52)">istry</span>, we have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> dent<span style="background-color:rgba(57,212,155, 0.52)">istry</span> to restorative dent<span style="background-color:rgba(57,212,155, 0.52)">istry</span> to orthodontic treatments. More specifically, we offer initial</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> a speaker at the Suncoast Pediatric Conference and the American Academy of Pediatric Dent<span style="background-color:rgba(57,212,155, 0.44)">istry</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>ico-chem<span style="background-color:rgba(57,212,155, 0.44)">istry</span> of biofilm-mediated pitting corrosion of copper pipe supplying potable water
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> someone. Her quest for knowing more about dent<span style="background-color:rgba(57,212,155, 0.44)">istry</span> and helping her patients is never enough. Every day</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> Florida Dental Association and Florida Academy of Pediatric Dent<span style="background-color:rgba(57,212,155, 0.44)">istry</span>. Dr. Staves is an attending</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> located in NYC. I provide cosmetic, celebrity and sedation dent<span style="background-color:rgba(57,212,155, 0.44)">istry</span> services to the greater NYC</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> in modernist architecture or in the physico-chem<span style="background-color:rgba(57,212,155, 0.36000000000000004)">istry</span> of minerals.
+Strictly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> the "Min<span style="background-color:rgba(57,212,155, 0.36000000000000004)">istry</span> of Hajj".
+7 Continents Travel was set up more than 14</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> have lost around 95% of the complex plant bio-chem<span style="background-color:rgba(57,212,155, 0.36000000000000004)">istry</span> and nutrients that were present during our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>���, in Karch, S. (Ed.),Neurochem<span style="background-color:rgba(57,212,155, 0.36000000000000004)">istry</span> of Abused</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> of this actually has the opposite effect of fruit bio-chem<span style="background-color:rgba(57,212,155, 0.36000000000000004)">istry</span> on our hormones, causing the unique</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Education (CE) for FLORIDA BOARD OF DENTIS<span style="background-color:rgba(57,212,155, 0.28)">TRY</span> 30-40 Hr</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> they uphold a high standard of education, too.
+Today's news is that ASUS partnered with<span style="background-color:rgba(57,212,155, 0.28)"> RM</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> ears, with a handful of problems that break the fluid<span style="background-color:rgba(57,212,155, 0.28)">ity</span> of the game��s flow.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>fully blended with active plant ingredients, Rene Furterer Fioravanti Cl<span style="background-color:rgba(57,212,155, 0.28)">arity</span> and Shine Rin</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> history.
+Chan teaches piano, chamber music, music<span style="background-color:rgba(57,212,155, 0.28)"> theory</span>, music history and French at Northwestern.</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> at me with a sly smile, ��Ah, so you��re wandering. You lost</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>-thinking surrounding this idea upon which all else stands. The purpose? To unburden you from all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> latest matte lip purchases have been two Sleek Matte Me ��ultra smooth matte lip creams</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>emphasis on ��teaching,�� period – the wedge, as he describes it, that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> negative (things woulda been worse without the stimulus), delayed gratification (the health-care bill doesn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> we behave or respond to situations or others, and how we feel both emotionally and physically. When we</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> from my impressionist one.
+The truth is that in the last 4 months I��ve</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>-338-7979 24 hours | Customer Service 800-754-8000Tyler Winklevoss is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>
+"Sally, listen. You don't know what Dan's going to do to you.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the Mayor��s draft London Plan.
+The Mayor��s draft 2017 London Plan recognised</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, previously a position<span style="background-color:rgba(57,212,155, 0.2)"> without</span> portfolio under<span style="background-color:rgba(57,212,155, 0.2)"> the</span> ministry of the interior.
+Eiki Nestor, head</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>istry, smiles with<span style="background-color:rgba(57,212,155, 0.2)"> visible</span> aesthetic flaws<span style="background-color:rgba(57,212,155, 0.2)"> can</span> be transformed into radiant grins that restore self-confidence</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> but dentistry is but<span style="background-color:rgba(57,212,155, 0.2)"> one</span> important leg<span style="background-color:rgba(57,212,155, 0.2)"> in</span> table of a happy life, work. A truly happy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> ask Amber!
+<span style="background-color:rgba(57,212,155, 0.2)">Y</span>vette is<span style="background-color:rgba(57,212,155, 0.2)"> Richmond</span> Landing Family Dentistry��s knowledgeable and friendly New Patient</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> additions, should be<span style="background-color:rgba(57,212,155, 0.2)"> finished</span> by early<span style="background-color:rgba(57,212,155, 0.2)"> April</span>.
+All of this technical skill and artistry costs money</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> this is particularly true<span style="background-color:rgba(57,212,155, 0.2)"> in</span> dentistry.<span style="background-color:rgba(57,212,155, 0.2)"> Dent</span>istry is dynamic and ever-changing. Technology moves on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> of physiognomy<span style="background-color:rgba(57,212,155, 0.2)">,</span> palmistry and<span style="background-color:rgba(57,212,155, 0.2)"> the</span> prevalent surroundings was to be amalgamated into one discipline</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> Dentistry - 501 South<span style="background-color:rgba(57,212,155, 0.2)"> Preston</span> Street
+<span style="background-color:rgba(57,212,155, 0.2)">Louis</span>ville, KY 40202
+Course: 12:00</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> three of the many<span style="background-color:rgba(57,212,155, 0.2)"> dental</span> services we<span style="background-color:rgba(57,212,155, 0.2)"> provide</span> at Marc J. Beshar Dentistry.
+Give</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> planning and in advocating<span style="background-color:rgba(57,212,155, 0.2)">...</span>
+Al<span style="background-color:rgba(57,212,155, 0.2)">umni</span> Spotlight: Spreading the UAB School of Dentistry Legacy</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

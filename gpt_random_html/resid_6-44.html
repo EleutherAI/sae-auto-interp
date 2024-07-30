@@ -1,0 +1,691 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-44</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-44</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> and screenplay scenes.<br>What to bring: Something to<span style="background-color:rgba(57,212,155, 1.0)"> scrib</span>ble with and something to<span style="background-color:rgba(57,212,155, 1.0)"> scrib</span>ble<br>Activations: (" scrib" : 5), (" scrib" : 4)<br>Example 2: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> Ibrahim</span>ovic was voted Ligue 1 Player of the Year at the same event after a blistering<br>Activations: (" Ibrahim" : 5)<br>Example 3: <|endoftext|>be Volla and Nathaniel<span style="background-color:rgba(57,212,155, 1.0)"> Hoy</span>t.<br>A memorial service will be held at 3 p.<br>Activations: (" Hoy" : 7)<br>Example 4:  2012;45(1):99-106."<br>Modeling spatial<span style="background-color:rgba(57,212,155, 1.0)"> traject</span>ories in dynamics testing using<br>Activations: (" traject" : 1)<br>Example 5: row<br>Charlie<span style="background-color:rgba(57,212,155, 1.0)"> McA</span>leenan Athenaeum<br>Mike Mackenzie Hammersmith<br>Steve Banks En<br>Activations: (" McA" : 3)<br>Example 6: There are 87 million people living in Egypt and as my friend<span style="background-color:rgba(57,212,155, 1.0)"> Ibrahim</span> said to me, this is the<br>Activations: (" Ibrahim" : 5)<br>Example 7:  make a reservation for the water<span style="background-color:rgba(57,212,155, 1.0)"> aer</span>obics fundraiser, please email firstname.lastname@example<br>Activations: (" aer" : 0)<br>Example 8:  through each book kitchen<span style="background-color:rgba(57,212,155, 1.0)"> scrib</span>bles in the margins reveal adjustments, additions or omissions of ingredients to personal<br>Activations: (" scrib" : 6)<br>Example 9: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> tur</span>quoise green pyjama in cotton is designed in Paris and hand block printed in India<br>Activations: (" tur" : 0)<br>Example 10: <|endoftext|> filter. Finally, check the inlet<span style="background-color:rgba(57,212,155, 1.0)"> baff</span>le to the tank if you have access to it<br>Activations: (" baff" : 1)<br>Example 11: <|endoftext|>ness of breath,<span style="background-color:rgba(57,212,155, 1.0)"> coughing</span>, fatigue, sleep and heart problems, weight loss, and depression.<br>Activations: (" coughing" : 4)<br>Example 12:  of Rajasthan as well as the rainbow shades of<span style="background-color:rgba(57,212,155, 1.0)"> turb</span>ans and sari is inevitably invoked in<br>Activations: (" turb" : 6)<br>Example 13: <|endoftext|> it a go. Lily really loved these little<span style="background-color:rgba(57,212,155, 1.0)"> spir</span>als too, I normally get penne but<br>Activations: (" spir" : 5)<br>Example 14: <|endoftext|> knows better than to trust men with her heart.<br>But their sizzling chemistry<span style="background-color:rgba(57,212,155, 1.0)"> spir</span>als<br>Activations: (" spir" : 5)<br>Example 15: <|endoftext|> girls like with new shoes...<br>The mood soon changed though and she was off<span style="background-color:rgba(57,212,155, 1.0)"> sul</span>king...<br>Activations: (" sul" : 6)<br>Example 16:  of sciatic pain include sneezing,<span style="background-color:rgba(57,212,155, 1.0)"> coughing</span>, physical activity like lifting weights without proper techniques,<br>Activations: (" coughing" : 4)<br>Example 17: isu, but not even close to the best<span style="background-color:rgba(57,212,155, 1.0)"> tir</span>amisu I��ve had. From this<br>Activations: (" tir" : 1)<br>Example 18: <|endoftext|> training that covers grammar, enhancing<span style="background-color:rgba(57,212,155, 1.0)"> scrib</span>endi reviews, proofreading, and more. Distant editors<br>Activations: (" scrib" : 5)<br>Example 19:  be larger.<br>The students need to<span style="background-color:rgba(57,212,155, 1.0)"> extrap</span>olate the graph out far enough to read the predicted<br><br>Activations: (" extrap" : 2)<br>Example 20: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> Sao</span> Paulo, of hosts to celebrations of Breton culture.<br>Follow The Breizh Amer<br>Activations: (" Sao" : 0)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Prefixes or partial words, often indicating a proper noun, surname, or a word related to writing or movement.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Prefixes or partial words, often indicating a proper noun, surname, or a word related to writing or movement.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> Monty Python type of way.
+Take the recent<span style="background-color:rgba(57,212,155, 1.0)"> hoop</span>la over the Queen Mum��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>, Marigny le<span style="background-color:rgba(57,212,155, 1.0)"> Cah</span>ouët, every helpful venue technician along our way, and all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> color and dark tones, French Malbec wines were dubbed ��the black wines of<span style="background-color:rgba(57,212,155, 1.0)"> Cah</span>ors</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>mondib<span style="background-color:rgba(57,212,155, 1.0)">rahim</span>.com
+If you enjoyed this article, please consider supporting our Veteran Editorial by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> of our most important positions, particularly with<span style="background-color:rgba(57,212,155, 1.0)"> Cah</span>ill playing up front, and this position requires players with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> cav</span>iar that, as you might observe, I tried to obscure beneath the little bowl of soy sauce</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> where we come in. These regular appointments will help to prevent<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> cav</span>ities and gum disease as they grow</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> that breaks down the enamel of teeth, which leads to<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> cav</span>ities. Sour, sticky candies</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span> the epidermis. As a result, improves cellular respiration, narrow<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> pores</span>, increases skin tone</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> the ridges,<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> pores</span> and valleys of the finger surface sensor surface of the sensor oriented in a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>a juice,<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> spir</span>ulina, and mung beans.
+Sprout Living Epic Protein Organic plant</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> also associated with dry skin which can be acidic.
+They can all be treated easily with advanced<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> electroly</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>. The error of omission is one of avoiding confrontation with issues and with power that could<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> reverber</span>ate and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> up with his left hand The Fish Sausage Sword on the golden<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> hoop</span> was picked up Taking</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span> use Soft & Bright in a<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> hoop</span> for embroidery and hand quilting without worry of dist</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> doubt<span style="background-color:rgba(57,212,155, 0.76)"> reverber</span>ate for years to come. Other than the pandemic and the societal uprisings,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span> often end up with un-needed parts or extras.
+Today we have a<span style="background-color:rgba(57,212,155, 0.76)"> turb</span>osmart ult</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> first he is treated with suspicion but<span style="background-color:rgba(57,212,155, 0.76)"> Ibrahim</span> slowly nurses him back to health, and the two characters bond</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> snicker at after I pass.��
+Excruciating<span style="background-color:rgba(57,212,155, 0.76)"> electroly</span>sis sessions and hormone therapy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>42-(Cl-) ions dissolved in the<span style="background-color:rgba(57,212,155, 0.76)"> electroly</span>te are removed by washing with water, and after drying</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>.
+Oh yeah, and the novel makes no mention of talking<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> garg</span>oyles.
+If</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> Statistically, these treatments reduce the risk of developing<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> cav</span>ities by 30 percent. Since the treatment is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> most difficult of times.
+"Anwar<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Ibrahim</span> has the experience and intelligence to reinvigorate</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> hoop</span> stress to the intact area of the AF. The ADR may be inserted through the defect in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>oustics were extensively treated with absorbent material to minimise<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> reverber</span>ation and clarify speech. This was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> of buracratic<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> hoop</span> jumping – ��I said ��yes�� to everything</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> end of about 5 minutes, during which the petroleum<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> evapor</span>ated off and sufficient (but incomplete)</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> time to<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> evapor</span>ate. Then, taking care not to use too much water, spritz some or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>ica records for the duration of mom and dad's fight. Mike<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> McA</span>uliff: "Senate Majority</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>.
+Many years ago, I was getting food for a<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> garg</span>oyle gecko when something blue caught</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>,<span style="background-color:rgba(57,212,155, 0.52)"> Boh</span>dan Taras, Yuri, Mikhail, for girls – Christina, Martha, Taisa,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>1587. 10.1086/302172
+Braak H, Braak E,<span style="background-color:rgba(57,212,155, 0.52)"> Boh</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>ermas, Seyla Benhabib or James<span style="background-color:rgba(57,212,155, 0.52)"> Boh</span>man, to name only six authors,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> Milan chairman Silvio Berlusconi met Chelsea owner Roman<span style="background-color:rgba(57,212,155, 0.52)"> Abram</span>ovich in Sardinia last Thursday</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.52)"> oats</span> which have been cut first, (to make pinhead<span style="background-color:rgba(57,212,155, 0.52)"> oats</span>) which are then rolled,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> then because, technically, it will remain the ownership of Roman<span style="background-color:rgba(57,212,155, 0.44)"> Abram</span>ovich.
+Andy is an exiled</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> – not cut)
+- 230g porridge<span style="background-color:rgba(57,212,155, 0.44)"> oats</span> (rolled – and cut)
+-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> UZR of 7.7 in just 42 games, which<span style="background-color:rgba(57,212,155, 0.44)"> extrap</span>olates into a UZ</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> river where I thought we could plant alfalfa to lure the deer away from the<span style="background-color:rgba(57,212,155, 0.44)"> oats</span> and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>85 at Writing.Com).
+All rights reserved.
+Matt<span style="background-color:rgba(57,212,155, 0.44)"> Boh</span>art has granted Writing.Com</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> to<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> spiral</span> completely out of control for both Debbie and Fiona, as their respective worlds are shaken to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>EH in oral<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> muc</span>osa is rare entity and has very less prevalence rate. The disease requires proper clinical</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> I last<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> eyeb</span>alled it and when it actually happened (a grand total of about 10 seconds).</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>bar with Albion keeper Ben Foster beaten.
+But Odemwingie doubled the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Bagg</span>ies lead</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span> its current location due complaints by the settling Spaniards about the amount of<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> mosquit</span>os in the area.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> million years ago based on their absence from the fossil record (Butt, 2006).<span style="background-color:rgba(57,212,155, 0.28)"> Coy</span>ne</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> left untreated, can lead to<span style="background-color:rgba(57,212,155, 0.28)"> muc</span>us buildup caused due to sinus drainage into the back of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> gossip, and<span style="background-color:rgba(57,212,155, 0.28)"> sch</span>olastic interest, spread quickly to London, where English coffeehouses became popular</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Escherichia<span style="background-color:rgba(57,212,155, 0.28)"> coli</span> O103 have been hospitalized, the Centers for Disease Control and Prevention said Tuesday</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> ripple</span> or snow ball effect that seeks to include everyone.
+Don��t get me wrong</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> think it was cool). It was a few years later, long after Jim had graduated and it was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> a more effective distraction display.
+Stickleback fish have been documented performing distraction displays. A nesting</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> help him drive the point home to his school. ��He enforces to the teachers that every</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> is administered jointly by MLB and the players union, is supposed to be confidential, but word of Braun</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> child.
+Child sexual assault has many definitions under the law. However, if it passes, AB</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> God created us. Hope is gift that God gave Adam and Eve after the fall. Hope brings us</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> as giving false assurances, because these words are the very words of Christ. What do we do if</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>Number of titles found is 1.More than 50 high school counselors and teachers from Banning, Be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> and fears. Gene transfer quickly evolved into a competitive research area, but its progress was checked by ethical</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> County and eliminated the territorial protections that allowed mismanagement, fraud and corruption to thrive.
+Now,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> I think of it<span style="background-color:rgba(57,212,155, 0.2)">.</span> That's<span style="background-color:rgba(57,212,155, 0.2)"> way</span> more valuable! I'm just an ordinary schmuck like</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> $13 million a<span style="background-color:rgba(57,212,155, 0.2)"> year</span> — if Cah<span style="background-color:rgba(57,212,155, 0.2)">ill</span> continues to improve and becomes a dependable no. 2</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>�t get<span style="background-color:rgba(57,212,155, 0.2)"> wind</span> of Keith<span style="background-color:rgba(57,212,155, 0.2)">�</span>�s creation. They might storm the party and gobble</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>ur beisp<span style="background-color:rgba(57,212,155, 0.2)">iel</span> essay.<span style="background-color:rgba(57,212,155, 0.2)"> Dr</span> Ibrahim Akubat Nicole Andrews Dr Adam Benkwitz Dr</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>-songwriters like<span style="background-color:rgba(57,212,155, 0.2)"> Nick</span> Cave,<span style="background-color:rgba(57,212,155, 0.2)"> Leonard</span> Cohen, or Jacques Brel, Latin stuff like Ibrahim Fer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>Big Trouble in<span style="background-color:rgba(57,212,155, 0.2)"> Little</span> China is<span style="background-color:rgba(57,212,155, 0.2)"> fun</span> and dopey, funny and dumb all at the same time</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>'s 2011 plan to<span style="background-color:rgba(57,212,155, 0.2)"> rid</span> the gargant<span style="background-color:rgba(57,212,155, 0.2)">uan</span> Rio de Janeiro favela Rocinha of drug</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>m. Hoy por Hoy�<span style="background-color:rgba(57,212,155, 0.2)">�</span> on national<span style="background-color:rgba(57,212,155, 0.2)"> Car</span>acol Radio, fled Colombia after hearing of an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> blackheads and clearing<span style="background-color:rgba(57,212,155, 0.2)"> of</span> clogged pores<span style="background-color:rgba(57,212,155, 0.2)">,</span> an acne-fighting mask, and mini-massage</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> captains then begin<span style="background-color:rgba(57,212,155, 0.2)"> noticing</span> that the<span style="background-color:rgba(57,212,155, 0.2)"> water</span> around Soul Society is evaporating, noting that it can only</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

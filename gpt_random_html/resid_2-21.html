@@ -1,0 +1,694 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-21</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-21</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  my<span style="background-color:rgba(57,212,155, 1.0)"> throat</span>. "For trying to get inside your knickers."<br>"Oh for God's sake<br>Activations: (" throat" : 9)<br>Example 2: <|endoftext|>You have a really nice little mouth. buy generic viagra online usa<br>deep<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> c<br>Activations: (" throat" : 9)<br>Example 3: <|endoftext|>ted and repressed as if something had him by the<span style="background-color:rgba(57,212,155, 1.0)"> throat</span>, was stunning her ear.<br><br>Activations: (" throat" : 9)<br>Example 4: <|endoftext|> municipal buildings.<br>A state law that allows people with a license to carry<span style="background-color:rgba(57,212,155, 1.0)"> concealed</span> weapons goes into<br>Activations: (" concealed" : 6)<br>Example 5: <|endoftext|> shove our urban blue state values down their<span style="background-color:rgba(57,212,155, 1.0)"> throats</span>. When criminals murder fellow citizens, we can choose<br>Activations: (" throats" : 7)<br>Example 6: <|endoftext|> That was harmless and a bit endearing, until he got a strep<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> and refused to<br>Activations: (" throat" : 9)<br>Example 7:  200 grand<span style="background-color:rgba(57,212,155, 1.0)"> concealed</span> in the former home of developer Tom McFeely on Ailesbury Road in Dublin 4<br>Activations: (" concealed" : 5)<br>Example 8: <|endoftext|> me doesn't get a girl like you, Buffy. Not for keeps anyway." His<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> was<br>Activations: (" throat" : 9)<br>Example 9: <|endoftext|><span style="background-color:rgba(57,212,155, 1.0)"> concealed</span> firearm(s). The permit and proper identification must be presented to a peace officer upon request<br>Activations: (" concealed" : 5)<br>Example 10: <|endoftext|> forces for survival and self-preservation.<br>A close examination of these texts reveal a<span style="background-color:rgba(57,212,155, 1.0)"> concealed</span><br>Activations: (" concealed" : 6)<br>Example 11: .<br>Unlike<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> cancers linked to heavy smoking and drinking, patients with HPV-related cancers are younger<br>Activations: (" throat" : 8)<br>Example 12:  desperation seemed to be keeping her mouth open, her<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> raw and lungs filled because Megan just kept screaming<br>Activations: (" throat" : 9)<br>Example 13: ened, and he cleared his<span style="background-color:rgba(57,212,155, 1.0)"> throat</span>. "If I had to say good-bye to you forever<br>Activations: (" throat" : 9)<br>Example 14:  esophagus, the part of the<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> that.<br>This is important because the human body has<br>Activations: (" throat" : 8)<br>Example 15: <|endoftext|> to slip over yours and your eyes stream blood and despair to wrap around her<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> while she is<br>Activations: (" throat" : 9)<br>Example 16:  may experience symptoms differently. Symptoms may include:<br>- irritation of the eyes, nose, and<span style="background-color:rgba(57,212,155, 1.0)"> throat</span><br>Activations: (" throat" : 8)<br>Example 17:  the business whether or not to allow the firearms.<br>The law allows those with a<span style="background-color:rgba(57,212,155, 1.0)"> concealed</span> carry permit<br>Activations: (" concealed" : 6)<br>Example 18: <|endoftext|> (a term used to associate the feeling a traditional cigarette gives to a smoker's<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> when inh<br>Activations: (" throat" : 9)<br>Example 19: The state��s Board of Insurance says that restaurants and bars that have patrons with<span style="background-color:rgba(57,212,155, 1.0)"> concealed</span> firearms would<br>Activations: (" concealed" : 6)<br>Example 20:  or me. Luckily for me the gift was<span style="background-color:rgba(57,212,155, 1.0)"> concealed</span> in a bag I had taken to carrying around with<br>Activations: (" concealed" : 5)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The neuron is activated by the words "throat" and "concealed", often in contexts related to physical body parts or hidden objects.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The neuron is activated by the words &quot;throat&quot; and &quot;concealed&quot;, often in contexts related to physical body parts or hidden objects.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>,��—his hand was about my<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> and my breath was shut off,—��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> with<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> cancer begins within weeks. He has all of those in racing in his corner. So,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> and Daizee for an apology. He admits the<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> injury was on purpose and gives Da</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>), and into the<span style="background-color:rgba(57,212,155, 1.0)"> throat</span>. When this happens, acidic material contacts the sensitive tissue at back of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> rip her<span style="background-color:rgba(57,212,155, 1.0)"> throat</span> out? Overkill.
+Seconds away from becoming kitty-food, M</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> notice it feels like there's something in my<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> throat</span>, and eventually I realize it's my foot,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> in highschool. You feel that burn creep down the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> throat</span> and for a split second you think</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Some adults may also experience a burning sensation in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> throat</span>. A more uncommon symptom is difficulty breathing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> present on the Daily Planet's roof, and Spider-Man cleared his<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> throat</span> to get everyone's attention</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> him in the<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> throat</span>. Unohana is being really tricky right now. which makes me happy!</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>, mainly because it made too much, not to sound gross, phlegm in my<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> throat</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> of breath, and a sour taste in the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> throat</span>. This makes it hard to get a good night</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> a sweet taste in the back of your<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> throat</span>, almost like honey.
+Then we moved on to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>— this is a common denominator of the ability of pillar drills and is specified as twice the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> throat</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>� in the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> throat</span>, which does not go away despite multiple swallowing attempts to clear the ��l</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> the extremely painful symptom of what felt like a lacerated<span style="background-color:rgba(57,212,155, 0.76)"> throat</span>, I couldn��t even</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> many cigar smokers do not inhale, their risk for oral,<span style="background-color:rgba(57,212,155, 0.76)"> throat</span>, and esophageal</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> 27 stab and slash wounds he suffered, or his slit<span style="background-color:rgba(57,212,155, 0.76)"> throat</span>, or how he ended up stuffed in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> pleasure and dercome cost per pill canada. This lymph derives some progress of<span style="background-color:rgba(57,212,155, 0.76)"> throat</span> from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>ptase in about 200 people with inflammatory conditions of the ear, nose, and<span style="background-color:rgba(57,212,155, 0.76)"> throat</span>, researchers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>ordered with black on each side of the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> throat</span>, and a similar blue area with a less heavy black</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> throat</span>.
+And if he wants to claim his re-election as a mandate for the Grand</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> include: nasopharyngeal (NP swabs), nasal swabs,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> throat</span> swabs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>s mucus in the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> throat</span> that causes people to clear their<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> throats</span> constantly, it��s it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> throat</span>; barrel backbore. American-type mouthpiece with bigger professional tone quality and narrow</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> make sure to consume sufficient fluids to avoid getting your<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> throats</span> desiccated. Also, don�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> coughing or wheezing; dizziness or lightheadedness; swelling of the<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> throat</span> and vocal cords</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> 5mm rim width; 4.70mm<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> throat</span>; barrel backbore. Standard rim mouth</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> wake up with a sore<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> throat</span> or feel as though I��m fighting something.
+So why</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>i-related marginalia.
+Oh, and did we mention she deep<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> throats</span> a pickle,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> arrested on possession of<span style="background-color:rgba(57,212,155, 0.52)"> concealed</span> deadly weapons charges last week after a cache of loaded guns was found in his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> the acupressure points for sore<span style="background-color:rgba(57,212,155, 0.52)"> throat</span>. Working on these points can help you get better</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> tip of the medial malleolus.
+Benefits: balancing point, sore<span style="background-color:rgba(57,212,155, 0.52)"> throat</span>, tooth</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>: food allergy, hives, vomiting, diarrhea, dysentery, fever, sore<span style="background-color:rgba(57,212,155, 0.52)"> throat</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> = fever (>100°F or 37.8°C) and cough and/or sore<span style="background-color:rgba(57,212,155, 0.52)"> throat</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> evolution-sec (dot) com [email<span style="background-color:rgba(57,212,155, 0.44)"> concealed</span>])
+The information provided in this advisory is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.44)"> concealed</span> in a framed enclosure from floor to floor.
+By Judy from ND on October 21, 2014</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> analysis SecretsEnsure that the backlink is just not<span style="background-color:rgba(57,212,155, 0.44)"> concealed</span> in a region almost never frequented by</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> to bring a<span style="background-color:rgba(57,212,155, 0.44)"> concealed</span> firearm into an establishment that serves alcohol. Jim Wald, one of the owners of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> The County Sheriff shall issue a<span style="background-color:rgba(57,212,155, 0.44)"> concealed</span> firearms permit to qualified applicants.
+Las Vegas Metropolitan Police Department (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>ard that<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> concealed</span> his identity. The affidavit states that the costumed man yelled at the boy, "</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Has a<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> concealed</span> zip fastener and removable feather pad.Made in England. This cushion measures 48 cm</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> the bill.
+Restaurants and bars would be able to expressly ban<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> concealed</span> firearms in their business</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> all of the necessary permits to carry a<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> concealed</span> weapon.��
+Fox & Hound Restaurant Group</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> effect Nov. 1. However, municipalities have the power to prohibit<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> concealed</span> and openly carried weapons within their</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> the action cant be<span style="background-color:rgba(57,212,155, 0.28)"> concealed</span> from him, so its nothing.The enemy destroys, you have all fought</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> adopted laws against<span style="background-color:rgba(57,212,155, 0.28)"> concealed</span> weapons. She quotes the Governor of Texas in 1893: The ��mission of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> extremely middleton his<span style="background-color:rgba(57,212,155, 0.28)"> concealed</span> perceived principle. Any nay pleasure entrance prepared her.
+On insensible</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.28)"> concealed</span> drawstring at the waist. Lined with short sports tights.
+Shell: Poly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>S: The House and Senate approved a compromise plan to allow people to carry<span style="background-color:rgba(57,212,155, 0.28)"> concealed</span> guns. The legislation</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> fetch the new Charms bar by pointing your mouse cursor at the screen��s top- or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the military in 1972, with the rank of lieutenant colonel.
+Moving to New Preston, Connecticut,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in its entirety. Enclosed, you will find information regarding:
+- Back to School Checklist</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ob. I love all of their stuff and just can't bring myself to really branch out to other</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Campus Life & Student Development.
+Why join a Fraternity or Sorority?
+Involvement</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> OS exploits and network attacks, points to the real story: The DoD saw a proliferation of threats</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Peroxide and Nitric Oxide Are Signaling Molecules Hydrogen peroxide and nitric oxide</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> off, the construct top quality is extremely pleasing, with superior top quality materials used throughout the construction.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in place to a depth of four to eight feet. The top of the monument, which is flush</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> retired Newtown teacher. "It's as if time stood still.''
+Schools Superintendent Janet Robinson announced</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> the Bushes,<span style="background-color:rgba(57,212,155, 0.2)"> who</span> concealed their misbehavior with a mannered WASPiness. But as they</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> her, all start<span style="background-color:rgba(57,212,155, 0.2)"> jumping</span> down T��s throat. My grandmother told her that for ��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> a message you<span style="background-color:rgba(57,212,155, 0.2)"> have</span> zero self-confidence and it blocks the sound from leaving your throat.
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> after that.<span style="background-color:rgba(57,212,155, 0.2)"> Pretty</span> much had my throat all tied up before I decided to put the cookies aside</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> throat.
+- Breath<span style="background-color:rgba(57,212,155, 0.2)"> Easy</span> Oil - helps maintain clear airways & give comfort to forehead, joints</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> (dot) com<span style="background-color:rgba(57,212,155, 0.2)"> [</span>email concealed]
+[ reply ]
+Copyright 2010, SecurityFocusWaip</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> listed.
+The<span style="background-color:rgba(57,212,155, 0.2)"> es</span>ophagus is the tube that carries food from the throat to the stomach.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> the desired throat sensation.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>The higher the coil head setting (1.5) the higher the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>, and throat, that<span style="background-color:rgba(57,212,155, 0.2)"> could</span> trigger infection. Eggs laid in oil-contaminated sand — or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> made up of<span style="background-color:rgba(57,212,155, 0.2)"> bacteria</span> food particles and dead gum cells. Colds and throat infections also cause bacteria</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

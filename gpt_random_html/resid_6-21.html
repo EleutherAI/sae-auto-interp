@@ -1,0 +1,692 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-21</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-21</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> more traditional soft dolls with their kits.<br>Favorite characters from movies, books and<span style="background-color:rgba(57,212,155, 1.0)"> folklore</span> are also<br>Activations: (" folklore" : 5)<br>Example 2: —to cite one of the most centred myth<span style="background-color:rgba(57,212,155, 1.0)">ologies</span> of modern popular cinema—has been read as<br>Activations: ("ologies" : 2)<br>Example 3: <|endoftext|> love stories in<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> - a little bit of embellishment and imagination was used during creation - but<br>Activations: (" mythology" : 9)<br>Example 4:  be president of the United States. When, at some point, the<span style="background-color:rgba(57,212,155, 1.0)"> hysteria</span> dies down, even her<br>Activations: (" hysteria" : 1)<br>Example 5: , you need to work smart. You need to get the right Forex education, avoid the<span style="background-color:rgba(57,212,155, 1.0)"> myths</span><br>Activations: (" myths" : 2)<br>Example 6: <|endoftext|> disco,<span style="background-color:rgba(57,212,155, 1.0)"> folklore</span> evenings, concerts, evening entertainment. Indoor aquatic centre, fitness centre, sa<br>Activations: (" folklore" : 5)<br>Example 7:  it is being able to connect to the<span style="background-color:rgba(57,212,155, 1.0)"> spirituality</span> universe that will guide you & help you through life.<br>Activations: (" spirituality" : 1)<br>Example 8:  took the<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> and shaped it into something real and enduring.<br>On the weekend of his Inaug<br>Activations: (" mythology" : 8)<br>Example 9:  variety of religions describe and practice<span style="background-color:rgba(57,212,155, 1.0)"> spirituality</span>: Buddhism, traditions of the Jewish Kabbalah, Hindu<br>Activations: (" spirituality" : 2)<br>Example 10:  division, manufacture prisoners of war, and create<span style="background-color:rgba(57,212,155, 1.0)"> paranoia</span> or suspicion amongst comrades. We will not be intimidated<br>Activations: (" paranoia" : 1)<br>Example 11:  told The Christian Post that much of the modern Santa Claus<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> comes from the Victorian Era.<br>"<br>Activations: (" mythology" : 9)<br>Example 12: <|endoftext|>wing<span style="background-color:rgba(57,212,155, 1.0)"> paranoia</span> isn't new. It's been around a while. It's almost always wrong.<br>Activations: (" paranoia" : 1)<br>Example 13:  the other gods inspired me to study more about greek<span style="background-color:rgba(57,212,155, 1.0)"> myths</span>. Writing a book is like driving a<br>Activations: (" myths" : 2)<br>Example 14: held<span style="background-color:rgba(57,212,155, 1.0)"> myths</span> about Australia and to encourage further dispersal and repeat visitation. A critical part of this strategy<br>Activations: (" myths" : 0)<br>Example 15:  moment of<span style="background-color:rgba(57,212,155, 1.0)"> paranoia</span> as a highway patrol officer came up on my right, but then I was in Anaheim<br>Activations: (" paranoia" : 1)<br>Example 16:  create an interest in Japanese art and<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> which is truly awe-inspiring. If Japanese culture seems<br>Activations: (" mythology" : 9)<br>Example 17: . Why did the historical battle of 1836 undergo this metamorphosis in memory and<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> to become<br>Activations: (" mythology" : 9)<br>Example 18: ise their status and identity. Some researchers believe that the Olmec sculptures relate to<span style="background-color:rgba(57,212,155, 1.0)"> myths</span> of spiritual<br>Activations: (" myths" : 2)<br>Example 19:  much THC day in and day can result in mental and physical issues, issues like<span style="background-color:rgba(57,212,155, 1.0)"> paranoia</span>, social isolation<br>Activations: (" paranoia" : 1)<br>Example 20:  to the topic that I believe will be helpful in our dialoguing on religion and<span style="background-color:rgba(57,212,155, 1.0)"> spirituality</span>. I have<br>Activations: (" spirituality" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Words related to abstract concepts, such as mythology, folklore, spirituality, and paranoia, often with a sense of cultural or societal significance.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Words related to abstract concepts, such as mythology, folklore, spirituality, and paranoia, often with a sense of cultural or societal significance.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> the ��blood and purity��<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> of The Birth of a Nation, not as a defiant</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> key for understanding a civilization is their<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span>; it represents their fear, desire, their psychosexual and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> schools of thought, which is more a type of ancestor-reverence than<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> in China and East</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> this<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span>. In available cookies, the permission of a browser section modeling grows only worked as a beach</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>. Christianity vs greek<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> essay greek and roman<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> intro to greek<span style="background-color:rgba(57,212,155, 1.0)"> mythology</span> influence g</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>. It is necessary to go back to the ancient Irish epic, to Gaelic<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> mythology</span>, to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>.. in other words, in the "shadows".
+In Hebrew<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> mythology</span>, Cain is the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>. Even the Gods are killed in Norse<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> mythology</span>–by the Midgaard serpent.
+The skeleton</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)"> mythology</span>, but it never was made because the action hours were losing popularty.
+- In Norse</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> and ideological anxiety as the racial<span style="background-color:rgba(57,212,155, 0.9200000000000002)"> mythology</span> of ��colour�� is put under erasure,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> and monsters from<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> folklore</span> and in the upcoming title, Keita returns with the power of a mysterious ghost</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> profusion of birdlore and<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> folklore</span>, whose rich suggestiveness frequently defies analysis.. The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> fighting, Chinese<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> folklore</span>, and the pressure weighing down on Genie's shoulders to get into a top</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> some frightening local<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> folklore</span> from area actors.
+"We have actors go around to different spots and portray</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.8400000000000001)">mology</span> and Visual Science. 55(2):1017-1023
+Boland, M</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>enging. Wagner, an artist who loved ambiguity, made one of
+our most complicated<span style="background-color:rgba(57,212,155, 0.76)"> myths</span> into</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> but no festivities could budge my deep<span style="background-color:rgba(57,212,155, 0.76)"> paranoia</span> about missing my deadline. To do so would surely be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> in Cincinnati and it became what it became: a loud, angry, lobbying organization that fueled<span style="background-color:rgba(57,212,155, 0.76)"> paranoia</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> legends and<span style="background-color:rgba(57,212,155, 0.76)"> myths</span>. One that I heard from a local herself was that a woman fell over the cliff</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> and statistical criteria have become<span style="background-color:rgba(57,212,155, 0.76)"> myths</span>, thus affecting the way that consumers perceive the information provided by the scientific</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> The author descends into the realm of<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> myths</span> and legends to unravel the deeper meaning and functions behind these</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> the cornerstone values of the Jesuit volunteer experience:<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> spirituality</span>, simple living, community, and social justice.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> around here.
+my<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> paranoia</span>/imagination is fascinating isn't it...
+Oh, it's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> most successful authors in the area of success, motivations, and<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> spirituality</span>. They all say different words and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> or equal rights extended to someone else is somehow an affront to them? Where does this<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> paranoia</span> /</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Have you thought about the traumatized<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> spirituality</span> of Eastern Europe after the communist period and whether there are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>
+A community of care might inspire hope by providing a framework of<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> spirituality</span> that gives meaning and hope to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> the Olympics of<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> spirituality</span> to go that far.
+What it says in the Law of One,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> surrealism, absurdities, non sequiturs,<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> paranoia</span>, parodies of the Establishment,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Native American<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> spirituality</span> and the Buddhist way of life. The authors of this web site chose themes and readings</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> and has stayed away from the conventional<span style="background-color:rgba(57,212,155, 0.52)"> myths</span> that surround
+the team (i. e. Snyder as</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>inging Sixties Edition
+The following examples of right-wing<span style="background-color:rgba(57,212,155, 0.52)"> paranoia</span> are all from the late 1950</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> their stories and experiences about motherhood,<span style="background-color:rgba(57,212,155, 0.52)"> spirituality</span>, and health. We became our own community separate</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> myths</span> about the gods, incredible and monstrous stories. For they said that Kronos swallowed his children and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>It may seem odd to discuss spiritual leadership here, but<span style="background-color:rgba(57,212,155, 0.52)"> spirituality</span> in the context of this article means</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>
+Perceiving Reality is a flash video on<span style="background-color:rgba(57,212,155, 0.44)"> spirituality</span>, the meaning of life, sceince</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>nings is through spiritual development. It must be noted that the authors do not equate<span style="background-color:rgba(57,212,155, 0.44)"> spirituality</span> with religion.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> lens of Ignatian<span style="background-color:rgba(57,212,155, 0.44)"> spirituality</span> and previous Sunday��s daily readings. We seek to understand one</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> or rebellious in matters of<span style="background-color:rgba(57,212,155, 0.44)"> spirituality</span>.
+- So, all these factors indicate that Vinod j</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> tests movie waters with 'See You in<span style="background-color:rgba(57,212,155, 0.44)"> Valhalla</span>'
+Matt Bomer's return to American Horror Story</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>adies of Horror" and will be compiled into a micro-anth<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ology</span> used to promote the press.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> is no question that a strong sense of<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> spirituality</span> can help people face difficult challenges with courage and a sense</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> bread, His body, and drinking of wine, His blood. We need to build<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> spirituality</span> into our</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>.
+One of the most harmful<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> myths</span> about suicide is the notion that people who really want to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> America | Oxfam America. – · 5<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> myths</span> about the working poor in America. September 7,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> commonly referred to as the bio-magnetic field or<span style="background-color:rgba(57,212,155, 0.28)"> aura</span>. The field consists of several different layers</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>aching Affiliation||Associate Professor of Ophthal<span style="background-color:rgba(57,212,155, 0.28)">mology</span>, Harvard Medical School|
+After receiving a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> Johns Hopkins University. His current research efforts include medical informatics in ophthal<span style="background-color:rgba(57,212,155, 0.28)">mology</span> and computer-assisted</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>�t a whole lot of demand for learning ophthal<span style="background-color:rgba(57,212,155, 0.28)">mology</span> (go figure). I read reviews on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> how they differ between cultures and traditions, and how there are similarities that cross cultures and bridge<span style="background-color:rgba(57,212,155, 0.28)"> traditions</span></span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> see the difference.Northwestern Mutual is increasing its sponsorship level for this year��s World Challenge</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> environmental conventions as well as adult education and lifelong learning.) To make these actions more effective, we must</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> my relati... more »
+It's a small community theater, but very quaint and I liked</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>).
+And we TOTES got him to take a picture with us:
+And then we</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> replace your flooring and other products around your home as regularly or at all, even with normal wear</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> your feet.
+That small wound becomes infected. Your immune system and circulatory system are compromised so</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> stroke, 60mm, with a compression ratio of 10 to 1, generating some 19 horsepower at 6</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> those terms were understood by Congress, are "objectively distinguishable," the statute is not vague.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> customer service representatives and game architects. Blackzone Controllers never let its customers go unsatisfied. We</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> as soul or breath. The concept here of this word is of a life sustained by this 'b</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>phthalmology (AA<span style="background-color:rgba(57,212,155, 0.2)">O</span>), is not reviewed or checked by medical experts or Academy staff before it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> character in the h<span style="background-color:rgba(57,212,155, 0.2)">indu</span> mythology he is playful and sometimes he will stir the pot, start thoughtful arguments</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> siege from hell-<span style="background-color:rgba(57,212,155, 0.2)">spawn</span> straight out of Chinese folklore, her priorities are suddenly and forcefully rearranged.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> for this course.<span style="background-color:rgba(57,212,155, 0.2)"> He</span> has published articles on mythology, comparative religion, and travels in Mexico. He</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>ables: The Big<span style="background-color:rgba(57,212,155, 0.2)">gest</span> Questions of Cosmology.�� Hubeny, a professor at UC Davis</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>�� It's<span style="background-color:rgba(57,212,155, 0.2)"> about</span> the gathering of power and paranoia by both Nixon and Kissinger during the first 100</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> old folklore of using<span style="background-color:rgba(57,212,155, 0.2)"> Candle</span>mas to predict the weather for the remainder of winter. According to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>, unleashing<span style="background-color:rgba(57,212,155, 0.2)"> a</span> brutal cycle of bloodshed, paranoia and guilt, as the couple do whatever is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> a serious attempt to<span style="background-color:rgba(57,212,155, 0.2)"> understand</span> Britain today, with its mix of races and colours, its hysteria and despair</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> finances, self care<span style="background-color:rgba(57,212,155, 0.2)"> and</span> spirituality. Sessions are facilitated by faculty and staff.
+The Society routinely sponsors</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

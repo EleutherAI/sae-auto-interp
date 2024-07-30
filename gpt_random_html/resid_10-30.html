@@ -1,0 +1,712 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_10-30</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_10-30</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <br>Cattron Group International<span style="background-color:rgba(57,212,155, 1.0)">™</span>,<br>a lglobal manufacturer of remote control products and professional<br><br>Activations: ("™" : 6)<br>Example 2:  frame using enhanced dynamic tone mapping.<br>Dolby Atmos<span style="background-color:rgba(57,212,155, 1.0)">®</span> Cinematic Sound at Home<br><br>Activations: ("®" : 5)<br>Example 3: <|endoftext|>EN, Denmark and SYDNEY- GN ReSound, the leader in Smart Hearing<span style="background-color:rgba(57,212,155, 1.0)">™</span> aids<br>Activations: ("™" : 8)<br>Example 4: piece Velcro<span style="background-color:rgba(57,212,155, 1.0)">®</span> strap easily adjusts to any foot type. It��s ideal for anyone with<br>Activations: ("®" : 4)<br>Example 5: <|endoftext|>house.com for providing information for this column.<br>Michael Wilbur, a Firehouse<span style="background-color:rgba(57,212,155, 1.0)">®</span><br>Activations: ("®" : 5)<br>Example 6:  Bulb Carbon Offset Program<span style="background-color:rgba(57,212,155, 1.0)">™</span> which we initiated.<br>Various organizations have undertaken a variety of creative<br>Activations: ("™" : 7)<br>Example 7: <br>SAS<span style="background-color:rgba(57,212,155, 1.0)">®</span> OpRisk Management lauded for comprehensive platform, extensible data management and analysis<br><br>Activations: ("®" : 4)<br>Example 8: the Levi��s<span style="background-color:rgba(57,212,155, 1.0)">®</span> Commuter<span style="background-color:rgba(57,212,155, 1.0)">™</span> Trucker Jacket, with Jacquard��s interactive<br>Activations: ("™" : 7)<br>Example 9: <|endoftext|> residence -- typically Florida or Pennsylvania, given the minimal security features of those statesâ€<span style="background-color:rgba(57,212,155, 1.0)">™</span> licenses<br>Activations: ("™" : 5)<br>Example 10: <|endoftext|> the patient record.<br>MILT<span style="background-color:rgba(57,212,155, 1.0)">®</span> Makes It Easy!<br>Medi-Dose<br>Activations: ("®" : 5)<br>Example 11:  This relationship has resulted in BASF formulating a new additive package, Keropur<span style="background-color:rgba(57,212,155, 1.0)">™</span> DP 45<br>Activations: ("™" : 7)<br>Example 12:  swaying grasses.back to services main menuMLS<span style="background-color:rgba(57,212,155, 1.0)">®</span> ID: 72280445<br><br>Activations: ("®" : 5)<br>Example 13:  accountability are two of Hilime Arslaner<span style="background-color:rgba(57,212,155, 1.0)">´</span>s principal values.<br>This is why you<br>Activations: ("´" : 0)<br>Example 14:  of our device management software based on Firmbase<span style="background-color:rgba(57,212,155, 1.0)">®</span><br>Technology will make it even easier for developers<br>Activations: ("®" : 5)<br>Example 15: <|endoftext|>s leader.<br>During his radio show Feb. 27, Beck<span style="background-color:rgba(57,212,155, 1.0)">Â</span> discussedÂ Farrakhan<br>Activations: ("Â" : 1)<br>Example 16: ester 67 percent, and Lycra<span style="background-color:rgba(57,212,155, 1.0)">®</span> Spandex 4 percent. A zipper permits easy access<br>Activations: ("®" : 4)<br>Example 17: <|endoftext|> BRAVIA® Sync devices with one<br>remote including: Sony Blu-ray Disc<span style="background-color:rgba(57,212,155, 1.0)">™</span> Players<br>Activations: ("™" : 7)<br>Example 18: roma<span style="background-color:rgba(57,212,155, 1.0)">*</span>Headache is our synergy that supports consciousness and right thinking. In the divine mind there is<br>Activations: ("*" : 0)<br>Example 19:  files, drivers and other materials are supplied "as is.".<br>Radeon<span style="background-color:rgba(57,212,155, 1.0)">™</span> Software Adrenalin<br>Activations: ("™" : 8)<br>Example 20: <|endoftext|>berg, Universit<span style="background-color:rgba(57,212,155, 1.0)">ä</span>t HNO-Klinik Mannheim, HNO-K<br>Activations: ("ä" : 0)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Special characters indicating trademark (™), registered trademark (®), or other diacritical marks (´, Â, *, ä) in a word or phrase.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Special characters indicating trademark (™), registered trademark (®), or other diacritical marks (´, Â, *, ä) in a word or phrase.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> on strawberries in FreshWorks<span style="background-color:rgba(57,212,155, 1.0)">™</span> containers vs. store packaging. Results may vary depending upon produce and use</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> about the food they eat. The Green Eats<span style="background-color:rgba(57,212,155, 1.0)">™</span> Feeding Spoons are made in the USA</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> or Theatre Sync<span style="background-color:rgba(57,212,155, 1.0)">™</span> labeled home audio/video
+products when connected via HDMI<span style="background-color:rgba(57,212,155, 1.0)">™</span> interface.
+-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> been a great solution for embedded x86 customers using the AMD Geode<span style="background-color:rgba(57,212,155, 1.0)">™</span> processor family. Now that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> by Susan J. Young, editor of SouthernTravelNews.com<span style="background-color:rgba(57,212,155, 1.0)">™</span>. All rights reserved.Details</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> this post with the news.Oggi<span style="background-color:rgba(57,212,155, 0.9200000000000002)">™</span> Ribbed Glass 4-Piece Canister</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Offset Program<span style="background-color:rgba(57,212,155, 0.9200000000000002)">™</span> is also one of the most practical and cost effective programs in the world to reduce</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> the Tree of Life<span style="background-color:rgba(57,212,155, 0.9200000000000002)">™</span> Award Dinner. Dietary law observed. Proceeds will benefit Aleh Ne</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Requires connection via HDMI<span style="background-color:rgba(57,212,155, 0.9200000000000002)">™</span> cable (sold separately) to equivalent HDTV.
+Upscaled/</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>ration. Secondly, apply the desired Revlonissimo Color Sublime<span style="background-color:rgba(57,212,155, 0.9200000000000002)">™</span> shade all over.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>.
+Jan 25, 2014
+The Intel<span style="background-color:rgba(57,212,155, 0.8400000000000001)">®</span> Core<span style="background-color:rgba(57,212,155, 0.8400000000000001)">™</span> i7-based MemoryMirror takes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>or<span style="background-color:rgba(57,212,155, 0.8400000000000001)">™</span> chiller to Shirdi in January 2012. The chiller is designed for 0.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> its new MaxColor<span style="background-color:rgba(57,212,155, 0.8400000000000001)">™</span> 4K60 transmitter and receiver series, its award-winning 2G�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>" wide pieces of VELCRO<span style="background-color:rgba(57,212,155, 0.8400000000000001)">®</span> Brand ONE-WRAP<span style="background-color:rgba(57,212,155, 0.8400000000000001)">®</span> that is removable)
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> Chassis<span style="background-color:rgba(57,212,155, 0.8400000000000001)">™</span> System offers optimal support and stability.
+•Smart Degree Technology<span style="background-color:rgba(57,212,155, 0.8400000000000001)">™</span> temperature-reg</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>FX Trading Combine<span style="background-color:rgba(57,212,155, 0.76)">®</span> or looking to integrate currency futures into your trading strategy.
+If you want to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>, but with XFINITY<span style="background-color:rgba(57,212,155, 0.76)">®</span> TRIPLE PLAY or DOUBLE PLAY bundles, it also</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> solution to the problem. Call Terminix<span style="background-color:rgba(57,212,155, 0.76)">®</span> today and let them help you find the answers.The</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>asy, Rich, Creamy Texture
+Mildness Clinically Proven<span style="background-color:rgba(57,212,155, 0.76)">®</span>
+We Love Bab</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>.|
+Powered by vBulletin<span style="background-color:rgba(57,212,155, 0.76)">®</span> Copyright ©2000 - 2020, Jelsoft</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>, just to name a few.
+Christine is certified in Healthcare Compliance (CHC<span style="background-color:rgba(57,212,155, 0.6799999999999999)">®</span>),</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>On! Drumming<span style="background-color:rgba(57,212,155, 0.6799999999999999)">®</span> Events may serve the following areas: San Jose, San Francisco, Bay</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>
+- Embroidered UA logo on back
+- HeatGear<span style="background-color:rgba(57,212,155, 0.6799999999999999)">®</span> sweatband
+Manufacturer</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> Best Practices SAP Consulting Existing Environment SAP R/3<span style="background-color:rgba(57,212,155, 0.6799999999999999)">®</span> (now available in mySAP</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>
+Measurement using OxiTop<span style="background-color:rgba(57,212,155, 0.6799999999999999)">®</span> is based on pressure measurement in a closed system: microorganisms</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>�s part of the standard StabiliTrak<span style="background-color:rgba(57,212,155, 0.6000000000000001)">®</span> system. If TSC detects the trailer is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> seeking a source of food.
+The Hunter��s Kloak<span style="background-color:rgba(57,212,155, 0.6000000000000001)">®</span> Gen 2 K</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>pertory since 1958.Hunter��s Kloak<span style="background-color:rgba(57,212,155, 0.6000000000000001)">®</span> Hog Bundle includes the Gen 2</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> GARD<span style="background-color:rgba(57,212,155, 0.6000000000000001)">™</span> Spatter Cleaner. The newly designed cutter blades feature a twin flute design that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> of the Hunter��s Kloak<span style="background-color:rgba(57,212,155, 0.6000000000000001)">®</span> scent cartridges last approximately 4.5 hours.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>andia<span style="background-color:rgba(57,212,155, 0.52)">®,</span> Glucotrol<span style="background-color:rgba(57,212,155, 0.52)">®,</span> Glucophage<span style="background-color:rgba(57,212,155, 0.52)">®</span>).
+Warnings While Using</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> Chalk Paint<span style="background-color:rgba(57,212,155, 0.52)">®</span> by Annie Sloan in the color ��Aubusson Blue��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>uralast<span style="background-color:rgba(57,212,155, 0.52)">®</span> Wheels are also guaranteed against tread separation for one year in ordinary free-wheeling applications</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> your stress.
+Great Northern<span style="background-color:rgba(57,212,155, 0.52)">®</span> Hot Tubs
+7909 Penn Ave. North, Minneapolis</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>ger App Interface uses Bluetooth<span style="background-color:rgba(57,212,155, 0.52)">®</span> wireless technology to connect with your smart device running the Solinst Levelog</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>. Operate it all with ease using the on-screen
+- iPod<span style="background-color:rgba(57,212,155, 0.44)">®</span>/iPhone<span style="background-color:rgba(57,212,155, 0.44)">®</span> video</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>us CLR2<span style="background-color:rgba(57,212,155, 0.44)">®</span>.
+The founders of Bio-K+ started fermenting each individual strain in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>as<span style="background-color:rgba(57,212,155, 0.44)">®</span> product selection and information system has been completely revised.
+Catalog | 2009-11
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> than 11,000 REALTORS<span style="background-color:rgba(57,212,155, 0.44)">®</span> and their companies. The Board provides a variety of member</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>ag have been removed.
+Heavy-Duty Alignment Machine | Hunter Engineering Company<span style="background-color:rgba(57,212,155, 0.44)">®</span>.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>nes International Inc.
+<span style="background-color:rgba(57,212,155, 0.36000000000000004)">®</span>The Apple logo is a trademark of Apple Inc., registered in the U</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)">��</span>»*> »»»*•—%•» II
+worth $45.00</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>9</small>
+            </div>
+            <span>NYSE: MSO<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> )</span>.
+I'd like to think -- despite clear evidence to the contrary --</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> creating and publishing many of the industry��s top video game franchises, including PAC-MAN<span style="background-color:rgba(57,212,155, 0.36000000000000004)">®,</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> for Wings<span style="background-color:rgba(57,212,155, 0.36000000000000004)">©</span> product.SALEM, Mass.--After averaging over six runs a game in Florida</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>.26 m<span style="background-color:rgba(57,212,155, 0.28)">²</span>
+Photographer: Youngchae PARK
+Hyoung-nam Lim and E</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>1<span style="background-color:rgba(57,212,155, 0.28)">½</span> inches thick (3.75 cm) Product Details Artist grade canvas, archival inks</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>; Probelt voltage measurement points; OC Panel support; SupremeFX Formula<span style="background-color:rgba(57,212,155, 0.28)"> 2014</span> audio solution; CrossCh</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> reserved. This material may not be published, broadcast, rewritten, or redistributed.
+<span style="background-color:rgba(57,212,155, 0.28)">©</span> 2020 Associated</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>
+<span style="background-color:rgba(57,212,155, 0.28)">©</span>2015 Twitpic Inc, All Rights Reserved1-30 Days: Store Credit Only
+</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>. I will be back in a bit with some more drawing lessons for you all to enjoy. In</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> interested please email us and let us know.
+The Club Champs are the highlight of our playing</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> working out on the TreadClimber at home with a fan on full-speed might be</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the impediment of his armor in the dust and the old mute was again hobbling straight away toward</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> next to the Kelderhouse/Port Oneida Cemetery on the east side of Port Oneida Road</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> product is not intended to diagnose, treat, prevent, or cure any disease.
+Precaution</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> term of the County Court and Sessions of 1881, the legal fraternity assembled and took appropriate action in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> do not have a green thumb when it comes to flowers so thanks to daughter Elizabeth for taking care of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the impression you want to make!
+Private Facebook Community: Chat, share and collaborate with other women</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> planning something to stop censorship?
+Social networking website Twitter are working on a technology to stop Chinese and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> you hire an experienced Medicaid<span style="background-color:rgba(57,212,155, 0.2)"> planner</span> to assist<span style="background-color:rgba(57,212,155, 0.2)"> with</span> this process. Furthermore, restructuring of finances may be required</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>
+City™ television<span style="background-color:rgba(57,212,155, 0.2)"> stations</span> in Toronto<span style="background-color:rgba(57,212,155, 0.2)">,</span> Vancouver, Calgary, Edmonton, Winnipeg, Montreal and Saskatchewan</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>ME Markets Grocery<span style="background-color:rgba(57,212,155, 0.2)"> Stores</span>
+-<span style="background-color:rgba(57,212,155, 0.2)"> AL</span>DI – current recalls
+- Big Y® World Class Market</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> updating Car Butler™<span style="background-color:rgba(57,212,155, 0.2)">.</span>
+While<span style="background-color:rgba(57,212,155, 0.2)"> Car</span> Butler™ is available for the iPhone, iPad, and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> multitasking continues.<span style="background-color:rgba(57,212,155, 0.2)"> RAM</span>Jet™ automatically<span style="background-color:rgba(57,212,155, 0.2)"> recovers</span> trapped memory in real-time to help PCs stay focused</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>ide Coordinator, W<span style="background-color:rgba(57,212,155, 0.2)">SU</span>
+In<span style="background-color:rgba(57,212,155, 0.2)"> May</span> 2002, U.S. Department of Agricultureâ€™</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Years® programme,<span style="background-color:rgba(57,212,155, 0.2)"> delivered</span> by Arch<span style="background-color:rgba(57,212,155, 0.2)">ways</span>, is a proven prevention and early intervention programme for children</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> Clues™,<span style="background-color:rgba(57,212,155, 0.2)"> Word</span>Girl® and<span style="background-color:rgba(57,212,155, 0.2)"> Goose</span>bumps. I SPY and Clifford The Big</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>osey, KILL<span style="background-color:rgba(57,212,155, 0.2)">SP</span>ENCER®<span style="background-color:rgba(57,212,155, 0.2)"> started</span> as a personal project to locally craft the perfect sustainable and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> on rest that are<span style="background-color:rgba(57,212,155, 0.2)"> available</span> from Caval<span style="background-color:rgba(57,212,155, 0.2)">or</span>® please visit http://www.cavalor.com</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

@@ -1,0 +1,701 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-28</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-28</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: Ford@BlackAg<span style="background-color:rgba(57,212,155, 1.0)">enda</span>Report.com.<br>Anne Frank Is Palestine��s Child, Too<br>Activations: ("enda" : 7)<br>Example 2: s sermons, chapter 7,<span style="background-color:rgba(57,212,155, 1.0)"> appendix</span> 1. Ok, you can��t see that,<br>Activations: (" appendix" : 4)<br>Example 3:  si affincano al racconto della<br>nascita dell'azi<span style="background-color:rgba(57,212,155, 1.0)">enda</span> e<br>Activations: ("enda" : 9)<br>Example 4: <|endoftext|> karate, and reading like a champ!<span style="background-color:rgba(57,212,155, 1.0)"> Jeremiah</span> is still mama��s baby,<br>Activations: (" Jeremiah" : 1)<br>Example 5: .Archaeological dating methods<br>Futilities must undress thitherward<span style="background-color:rgba(57,212,155, 1.0)"> convened</span> dismissively tower<br>Activations: (" convened" : 2)<br>Example 6:  crime victim's rights fund excess revenue provision.<br>11/18 House Judiciary<br>Ag<span style="background-color:rgba(57,212,155, 1.0)">enda</span>: HB<br>Activations: ("enda" : 6)<br>Example 7: <|endoftext|> Expansion Slots, Algorithms,<span style="background-color:rgba(57,212,155, 1.0)"> Cyp</span>hers and Security", Computers & Security, 1991<br>Activations: (" Cyp" : 1)<br>Example 8:  provisions concerning sentencing multiple felonies.<br>11/17 House Health Policy<br>Ag<span style="background-color:rgba(57,212,155, 1.0)">enda</span> Item of Interest<br>Activations: ("enda" : 7)<br>Example 9: <br>Sea Service Piggin: Bald<span style="background-color:rgba(57,212,155, 1.0)"> Cyp</span>ress with White Hoops (Marshall Scheetz)<br><br>Activations: (" Cyp" : 1)<br>Example 10: <|endoftext|> years.<br>Duke brings a new perspective to the Big<span style="background-color:rgba(57,212,155, 1.0)"> Cyp</span>ress Grill and<span style="background-color:rgba(57,212,155, 1.0)"> Cyp</span>ress Lakes<br>Activations: (" Cyp" : 1), (" Cyp" : 1)<br>Example 11:  group of experts<span style="background-color:rgba(57,212,155, 1.0)"> convened</span> by the then chief medical officer, Sir Liam Donaldson, recommended sweeping changes intended<br>Activations: (" convened" : 3)<br>Example 12:  wound up pushing me along my journey to landing my dream job at<span style="background-color:rgba(57,212,155, 1.0)"> Cyp</span>ress Lakes. … I started<br>Activations: (" Cyp" : 1)<br>Example 13:  They could regret it.��Carthago del<span style="background-color:rgba(57,212,155, 1.0)">enda</span> est!�� cried Cato the Elder<br>Activations: ("enda" : 8)<br>Example 14:  Staff Departments Meetings & Ag<span style="background-color:rgba(57,212,155, 1.0)">endas</span> Codes Safety Fire Police Citizens Animals Calendar Municipal Court Suggestions Taxes<br>Activations: ("endas" : 4)<br>Example 15: <|endoftext|>� seem to be coming every other year. This new<span style="background-color:rgba(57,212,155, 1.0)"> appendix</span> zeros in on the importance to<br>Activations: (" appendix" : 4)<br>Example 16: <|endoftext|> Garis<span style="background-color:rgba(57,212,155, 1.0)">enda</span>, before you explore the historical market Quadrilatero to admire the historical shops<br>Activations: ("enda" : 9)<br>Example 17: .<br>WT news feed<br>No<span style="background-color:rgba(57,212,155, 1.0)"> Agenda</span> Network<br>Available Streams 4<br>Subscribe to be a proud<br>Activations: (" Agenda" : 3)<br>Example 18: <|endoftext|> The books follow the protagonists Richard<span style="background-color:rgba(57,212,155, 1.0)"> Cyp</span>her, Kahlan Amnell and Zeddicus Zu<br>Activations: (" Cyp" : 1)<br>Example 19:  us anymore.<br>As an add<span style="background-color:rgba(57,212,155, 1.0)">endum</span> for my MBA class in Paris next week:<br>I still<br>Activations: ("endum" : 6)<br>Example 20: <|endoftext|> hand, it may be tough to pull him out of the sunshine state. California LB<span style="background-color:rgba(57,212,155, 1.0)"> Jeremiah</span> Allison<br>Activations: (" Jeremiah" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Latin-derived suffixes or words, often indicating a connection or relation, such as "-enda", "-endum", "Cyp", "Jeremiah", or "appendix", typically in formal or technical contexts.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Latin-derived suffixes or words, often indicating a connection or relation, such as &quot;-enda&quot;, &quot;-endum&quot;, &quot;Cyp&quot;, &quot;Jeremiah&quot;, or &quot;appendix&quot;, typically in formal or technical contexts.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>acc<span style="background-color:rgba(57,212,155, 1.0)">enda</span>® are the dresses to compliment the bride as bridesmaids or guests of the wedding</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">enda</span> to this Privacy Notice, TAG will ordinarily keep your information for a period of 24 months, (</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>ard Cake the Filipino version is a really popular tea time (meri<span style="background-color:rgba(57,212,155, 1.0)">enda</span>) snack it is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">enda</span> was born on August 20th, 1900 in the municipality of Guanabacoa (Hav</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>. In 1933 the Maandblad voor Hed<span style="background-color:rgba(57,212,155, 1.0)">enda</span>agsche Muziek (Month</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>
+Add<span style="background-color:rgba(57,212,155, 0.9200000000000002)">endum</span>: May we extend a big thank you to Antoinette Morgan, Fran Coll</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> this afternoon, Florida Secretary of State Gl<span style="background-color:rgba(57,212,155, 0.9200000000000002)">enda</span> Hood announced that the state would NOT appeal, meaning</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>
+City of Alice (Alice)
+City of Amarillo (Amarillo)
+Ag<span style="background-color:rgba(57,212,155, 0.9200000000000002)">enda</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>Ag<span style="background-color:rgba(57,212,155, 0.9200000000000002)">enda</span> 21: New Senate Bill "Ramrods U.S. Citizens and Hands Over Their</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>-259-2900,.
+- La Haci<span style="background-color:rgba(57,212,155, 0.9200000000000002)">enda</span> (Great Mexican Food), 574</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.8400000000000001)">endas</span> and workshops that line the way. Anyway, we went in to try to buy a generic version</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> Government City Commission Commission Videos Ag<span style="background-color:rgba(57,212,155, 0.8400000000000001)">endas</span> and Minutes City Manager City Secretary City Attorney Departments (A-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> ��Once a student��s statement and<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> appendix</span> is submitted, it will be reviewed by [</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> to third parties this<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> appendix</span> shouldn��t concern you much. But if your credit union can�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> mechanism.
+In the<span style="background-color:rgba(57,212,155, 0.8400000000000001)"> appendix</span> on Implementation scenarios we give examples that illustrate several approaches that could be used</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>. All members were present.<span style="background-color:rgba(57,212,155, 0.76)"> Agenda</span>Here are the tracks I rely on when evaluating subwoof</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> the FLACPED Executive Bureau).
+• FLACPED I<span style="background-color:rgba(57,212,155, 0.76)"> Agenda</span>
+• Medium-Term Strategy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>old Lindsay underwent an operation to remove her<span style="background-color:rgba(57,212,155, 0.76)"> appendix</span>.
+1/17/2007 8:26</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> coffee table with the finley home rem<span style="background-color:rgba(57,212,155, 0.76)">mington</span> heavy duty bookcase oak its the perfect place to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> set by the UN 2030<span style="background-color:rgba(57,212,155, 0.76)"> Agenda</span> for Sustainable Development. The project will also translate into action priorities outlined in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> week, a week and a half later, is when this grand jury was<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> convened</span>. And what</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> fulfill key target goals in the<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Agenda</span> 2030.
+A common goods approach would allow key stakeholders like non</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>.
+A Black<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> Agenda</span> Radio commentary by executive editor Glen Ford
+The deeper the U.S.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> press conference in Kampala,<span style="background-color:rgba(57,212,155, 0.6799999999999999)"> convened</span> primarily to unveil his new political ambitions.
+Muntu has</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)"> convened</span> in November. The timing seemed almost serendipitous. His Holiness had called the meeting</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> for the mainland, a line of steamers running from it to Ly<span style="background-color:rgba(57,212,155, 0.6000000000000001)">mington</span>, and has a station</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> As a result, a Configuration Board consisting of fire radio users and technicians was<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> convened</span> to define the radio</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> Embodied pedagogy, praxis and practice
+The conference is<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> convened</span> by Jondi</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span>
+To help, SAMHSA<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> convened</span> a Returning Service Members, Veterans, and their Families Policy Academy</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Effects on Scientific Controversies that we<span style="background-color:rgba(57,212,155, 0.6000000000000001)"> convened</span> through the Center for Mobile Communication Studies at Boston University</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> 12 events to rack up 599 points. Seniors Chris Brady (Wil<span style="background-color:rgba(57,212,155, 0.52)">mington</span>, Del./Mount</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> Alex Legge, Brad Clark,<span style="background-color:rgba(57,212,155, 0.52)"> Jeremiah</span> Lenisaurua and Nick Griffiths received the Nowra</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>25:15 -0700
+The Cleveland Browns placed OG<span style="background-color:rgba(57,212,155, 0.52)"> Jeremiah</span> Warren, OG Ryan Lee,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.52)"> Jeremiah</span> Warren to futures contracts Monday, Dec. 30.
+Wed, 18 Dec 2013 05:55</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>.
+However, I expect Marcel Jones,<span style="background-color:rgba(57,212,155, 0.52)"> Jeremiah</span> Sirles, Brent Qvale and Spencer Long to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> of long-term body-building purposes, Anavar,<span style="background-color:rgba(57,212,155, 0.44)"> Cyp</span>ionate, and Testosterone</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> course, Big<span style="background-color:rgba(57,212,155, 0.44)"> Cyp</span>ress Golf Club. I oversee the community operations, food and beverage, in addition</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span> low
+Sea Service Piggin: Bald<span style="background-color:rgba(57,212,155, 0.44)"> Cyp</span>ress (Marshall Scheetz)
+Add to cart</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> spent time optimizing memory consumption, so you can run more and larger<span style="background-color:rgba(57,212,155, 0.44)"> Cyp</span>her queries faster than ever before</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> during the cycle ergometer were due postural differences during the two exercise modalities.
+M<span style="background-color:rgba(57,212,155, 0.44)">endo</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> that I am?�� They answered: ��Elijah, John the Baptist,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Jeremiah</span>,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> tournament would benefit the post-war economy. Crosby used Pebble Beach,<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Cyp</span>ress Point Golf Club and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> his pitching wedge, playing a par 5 on the eighth hole at<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Cyp</span>ress Point during a round</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> Bald<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Cyp</span>ress (Marshall Scheetz)
+Copyright © 2019 ENTOTEN LLC
+Studio</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|><span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Cyp</span>ress Trust Co., it says that Testa Family has been delinquent on the<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> Cyp</span>ress loan</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> Dubai,<span style="background-color:rgba(57,212,155, 0.28)"> Cyp</span>ress, Greenland and even at the South and North Pole. Yes, he��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> in mind.<span style="background-color:rgba(57,212,155, 0.28)"> Jeremiah</span> 29:11- a popular verse- says, ��For I know the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> to meet the obligations under the<span style="background-color:rgba(57,212,155, 0.28)"> Cyp</span>ress mortgage, it is possible that it could hold onto the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> fed with five Pro Tools and four Nu<span style="background-color:rgba(57,212,155, 0.28)">endo</span> Systems, used for editing, as recorders,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> up at the z<span style="background-color:rgba(57,212,155, 0.28)">endo</span> every couple of weeks feels like a second-class Zennie, then</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> exploring live centuries of colour woodcuts — the artform's aesthetic and technical history. The display's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> furoshiki and tenugui 70% cheaper than anywhere else from one granny in this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> our right decisions. And now, just like we have several times before, we stand at a cross</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> Hood River in 1959-60 and again in 1989-90.
+Jernstedt kept his</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> amazing. It is just right in the centre of the beautiful town. The room was nice, clean</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>adrive50hz snes
+outrun2sp commented on Miyamoto: "F-Zero</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to entertain: your kid, a date, a colleague, even your dog.
+Chase's</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> end, rather than as an end in itself, Zero Motorcycles has redefined the riding experience to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> on the water – all very romantic, but, alas, those were the days before women served aboard</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>th Annual Survey of Paper, Paperboard and Pulp Capacity, reporting U.S. paper and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>, ��We<span style="background-color:rgba(57,212,155, 0.2)"> fell</span> in love with Cypress Lakes before we even looked at one home.�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Eric Roozenda<span style="background-color:rgba(57,212,155, 0.2)">al</span>. A protege of Joe Tripodi, Ian MacNamara,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> seem to sometimes<span style="background-color:rgba(57,212,155, 0.2)"> view</span> this process as an appendix to the ��greater goal�� of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> I love to<span style="background-color:rgba(57,212,155, 0.2)"> Sh</span>indu massage Hacienda Heights, camping, respectable 27yr old black male</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> reviewed and her second<span style="background-color:rgba(57,212,155, 0.2)">,</span> Chill Factor (June 2016) contains poems from Agenda 48/3–4</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>®, TendoActive®<span style="background-color:rgba(57,212,155, 0.2)"> and</span> Mobilee® protect and preserve cartilage, tendons, ligaments</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> preparation and the execution<span style="background-color:rgba(57,212,155, 0.2)"> of</span> the meetings, including the preparation of Agendas and the recording of Minutes.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> can be viewed<span style="background-color:rgba(57,212,155, 0.2)"> here</span>
+2013 Advocacy Day Agenda
+View Past Programs
+Surgical Safety,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>.R.,<span style="background-color:rgba(57,212,155, 0.2)"> and</span> MAPS)
+– Student Agenda
+* Please see fee letter for a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> regulators commented in releasing<span style="background-color:rgba(57,212,155, 0.2)"> the</span> appendix, ��a financial institution should ensure that its third-party service</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

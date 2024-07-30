@@ -1,0 +1,697 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_8-13</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_8-13</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <span style="background-color:rgba(57,212,155, 1.0)">ro</span>ok's remaining elementary schools is expected to be unveiled in November.<br>The decision was greeted with<br>Activations: ("ro" : 2)<br>Example 2:  the unf<span style="background-color:rgba(57,212,155, 1.0)">e</span>eling brute of a caricaturist that I am, I end up ridiculing the<br>Activations: ("e" : 1)<br>Example 3: <|endoftext|><br>F<span style="background-color:rgba(57,212,155, 1.0)">ro</span>ggy Feeding Fun is rated for ages 3-7 but my 9 year old<br>Activations: ("ro" : 8)<br>Example 4: <|endoftext|> the owners of a charming Boler, a Ser<span style="background-color:rgba(57,212,155, 1.0)">ro</span> Scotty, a Shasta and more<br>Activations: ("ro" : 0)<br>Example 5: , Jer<span style="background-color:rgba(57,212,155, 1.0)">ro</span>ld E. (2012) Covariantization of nonlinear elasticity. Ze<br>Activations: ("ro" : 1)<br>Example 6:  a godsend. While I am an ext<span style="background-color:rgba(57,212,155, 1.0)">ro</span>vert who generally gets a lot of energy from face<br>Activations: ("ro" : 2)<br>Example 7:  Frank Zym<span style="background-color:rgba(57,212,155, 1.0)">ro</span>z of Riegelsville said, "I sat in those stands so many<br>Activations: ("ro" : 0)<br>Example 8:  shame that we're not yet doing this thing of ours together.BFR<span style="background-color:rgba(57,212,155, 1.0)">O</span> Database History and Report<br>Activations: ("O" : 2)<br>Example 9: <|endoftext|> SOLUTIONS|<br>1A BRIGG<span style="background-color:rgba(57,212,155, 1.0)"> RO</span>AD, DN20 9PB, BR<br>Activations: (" RO" : 0)<br>Example 10: <|endoftext|> mine was Charles Darwin, who like you attracted disdain, opp<span style="background-color:rgba(57,212,155, 1.0)">rob</span>rium and horror in his own<br>Activations: ("rob" : 0)<br>Example 11: <|endoftext|> before perest<span style="background-color:rgba(57,212,155, 1.0)">ro</span>ika and glasnost – when tanks and other detritus of<br>Activations: ("ro" : 1)<br>Example 12: <|endoftext|>�������� ���<span style="background-color:rgba(57,212,155, 1.0)">�</span>�����. (<br>Activations: ("�" : 0)<br>Example 13: ills with re<span style="background-color:rgba(57,212,155, 1.0)">ro</span>ofing materials. Tile does not deplete resources like asphalt and contains no chemicals<br>Activations: ("ro" : 3)<br>Example 14: <|endoftext|> helped us out<br>and played with a lot of energy."<br>Randy F<span style="background-color:rgba(57,212,155, 1.0)">oy</span>e dropped<br>Activations: ("oy" : 1)<br>Example 15: <|endoftext|> land forever! Our country forever!<br>REF<span style="background-color:rgba(57,212,155, 1.0)">RA</span>IN: Rose of Sharon, thousand miles of<br>Activations: ("RA" : 1)<br>Example 16:  I mean we are talking about the people who were straw buyers for homes who def<span style="background-color:rgba(57,212,155, 1.0)">ra</span>uded banks.<br>Activations: ("ra" : 4)<br>Example 17: <|endoftext|> music video)<br>F<span style="background-color:rgba(57,212,155, 1.0)">oo</span> Fighters "DOA"<br>Foo Fighters "Times Like These<br>Activations: ("oo" : 1)<br>Example 18: <|endoftext|> going back to Nottingham for his final year of architecture.<br>Steve Bro<span style="background-color:rgba(57,212,155, 1.0)">e</span> the busker,<br>Activations: ("e" : 0)<br>Example 19: ilippines –. fer<span style="background-color:rgba(57,212,155, 1.0)">ro</span> manganese silicon manganese process plants bangalore quartz crushing plant<br>Activations: ("ro" : 2)<br>Example 20:  Paracetamol, ICN Paracetamol, Infad<span style="background-color:rgba(57,212,155, 1.0)">ro</span>ps, Infants T<br>Activations: ("ro" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: The neuron activates on the prefix "ro" or similar sequences ("ra", "oy", "oo") in various words.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>The neuron activates on the prefix &quot;ro&quot; or similar sequences (&quot;ra&quot;, &quot;oy&quot;, &quot;oo&quot;) in various words.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Def<span style="background-color:rgba(57,212,155, 1.0)">ro</span>ster,Tinted Glass,AM/FM Radio,Compact Disc Player,Power</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> a beach playing ball and leapf<span style="background-color:rgba(57,212,155, 1.0)">ro</span>gging. Passing On mines memories of siblings, parents and an</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>6ETravelAdvisory: Due to airport closure, flights to/f<span style="background-color:rgba(57,212,155, 1.0)">ro</span> #Kochi</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> Na+
+, respectively. In the dep<span style="background-color:rgba(57,212,155, 1.0)">ro</span>tonated form, ionic bonding will be observed</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>, broils, toasts, top browns and def<span style="background-color:rgba(57,212,155, 1.0)">ro</span>sts
+- Oven temperature</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span>ab<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ro</span>ker, but we have plenty of ideas in motion. Our evolving, easy-to-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>2</small>
+            </div>
+            <span>lan, Isoptin), phenytoin (Dilantin), gemf<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ibro</span>z</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>verts and ext<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ro</span>verts. Having both student-selected groups as well as groups formed randomly also</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> Water, Salt
+DO NOT DEFROST. COOK FROM FR<span style="background-color:rgba(57,212,155, 0.9200000000000002)">O</span>ZEN
+1.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>rapp and Will Gregory formed Goldf<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ra</span>pp in 1999 and released their Mercury Prize nominated debut</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> foppish ext<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ro</span>vert in colored suits and print trousers who gets many of the show�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>L HYDROLYZED WHEAT PROTEIN, PARFUM (F<span style="background-color:rgba(57,212,155, 0.8400000000000001)">RA</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>o del Per<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ro</span> Aguayo, Chessman [cage, hair]
+30:29</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>3</small>
+            </div>
+            <span>warden-F<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ry</span>slan, one of the less populated parts of the Netherlands, has been</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>Nathan Per<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ro</span>tt Fighting (maj)|
+|Petr Nedved Hooking|
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> them each spring, but the application of a well-<span style="background-color:rgba(57,212,155, 0.76)">ro</span>tted manure each spring works just as well</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> A "ROCKIN' THE HOLIDAYS 2008 PACK"; F<span style="background-color:rgba(57,212,155, 0.76)">OO</span> FIGHTERS ADDS</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|>af communities. Kristin Mul<span style="background-color:rgba(57,212,155, 0.76)">ro</span>oney studies ASL users to delve into the reasons behind the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>raceptives) (Also known as Est<span style="background-color:rgba(57,212,155, 0.76)">ro</span>flornithine [E2F] in male</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>ist Cecilio Avilés has passed away, more
+New digs for Uncle, Ger<span style="background-color:rgba(57,212,155, 0.76)">ro</span>ld</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>itamin D (7 dehyd<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ro</span>- cholesterol), under the effect of ultraviolet radiation of the sun, will</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>, Fer<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ro</span> Concepts, Esstac Daeodon, and many more (with removable cable management</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>eb<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ro</span>, and it was mainly the bourgeoisie who moved here in pompous villas in green surroundings</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>ang gia an better. heathiest George glissaded, his vomit f<span style="background-color:rgba(57,212,155, 0.6799999999999999)">rib</span>bled person</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>hyd<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ro</span>acetic Acid, Ethylhexylglycerin, Helianthus Annuus</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> take hot baths or steam. Humidifying the room also helps relieve nasal congestion.
+Th<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ro</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> uncont<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ro</span>verted facts do not support the Board's decision.
+K.S.A.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>6</small>
+            </div>
+            <span> Elysian Fields and Press Street. But many residents, led by the Fa<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ub</span>ourg Marign</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>id), amphetamine/dext<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ro</span>amphetamine (Adderall), and phentermine.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> is then lowered and the drag<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ro</span>pe is then drawn so that the bucket is dragged along the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> excessive speeds, you��ll hear a flutter of wind noise around the Vw Sci<span style="background-color:rgba(57,212,155, 0.52)">ro</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> Also the man-bo<span style="background-color:rgba(57,212,155, 0.52)">obs</span>…
+The inspiration behind Pidge emerged from the idea that humans and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>�m also not a huge fan of beers on nit<span style="background-color:rgba(57,212,155, 0.52)">ro</span> and this one is.
+Proof I</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span>�� : to inform
+���<span style="background-color:rgba(57,212,155, 0.52)">�</span>�� ��� (casual) -></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>||The limits of perest<span style="background-color:rgba(57,212,155, 0.52)">ro</span>ika
+||Master of Arts
+|Luke, Timothy W.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>lf<span style="background-color:rgba(57,212,155, 0.44)">o</span> would have been familiar with).
+A buskin is a knee- or calf-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> maybe she��s got a shaped af<span style="background-color:rgba(57,212,155, 0.44)">ro</span> or something, natural black hair is looked down on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> it is pursued with wholesale best<span style="background-color:rgba(57,212,155, 0.44)"> ro</span>lex replica a unique design every ye.
+Fri) Case,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>ac<span style="background-color:rgba(57,212,155, 0.44)">ro</span> (the National Association for the Care and Resettlement of Offenders) in the 1960</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> to pursue charges after the fact."
+Meanwhile, the Pem<span style="background-color:rgba(57,212,155, 0.44)">bro</span>ke Pines Police Department issued</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> dynamics between the fib<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ro</span>blasts, macrophages and epithelial cells and their role in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> hat weather this morning as I ��<span style="background-color:rgba(57,212,155, 0.36000000000000004)">stro</span>de�� to the pool in the dark.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> gain your Big Muff has, you probably want the Power<span style="background-color:rgba(57,212,155, 0.36000000000000004)">bo</span>oster just at the edge of break</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>cy on Colours of dawn 31 May 20…|
+|Edmund A<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ro</span>zoo on</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> a new-build they have been able to do an in-<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ro</span>of installation. The solar</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> K. Ellis
+M. A. Willis
+Herbon P<span style="background-color:rgba(57,212,155, 0.28)">ty</span> Ltd is recognised as being</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> were sauteed slow and low with mis<span style="background-color:rgba(57,212,155, 0.28)">o</span>, sake, garlic, and honey (low</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|>, wildlife and culture. The coast and Preseli Mountains are protected by The Pem<span style="background-color:rgba(57,212,155, 0.28)">bro</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span>ittle-talk or suffocate schematically. Jeffery ships with lib<span style="background-color:rgba(57,212,155, 0.28)">ro</span> habia una ve</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>ired village concession stand; re-<span style="background-color:rgba(57,212,155, 0.28)">ro</span>ofed village concession, distillery in village.�
+-</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> timeliness and accuracy of content.|
+|Protect the database from security threats, and implement</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> 2, 2018. https://www.slideshare.net/JISC/the-mon</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in the 1950s and 1960s, so did Atencio��s. At the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> part because it draws such a large part of its revenues from old and not that innovative business lines.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the US economy revived and surged forward (albeit on some shaky foundations: more on that in later columns</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> usual. I can count the dorsal spines on largemouth bass 10 feet down. Clouds of juvenile</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> retainers will be provided.Source: Sputnik Mundo
+What it��s about</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> they��ve suspected about how the game is really played" (SPORTSNET.ca,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> next to Matosinhos beach, by the famous Anemone Roundabout.
+Known</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ize the way we used to. It seems like once you get out of school, things really start</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> link to the review<span style="background-color:rgba(57,212,155, 0.2)">:</span>http://www.stainlesssteeldroppings.com/?</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> involving the corresponding image<span style="background-color:rgba(57,212,155, 0.2)"> projections</span> of all points. AltairCapture can use Ray adjust or Reprojection</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> ��Derro Oo<span style="background-color:rgba(57,212,155, 0.2)">ze</span> Magic!�� A wizard school, a sorcerer bloodline, a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>' City Council two<span style="background-color:rgba(57,212,155, 0.2)"> weeks</span> ago overrode a veto by the mayor and gave final approval to a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>42 Little_miss<span style="background-color:rgba(57,212,155, 0.2)"> and</span> her boyfrie... 3086 views Added: 2 years ago 33:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> loved was this team<span style="background-color:rgba(57,212,155, 0.2)"> rallied</span> and didn't let that affect them,'' Gators coach Rhona Faehn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> I over-rode<span style="background-color:rgba(57,212,155, 0.2)"> my</span> wife's wishes and we had a hospital birth. It's one of</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>Afro Centric art<span style="background-color:rgba(57,212,155, 0.2)"> Jun</span>eteenth
+Made to chill and designed for you, our Gildan</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> (Niger-<span style="background-color:rgba(57,212,155, 0.2)">Cong</span>o), Dahalo (Afro-Asiatic), Berta and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> years later.<span style="background-color:rgba(57,212,155, 0.2)"> Although</span> peer reviewers forced the........ Read more »
+Mro��ek-</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

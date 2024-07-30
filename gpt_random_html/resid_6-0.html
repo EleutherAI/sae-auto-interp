@@ -1,0 +1,694 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_6-0</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_6-0</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1:  6.<span style="background-color:rgba(57,212,155, 1.0)">3</span>-magnitude earthquake that struck Christchurch, New Zealand, on Feb. 22<br>Activations: ("3" : 3)<br>Example 2: <|endoftext|>, is for £20.<span style="background-color:rgba(57,212,155, 1.0)">4</span> million plus another £2.5 million in incentives.<br><br>Activations: ("4" : 2)<br>Example 3: |Product Height||168 mm [6.<span style="background-color:rgba(57,212,155, 1.0)">6</span> in]|<br>|Product Length||500 mm<br>Activations: ("6" : 5)<br>Example 4: <|endoftext|>4bn, or $47.<span style="background-color:rgba(57,212,155, 1.0)">34</span> per share (€25.<span style="background-color:rgba(57,212,155, 1.0)">8</span>bn, €37<br>Activations: ("34" : 1), ("8" : 1)<br>Example 5: <|endoftext|>AGR of 4.<span style="background-color:rgba(57,212,155, 1.0)">9</span> per cent from 2016 to 2025.<br>Freeze-dried<br>Activations: ("9" : 3)<br>Example 6: <|endoftext|> wins in club history, surpassing Tom Seaver's record of 26.<span style="background-color:rgba(57,212,155, 1.0)">8</span>%, accomplished in<br>Activations: ("8" : 3)<br>Example 7:  and other devices that can muck with devices at 2.<span style="background-color:rgba(57,212,155, 1.0)">4</span> GHz.<br>The upshot:<br>Activations: ("4" : 2)<br>Example 8:  IVI anti-VEGF treated DME eye was 6.<span style="background-color:rgba(57,212,155, 1.0)">43</span>%. Poor baseline BCVA was<br>Activations: ("43" : 4)<br>Example 9: and-control servers had hijacked 14.<span style="background-color:rgba(57,212,155, 1.0)">2</span> million host machines in the country. The number of Trojan<br>Activations: ("2" : 2)<br>Example 10: <|endoftext|> 56.<span style="background-color:rgba(57,212,155, 1.0)">9</span> million shares would be worth nearly US$1.<span style="background-color:rgba(57,212,155, 1.0)">2</span> billion.<br>San Francisco<br>Activations: ("9" : 2), ("2" : 2)<br>Example 11:  - 1 of 1):Venetian Sun Massage<br>CELEBRATING OVER 4.<span style="background-color:rgba(57,212,155, 1.0)">5</span><br>Activations: ("5" : 4)<br>Example 12: ,000 Jobs in April; Rate Is 8.<span style="background-color:rgba(57,212,155, 1.0)">1</span>%�� by Catherine Rampell in The<br>Activations: ("1" : 2)<br>Example 13: <|endoftext|>el A32F based on Android 8.<span style="background-color:rgba(57,212,155, 1.0)">1</span> Oreo is packed with new Wallpaper The<br>Activations: ("1" : 0)<br>Example 14:  virgin hair is approximately 100g (approximately 3.<span style="background-color:rgba(57,212,155, 1.0)">5</span>oz).<br>Brazilian virgin hair is available<br>Activations: ("5" : 3)<br>Example 15: <|endoftext|>Round Three, Saturday May 6, 2006<br>Moorook-Kingston 15.<span style="background-color:rgba(57,212,155, 1.0)">17</span> (<br>Activations: ("17" : 1)<br>Example 16:  1/<span style="background-color:rgba(57,212,155, 1.0)">2</span>″ FEMALE #707/8 & Adult Complete Terrestrial Enclosure Kit<br><br>Activations: ("2" : 1)<br>Example 17: FA, but with a vastly superior yield. DOO has a distribution yield of almost 11.<span style="background-color:rgba(57,212,155, 1.0)">1</span><br>Activations: ("1" : 4)<br>Example 18: The concert will be held on May 9th at 7:<span style="background-color:rgba(57,212,155, 1.0)">30</span> p.m. at The Triple<br>Activations: ("30" : 1)<br>Example 19: <|endoftext|>attini.<br>Its dimensions are<br>H x W x D: 6.<span style="background-color:rgba(57,212,155, 1.0)">5</span> x 34<br>Activations: ("5" : 5)<br>Example 20: <|endoftext|> agreement for cutting the $1.<span style="background-color:rgba(57,212,155, 1.0)">2</span> trillion over 10 years promised under the 2011 Budget Control Act<br>Activations: ("2" : 1)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Decimal numbers or numbers with a specific unit (e.g., mm, GHz, oz, %) in a formal or technical context.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Decimal numbers or numbers with a specific unit (e.g., mm, GHz, oz, %) in a formal or technical context.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> of 2019 slowed down to 8.<span style="background-color:rgba(57,212,155, 1.0)">6</span>% this March compared with 9.8% last December.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span>
+· 14.<span style="background-color:rgba(57,212,155, 1.0)">2</span> effective megapixel ExmorTM APS HD CMOS sensor (19.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> consultancy for landscaping of Ain Adhari National Park project worth 4.<span style="background-color:rgba(57,212,155, 1.0)">5</span> million BHD. •</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">5</span>�� long
+- Set includes over 250 pieces
+- Jeff Gordon K��NEX</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">3</span>° North and 73.<span style="background-color:rgba(57,212,155, 1.0)">1</span>° West, 110 miles (180 kilometers) southeast of Atlantic City</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> 175kg but had to settle for silver due to a higher body weight (63.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">30</span>kg against</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>75�� to 8.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">25</span>�� wide and 12�� to 20.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">5</span>�</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> VXR model with a turbocharged 1.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">6</span>-litre engine and 202bhp in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>jiang population at 45.<span style="background-color:rgba(57,212,155, 0.9200000000000002)">8</span> per cent Uyghur and 40.5 per cent Han</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.9200000000000002)">3</span>Mp 5D Mark III To test the Canon EOS 5D Mark IV's 7 fps drive</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> wholesalers such as 36.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">6</span>, Omega-L, Grand-fair, Infra-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> 100.0, a stochastic oscillator of 50.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">0</span>, a stochastic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>, which includes more than 5.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">57</span> billion searchable names in 2,300+ collections from</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>. agencies and international aid groups step up calls for emergency assistance funding to the more than 12.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">4</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> massive? Think over 4.<span style="background-color:rgba(57,212,155, 0.8400000000000001)">4</span> billion people! Stack that up against the other continents of the world</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.76)">1</span>% of his passes were thrown past the sticks last season. You��re going to need</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> of... Read more...
+April 1, 2014
+Device lifts up to 1.<span style="background-color:rgba(57,212,155, 0.76)">76</span> tons</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> this game in under 8.<span style="background-color:rgba(57,212,155, 0.76)">45</span> and wondered if anyone had any step-by-step tips about</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> like this :
+1983 Bristol 38.<span style="background-color:rgba(57,212,155, 0.76)">8</span> Sail Boat For Sale - www.yachtw</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> Resources, Construction & Maintenance||12.<span style="background-color:rgba(57,212,155, 0.76)">5</span>%|
+|Production, Transportation & Material Moving</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span>ity Exchange are down 2.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">8</span>%, on SHFE steel rebar prices are off 1.3</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span>2.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">414</span>.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">8</span>s.9d.
+He was buried in Glasgow's Necropolis,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> goal!
+This most recent weight loss also brings my grand total back down to -19.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">7</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>5</small>
+            </div>
+            <span> are at 7.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">00</span>pm and its a free entry show so it couldn��t get any</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> XP|
+File Version: Version 5.0.1171
+File Size: 1.<span style="background-color:rgba(57,212,155, 0.6799999999999999)">2</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>The 26-year-old had a 10.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">29</span> ERA in six games this year, then went</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>'s energy environment Amazon faces nearly 4.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">0</span>% net margin headwinds from its prior peak performance</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">5</span> million residents age 65 or older? This #ElderAbuseAwarenessMonth is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|>Helsinki)
+8.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">00</span>am AEST (Sunday) Brisbane, Sydney, Melbourne</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span>��s 12.<span style="background-color:rgba(57,212,155, 0.6000000000000001)">8</span> PPG in 2012-13 to improve to 20 PPG this year</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span>The new Grivel Monte Rosa crampon (RRP £80, weight 8<span style="background-color:rgba(57,212,155, 0.52)">04</span>g per</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|>'s most efficient running backs, managed just 2.<span style="background-color:rgba(57,212,155, 0.52)">9</span> yards per carry in a 49-29</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> thoughts regarding their 147.<span style="background-color:rgba(57,212,155, 0.52)">9</span> national corn yield, and a 41.8 soybean yield.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> of the 2000 acquisition of hkt, the stock sales yielded only $1.<span style="background-color:rgba(57,212,155, 0.52)">9</span> billion in the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> the right side of the urinary bladder (Fig. 1a) and a 1.<span style="background-color:rgba(57,212,155, 0.52)">7</span> cm ly</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>) 14.<span style="background-color:rgba(57,212,155, 0.44)">5</span>% abv.Amazon Captive of the SS. Part
+(The Television</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Theraphosa apophysis (Goliath Pinkfoot) 4-4 1/<span style="background-color:rgba(57,212,155, 0.44)">2</span>″</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> Rd||At-grade intersection|
+|14.<span style="background-color:rgba(57,212,155, 0.44)">3</span>||Chittenango Creek, On</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>inseng, valued at $1.<span style="background-color:rgba(57,212,155, 0.44)">5</span> million, for export from Indiana.
+Public Relations -</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>age, $1.<span style="background-color:rgba(57,212,155, 0.44)">3</span> million could have gone to the college.
+SingleGuy2 shared</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> higher COCs number than adults (mean ± s.e.m., 89.<span style="background-color:rgba(57,212,155, 0.36000000000000004)">67</span> ±</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>The Mighty Ducks,'" said the junior right wing, who at 6-<span style="background-color:rgba(57,212,155, 0.36000000000000004)">4</span>, 198 pounds, is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> you get 2.<span style="background-color:rgba(57,212,155, 0.36000000000000004)">5</span> times more power than you'd get from a 9V battery!
+If</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span>of-the-art teaching, learning and research technology thanks to a $4.<span style="background-color:rgba(57,212,155, 0.36000000000000004)">18</span>-million</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|> 2016 it was found to be 1.<span style="background-color:rgba(57,212,155, 0.36000000000000004)">9</span> per 1000 UC days (Table 1).
+Among</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> well documented worldwide,. In the United States, 4.<span style="background-color:rgba(57,212,155, 0.28)">7</span> million people were estimated to have</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> to tell this joke to his face.Every Saturday, from about 2.<span style="background-color:rgba(57,212,155, 0.28)">30</span> - 4.30</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> the third quarter at $1.<span style="background-color:rgba(57,212,155, 0.28)">28</span> (nearly identical to last year's numbers for the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> $4.<span style="background-color:rgba(57,212,155, 0.28)">4</span> million to replace Grand View-on...
+Copyright © 2014 Mid-H</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span> 109,995 square-feet. The $3.<span style="background-color:rgba(57,212,155, 0.28)">5</span> million financing was structured with a 5-</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>.
+Ereinion still clutched the soft toy fawn against his chest, but it was</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> new faces, so as good a time as any!
+I'm not going to repost all</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> knowledge. A student may use a computer at home, at a campus lab, a library, or</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> is a free-to-play card video game for iOS, developed by BitRhymes Inc..</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>Wren Scott, looked dramatic on her way into the show while funny woman Amy Poehler kept it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>ething with rage. She felt like throwing something. Maybe the vase of roses?Explore the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> the Jewish people." This is the reason, Netanyahu said,
+that Jerusalem must remain undivided</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span>). Second, gap 336 can be closed by coupling together opposing portions of the simulated physiological structure (i</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> to email@example.com. Although not necessary, it's interesting to have a first name,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> their search engine rankings and subsequently improve the amount of traffic their website receives. If you��re</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span>30amWhen the students<span style="background-color:rgba(57,212,155, 0.2)"> in</span> Nikki and Deja��s class find out that their school is</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>bro255 fuel<span style="background-color:rgba(57,212,155, 0.2)"> pump</span> and tuned @19.5psi srt4 intake 3inch turbo</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> Tris-H<span style="background-color:rgba(57,212,155, 0.2)">Cl</span> pH 7.4, 1mM EDTA) for 15 minutes in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> 204 branches with approximately<span style="background-color:rgba(57,212,155, 0.2)"> $</span>8.6 billion in depositions in Massachusetts, 13 branches with about $</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>hunt81 Pepper<span style="background-color:rgba(57,212,155, 0.2)">oni</span> Since: 6.1.02 From: not Japan Since last post:</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> a family of two<span style="background-color:rgba(57,212,155, 0.2)"> above</span> the federal poverty line. Though it rose to $7.25 an hour</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> 12.1% Hero<span style="background-color:rgba(57,212,155, 0.2)">ine</span>: 14, best steroid for solid muscle gain.5% Other drugs</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>s district continues to<span style="background-color:rgba(57,212,155, 0.2)"> contract</span>.
+The Consumer Confidence Index rose to 45.4 from 44.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> of 323.1<span style="background-color:rgba(57,212,155, 0.2)">.</span>
+When the offense is clicking, if only for a play or two</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> the most water<span style="background-color:rgba(57,212,155, 0.2)">-</span>poor country in South Caucasus. There are 2.2 and 1.7</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

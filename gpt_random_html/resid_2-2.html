@@ -1,0 +1,693 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>resid_2-2</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FBFBFB;
+            }
+            h1, h2 {
+                color: #2c3e50;
+                margin-top: 0px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .subtitle {
+                font-size: 10px;
+                color: #666;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+            .card {
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: solid #E4E4E7;
+                border-width: .25px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .explanation {
+                background-color: #e8f6f3;
+                border-left: 4px solid #1abc9c;
+                padding: 3px 15px 3px 15px;
+                margin-top: 20px;
+            }
+            .score-item {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .highlighted {
+                background-color: #ffff99;
+            }
+            .circle {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 5px;
+                border: 0.5px solid #84848C;
+            }
+            .true {
+                background-color: #27ae60;
+            }
+            .false {
+                background-color: #c0392b;
+            }
+            .none {
+                background-color: #ffffff;
+            }
+            .key {
+                font-size: 10px;
+                color: #84848C;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Feature Analysis: resid_2-2</h1>
+
+        <div class="card">
+            <h2>Model Generation</h2>
+            <h3>Prompt:</h3>
+            Example 1: <|endoftext|> marathon<span style="background-color:rgba(57,212,155, 1.0)">ers</span> shooting swiftly past me. They glided along singly and in long strings. I<br>Activations: ("ers" : 1)<br>Example 2:  to the world of motorsport.<br>M Sport is a name associated with Rally<span style="background-color:rgba(57,212,155, 1.0)">ing</span>, as a<br>Activations: ("ing" : 1)<br>Example 3:  project is progressing. Work is usually done in development sprint<span style="background-color:rgba(57,212,155, 1.0)">s</span>. The key being in constantly prioritizing<br>Activations: ("s" : 6)<br>Example 4:  trek<span style="background-color:rgba(57,212,155, 1.0)"> to</span> Ottawa<br>"They should be tremendously proud of what they have accomplished��<br>When the<br>Activations: (" to" : 0)<br>Example 5:  who scoot<span style="background-color:rgba(57,212,155, 1.0)">ed</span> over to cut the deficit to one point in the 37th minute.<br>However<br>Activations: ("ed" : 0)<br>Example 6:  victory that would have vault<span style="background-color:rgba(57,212,155, 1.0)">ed</span> the Cubs into their first World Series in six decades. Though he,<br>Activations: ("ed" : 1)<br>Example 7:  I can see their sillouette.Some friendly jog<span style="background-color:rgba(57,212,155, 1.0)">gers</span> smiled while I was training.Many not<br>Activations: ("gers" : 1)<br>Example 8:  improve your driving skills and reflex<span style="background-color:rgba(57,212,155, 1.0)">es</span>. A new off-road version will soon be available.<br><br>Activations: ("es" : 0)<br>Example 9: m not in the middle of marathon<span style="background-color:rgba(57,212,155, 1.0)"> training</span>, I��m often five to 10 pounds heavier—<br>Activations: (" training" : 0)<br>Example 10: <|endoftext|>Blainville-Boisbriand Armada||Cape Breton Scream<span style="background-color:rgba(57,212,155, 1.0)">ing</span> Eagles<br>Activations: ("ing" : 1)<br>Example 11:  beautifully designed with vault<span style="background-color:rgba(57,212,155, 1.0)">ed</span> ceilings, open plan living, luxurious bathrooms, kitchens and private decking.<br>Activations: ("ed" : 1)<br>Example 12: . Brenner and Taylor watched in horror as Cheek repeatedly began writing and then angrily scrunch<span style="background-color:rgba(57,212,155, 1.0)">ing</span><br>Activations: ("ing" : 1)<br>Example 13: <|endoftext|> and English descent while mom, Vi, is a marathon<span style="background-color:rgba(57,212,155, 1.0)">er</span> who has Hawaiian, Filipino and Spanish<br>Activations: ("er" : 2)<br>Example 14:  and directors accepted that their HR department excel<span style="background-color:rgba(57,212,155, 1.0)">s</span> at 'sourcing key talent' or 'preparing<br>Activations: ("s" : 0)<br>Example 15: , marching<span style="background-color:rgba(57,212,155, 1.0)"> off</span> satisfied into the night, his candy bag a little bit fuller.<br>For many of<br>Activations: (" off" : 0)<br>Example 16: aini��s old stomp<span style="background-color:rgba(57,212,155, 1.0)">ing</span> ground.<br>��I asked him today and he said<br>Activations: ("ing" : 1)<br>Example 17:  the trek<span style="background-color:rgba(57,212,155, 1.0)"> to</span> your nearest Costco for the first time, call ahead. And if you're confident you<br>Activations: (" to" : 0)<br>Example 18:  how it works: Members get a 100 cash reward for every new line when you switch to Sprint<span style="background-color:rgba(57,212,155, 1.0)">.</span><br>Activations: ("." : 0)<br>Example 19:  Carlisle swapped out two starters and got the desired impact in a grind-<span style="background-color:rgba(57,212,155, 1.0)">out</span> 97-94 victory<br>Activations: ("out" : 0)<br>Example 20: <|endoftext|> shouted at the end of the onscreen argument, stomp<span style="background-color:rgba(57,212,155, 1.0)">ing</span> her feet and repeating a complaint that<br>Activations: ("ing" : 2)<br>
+            <h3>Response:</h3>
+            [EXPLANATION]: Suffixes (-ers, -ing, -ed, -s) indicating verb forms or plural nouns.
+        </div>
+
+        <div class="card">
+            <h2>Explanation</h2>
+            <div class="explanation">
+                <p>Suffixes (-ers, -ing, -ed, -s) indicating verb forms or plural nouns.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Scores
+                <p class="subtitle">
+                    ● Recall | ● Fuzz | # Distance
+                    <br>
+                    Green indicates a correct prediction, red incorrect.
+                    For recall, -1 indicates a non-activating example. 
+                    For fuzzing, -1 indicates an incorrectly marked example.
+                </p> 
+            </h2>
+            <div id="scores">
+                
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span> the mini team-triathlon. The triathlon consists of swimming, sprint<span style="background-color:rgba(57,212,155, 1.0)">ing</span>, cycling, running</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 1.0)">ed</span> into the Holy Cross record book with a time of 24.19 seconds in the 200-meter</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>1</small>
+            </div>
+            <span>; these teammates can sprint<span style="background-color:rgba(57,212,155, 1.0)"> to</span> their basket and quickly shoot before enough opponents catch up to stop them.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|>imkarudIt was amazing, says teenage whiz Gemili after sprint<span style="background-color:rgba(57,212,155, 1.0)">ing</span> into Olympic contention</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>1</small>
+            </div>
+            <span><|endoftext|> give you the option to run multiple sprint<span style="background-color:rgba(57,212,155, 1.0)">s</span> (legs) in any order with brief rest</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> few early-mid 60s artists from the UK like The Tornados, Scream<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ing</span> Lord S</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|>atsby and Treasure Island over the holidays, into January. I'm slog<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ging through</span> On the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span><|endoftext|> Nash retreat<span style="background-color:rgba(57,212,155, 0.9200000000000002)">s</span> to the corner - bronco buster! Nash pushes him off - Mysterio</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> had to buy a spike to break the stuff apart. I had to pull out my little sled<span style="background-color:rgba(57,212,155, 0.9200000000000002)">ges</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>2</small>
+            </div>
+            <span> the jog<span style="background-color:rgba(57,212,155, 0.9200000000000002)">gers</span>, bikers, rollerbladers, and motorists who parade around Lake Calhoun daily</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|> failed to clear the puck in front.
+Edmonton vault<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ed</span> back in front with nine minutes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>�� But I don't remember anyone on the left literally stomp<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ing</span> heads.
+- Imagine any</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span><|endoftext|>alis - ID: Korkalis
+Scream<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ing</span> Manti - ID: Boothby1991</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span>erily at us. The next thing I knew, it was lung<span style="background-color:rgba(57,212,155, 0.8400000000000001)">ing</span> at me,��</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>3</small>
+            </div>
+            <span> values of equality and decency that make our country great."
+Shortly after her victory, Greene spar<span style="background-color:rgba(57,212,155, 0.8400000000000001)">red</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> 15 distinctive styles of brickwork, 94 stained-glass windows, a barreled vault<span style="background-color:rgba(57,212,155, 0.76)">ed</span> ceiling</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>
+Run<span style="background-color:rgba(57,212,155, 0.76)">s</span> a highly successful and broadly based tropical rainforest campaign. Also campaigns about acid rain and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span>7
+Abstract: H6.00007 : Planar Jump<span style="background-color:rgba(57,212,155, 0.76)">ing</span>-Drop Thermal Diodes
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span><|endoftext|> reviewing the situation, it was decided horizontal beams weld<span style="background-color:rgba(57,212,155, 0.76)">ed</span> onto helical piles would be the best</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>4</small>
+            </div>
+            <span> from diplomats and newspaper columnists in those regions. Many Arab and European governments spar<span style="background-color:rgba(57,212,155, 0.76)">red</span> with former U</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> what he found there.
+Sighting abundant wildlife while hiking undulating vineyard slopes, bicy<span style="background-color:rgba(57,212,155, 0.6799999999999999)">cling</span></span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|>pess and alternating reverse lung<span style="background-color:rgba(57,212,155, 0.6799999999999999)">es</span>…was a busy day… did I do the full song</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><|endoftext|> Surry SU7 1XR.
+Campaign<span style="background-color:rgba(57,212,155, 0.6799999999999999)">s</span> about issues related to the destruction of plant</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.6799999999999999)">s</span> individual, family, and group counseling for patients in chemical dependency programs. Acts as mediator between</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>5</small>
+            </div>
+            <span> support beams were slid in and weld<span style="background-color:rgba(57,212,155, 0.6799999999999999)">ed</span> in place. The tower was then lowered onto the new beams</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> was Lamb��s second Pirelli World Challenge Tour<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ing</span> Car win of his rookie season,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> an hour.
+During the rest of the campaign, bridges and raft<span style="background-color:rgba(57,212,155, 0.6000000000000001)">s</span> continued to be a</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> fleece bathrobe and slid into her slippers.
+Tires shriek<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ed</span>, ending</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span><|endoftext|> Grand Slam<span style="background-color:rgba(57,212,155, 0.6000000000000001)">s</span> currently offer.
+Since its inception, the tournament has been a leader in innovations</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>6</small>
+            </div>
+            <span> these swallows. Jump<span style="background-color:rgba(57,212,155, 0.6000000000000001)">ing</span> before their wing feathers are grown means they are carp food. That this</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span><|endoftext|> the first time since duel<span style="background-color:rgba(57,212,155, 0.52)">ing</span> on May 8 at Alliant Energy Field. Paxton yielded two</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> upon. She had found a large Regal Jump<span style="background-color:rgba(57,212,155, 0.52)">ing</span> Spider (Phidippus regius).</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> squeezes in bed,
+wal<span style="background-color:rgba(57,212,155, 0.52)">ks</span> to the tip of my tongue to drop off your name with</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>7</small>
+            </div>
+            <span> 85' aluminum catamaran. All weld<span style="background-color:rgba(57,212,155, 0.52)">ed</span> construction, tools used are 7 1/4 circular</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>7</small>
+            </div>
+            <span> what felt like a three mile trek<span style="background-color:rgba(57,212,155, 0.52)"> to</span> the car which is 50 feet away we hauled ourselves in and</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle false"></span>
+                <small>8</small>
+            </div>
+            <span>s good form by setting the fastest time during the final practice session<span style="background-color:rgba(57,212,155, 0.44)"> ahead</span> of the Bahrain Grand Prix.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span> blanket, both he and the deformed girl protected by the enshroud<span style="background-color:rgba(57,212,155, 0.44)">ing</span> night. And sometimes</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|>-storey car park with wide ramp<span style="background-color:rgba(57,212,155, 0.44)">ed</span> access, traffic lights, one way systems and electronic</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span><|endoftext|> AT crossing, I felt as though I had trek<span style="background-color:rgba(57,212,155, 0.44)">ked</span> much further. Once we got to the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>8</small>
+            </div>
+            <span>aper was just weld<span style="background-color:rgba(57,212,155, 0.44)">ed</span> to a flat. Again not confident that will hold either but at least my</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> Rose Bowl Field to watch the Yellow Jackets, and reporters are allowed to stroll<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> down</span> the sidelines with the</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><|endoftext|>ing this reporter who just parach<span style="background-color:rgba(57,212,155, 0.36000000000000004)">uted</span> into the story and, frankly, he saved my professional butt</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span><span style="background-color:rgba(57,212,155, 0.36000000000000004)">es</span>|
+|Gunslinger (4)||Able to use two handguns at once though</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> 5 days each week, at a local food business that is excited to hire<span style="background-color:rgba(57,212,155, 0.36000000000000004)"> going</span> forward. This has</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>9</small>
+            </div>
+            <span> the second round against Hatton, Pacquiao loop<span style="background-color:rgba(57,212,155, 0.36000000000000004)">ed</span> his left hand. He had driven it</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle true"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> some professional hockey players doing on-ice drills and scrim<span style="background-color:rgba(57,212,155, 0.28)">m</span>ages including players from your NHL Ottawa</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> are extremely beneficial among males that are having trouble with performance such as erection, stamina<span style="background-color:rgba(57,212,155, 0.28)">,</span> libido,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span> weeks ago. Back to that first debate.
+I'm expending my nervous<span style="background-color:rgba(57,212,155, 0.28)"> energy</span> by helping get</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span>�Mormon studies is a one way slog<span style="background-color:rgba(57,212,155, 0.28)"> to</span> desolation,�� a friend wrote:
+</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle false"></span>
+                <small>10</small>
+            </div>
+            <span><|endoftext|> relies on take-out menus. Amy has found that she can be healthy<span style="background-color:rgba(57,212,155, 0.28)"> but</span> many times it</span>
+        </div>
+        <hr>
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> my spit was hot and then I would swallow it and it would make my stomach burn. The burning</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> need to know
+that an internet connection isn��t far away. This means that sleeping in</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> system builder will add the CPU, memory and DVD or CD drive.
+����Intel</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> much more versatile code without knowing every nuance of every API.
+$ npm install resteasy
+var</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> for the giant stomach. ��We went in, and they take a nice, big, long</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> below for you:
+Why should I upgrade my internet browser? Older browsers are slow and more likely</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle true"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> in case of real espresso machines, it takes about 9 bars of pressure to pull? These machines are</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> ways to manage their symptoms and function well. You��ll face unique challenges, and those can</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> unused household items, advocating for a cause you are passionate about, or volunteering your time in ways that</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle false"></span><span class="circle none"></span>
+                <small>-1</small>
+            </div>
+            <span> of Sewell after he was fired, including allegations that he traded liquor for favors, and tried to</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> take him down,"<span style="background-color:rgba(57,212,155, 0.2)"> answered</span> Zhu Jin<span style="background-color:rgba(57,212,155, 0.2)">xi</span> before rushing toward Xiang Shaoyun with his weapon raised.</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> mix of small town<span style="background-color:rgba(57,212,155, 0.2)"> mystic</span>ism,<span style="background-color:rgba(57,212,155, 0.2)"> indoor</span> sprinting techniques, doomed love affairs and mammy's-</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>�s a<span style="background-color:rgba(57,212,155, 0.2)"> partnership</span> between C<span style="background-color:rgba(57,212,155, 0.2)">AA</span>, school boards, police services, busing consortiums,</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> by stomping on the<span style="background-color:rgba(57,212,155, 0.2)"> wrong</span> pedal.<span style="background-color:rgba(57,212,155, 0.2)">
+</span>Of course, when NHTSA factored age into</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span> options other than channel<span style="background-color:rgba(57,212,155, 0.2)"> 1</span>, 2<span style="background-color:rgba(57,212,155, 0.2)">,</span> or 3.
+On one of my frequent strolls around</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle true"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> those days,<span style="background-color:rgba(57,212,155, 0.2)"> I</span> have continued<span style="background-color:rgba(57,212,155, 0.2)"> to</span> be fascinated with the sport: sandstone, welded tu</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span>odynamics For Open-<span style="background-color:rgba(57,212,155, 0.2)">B</span>odied Sprint-<span style="background-color:rgba(57,212,155, 0.2)">Style</span> Racers, But This Race Team Found That Just Isn</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|> a vaulted convent<span style="background-color:rgba(57,212,155, 0.2)"> used</span> for functions<span style="background-color:rgba(57,212,155, 0.2)"> and</span> weddings. El Monasterio bakes its own bread</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span><|endoftext|>!��<span style="background-color:rgba(57,212,155, 0.2)"> the</span> cat shri<span style="background-color:rgba(57,212,155, 0.2)">ek</span>ed in terror as it struggled to free itself from the complex</span>
+        </div>
+        
+        <div class="score-item">
+            <div style="min-width: 60px;">
+                <span class="circle none"></span><span class="circle false"></span>
+                <small>-1</small>
+            </div>
+            <span> a bigger sump<span style="background-color:rgba(57,212,155, 0.2)">,</span> a welded<span style="background-color:rgba(57,212,155, 0.2)"> crank</span>, 6:1 forged turbo pistons, undercut the</span>
+        </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

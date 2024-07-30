@@ -140,6 +140,8 @@ def generate_score_html(recall_scores, fuzz_scores):
     fuzz_wrong = []
     recall_wrong = []
 
+    n_false = 0
+
     for score in fuzz_scores:
 
         s = {
@@ -157,7 +159,12 @@ def generate_score_html(recall_scores, fuzz_scores):
             
     for score in recall_scores:
 
-        if score['ground_truth'] is False:
+        if score['distance'] == -1:
+
+            n_false += 1
+
+            if n_false > 10:
+                continue
 
             s = {
                 'ground_truth': score['ground_truth'],
@@ -258,7 +265,7 @@ def build_html_page(data):
         )
         with open(f"output_html/{feature_name}.html", "w", encoding="utf-8") as f:
             f.write(html_content)
-    print(f"HTML files have been created in the 'output_html' directory.")
+    print("HTML files have been created in the 'output_html' directory.")
 
 # Process all files
 for file in os.listdir(explanation_dir):

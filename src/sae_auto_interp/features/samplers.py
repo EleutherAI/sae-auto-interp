@@ -106,3 +106,34 @@ def top_and_quantiles(
 
     record.train = train_examples
     record.test = test_examples
+
+
+def random_and_quantiles(
+    record: FeatureRecord,
+    n_train=10,
+    n_test=10,
+    n_quantiles=4,
+    seed=22,
+):
+    random.seed(seed)
+
+    examples = record.examples
+
+    train_examples = random.sample(examples, n_train)
+    
+    remaining_examples = [
+        example 
+        for example in examples 
+        if example not in train_examples
+    ]
+
+    quantiles = split_quantiles(remaining_examples, n_quantiles)
+
+    test_examples = []
+
+    for quantile in quantiles:
+        check_quantile(quantile, n_test)
+        test_examples.append(random.sample(quantile, n_test))
+
+    record.train = train_examples
+    record.test = test_examples
