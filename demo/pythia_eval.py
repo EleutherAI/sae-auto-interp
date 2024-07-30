@@ -38,6 +38,7 @@ def main(cfg):
     dataset = FeatureDataset(
         raw_dir=raw_features,
         cfg=cfg,
+        modules=['.gpt_neox.layers.4.attention', '.gpt_neox.layers.4']
     )
 
     def load_logits(record):

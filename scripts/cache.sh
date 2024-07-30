@@ -1,5 +1,5 @@
-python demo/cache.py \
+python experiments/pythia.py \
     --batch_size 128 \
-    --seq_len 64 \
+    --ctx_len 64 \
     --n_tokens 15000000 \
-    --n_splits 2 \
+    --n_splits 1 \

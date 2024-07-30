@@ -7,8 +7,16 @@
 keys.py
 
 results/*
+!results/gpt2_explanations
+!results/gpt2_recall
+!results/gpt2_fuzz
 raw*
-
+saved*
+scores*
+processed*
+extras*
+redoing*
+weights*
 .nfs*
 
 processed_features/

@@ -3,13 +3,9 @@ from tqdm import tqdm
 import psutil
 import orjson
 
-SEQ_LEN = 64
-MINIBATCH_SIZE = 128
-N_FEATURES = 131072
-
 
 class FrequencyBuffer:
-    def __init__(self, seq_len: int, n_features: int):
+    def __init__(self, seq_len: int, n_features: int, minibatch_size: int):
         """
         Initialize the cache with the batch length and number of features.
 
@@ -19,28 +15,30 @@ class FrequencyBuffer:
         """
         self.total_counts = torch.zeros(n_features)
         self.position_counts = torch.zeros((seq_len, n_features))
+        self.seq_len = seq_len
         self.num_sequences_processed = 0
+        self.minibatch_size = minibatch_size
 
     def final(self):
         """
         Aggregate the counts and calculate the final frequency of 
         each feature and each feature at each position.
         """
-        fr_n = self.total_counts / (self.num_sequences_processed * SEQ_LEN)
+        fr_n = self.total_counts / (self.num_sequences_processed * self.seq_len)
         fr_n_pos = self.position_counts / self.num_sequences_processed
         return fr_n, fr_n_pos
     
-    def save(self):
+    def save(self, threshold): 
         """
         Finalize the cache and return the sorted indices by mutual information.
         """
         fr_n, fr_n_pos = self.final()
-        mutual_information = self.mutual_information_per_feature(fr_n_pos, fr_n, SEQ_LEN)
-        sorted_indices = self.get_sorted_indices_above_threshold(mutual_information)
+        mutual_information = self.mutual_information_per_feature(fr_n_pos, fr_n, self.seq_len)
+        sorted_indices = self.get_sorted_indices_above_threshold(mutual_information, threshold)
 
         return sorted_indices
 
-    def get_sorted_indices_above_threshold(self, mutual_information, threshold=0.05):
+    def get_sorted_indices_above_threshold(self, mutual_information, threshold):
         """
         Get the indices of features with mutual information above a threshold.
         Threshold specified in [https://arxiv.org/abs/2309.04827]
@@ -58,7 +56,7 @@ class FrequencyBuffer:
         clamped_latents = torch.where(latents > 1e-5, torch.ones_like(latents), torch.zeros_like(latents))
         self.total_counts += torch.sum(clamped_latents, dim=(0, 1))
         self.position_counts += torch.sum(clamped_latents, dim=0)
-        self.num_sequences_processed += MINIBATCH_SIZE
+        self.num_sequences_processed += self.minibatch_size
 
     def mutual_information_per_feature(
         self, 
@@ -102,7 +100,7 @@ class FrequencyCache:
 
         self.seq_len = seq_len
         self.layer_caches = {
-            layer : FrequencyBuffer(seq_len, n_features)
+            layer : FrequencyBuffer(seq_len, n_features, minibatch_size)
             for layer in submodule_dict.keys()
         }
 
@@ -165,13 +163,15 @@ class FrequencyCache:
 
         print(f"Total tokens processed: {total_tokens:,}")
 
-    def save(self):
+    def save(self, threshold=0.05):
 
         results = {}
 
         for layer, cache in self.layer_caches.items():
-            sorted_indices = cache.save()
+            sorted_indices = cache.save(threshold)
             filename = f"{layer}.txt"
+
+            print(layer, len(sorted_indices))
 
             with open(filename, 'wb') as f:
                 f.write(orjson.dumps(sorted_indices.tolist()))
