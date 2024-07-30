@@ -107,9 +107,9 @@ The pipe should then be used in a pipeline. Running the pipeline will send reque
 
 ```
 pipeline = Pipeline(
-        loader.load,
-        explainer_pipe,
-    )
+    loader.load,
+    explainer_pipe,
+)
 
 asyncio.run(pipeline.run())
 ```
@@ -126,7 +126,9 @@ RecallScorer(
     batch_size=cfg.batch_size
 )
 ```
+
 You can then create a pipe to run the scorer. The pipe should have a pre-processer, that takes the results from the previous pipe and a post processor, that saves the scores. An scorer should always be run after a explainer pipe, but the explainer pipe can be used to load saved explanations. 
+
 ```python
 def scorer_preprocess(result):
         record = result.record
@@ -146,12 +148,12 @@ scorer_pipe = Pipe(
         preprocess=scorer_preprocess,
         postprocess=partial(scorer_postprocess, score_dir=recall_dir),
     )
-)```
+)
+```
 
 It is possible to have more than one scorer per pipe. One could use that to run fuzzing and detection together:
 
 ```python
-
 scorer_pipe = Pipe(
     process_wrapper(
         RecallScorer(client, tokenizer=tokenizer, batch_size=cfg.batch_size),
@@ -163,7 +165,8 @@ scorer_pipe = Pipe(
             preprocess=scorer_preprocess,
             postprocess=partial(scorer_postprocess, score_dir=fuzz_dir),
         ),
-)```
+)
+```
 
 Then the pipe should be sent to the pipeline and run:
 
