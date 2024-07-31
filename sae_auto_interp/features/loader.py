@@ -163,9 +163,10 @@ class FeatureDataset:
 
     def __len__(self):
         return len(self.dataset.buffers)
-    
-    def _process(
-        tokens: TensorType["batch", "seq"],
+        
+    def load(
+        self,
+        collate: bool = False,
         constructor: Callable = None,
         sampler: Callable = None,
         transform: Callable = None,
@@ -183,17 +184,6 @@ class FeatureDataset:
                 transform(record)
 
             return record
-
-        return _process
-        
-    
-    def load(
-        self,
-        tokens: TensorType["batch", "seq"],
-        collate: bool = False,
-        **kwargs,
-    ):
-        _process = self._process(tokens, **kwargs)
 
         def _worker(buffer):
             return [
