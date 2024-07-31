@@ -13,11 +13,13 @@ from sae_auto_interp.pipeline import Pipe, process_wrapper, Pipeline
 from functools import partial
 from sae_auto_interp.config import FeatureConfig
 
+
 ### Set directories ###
 
+all_at_once = False
 RAW_FEATURES_PATH = "/mnt/ssd-1/gpaulo/SAE-Zoology/raw_features_128k"
 EXPLAINER_OUT_DIR = "/mnt/ssd-1/gpaulo/SAE-Zoology/results/gpt2_explanations"
-SCORER_OUT_DIR = "/mnt/ssd-1/gpaulo/SAE-Zoology/results/gpt2_simulation"
+SCORER_OUT_DIR = f"/mnt/ssd-1/gpaulo/SAE-Zoology/results/gpt2_simulation/{'all_at_once' if all_at_once else 'token_by_token'}"
 
 ### Load dataset ###
 
@@ -29,9 +31,9 @@ tokens = load_tokenized_data(
     "train",
 )    
 
-modules = [".transformer.h.0"]
+modules = [f".transformer.h.{i}" for i in [0, 2, 4, 6, 8, 10]]
 features = {
-    m : torch.arange(1) for m in modules
+    m : torch.arange(4, 20) for m in modules
 }
 
 dataset = FeatureDataset(
@@ -55,7 +57,7 @@ loader = FeatureLoader(
 
 ### Load client ###
 
-client = Outlines("casperhansen/llama-3-70b-instruct-awq")
+client = Local("casperhansen/llama-3-70b-instruct-awq") if all_at_once else Outlines("casperhansen/llama-3-70b-instruct-awq")
 
 ### Build Explainer pipe ###
 
@@ -67,7 +69,7 @@ def scorer_preprocess(result):
     record = result.record
 
     record.explanation = result.explanation
-    record.test = record.test[0][:5]
+    record.test = record.test[0][:5]  # use first 5 of top activating quantile
     return record
 
 def scorer_postprocess(result):
@@ -76,7 +78,7 @@ def scorer_postprocess(result):
 
 scorer_pipe = Pipe(
     process_wrapper(
-        OpenAISimulator(client, tokenizer=tokenizer),
+        OpenAISimulator(client, tokenizer=tokenizer, all_at_once=all_at_once),
         preprocess=scorer_preprocess,
         postprocess=scorer_postprocess
     )
@@ -93,4 +95,3 @@ pipeline = Pipeline(
 asyncio.run(
     pipeline.run()
 )
-

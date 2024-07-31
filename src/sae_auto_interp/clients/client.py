@@ -12,7 +12,7 @@ class Client(ABC):
         self, 
         prompt: str, 
         **kwargs
-    ) -> str:
+    ):
         raise NotImplementedError
     
 
