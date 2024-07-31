@@ -1,20 +1,19 @@
 import asyncio
-import orjson
 from functools import partial
 
-import torch
+import orjson
 
-from sae_auto_interp.explainers import explanation_loader
-from sae_auto_interp.scorers import NeighborScorer, load_neighbors
 from sae_auto_interp.clients import Local
+from sae_auto_interp.config import FeatureConfig
+from sae_auto_interp.explainers import explanation_loader
+from sae_auto_interp.features import FeatureDataset, FeatureLoader, top_and_quantiles
+from sae_auto_interp.pipeline import Actor, Pipe, Pipeline
+from sae_auto_interp.scorers import NeighborScorer, load_neighbors
 from sae_auto_interp.utils import (
+    default_constructor,
     load_tokenized_data,
     load_tokenizer,
-    default_constructor,
 )
-from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
-from sae_auto_interp.pipeline import Pipe, Pipeline, Actor
-from sae_auto_interp.config import FeatureConfig
 
 ### Set directories ###
 
@@ -47,7 +46,10 @@ records = loader.load(collate=True)
 
 to_score = load_neighbors(records, modules, "weights/neighbors.json")
 
-generator = lambda _: [to_score]
+
+def generator(_):
+    return [to_score]
+
 
 ### Load client ###
 

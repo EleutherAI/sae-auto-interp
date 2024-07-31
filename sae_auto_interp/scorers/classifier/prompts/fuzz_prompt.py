@@ -1,7 +1,7 @@
 # %%
 DSCORER_SYSTEM_PROMPT = """You are an intelligent and meticulous linguistics researcher.
 
-You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment". You will be given a few examples of text that contain this feature. Portions of the sentence which strongly represent this feature are between tokens << and >>. 
+You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment". You will be given a few examples of text that contain this feature. Portions of the sentence which strongly represent this feature are between tokens << and >>.
 
 Some examples might be mislabeled. Your task is to determine if every single token within << and >> is correctly labeled. Consider that all provided examples could be correct, none of the examples could be correct, or a mix. An example is only correct if every marked token is representative of the feature
 
@@ -81,22 +81,25 @@ Text examples:
 {examples}
 """
 
+
 def prompt(examples, explanation):
-  generation_prompt = GENERATION_PROMPT.format(explanation=explanation, examples=examples)
+    generation_prompt = GENERATION_PROMPT.format(
+        explanation=explanation, examples=examples
+    )
 
-  defaults = [
-    {"role": "user", "content": DSCORER_EXAMPLE_ONE},
-    {"role": "assistant", "content": DSCORER_RESPONSE_ONE},
-    {"role": "user", "content": DSCORER_EXAMPLE_TWO},
-    {"role": "assistant", "content": DSCORER_RESPONSE_TWO},
-    {"role": "user", "content": DSCORER_EXAMPLE_THREE},
-    {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
-  ]
+    defaults = [
+        {"role": "user", "content": DSCORER_EXAMPLE_ONE},
+        {"role": "assistant", "content": DSCORER_RESPONSE_ONE},
+        {"role": "user", "content": DSCORER_EXAMPLE_TWO},
+        {"role": "assistant", "content": DSCORER_RESPONSE_TWO},
+        {"role": "user", "content": DSCORER_EXAMPLE_THREE},
+        {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
+    ]
 
-  prompt = [
-    {"role": "system", "content": DSCORER_SYSTEM_PROMPT},
-    *defaults,
-    {"role": "user", "content": generation_prompt}
-  ]
+    prompt = [
+        {"role": "system", "content": DSCORER_SYSTEM_PROMPT},
+        *defaults,
+        {"role": "user", "content": generation_prompt},
+    ]
 
-  return prompt
+    return prompt
