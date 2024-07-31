@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Literal
 
 from simple_parsing import Serializable
 
@@ -20,6 +21,12 @@ class ExperimentConfig(Serializable):
     n_random: int = 5
     """Number of random examples to sample"""
 
+    train_type: Literal["top", "random"] = "top"
+    """Type of sampler to use for training"""
+
+    test_type: Literal["even", "activation"] = "even"
+    """Type of sampler to use for testing"""
+
 
 @dataclass
 class FeatureConfig(Serializable):
@@ -35,7 +42,7 @@ class FeatureConfig(Serializable):
     example_ctx_len: int = 64
     """Length of each example"""
 
-    n_splits: int = 5
+    n_splits: int = 2
     """Number of splits that features were devided into"""
 
 

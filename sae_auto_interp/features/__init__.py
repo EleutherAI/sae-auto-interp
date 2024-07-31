@@ -1,7 +1,7 @@
 from .cache import FeatureCache
 from .constructors import pool_max_activation_windows, random_activation_windows
 from .features import Example, Feature, FeatureRecord
-from .loader import FeatureDataset, FeatureLoader
+from .loader import FeatureDataset
 from .samplers import (
     quantiles_sample,
     random_and_quantiles,
@@ -17,7 +17,6 @@ __all__ = [
     "Feature",
     "FeatureCache",
     "FeatureDataset",
-    "FeatureLoader",
     "FeatureRecord",
     "get_neighbors",
     "pool_max_activation_windows",
