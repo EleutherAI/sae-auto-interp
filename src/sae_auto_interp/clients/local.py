@@ -24,34 +24,42 @@ class Local(Client):
         self, 
         prompt: str, 
         raw: bool = False,
+        use_legacy_api: bool = False,
         max_retries: int = 2,
         **kwargs
     ) -> str:
         """
         Wrapper method for vLLM post requests.
         """
+        try:
+            for attempt in range(max_retries):
 
-        for attempt in range(max_retries):
+                try:
+                    if use_legacy_api:
+                        response = await self.client.completions.create(
+                            model=self.model,
+                            prompt=prompt,
+                            **kwargs
+                        )
+                    else:
+                        response = await self.client.chat.completions.create(
+                            model=self.model,
+                            messages=prompt,
+                            **kwargs
+                        )
 
-            try:
-                response = await self.client.chat.completions.create(
-                    model=self.model,
-                    messages=prompt,
-                    **kwargs
-                )
+                    return response if raw else self.postprocess(response)
 
-                return response if raw else self.postprocess(response)
-
-            except json.JSONDecodeError:
-                logger.warning(f"Attempt {attempt + 1}: Invalid JSON response, retrying...")
-            
-            except Exception as e:
-                logger.warning(f"Attempt {attempt + 1}: {str(e)}, retrying...")
-            
-            await sleep(1)
-
-        logger.error("All retry attempts failed.")
-        raise RuntimeError("Failed to generate text after multiple attempts.")
+                except json.JSONDecodeError as e:
+                    logger.warning(f"Attempt {attempt + 1}: Invalid JSON response, retrying... {e}")
+                
+                except Exception as e:
+                    logger.warning(f"Attempt {attempt + 1}: {str(e)}, retrying...")
+                
+                await sleep(1)
+        except Exception as e:
+            logger.error(f"All retry attempts failed. Most recent error: {e}")
+            raise
     
     def postprocess(self, response: dict) -> str:
         """

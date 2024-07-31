@@ -8,10 +8,10 @@ class FeatureConfig(Serializable):
     """Number of features in the autoencoder"""
 
     min_examples: int = 200
-    """Minimum number of examples for a feature to be included"""
+    """Minimum number of activating examples for a feature to be included"""
 
     max_examples: int = 10000
-    """Maximum number of examples for a feature to included"""
+    """Maximum number of activating examples to include for a feature"""
 
     ctx_len: int = 64
     """Length of each example"""
