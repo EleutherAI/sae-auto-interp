@@ -89,8 +89,8 @@ class FeatureCache:
         self.width = list(submodule_dict.values())[0].ae.width
 
         self.cache = Cache(filters, batch_size=batch_size)
-
-        self.filter_submodules(filters)
+        if filters is not None:
+            self.filter_submodules(filters)
 
         print(submodule_dict.keys())
 
