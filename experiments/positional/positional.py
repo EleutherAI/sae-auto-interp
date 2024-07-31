@@ -1,14 +1,11 @@
-import torch
-from nnsight import LanguageModel
-import matplotlib.pyplot as plt
-import numpy as np
-from tqdm import tqdm
-
 import argparse
 
-from sae_auto_interp.autoencoders import load_oai_autoencoders
+from nnsight import LanguageModel
 from positional_cache import FrequencyCache
+
+from sae_auto_interp.autoencoders import load_oai_autoencoders
 from sae_auto_interp.utils import load_tokenized_data
+
 
 def main(args):
     model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
@@ -26,13 +23,14 @@ def main(args):
     )
 
     cache = FrequencyCache(
-        model, 
+        model,
         submodule_dict,
         args.minibatch_size,
         args.seq_len,
     )
     cache.run(args.n_tokens, tokens)
     _ = cache.save(threshold=0.06)
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -43,10 +41,10 @@ def parse_args():
 
     return parser.parse_args()
 
+
 if __name__ == "__main__":
     args = parse_args()
     main(args)
-
 
 
 # # %%

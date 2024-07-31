@@ -1,17 +1,20 @@
 import asyncio
-import orjson
 from functools import partial
 
+import orjson
 import torch
 from simple_parsing import ArgumentParser
 
-from sae_auto_interp.explainers import explanation_loader
-from sae_auto_interp.scorers import GenerationScorer
 from sae_auto_interp.clients import Outlines
-from sae_auto_interp.utils import load_tokenized_data, load_tokenizer
-from sae_auto_interp.features import FeatureLoader, FeatureDataset, pool_max_activation_windows
-from sae_auto_interp.pipeline import Pipeline, process_wrapper
 from sae_auto_interp.config import FeatureConfig
+from sae_auto_interp.explainers import explanation_loader
+from sae_auto_interp.features import (
+    FeatureDataset,
+    FeatureLoader,
+)
+from sae_auto_interp.pipeline import Pipeline, process_wrapper
+from sae_auto_interp.scorers import GenerationScorer
+from sae_auto_interp.utils import load_tokenized_data, load_tokenizer
 
 ### Set directories ###
 
@@ -19,9 +22,10 @@ RAW_FEATURES_PATH = "raw_features/gpt2"
 EXPLAINER_OUT_DIR = "results/explanations"
 SCORER_OUT_DIR = "results/generation"
 
+
 def main(cfg):
     ### Load dataset ###
-    
+
     tokenizer = load_tokenizer("gpt2")
     tokens = load_tokenized_data(
         cfg.seq_len,
@@ -85,8 +89,8 @@ def main(cfg):
 
     asyncio.run(pipeline.run())
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_arguments(FeatureConfig, dest="options")
     args = parser.parse_args()
