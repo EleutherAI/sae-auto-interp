@@ -1,9 +1,10 @@
 # %%
 
-import os
-import orjson
 import html
+import os
 from collections import defaultdict
+
+import orjson
 
 explanation_dir = "results/pythia_explanations"
 recall_dir = "results/pythia_recall"
@@ -11,11 +12,15 @@ fuzz_dir = "results/pythia_fuzz"
 
 data = defaultdict(dict)
 
-def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
 
-    prompt = _highlight(explanation.get('generation_prompt', 'No prompt available.')[1:], 1.0)
-    prompt = prompt.replace('\n', '<br>')
-    response = explanation.get('response', 'No response available.').replace('\n', '<br>')
+def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
+    prompt = _highlight(
+        explanation.get("generation_prompt", "No prompt available.")[1:], 1.0
+    )
+    prompt = prompt.replace("\n", "<br>")
+    response = explanation.get("response", "No response available.").replace(
+        "\n", "<br>"
+    )
 
     feature_name = edit(feature_name)
 
@@ -118,9 +123,9 @@ def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
                     ● Recall | ● Fuzz | # Distance
                     <br>
                     Green indicates a correct prediction, red incorrect.
-                    For recall, -1 indicates a non-activating example. 
+                    For recall, -1 indicates a non-activating example.
                     For fuzzing, -1 indicates an incorrectly marked example.
-                </p> 
+                </p>
             </h2>
             <div id="scores">
                 {generate_score_html(recall_scores, fuzz_scores)}
@@ -131,11 +136,14 @@ def create_html_content(feature_name, explanation, recall_scores, fuzz_scores):
     """
     return html_content, feature_name
 
+
 def _highlight(text, opacity: float = 1.0):
-    return text.replace('<<', f'<span style="background-color:rgba(57,212,155, {opacity})">').replace('>>', '</span>')
+    return text.replace(
+        "<<", f'<span style="background-color:rgba(57,212,155, {opacity})">'
+    ).replace(">>", "</span>")
+
 
 def generate_score_html(recall_scores, fuzz_scores):
-
     results = {}
     fuzz_wrong = []
     recall_wrong = []
@@ -143,58 +151,59 @@ def generate_score_html(recall_scores, fuzz_scores):
     n_false = 0
 
     for score in fuzz_scores:
-
         s = {
-            'ground_truth': score['ground_truth'],
-            'fuzz': score['prediction'],
-            'distance': score['distance'],
-            'text': score['text'],
-            'recall': None
+            "ground_truth": score["ground_truth"],
+            "fuzz": score["prediction"],
+            "distance": score["distance"],
+            "text": score["text"],
+            "recall": None,
         }
 
-        if s['ground_truth'] is False:
+        if s["ground_truth"] is False:
             fuzz_wrong.append(s)
         else:
-            results[score['id']] = s
-            
+            results[score["id"]] = s
+
     for score in recall_scores:
-
-        if score['distance'] == -1:
-
+        if score["distance"] == -1:
             n_false += 1
 
             if n_false > 10:
                 continue
 
             s = {
-                'ground_truth': score['ground_truth'],
-                'fuzz': None,
-                'distance': score['distance'],
-                'text': score['text'],
-                'recall': score['prediction']
+                "ground_truth": score["ground_truth"],
+                "fuzz": None,
+                "distance": score["distance"],
+                "text": score["text"],
+                "recall": score["prediction"],
             }
 
             recall_wrong.append(s)
 
             continue
 
-        s = results[score['id']]
-        s['recall'] = score['prediction']
+        s = results[score["id"]]
+        s["recall"] = score["prediction"]
 
-    sorted_scores = sorted(list(results.values()), key=lambda x: x['distance'])
+    sorted_scores = sorted(list(results.values()), key=lambda x: x["distance"])
     sorted_scores += recall_wrong
     sorted_scores += fuzz_wrong
 
     score_html = ""
     correct = True
     for score in sorted_scores:
-        if score['distance'] == -1 and correct:
+        if score["distance"] == -1 and correct:
             correct = False
-            score_html += '<hr>'
+            score_html += "<hr>"
 
-        text = score['text']
+        text = score["text"]
 
-        opacity = 0.2 + 0.8 * (abs(score['distance'] - 11) / 10) if score['distance'] != -1 else 0.2
+        opacity = (
+            0.2 + 0.8 * (abs(score["distance"] - 11) / 10)
+            if score["distance"] != -1
+            else 0.2
+        )
         text = _highlight(text, opacity)
 
         match (score["recall"]):
@@ -207,7 +216,6 @@ def generate_score_html(recall_scores, fuzz_scores):
 
         recall_circle = f'<span class="circle {recall}"></span>'
 
-
         match (score["fuzz"]):
             case None:
                 fuzz = "none"
@@ -217,7 +225,7 @@ def generate_score_html(recall_scores, fuzz_scores):
                 fuzz = "true"
 
         fuzz_circle = f'<span class="circle {fuzz}"></span>'
-        
+
         score_html += f"""
         <div class="score-item">
             <div style="min-width: 60px;">
@@ -229,12 +237,9 @@ def generate_score_html(recall_scores, fuzz_scores):
         """
     return score_html
 
-def edit(path):
 
-    replacements = {
-        "embed_in" : "embed",
-        "attention" : "attn"
-    }
+def edit(path):
+    replacements = {"embed_in": "embed", "attention": "attn"}
 
     path = path.replace(".gpt_neox.", "")
     path = path.replace("layers.", "")
@@ -254,18 +259,20 @@ def edit(path):
 
     return f"{module}-{feature}"
 
+
 def build_html_page(data):
     os.makedirs("output_html", exist_ok=True)
     for feature, feature_data in data.items():
         html_content, feature_name = create_html_content(
             feature,
-            feature_data['explanation'],
-            feature_data['recall'],
-            feature_data['fuzz']
+            feature_data["explanation"],
+            feature_data["recall"],
+            feature_data["fuzz"],
         )
         with open(f"output_html/{feature_name}.html", "w", encoding="utf-8") as f:
             f.write(html_content)
     print("HTML files have been created in the 'output_html' directory.")
+
 
 # Process all files
 for file in os.listdir(explanation_dir):
@@ -281,14 +288,10 @@ for file in os.listdir(explanation_dir):
         with open(f"{fuzz_dir}/{file}", "rb") as f:
             fuzz = orjson.loads(f.read())
 
-    except Exception as e:
+    except Exception:
         continue
 
-    data[feature_name] = {
-        'explanation': explanation,
-        'recall': recall,
-        'fuzz': fuzz
-    }
+    data[feature_name] = {"explanation": explanation, "recall": recall, "fuzz": fuzz}
 
 # Generate HTML files
 build_html_page(data)

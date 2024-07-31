@@ -1,24 +1,24 @@
 # Introduction
 
-This library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) features. The explainer and scorer models can be run locally or acessed using API calls via OpenRouter. 
+This library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) features. The explainer and scorer models can be run locally or acessed using API calls via OpenRouter.
 
 Note that we're still actively cleaning up the codebase and scripts.
 
 ## Installation
 
-Install this library as a local editable installation. Run the following command from the `sae-auto-interp` directory. 
+Install this library as a local editable installation. Run the following command from the `sae-auto-interp` directory.
 
 ```pip install -e .```
 
 # Loading Autoencoders
 
-This library uses NNsight to load and edit a model with autoencoders. One should install version 0.3 of [NNsight](https://github.com/ndif-team/nnsight/tree/0.3) 
+This library uses NNsight to load and edit a model with autoencoders. One should install version 0.3 of [NNsight](https://github.com/ndif-team/nnsight/tree/0.3)
 
 ```python
 model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 
 submodule_dict = load_oai_autoencoders(
-    model, 
+    model,
     # List of layers,
     "weights/gpt2_128k",
 )
@@ -26,13 +26,13 @@ submodule_dict = load_oai_autoencoders(
 
 # Caching
 
-To cache autoencoder activations, load your autoencoders and run a cache object. 
+To cache autoencoder activations, load your autoencoders and run a cache object.
 
 ```python
 
 cache = FeatureCache(
-    model, 
-    submodule_dict, 
+    model,
+    submodule_dict,
     batch_size = 128,
     filters = module_filter
 )
@@ -40,11 +40,11 @@ cache = FeatureCache(
 cache.run(n_tokens = 15_000_000, tokens)
 ```
 
-Caching saves `.safetensors` of `Dict["activations", "locations"]`. 
+Caching saves `.safetensors` of `Dict["activations", "locations"]`.
 
 ```python
 cache.save_splits(
-    n_splits=4, 
+    n_splits=4,
     save_dir="/share/u/caden/sae-auto-interp/raw_features/weights"
 )
 ```
@@ -53,9 +53,9 @@ Safetensors are split into shards over the width of the autoencoder.
 
 # Loading Feature Records
 
-The `.features` module provides utilities for reconstructing and sampling various statistics for SAE features. 
+The `.features` module provides utilities for reconstructing and sampling various statistics for SAE features.
 
-```python 
+```python
 from sae_auto_interp.features import FeatureLoader, FeatureDataset
 
 dataset = FeatureDataset(
@@ -78,12 +78,12 @@ We use a `max_activation_pooling_sampler` which reconstructs activations given t
 
 # Generating Explanations
 
-First, start a VLLM server or your preferred client. Create an explainer from the `.explainers` module. 
+First, start a VLLM server or your preferred client. Create an explainer from the `.explainers` module.
 
 ```python
 SimpleExplainer(
-    client, 
-    tokenizer = tokenizer, 
+    client,
+    tokenizer = tokenizer,
 )
 ```
 
@@ -99,7 +99,7 @@ def explainer_postprocess(result):
 
 explainer_pipe = process_wrapper(
     SimpleExplainer(
-        client, 
+        client,
         tokenizer=tokenizer,
     ),
     postprocess=explainer_postprocess,
@@ -129,12 +129,12 @@ RecallScorer(
 )
 ```
 
-You can then create a pipe to run the scorer. The pipe should have a pre-processer, that takes the results from the previous pipe and a post processor, that saves the scores. An scorer should always be run after a explainer pipe, but the explainer pipe can be used to load saved explanations. 
+You can then create a pipe to run the scorer. The pipe should have a pre-processer, that takes the results from the previous pipe and a post processor, that saves the scores. An scorer should always be run after a explainer pipe, but the explainer pipe can be used to load saved explanations.
 
 ```python
 def scorer_preprocess(result):
         record = result.record
-        
+
         record.explanation = result.explanation
         record.extra_examples = record.random_examples
 

@@ -1,20 +1,20 @@
 import asyncio
-import orjson
+from functools import partial
 
+import orjson
+from defaults import default_constructor
 from simple_parsing import ArgumentParser
 
-from functools import partial
-from sae_auto_interp.explainers import SimpleExplainer
-from sae_auto_interp.scorers import RecallScorer, FuzzingScorer
 from sae_auto_interp.clients import Local
+from sae_auto_interp.config import FeatureConfig
+from sae_auto_interp.explainers import SimpleExplainer
+from sae_auto_interp.features import FeatureDataset, FeatureLoader, top_and_quantiles
+from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
+from sae_auto_interp.scorers import FuzzingScorer, RecallScorer
 from sae_auto_interp.utils import (
     load_tokenized_data,
     load_tokenizer,
 )
-from defaults import default_constructor
-from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
-from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
-from sae_auto_interp.config import FeatureConfig
 
 ### Set directories ###
 
@@ -23,6 +23,7 @@ explanation_dir = "results/pythia_explanations"
 recall_dir = "results/pythia_recall"
 fuzz_dir = "results/pythia_fuzz"
 processed_path = "/share/u/caden/sae-auto-interp/processed_features"
+
 
 def main(cfg):
     ### Load dataset ###
@@ -38,33 +39,25 @@ def main(cfg):
     dataset = FeatureDataset(
         raw_dir=raw_features,
         cfg=cfg,
-        modules=['.gpt_neox.layers.4.attention', '.gpt_neox.layers.4']
+        modules=[".gpt_neox.layers.4.attention", ".gpt_neox.layers.4"],
     )
 
     def load_logits(record):
-        try: 
+        try:
             with open(f"{processed_path}/{record.feature}.txt", "rb") as f:
                 record.top_logits = orjson.loads(f.read())
-        except:
-            record.top_logits = ["Top logits could not be loaded."]
+        except Exception as e:
+            record.top_logits = [f"Top logits could not be loaded ({e})."]
         return record
 
     loader = FeatureLoader(
         tokens=tokens,
         dataset=dataset,
         constructor=partial(
-            default_constructor, 
-            n_random=20, 
-            ctx_len=20, 
-            max_examples=5_000
+            default_constructor, n_random=20, ctx_len=20, max_examples=5_000
         ),
-        sampler=partial(
-            top_and_quantiles,
-            n_train=20,
-            n_test=7,
-            n_quantiles=10
-        ),
-        transform=load_logits
+        sampler=partial(top_and_quantiles, n_train=20, n_test=7, n_quantiles=10),
+        transform=load_logits,
     )
 
     ### Load client ###
@@ -76,7 +69,7 @@ def main(cfg):
     def preprocess(record):
         test = []
         extra_examples = []
-        
+
         for examples in record.test:
             test.append(examples[:5])
             extra_examples.extend(examples[5:])
@@ -88,8 +81,8 @@ def main(cfg):
 
     def explainer_postprocess(result):
         data = {
-            "generation_prompt" : result[0],
-            "response" : result[1],
+            "generation_prompt": result[0],
+            "response": result[1],
             "explanation": result[2].explanation,
         }
 
@@ -100,10 +93,10 @@ def main(cfg):
 
     explainer_pipe = process_wrapper(
         SimpleExplainer(
-            client, 
+            client,
             tokenizer=tokenizer,
             cot=True,
-            activations=True, 
+            activations=True,
             logits=True,
             max_tokens=500,
             temperature=0.0,
@@ -116,7 +109,7 @@ def main(cfg):
 
     def scorer_preprocess(result):
         record = result.record
-        
+
         record.explanation = result.explanation
 
         return record
@@ -128,24 +121,24 @@ def main(cfg):
     scorer_pipe = Pipe(
         process_wrapper(
             RecallScorer(
-                client, 
-                tokenizer=tokenizer, 
-                verbose=True, 
+                client,
+                tokenizer=tokenizer,
+                verbose=True,
                 max_tokens=25,
                 temperature=0.0,
-                batch_size=cfg.batch_size
+                batch_size=cfg.batch_size,
             ),
             preprocess=scorer_preprocess,
             postprocess=partial(scorer_postprocess, score_dir=recall_dir),
         ),
         process_wrapper(
             FuzzingScorer(
-                client, 
-                tokenizer=tokenizer, 
-                verbose=True, 
+                client,
+                tokenizer=tokenizer,
+                verbose=True,
                 max_tokens=25,
                 temperature=0.0,
-                batch_size=cfg.batch_size
+                batch_size=cfg.batch_size,
             ),
             preprocess=scorer_preprocess,
             postprocess=partial(scorer_postprocess, score_dir=fuzz_dir),
@@ -164,7 +157,6 @@ def main(cfg):
 
 
 if __name__ == "__main__":
-
     parser = ArgumentParser()
     parser.add_argument("--batch_size", type=int, default=16)
     parser.add_arguments(FeatureConfig, dest="options")
