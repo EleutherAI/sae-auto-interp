@@ -37,7 +37,11 @@ def _reconstruct_examples(dense_activations, token_batches, ctx_len):
     return token_windows, activation_windows, avg_pools
 
 
-def _top_k_pools(avg_pools, max_examples):
+def _top_k_pools(dense_activations, token_batches, ctx_len, max_examples):
+
+    token_windows, activation_windows, avg_pools = \
+        _reconstruct_examples(dense_activations, token_batches, ctx_len)
+    
     # Filter out zero pools
     non_zero_mask = avg_pools != 0
     non_zero_pools = avg_pools[non_zero_mask]
@@ -55,8 +59,8 @@ def _top_k_pools(avg_pools, max_examples):
 
 def pool_max_activation_windows(
     record,
-    tokens: TensorType["batch", "seq"],
     buffer_output: BufferOutput,
+    tokens: TensorType["batch", "seq"],
     ctx_len: int,
     max_examples: int,
 ):
@@ -64,10 +68,9 @@ def pool_max_activation_windows(
         tokens, buffer_output.activations, buffer_output.locations
     )
 
-    token_windows, activation_windows, avg_pools = \
-        _reconstruct_examples(dense_activations, token_batches, ctx_len)
-
-    token_windows, activation_windows = _top_k_pools(avg_pools, max_examples)
+    token_windows, activation_windows = _top_k_pools(
+        dense_activations, token_batches, ctx_len, max_examples
+    )
 
     # Set as examples
     record.examples = prepare_examples(token_windows, activation_windows)
