@@ -1,7 +1,12 @@
 from typing import List
 
 from ...features import Example
-from ...oai_autointerp import LogprobFreeExplanationTokenSimulator, simulate_and_score, ExplanationNeuronSimulator,ActivationRecord
+from ...oai_autointerp import (
+    ActivationRecord,
+    ExplanationNeuronSimulator,
+    LogprobFreeExplanationTokenSimulator,
+    simulate_and_score,
+)
 from ..scorer import Scorer, ScorerResult
 
 
@@ -24,7 +29,11 @@ class OpenAISimulator(Scorer):
 
     async def __call__(self, record):
         # Simulate and score the explanation.
-        cls = ExplanationNeuronSimulator if self.all_at_once else LogprobFreeExplanationTokenSimulator
+        cls = (
+            ExplanationNeuronSimulator
+            if self.all_at_once
+            else LogprobFreeExplanationTokenSimulator
+        )
         simulator = cls(
             self.client,
             record.explanation,
