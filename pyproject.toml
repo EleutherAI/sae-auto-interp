@@ -18,4 +18,4 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["sae_auto_interp"]
