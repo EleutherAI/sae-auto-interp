@@ -2,12 +2,10 @@
 # related helper functions.
 
 from __future__ import annotations
-
+from simple_parsing import Serializable
 from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional
-
-from ..fast_dataclasses import FastDataclass, register_dataclass
 
 
 class ActivationScale(str, Enum):
@@ -27,9 +25,8 @@ class ActivationScale(str, Enum):
     """
 
 
-@register_dataclass
 @dataclass
-class SequenceSimulation(FastDataclass):
+class SequenceSimulation(Serializable):
     """The result of a simulation of neuron activations on one text sequence."""
 
     tokens: list[str]
@@ -64,9 +61,9 @@ class SequenceSimulation(FastDataclass):
     """The result of the simulation before calibration."""
 
 
-@register_dataclass
+
 @dataclass
-class ScoredSequenceSimulation(FastDataclass):
+class ScoredSequenceSimulation(Serializable):
     """
     SequenceSimulation result with a score (for that sequence only) and ground truth activations.
     """
@@ -89,9 +86,8 @@ class ScoredSequenceSimulation(FastDataclass):
     """
 
 
-@register_dataclass
 @dataclass
-class ScoredSimulation(FastDataclass):
+class ScoredSimulation(Serializable):
     """Result of scoring a neuron simulation on multiple sequences."""
 
     scored_sequence_simulations: List[ScoredSequenceSimulation]
@@ -118,9 +114,8 @@ class ScoredSimulation(FastDataclass):
         return self.ev_correlation_score
 
 
-@register_dataclass
 @dataclass
-class ScoredExplanation(FastDataclass):
+class ScoredExplanation(Serializable):
     """Simulator parameters and the results of scoring it on multiple sequences"""
 
     explanation: str

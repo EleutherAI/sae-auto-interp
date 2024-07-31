@@ -3,14 +3,11 @@
 
 from dataclasses import dataclass
 from typing import List, Optional
+from simple_parsing import Serializable
 
 
-from ..fast_dataclasses import FastDataclass, register_dataclass
-
-
-@register_dataclass
 @dataclass
-class ActivationRecord(FastDataclass):
+class ActivationRecord(Serializable):
     """Collated lists of tokens and their activations for a single neuron."""
 
     tokens: List[str]
