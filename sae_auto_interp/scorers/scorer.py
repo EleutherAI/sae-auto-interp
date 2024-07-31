@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-
-from typing import NamedTuple, Any
+from typing import Any, NamedTuple
 
 from ..features.features import FeatureRecord
+
 
 class ScorerResult(NamedTuple):
     record: FeatureRecord
@@ -11,11 +11,8 @@ class ScorerResult(NamedTuple):
     score: Any
     """Generated score for feature."""
 
+
 class Scorer(ABC):
-    
     @abstractmethod
-    def __call__(
-        self,
-        record: FeatureRecord
-    ) -> ScorerResult:
+    def __call__(self, record: FeatureRecord) -> ScorerResult:
         pass

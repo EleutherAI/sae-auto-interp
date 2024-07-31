@@ -1,5 +1,7 @@
 from typing import List
+
 from .prompts import example, system
+
 
 def build_examples(
     **kwargs,
@@ -7,21 +9,17 @@ def build_examples(
     examples = []
 
     for i in range(1, 4):
-        prompt, response = \
-            example(
-                i,
-                **kwargs
-            )
-        
+        prompt, response = example(i, **kwargs)
+
         messages = [
             {
-                "role" : "user",
-                "content" : prompt,
+                "role": "user",
+                "content": prompt,
             },
             {
-                "role" : "system",
-                "content" : response,
-            }
+                "role": "system",
+                "content": response,
+            },
         ]
 
         examples.extend(messages)
@@ -35,7 +33,6 @@ def build_prompt(
     activations: bool = False,
     top_logits: List[str] = None,
 ):
-    
     logits = True if top_logits is not None else False
 
     messages = system(
@@ -59,8 +56,8 @@ def build_prompt(
 
     messages.append(
         {
-            "role" : "user",
-            "content" : user_start,
+            "role": "user",
+            "content": user_start,
         }
     )
 

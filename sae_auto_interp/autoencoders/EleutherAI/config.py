@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from simple_parsing import list_field, Serializable
+
+from simple_parsing import Serializable, list_field
 
 
 @dataclass
@@ -7,6 +8,7 @@ class SaeConfig(Serializable):
     """
     Configuration for training a sparse autoencoder on a language model.
     """
+
     expansion_factor: int = 32
     """Multiple of the input dimension to use as the SAE dimension."""
 
@@ -37,7 +39,7 @@ class TrainConfig(Serializable):
     """Base LR. If None, it is automatically chosen based on the number of latents."""
 
     lr_warmup_steps: int = 1000
- 
+
     auxk_alpha: float = 1 / 32
     """Weight of the auxiliary loss term."""
 
@@ -64,4 +66,6 @@ class TrainConfig(Serializable):
     wandb_log_frequency: int = 1
 
     def __post_init__(self):
-        assert not (self.layers and self.layer_stride != 1), "Cannot specify both `layers` and `layer_stride`."
+        assert not (
+            self.layers and self.layer_stride != 1
+        ), "Cannot specify both `layers` and `layer_stride`."

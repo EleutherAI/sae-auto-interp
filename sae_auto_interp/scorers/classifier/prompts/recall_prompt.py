@@ -57,21 +57,24 @@ Text examples:
 """
 
 default = [
-  {"role": "user", "content": DSCORER_EXAMPLE_ONE},
-  {"role": "assistant", "content": DSCORER_RESPONSE_ONE},
-  {"role": "user", "content": DSCORER_EXAMPLE_TWO},
-  {"role": "assistant", "content": DSCORER_RESPONSE_TWO},
-  {"role": "user", "content": DSCORER_EXAMPLE_THREE},
-  {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
+    {"role": "user", "content": DSCORER_EXAMPLE_ONE},
+    {"role": "assistant", "content": DSCORER_RESPONSE_ONE},
+    {"role": "user", "content": DSCORER_EXAMPLE_TWO},
+    {"role": "assistant", "content": DSCORER_RESPONSE_TWO},
+    {"role": "user", "content": DSCORER_EXAMPLE_THREE},
+    {"role": "assistant", "content": DSCORER_RESPONSE_THREE},
 ]
 
+
 def prompt(examples, explanation):
-  generation_prompt = GENERATION_PROMPT.format(explanation=explanation, examples=examples)
+    generation_prompt = GENERATION_PROMPT.format(
+        explanation=explanation, examples=examples
+    )
 
-  prompt = [
-    {"role": "system", "content": DSCORER_SYSTEM_PROMPT},
-    *default,
-    {"role": "user", "content": generation_prompt}
-  ]
+    prompt = [
+        {"role": "system", "content": DSCORER_SYSTEM_PROMPT},
+        *default,
+        {"role": "user", "content": generation_prompt},
+    ]
 
-  return prompt
+    return prompt

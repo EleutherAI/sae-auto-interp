@@ -1,11 +1,11 @@
-from tqdm import tqdm
-from typing import List, Dict, NamedTuple, Callable
 import os
+from typing import Callable, Dict, List, NamedTuple
 
 import torch
 import torch.multiprocessing as mp
-from torchtyping import TensorType
 from safetensors.torch import load_file
+from torchtyping import TensorType
+from tqdm import tqdm
 
 from ..config import FeatureConfig
 from ..features.features import Feature, FeatureRecord
@@ -101,7 +101,6 @@ class FeatureDataset:
         self.buffers = []
 
         if features is None:
-
             if modules is None:
                 self._load_all(raw_dir)
 
@@ -113,7 +112,6 @@ class FeatureDataset:
 
     def _edges(self):
         return torch.linspace(0, self.cfg.width, steps=self.cfg.n_splits + 1).long()
-    
 
     def _load_all(self, raw_dir: str):
         """
@@ -197,10 +195,10 @@ class FeatureLoader:
     ):
         """
         Args:
-            tokens (TensorType["batch", "seq"]): The tokenized input data.
-            dataset (FeatureDataset): The dataset to load.
-            constructor (Callable): A function defining how examples are sampled from the tokens.
-            sampler (Callable): A function for sampling top examples into train/test splits.
+            tokens: The tokenized input data.
+            dataset: The dataset to load.
+            constructor: A function defining how examples are sampled from the tokens.
+            sampler: A function for sampling top examples into train/test splits.
         """
         self.tokens = tokens
         self.dataset = dataset

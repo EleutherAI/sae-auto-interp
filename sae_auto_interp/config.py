@@ -1,9 +1,10 @@
-from simple_parsing import Serializable
 from dataclasses import dataclass
+
+from simple_parsing import Serializable
+
 
 @dataclass
 class ExperimentConfig(Serializable):
-
     train_type: str = "top"
     """Type of sampler to use"""
 
@@ -14,7 +15,7 @@ class ExperimentConfig(Serializable):
     """Number of examples to sample for testing"""
 
     n_quantiles: int = 10
-    """Number of quantiles to sample""" 
+    """Number of quantiles to sample"""
 
     n_random: int = 5
     """Number of random examples to sample"""
@@ -22,7 +23,6 @@ class ExperimentConfig(Serializable):
 
 @dataclass
 class FeatureConfig(Serializable):
-    
     width: int = 131072
     """Number of features in the autoencoder"""
 
@@ -38,9 +38,9 @@ class FeatureConfig(Serializable):
     n_splits: int = 5
     """Number of splits that features were devided into"""
 
+
 @dataclass
 class CacheConfig(Serializable):
-
     batch_size: int = 32
     """Number of sequences to process in a batch"""
 
