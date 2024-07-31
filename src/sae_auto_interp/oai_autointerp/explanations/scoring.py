@@ -2,20 +2,17 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Any, Callable, Coroutine, Sequence
+from typing import Any, Callable, Sequence
 
 import numpy as np
 from ..activations.activations import ActivationRecord
-from ..explanations.calibrated_simulator import (
-    CalibratedNeuronSimulator,
-    LinearCalibratedNeuronSimulator,
-)
+
 from ..explanations.explanations import (
     ScoredSequenceSimulation,
     ScoredSimulation,
     SequenceSimulation,
 )
-from ..explanations.simulator import ExplanationNeuronSimulator, NeuronSimulator
+from ..explanations.simulator import NeuronSimulator
 
 
 def flatten_list(list_of_lists: Sequence[Sequence[Any]]) -> list[Any]:
@@ -57,22 +54,6 @@ def absolute_dev_explained_score_from_sequences(
         - np.mean(np.abs(np.array(real_activations) - np.array(predicted_activations)))
         / np.mean(np.abs(np.array(real_activations)))
     )
-
-
-async def make_explanation_simulator(
-    explanation: str,
-    calibration_activation_records: Sequence[ActivationRecord],
-    model_name: str,
-    calibrated_simulator_class: type[CalibratedNeuronSimulator] = LinearCalibratedNeuronSimulator,
-) -> CalibratedNeuronSimulator:
-    """
-    Make a simulator that uses an explanation to predict activations and calibrates it on the given
-    activation records.
-    """
-    simulator = ExplanationNeuronSimulator(model_name, explanation)
-    calibrated_simulator = calibrated_simulator_class(simulator)
-    await calibrated_simulator.calibrate(calibration_activation_records)
-    return calibrated_simulator
 
 
 async def _simulate_and_score_sequence(
@@ -176,11 +157,3 @@ async def simulate_and_score(
     val = aggregate_scored_sequence_simulations(scored_sequence_simulations)
     return val
 
-
-async def make_simulator_and_score(
-    make_simulator: Coroutine[None, None, NeuronSimulator],
-    activation_records: Sequence[ActivationRecord],
-) -> ScoredSimulation:
-    """Chain together creating the simulator and using it to score activation records."""
-    simulator = await make_simulator
-    return await simulate_and_score(simulator, activation_records)
