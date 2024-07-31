@@ -23,7 +23,7 @@ include = ["sae_auto_interp*"]
 reportPrivateImportUsage = false
 
 [tool.setuptools.packages.find]
-where = ["sae_auto_interp"]
+include = ["sae_auto_interp*"]
 
 [tool.ruff]
 # TODO: Clean up or remove experiments folder.
