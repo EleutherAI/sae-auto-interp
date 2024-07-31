@@ -16,8 +16,8 @@ HarmonyMessage = TypedDict(
 
 class PromptFormat(str, Enum):
     """
-    Different ways of formatting the components of a prompt into the format accepted by the relevant
-    API server endpoint.
+    Different ways of formatting the components of a prompt into the format accepted
+    by the relevant API server endpoint.
     """
 
     NONE = "none"
@@ -26,8 +26,9 @@ class PromptFormat(str, Enum):
     """Suitable for IF models that use <|endofprompt|>."""
     HARMONY_V4 = "harmony_v4"
     """
-    Suitable for Harmony models that use a structured turn-taking role+content format. Generates a
-    list of HarmonyMessage dicts that can be sent to the /chat/completions endpoint.
+    Suitable for Harmony models that use a structured turn-taking role+content format.
+    Generates a list of HarmonyMessage dicts that can be sent to the /chat/completions
+    endpoint.
     """
 
     @classmethod
@@ -47,7 +48,8 @@ class Role(str, Enum):
 
 
 class PromptBuilder:
-    """Class for accumulating components of a prompt and then formatting them into an output."""
+    """Class for accumulating components of a prompt and then formatting
+    them into an output."""
 
     def __init__(self) -> None:
         self._messages: list[HarmonyMessage] = []
@@ -56,7 +58,8 @@ class PromptBuilder:
         self._messages.append(HarmonyMessage(role=role, content=message))
 
     def prompt_length_in_tokens(self, prompt_format: PromptFormat) -> int:
-        # TODO(sbills): Make the model/encoding configurable. This implementation assumes GPT-4.
+        # TODO(sbills): Make the model/encoding configurable. This implementation
+        #  assumes GPT-4.
         encoding = tiktoken.get_encoding("cl100k_base")
         if prompt_format == PromptFormat.HARMONY_V4:
             # Approximately-correct implementation adapted from this documentation:
@@ -64,9 +67,11 @@ class PromptBuilder:
             num_tokens = 0
             for message in self._messages:
                 num_tokens += (
-                    4  # every message follows <|im_start|>{role/name}\n{content}<|im_end|>\n
+                    4  # every message follows
+                    # <|im_start|>{role/name}\n{content}<|im_end|>\n
                 )
-                num_tokens += len(encoding.encode(message["content"], allowed_special="all"))
+                num_tokens += len(encoding.encode(message["content"],
+                                                   allowed_special="all"))
             num_tokens += 2  # every reply is primed with <|im_start|>assistant
             return num_tokens
         else:
@@ -78,15 +83,17 @@ class PromptBuilder:
         self, prompt_format: PromptFormat, *, allow_extra_system_messages: bool = False
     ) -> Union[str, list[HarmonyMessage]]:
         """
-        Validates the messages added so far (reasonable alternation of assistant vs. user, etc.)
-        and returns either a regular string (maybe with <|endofprompt|> tokens) or a list of
+        Validates the messages added so far (reasonable alternation of assistant
+        vs. user, etc.) and returns either a regular string (maybe with
+        <|endofprompt|> tokens) or a list of
         HarmonyMessages suitable for use with the /chat/completions endpoint.
 
-        The `allow_extra_system_messages` parameter allows the caller to specify that the prompt
-        should be allowed to contain system messages after the very first one.
+        The `allow_extra_system_messages` parameter allows the caller to specify
+        that the prompt should be allowed to contain system messages after the very
+        first one.
         """
-        # Create a deep copy of the messages so we can modify it and so that the caller can't
-        # modify the internal state of this object.
+        # Create a deep copy of the messages so we can modify it and so that the
+        # caller can't modify the internal state of this object.
         messages = [message.copy() for message in self._messages]
 
         expected_next_role = Role.SYSTEM

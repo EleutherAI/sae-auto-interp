@@ -1,27 +1,32 @@
-# Dataclasses and enums for storing neuron explanations, their scores, and related data. Also,
-# related helper functions.
+# Dataclasses and enums for storing neuron explanations, their scores, and related data.
+#Also, related helper functions.
 
 from __future__ import annotations
-from simple_parsing import Serializable
+
 from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional
 
+from simple_parsing import Serializable
+
 
 class ActivationScale(str, Enum):
-    """Which "units" are stored in the expected_activations/distribution_values fields of a
-    SequenceSimulation.
+    """
+    Which "units" are stored in the expected_activations/distribution_values fields of
+    a SequenceSimulation.
 
-    This enum identifies whether the values represent real activations of the neuron or something
-    else. Different scales are not necessarily related by a linear transformation.
+    This enum identifies whether the values represent real activations of the neuron or 
+    something else. Different scales are not necessarily related by a linear
+    transformation.
     """
 
     NEURON_ACTIVATIONS = "neuron_activations"
     """Values represent real activations of the neuron."""
     SIMULATED_NORMALIZED_ACTIVATIONS = "simulated_normalized_activations"
     """
-    Values represent simulated activations of the neuron, normalized to the range [0, 10]. This
-    scale is arbitrary and should not be interpreted as a neuron activation.
+    Values represent simulated activations of the neuron, normalized to the range 
+    [0, 10].
+    This scale is arbitrary and should not be interpreted as a neuron activation.
     """
 
 
@@ -32,24 +37,28 @@ class SequenceSimulation(Serializable):
     tokens: list[str]
     """The sequence of tokens that was simulated."""
     expected_activations: list[float]
-    """Expected value of the possibly-normalized activation for each token in the sequence."""
+    """Expected value of the possibly-normalized activation for 
+    each token in the sequence."""
     activation_scale: ActivationScale
     """What scale is used for values in the expected_activations field."""
     distribution_values: list[list[float]]
     """
-    For each token in the sequence, a list of values from the discrete distribution of activations
-    produced from simulation. Tokens will be included here if and only if they are in the top K=15
+    For each token in the sequence, a list of values from the discrete 
+    distribution of activations produced from simulation. 
+    Tokens will be included here if and only if they are in the top K=15
     tokens predicted by the simulator, and excluded otherwise.
     
-    May be transformed to another unit by calibration. When we simulate a neuron, we produce a
-    discrete distribution with values in the arbitrary discretized space of the neuron, e.g. 10%
-    chance of 0, 70% chance of 1, 20% chance of 2. Which we store as distribution_values =
-    [0, 1, 2], distribution_probabilities = [0.1, 0.7, 0.2]. When we transform the distribution to
-    the real activation units, we can correspondingly transform the values of this distribution
-    to get a distribution in the units of the neuron. e.g. if the mapping from the discretized space
-    to the real activation unit of the neuron is f(x) = x/2, then the distribution becomes 10%
-    chance of 0, 70% chance of 0.5, 20% chance of 1. Which we store as distribution_values =
-    [0, 0.5, 1], distribution_probabilities = [0.1, 0.7, 0.2].
+    May be transformed to another unit by calibration. When we simulate a neuron,
+    we produce a discrete distribution with values in the arbitrary discretized space 
+    of the neuron, e.g. 10% chance of 0, 70% chance of 1, 20% chance of 2.
+    Which we store as distribution_values = [0, 1, 2],
+    distribution_probabilities = [0.1, 0.7, 0.2]. When we transform the distribution to
+    the real activation units, we can correspondingly transform the values of this
+    distribution to get a distribution in the units of the neuron. e.g. if the mapping
+    from the discretized space to the real activation unit of the neuron is f(x) = x/2,
+    then the distribution becomes 10% chance of 0, 70% chance of 0.5, 20% chance of 1.
+    Which we store as distribution_values = [0, 0.5, 1], distribution_probabilities =
+    [0.1, 0.7, 0.2].  
     """
     distribution_probabilities: list[list[float]]
     """
@@ -65,7 +74,8 @@ class SequenceSimulation(Serializable):
 @dataclass
 class ScoredSequenceSimulation(Serializable):
     """
-    SequenceSimulation result with a score (for that sequence only) and ground truth activations.
+    SequenceSimulation result with a score (for that sequence only) and ground truth
+    activations.
     """
 
     simulation: SequenceSimulation
@@ -74,8 +84,9 @@ class ScoredSequenceSimulation(Serializable):
     """Ground truth activations on the sequence (not normalized)"""
     ev_correlation_score: float
     """
-    Correlation coefficient between the expected values of the normalized activations from the
-    simulation and the unnormalized true activations of the neuron on the text sequence.
+    Correlation coefficient between the expected values of the normalized activations
+    from the simulation and the unnormalized true activations of the neuron on the text
+    sequence.
     """
     rsquared_score: Optional[float] = None
     """R^2 of the simulated activations."""
@@ -94,9 +105,9 @@ class ScoredSimulation(Serializable):
     """ScoredSequenceSimulation for each sequence"""
     ev_correlation_score: Optional[float] = None
     """
-    Correlation coefficient between the expected values of the normalized activations from the
-    simulation and the unnormalized true activations on a dataset created from all score_results.
-    (Note that this is not equivalent to averaging across sequences.)
+    Correlation coefficient between the expected values of the normalized activations
+    from the simulation and the unnormalized true activations on a dataset created from
+    all score_results. (Note that this is not equivalent to averaging across sequences.)
     """
     rsquared_score: Optional[float] = None
     """R^2 of the simulated activations."""
@@ -108,8 +119,9 @@ class ScoredSimulation(Serializable):
 
     def get_preferred_score(self) -> Optional[float]:
         """
-        This method may return None in cases where the score is undefined, for example if the
-        normalized activations were all zero, yielding a correlation coefficient of NaN.
+        This method may return None in cases where the score is undefined, for example
+        if the normalized activations were all zero, yielding a correlation coefficient
+        of NaN.
         """
         return self.ev_correlation_score
 
@@ -126,8 +138,9 @@ class ScoredExplanation(Serializable):
 
     def get_preferred_score(self) -> Optional[float]:
         """
-        This method may return None in cases where the score is undefined, for example if the
-        normalized activations were all zero, yielding a correlation coefficient of NaN.
+        This method may return None in cases where the score is undefined, for example
+        if the normalized activations were all zero, yielding a correlation coefficient
+        of NaN.
         """
         return self.scored_simulation.get_preferred_score()
 

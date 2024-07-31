@@ -1,8 +1,9 @@
-# Dataclasses and enums for storing neuron-indexed information about activations. Also, related
-# helper functions.
+# Dataclasses and enums for storing neuron-indexed information about activations. Also, 
+# related helper functions.
 
 from dataclasses import dataclass
 from typing import List, Optional
+
 from simple_parsing import Serializable
 
 
@@ -33,7 +34,8 @@ def _check_slices(
     ), f"{sum_of_slice_lengths=} != {expected_num_values=}"
     stride = n_splits
     expected_indices = set.union(
-        *[set(range(start_index, expected_num_values, stride)) for start_index in range(n_splits)]
+        *[set(range(start_index, expected_num_values, stride)) 
+          for start_index in range(n_splits)]
     )
     assert indices == expected_indices, f"{indices=} != {expected_indices=}"
 
@@ -43,8 +45,8 @@ def get_slices_for_splits(
     num_activation_records_per_split: int,
 ) -> dict[str, slice]:
     """
-    Get equal-sized interleaved subsets for each of a list of splits, given the number of elements
-    to include in each split.
+    Get equal-sized interleaved subsets for each of a list of splits, given the number 
+    of elements to include in each split.
     """
 
     stride = len(splits)

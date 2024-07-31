@@ -2,14 +2,17 @@
 
 from __future__ import annotations
 
-import logging
 import json
+import logging
 from abc import ABC, abstractmethod
 from collections import OrderedDict
 from enum import Enum
-from typing import Any, Optional, Sequence, Union
+from typing import Any, List, Optional, Sequence, Union
 
 import numpy as np
+from pydantic import BaseModel
+
+from ...clients.client import Client
 from ..activations.activation_records import (
     calculate_max_activation,
     format_activation_records,
@@ -29,21 +32,18 @@ from .prompt_builder import (
     Role,
 )
 
-from pydantic import BaseModel
-from typing import List
-from ...clients.client import Client
-
 logger = logging.getLogger(__name__)
 
-# Our prompts use normalized activation values, which map any range of positive activations to the
-# integers from 0 to 10.
+# Our prompts use normalized activation values, which map any range of positive 
+# activations to the integers from 0 to 10.
 MAX_NORMALIZED_ACTIVATION = 10
 VALID_ACTIVATION_TOKENS_ORDERED = list(
     str(i) for i in range(MAX_NORMALIZED_ACTIVATION + 1)
 )
 VALID_ACTIVATION_TOKENS = set(VALID_ACTIVATION_TOKENS_ORDERED)
 
-# Edge Case #3: The chat-based simulator is confused by end token. Replace it with a "not end token"
+# Edge Case #3: The chat-based simulator is confused by end token. Replace it with 
+# a "not end token"
 END_OF_TEXT_TOKEN = "<|endoftext|>"
 END_OF_TEXT_TOKEN_REPLACEMENT = "<|not_endoftext|>"
 EXPLANATION_PREFIX = "the main thing this neuron does is find"
@@ -58,7 +58,8 @@ class ResponseModel(BaseModel):
     activations: List[Activation]
 
 class SimulationType(str, Enum):
-    """How to simulate neuron activations. Values correspond to subclasses of NeuronSimulator."""
+    """How to simulate neuron activations.
+    Values correspond to subclasses of NeuronSimulator."""
 
     ALL_AT_ONCE = "all_at_once"
     """
@@ -97,8 +98,9 @@ def compute_expected_value(
 
 def parse_top_logprobs(top_logprobs: dict[str, float]) -> OrderedDict[int, float]:
     """
-    Given a map from tokens to logprobs, return a map from distribution values (integers on the
-    range [0, 10]) to unnormalized probabilities (in the sense that they may not sum to 1).
+    Given a map from tokens to logprobs, return a map from distribution values 
+    (integers on the range [0, 10]) to unnormalized probabilities 
+    (in the sense that they may not sum to 1).
     """
     probabilities_by_distribution_value = OrderedDict()
     for token, logprob in top_logprobs.items():
@@ -137,7 +139,8 @@ def parse_simulation_response(
     Args:
         response: response from the API
         prompt_format: how the prompt was formatted
-        tokens: list of tokens as strings in the sequence where the neuron is being simulated
+        tokens: list of tokens as strings in the sequence where the neuron 
+        is being simulated
     """
     choice = response.choices[0]
     if prompt_format == PromptFormat.HARMONY_V4:
@@ -150,11 +153,12 @@ def parse_simulation_response(
     else:
         raise ValueError(f"Unhandled prompt format {prompt_format}")
     
-    # (atmallen) The original code seems overly complicated. I think we just need a map from `text` index to response token position
-    # and then we can traverse the `text` one '<tok>\tunknown\n' match at a time
+    # (atmallen) The original code seems overly complicated. I think we just need a map
+    # from `text` index to response token position and then we can traverse the `text`
+    # one '<tok>\tunknown\n' match at a time
     
-    # This only works because the sequence "\n<start>\n" tokenizes into multiple tokens if it appears in
-    # a text sequence in the prompt.
+    # This only works because the sequence "\n<start>\n" tokenizes into multiple tokens
+    # if it appears in a text sequence in the prompt.
     current_text_idx = text.rfind("\n<start>\n") + len("\n<start>")
     if current_text_idx == -1:
         raise Exception(f"No scoring start found in {text}")
@@ -167,11 +171,14 @@ def parse_simulation_response(
         u_idx = current_text_idx + len(f"\n{subject_token}\t")
         
         # Ideally, the activation token is not merged with either the \t or the \n
-        # This seems very likely (because merging would have to be caused by the token preceding \t) 
-        # so I am willing to just assert it
+        # This seems very likely (because merging would have to be caused by the token
+        # preceding \t) so I am willing to just assert it
         # We also assume that all integers 0-10 have dedicated tokens
-        assert u_idx in choice.logprobs.text_offset, "tab token was merged with the unknown token"
-        # in the OpenAI API, the logprobs are for the *current* token, so no need to add 1
+        assert (
+            u_idx in choice.logprobs.text_offset
+        ), "tab token was merged with the unknown token"
+        # in the OpenAI API, the logprobs are for the *current* token,
+        # so no need to add 1
         response_token_idx = choice.logprobs.text_offset.index(u_idx)
 
         (
@@ -208,8 +215,10 @@ class ExplanationNeuronSimulator(NeuronSimulator):
     """
     Simulate neuron behavior based on an explanation.
 
-    This class uses a few-shot prompt with examples of other explanations and activations. This
-    prompt allows us to score all of the tokens at once using a nifty trick involving logprobs.
+    This class uses a few-shot prompt with examples of other explanations
+    and activations.
+    This prompt allows us to score all of the tokens at once using a nifty trick
+    involving logprobs.
     """
 
     def __init__(
@@ -251,15 +260,18 @@ class ExplanationNeuronSimulator(NeuronSimulator):
         logger.debug("result in score_explanation_by_activations is %s", result)
         return result
 
-    # TODO(sbills): The current token<tab>activation format can result in improper tokenization.
-    # In particular, if the token is itself a tab, we may get a single "\t\t" token rather than two
-    # "\t" tokens. Consider using a separator that does not appear in any multi-character tokens.
+    # TODO(sbills): The current token<tab>activation format can result in 
+    # improper tokenization. In particular, if the token is itself a tab,
+    # we may get a single "\t\t" token rather than two "\t" tokens.
+    # Consider using a separator that does not appear in any multi-character tokens.
     def make_simulation_prompt(
         self, tokens: Sequence[str]
     ) -> Union[str, list[HarmonyMessage]]:
-        """Create a few-shot prompt for predicting neuron activations for the given tokens."""
+        """Create a few-shot prompt for predicting neuron activations for
+        the given tokens."""
 
-        # TODO(sbills): The prompts in this file are subtly different from the ones in explainer.py.
+        # TODO(sbills): The prompts in this file are subtly different from 
+        # the ones in explainer.py.
         # Consider reconciling them.
         prompt_builder = PromptBuilder()
         prompt_builder.add_message(
@@ -276,7 +288,7 @@ The activation format is token<tab>activation, activations go from 0 to 10, "unk
         for i, example in enumerate(few_shot_examples):
             prompt_builder.add_message(
                 Role.USER,
-                f"\n\nNeuron {i + 1}\nExplanation of neuron {i + 1} behavior: {EXPLANATION_PREFIX} "
+                f"\n\nNeuron {i + 1}\nExplanation of neuron {i + 1} behavior: {EXPLANATION_PREFIX}"
                 f"{example.explanation}",
             )
             formatted_activation_records = format_activation_records(
@@ -693,35 +705,52 @@ For each sequence, you will see the tokens in the sequence where the activations
                 example.activation_records
             )
 
+            tokens_without_activations = _format_record_for_logprob_free_simulation(
+                example.activation_records[0], include_activations=False
+            )
             prompt_builder.add_message(
                 Role.USER,
                 f"Neuron {i + 1}\nExplanation of neuron {i + 1} behavior: {EXPLANATION_PREFIX} "
                 f"{example.explanation}\n\n"
-                f"Sequence 1 Tokens without Activations:\n{_format_record_for_logprob_free_simulation(example.activation_records[0], include_activations=False)}\n\n"
+                f"Sequence 1 Tokens without Activations:\n{tokens_without_activations}\n\n"
                 f"Sequence 1 Tokens with Activations:\n",
+            )
+            tokens_with_activations = _format_record_for_logprob_free_simulation(
+                example.activation_records[0], include_activations=True, 
+                max_activation=few_shot_example_max_activation
             )
             prompt_builder.add_message(
                 Role.ASSISTANT,
-                f"{_format_record_for_logprob_free_simulation(example.activation_records[0], include_activations=True, max_activation=few_shot_example_max_activation)}\n\n",
+                f"{tokens_with_activations}\n\n",
             )
 
             for record_index, record in enumerate(example.activation_records[1:]):
+                tks_without = _format_record_for_logprob_free_simulation(
+                    record, include_activations=False
+                )
                 prompt_builder.add_message(
                     Role.USER,
-                    f"Sequence {record_index + 2} Tokens without Activations:\n{_format_record_for_logprob_free_simulation(record, include_activations=False)}\n\n"
+                    f"Sequence {record_index + 2} Tokens without Activations:\n{tks_without}\n\n"
                     f"Sequence {record_index + 2} Tokens with Activations:\n",
+                )
+                tokens_with_activations = _format_record_for_logprob_free_simulation(
+                    record, include_activations=True, 
+                    max_activation=few_shot_example_max_activation
                 )
                 prompt_builder.add_message(
                     Role.ASSISTANT,
-                    f"{_format_record_for_logprob_free_simulation(record, include_activations=True, max_activation=few_shot_example_max_activation)}\n\n",
+                    f"{tokens_with_activations}\n\n",
                 )
 
         neuron_index = len(few_shot_examples) + 1
+        tokens_without_activations = _format_record_for_logprob_free_simulation(
+            ActivationRecord(tokens=tokens, activations=[]), include_activations=False
+        )
         prompt_builder.add_message(
             Role.USER,
             f"Neuron {neuron_index}\nExplanation of neuron {neuron_index} behavior: {EXPLANATION_PREFIX} "
             f"{explanation}\n\n"
-            f"Sequence 1 Tokens without Activations:\n{_format_record_for_logprob_free_simulation(ActivationRecord(tokens=tokens, activations=[]), include_activations=False)}\n\n"
+            f"Sequence 1 Tokens without Activations:\n{tokens_without_activations}\n\n"
             f"Sequence 1 Tokens with Activations:\n",
         )
         return prompt_builder.build(
