@@ -1,12 +1,12 @@
-from typing import List
-from . import FeatureRecord
-
-from math import floor
-import torch
-import torch.nn.functional as F
 from collections import defaultdict
+from math import floor
+from typing import List
 
 import numpy as np
+import torch
+import torch.nn.functional as F
+
+from . import FeatureRecord
 
 
 def logits(
@@ -46,15 +46,15 @@ def logits(
 
         records[record_index].top_logits = decoded
 
-    
 
-
-def unigram(record: FeatureRecord, k: int = 10, threshold: float = 0.0, negative_shift: int = 0):
+def unigram(
+    record: FeatureRecord, k: int = 10, threshold: float = 0.0, negative_shift: int = 0
+):
     avg_nonzero = []
     top_tokens = []
 
     n_examples = floor(len(record.examples) * threshold)
-    
+
     for example in record.examples[:n_examples]:
         # Get the number of nonzero activations per example
         avg_nonzero.append(np.count_nonzero(example.activations))
@@ -69,8 +69,9 @@ def unigram(record: FeatureRecord, k: int = 10, threshold: float = 0.0, negative
 
     if len(set(top_tokens)) < k:
         return set(top_tokens), np.mean(avg_nonzero)
-    
+
     return -1, np.mean(avg_nonzero)
+
 
 def cos(matrix, selected_features=[0]):
     a = matrix[:, selected_features]

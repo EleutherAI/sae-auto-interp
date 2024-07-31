@@ -14,8 +14,28 @@ dependencies = [
     "nnsight",
     "orjson",
     "safetensors",
-    "simple_parsing"
+    "simple_parsing",
+    "torchtyping"
 ]
+
+[tool.pyright]
+include = ["sae_auto_interp*"]
+reportPrivateImportUsage = false
 
 [tool.setuptools.packages.find]
 where = ["sae_auto_interp"]
+
+[tool.ruff]
+# TODO: Clean up or remove experiments folder.
+exclude = ["experiments", "**/prompts/*", "**/prompts.py"]
+# Avoid automatically removing unused imports in __init__.py files.
+# Such imports will be flagged with a dedicated message suggesting
+# that the import is either added to the module's __all__ symbol
+ignore-init-module-imports = true
+# Ignore F821 (undefined name) errors, as they are common in type annotations.
+ignore = ["F722", "F821"]
+# Same as Black.
+line-length = 88
+# Enable pycodestyle (`E`), Pyflakes (`F`), and isort (`I`) codes
+# See https://beta.ruff.rs/docs/rules/ for more possible rules
+select = ["E", "F", "I"]

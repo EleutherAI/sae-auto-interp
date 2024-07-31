@@ -11,7 +11,9 @@ Guidelines:
 - IMPORTANT: If the feature explanation involves some broader context of the text, you must establish the context at the start of each example. By the time the feature appears in the example, the context must already have been established.
 """
 
-GSCORER_EXAMPLE_ONE = """Description of text feature: male names in text to do with sports."""
+GSCORER_EXAMPLE_ONE = (
+    """Description of text feature: male names in text to do with sports."""
+)
 
 GSCORER_RESPONSE_ONE = """{
     "example_0":"The olympic gold medal went to Bob.",
@@ -42,15 +44,18 @@ GSCORER_RESPONSE_TWO = """{
     "example_9":"a woman who flew to Albuquerque, only to be blocked by protesters. By the time"
 }"""
 
-def get_gen_scorer_template(explanation, n_examples):
 
+def get_gen_scorer_template(explanation, n_examples):
     prompt = [
-        {"role": "system", "content": GSCORER_SYSTEM_PROMPT.format(n_examples=n_examples)},
+        {
+            "role": "system",
+            "content": GSCORER_SYSTEM_PROMPT.format(n_examples=n_examples),
+        },
         {"role": "user", "content": GSCORER_EXAMPLE_ONE},
         {"role": "assistant", "content": GSCORER_RESPONSE_ONE},
         {"role": "user", "content": GSCORER_EXAMPLE_TWO},
         {"role": "assistant", "content": GSCORER_RESPONSE_TWO},
-        {"role": "user", "content": f"Description of text feature: {explanation}"}
+        {"role": "user", "content": f"Description of text feature: {explanation}"},
     ]
 
     return prompt

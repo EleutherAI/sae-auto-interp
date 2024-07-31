@@ -2,11 +2,11 @@
 
 SYSTEM = """You are a meticulous AI researcher conducting an important investigation into a certain neuron in a language model. Your task is to analyze the neuron and provide an explanation that thoroughly encapsulates its behavior.
 {prompt}
-Guidelines: 
+Guidelines:
 
 You will be given a list of text examples on which the neuron activates. The specific tokens which cause the neuron to activate will appear between delimiters like <<this>>. If a sequence of consecutive tokens all cause the neuron to activate, the entire sequence of tokens will be contained between delimiters <<just like this>>. The activation value of the example is listed after each example in parentheses.
 
-- Try to produce a concise final description. Simply describe the text features that activate the neuron, and what its role might be based on the tokens it predicts. 
+- Try to produce a concise final description. Simply describe the text features that activate the neuron, and what its role might be based on the tokens it predicts.
 - If either the text features or the predicted tokens are completely uninformative, you don't need to mention them.
 - The last line of your response must be the formatted explanation."""
 
@@ -26,11 +26,11 @@ Step 3: Take note of the activation values to understand which examples are most
 """
 
 LOGITS = """
-(Part 2) Tokens that the neuron boosts in the next token prediction 
+(Part 2) Tokens that the neuron boosts in the next token prediction
 
-You will also be shown a list called Top_logits. The logits promoted by the neuron shed light on how the neuron's activation influences the model's predictions or outputs. Look at this list of Top_logits and refine your hypotheses from part 1. It is possible that this list is more informative than the examples from part 1. 
+You will also be shown a list called Top_logits. The logits promoted by the neuron shed light on how the neuron's activation influences the model's predictions or outputs. Look at this list of Top_logits and refine your hypotheses from part 1. It is possible that this list is more informative than the examples from part 1.
 
-Pay close attention to the words in this list and write down what they have in common. Then look at what they have in common, as well as patterns in the tokens you found in Part 1, to produce a single explanation for what features of text cause the neuron to activate. Propose your explanation in the following format: 
+Pay close attention to the words in this list and write down what they have in common. Then look at what they have in common, as well as patterns in the tokens you found in Part 1, to produce a single explanation for what features of text cause the neuron to activate. Propose your explanation in the following format:
 [EXPLANATION]: <your explanation>
 """
 
@@ -70,7 +70,7 @@ Step 2.
 - The examples contain common idioms.
 - In some examples, the activating tokens are followed by an exclamation mark.
 
-Let me think carefully. Did I miss any patterns in the text examples? Are there any more linguistic similarities? 
+Let me think carefully. Did I miss any patterns in the text examples? Are there any more linguistic similarities?
 - Yes, I missed one: The text examples all convey positive sentiment.
 """
 
@@ -88,9 +88,9 @@ Step 2.
 - In some examples, the activating tokens are followed by an exclamation mark.
 
 Step 3.
-- The activation values are the highest for the more common idioms in examples 1 and 3. 
+- The activation values are the highest for the more common idioms in examples 1 and 3.
 
-Let me think carefully. Did I miss any patterns in the text examples? Are there any more linguistic similarities? 
+Let me think carefully. Did I miss any patterns in the text examples? Are there any more linguistic similarities?
 - Yes, I missed one: The text examples all convey positive sentiment.
 """
 
@@ -141,7 +141,7 @@ Step 2.
 - In each example, the activating token appeared at the end of a comparative adjective.
 - The comparative adjectives ("wider", "tallish", "smaller", "deeper") all describe size.
 
-Let me look again for patterns in the examples. Are there any links or hidden linguistic commonalities that I missed? 
+Let me look again for patterns in the examples. Are there any links or hidden linguistic commonalities that I missed?
 - I can't see any.
 """
 
@@ -162,7 +162,7 @@ Step 2.
 Step 3.
 - Example 2 has a lower activation value. It doesn't compare sizes as directly as the other examples.
 
-Let me look again for patterns in the examples. Are there any links or hidden linguistic commonalities that I missed? 
+Let me look again for patterns in the examples. Are there any links or hidden linguistic commonalities that I missed?
 - I can't see any.
 """
 
@@ -217,7 +217,7 @@ Step 2.
 - The examples involve being inside something, sometimes figuratively.
 - The activating token is a thing which something else is inside of.
 
-Let me think carefully. Did I miss any patterns in the text examples? Are there any more linguistic similarities? 
+Let me think carefully. Did I miss any patterns in the text examples? Are there any more linguistic similarities?
 - Yes, I missed one: The activating token is followed by a quotation mark, suggesting it occurs within speech.
 """
 
@@ -237,7 +237,7 @@ Step 2.
 STEP 3.
 - The activation values are highest for the examples where the token is a distinctive object or space.
 
-Let me think carefully. Did I miss any patterns in the text examples? Are there any more linguistic similarities? 
+Let me think carefully. Did I miss any patterns in the text examples? Are there any more linguistic similarities?
 - Yes, I missed one: The activating token is followed by a quotation mark, suggesting it occurs within speech.
 """
 
@@ -251,29 +251,23 @@ EXAMPLE_3_EXPLANATION = """
 [EXPLANATION]: Nouns preceding a quotation mark, representing a distinct objects that contains something.
 """
 
+
 def get(item):
     return globals()[item]
 
-def _prompt(
-    n,
-    logits=False,
-    activations=False,
-    **kwargs
-):
-    starter = get(f"EXAMPLE_{n}") \
-        if not activations \
-            else get(f"EXAMPLE_{n}_ACTIVATIONS")
-    
-    prompt_atoms = [
-        starter
-    ]
+
+def _prompt(n, logits=False, activations=False, **kwargs):
+    starter = (
+        get(f"EXAMPLE_{n}") if not activations else get(f"EXAMPLE_{n}_ACTIVATIONS")
+    )
+
+    prompt_atoms = [starter]
 
     if logits:
-        prompt_atoms.append(
-            get(f"EXAMPLE_{n}_LOGITS")
-        )
+        prompt_atoms.append(get(f"EXAMPLE_{n}_LOGITS"))
 
     return "".join(prompt_atoms)
+
 
 def _response(
     n,
@@ -284,38 +278,25 @@ def _response(
     response_atoms = []
 
     if cot and activations:
-
-        response_atoms.append(
-            get(f"EXAMPLE_{n}_COT_ACTIVATION_RESPONSE")
-        )
+        response_atoms.append(get(f"EXAMPLE_{n}_COT_ACTIVATION_RESPONSE"))
 
     elif cot:
-
-        response_atoms.append(
-            get(f"EXAMPLE_{n}_COT_RESPONSE")
-        )
+        response_atoms.append(get(f"EXAMPLE_{n}_COT_RESPONSE"))
 
     if logits:
-        response_atoms.append(
-            get(f"EXAMPLE_{n}_LOGITS_RESPONSE")
-        )
+        response_atoms.append(get(f"EXAMPLE_{n}_LOGITS_RESPONSE"))
 
-    response_atoms.append(
-        get(f"EXAMPLE_{n}_EXPLANATION")
-    )
+    response_atoms.append(get(f"EXAMPLE_{n}_EXPLANATION"))
 
     return "".join(response_atoms)
-    
 
-def example(
-    n,
-    **kwargs
-):
 
+def example(n, **kwargs):
     prompt = _prompt(n, **kwargs)
     response = _response(n, **kwargs)
 
     return prompt, response
+
 
 def system(
     cot=False,
@@ -334,7 +315,7 @@ def system(
 
     return [
         {
-            "role" : "system",
-            "content" : SYSTEM.format(prompt=prompt),
+            "role": "system",
+            "content": SYSTEM.format(prompt=prompt),
         }
     ]
