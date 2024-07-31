@@ -1,9 +1,10 @@
+from torchtyping import TensorType
+
 from sae_auto_interp.features import (
     FeatureRecord,
     pool_max_activation_windows,
     random_activation_windows,
 )
-from torchtyping import TensorType
 
 
 def default_constructor(
@@ -31,4 +32,3 @@ def default_constructor(
         n_random=n_random,
         ctx_len=ctx_len,
     )
-

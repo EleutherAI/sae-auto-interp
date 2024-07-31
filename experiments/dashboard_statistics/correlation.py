@@ -1,13 +1,13 @@
 # %%
 # Import necessary libraries
 import os
-import orjson
-from sklearn.metrics import balanced_accuracy_score
+
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
+import orjson
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import balanced_accuracy_score, r2_score
 
 # Directory paths
 explanation_dir_a = "results/gpt2_top/gpt2_explanations"
@@ -22,20 +22,21 @@ fuzz_dir_b = "results/gpt2_fuzz"
 scores_a = []
 scores_b = []
 
+
 # Function to calculate balanced accuracy
 def calculate_balanced_accuracy(data):
-    ground_truths = [d['ground_truth'] for d in data]
+    ground_truths = [d["ground_truth"] for d in data]
     predictions = []
-    
+
     for truth, d in zip(ground_truths, data):
         if truth:
-            if d['prediction']:
+            if d["prediction"]:
                 predictions.append(True)
             else:
                 predictions.append(False)
 
         else:
-            if d['prediction']:
+            if d["prediction"]:
                 predictions.append(False)
             else:
                 predictions.append(True)
@@ -43,12 +44,14 @@ def calculate_balanced_accuracy(data):
     score = balanced_accuracy_score(ground_truths, predictions)
     return round(score, 2)
 
+
 # Function to extract layer and feature from file name
 def to_feature(name):
     layer, feature = name.split("_")
     layer = layer.replace(".transformer.h.", "")
     feature = feature.replace("feature", "")
     return layer, feature
+
 
 # Function to process directory
 def process_directory(explanation_dir, recall_dir, fuzz_dir):
@@ -71,21 +74,22 @@ def process_directory(explanation_dir, recall_dir, fuzz_dir):
             fuzz_score = calculate_balanced_accuracy(fuzz)
             average_score = (recall_score + fuzz_score) / 2
 
-            scores.append({
-                "layer": layer,
-                "feature": feature,
-                "explanation": explanation['explanation'],
-                "recall": recall_score,
-                "fuzz": fuzz_score,
-                "average": average_score
-            })
+            scores.append(
+                {
+                    "layer": layer,
+                    "feature": feature,
+                    "explanation": explanation["explanation"],
+                    "recall": recall_score,
+                    "fuzz": fuzz_score,
+                    "average": average_score,
+                }
+            )
 
         except Exception as e:
             print(f"Error processing {file}: {str(e)}")
             continue
     return scores
 
-import pandas as pd
 
 scores_a = process_directory(explanation_dir_a, recall_dir_a, fuzz_dir_a)
 scores_b = process_directory(explanation_dir_b, recall_dir_b, fuzz_dir_b)
@@ -102,46 +106,50 @@ scores_b = process_directory(explanation_dir_b, recall_dir_b, fuzz_dir_b)
 scores_a = process_directory(explanation_dir_a, recall_dir_a, fuzz_dir_a)
 scores_b = process_directory(explanation_dir_b, recall_dir_b, fuzz_dir_b)
 
+
 # Function to plot data
 def plot_data(ax, scores, title):
-    recall_scores = [score['recall'] for score in scores]
-    fuzz_scores = [score['fuzz'] for score in scores]
-    average_scores = [score['average'] for score in scores]
+    recall_scores = [score["recall"] for score in scores]
+    fuzz_scores = [score["fuzz"] for score in scores]
+    average_scores = [score["average"] for score in scores]
 
-    scatter = ax.scatter(recall_scores, fuzz_scores, c=average_scores, cmap='viridis', alpha=0.7)
+    scatter = ax.scatter(
+        recall_scores, fuzz_scores, c=average_scores, cmap="viridis", alpha=0.7
+    )
 
     # Adding correlation line
     X = np.array(recall_scores).reshape(-1, 1)
     y = np.array(fuzz_scores)
     reg = LinearRegression().fit(X, y)
     y_pred = reg.predict(X)
-    ax.plot(recall_scores, y_pred, color='red', linewidth=2)
+    ax.plot(recall_scores, y_pred, color="red", linewidth=2)
 
     # Calculate and display correlation and r^2
     correlation = np.corrcoef(recall_scores, fuzz_scores)[0, 1]
     r2 = r2_score(fuzz_scores, y_pred)
-    ax.legend([f'Correlation: {correlation:.2f}\nR^2: {r2:.2f}'], loc='upper left')
+    ax.legend([f"Correlation: {correlation:.2f}\nR^2: {r2:.2f}"], loc="upper left")
 
     # Plot settings
     ax.set_title(title)
-    ax.set_xlabel('Recall')
-    ax.set_ylabel('Fuzz')
+    ax.set_xlabel("Recall")
+    ax.set_ylabel("Fuzz")
     ax.set_xlim(0.3, 1)
     ax.set_ylim(0.3, 1)
     ax.grid(True)
 
     return scatter
 
+
 # Plot the data
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
 
-scatter1 = plot_data(ax1, scores_a, 'Balanced accuracy from top twenty examples')
-scatter2 = plot_data(ax2, scores_b, 'Balanced accuracy from twenty random examples')
+scatter1 = plot_data(ax1, scores_a, "Balanced accuracy from top twenty examples")
+scatter2 = plot_data(ax2, scores_b, "Balanced accuracy from twenty random examples")
 
 # Add colorbar
 divider = make_axes_locatable(ax2)
 cax = divider.append_axes("right", size="5%", pad=0.5)
-cbar = plt.colorbar(scatter2, cax=cax, label='Average Score')
+cbar = plt.colorbar(scatter2, cax=cax, label="Average Score")
 
 # Show plot
 plt.tight_layout()
