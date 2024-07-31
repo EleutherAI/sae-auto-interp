@@ -1,2 +1,2 @@
 from .activation_records import calculate_max_activation
-from .activations import ActivationRecordSliceParams, load_neuron
+from .activations import ActivationRecordSliceParams

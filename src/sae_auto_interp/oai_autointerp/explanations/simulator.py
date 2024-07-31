@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
 import json
 from abc import ABC, abstractmethod
@@ -18,8 +17,6 @@ from ..activations.activation_records import (
     normalize_activations,
 )
 from ..activations.activations import ActivationRecord
-from ..api_client import ApiClient
-from .explainer import EXPLANATION_PREFIX
 from .explanations import (
     ActivationScale,
     SequenceSimulation,
@@ -31,6 +28,9 @@ from .prompt_builder import (
     PromptFormat,
     Role,
 )
+
+from pydantic import BaseModel
+from typing import List
 from ...clients.client import Client
 
 logger = logging.getLogger(__name__)
@@ -46,7 +46,16 @@ VALID_ACTIVATION_TOKENS = set(VALID_ACTIVATION_TOKENS_ORDERED)
 # Edge Case #3: The chat-based simulator is confused by end token. Replace it with a "not end token"
 END_OF_TEXT_TOKEN = "<|endoftext|>"
 END_OF_TEXT_TOKEN_REPLACEMENT = "<|not_endoftext|>"
+EXPLANATION_PREFIX = "the main thing this neuron does is find"
 
+class Activation(BaseModel):
+    token: str
+    activation: float
+
+class ResponseModel(BaseModel):
+    to_find: str
+    document: str
+    activations: List[Activation]
 
 class SimulationType(str, Enum):
     """How to simulate neuron activations. Values correspond to subclasses of NeuronSimulator."""
@@ -292,197 +301,6 @@ The activation format is token<tab>activation, activations go from 0 to 10, "unk
         return prompt_builder.build(self.prompt_format)
 
 
-class ExplanationTokenByTokenSimulator(NeuronSimulator):
-    """
-    Simulate neuron behavior based on an explanation.
-
-    Unlike ExplanationNeuronSimulator, this class uses one few-shot prompt per token to calculate
-    expected activations. This is slower. This class gets a one-token completion and calculates an
-    expected value from that token's logprobs.
-    """
-
-    def __init__(
-        self,
-        model_name: str,
-        explanation: str,
-        max_concurrent: Optional[int] = 10,
-        few_shot_example_set: FewShotExampleSet = FewShotExampleSet.NEWER,
-        prompt_format: PromptFormat = PromptFormat.INSTRUCTION_FOLLOWING,
-        cache: bool = False,
-    ):
-        assert (
-            few_shot_example_set != FewShotExampleSet.ORIGINAL
-        ), "This simulator doesn't support the ORIGINAL few-shot example set."
-        self.api_client = ApiClient(
-            model_name=model_name, max_concurrent=max_concurrent, cache=cache
-        )
-        self.explanation = explanation
-        self.few_shot_example_set = few_shot_example_set
-        self.prompt_format = prompt_format
-
-    async def simulate(
-        self,
-        tokens: Sequence[str],
-    ) -> SequenceSimulation:
-        responses_by_token = await asyncio.gather(
-            *[
-                self._get_activation_stats_for_single_token(
-                    tokens, self.explanation, token_index
-                )
-                for token_index in range(len(tokens))
-            ]
-        )
-        expected_values, distribution_values, distribution_probabilities = [], [], []
-        for response in responses_by_token:
-            activation_logprobs = response["choices"][0]["logprobs"]["top_logprobs"][0]
-            (
-                norm_probabilities_by_distribution_value,
-                expected_value,
-            ) = compute_predicted_activation_stats_for_token(
-                activation_logprobs,
-            )
-            distribution_values.append(
-                [float(v) for v in norm_probabilities_by_distribution_value.keys()]
-            )
-            distribution_probabilities.append(
-                list(norm_probabilities_by_distribution_value.values())
-            )
-            expected_values.append(expected_value)
-
-        result = SequenceSimulation(
-            tokens=list(tokens),  # SequenceSimulation expects List type
-            expected_activations=expected_values,
-            activation_scale=ActivationScale.SIMULATED_NORMALIZED_ACTIVATIONS,
-            distribution_values=distribution_values,
-            distribution_probabilities=distribution_probabilities,
-        )
-        logger.debug("result in score_explanation_by_activations is %s", result)
-        return result
-
-    async def _get_activation_stats_for_single_token(
-        self,
-        tokens: Sequence[str],
-        explanation: str,
-        token_index_to_score: int,
-    ) -> dict:
-        prompt = self.make_single_token_simulation_prompt(
-            tokens,
-            explanation,
-            token_index_to_score=token_index_to_score,
-        )
-        return await self.api_client.make_request(
-            prompt=prompt, max_tokens=1, echo=False, logprobs=15
-        )
-
-    def _add_single_token_simulation_subprompt(
-        self,
-        prompt_builder: PromptBuilder,
-        activation_record: ActivationRecord,
-        neuron_index: int,
-        explanation: str,
-        token_index_to_score: int,
-        end_of_prompt: bool,
-    ) -> None:
-        trimmed_activation_record = ActivationRecord(
-            tokens=activation_record.tokens[: token_index_to_score + 1],
-            activations=activation_record.activations[: token_index_to_score + 1],
-        )
-        prompt_builder.add_message(
-            Role.USER,
-            f"""
-Neuron {neuron_index}
-Explanation of neuron {neuron_index} behavior: {EXPLANATION_PREFIX} {explanation.strip()}
-Text:
-{"".join(trimmed_activation_record.tokens)}
-
-Last token in the text:
-{trimmed_activation_record.tokens[-1]}
-
-Last token activation, considering the token in the context in which it appeared in the text:
-""",
-        )
-        if not end_of_prompt:
-            normalized_activations = normalize_activations(
-                trimmed_activation_record.activations,
-                calculate_max_activation([activation_record]),
-            )
-            prompt_builder.add_message(
-                Role.ASSISTANT,
-                str(normalized_activations[-1]) + ("" if end_of_prompt else "\n\n"),
-            )
-
-    def make_single_token_simulation_prompt(
-        self,
-        tokens: Sequence[str],
-        explanation: str,
-        token_index_to_score: int,
-    ) -> Union[str, list[HarmonyMessage]]:
-        """Make a few-shot prompt for predicting the neuron's activation on a single token."""
-        assert explanation != ""
-        prompt_builder = PromptBuilder()
-        prompt_builder.add_message(
-            Role.SYSTEM,
-            """We're studying neurons in a neural network. Each neuron looks for some particular thing in a short document. Look at  an explanation of what the neuron does, and try to predict its activations on a particular token.
-
-The activation format is token<tab>activation, and activations range from 0 to 10. Most activations will be 0.
-
-""",
-        )
-
-        few_shot_examples = self.few_shot_example_set.get_examples()
-        for i, example in enumerate(few_shot_examples):
-            prompt_builder.add_message(
-                Role.USER,
-                f"Neuron {i + 1}\nExplanation of neuron {i + 1} behavior: {EXPLANATION_PREFIX} "
-                f"{example.explanation}\n",
-            )
-            formatted_activation_records = format_activation_records(
-                example.activation_records,
-                calculate_max_activation(example.activation_records),
-                start_indices=None,
-            )
-            prompt_builder.add_message(
-                Role.ASSISTANT,
-                f"Activations: {formatted_activation_records}\n\n",
-            )
-
-        prompt_builder.add_message(
-            Role.SYSTEM,
-            "Now, we're going predict the activation of a new neuron on a single token, "
-            "following the same rules as the examples above. Activations still range from 0 to 10.",
-        )
-        single_token_example = (
-            self.few_shot_example_set.get_single_token_prediction_example()
-        )
-        assert single_token_example.token_index_to_score is not None
-        self._add_single_token_simulation_subprompt(
-            prompt_builder,
-            single_token_example.activation_records[0],
-            len(few_shot_examples) + 1,
-            explanation,
-            token_index_to_score=single_token_example.token_index_to_score,
-            end_of_prompt=False,
-        )
-
-        activation_record = ActivationRecord(
-            tokens=list(
-                tokens[: token_index_to_score + 1]
-            ),  # ActivationRecord expects List type.
-            activations=[0.0] * len(tokens),
-        )
-        self._add_single_token_simulation_subprompt(
-            prompt_builder,
-            activation_record,
-            len(few_shot_examples) + 2,
-            explanation,
-            token_index_to_score,
-            end_of_prompt=True,
-        )
-        return prompt_builder.build(
-            self.prompt_format, allow_extra_system_messages=True
-        )
-
-
 def _format_record_for_logprob_free_simulation(
     activation_record: ActivationRecord,
     include_activations: bool = False,
@@ -638,119 +456,6 @@ def _parse_no_logprobs_completion_json(
         )
         return zero_prediction
 
-
-
-def _updated_parse_no_logprobs_completion_json(response):
-    activations = response["activations"]
-    return [activation["activation"] for activation in activations]
-
-def _parse_no_logprobs_completion(
-    completion: str,
-    tokens: Sequence[str],
-) -> Sequence[float]:
-    """
-    Parse a completion into a list of simulated activations. If the model did not faithfully
-    reproduce the token sequence, return a list of 0s. If the model's activation for a token
-    is not a number between 0 and 10 (inclusive), substitute 0.
-
-    Args:
-        completion: completion from the API
-        tokens: list of tokens as strings in the sequence where the neuron is being simulated
-    """
-
-    logger.debug("for tokens:\n%s", tokens)
-    logger.debug("received completion:\n%s", completion)
-
-    zero_prediction = [0] * len(tokens)
-    # FIX: Strip the last ༗\n, otherwise all last activations are invalid
-    token_lines = completion.strip("\n").strip("༗\n").split("༗\n")
-    # Edge Case #2: Sometimes GPT doesn't use the special character when it answers, it only uses the \n"
-    # The fix is to try splitting by \n if we detect that the response isn't the right format
-    # TODO: If there are also line breaks in the text, this will probably break
-    if (len(token_lines)) == 1:
-        token_lines = completion.strip("\n").strip("༗\n").split("\n")
-    logger.debug("parsed completion into token_lines as:\n%s", token_lines)
-
-    start_line_index = None
-    for i, token_line in enumerate(token_lines):
-        if (
-            token_line.startswith(f"{tokens[0]}\t")
-            # Edge Case #1: GPT often omits the space before the first token.
-            # Allow the returned token line to be either " token" or "token".
-            or f" {token_line}".startswith(f"{tokens[0]}\t")
-            # Edge Case #3: Allow our "not end token" replacement
-            or (
-                token_line.startswith(END_OF_TEXT_TOKEN_REPLACEMENT)
-                and tokens[0].strip() == END_OF_TEXT_TOKEN
-            )
-        ):
-            logger.debug("start_line_index is: %s", start_line_index)
-            logger.debug("matched token %s with token_line %s", tokens[0], token_line)
-            start_line_index = i
-            break
-
-    # If we didn't find the first token, or if the number of lines in the completion doesn't match
-    # the number of tokens, return a list of 0s.
-    if start_line_index is None or len(token_lines) - start_line_index != len(tokens):
-        logger.debug(
-            "didn't find first token or number of lines didn't match, returning all zeroes"
-        )
-        return zero_prediction
-
-    predicted_activations = []
-    for i, token_line in enumerate(token_lines[start_line_index:]):
-        if (
-            not token_line.startswith(f"{tokens[i]}\t")
-            # Edge Case #1: GPT often omits the space before the token.
-            # Allow the returned token line to be either " token" or "token".
-            and not f" {token_line}".startswith(f"{tokens[i]}\t")
-            # Edge Case #3: Allow our "not end token" replacement
-            and not token_line.startswith(END_OF_TEXT_TOKEN_REPLACEMENT)
-        ):
-            logger.debug(
-                "failed to match token %s with token_line %s, returning all zeroes",
-                tokens[i],
-                token_line,
-            )
-            return zero_prediction
-        predicted_activation_split = token_line.split("\t")
-        # Ensure token line has correct size after splitting. If not then assume it's a zero.
-        if len(predicted_activation_split) != 2:
-            logger.debug("tokenline split invalid size: %s", token_line)
-            predicted_activations.append(0)
-            continue
-        predicted_activation = predicted_activation_split[1]
-        # Sometimes GPT the activation value is not a float (GPT likes to append an extra ༗).
-        # In all cases if the activation is not numerically parseable, set it to 0
-        try:
-            predicted_activation_float = float(predicted_activation)
-            if (
-                predicted_activation_float < 0
-                or predicted_activation_float > MAX_NORMALIZED_ACTIVATION
-            ):
-                logger.debug(
-                    "activation value out of range: %s", predicted_activation_float
-                )
-                predicted_activations.append(0)
-            else:
-                predicted_activations.append(predicted_activation_float)
-        except ValueError:
-            logger.debug("activation value not numeric: %s", predicted_activation)
-            predicted_activations.append(0)
-    logger.debug("predicted activations: %s", predicted_activations)
-    return predicted_activations
-
-from pydantic import BaseModel
-from typing import List
-
-class Activation(BaseModel):
-    token: str
-    activation: float
-
-class ResponseModel(BaseModel):
-    to_find: str
-    document: str
-    activations: List[Activation]
 
 class LogprobFreeExplanationTokenSimulator(NeuronSimulator):
     """

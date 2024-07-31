@@ -3,15 +3,11 @@
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional, Union
+from typing import List, Optional
 
-import blobfile as bf
-import boostedblob as bbb
-from ..activations.activations import NeuronId
-from ..fast_dataclasses import FastDataclass, loads, register_dataclass
+from ..fast_dataclasses import FastDataclass, register_dataclass
 
 
 class ActivationScale(str, Enum):
@@ -141,90 +137,3 @@ class ScoredExplanation(FastDataclass):
         return self.scored_simulation.get_preferred_score()
 
 
-@register_dataclass
-@dataclass
-class NeuronSimulationResults(FastDataclass):
-    """Simulation results and scores for a neuron."""
-
-    neuron_id: NeuronId
-    scored_explanations: list[ScoredExplanation]
-
-
-def load_neuron_explanations(
-    explanations_path: str, layer_index: Union[str, int], neuron_index: Union[str, int]
-) -> Optional[NeuronSimulationResults]:
-    """Load scored explanations for the specified neuron."""
-    file = bf.join(explanations_path, str(layer_index), f"{neuron_index}.jsonl")
-    if not bf.exists(file):
-        return None
-    with bf.BlobFile(file) as f:
-        for line in f:
-            return loads(line)
-    return None
-
-
-@bbb.ensure_session
-async def load_neuron_explanations_async(
-    explanations_path: str, layer_index: Union[str, int], neuron_index: Union[str, int]
-) -> Optional[NeuronSimulationResults]:
-    """Load scored explanations for the specified neuron, asynchronously."""
-    return await read_explanation_file(
-        bf.join(explanations_path, str(layer_index), f"{neuron_index}.jsonl")
-    )
-
-
-@bbb.ensure_session
-async def read_file(filename: str) -> Optional[str]:
-    """Read the contents of the given file as a string, asynchronously."""
-    try:
-        raw_contents = await bbb.read.read_single(filename)
-    except FileNotFoundError:
-        print(f"Could not read {filename}")
-        return None
-    lines = []
-    for line in raw_contents.decode("utf-8").split("\n"):
-        if len(line) > 0:
-            lines.append(line)
-    assert len(lines) == 1, filename
-    return lines[0]
-
-
-@bbb.ensure_session
-async def read_explanation_file(explanation_filename: str) -> Optional[NeuronSimulationResults]:
-    """Load scored explanations from the given filename, asynchronously."""
-    line = await read_file(explanation_filename)
-    return loads(line) if line is not None else None
-
-
-@bbb.ensure_session
-async def read_json_file(filename: str) -> Optional[dict]:
-    """Read the contents of the given file as a JSON object, asynchronously."""
-    line = await read_file(filename)
-    return json.loads(line) if line is not None else None
-
-
-def get_numerical_subdirs(dataset_path: str) -> list[str]:
-    """Return the names of all numbered subdirectories in the specified directory.
-
-    Used to get all layer directories in an explanation directory.
-    """
-    return [
-        str(x)
-        for x in sorted(
-            [
-                int(x)
-                for x in bf.listdir(dataset_path)
-                if bf.isdir(bf.join(dataset_path, x)) and x.isnumeric()
-            ]
-        )
-    ]
-
-
-def get_sorted_neuron_indices_from_explanations(
-    explanations_path: str, layer: Union[str, int]
-) -> list[int]:
-    """Return the indices of all neurons in this layer, in ascending order."""
-    layer_dir = bf.join(explanations_path, str(layer))
-    return sorted(
-        [int(f.split(".")[0]) for f in bf.listdir(layer_dir) if f.split(".")[0].isnumeric()]
-    )
