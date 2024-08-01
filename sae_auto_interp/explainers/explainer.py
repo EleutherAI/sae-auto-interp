@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import NamedTuple
+import json
 
 import aiofiles
 
@@ -20,8 +21,13 @@ class Explainer(ABC):
         pass
 
 
-async def explanation_loader(record: FeatureRecord, explanation_dir: str) -> str:
-    async with aiofiles.open(f"{explanation_dir}/{record.feature}.txt", "r") as f:
-        explanation = await f.read()
+async def explanation_loader(record: FeatureRecord, explanation_dir: str) -> ExplainerResult:
+    async with aiofiles.open(f'{explanation_dir}/{record.feature}.txt', 'r') as f:
+        explanation = json.loads(await f.read())
+    
+    return ExplainerResult(
+        record=record,
+        explanation=explanation
+    )
 
     return ExplainerResult(record=record, explanation=explanation)
