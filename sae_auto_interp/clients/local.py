@@ -23,22 +23,31 @@ class Local(Client):
         """
 
         for attempt in range(max_retries):
-            try:
-                response = await self.client.chat.completions.create(
+            # try:
+                print(kwargs)
+                if kwargs.get("logprobs"):
+                    print(prompt)
+                    response = await self.client.completions.create(
+                        model=self.model, prompt=prompt, **kwargs
+                    )
+                    return self.postprocess(response),response.choices[0].message.logprobs
+                else:
+                    print("I'm here")
+                    print(prompt)
+                    response = await self.client.chat.completions.create(
                     model=self.model, messages=prompt, **kwargs
                 )
+                    return response if raw else self.postprocess(response)
 
-                return response if raw else self.postprocess(response)
+            # except json.JSONDecodeError:
+            #     logger.warning(
+            #         f"Attempt {attempt + 1}: Invalid JSON response, retrying..."
+            #     )
 
-            except json.JSONDecodeError:
-                logger.warning(
-                    f"Attempt {attempt + 1}: Invalid JSON response, retrying..."
-                )
+            # except Exception as e:
+            #     logger.warning(f"Attempt {attempt + 1}: {str(e)}, retrying...")
 
-            except Exception as e:
-                logger.warning(f"Attempt {attempt + 1}: {str(e)}, retrying...")
-
-            await sleep(1)
+                await sleep(1)
 
         logger.error("All retry attempts failed.")
         raise RuntimeError("Failed to generate text after multiple attempts.")
