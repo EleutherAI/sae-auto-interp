@@ -18,6 +18,7 @@ class RecallScorer(Classifier):
         tokenizer: PreTrainedTokenizer,
         verbose: bool = False,
         batch_size: int = 10,
+        log_prob: bool = False,
         **generation_kwargs,
     ):
         super().__init__(
@@ -25,6 +26,7 @@ class RecallScorer(Classifier):
             tokenizer=tokenizer,
             verbose=verbose,
             batch_size=batch_size,
+            log_prob=log_prob,
             **generation_kwargs,
         )
 
