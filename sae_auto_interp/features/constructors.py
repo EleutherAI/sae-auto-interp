@@ -1,17 +1,11 @@
 import torch
 from torchtyping import TensorType
 
-from .features import Example
+from .features import prepare_examples
+from .loader import BufferOutput
 
 
-def pool_max_activation_windows(
-    record,
-    tokens: TensorType["batch", "seq"],
-    locations: TensorType["locations", 2],
-    activations: TensorType["locations"],
-    ctx_len: int,
-    max_examples: int = None,
-):
+def _to_dense(tokens, activations, locations):
     # Reconstruct dense tensor
     batch_len, seq_len = tokens.shape
     sparse_activations = torch.sparse_coo_tensor(
@@ -24,6 +18,11 @@ def pool_max_activation_windows(
     token_batches = tokens[unique_batch_pos]
     dense_activations = dense_activations[unique_batch_pos]
 
+    return token_batches, dense_activations
+
+
+# TODO: We should add an option to change stride size
+def _reconstruct_examples(dense_activations, token_batches, ctx_len):
     # Max pool activations
     avg_pools = torch.nn.functional.max_pool1d(
         dense_activations, kernel_size=ctx_len, stride=ctx_len
@@ -35,6 +34,14 @@ def pool_max_activation_windows(
     )
     token_windows = token_batches.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
 
+    return token_windows, activation_windows, avg_pools
+
+
+def _top_k_pools(dense_activations, token_batches, ctx_len, max_examples):
+
+    token_windows, activation_windows, avg_pools = \
+        _reconstruct_examples(dense_activations, token_batches, ctx_len)
+    
     # Filter out zero pools
     non_zero_mask = avg_pools != 0
     non_zero_pools = avg_pools[non_zero_mask]
@@ -47,20 +54,38 @@ def pool_max_activation_windows(
     activation_windows = activation_windows[top_indices]
     token_windows = token_windows[top_indices]
 
+    return token_windows, activation_windows
+
+
+def pool_max_activation_windows(
+    record,
+    buffer_output: BufferOutput,
+    tokens: TensorType["batch", "seq"],
+    ctx_len: int,
+    max_examples: int,
+):
+    token_batches, dense_activations = _to_dense(
+        tokens, buffer_output.activations, buffer_output.locations
+    )
+
+    token_windows, activation_windows = _top_k_pools(
+        dense_activations, token_batches, ctx_len, max_examples
+    )
+
     # Set as examples
-    record.examples = Example.prepare_examples(token_windows, activation_windows)
+    record.examples = prepare_examples(token_windows, activation_windows)
 
 
 def random_activation_windows(
     record,
-    tokens: torch.Tensor,
-    locations: torch.Tensor,
-    n_random: int,
+    tokens: TensorType["batch", "seq"],
+    buffer_output: BufferOutput,
     ctx_len: int,
+    n_random: int,
 ):
     torch.manual_seed(22)
     batch_size = tokens.shape[0]
-    unique_batch_pos = locations[:, 0].unique()
+    unique_batch_pos = buffer_output.locations[:, 0].unique()
 
     mask = torch.ones(batch_size, dtype=torch.bool)
     mask[unique_batch_pos] = False
@@ -73,7 +98,7 @@ def random_activation_windows(
 
     toks = tokens[selected_indices, 10 : 10 + ctx_len]
 
-    record.random_examples = Example.prepare_examples(
+    record.random_examples = prepare_examples(
         toks,
         torch.zeros_like(toks),
     )
