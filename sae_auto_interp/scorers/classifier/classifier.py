@@ -21,7 +21,7 @@ class Classifier(Scorer):
         tokenizer: PreTrainedTokenizer,
         verbose: bool,
         batch_size: int,
-        type: str,
+        log_prob: bool,
         **generation_kwargs,
     ):
         self.client = client
@@ -30,7 +30,7 @@ class Classifier(Scorer):
 
         self.batch_size = batch_size
         self.generation_kwargs = generation_kwargs
-        self.type = type
+        self.log_prob = log_prob
 
 
 
@@ -76,7 +76,7 @@ class Classifier(Scorer):
         """
 
         prompt = self._build_prompt(explanation, batch)
-        if self.type == "logprob":
+        if self.log_prob:
             self.generation_kwargs["logprobs"] = True
             self.generation_kwargs["top_logprobs"] = 10
             #self.generation_kwargs["echo"] = True
@@ -100,7 +100,7 @@ class Classifier(Scorer):
             prediction = array[i] 
             result.prediction = prediction
             result.correct = prediction == result.ground_truth
-            if self.type == "logprob":
+            if self.log_prob:
                 result.probability = probabilities[i].item()
             results.append(result)
 
