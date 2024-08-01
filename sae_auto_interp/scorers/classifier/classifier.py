@@ -77,11 +77,14 @@ class Classifier(Scorer):
 
         prompt = self._build_prompt(explanation, batch)
         if self.type == "logprob":
-            self.generation_kwargs["logprobs"] = 15
-            self.generation_kwargs["max_tokens"] = 0
+            self.generation_kwargs["logprobs"] = True
+            self.generation_kwargs["top_logprobs"] = 10
             #self.generation_kwargs["echo"] = True
             
-            selections, logprobs = await self.client.generate(prompt, **self.generation_kwargs)
+            response = await self.client.generate(prompt, **self.generation_kwargs,raw=True)
+            selections = response.choices[0].message.content
+            
+            logprobs = response.choices[0].logprobs.content
             array = self._parse(selections)
             probabilities = self._parse_logprobs(selections, logprobs)
         else:
@@ -97,8 +100,8 @@ class Classifier(Scorer):
             prediction = array[i] 
             result.prediction = prediction
             result.correct = prediction == result.ground_truth
-            if self.type == "logprobs":
-                result.probability = probabilities[i]
+            if self.type == "logprob":
+                result.probability = probabilities[i].item()
             results.append(result)
 
             if self.verbose:
@@ -124,11 +127,14 @@ class Classifier(Scorer):
         interested_indices = [i for i in range(1, len(selections), 2)]
         probabilities = []
         for i in interested_indices:
-            top_logprobs = logprobs.top_logprobs[i]
+            top_logprobs = logprobs[i].top_logprobs
+            print(top_logprobs)
             prob_0 = 0
             prob_1 = 0
 
-            for token, logprob in top_logprobs.items():
+            for i in range(len(top_logprobs)):
+                token = top_logprobs[i].token
+                logprob = top_logprobs[i].logprob
                 if "0" in token:
                     prob_0 += np.exp(logprob)
                 elif "1" in token:
