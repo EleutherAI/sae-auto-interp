@@ -8,15 +8,11 @@ class Client(ABC):
         self.model = model
 
     @abstractmethod
-<<<<<<< HEAD:src/sae_auto_interp/clients/client.py
     async def generate(
         self, 
         prompt: str, 
         **kwargs
     ):
-=======
-    async def generate(self, prompt: str, **kwargs) -> str:
->>>>>>> ca973f5a5f4c1feaafaf0dae94c9a3f068104774:sae_auto_interp/clients/client.py
         raise NotImplementedError
 
 
