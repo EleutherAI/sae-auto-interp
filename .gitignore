@@ -11,7 +11,9 @@ results/*
 !results/gpt2_recall
 !results/gpt2_fuzz
 raw*
-
+saved*
+extras*
+processed*
 .nfs*
 
 processed_features/
