@@ -20,15 +20,15 @@ class Example:
     def max_activation(self):
         return max(self.activations)
 
-    @staticmethod
-    def prepare_examples(tokens, activations):
-        return [
-            Example(
-                tokens=toks,
-                activations=acts,
-            )
-            for toks, acts in zip(tokens, activations)
-        ]
+
+def prepare_examples(tokens, activations):
+    return [
+        Example(
+            tokens=toks,
+            activations=acts,
+        )
+        for toks, acts in zip(tokens, activations)
+    ]
 
 
 @dataclass
@@ -50,13 +50,6 @@ class FeatureRecord:
     @property
     def max_activation(self):
         return self.examples[0].max_activation
-
-    def load_processed(self, directory: str):
-        path = f"{directory}/{self.feature}.json"
-
-        with bf.BlobFile(path, "rb") as f:
-            processed_data = orjson.loads(f.read())
-            self.__dict__.update(processed_data)
 
     def save(self, directory: str, save_examples=False):
         path = f"{directory}/{self.feature}.json"

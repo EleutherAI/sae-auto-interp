@@ -12,12 +12,12 @@ class AutoencoderLatents(torch.nn.Module):
         self,
         ae: torch.nn.Module,
         _forward: Callable,
-        width: int = 32768,
+        width: int,
     ) -> None:
         super().__init__()
+        self.ae = ae
         self._forward = _forward
         self.width = width
-        self.ae = ae
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self._forward(x)
