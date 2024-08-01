@@ -22,6 +22,7 @@ class FuzzingScorer(Classifier, Scorer):
         verbose: bool = False,
         batch_size: int = 1,
         threshold: float = 0.3,
+        type: str = "logprob",
         **generation_kwargs,
     ):
         super().__init__(
@@ -29,6 +30,7 @@ class FuzzingScorer(Classifier, Scorer):
             tokenizer=tokenizer,
             verbose=verbose,
             batch_size=batch_size,
+            type=type,
             **generation_kwargs,
         )
 
