@@ -12,22 +12,16 @@ results/*
 !results/gpt2_fuzz
 raw*
 saved*
-<<<<<<< HEAD
-extras*
-processed*
-=======
 scores*
 processed*
 extras*
 redoing*
 weights*
->>>>>>> ca973f5a5f4c1feaafaf0dae94c9a3f068104774
 .nfs*
 
 processed_features/
 
 output_html/
-<<<<<<< HEAD
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -191,5 +185,3 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
-=======
->>>>>>> ca973f5a5f4c1feaafaf0dae94c9a3f068104774
