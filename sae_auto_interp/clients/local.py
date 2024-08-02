@@ -42,7 +42,8 @@ class Local(Client):
                             messages=prompt,
                             **kwargs
                         )
-
+                    if response is None:
+                        raise Exception("Response is None")
                     return response if raw else self.postprocess(response)
 
                 except json.JSONDecodeError as e:
