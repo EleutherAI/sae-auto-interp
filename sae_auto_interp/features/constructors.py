@@ -1,7 +1,7 @@
 import torch
 from torchtyping import TensorType
 
-from .features import prepare_examples
+from .features import FeatureRecord, prepare_examples
 from .loader import BufferOutput
 
 
@@ -101,4 +101,28 @@ def random_activation_windows(
     record.random_examples = prepare_examples(
         toks,
         torch.zeros_like(toks),
+    )
+
+def default_constructor(
+    record: FeatureRecord,
+    tokens: TensorType["batch", "seq"],
+    buffer_output: BufferOutput,
+    n_random: int,
+    ctx_len: int,
+    max_examples: int,
+):
+    pool_max_activation_windows(
+        record,
+        tokens=tokens,
+        buffer_output=buffer_output,
+        ctx_len=ctx_len,
+        max_examples=max_examples,
+    )
+
+    random_activation_windows(
+        record,
+        tokens=tokens,
+        buffer_output=buffer_output,
+        n_random=n_random,
+        ctx_len=ctx_len,
     )
