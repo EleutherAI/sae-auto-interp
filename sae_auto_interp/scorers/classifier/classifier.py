@@ -78,15 +78,14 @@ class Classifier(Scorer):
         prompt = self._build_prompt(explanation, batch)
         if self.log_prob:
             self.generation_kwargs["logprobs"] = True
-            self.generation_kwargs["top_logprobs"] = 10
+            self.generation_kwargs["top_logprobs"] = 3
             #self.generation_kwargs["echo"] = True
             
             response = await self.client.generate(prompt, **self.generation_kwargs,raw=True)
             selections = response.choices[0].message.content
-            
             logprobs = response.choices[0].logprobs.content
-            array = self._parse(selections)
-            probabilities = self._parse_logprobs(selections, logprobs)
+            array, probabilities = self._parse(selections, logprobs)
+            #probabilities = self._parse_logprobs(selections, logprobs)
         else:
             selections = await self.client.generate(prompt, **self.generation_kwargs)
             array = self._parse(selections)
@@ -101,7 +100,7 @@ class Classifier(Scorer):
             result.prediction = prediction
             result.correct = prediction == result.ground_truth
             if self.log_prob:
-                result.probability = probabilities[i].item()
+                result.probability = probabilities[i]
             results.append(result)
 
             if self.verbose:
@@ -109,15 +108,19 @@ class Classifier(Scorer):
 
         return results
 
-    def _parse(self, string):
+    def _parse(self, string,logprobs=None):
         pattern = r"\[.*?\]"
         match = re.search(pattern, string)
 
         try:
             array = json.loads(match.group(0))
-            assert len(array) == self.batch_size 
+            assert len(array) == self.batch_size
+            if logprobs:
+                return array, self._parse_logprobs(string, logprobs)
             return array
-        except (json.JSONDecodeError, AssertionError):
+        except (json.JSONDecodeError, AssertionError, AttributeError):
+            if logprobs:
+                return [-1] * self.batch_size, [-1] * self.batch_size
             return [-1] * self.batch_size
 
     def _parse_logprobs(self, selections, logprobs):
@@ -128,7 +131,6 @@ class Classifier(Scorer):
         probabilities = []
         for i in interested_indices:
             top_logprobs = logprobs[i].top_logprobs
-            print(top_logprobs)
             prob_0 = 0
             prob_1 = 0
 
@@ -136,9 +138,9 @@ class Classifier(Scorer):
                 token = top_logprobs[i].token
                 logprob = top_logprobs[i].logprob
                 if "0" in token:
-                    prob_0 += np.exp(logprob)
+                    prob_0 += np.exp(logprob).item()
                 elif "1" in token:
-                    prob_1 += np.exp(logprob)
+                    prob_1 += np.exp(logprob).item()
             if prob_0+prob_1>0:
                 probabilities.append(prob_1/(prob_0+prob_1))
             else:
