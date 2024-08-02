@@ -1,6 +1,6 @@
 import os
+from functools import partial, reduce
 from typing import Callable, Dict, List, NamedTuple
-from functools import reduce, partial
 
 import torch
 import torch.multiprocessing as mp
@@ -10,6 +10,7 @@ from tqdm import tqdm
 
 from ..config import FeatureConfig
 from ..features.features import Feature, FeatureRecord
+
 
 class BufferOutput(NamedTuple):
     feature: Feature
@@ -175,7 +176,7 @@ class FeatureDataset:
             record = FeatureRecord(buffer_output.feature)
 
             if constructor is not None:
-                constructor(record, buffer_output)
+                constructor(record=record, buffer_output=buffer_output)
 
             if sampler is not None:
                 sampler(record)

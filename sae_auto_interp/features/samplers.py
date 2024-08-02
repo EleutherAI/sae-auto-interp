@@ -1,9 +1,9 @@
 import random
-from typing import List, Literal
 from collections import deque
+from typing import List, Literal
 
-from .features import Example, FeatureRecord
 from ..config import ExperimentConfig
+from .features import Example, FeatureRecord
 
 
 def split_activation_quantiles(
