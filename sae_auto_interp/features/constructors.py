@@ -3,6 +3,7 @@ from torchtyping import TensorType
 
 from .features import FeatureRecord, prepare_examples
 from .loader import BufferOutput
+from ..config import FeatureConfig
 
 
 def _to_dense(tokens, activations, locations):
@@ -61,15 +62,14 @@ def pool_max_activation_windows(
     record,
     buffer_output: BufferOutput,
     tokens: TensorType["batch", "seq"],
-    ctx_len: int,
-    max_examples: int,
+    cfg: FeatureConfig,
 ):
     token_batches, dense_activations = _to_dense(
         tokens, buffer_output.activations, buffer_output.locations
     )
 
     token_windows, activation_windows = _top_k_pools(
-        dense_activations, token_batches, ctx_len, max_examples
+        dense_activations, token_batches, cfg.example_ctx_len, cfg.max_examples
     )
 
     # Set as examples
