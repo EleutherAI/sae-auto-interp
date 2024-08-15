@@ -1,3 +1,4 @@
+import json
 import os
 from collections import defaultdict
 from typing import Dict
@@ -6,6 +7,8 @@ import torch
 from safetensors.torch import save_file
 from torchtyping import TensorType
 from tqdm import tqdm
+
+from sae_auto_interp.config import CacheConfig
 
 
 class Cache:
@@ -190,3 +193,12 @@ class FeatureCache:
                 }
 
                 save_file(split_data, output_file)
+
+    def save_config(self, save_dir: str,cfg: CacheConfig, model_name: str):
+            
+        for module_path in self.cache.feature_locations.keys():
+            config_file = f"{save_dir}/{module_path}/config.json"
+            with open(config_file, "w") as f:
+                config_dict = cfg.to_dict()
+                config_dict["model_name"] = model_name
+                json.dump(config_dict, f)
