@@ -1,12 +1,16 @@
 import os
-from functools import partial, reduce
 from typing import Callable, Dict, List, NamedTuple
 
 import torch
-import torch.multiprocessing as mp
 from safetensors.torch import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
+import json
+
+from sae_auto_interp.utils import (
+    load_tokenized_data,
+    load_tokenizer,
+)
 
 from ..config import FeatureConfig
 from ..features.features import Feature, FeatureRecord
@@ -106,6 +110,19 @@ class FeatureDataset:
 
         else:
             self._build_selected(raw_dir, modules, features)
+
+        cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
+        with open(cache_config_dir, "r") as f:
+            cache_config = json.load(f)
+        self.tokenizer = load_tokenizer(cache_config["model_name"])
+        self.tokens = load_tokenized_data(
+            cache_config["ctx_len"],
+            self.tokenizer,
+            cache_config["dataset_repo"],
+            cache_config["dataset_split"],
+            cache_config["dataset_name"],
+        )
+   
 
     def _edges(self):
         return torch.linspace(0, self.cfg.width, steps=self.cfg.n_splits + 1).long()
