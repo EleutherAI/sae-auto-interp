@@ -6,8 +6,8 @@ from ..explainer import Explainer, ExplainerResult
 from .prompt_builder import build_prompt
 
 
-class SimpleExplainer(Explainer):
-    name = "Simple"
+class DefaultExplainer(Explainer):
+    name = "default"
 
     def __init__(
         self,
