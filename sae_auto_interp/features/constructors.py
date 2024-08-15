@@ -111,6 +111,7 @@ def default_constructor(
     ctx_len: int,
     max_examples: int,
 ):
+    
     pool_max_activation_windows(
         record,
         tokens=tokens,

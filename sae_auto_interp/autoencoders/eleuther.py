@@ -9,7 +9,7 @@ from .wrapper import AutoencoderLatents
 DEVICE = "cuda:0"
 
 
-def load_eai_autoencoders(model, ae_layers: List[int], weight_dir: str, module: str):
+def load_eai_autoencoders(model, ae_layers: list[int], weight_dir: str, module: str):
     submodules = {}
 
     for layer in ae_layers:

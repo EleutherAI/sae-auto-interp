@@ -8,7 +8,7 @@ DEVICE = "cuda:0"
 
 
 
-def load_gemma_autoencoders(model, ae_layers: List[int],average_l0s: Dict[int,int]):
+def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,int]):
     submodules = {}
 
     for layer in ae_layers:

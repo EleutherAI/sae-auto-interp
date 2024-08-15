@@ -11,9 +11,9 @@ from simple_parsing import Serializable
 class ActivationRecord(Serializable):
     """Collated lists of tokens and their activations for a single neuron."""
 
-    tokens: List[str]
+    tokens: list[str]
     """Tokens in the text sequence, represented as strings."""
-    activations: List[float]
+    activations: list[float]
     """Raw activation values for the neuron on each token in the text sequence."""
 
 

@@ -37,7 +37,7 @@ class Classifier(Scorer):
     async def __call__(
         self,
         record: FeatureRecord,
-    ) -> List[ClassifierOutput]:
+    ) -> list[ClassifierOutput]:
         samples = self._prepare(record)
 
         random.shuffle(samples)
@@ -50,14 +50,14 @@ class Classifier(Scorer):
         return ScorerResult(record=record, score=results)
 
     @abstractmethod
-    def _prepare(self, record: FeatureRecord) -> List[List[Sample]]:
+    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
         pass
 
     async def _query(
         self,
         explanation: str,
-        batches: List[List[Sample]],
-    ) -> List[Sample]:
+        batches: list[list[Sample]],
+    ) -> list[Sample]:
         """
         Send and gather batches of samples to the model.
         """
@@ -69,8 +69,8 @@ class Classifier(Scorer):
         return sum(results, [])
 
     async def _generate(
-        self, explanation: str, batch: List[Sample]
-    ) -> List[ClassifierOutput]:
+        self, explanation: str, batch: list[Sample]
+    ) -> list[ClassifierOutput]:
         """
         Generate predictions for a batch of samples.
         """
@@ -162,7 +162,7 @@ class Classifier(Scorer):
     def _build_prompt(
         self,
         explanation: str,
-        batch: List[Sample],
+        batch: list[Sample],
     ) -> str:
         """
         Prepare prompt for generation.

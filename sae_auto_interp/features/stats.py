@@ -10,24 +10,24 @@ from . import FeatureRecord
 
 
 def logits(
-    records: List[FeatureRecord],
+    records: list[FeatureRecord],
     W_U: torch.nn.Module,
     W_dec: torch.nn.Module,
     k: int = 10,
     tokenizer=None,
-) -> List[List[str]]:
+) -> list[list[str]]:
     """
     Compute the top k logits via direct logit attribution for a set of records.
 
     Args:
-        records (List[FeatureRecord]): A list of feature records.
+        records (list[FeatureRecord]): A list of feature records.
         W_U (torch.nn.Module): The linear layer for the encoder.
         W_dec (torch.nn.Module): The linear layer for the decoder.
         k (int): The number of top logits to compute.
         tokenizer (Optional): A tokenizer for decoding logits.
 
     Returns:
-        decoded_top_logits (List[List[str]]): A list of top k logits for each record.
+        decoded_top_logits (list[list[str]]): A list of top k logits for each record.
     """
 
     feature_indices = [record.feature.feature_index for record in records]

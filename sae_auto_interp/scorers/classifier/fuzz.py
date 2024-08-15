@@ -44,7 +44,7 @@ class FuzzingScorer(Classifier, Scorer):
 
         return ceil(avg)
 
-    def _prepare(self, record: FeatureRecord) -> List[List[Sample]]:
+    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
         """
         Prepare and shuffle a list of samples for classification.
         """
@@ -55,7 +55,7 @@ class FuzzingScorer(Classifier, Scorer):
         }
 
         n_incorrect = self.average_n_activations(record.extra_examples)
-
+        print(f"n_incorrect: {n_incorrect}")
         samples = examples_to_samples(
             record.extra_examples,
             distance=-1,
