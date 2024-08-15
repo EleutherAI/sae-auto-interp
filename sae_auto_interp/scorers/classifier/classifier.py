@@ -78,20 +78,25 @@ class Classifier(Scorer):
         prompt = self._build_prompt(explanation, batch)
         if self.log_prob:
             self.generation_kwargs["logprobs"] = True
-            self.generation_kwargs["top_logprobs"] = 3
+            self.generation_kwargs["top_logprobs"] = 5
             #self.generation_kwargs["echo"] = True
-            
+            #self.generation_kwargs["stop"] = "]"
             response = await self.client.generate(prompt, **self.generation_kwargs,raw=True)
-            selections = response.choices[0].message.content
-            logprobs = response.choices[0].logprobs.content
-            array, probabilities = self._parse(selections, logprobs)
-            #probabilities = self._parse_logprobs(selections, logprobs)
-        else:
+            if response is None:
+                array = [-1] * self.batch_size
+                probabilities = [-1] * self.batch_size
+            else:
+                selections = response.choices[0].message.content
+                logprobs = response.choices[0].logprobs.content
+                array, probabilities = self._parse(selections, logprobs)
+            else:
             selections = await self.client.generate(prompt, **self.generation_kwargs)
-            array = self._parse(selections)
+            if selections is None:
+                array = [-1] * self.batch_size
+            else:
+                array = self._parse(selections)
 
-        # print(selections, array)
-
+        
         results = []
 
         for i, sample in enumerate(batch):
@@ -116,35 +121,37 @@ class Classifier(Scorer):
             array = json.loads(match.group(0))
             assert len(array) == self.batch_size
             if logprobs:
-                return array, self._parse_logprobs(string, logprobs)
+                probabilities = self._parse_logprobs(logprobs)
+                assert len(probabilities) == self.batch_size
+                return array, probabilities
             return array
         except (json.JSONDecodeError, AssertionError, AttributeError):
             if logprobs:
                 return [-1] * self.batch_size, [-1] * self.batch_size
             return [-1] * self.batch_size
 
-    def _parse_logprobs(self, selections, logprobs):
-        #Logprobs will be a list of 15 probabilites for each token in the response
+    def _parse_logprobs(self, logprobs):
+        #Logprobs will be a list of 5 probabilites for each token in the response
         # The response will be in the form of [x, x, x, ...] for each position we
         # need to get the probability of 1 or 0 
-        interested_indices = [i for i in range(1, len(selections), 2)]
         probabilities = []
-        for i in interested_indices:
-            top_logprobs = logprobs[i].top_logprobs
-            prob_0 = 0
-            prob_1 = 0
-
-            for i in range(len(top_logprobs)):
-                token = top_logprobs[i].token
-                logprob = top_logprobs[i].logprob
-                if "0" in token:
-                    prob_0 += np.exp(logprob).item()
-                elif "1" in token:
-                    prob_1 += np.exp(logprob).item()
-            if prob_0+prob_1>0:
-                probabilities.append(prob_1/(prob_0+prob_1))
-            else:
-                probabilities.append(0)
+        
+        for i in range(len(logprobs)):
+            if "1" in logprobs[i].token or "0" in logprobs[i].token:
+                top_logprobs = logprobs[i].top_logprobs
+                prob_0 = 0
+                prob_1 = 0
+                for i in range(len(top_logprobs)):
+                    token = top_logprobs[i].token
+                    logprob = top_logprobs[i].logprob
+                    if "0" in token:
+                        prob_0 += np.exp(logprob).item()
+                    elif "1" in token:
+                        prob_1 += np.exp(logprob).item()
+                if prob_0+prob_1>0:
+                    probabilities.append(prob_1/(prob_0+prob_1))
+                else:
+                    probabilities.append(0)
         return probabilities
 
 
