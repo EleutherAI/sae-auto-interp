@@ -19,7 +19,7 @@ Example 3: shown, is generally not eligible for ads. For example, videos about r
 Example 4: line, with the left side âĢĶ namely tackle Byron Bell at tackle and guard Amini
 """
 
-DSCORER_RESPONSE_ONE = "[1,0,0,1,1]"
+DSCORER_RESPONSE_ONE = "[1,0,0,0,1]"
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/9396
 DSCORER_EXAMPLE_TWO = """Feature explanation: The word "guys" in the phrase "you guys".
