@@ -48,7 +48,7 @@ class OpenAISimulator(Scorer):
             score=result,
         )
 
-    def to_activation_records(self, examples: List[Example]) -> List[ActivationRecord]:
+    def to_activation_records(self, examples: list[Example]) -> list[ActivationRecord]:
         return [
             ActivationRecord(
                 self.tokenizer.batch_decode(example.tokens), example.activations.half()

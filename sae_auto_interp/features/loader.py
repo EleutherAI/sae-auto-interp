@@ -1,5 +1,5 @@
 import os
-from typing import Callable, Dict, List, NamedTuple
+from typing import Callable, Dict , NamedTuple
 
 import torch
 from safetensors.torch import load_file
@@ -98,7 +98,7 @@ class FeatureDataset:
         self,
         raw_dir: str,
         cfg: FeatureConfig,
-        modules: List[str] = None,
+        modules: list[str] = None,
         features: Dict[str, int] = None,
     ):
         self.cfg = cfg
@@ -127,7 +127,7 @@ class FeatureDataset:
     def _edges(self):
         return torch.linspace(0, self.cfg.width, steps=self.cfg.n_splits + 1).long()
 
-    def _build(self, raw_dir: str, modules: List[str] = None):
+    def _build(self, raw_dir: str, modules: list[str] = None):
         """
         Build dataset buffers which load all cached features.
         """
@@ -146,7 +146,7 @@ class FeatureDataset:
                 )
 
     def _build_selected(
-        self, raw_dir: str, modules: List[str], features: Dict[str, int]
+        self, raw_dir: str, modules: list[str], features: Dict[str, int]
     ):
         """
         Build a dataset buffer which loads only selected features.

@@ -17,7 +17,7 @@ class TopKNeurons(torch.nn.Module):
 
 def load_llama3_neurons(
         model,
-        layers:List[int],
+        layers:list[int],
         k:int
     ):
     submodule_dict = {}

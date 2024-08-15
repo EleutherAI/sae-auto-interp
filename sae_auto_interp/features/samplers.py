@@ -7,7 +7,7 @@ from .features import Example, FeatureRecord
 
 
 def split_activation_quantiles(
-    examples: List[Example], 
+    examples: list[Example], 
     n_quantiles: int,
     n_samples: int,
     seed: int = 22
@@ -35,7 +35,7 @@ def split_activation_quantiles(
 
 
 def split_quantiles(
-    examples: List[Example], 
+    examples: list[Example], 
     n_quantiles: int, 
     n_samples: int,
     seed: int = 22
@@ -56,7 +56,7 @@ def split_quantiles(
 
 
 def train(
-    examples: List[Example],
+    examples: list[Example],
     n_train: int,
     train_type: Literal["top", "random","quantile"],
     seed: int = 22,
@@ -74,7 +74,7 @@ def train(
 
 
 def test(
-    examples: List[Example],
+    examples: list[Example],
     n_test: int,
     n_quantiles: int,
     test_type: Literal["even", "activation"],

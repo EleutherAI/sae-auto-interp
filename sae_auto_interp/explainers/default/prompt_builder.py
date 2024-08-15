@@ -31,7 +31,7 @@ def build_prompt(
     examples,
     cot: bool = False,
     activations: bool = False,
-    top_logits: List[str] = None,
+    top_logits: list[str] = None,
 ):
     logits = True if top_logits is not None else False
 

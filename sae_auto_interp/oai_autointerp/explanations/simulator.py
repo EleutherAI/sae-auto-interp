@@ -7,7 +7,7 @@ import logging
 from abc import ABC, abstractmethod
 from collections import OrderedDict
 from enum import Enum
-from typing import Any, List, Optional, Sequence, Union
+from typing import Any , Optional, Sequence, Union
 
 import numpy as np
 from pydantic import BaseModel
@@ -55,7 +55,7 @@ class Activation(BaseModel):
 class ResponseModel(BaseModel):
     to_find: str
     document: str
-    activations: List[Activation]
+    activations: list[Activation]
 
 class SimulationType(str, Enum):
     """How to simulate neuron activations.

@@ -13,9 +13,9 @@ from ..activations.activations import ActivationRecord
 
 @dataclass
 class Example(Serializable):
-    activation_records: List[ActivationRecord]
+    activation_records: list[ActivationRecord]
     explanation: str
-    first_revealed_activation_indices: List[int]
+    first_revealed_activation_indices: list[int]
     """
     For each activation record, the index of the first token for which the activation 
     value in the prompt should be an actual number rather than "unknown".

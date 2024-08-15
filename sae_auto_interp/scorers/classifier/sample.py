@@ -40,13 +40,13 @@ class Sample(NamedTuple):
 
 
 def examples_to_samples(
-    examples: List[Example],
+    examples: list[Example],
     tokenizer: PreTrainedTokenizer,
     n_incorrect: int = 0,
     threshold: float = 0.3,
     highlighted: bool = False,
     **sample_kwargs,
-) -> List[Sample]:
+) -> list[Sample]:
     samples = []
 
     for example in examples:
