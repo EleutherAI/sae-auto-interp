@@ -79,8 +79,6 @@ class Classifier(Scorer):
         if self.log_prob:
             self.generation_kwargs["logprobs"] = True
             self.generation_kwargs["top_logprobs"] = 5
-            #self.generation_kwargs["echo"] = True
-            #self.generation_kwargs["stop"] = "]"
             response = await self.client.generate(prompt, **self.generation_kwargs,raw=True)
             if response is None:
                 array = [-1] * self.batch_size
@@ -89,7 +87,7 @@ class Classifier(Scorer):
                 selections = response.choices[0].message.content
                 logprobs = response.choices[0].logprobs.content
                 array, probabilities = self._parse(selections, logprobs)
-            else:
+        else:
             selections = await self.client.generate(prompt, **self.generation_kwargs)
             if selections is None:
                 array = [-1] * self.batch_size
@@ -98,19 +96,23 @@ class Classifier(Scorer):
 
         
         results = []
-
+        correct = []
+        response=[]
         for i, sample in enumerate(batch):
             result = sample.data
             prediction = array[i] 
             result.prediction = prediction
             result.correct = prediction == result.ground_truth
+            correct.append(result.ground_truth)
+            response.append(prediction)
             if self.log_prob:
                 result.probability = probabilities[i]
             results.append(result)
 
             if self.verbose:
                 result.text = sample.text
-
+        print(f"correct: {correct}")
+        print(f"response: {response}")
         return results
 
     def _parse(self, string,logprobs=None):
@@ -169,6 +171,8 @@ class Classifier(Scorer):
         examples = "\n".join(
             f"Example {i}: {sample.text}" for i, sample in enumerate(batch)
         )
+        for i, sample in enumerate(batch):
+            print(f"Example {i}: {sample.text}")
 
         return self.prompt(explanation=explanation, examples=examples)
 
