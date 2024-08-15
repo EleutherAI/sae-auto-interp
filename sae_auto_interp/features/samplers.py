@@ -58,8 +58,10 @@ def split_quantiles(
 def train(
     examples: List[Example],
     n_train: int,
-    train_type: Literal["top", "random"],
+    train_type: Literal["top", "random","quantile"],
     seed: int = 22,
+    n_quantiles: int = 10,
+    chosen_quantile: int = 0,
 ):
     match train_type:
         case "top":
@@ -67,6 +69,8 @@ def train(
         case "random":
             random.seed(seed)
             return random.sample(examples, n_train)
+        case "quantile":
+            return split_quantiles(examples, n_quantiles, n_train)[chosen_quantile]
 
 
 def test(
@@ -92,8 +96,10 @@ def sample(
         examples,
         cfg.n_examples_train,
         cfg.train_type,
+        cfg.n_quantiles,
+        cfg.chosen_quantile,
     )
-
+    
     _test = test(
         examples,
         cfg.n_examples_test,

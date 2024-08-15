@@ -163,7 +163,7 @@ class FeatureDataset:
                 )
 
     def __len__(self):
-        return len(self.dataset.buffers)
+        return len(self.buffers)
         
     def load(
         self,
@@ -174,7 +174,6 @@ class FeatureDataset:
     ):
         def _process(buffer_output: BufferOutput):
             record = FeatureRecord(buffer_output.feature)
-
             if constructor is not None:
                 constructor(record=record, buffer_output=buffer_output)
 
