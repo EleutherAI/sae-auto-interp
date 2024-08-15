@@ -42,7 +42,7 @@ class Outlines(Client):
         prompt: str,
         tokenize: bool = True,
         raw: bool = False,
-        max_retries: int = 3,
+        max_retries: int = 1,
         **kwargs,
     ) -> str:
         """
@@ -75,4 +75,5 @@ class Outlines(Client):
             await sleep(1)
 
         logger.error("All retry attempts failed.")
-        raise RuntimeError("Failed to generate text after multiple attempts.")
+        #raise RuntimeError("Failed to generate text after multiple attempts.")
+        return ""
