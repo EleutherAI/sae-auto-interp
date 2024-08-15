@@ -1,7 +1,8 @@
 from ...clients import Client, create_response_model
 from ..scorer import Scorer, ScorerResult
 from .prompts import get_gen_scorer_template
-
+import re
+import json
 
 class GenerationScorer(Scorer):
     name = "generation"
@@ -18,11 +19,18 @@ class GenerationScorer(Scorer):
     ):
         prompt = get_gen_scorer_template(record.explanation, self.n_examples)
 
-        schema = create_response_model(self.n_examples, type=str)
+        #schema = create_response_model(self.n_examples, type=str)
 
         # Generate responses
         examples = await self.client.generate(
-            prompt, schema=schema.model_json_schema(), **self.generation_kwargs
+            prompt, **self.generation_kwargs
         )
 
-        return ScorerResult(record=record, score=list(examples.values()))
+        try:
+            match = re.search(r"\{.*\}", examples, re.DOTALL)
+            array = json.loads(match.group(0))
+            
+        except:
+            return ScorerResult(record=record, score=list(len(examples)*[" "]))
+
+        return ScorerResult(record=record, score=list(array.values()))
