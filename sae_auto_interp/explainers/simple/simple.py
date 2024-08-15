@@ -62,9 +62,12 @@ class SimpleExplainer(Explainer):
         return ExplainerResult(record=record, explanation=explanation)
 
     def parse_explanation(self, text: str) -> str:
-        match = re.search(r"\[EXPLANATION\]:\s*(.*)", text, re.DOTALL)
+        try:
+            match = re.search(r"\[EXPLANATION\]:\s*(.*)", text, re.DOTALL)
 
-        return match.group(1).strip() if match else "Explanation could not be parsed."
+            return match.group(1).strip() if match else "Explanation could not be parsed."
+        except Exception as e:
+            return "Explanation could not be parsed."
 
     def _highlight(self, index, example):
         result = f"Example {index}: "
