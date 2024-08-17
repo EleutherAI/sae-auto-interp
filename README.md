@@ -1,6 +1,6 @@
 # Introduction
 
-This is the legacy version of the code used to run the experiments on [link]. We will be using the most recent version for future work.
+This is the legacy version of the code used to run the experiments on [our blog post](https://blog.eleuther.ai/autointerp/). We will be using the most recent version for future work.
 
 # Recording feature activations.
 
