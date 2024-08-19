@@ -1,10 +1,15 @@
 from nnsight import LanguageModel
+import torch
 from simple_parsing import ArgumentParser
 
 from sae_auto_interp.autoencoders import load_oai_autoencoders
 from sae_auto_interp.config import CacheConfig
 from sae_auto_interp.features import FeatureCache
-from sae_auto_interp.utils import load_filter, load_tokenized_data
+from sae_auto_interp.utils import load_tokenized_data
+
+
+WEIGHT_PATH = "weights/gpt2_128k"
+SAVE_DIR = "/share/u/caden/sae-auto-interp/raw_features/new_stuff"
 
 
 def main(cfg: CacheConfig):
@@ -13,10 +18,13 @@ def main(cfg: CacheConfig):
     submodule_dict = load_oai_autoencoders(
         model,
         list(range(0, 12, 2)),
-        "weights/gpt2_128k",
+        WEIGHT_PATH
     )
 
-    module_filter = load_filter("weights/per_layer_features.json")
+    module_filter = {
+        module : torch.arange(100).to('cuda:0') 
+        for module in submodule_dict
+    }
 
     tokens = load_tokenized_data(
         cfg.ctx_len,
@@ -33,7 +41,7 @@ def main(cfg: CacheConfig):
 
     cache.save_splits(
         n_splits=cfg.n_splits,
-        save_dir="/share/u/caden/sae-auto-interp/raw_features/weights",
+        save_dir = SAVE_DIR
     )
 
 

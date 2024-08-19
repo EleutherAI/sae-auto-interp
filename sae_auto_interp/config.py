@@ -12,7 +12,7 @@ class ExperimentConfig(Serializable):
     n_examples_train: int = 10
     """Number of examples to sample for training"""
 
-    n_examples_test: int = 5
+    n_examples_test: int = 7
     """Number of examples to sample for testing"""
 
     n_quantiles: int = 10
@@ -30,8 +30,11 @@ class ExperimentConfig(Serializable):
 
 @dataclass
 class FeatureConfig(Serializable):
-    width: int = 131072
+    width: int 
     """Number of features in the autoencoder"""
+
+    example_ctx_len: int
+    """Length of each example."""
 
     min_examples: int = 200
     """Minimum number of examples for a feature to be included"""
@@ -39,23 +42,20 @@ class FeatureConfig(Serializable):
     max_examples: int = 10000
     """Maximum number of examples for a feature to included"""
 
-    example_ctx_len: int = 64
-    """Length of each example"""
-
     n_splits: int = 2
     """Number of splits that features were devided into"""
 
 
 @dataclass
 class CacheConfig(Serializable):
+    ctx_len: int
+    """Context length of the autoencoder. Each batch is shape (batch_size, ctx_len)"""
+
     batch_size: int = 32
     """Number of sequences to process in a batch"""
-
-    ctx_len: int = 256
-    """Context length of the autoencoder. Each batch is shape (batch_size, ctx_len)"""
 
     n_tokens: int = 10_000_000
     """Number of tokens to cache"""
 
-    n_splits: int = 5
+    n_splits: int = 2
     """Number of splits to divide .safetensors into"""
