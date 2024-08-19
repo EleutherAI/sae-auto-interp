@@ -1,3 +1,7 @@
+"""
+THIS SCRIPT IS DEPRECATED
+"""
+
 import asyncio
 from functools import partial
 

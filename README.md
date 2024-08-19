@@ -2,7 +2,7 @@
 
 This library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) features. The explainer and scorer models can be run locally or acessed using API calls via OpenRouter.
 
-Note that we're still actively cleaning up the codebase and scripts.
+#Note that we're still actively cleaning up the codebase and scripts.
 
 ## Installation
 
@@ -112,7 +112,6 @@ pipeline = Pipeline(
     loader.load,
     explainer_pipe,
 )
-
 asyncio.run(pipeline.run())
 ```
 
@@ -180,7 +179,7 @@ pipeline = Pipeline(
 )
 
 asyncio.run(pipeline.run())
-```
+``` 
 
 ## Simulation
 

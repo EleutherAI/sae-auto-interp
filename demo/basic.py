@@ -3,15 +3,14 @@ from functools import partial
 
 import orjson
 import torch
-from defaults import default_constructor
 from simple_parsing import ArgumentParser
 
 from sae_auto_interp.clients import Local
-from sae_auto_interp.config import FeatureConfig
+from sae_auto_interp.config import FeatureConfig, ExperimentConfig
 from sae_auto_interp.explainers import SimpleExplainer
-from sae_auto_interp.features import FeatureDataset, FeatureLoader, random_and_quantiles
+from sae_auto_interp.features import FeatureDataset, sample, pool_max_activation_windows
 from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
-from sae_auto_interp.scorers import FuzzingScorer, RecallScorer
+from sae_auto_interp.scorers import FuzzingScorer
 from sae_auto_interp.utils import (
     load_tokenized_data,
     load_tokenizer,
@@ -21,17 +20,15 @@ from sae_auto_interp.utils import (
 
 raw_features = "raw_features/gpt2"
 explanation_dir = "results/gpt2_explanations"
-recall_dir = "results/gpt2_recall"
 fuzz_dir = "results/gpt2_fuzz"
-processed_path = "/share/u/caden/sae-auto-interp/processed_features"
 
 
-def main(cfg):
-    ### Load dataset ###
+def main(args):
 
+    ### Load tokens ###
     tokenizer = load_tokenizer("gpt2")
     tokens = load_tokenized_data(
-        cfg.ctx_len,
+        args.feature.example_ctx_len,
         tokenizer,
         "kh4dien/fineweb-100m-sample",
         "train[:15%]",
@@ -43,18 +40,17 @@ def main(cfg):
 
     dataset = FeatureDataset(
         raw_dir=raw_features,
-        cfg=cfg,
+        cfg=args.feature,
         modules=modules,
         features=features,
     )
 
-    loader = FeatureLoader(
-        tokens=tokens,
-        dataset=dataset,
+    loader = partial(
+        dataset.load,
         constructor=partial(
-            default_constructor, n_random=20, ctx_len=20, max_examples=5_000
+            pool_max_activation_windows, tokens=tokens, cfg=args.feature
         ),
-        sampler=partial(random_and_quantiles, n_train=20, n_test=7, n_quantiles=10),
+        sampler=partial(sample, cfg=args.experiment)
     )
 
     ### Load client ###
@@ -77,21 +73,15 @@ def main(cfg):
         return record
 
     def explainer_postprocess(result):
-        data = {
-            "generation_prompt": result[0],
-            "response": result[1],
-            "explanation": result[2].explanation,
-        }
+        
+        with open(f"{explanation_dir}/{result.record.feature}.txt", "wb") as f:
+            f.write(orjson.dumps(result.explanation))
 
-        with open(f"{explanation_dir}/{result[2].record.feature}.txt", "wb") as f:
-            f.write(orjson.dumps(data))
-
-        return result[2]
+        return result
 
     explainer_pipe = process_wrapper(
         SimpleExplainer(
             client,
-            verbose=True,
             tokenizer=tokenizer,
             activations=True,
             max_tokens=500,
@@ -105,9 +95,7 @@ def main(cfg):
 
     def scorer_preprocess(result):
         record = result.record
-
         record.explanation = result.explanation
-
         return record
 
     def scorer_postprocess(result, score_dir):
@@ -116,25 +104,13 @@ def main(cfg):
 
     scorer_pipe = Pipe(
         process_wrapper(
-            RecallScorer(
-                client,
-                tokenizer=tokenizer,
-                verbose=True,
-                max_tokens=50,
-                temperature=0.0,
-                batch_size=cfg.batch_size,
-            ),
-            preprocess=scorer_preprocess,
-            postprocess=partial(scorer_postprocess, score_dir=recall_dir),
-        ),
-        process_wrapper(
             FuzzingScorer(
                 client,
                 tokenizer=tokenizer,
                 verbose=True,
                 max_tokens=50,
                 temperature=0.0,
-                batch_size=cfg.batch_size,
+                batch_size=10,
             ),
             preprocess=scorer_preprocess,
             postprocess=partial(scorer_postprocess, score_dir=fuzz_dir),
@@ -144,7 +120,7 @@ def main(cfg):
     ### Build the pipeline ###
 
     pipeline = Pipeline(
-        loader.load,
+        loader,
         explainer_pipe,
         scorer_pipe,
     )
@@ -154,10 +130,9 @@ def main(cfg):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--batch_size", type=int)
-    parser.add_arguments(FeatureConfig, dest="options")
-    args = parser.parse_args()
-    cfg = args.options
-    cfg.batch_size = args.batch_size
+    parser.add_arguments(FeatureConfig, dest="feature")
+    parser.add_arguments(ExperimentConfig, dest="experiment")
 
-    main(cfg)
+    args = parser.parse_args()
+
+    main(args)
