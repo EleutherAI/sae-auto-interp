@@ -19,8 +19,8 @@ model = LanguageModel("openai-community/gpt2", device_map="auto", dispatch=True)
 
 submodule_dict = load_oai_autoencoders(
     model,
-    # List of layers,
-    "weights/gpt2_128k",
+    layer_list,
+    PATH_TO_WEIGHTS,
 )
 ```
 
@@ -33,7 +33,7 @@ To cache autoencoder activations, load your autoencoders and run a cache object.
 cache = FeatureCache(
     model,
     submodule_dict,
-    batch_size = 128,
+    batch_size = n_batches,
     filters = module_filter
 )
 
@@ -64,17 +64,22 @@ dataset = FeatureDataset(
 )
 ```
 
-The feature dataset will construct lazy loaded buffers that load activations into memory when called as an iterator object. You can iterate through the dataset using the `FeatureLoader` object.
+The feature dataset will construct lazy loaded buffers that load activations into memory when called as an iterator object. You can iterate through the dataset using the `load` function of the `FeatureDataset`, which requires us to define a constructor and a sampler:
 
 ```python
-loader = FeatureLoader(
-    tokens=tokens,
-    dataset=dataset,
-    constructor = # constructor,
-)
+loader = partial(
+        dataset.load,
+        constructor=partial(
+            pool_max_activation_windows, tokens=tokens, cfg=args.feature
+        ),
+        sampler=partial(sample, cfg=args.experiment)
+    )
+
 ```
 
-We use a `max_activation_pooling_sampler` which reconstructs activations given the original cached tokens and each features' locations and activations. It reconstructs a sparse tensor of activations and finds maximum activating sets of contexts of a given length.
+A constructor defines the activation windows from the activations. We use a `max_activation_pooling_sampler` which reconstructs the contexts given the original cached tokens and each features' locations and activations. It reconstructs a sparse tensor of activations and finds maximum activating sets of contexts of a given length.
+
+The sampler defines how many of these contexts to use for generating explanations (train) and for scoring them (test)
 
 # Generating Explanations
 
