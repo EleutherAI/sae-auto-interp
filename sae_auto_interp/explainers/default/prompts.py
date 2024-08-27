@@ -8,6 +8,7 @@ You will be given a list of text examples on which the neuron activates. The spe
 
 - Try to produce a concise final description. Simply describe the text features that activate the neuron, and what its role might be based on the tokens it predicts.
 - If either the text features or the predicted tokens are completely uninformative, you don't need to mention them.
+- Do not mention the marker tokens (<< >>) in your explanation.
 - The last line of your response must be the formatted explanation."""
 
 COT = """
