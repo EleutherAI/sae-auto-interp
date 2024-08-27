@@ -1,5 +1,5 @@
 import json
-from asyncio import sleep
+import asyncio
 
 from openai import AsyncOpenAI
 
@@ -52,7 +52,7 @@ class Local(Client):
                 except Exception as e:
                     logger.warning(f"Attempt {attempt + 1}: {str(e)}, retrying...")
                 
-                await sleep(1)
+                await asyncio.sleep(1)
         except Exception as e:
             logger.error(f"All retry attempts failed. Most recent error: {e}")
             raise
@@ -62,3 +62,6 @@ class Local(Client):
         Postprocess the response from the API.
         """
         return response.choices[0].message.content
+
+
+
