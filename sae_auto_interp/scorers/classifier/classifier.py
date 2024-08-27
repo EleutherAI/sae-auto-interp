@@ -12,7 +12,7 @@ from ...clients.client import Client
 from ...features import FeatureRecord
 from ..scorer import Scorer, ScorerResult
 from .sample import ClassifierOutput, Sample
-
+import time
 
 class Classifier(Scorer):
     def __init__(
@@ -41,11 +41,19 @@ class Classifier(Scorer):
         samples = self._prepare(record)
 
         random.shuffle(samples)
-
+        # total_tokens = 0
+        samples = self._batch(samples)
+        # for sample in samples:
+        #     prompt = self._build_prompt(record.explanation, sample)
+        #     tokens = self.tokenizer.apply_chat_template(prompt,tokenize=True)
+        #     total_tokens += len(tokens)
+        # start_time = time.time()
         results = await self._query(
             record.explanation,
-            self._batch(samples),
+            samples,
         )
+        #end_time = time.time()
+        #print(f"Got  {len(results)} {self.name} scoring results for {record.explanation} in {end_time - start_time} seconds, with prompt tokens {total_tokens}, {total_tokens/(end_time - start_time)} tokens per second, response tokens {len(samples)*50}, {len(samples)*50/(end_time - start_time)} tokens per second")
 
         return ScorerResult(record=record, score=results)
 
@@ -61,12 +69,20 @@ class Classifier(Scorer):
         """
         Send and gather batches of samples to the model.
         """
+        sem = asyncio.Semaphore(1)
 
-        tasks = [self._generate(explanation, batch) for batch in batches]
-
+        async def _process(explanation, batch):
+            async with sem:
+                result = await self._generate(explanation, batch)
+                #print(f"Got {len(result)} {self.name} scoring results for {explanation}")
+                return result
+    
+        tasks = [asyncio.create_task(_process(explanation, batch)) for batch in batches]
+        #tasks = [self._generate(explanation, batch) for batch in batches]
         results = await asyncio.gather(*tasks)
 
         return sum(results, [])
+    
 
     async def _generate(
         self, explanation: str, batch: list[Sample]
@@ -111,8 +127,6 @@ class Classifier(Scorer):
 
             if self.verbose:
                 result.text = sample.text
-        print(f"correct: {correct}")
-        print(f"response: {response}")
         return results
 
     def _parse(self, string,logprobs=None):
@@ -171,9 +185,7 @@ class Classifier(Scorer):
         examples = "\n".join(
             f"Example {i}: {sample.text}" for i, sample in enumerate(batch)
         )
-        for i, sample in enumerate(batch):
-            print(f"Example {i}: {sample.text}")
-
+        
         return self.prompt(explanation=explanation, examples=examples)
 
     def _batch(self, samples):
