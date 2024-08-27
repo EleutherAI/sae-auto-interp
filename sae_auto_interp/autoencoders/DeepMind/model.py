@@ -16,6 +16,8 @@ class JumpReLUSAE(nn.Module):
   def encode(self, input_acts):
     pre_acts = input_acts @ self.W_enc + self.b_enc
     mask = (pre_acts > self.threshold)
+    #print(pre_acts.shape)
+    #print(torch.nonzero(mask).shape)
     acts = mask * torch.nn.functional.relu(pre_acts)
     return acts
 
@@ -28,9 +30,9 @@ class JumpReLUSAE(nn.Module):
     return recon
   
   @classmethod
-  def from_pretrained(cls, path):
+  def from_pretrained(cls, path,type):
     path_to_params = hf_hub_download(
-    repo_id="google/gemma-scope-9b-pt-res",
+    repo_id="google/gemma-scope-9b-pt-"+type,
     filename=f"{path}/params.npz",
     force_download=False,
     )
