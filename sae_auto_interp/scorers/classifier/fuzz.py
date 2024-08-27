@@ -53,9 +53,10 @@ class FuzzingScorer(Classifier, Scorer):
             "highlighted": True,
             "tokenizer": self.tokenizer,
         }
-
-        n_incorrect = self.average_n_activations(record.extra_examples)
-        print(f"n_incorrect: {n_incorrect}")
+        all_examples = []
+        for test in record.test:
+            all_examples.extend(test)
+        n_incorrect = self.average_n_activations(all_examples)
         samples = examples_to_samples(
             record.extra_examples,
             distance=-1,
