@@ -14,10 +14,12 @@ def load_tokenized_data(
     """
     from datasets import load_dataset
     from transformer_lens import utils
-
+    print(dataset_repo,dataset_name,dataset_split)
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
-
-    tokens = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len)
+    if "rpj" in dataset_repo:
+        tokens = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name="raw_content")
+    else:
+        tokens = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name="text")
 
     tokens = tokens.shuffle(seed)["tokens"]
 
