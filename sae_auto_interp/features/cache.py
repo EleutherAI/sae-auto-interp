@@ -4,7 +4,8 @@ from collections import defaultdict
 from typing import Dict
 
 import torch
-from safetensors.torch import save_file
+from safetensors.numpy import save_file
+import numpy as np
 from torchtyping import TensorType
 from tqdm import tqdm
 from sae_auto_interp.config import CacheConfig
@@ -205,7 +206,17 @@ class FeatureCache:
 
                 masked_locations = feature_locations[mask]
                 masked_activations = feature_activations[mask]
-
+                masked_locations[:,2] = masked_locations[:,2]-start
+                if masked_locations[:,2].max() < 2**16 and masked_locations[:,0].max() < 2**16:
+                    masked_locations = masked_locations.astype(np.uint16)
+                
+                else:
+                    print(masked_locations[:,2].max(), masked_locations[:,0].max())
+                    masked_locations = masked_locations.astype(np.uint32)
+                max_activation = masked_activations.max()
+                masked_activations = masked_activations/max_activation*10
+                masked_activations = masked_activations.round().astype(np.int8)
+                
                 module_dir = f"{save_dir}/{module_path}"
                 os.makedirs(module_dir, exist_ok=True)
 
