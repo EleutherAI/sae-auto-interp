@@ -20,20 +20,24 @@ from .prompts import BASEPROMPT as base_prompt
 
 @dataclass
 class SurprisalOutput:
+    text: str
+    """The text that was used to evaluate the surprisal"""
+
     distance: float | int
     """Quantile or neighbor distance"""
 
-    no_explanation: float = 0
+    no_explanation: list[float] = 0
     """What is the surprisal of the model with no explanation"""
 
-    explanation: float = 0
+    explanation: list[float] = 0
     """What is the surprisal of the model with an explanation"""
 
-    highlighted: bool = False
-    """Whether the surprisal is measured for the highlighted token"""
+    activations: list[float] = 0
+    """What are the activations of the model"""
 
 class Sample(NamedTuple):
     text: str
+    activations: list[float]
     data: SurprisalOutput
 
 
@@ -43,17 +47,17 @@ class SurprisalScorer(Scorer):
     def __init__(
         self,
         model,
+        tokenizer,
         verbose: bool,
         batch_size: int,
-        fuzzing:bool = False,
         **generation_kwargs,
     ):
         self.model = model
         self.verbose = verbose
-
+        self.tokenizer = tokenizer
         self.batch_size = batch_size
         self.generation_kwargs = generation_kwargs
-        self.fuzzing = fuzzing
+        
     async def __call__(
         self,
         record: FeatureRecord,
@@ -74,8 +78,7 @@ class SurprisalScorer(Scorer):
         """
 
         defaults = {
-            "highlighted": self.fuzzing,
-            "tokenizer": self.model.tokenizer,
+            "tokenizer": self.tokenizer,
         }
         samples = examples_to_samples(
             record.extra_examples,
@@ -95,6 +98,9 @@ class SurprisalScorer(Scorer):
         return samples
 
     def compute_loss_with_kv_cache(self, explanation:str, samples: list[Sample], batch_size=2):
+        
+        
+        #print(explanation_prompt)
         model = self.model
         tokenizer = self.model.tokenizer
         # Tokenize explanation
@@ -103,15 +109,11 @@ class SurprisalScorer(Scorer):
         explanation_tokens = tokenizer.encode(explanation, return_tensors="pt", add_special_tokens=False).to(model.device)
         # Generate KV cache for explanation
         explanation_tokens = explanation_tokens.repeat_interleave(batch_size, dim=0)
-        with torch.no_grad():
+        with torch.inference_mode():
             outputs = model(input_ids=explanation_tokens, use_cache=True)
             kv_cache = outputs.past_key_values
-        
-            
         total_losses = []
-
-        # Process prompts in batches
-        for i in range(0, len(samples), batch_size):
+        for i in range(0,len(samples),batch_size):
             batch_samples = samples[i:i+batch_size]
             current_batch_size = len(batch_samples)
             if current_batch_size < batch_size:
@@ -119,15 +121,15 @@ class SurprisalScorer(Scorer):
             
             # Tokenize full input (explanation + prompts)
             full_inputs = [sample.text for sample in batch_samples]
-            tokenized_inputs = tokenizer(full_inputs, return_tensors="pt", padding=True, truncation=True).to(model.device)
-            
+            tokenized_inputs = tokenizer(full_inputs, return_tensors="pt",add_special_tokens=False).to(model.device)
+            print(tokenized_inputs.input_ids.shape)
             # Prepare input for the model (including explanation)
             input_ids = tokenized_inputs.input_ids
             attention_mask = tokenized_inputs.attention_mask
             labels = input_ids.clone()
             labels[~attention_mask.bool()] = -100
             # Forward pass using KV cache
-            with torch.no_grad():
+            with torch.inference_mode():
                 outputs = model(input_ids=input_ids, 
                                 #attention_mask=attention_mask, 
                                 past_key_values=kv_cache,
@@ -135,20 +137,28 @@ class SurprisalScorer(Scorer):
             # Compute loss
             logits = outputs.logits
             for j, logit in enumerate(logits):
-                loss = cross_entropy(logit, labels[j])
-                total_losses.append(loss.item())
-           
+                
+                loss = cross_entropy(logit[:-1], labels[j][1:],reduction="none").tolist()
+                print(len(loss))
+                total_losses.append(loss)
+        
         return total_losses
 
 
 
     def _query(self, explanation: str, samples: list[Sample]) -> list[SurprisalOutput]:
 
-        explanation_prompt = base_prompt + "Description: \n" + explanation + "\n"
-        no_explanation_prompt = base_prompt + "Description: \n" + "List of sentences:" + "\n"
+        explanation_prompt = base_prompt + "Description: \n" + explanation + "\n Sentences:\n"
+        no_explanation_prompt = base_prompt + "Description: \n" + "Various unrelated sentences." + "\n Sentences:\n"
         
-        no_explanation_losses = self.compute_loss_with_kv_cache(no_explanation_prompt, samples)
-        explanation_losses = self.compute_loss_with_kv_cache(explanation_prompt, samples)
+
+
+
+        no_explanation_losses = self.compute_loss_with_kv_cache(no_explanation_prompt, samples,batch_size=5)
+        explanation_losses = self.compute_loss_with_kv_cache(explanation_prompt, samples,batch_size=5)
+        #print(no_explanation_losses)
+        #print(explanation_losses)
+        
         results = []
         for i in range(len(samples)):
             samples[i].data.no_explanation = no_explanation_losses[i]
@@ -162,19 +172,20 @@ class SurprisalScorer(Scorer):
 def examples_to_samples(
     examples: list[Example],
     tokenizer: PreTrainedTokenizer,
-    highlighted: bool = False,
     **sample_kwargs,
 ) -> list[Sample]:
-    samples = []
-
+    samples = []    
     for example in examples:
         text = "".join(tokenizer.batch_decode(example.tokens))
-        
+        activations = example.activations.tolist()
         samples.append(
             Sample(
                 text=text,
+                activations=activations,
                 data=SurprisalOutput(
-                    highlighted=highlighted, **sample_kwargs
+                    activations=activations,
+                    text=text,
+                    **sample_kwargs
                 ),
             )
         )
