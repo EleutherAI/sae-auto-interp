@@ -57,9 +57,10 @@ def absolute_dev_explained_score_from_sequences(
 
 
 async def _simulate_and_score_sequence(
-    simulator: NeuronSimulator, activations: ActivationRecord
+    simulator: NeuronSimulator, activations: ActivationRecord,quantile:int
 ) -> ScoredSequenceSimulation:
     """Score an explanation of a neuron by how well it predicts activations on a sentence."""
+    
     simulation = await simulator.simulate(activations.tokens)
     logging.debug(simulation)
     rsquared_score = score_from_simulation(activations, simulation, rsquared_score_from_sequences)
@@ -67,6 +68,7 @@ async def _simulate_and_score_sequence(
         activations, simulation, absolute_dev_explained_score_from_sequences
     )
     scored_sequence_simulation = ScoredSequenceSimulation(
+        distance=quantile,
         simulation=simulation,
         true_activations=activations.activations.tolist(),
         ev_correlation_score=score_from_simulation(activations, simulation, correlation_score),
@@ -98,6 +100,7 @@ def default(scored_simulation):
 
 def aggregate_scored_sequence_simulations(
     scored_sequence_simulations: list[ScoredSequenceSimulation],
+    distance: int,
 ) -> ScoredSimulation:
     """
     Aggregate a list of scored sequence simulations. The logic for doing this is non-trivial for EV
@@ -124,6 +127,7 @@ def aggregate_scored_sequence_simulations(
     ev_correlation_score = fix_nan(ev_correlation_score)
 
     return ScoredSimulation(
+        distance=distance,
         scored_sequence_simulations=scored_sequence_simulations,
         ev_correlation_score=ev_correlation_score,
         rsquared_score=float(rsquared_score),
@@ -141,11 +145,17 @@ async def simulate_and_score(
     """
     scored_sequence_simulations = await asyncio.gather(
         *[
-            _simulate_and_score_sequence(
-                simulator,
-                activation_record,
+            asyncio.gather(
+                *[
+                    _simulate_and_score_sequence(
+                        simulator,
+                        activation_record,
+                        quantile+1
+                    )
+                    for activation_record in activation_quantile
+                ]
             )
-            for activation_record in activation_records
+            for quantile, activation_quantile in enumerate(activation_records)
         ]
     )
 
@@ -153,7 +163,8 @@ async def simulate_and_score(
     #     f.write(str(scored_sequence_simulations))
     # return scored_sequence_simulations
 
-
-    val = aggregate_scored_sequence_simulations(scored_sequence_simulations)
-    return val
+    values = []
+    for distance,sequence in enumerate(scored_sequence_simulations):
+        values.append(aggregate_scored_sequence_simulations(sequence,distance+1))
+    return values
 
