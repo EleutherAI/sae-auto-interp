@@ -1,4 +1,5 @@
-import json
+
+import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from ..logger import logger
 from .client import Client
@@ -10,13 +11,11 @@ class HuggingFace(Client):
         super().__init__(model)
         self.tokenizer = AutoTokenizer.from_pretrained(model)
         self.model = AutoModelForCausalLM.from_pretrained(model, device_map="auto")
+        self.model = torch.compile(self.model)
 
     async def generate(
         self, 
         prompt: str, 
-        raw: bool = False,
-        use_legacy_api: bool = False,
-        max_retries: int = 2,
         **kwargs
     ) -> str:
         """

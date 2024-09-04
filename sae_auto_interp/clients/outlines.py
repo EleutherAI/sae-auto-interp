@@ -40,7 +40,7 @@ class Outlines(Client):
     async def generate(
         self,
         prompt: str,
-        tokenize: bool = True,
+        tokenize: bool = False,
         raw: bool = False,
         max_retries: int = 1,
         **kwargs,

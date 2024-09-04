@@ -1,7 +1,8 @@
-from .client import Client, create_response_model
+from .client import Client
+from .huggingface import HuggingFace
 from .local import Local
+from .offline import Offline
 from .openrouter import OpenRouter
 from .outlines import Outlines
-from .huggingface import HuggingFace
 
-__all__ = ["Client", "create_response_model", "Local", "OpenRouter", "Outlines", "HuggingFace"]
+__all__ = ["Client", "Local", "OpenRouter", "Outlines", "HuggingFace", "Offline"]
