@@ -80,22 +80,25 @@ class Pipeline:
         
         progress_bar = tqdm(desc="Processing items")
         number_of_items = 0
+        
+        async def process_and_update(item, count):
+            result = await self.process_item(item, semaphore, count)
+            progress_bar.update(1)
+            return result
+
         async for item in self.generate_items():
             number_of_items += 1
-            task = asyncio.create_task(self.process_item(item, semaphore, number_of_items))
+            task = asyncio.create_task(process_and_update(item, number_of_items))
             tasks.add(task)
             task.add_done_callback(tasks.discard)
             
-            if len(tasks) >= max_concurrent:
-                done, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+            if len(tasks) >= max_concurrent:  
+                done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
                 results.extend(task.result() for task in done)
-                progress_bar.update(len(done))
-                #print(f"Processed {len(done)} items")
         
         if tasks:
             done, _ = await asyncio.wait(tasks)
             results.extend(task.result() for task in done)
-            progress_bar.update(len(done))
         
         progress_bar.close()
         return results
