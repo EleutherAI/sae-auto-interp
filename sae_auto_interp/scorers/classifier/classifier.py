@@ -3,16 +3,16 @@ import json
 import random
 import re
 from abc import abstractmethod
-from typing import List
 
 import numpy as np
 from transformers import PreTrainedTokenizer
 
 from ...clients.client import Client
 from ...features import FeatureRecord
+from ...logger import logger
 from ..scorer import Scorer, ScorerResult
 from .sample import ClassifierOutput, Sample
-import time
+
 
 class Classifier(Scorer):
     def __init__(
@@ -41,20 +41,12 @@ class Classifier(Scorer):
         samples = self._prepare(record)
 
         random.shuffle(samples)
-        # total_tokens = 0
         samples = self._batch(samples)
-        # for sample in samples:
-        #     prompt = self._build_prompt(record.explanation, sample)
-        #     tokens = self.tokenizer.apply_chat_template(prompt,tokenize=True)
-        #     total_tokens += len(tokens)
-        # start_time = time.time()
         results = await self._query(
             record.explanation,
             samples,
         )
-        #end_time = time.time()
-        #print(f"Got  {len(results)} {self.name} scoring results for {record.explanation} in {end_time - start_time} seconds, with prompt tokens {total_tokens}, {total_tokens/(end_time - start_time)} tokens per second, response tokens {len(samples)*50}, {len(samples)*50/(end_time - start_time)} tokens per second")
-
+        
         return ScorerResult(record=record, score=results)
 
     @abstractmethod
@@ -74,11 +66,9 @@ class Classifier(Scorer):
         async def _process(explanation, batch):
             async with sem:
                 result = await self._generate(explanation, batch)
-                #print(f"Got {len(result)} {self.name} scoring results for {explanation}")
                 return result
     
         tasks = [asyncio.create_task(_process(explanation, batch)) for batch in batches]
-        #tasks = [self._generate(explanation, batch) for batch in batches]
         results = await asyncio.gather(*tasks)
 
         return sum(results, [])
@@ -95,25 +85,23 @@ class Classifier(Scorer):
         if self.log_prob:
             self.generation_kwargs["logprobs"] = True
             self.generation_kwargs["top_logprobs"] = 5
-            response = await self.client.generate(prompt, **self.generation_kwargs,raw=True)
-            if response is None:
+        response = await self.client.generate(prompt, **self.generation_kwargs)
+        if response is None:
+            array = [-1] * self.batch_size
+            probabilities = [-1] * self.batch_size
+        else:
+            selections = response.text
+            logprobs = response.logprobs if self.log_prob else None
+            try:
+                array, probabilities = self._parse(selections, logprobs)
+            except Exception as e:
+                logger.error(f"Parsing selections failed: {e}")
                 array = [-1] * self.batch_size
                 probabilities = [-1] * self.batch_size
-            else:
-                selections = response.choices[0].message.content
-                logprobs = response.choices[0].logprobs.content
-                array, probabilities = self._parse(selections, logprobs)
-        else:
-            selections = await self.client.generate(prompt, **self.generation_kwargs)
-            if selections is None:
-                array = [-1] * self.batch_size
-            else:
-                array = self._parse(selections)
 
-        
         results = []
         correct = []
-        response=[]
+        response = []
         for i, sample in enumerate(batch):
             result = sample.data
             prediction = array[i] 
@@ -129,20 +117,22 @@ class Classifier(Scorer):
                 result.text = sample.text
         return results
 
-    def _parse(self, string,logprobs=None):
+    def _parse(self, string, logprobs=None):
         pattern = r"\[.*?\]"
         match = re.search(pattern, string)
 
         try:
             array = json.loads(match.group(0))
             assert len(array) == self.batch_size
-            if logprobs:
+            if self.log_prob:
                 probabilities = self._parse_logprobs(logprobs)
                 assert len(probabilities) == self.batch_size
                 return array, probabilities
-            return array
-        except (json.JSONDecodeError, AssertionError, AttributeError):
-            if logprobs:
+            probabilities = None
+            return array, probabilities
+        except (json.JSONDecodeError, AssertionError, AttributeError) as e:
+            logger.error(f"Parsing array failed: {e}")
+            if self.log_prob:
                 return [-1] * self.batch_size, [-1] * self.batch_size
             return [-1] * self.batch_size
 

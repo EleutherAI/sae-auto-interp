@@ -4,7 +4,7 @@ from typing import List, Literal
 
 from ..config import ExperimentConfig
 from .features import Example, FeatureRecord
-
+from ..logger import logger
 
 def split_activation_quantiles(
     examples: list[Example], 
@@ -45,11 +45,13 @@ def split_quantiles(
     quantile_size = len(examples) // n_quantiles
 
     samples = []
-
     for i in range(n_quantiles):
         quantile = examples[i * quantile_size : (i + 1) * quantile_size]
-
-        sample = random.sample(quantile, n_samples)
+        if len(quantile) < n_samples:
+            sample = quantile
+            logger.info(f"Quantile {i} has less than {n_samples} samples, using all samples")
+        else:
+            sample = random.sample(quantile, n_samples)
         samples.append(sample)
 
     return samples
