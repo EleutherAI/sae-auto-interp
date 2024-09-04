@@ -2,7 +2,7 @@ import os
 from typing import Callable, Dict, List, NamedTuple
 
 import torch
-from safetensors.torch import load_file
+from safetensors.numpy import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
 import json
@@ -49,10 +49,10 @@ class TensorBuffer:
 
     def _load(self):
         split_data = load_file(self.tensor_path)
-
-        self.activations = split_data["activations"]
-        self.locations = split_data["locations"]
-        
+        first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
+        self.activations = torch.tensor(split_data["activations"])
+        self.locations = torch.tensor(split_data["locations"])
+        self.locations[:,2] = self.locations[:,2]+first_feature
     def __iter__(self):
         self._load()
 
@@ -87,6 +87,11 @@ class TensorBuffer:
             feature_locations,
             feature_activations,
         )
+
+    def reset(self):
+        self.start = 0
+        self.activations = None
+        self.locations = None
 
 
 class FeatureDataset:
@@ -222,6 +227,10 @@ class FeatureDataset:
         else:
             for buffer in self.buffers:
                 yield _worker(buffer)
+    
+    def reset(self):
+        for buffer in self.buffers:
+            buffer.reset()
 
 class FeatureLoader:
     def __init__(self, feature_dataset: 'FeatureDataset', constructor: Callable = None, sampler: Callable = None, transform: Callable = None):
@@ -232,21 +241,47 @@ class FeatureLoader:
 
     async def __aiter__(self):
         for buffer in self.feature_dataset.buffers:
-            async for record in self._process_buffer(buffer):
+            async for record in self._aprocess_buffer(buffer):
                 yield record
 
-    async def _process_buffer(self, buffer):
+    async def _aprocess_buffer(self, buffer):
         for data in buffer:
             if data is not None:
                 #start_time = time.time()
-                record = await self._process_feature(data)
+                record = await self._aprocess_feature(data)
                 #end_time = time.time()
                 #print(f"Processed {data.feature} in {end_time - start_time} seconds")
                 if record is not None:
                     yield record
             await asyncio.sleep(0)  # Allow other coroutines to run
 
-    async def _process_feature(self, buffer_output: BufferOutput):
+    async def _aprocess_feature(self, buffer_output: BufferOutput):
+        record = FeatureRecord(buffer_output.feature)
+        #print(buffer_output.feature)
+        if self.constructor is not None:
+            self.constructor(record=record, buffer_output=buffer_output)
+        if self.sampler is not None:
+            self.sampler(record)
+        if self.transform is not None:
+            self.transform(record)
+        return record
+
+    def __iter__(self):
+        for buffer in self.feature_dataset.buffers:
+            for record in self._process_buffer(buffer):
+                yield record
+
+    def _process_buffer(self, buffer):
+        for data in buffer:
+            if data is not None:
+                #start_time = time.time()
+                record = self._process_feature(data)
+                #end_time = time.time()
+                #print(f"Processed {data.feature} in {end_time - start_time} seconds")
+                if record is not None:
+                    yield record
+
+    def _process_feature(self, buffer_output: BufferOutput):
         record = FeatureRecord(buffer_output.feature)
         #print(buffer_output.feature)
         if self.constructor is not None:
