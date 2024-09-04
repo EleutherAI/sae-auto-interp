@@ -10,6 +10,7 @@ from transformers import AutoTokenizer
 class Example:
     tokens: TensorType["seq"]
     activations: TensorType["seq"]
+    normalized_activations: TensorType["seq"]
 
     def __hash__(self) -> int:
         return hash(tuple(self.tokens.tolist()))
@@ -22,11 +23,12 @@ class Example:
         return max(self.activations)
 
 
-def prepare_examples(tokens, activations):
+def prepare_examples(tokens, activations,max_activation):
     return [
         Example(
             tokens=toks,
             activations=acts,
+            normalized_activations=(acts*10 / max_activation).floor(),
         )
         for toks, acts in zip(tokens, activations)
     ]
