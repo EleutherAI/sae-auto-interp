@@ -5,6 +5,7 @@ import torch
 from ..explainer import Explainer, ExplainerResult
 from .prompt_builder import build_prompt
 import time
+from ...logger import logger
 
 class DefaultExplainer(Explainer):
     name = "default"
@@ -31,69 +32,37 @@ class DefaultExplainer(Explainer):
         self.threshold = threshold
         self.generation_kwargs = generation_kwargs
 
-    # def __name__(self):
-    #     return "DefaultExplainer"
-
-    def normalize_examples(self, record, train):
-        max_activation = record.examples[0].max_activation
-
-        for example in train:
-            example.normalized_activations = torch.floor(
-                10 * example.activations / max_activation
-            )
 
     async def __call__(self, record):
-        if self.activations:
-            self.normalize_examples(record, record.train)
-
+       
         if self.logits:
             messages = self._build_prompt(record.train, record.top_logits)
         else:
             messages = self._build_prompt(record.train, None)
-        #prompt_tokens = self.tokenizer.apply_chat_template(messages,tokenize=True)
-        #print(f"Building prompt for {record.feature} with {len(prompt_tokens)} tokens")
-        #start_time = time.time()
+        
         response = await self.client.generate(messages, **self.generation_kwargs)
 
-        explanation = self.parse_explanation(response)
-        #response_tokens = self.tokenizer.encode(explanation)
-        #end_time = time.time()
-        #print(f"Got explanation for {record.feature} in {end_time - start_time} seconds, with {len(prompt_tokens)} prompt tokens, {len(response_tokens)} response tokens, {len(prompt_tokens)/(end_time - start_time)} prompt tokens per second, {len(response_tokens)/(end_time - start_time)} response tokens per second")
-        
-        if self.verbose:
-            return (
-                messages[-1]["content"],
-                response,
-                ExplainerResult(record=record, explanation=explanation),
-            )
+        try:
+            explanation = self.parse_explanation(response.text)
+            if self.verbose:
+                return (
+                    messages[-1]["content"],
+                    response,
+                    ExplainerResult(record=record, explanation=explanation),
+                )
 
-        return ExplainerResult(record=record, explanation=explanation)
-
-    # async def __call__(self, records: list["FeatureRecord"]):
-    #     messages = []
-    #     for record in records:
-    #         if self.activations:
-    #             self.normalize_examples(record, record.train)
-
-    #         if self.logits:
-    #             messages.append(self._build_prompt(record.train, record.top_logits))
-    #         else:
-    #             messages.append(self._build_prompt(record.train, None))
-    #     responses = await self.client.generate_batch(messages, **self.generation_kwargs)
-    #     results = []
-    #     for response in responses:
-    #         explanation = self.parse_explanation(response)
-    #         results.append(ExplainerResult(record=record, explanation=explanation))
-    #     return results
+            return ExplainerResult(record=record, explanation=explanation)
+        except Exception as e:
+            logger.error(f"Explanation parsing failed: {e}")
+            return ExplainerResult(record=record, explanation="Explanation could not be parsed.")
 
     def parse_explanation(self, text: str) -> str:
         try:
             match = re.search(r"\[EXPLANATION\]:\s*(.*)", text, re.DOTALL)
-
             return match.group(1).strip() if match else "Explanation could not be parsed."
         except Exception as e:
-            return "Explanation could not be parsed."
-
+            logger.error(f"Explanation parsing regex failed: {e}")
+            raise
     def _highlight(self, index, example):
         result = f"Example {index}: "
 
