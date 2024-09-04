@@ -67,13 +67,12 @@ def pool_max_activation_windows(
     token_batches, dense_activations = _to_dense(
         tokens, buffer_output.activations, buffer_output.locations
     )
-
+    max_activation = buffer_output.activations.max()
     token_windows, activation_windows = _top_k_pools(
         dense_activations, token_batches, ctx_len, max_examples
     )
-
     # Set as examples
-    record.examples = prepare_examples(token_windows, activation_windows)
+    record.examples = prepare_examples(token_windows, activation_windows,max_activation)
 
 
 def random_activation_windows(
@@ -86,6 +85,8 @@ def random_activation_windows(
     torch.manual_seed(22)
     batch_size = tokens.shape[0]
     unique_batch_pos = buffer_output.locations[:, 0].unique()
+    max_activation = buffer_output.activations.max()
+
 
     mask = torch.ones(batch_size, dtype=torch.bool)
     mask[unique_batch_pos] = False
@@ -97,10 +98,12 @@ def random_activation_windows(
     ]
 
     toks = tokens[selected_indices, 10 : 10 + ctx_len]
+    
 
     record.random_examples = prepare_examples(
         toks,
         torch.zeros_like(toks),
+        max_activation
     )
 
 def default_constructor(
