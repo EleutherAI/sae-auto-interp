@@ -89,7 +89,7 @@ class Classifier(Scorer):
                 selections = response.choices[0].message.content
                 logprobs = response.choices[0].logprobs.content
                 array, probabilities = self._parse(selections, logprobs)
-            else:
+        else:
             selections = await self.client.generate(prompt, **self.generation_kwargs)
             if selections is None:
                 array = [-1] * self.batch_size
