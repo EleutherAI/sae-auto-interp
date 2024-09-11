@@ -25,12 +25,12 @@ class Logprobs:
 class Offline(Client):
     provider = "offline"
 
-    def __init__(self, model: str, max_memory: float=0.85,prefix_caching:bool=True,batch_size:int=100,max_model_len:int=4096):
+    def __init__(self, model: str, max_memory: float=0.85,prefix_caching:bool=True,batch_size:int=100,max_model_len:int=4096,num_gpus:int=2):
         super().__init__(model)
         self.model = model  
         self.queue = asyncio.Queue()
         self.task = None
-        self.client = LLM(model=model, gpu_memory_utilization=max_memory, enable_prefix_caching=prefix_caching, tensor_parallel_size=2, max_model_len=max_model_len)
+        self.client = LLM(model=model, gpu_memory_utilization=max_memory, enable_prefix_caching=prefix_caching, tensor_parallel_size=num_gpus, max_model_len=max_model_len)
         self.sampling_params = SamplingParams(max_tokens=500, temperature=0.7)
         self.tokenizer= AutoTokenizer.from_pretrained(model)
         self.batch_size=batch_size
@@ -54,7 +54,7 @@ class Offline(Client):
             prompts.append(prompt)
         response = await loop.run_in_executor(
             None, 
-            partial(self.client.generate, prompt_token_ids=prompts, sampling_params=self.sampling_params, use_tqdm=True)
+            partial(self.client.generate, prompt_token_ids=prompts, sampling_params=self.sampling_params, use_tqdm=False)
         )
         
         new_response = []   
@@ -71,7 +71,7 @@ class Offline(Client):
         if self.task is None:
             self.task = asyncio.create_task(self._process_batches())
         await self.queue.put((prompt, future, kwargs))
-        print(f"Current queue size: {self.queue.qsize()} prompts")
+        #print(f"Current queue size: {self.queue.qsize()} prompts")
         return await future
 
     def _parse_logprobs(self,response):
@@ -118,10 +118,10 @@ class Offline(Client):
                 except asyncio.QueueEmpty:
                     if batch:  # If we have any items, process them
                         break
-                    await asyncio.sleep(0.01)  # Short sleep if queue is empty
+                    await asyncio.sleep(0.1)  # Short sleep if queue is empty
                     continue
 
-                if asyncio.get_event_loop().time() - start_time > 0.1:  # Time-based batch cutoff
+                if asyncio.get_event_loop().time() - start_time > 1:  # Time-based batch cutoff
                     break
                 
             if not batch:
@@ -130,7 +130,7 @@ class Offline(Client):
             try:
                 results = await self.process_func(batch, batch_kwargs)
                 batch_count += 1
-                print(f"Batch {batch_count} finished processing. {len(results)} prompts processed.")
+                #print(f"Batch {batch_count} finished processing. {len(results)} prompts processed.")
                 for result, future in zip(results, batch_futures):
                     if not future.done():
                         future.set_result(result)
