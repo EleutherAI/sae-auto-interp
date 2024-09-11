@@ -15,8 +15,6 @@ class DefaultExplainer(Explainer):
         client,
         tokenizer,
         verbose: bool = False,
-        cot: bool = False,
-        logits: bool = False,
         activations: bool = False,
         threshold: float = 0.6,
         **generation_kwargs,
@@ -25,8 +23,6 @@ class DefaultExplainer(Explainer):
         self.tokenizer = tokenizer
         self.verbose = verbose
 
-        self.cot = cot
-        self.logits = logits
         self.activations = activations
 
         self.threshold = threshold
@@ -35,10 +31,7 @@ class DefaultExplainer(Explainer):
 
     async def __call__(self, record):
        
-        if self.logits:
-            messages = self._build_prompt(record.train, record.top_logits)
-        else:
-            messages = self._build_prompt(record.train, None)
+        messages = self._build_prompt(record.train)
         
         response = await self.client.generate(messages, **self.generation_kwargs)
 
@@ -92,16 +85,16 @@ class DefaultExplainer(Explainer):
     def _join_activations(self, example):
         activations = []
 
-        threshold = example.max_activation * 0.7
+        threshold = 0.6
         for i, normalized in enumerate(example.normalized_activations):
-            if example.activations[i] > threshold:
+            if example.normalized_activations[i] > threshold:
                 activations.append((example.str_toks[i], int(normalized)))
 
         acts = ", ".join(f'("{item[0]}" : {item[1]})' for item in activations)
 
         return "Activations: " + acts
 
-    def _build_prompt(self, examples, top_logits):
+    def _build_prompt(self, examples):
         highlighted_examples = []
 
         for i, example in enumerate(examples):
@@ -114,7 +107,5 @@ class DefaultExplainer(Explainer):
 
         return build_prompt(
             examples=highlighted_examples,
-            cot=self.cot,
             activations=self.activations,
-            top_logits=top_logits,
         )
