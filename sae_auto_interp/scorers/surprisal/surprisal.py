@@ -109,6 +109,7 @@ class SurprisalScorer(Scorer):
         explanation_tokens = tokenizer.encode(explanation, return_tensors="pt", add_special_tokens=False).to(model.device)
         # Generate KV cache for explanation
         explanation_tokens = explanation_tokens.repeat_interleave(batch_size, dim=0)
+        
         with torch.inference_mode():
             outputs = model(input_ids=explanation_tokens, use_cache=True)
             kv_cache = outputs.past_key_values
@@ -117,12 +118,16 @@ class SurprisalScorer(Scorer):
             batch_samples = samples[i:i+batch_size]
             current_batch_size = len(batch_samples)
             if current_batch_size < batch_size:
-                continue
-            
+                explanation_tokens = explanation_tokens.repeat_interleave(current_batch_size, dim=0)
+                with torch.inference_mode():
+                    outputs = model(input_ids=explanation_tokens, use_cache=True)
+                    kv_cache = outputs.past_key_values
+                
             # Tokenize full input (explanation + prompts)
             full_inputs = [sample.text for sample in batch_samples]
-            tokenized_inputs = tokenizer(full_inputs, return_tensors="pt",add_special_tokens=False).to(model.device)
-            print(tokenized_inputs.input_ids.shape)
+            tokenized_inputs = tokenizer(full_inputs, return_tensors="pt",padding=True,add_special_tokens=False).to(model.device)
+            #print(tokenized_inputs.input_ids.shape)
+            
             # Prepare input for the model (including explanation)
             input_ids = tokenized_inputs.input_ids
             attention_mask = tokenized_inputs.attention_mask
@@ -136,12 +141,15 @@ class SurprisalScorer(Scorer):
                                 )
             # Compute loss
             logits = outputs.logits
+            
             for j, logit in enumerate(logits):
                 
                 loss = cross_entropy(logit[:-1], labels[j][1:],reduction="none").tolist()
-                print(len(loss))
+                #Remove the trailing zeros from the loss, by looking at the attention mask
+                loss = loss[:attention_mask[j].sum().item()]
+
+                #print(len(loss))
                 total_losses.append(loss)
-        
         return total_losses
 
 
@@ -153,14 +161,11 @@ class SurprisalScorer(Scorer):
         
 
 
-
-        no_explanation_losses = self.compute_loss_with_kv_cache(no_explanation_prompt, samples,batch_size=5)
-        explanation_losses = self.compute_loss_with_kv_cache(explanation_prompt, samples,batch_size=5)
-        #print(no_explanation_losses)
-        #print(explanation_losses)
-        
+        no_explanation_losses = self.compute_loss_with_kv_cache(no_explanation_prompt, samples,batch_size=10)
+        explanation_losses = self.compute_loss_with_kv_cache(explanation_prompt, samples,batch_size=10)
         results = []
         for i in range(len(samples)):
+            #print(i)
             samples[i].data.no_explanation = no_explanation_losses[i]
             samples[i].data.explanation = explanation_losses[i]
             results.append(samples[i].data)
