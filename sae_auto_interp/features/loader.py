@@ -3,6 +3,7 @@ from typing import Callable, Dict, List, NamedTuple
 
 import torch
 from safetensors.numpy import load_file
+import numpy as np
 from torchtyping import TensorType
 from tqdm import tqdm
 import json
@@ -51,8 +52,10 @@ class TensorBuffer:
         split_data = load_file(self.tensor_path)
         first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
         self.activations = torch.tensor(split_data["activations"])
-        self.locations = torch.tensor(split_data["locations"])
+        self.locations = torch.tensor(split_data["locations"].astype(np.int64))
         self.locations[:,2] = self.locations[:,2]+first_feature
+        del split_data
+        
     def __iter__(self):
         self._load()
 
