@@ -22,12 +22,9 @@ class ExperimentConfig(Serializable):
     n_random: int = 50
     """Number of random examples to sample"""
 
-    train_type: Literal["top", "random", "quantile"] = "random"
+    train_type: Literal["top", "random", "quantiles"] = "random"
     """Type of sampler to use for training"""
 
-    chosen_quantile: int = 0
-    """Quantile to sample from if train_type is quantile"""
-    
     test_type: Literal["even", "activation"] = "even"
     """Type of sampler to use for testing"""
 
