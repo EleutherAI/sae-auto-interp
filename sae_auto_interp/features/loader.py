@@ -35,61 +35,49 @@ class TensorBuffer:
         self,
         path: str,
         module_path: str,
-        features: TensorType["features"] = None,
+        features: TensorType["features"],
         min_examples: int = 120,
     ):
         self.tensor_path = path
         self.module_path = module_path
-
         self.features = features
         self.min_examples = min_examples
-        self.start = 0
-
-        self.activations = None
-        self.locations = None
-
-    def _load(self):
-        split_data = load_file(self.tensor_path)
-        first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
-        self.activations = torch.tensor(split_data["activations"])
-        self.locations = torch.tensor(split_data["locations"].astype(np.int64))
-        self.locations[:,2] = self.locations[:,2]+first_feature
-        del split_data
+        
         
     def __iter__(self):
-        self._load()
+        split_data = load_file(self.tensor_path)
+        first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
+        activations = torch.tensor(split_data["activations"])
+        locations = torch.tensor(split_data["locations"].astype(np.int64))
+        
+        locations[:,2] = locations[:,2]+first_feature
+        # 
+        wanted_locations = torch.isin(locations[:,2],self.features)
+        locations = locations[wanted_locations]
+        activations = activations[wanted_locations]
+        indices = torch.argsort(locations[:,2],stable=True)
+        activations = activations[indices]
+        locations = locations[indices]
+        unique_features,counts = torch.unique_consecutive(locations[:,2],return_counts=True)
+        features = unique_features
+        split_locations = torch.split(locations,counts.tolist())
+        split_activations = torch.split(activations,counts.tolist())
+        
+        for i in range(len(features)):
+            
 
-        if self.features is None:
-            self.features = torch.unique(self.locations[:, 2])
-
-        return self
-
-    def __next__(self):
-        if self.start >= len(self.features):
-            del self.activations
-            del self.locations
-            torch.cuda.empty_cache()
-
-            raise StopIteration
-
-        feature = self.features[self.start]
-
-        mask = self.locations[:, 2] == feature
-        # NOTE: MIN examples is here
-        if mask.sum() < self.min_examples:
-            self.start += 1
-            return None
-
-        feature_locations = self.locations[mask][:, :2]
-        feature_activations = self.activations[mask]
-
-        self.start += 1
-
-        return BufferOutput(
-            Feature(self.module_path, feature.item()),
-            feature_locations,
-            feature_activations,
-        )
+            
+            feature_locations = split_locations[i]
+            feature_activations = split_activations[i]
+            if len(feature_locations) < self.min_examples:
+                yield None
+            else:
+                yield BufferOutput(
+                    Feature(self.module_path, features[i].item()),
+                    feature_locations,
+                    feature_activations
+                )
+        
 
     def reset(self):
         self.start = 0
@@ -259,23 +247,36 @@ class FeatureLoader:
             await asyncio.sleep(0)  # Allow other coroutines to run
 
     async def _aprocess_feature(self, buffer_output: BufferOutput):
+        #start_time = time.time()
+        #start_start = time.time()
         record = FeatureRecord(buffer_output.feature)
+        #print(f"Feature record time: {time.time() - start_time} seconds")
         #print(buffer_output.feature)
+        #start_time = time.time()
         if self.constructor is not None:
             self.constructor(record=record, buffer_output=buffer_output)
+        #print(f"Constructor time: {time.time() - start_time} seconds")
+        #start_time = time.time()
         if self.sampler is not None:
             self.sampler(record)
+        #print(f"Sampler time: {time.time() - start_time} seconds")
         if self.transform is not None:
             self.transform(record)
+        #print(f"it/s{1/(time.time() - start_start)}")
         return record
 
     def __iter__(self):
         for buffer in self.feature_dataset.buffers:
+            start_start = time.time()
             for record in self._process_buffer(buffer):
                 yield record
-
+                #print(f"yielded it/s{1/(time.time() - start_start)}")
     def _process_buffer(self, buffer):
+        start = time.time()
         for data in buffer:
+            load_time = time.time()
+            #print(f"load time: {load_time - start} seconds")
+            start = time.time()
             if data is not None:
                 #start_time = time.time()
                 record = self._process_feature(data)
@@ -285,12 +286,21 @@ class FeatureLoader:
                     yield record
 
     def _process_feature(self, buffer_output: BufferOutput):
+        start_time = time.time()
+        start_start = time.time()
         record = FeatureRecord(buffer_output.feature)
+        #print(f"Feature record time: {time.time() - start_time} seconds")
         #print(buffer_output.feature)
+        start_time = time.time()
         if self.constructor is not None:
             self.constructor(record=record, buffer_output=buffer_output)
+        #print(f"Constructor time: {time.time() - start_time} seconds")
+        start_time = time.time()
         if self.sampler is not None:
             self.sampler(record)
+        #print(f"Sampler time: {time.time() - start_time} seconds")
+        start_time = time.time()
         if self.transform is not None:
             self.transform(record)
+        #print(f"it/s{1/(time.time() - start_start)}")
         return record
