@@ -22,6 +22,11 @@ class Example:
     def max_activation(self):
         return max(self.activations)
 
+@dataclass
+class BatchExample:
+    tokens: TensorType["batch","seq"]
+    activations: TensorType["batch","seq"]
+
 
 def prepare_examples(tokens, activations):
     return [
@@ -32,6 +37,10 @@ def prepare_examples(tokens, activations):
         )
         for toks, acts in zip(tokens, activations)
     ]
+    # return BatchExample(
+    #     tokens=tokens,
+    #     activations=activations
+    # )
 
 
 @dataclass

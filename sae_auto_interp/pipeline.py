@@ -81,18 +81,20 @@ class Pipeline:
         progress_bar = tqdm(desc="Processing items")
         number_of_items = 0
         
-        async def process_and_update(item, count):
-            result = await self.process_item(item, semaphore, count)
+        async def process_and_update(item, semaphore, count):
+            result = await self.process_item(item,semaphore, count)
             progress_bar.update(1)
             return result
 
         async for item in self.generate_items():
             number_of_items += 1
-            task = asyncio.create_task(process_and_update(item, number_of_items))
+            #start_time = time.time()
+            task = asyncio.create_task(process_and_update(item, semaphore, number_of_items))
+            #end_time = time.time()
             tasks.add(task)
             task.add_done_callback(tasks.discard)
             
-            if len(tasks) >= max_concurrent:  
+            if len(tasks) >= max_concurrent: 
                 done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
                 results.extend(task.result() for task in done)
         
@@ -119,7 +121,7 @@ class Pipeline:
         else:
             raise TypeError("The first pipe must be an async iterable or a callable")
 
-    async def process_item(self, item, semaphore,count):
+    async def process_item(self, item,semaphore,count):
         """
         Processes a single item through all pipes except the first one.
         Includes timing for each pipe.
@@ -133,5 +135,5 @@ class Pipeline:
                 result = await pipe(result)
                 #end_time = time.time()
                 #print(f"Pipe {i} took {end_time - start_time:.2f} seconds")
-            #print(f"Finished processing item {count}")
-            return result
+        #print(f"Finished processing item {count}")
+        return result
