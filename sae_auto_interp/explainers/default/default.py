@@ -4,18 +4,17 @@ import torch
 
 from ..explainer import Explainer, ExplainerResult
 from .prompt_builder import build_prompt
+import time
+from ...logger import logger
 
-
-class SimpleExplainer(Explainer):
-    name = "Simple"
+class DefaultExplainer(Explainer):
+    name = "default"
 
     def __init__(
         self,
         client,
         tokenizer,
         verbose: bool = False,
-        cot: bool = False,
-        logits: bool = False,
         activations: bool = False,
         threshold: float = 0.6,
         **generation_kwargs,
@@ -24,51 +23,39 @@ class SimpleExplainer(Explainer):
         self.tokenizer = tokenizer
         self.verbose = verbose
 
-        self.cot = cot
-        self.logits = logits
         self.activations = activations
 
         self.threshold = threshold
         self.generation_kwargs = generation_kwargs
 
-    def normalize_examples(self, record, train):
-        max_activation = record.examples[0].max_activation
-
-        for example in train:
-            example.normalized_activations = torch.floor(
-                10 * example.activations / max_activation
-            )
 
     async def __call__(self, record):
-        if self.activations:
-            self.normalize_examples(record, record.train)
-
-        if self.logits:
-            messages = self._build_prompt(record.train, record.top_logits)
-        else:
-            messages = self._build_prompt(record.train, None)
-
+       
+        messages = self._build_prompt(record.train)
+        
         response = await self.client.generate(messages, **self.generation_kwargs)
 
-        explanation = self.parse_explanation(response)
+        try:
+            explanation = self.parse_explanation(response.text)
+            if self.verbose:
+                return (
+                    messages[-1]["content"],
+                    response,
+                    ExplainerResult(record=record, explanation=explanation),
+                )
 
-        if self.verbose:
-            return (
-                messages[-1]["content"],
-                response,
-                ExplainerResult(record=record, explanation=explanation),
-            )
-
-        return ExplainerResult(record=record, explanation=explanation)
+            return ExplainerResult(record=record, explanation=explanation)
+        except Exception as e:
+            logger.error(f"Explanation parsing failed: {e}")
+            return ExplainerResult(record=record, explanation="Explanation could not be parsed.")
 
     def parse_explanation(self, text: str) -> str:
         try:
             match = re.search(r"\[EXPLANATION\]:\s*(.*)", text, re.DOTALL)
-
             return match.group(1).strip() if match else "Explanation could not be parsed."
         except Exception as e:
-            return "Explanation could not be parsed."
-
+            logger.error(f"Explanation parsing regex failed: {e}")
+            raise
     def _highlight(self, index, example):
         result = f"Example {index}: "
 
@@ -98,16 +85,16 @@ class SimpleExplainer(Explainer):
     def _join_activations(self, example):
         activations = []
 
-        threshold = example.max_activation * 0.7
+        threshold = 0.6
         for i, normalized in enumerate(example.normalized_activations):
-            if example.activations[i] > threshold:
+            if example.normalized_activations[i] > threshold:
                 activations.append((example.str_toks[i], int(normalized)))
 
         acts = ", ".join(f'("{item[0]}" : {item[1]})' for item in activations)
 
         return "Activations: " + acts
 
-    def _build_prompt(self, examples, top_logits):
+    def _build_prompt(self, examples):
         highlighted_examples = []
 
         for i, example in enumerate(examples):
@@ -120,7 +107,5 @@ class SimpleExplainer(Explainer):
 
         return build_prompt(
             examples=highlighted_examples,
-            cot=self.cot,
             activations=self.activations,
-            top_logits=top_logits,
         )

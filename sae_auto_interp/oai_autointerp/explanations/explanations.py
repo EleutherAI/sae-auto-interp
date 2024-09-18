@@ -78,9 +78,11 @@ class ScoredSequenceSimulation(Serializable):
     activations.
     """
 
+    distance: int
+
     simulation: SequenceSimulation
     """The result of a simulation of neuron activations."""
-    true_activations: List[float]
+    true_activations: list[float]
     """Ground truth activations on the sequence (not normalized)"""
     ev_correlation_score: float
     """
@@ -101,7 +103,11 @@ class ScoredSequenceSimulation(Serializable):
 class ScoredSimulation(Serializable):
     """Result of scoring a neuron simulation on multiple sequences."""
 
-    scored_sequence_simulations: List[ScoredSequenceSimulation]
+
+    distance: int
+    """Distance of the sequence from the original sequence."""
+    
+    scored_sequence_simulations: list[ScoredSequenceSimulation]
     """ScoredSequenceSimulation for each sequence"""
     ev_correlation_score: Optional[float] = None
     """
