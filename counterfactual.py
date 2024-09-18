@@ -12,22 +12,6 @@ import pandas as pd
 from pathlib import Path
 import json
 
-results_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/results/gpt2_simulation/all_at_once"
-results = dict()
-for fname in Path(results_dir).iterdir():
-    with open(fname, "r") as f:
-        r = json.load(f)
-    last = fname.stem.split(".")[-1]
-    layer = int(last.split("_")[0])
-    feat = int(last[last.index("_feature") + len("_feature"):])
-    results[fname.stem] = {"ev_correlation_score": r["ev_correlation_score"], "layer": layer, "feature": feat}
-input_scores_df = pd.DataFrame(results).T
-input_scores_df["layer"] = input_scores_df["layer"].astype(int)
-input_scores_df["feature"] = input_scores_df["feature"].astype(int)
-input_scores_df = input_scores_df.sort_values("ev_correlation_score", ascending=False)
-unq_layers = input_scores_df["layer"].unique()
-
-import json
 import random
 
 with open("pile.jsonl", "r") as f:
@@ -280,19 +264,23 @@ def get_encoder_decoder_weights(feat_idx, feat_layer, device, random_resid_direc
     encoder_feat = state_dict['encoder.weight'][feat_idx, :]
     decoder_feat = state_dict['decoder.weight'][:, feat_idx]
     if random_resid_direction:
+        en_norm, de_norm = encoder_feat.norm(), decoder_feat.norm()
         encoder_feat = torch.randn_like(encoder_feat)
         decoder_feat = torch.randn_like(decoder_feat)
+        encoder_feat = encoder_feat * en_norm / encoder_feat.norm()
+        decoder_feat = decoder_feat * de_norm / decoder_feat.norm()
     return encoder_feat, decoder_feat
 
 all_results = []
 
 random_resid_direction = False  # this is a random baseline
-feat_idxs = [12420] + list(range(1000))
+feat_idxs = list(range(1000))
 feat_layers = [4, 2]
+save_path = f"counterfactual_results/neg_{subject_name.split('/')[-1]}_{len(feat_layers)}layers_{len(feat_idxs)}feats{'_random_dir' if random_resid_direction else ''}.json"
 total_iterations = len(feat_idxs) * len(feat_layers)
 for iter, (feat_idx, feat_layer) in enumerate(tqdm(product(feat_idxs, feat_layers), total=total_iterations)):
-    scorer_intervention_strengths = [0, 10, 32, 100, 320, 1000]
-    explainer_intervention_strength = 32
+    scorer_intervention_strengths = [0, -10, -32, -100, -320, -1000]
+    explainer_intervention_strength = -32
 
     print("Loading autoencoder...", end="")
     encoder_feat, decoder_feat = get_encoder_decoder_weights(feat_idx, feat_layer, subject_device, random_resid_direction)
@@ -465,7 +453,7 @@ for iter, (feat_idx, feat_layer) in enumerate(tqdm(product(feat_idxs, feat_layer
     if (iter - 1) % 10 == 0:
         all_df = pd.DataFrame(all_results)
         all_df = all_df.sort_values("predictiveness_score", ascending=False)
-        all_df.to_json(f"counterfactual_results/{subject_name.split('/')[-1]}_{len(feat_layers)}layers_{len(feat_idxs)}feats.json")
+        all_df.to_json(save_path)
 all_df = pd.DataFrame(all_results)
 all_df = all_df.sort_values("predictiveness_score", ascending=False)
-all_df.to_json(f"counterfactual_results/{subject_name.split('/')[-1]}_{len(feat_layers)}layers_{len(feat_idxs)}feats.json")
+all_df.to_json(save_path)
