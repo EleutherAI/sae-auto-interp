@@ -6,35 +6,24 @@ import asyncio
 from functools import partial
 
 import orjson
-
 import torch
 
-from defaults import default_constructor
+from sae_auto_interp.clients import Local,
+from sae_auto_interp.config import ExperimentConfig, FeatureConfig
 from sae_auto_interp.explainers import explanation_loader
-from sae_auto_interp.scorers import OpenAISimulator
-from sae_auto_interp.clients import Outlines, Local
-from sae_auto_interp.utils import load_tokenized_data, load_tokenizer
-from sae_auto_interp.features import top_and_quantiles, FeatureLoader, FeatureDataset
-from sae_auto_interp.pipeline import Pipe, process_wrapper, Pipeline
-from functools import partial
-from sae_auto_interp.config import FeatureConfig
-from sae_auto_interp.explainers import explanation_loader
-from sae_auto_interp.features import FeatureDataset, FeatureLoader, top_and_quantiles
-from sae_auto_interp.pipeline import Actor, Pipe, Pipeline
+from sae_auto_interp.features import FeatureDataset, pool_max_activation_windows, sample
+from sae_auto_interp.pipeline import  Pipe, Pipeline, process_wrapper
 from sae_auto_interp.scorers import OpenAISimulator
 from sae_auto_interp.utils import (
-    default_constructor,
     load_tokenized_data,
     load_tokenizer,
 )
 
-
 ### Set directories ###
 
-all_at_once = False
-RAW_FEATURES_PATH = "/mnt/ssd-1/gpaulo/SAE-Zoology/raw_features_128k"
-EXPLAINER_OUT_DIR = "/mnt/ssd-1/gpaulo/SAE-Zoology/results/gpt2_explanations"
-SCORER_OUT_DIR = f"/mnt/ssd-1/gpaulo/SAE-Zoology/results/gpt2_simulation/{'all_at_once' if all_at_once else 'token_by_token'}"
+RAW_FEATURES_PATH = "raw_features/gpt2"
+EXPLAINER_OUT_DIR = "results/gpt2_explanations"
+SCORER_OUT_DIR = "results/gpt2_simulation/all_at_once"
 
 ### Load dataset ###
 
@@ -43,7 +32,7 @@ tokens = load_tokenized_data(
     64,
     tokenizer,
     "kh4dien/fineweb-100m-sample",
-    "train",
+    "train[:15%]",
 )    
 
 modules = [f".transformer.h.{i}" for i in [0, 2, 4, 6, 8, 10]]
@@ -58,21 +47,19 @@ dataset = FeatureDataset(
     features=features,
 )
 
-loader = FeatureLoader(
-    tokens=tokens,
-    dataset=dataset,
+loader = partial(
+    dataset.load,
     constructor=partial(
-        default_constructor, 
+        pool_max_activation_windows, 
         n_random=5, 
         ctx_len=20, 
         max_examples=5_000
     ),
-    sampler=top_and_quantiles
+    sampler=partial(sample, cfg=ExperimentConfig())
 )
-
 ### Load client ###
 
-client = Local("casperhansen/llama-3-70b-instruct-awq") if all_at_once else Outlines("casperhansen/llama-3-70b-instruct-awq")
+client = Local("casperhansen/llama-3-70b-instruct-awq")
 
 ### Build Explainer pipe ###
 
@@ -96,7 +83,7 @@ def scorer_postprocess(result):
 
 scorer_pipe = Pipe(
     process_wrapper(
-        OpenAISimulator(client, tokenizer=tokenizer, all_at_once=all_at_once),
+        OpenAISimulator(client, tokenizer=tokenizer),
         preprocess=scorer_preprocess,
         postprocess=scorer_postprocess,
     )
@@ -105,7 +92,7 @@ scorer_pipe = Pipe(
 ### Build the pipeline ###
 
 pipeline = Pipeline(
-    loader.load,
+    loader,
     explainer_pipe,
     scorer_pipe,
 )
