@@ -5,6 +5,7 @@ from .classifier.utils import get_neighbors, load_neighbors
 from .generation.generation import GenerationScorer
 from .scorer import Scorer
 from .simulator.oai_simulator import OpenAISimulator
+from .surprisal.surprisal import SurprisalScorer
 
 __all__ = [
     "FuzzingScorer",
@@ -15,4 +16,5 @@ __all__ = [
     "Scorer",
     "get_neighbors",
     "load_neighbors",
+    "SurprisalScorer",
 ]

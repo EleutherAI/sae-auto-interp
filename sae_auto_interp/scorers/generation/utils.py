@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Dict, List
+from typing import Dict 
 
 import orjson
 import torch
@@ -60,8 +60,8 @@ def to_feature(string):
 def _score(
     model,
     submodule: Dict,
-    examples: List[List[str]],
-    features: List[int],
+    examples: list[list[str]],
+    features: list[int],
     generation_size: int,
 ):
     flattened_examples = sum(examples, [])
@@ -84,7 +84,7 @@ def _score(
     return map(lambda x: x.value, all_scores)
 
 
-def save(examples: List, scores: List[int], path: str):
+def save(examples: List, scores: list[int], path: str):
     for examples, score in zip(examples, scores):
         result = {"examples": examples, "score": score}
 

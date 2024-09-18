@@ -1,5 +1,6 @@
 from functools import partial
 from typing import List
+import torch
 
 from sae import Sae
 
@@ -9,7 +10,7 @@ from .wrapper import AutoencoderLatents
 DEVICE = "cuda:0"
 
 
-def load_eai_autoencoders(model, ae_layers: List[int], weight_dir: str, module: str):
+def load_eai_autoencoders(model, ae_layers: list[int], weight_dir: str, module: str, randomize: bool = False, seed: int = 42, k: int = None):
     submodules = {}
 
     for layer in ae_layers:
@@ -23,9 +24,16 @@ def load_eai_autoencoders(model, ae_layers: List[int], weight_dir: str, module: 
         else:
             sae = Sae.load_from_hub(weight_dir,hookpoint=submodule, device=DEVICE).to(dtype=model.dtype)
         
-        def _forward(sae, x):
+        if randomize:
+            sae = Sae.load_from_hub(weight_dir,hookpoint=submodule, device=DEVICE).to(dtype=model.dtype)
+            sae = Sae(sae.d_in, sae.cfg, device=DEVICE, dtype=model.dtype, decoder=False)
+        
+        def _forward(sae, k,x):
             encoded = sae.pre_acts(x)
-            trained_k = sae.cfg.k
+            if k is not None:
+                trained_k = k
+            else:
+                trained_k = sae.cfg.k
             topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
             return topk(encoded)
 
@@ -39,7 +47,7 @@ def load_eai_autoencoders(model, ae_layers: List[int], weight_dir: str, module: 
         else:
             submodule = model.gpt_neox.layers[layer]
         submodule.ae = AutoencoderLatents(
-            sae, partial(_forward, sae), width=sae.d_in * sae.cfg.expansion_factor
+            sae, partial(_forward, sae, k), width=sae.d_in * sae.cfg.expansion_factor
         )
 
         submodules[submodule._module_path] = submodule

@@ -8,28 +8,35 @@ DEVICE = "cuda:0"
 
 
 
-def load_gemma_autoencoders(model, ae_layers: List[int],average_l0s: Dict[int,int]):
+def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,int],size:str,type:str):
     submodules = {}
 
     for layer in ae_layers:
-        path = f"layer_{layer}/width_16k/average_l0_{average_l0s[layer]}"
+        path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
 
-        sae = JumpReLUSAE.from_pretrained(path)
+        sae = JumpReLUSAE.from_pretrained(path,type)
         sae.to(DEVICE)
+        sae.half()
         def _forward(sae, x):
             encoded = sae.encode(x)
             return encoded
-
-        submodule = model.model.layers[layer]
+        if type == "res":
+            submodule = model.model.layers[layer]
+        else:
+            submodule = model.model.layers[layer].mlp
+        
         submodule.ae = AutoencoderLatents(
-            sae, partial(_forward, sae), width=16384
+            sae, partial(_forward, sae), width=sae.W_enc.shape[1]
         )
 
-        submodules[layer] = submodule
+        submodules[submodule._module_path] = submodule
 
     with model.edit(" "):
         for _, submodule in submodules.items():
-            acts = submodule.output[0]
+            if type == "res":
+                acts = submodule.output[0]
+            else:
+                acts = submodule.output
             submodule.ae(acts, hook=True)
 
     return submodules

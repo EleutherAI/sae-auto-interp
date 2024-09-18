@@ -29,30 +29,21 @@ def build_examples(
 
 def build_prompt(
     examples,
-    cot: bool = False,
     activations: bool = False,
-    top_logits: List[str] = None,
 ):
-    logits = True if top_logits is not None else False
-
+    
     messages = system(
-        cot=cot,
-        logits=logits,
-        activations=activations,
+        
     )
 
     few_shot_examples = build_examples(
-        cot=cot,
-        logits=logits,
+    
         activations=activations,
     )
 
     messages.extend(few_shot_examples)
 
     user_start = f"\n{examples}\n"
-
-    if logits:
-        user_start += f"\nTop_logits: {top_logits}"
 
     messages.append(
         {

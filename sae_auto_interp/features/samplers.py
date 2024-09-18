@@ -4,10 +4,10 @@ from typing import List, Literal
 
 from ..config import ExperimentConfig
 from .features import Example, FeatureRecord
-
+from ..logger import logger
 
 def split_activation_quantiles(
-    examples: List[Example], 
+    examples: list[Example], 
     n_quantiles: int,
     n_samples: int,
     seed: int = 22
@@ -35,7 +35,7 @@ def split_activation_quantiles(
 
 
 def split_quantiles(
-    examples: List[Example], 
+    examples: list[Example], 
     n_quantiles: int, 
     n_samples: int,
     seed: int = 22
@@ -45,45 +45,75 @@ def split_quantiles(
     quantile_size = len(examples) // n_quantiles
 
     samples = []
-
     for i in range(n_quantiles):
         quantile = examples[i * quantile_size : (i + 1) * quantile_size]
-
-        sample = random.sample(quantile, n_samples)
+        if len(quantile) < n_samples:
+            sample = quantile
+            logger.info(f"Quantile {i} has less than {n_samples} samples, using all samples")
+        else:
+            sample = random.sample(quantile, n_samples)
         samples.append(sample)
 
     return samples
 
 
 def train(
-    examples: List[Example],
+    examples: list[Example],
+    max_activation: float,
     n_train: int,
-    train_type: Literal["top", "random","quantile"],
-    seed: int = 22,
+    train_type: Literal["top", "random","quantiles"],
     n_quantiles: int = 10,
-    chosen_quantile: int = 0,
+    seed: int = 22,
 ):
     match train_type:
         case "top":
-            return examples[:n_train]
+            selected_examples = examples[:n_train]
+            for example in selected_examples:
+                example.normalized_activations = (example.activations * 10 / max_activation).floor()
+            return selected_examples
         case "random":
             random.seed(seed)
-            return random.sample(examples, n_train)
-        case "quantile":
-            return split_quantiles(examples, n_quantiles, n_train)[chosen_quantile]
+            if n_train > len(examples):
+                logger.warning(f"n_train is greater than the number of examples, using all examples")
+                for example in examples:
+                    example.normalized_activations = (example.activations * 10 / max_activation).floor()
+                return examples
+            selected_examples = random.sample(examples, n_train)
+            for example in selected_examples:
+                example.normalized_activations = (example.activations * 10 / max_activation).floor()
+            return selected_examples
+        case "quantiles":
+            
+            selected_examples_quantiles = split_quantiles(examples, n_quantiles, n_train)
+            selected_examples = []
+            for quantile in selected_examples_quantiles:
+                for example in quantile:
+                    example.normalized_activations = (example.activations * 10 / max_activation).floor()
+                selected_examples.extend(quantile)
+            return selected_examples
 
 
 def test(
-    examples: List[Example],
+    examples: list[Example],
+    max_activation: float,
     n_test: int,
     n_quantiles: int,
     test_type: Literal["even", "activation"],
+    
 ):
     match test_type:
         case "even":
-            return split_quantiles(examples, n_quantiles, n_test)
+            selected_examples = split_quantiles(examples, n_quantiles, n_test)
+            for quantile in selected_examples:
+                for example in quantile:
+                    example.normalized_activations = (example.activations * 10 / max_activation).floor()
+            return selected_examples
         case "activation":
-            return split_activation_quantiles(examples, n_quantiles, n_test)
+            selected_examples = split_activation_quantiles(examples, n_quantiles, n_test)
+            for quantile in selected_examples:
+                for example in quantile:
+                    example.normalized_activations = (example.activations * 10 / max_activation).floor()
+            return selected_examples
 
 
 def sample(
@@ -91,21 +121,24 @@ def sample(
     cfg: ExperimentConfig,
 ):
     examples = record.examples
-
+    max_activation = record.max_activation
     _train = train(
         examples,
+        max_activation,
         cfg.n_examples_train,
         cfg.train_type,
-        cfg.n_quantiles,
-        cfg.chosen_quantile,
+        n_quantiles=cfg.n_quantiles,
     )
-    
-    _test = test(
-        examples,
-        cfg.n_examples_test,
-        cfg.n_quantiles,
-        cfg.test_type,
-    )
-
     record.train = _train
-    record.test = _test
+    if cfg.n_examples_test > 0: 
+        _test = test(
+            examples,
+        max_activation,
+        cfg.n_examples_test,
+            cfg.n_quantiles,
+            cfg.test_type,   
+        )
+        record.test = _test
+
+    
+    

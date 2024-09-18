@@ -96,23 +96,23 @@ class PromptBuilder:
         # caller can't modify the internal state of this object.
         messages = [message.copy() for message in self._messages]
 
-        expected_next_role = Role.SYSTEM
+        expected_next_role = "system"
         for message in messages:
             role = message["role"]
             assert role == expected_next_role or (
-                allow_extra_system_messages and role == Role.SYSTEM
+                allow_extra_system_messages and role == "system"
             ), f"Expected message from {expected_next_role} but got message from {role}"
-            if role == Role.SYSTEM:
-                expected_next_role = Role.USER
-            elif role == Role.USER:
-                expected_next_role = Role.ASSISTANT
-            elif role == Role.ASSISTANT:
-                expected_next_role = Role.USER
+            if role == "system":
+                expected_next_role = "user"
+            elif role == "user":
+                expected_next_role = "assistant"
+            elif role == "assistant":
+                expected_next_role = "user"
 
         if prompt_format == PromptFormat.INSTRUCTION_FOLLOWING:
             last_user_message = None
             for message in messages:
-                if message["role"] == Role.USER:
+                if message["role"] == "user":
                     last_user_message = message
             assert last_user_message is not None
             last_user_message["content"] += "<|endofprompt|>"

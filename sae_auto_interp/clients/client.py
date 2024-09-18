@@ -1,6 +1,13 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from typing import List
 
-from pydantic import create_model
+
+@dataclass
+class Response:
+    text: str
+    logprobs: List[float]
+    prompt_logprobs: List[float]
 
 
 class Client(ABC):
@@ -15,10 +22,3 @@ class Client(ABC):
     ):
         raise NotImplementedError
 
-
-def create_response_model(n: int, type: type = int):
-    fields = {f"example_{i}": (type, ...) for i in range(n)}
-
-    ResponseModel = create_model("ResponseModel", **fields)
-
-    return ResponseModel

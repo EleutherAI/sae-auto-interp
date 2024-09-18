@@ -1,11 +1,14 @@
+import json
 import os
 from collections import defaultdict
 from typing import Dict
 
 import torch
-from safetensors.torch import save_file
+from safetensors.numpy import save_file
+import numpy as np
 from torchtyping import TensorType
 from tqdm import tqdm
+from sae_auto_interp.config import CacheConfig
 
 
 class Cache:
@@ -52,16 +55,43 @@ class Cache:
                 self.feature_activations[module_path], dim=0
             )
 
+    def get_nonzeros_batch(self, latents: TensorType["batch", "seq", "feature"]):
+        # Calculate the maximum batch size that fits within sys.maxsize
+        max_batch_size = torch.iinfo(torch.int32).max// (latents.shape[1]*latents.shape[2])
+        nonzero_feature_locations = []
+        nonzero_feature_activations = []
+        
+        for i in range(0, latents.shape[0], max_batch_size):
+            batch = latents[i:i+max_batch_size]
+            
+            # Get nonzero locations and activations
+            batch_locations = torch.nonzero(batch.abs() > 1e-5)
+            batch_activations = batch[batch.abs() > 1e-5]
+            
+            # Adjust indices to account for batching
+            batch_locations[:, 0] += i 
+            nonzero_feature_locations.append(batch_locations)
+            nonzero_feature_activations.append(batch_activations)
+        
+        # Concatenate results
+        nonzero_feature_locations = torch.cat(nonzero_feature_locations, dim=0)
+        nonzero_feature_activations = torch.cat(nonzero_feature_activations, dim=0)
+        return nonzero_feature_locations, nonzero_feature_activations
+
     def get_nonzeros(
         self, latents: TensorType["batch", "seq", "feature"], module_path: str
     ):
         """
         Get the nonzero feature locations and activations
         """
-
-        nonzero_feature_locations = torch.nonzero(latents.abs() > 1e-5)
-        nonzero_feature_activations = latents[latents.abs() > 1e-5]
-
+        size = latents.shape[1]*latents.shape[0]*latents.shape[2]
+        if size > torch.iinfo(torch.int32).max:
+            nonzero_feature_locations, nonzero_feature_activations = self.get_nonzeros_batch(latents)
+        
+        else:
+            nonzero_feature_locations = torch.nonzero(latents.abs() > 1e-5)
+            nonzero_feature_activations = latents[latents.abs() > 1e-5]
+        
         # Return all nonzero features if no filter is provided
         if self.filters is None:
             return nonzero_feature_locations, nonzero_feature_activations
@@ -129,7 +159,6 @@ class FeatureCache:
 
                 with torch.no_grad():
                     buffer = {}
-
                     with self.model.trace(batch, scan=False, validate=False):
                         for module_path, submodule in self.submodule_dict.items():
                             buffer[module_path] = submodule.ae.output.save()
@@ -170,7 +199,6 @@ class FeatureCache:
         for module_path in self.cache.feature_locations.keys():
             feature_locations = self.cache.feature_locations[module_path]
             feature_activations = self.cache.feature_activations[module_path]
-
             features = feature_locations[:, 2]
 
             for start, end in split_indices:
@@ -178,7 +206,17 @@ class FeatureCache:
 
                 masked_locations = feature_locations[mask]
                 masked_activations = feature_activations[mask]
-
+                masked_locations[:,2] = masked_locations[:,2]-start
+                if masked_locations[:,2].max() < 2**16 and masked_locations[:,0].max() < 2**16:
+                    masked_locations = masked_locations.astype(np.uint16)
+                
+                else:
+                    print(masked_locations[:,2].max(), masked_locations[:,0].max())
+                    masked_locations = masked_locations.astype(np.uint32)
+                max_activation = masked_activations.max()
+                masked_activations = masked_activations/max_activation*10
+                masked_activations = masked_activations.round().astype(np.int8)
+                
                 module_dir = f"{save_dir}/{module_path}"
                 os.makedirs(module_dir, exist_ok=True)
 
@@ -190,3 +228,12 @@ class FeatureCache:
                 }
 
                 save_file(split_data, output_file)
+
+    def save_config(self, save_dir: str,cfg: CacheConfig, model_name: str):
+            
+        for module_path in self.cache.feature_locations.keys():
+            config_file = f"{save_dir}/{module_path}/config.json"
+            with open(config_file, "w") as f:
+                config_dict = cfg.to_dict()
+                config_dict["model_name"] = model_name
+                json.dump(config_dict, f)

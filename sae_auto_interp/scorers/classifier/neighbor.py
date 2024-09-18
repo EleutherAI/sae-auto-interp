@@ -30,7 +30,7 @@ class NeighborScorer(Classifier):
 
         self.prompt = prompt
 
-    def _prepare(self, record: FeatureRecord) -> List[List[Sample]]:
+    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
         """
         Prepare and shuffle a list of samples for classification.
         """

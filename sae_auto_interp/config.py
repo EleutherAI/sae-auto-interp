@@ -6,26 +6,29 @@ from simple_parsing import Serializable
 
 @dataclass
 class ExperimentConfig(Serializable):
-    train_type: str = "top"
-    """Type of sampler to use"""
-
-    n_examples_train: int = 10
+    
+    n_examples_train: int = 40
     """Number of examples to sample for training"""
 
-    n_examples_test: int = 7
+    example_ctx_len: int = 20
+    """Length of each example"""
+
+    n_examples_test: int = 5
     """Number of examples to sample for testing"""
 
-    n_quantiles: int = 10
+    n_quantiles: int = 20
     """Number of quantiles to sample"""
 
-    n_random: int = 5
+    n_random: int = 50
     """Number of random examples to sample"""
 
-    train_type: Literal["top", "random"] = "top"
+    train_type: Literal["top", "random", "quantiles"] = "random"
     """Type of sampler to use for training"""
 
     test_type: Literal["even", "activation"] = "even"
     """Type of sampler to use for testing"""
+
+
 
 
 @dataclass
@@ -42,14 +45,21 @@ class FeatureConfig(Serializable):
     max_examples: int = 10000
     """Maximum number of examples for a feature to included"""
 
-    n_splits: int = 2
+    n_splits: int = 5
     """Number of splits that features were devided into"""
 
 
 @dataclass
 class CacheConfig(Serializable):
-    ctx_len: int
-    """Context length of the autoencoder. Each batch is shape (batch_size, ctx_len)"""
+
+    dataset_repo: str = "kh4dien/fineweb-100m-sample"
+    """Dataset repository to use"""
+
+    dataset_split: str = "train"
+    """Dataset split to use""" 
+
+    dataset_name: str = ""
+    """Dataset name to use"""
 
     batch_size: int = 32
     """Number of sequences to process in a batch"""
