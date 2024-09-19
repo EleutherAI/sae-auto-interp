@@ -25,13 +25,13 @@ class Logprobs:
 class Offline(Client):
     provider = "offline"
 
-    def __init__(self, model: str, max_memory: float=0.85,prefix_caching:bool=True,batch_size:int=100,max_model_len:int=4096,num_gpus:int=2):
+    def __init__(self, model: str, max_memory: float=0.85,prefix_caching:bool=True,batch_size:int=100,max_model_len:int=4096,num_gpus:int=2,n:int=1):
         super().__init__(model)
         self.model = model  
         self.queue = asyncio.Queue()
         self.task = None
-        self.client = LLM(model=model, gpu_memory_utilization=max_memory, enable_prefix_caching=prefix_caching, tensor_parallel_size=num_gpus, max_model_len=max_model_len)
-        self.sampling_params = SamplingParams(max_tokens=500, temperature=0.7)
+        self.client = LLM(model=model, gpu_memory_utilization=max_memory, enable_prefix_caching=prefix_caching, tensor_parallel_size=num_gpus, max_model_len=max_model_len, quantization="awq")
+        self.sampling_params = SamplingParams(max_tokens=500, temperature=0.7, n=n)
         self.tokenizer= AutoTokenizer.from_pretrained(model)
         self.batch_size=batch_size
         

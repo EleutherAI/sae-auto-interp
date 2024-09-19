@@ -36,9 +36,6 @@ class FeatureConfig(Serializable):
     width: int 
     """Number of features in the autoencoder"""
 
-    example_ctx_len: int
-    """Length of each example."""
-
     min_examples: int = 200
     """Minimum number of examples for a feature to be included"""
 

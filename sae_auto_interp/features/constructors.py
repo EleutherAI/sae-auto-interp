@@ -80,7 +80,7 @@ def _top_k_pools(max_buffer,split_activations, buffer_tokens, ctx_len, max_examp
     # Get top k activation pools
     k = min(max_examples, len(max_buffer))
     #start_time = time()
-    top_values,top_indices = torch.topk(max_buffer, k,sorted=True)
+    top_values,top_indices = torch.topk(max_buffer.long(), k,sorted=True)
     #print(f"Top k: {time() - start_time}")
     # Get the top indices
     activation_windows = torch.stack([split_activations[i] for i in top_indices])
@@ -119,63 +119,38 @@ def pool_max_activation_windows(
     record,
     buffer_output: BufferOutput,
     tokens: TensorType["batch", "seq"],
-    cfg: FeatureConfig,
+    ctx_len: int,
+    max_examples: int,
 ):
-    #start_time = time()
-    #start_start = time()
-    #buffer_output.activations [occurences]
-    #buffer_output.locations [occurences, 2] -> batch,seq -> new_batch
+    """
+    Pool max activation windows from the buffer output and update the feature record.
+
+    Args:
+        record (FeatureRecord): The feature record to update.
+        buffer_output (BufferOutput): The buffer output containing activations and locations.
+        tokens (TensorType["batch", "seq"]): The input tokens.
+        ctx_len (int): The context length.
+        max_examples (int): The maximum number of examples.
+    """
     buffer_output.activations.to(torch.float32)
     flat_indices = buffer_output.locations[:, 0] * tokens.shape[1] + buffer_output.locations[:, 1]
-    #print(flat_indices[:10])
     num_contexts = tokens.numel()//ctx_len
     ctx_indices = flat_indices//ctx_len
     index_within_ctx = flat_indices%ctx_len
     unique_ctx_indices,inverses,lengths = torch.unique_consecutive(ctx_indices,return_counts=True,return_inverse=True)
     max_buffer = torch.segment_reduce(buffer_output.activations, 'max', lengths=lengths)
-    #split_activations = torch.split(buffer_output.activations, lengths.tolist())
-    #split_index_within_ctx = torch.split(index_within_ctx, lengths.tolist())
-    
+
     new_tensor=torch.zeros(len(unique_ctx_indices),ctx_len,dtype=buffer_output.activations.dtype)
     new_tensor[inverses,index_within_ctx]=buffer_output.activations
-    # new_tensor=[]
-    # for non_zero_acts,non_zero_indices in zip(split_activations,split_index_within_ctx):
-    #     zero_tensor = torch.zeros(ctx_len,dtype=non_zero_acts.dtype)
-    #     zero_tensor[non_zero_indices] = non_zero_acts
-    #     new_tensor.append(zero_tensor)
-    # new_tensor = torch.stack(new_tensor)
-    #print(new_tensor.shape)
-    #max_buffer = torch.zeros(num_contexts,dtype=buffer_output.activations.dtype).scatter_reduce_(0, ctx_indices, buffer_output.activations, reduce='amax')
-    #print(max_buffer.shape)
-    #print(unique_ctx_indices.shape)
+
     buffer_tokens = tokens.reshape(-1,ctx_len)
     buffer_tokens = buffer_tokens[unique_ctx_indices]
-    #print(max_buffer[:10])
-    #print(max_buffer.shape)
 
-
-    # token_batches, dense_activations = _to_dense(
-    #     tokens, buffer_output.activations, buffer_output.locations
-    # )
-    #print(f"To dense: {time() - start_time}")
-    #start_time = time()
     token_windows, activation_windows = _top_k_pools(
         max_buffer,new_tensor, buffer_tokens, ctx_len, max_examples
     )
-    #print(f"Top k: {time() - start_time}")
-    #total= time() - start_start
-    #print(token_windows.shape)
-    #print(activation_windows.shape)
-    #print(token_windows[:10])
-    #print(activation_windows[:10])
-    # Set as examples
-    #start_time = time()
-    # batch,seq,2
-    record.examples = prepare_examples(token_windows, activation_windows)
-    #print(record.examples[:5])
-    #print(record.examples[-1])
-    #print(f"Prepare examples: {time() - start_time}")
-    
+
+    record.examples = prepare_examples(token_windows, activation_windows)    
     
 
 def random_activation_windows(
@@ -225,8 +200,17 @@ def default_constructor(
     ctx_len: int,
     max_examples: int,
 ):
-    
-    
+    """
+    Construct feature examples using pool max activation windows and random activation windows.
+
+    Args:
+        record (FeatureRecord): The feature record to update.
+        tokens (TensorType["batch", "seq"]): The input tokens.
+        buffer_output (BufferOutput): The buffer output containing activations and locations.
+        n_random (int): Number of random examples to generate.
+        ctx_len (int): Context length for each example.
+        max_examples (int): Maximum number of examples to generate.
+    """
     pool_max_activation_windows(
         record,
         tokens=tokens,
@@ -234,17 +218,6 @@ def default_constructor(
         ctx_len=ctx_len,
         max_examples=max_examples,
     )
-    # print(f"Pool max activation windows: {time() - start_time} seconds")
-    # start_time = time()
-    # pool_max_activation_windows_old(
-    #     record,
-    #     tokens=tokens,
-    #     buffer_output=buffer_output,
-    #     ctx_len=ctx_len,
-    #     max_examples=max_examples,
-    # )
-    #print(f"Pool max activation windows old: {time() - start_time} seconds")
-    #start_time = time()
     random_activation_windows(
         record,
         tokens=tokens,
@@ -252,4 +225,3 @@ def default_constructor(
         n_random=n_random,
         ctx_len=ctx_len,
     )
-    #print(f"Random activation windows: {time() - start_time} seconds")
