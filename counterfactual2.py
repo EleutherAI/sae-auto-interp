@@ -1,35 +1,59 @@
-# load subject model
-# load SAEs without attaching them to the model
-# for now just use the Islam feature and explanation
-# load a scorer. The prompt should have the input as well this time
-# (for now) on random pretraining data, evaluate gpt2 with a hook that 
-# adds a multiple of the Islam feature to the appropriate residual stream layer and position
-# Get the pre- and post-intervention output distributions of gpt2
-# (TODO: check if all the Islam features just have similar embeddings)
-# Show this to the scorer and get a score (scorer should be able to have a good prior without being given the clean output distribution)
-# Also get a simplicity score for the explanation
-import pandas as pd
-from pathlib import Path
-import json
+import torch
+from sae_auto_interp.config import ExperimentConfig, FeatureConfig
+from sae_auto_interp.features import (
+    FeatureDataset,
+    FeatureLoader
+)
+from sae_auto_interp.features.constructors import default_constructor
+from sae_auto_interp.features.samplers import sample
 
+feat_layer = 32
+sae_model = "gemma/131k"
+module = f".model.layers.{feat_layer}"
+n_train, n_test, n_quantiles = 5, 10, 5
+n_feats = 300
+feature_dict = {f"{module}": torch.arange(0, n_feats)}
+feature_cfg = FeatureConfig(width=131072, n_splits=5, max_examples=100000, min_examples=200)
+experiment_cfg = ExperimentConfig(n_random=0, example_ctx_len=64, n_quantiles=5, n_examples_test=0, n_examples_train=n_train + n_test // n_quantiles, train_type="quantiles", test_type="even")
+from sae_auto_interp.features import FeatureDataset
+from functools import partial
 import random
 
-with open("pile.jsonl", "r") as f:
-    pile = random.sample([json.loads(line) for line in f.readlines()], 100000)
+dataset = FeatureDataset(
+        raw_dir=f"/mnt/ssd-1/gpaulo/SAE-Zoology/raw_features/{sae_model}",
+        cfg=feature_cfg,
+        modules=[module],
+        features=feature_dict,  # type: ignore
+)
+
+constructor=partial(
+            default_constructor,
+            tokens=dataset.tokens,  # type: ignore
+            n_random=experiment_cfg.n_random, 
+            ctx_len=experiment_cfg.example_ctx_len, 
+            max_examples=feature_cfg.max_examples
+        )
+
+sampler=partial(sample,cfg=experiment_cfg)
+loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
+    
+record = next(iter(loader))
+
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import BitsAndBytesConfig
 import torch
+from huggingface_hub import hf_hub_download
+import numpy as np
 
-subject_device = "cuda:0"
+subject_device = "cuda:6"
 
-subject_name = "EleutherAI/pythia-70m-deduped"
+subject_name = "google/gemma-2-9b"
 subject = AutoModelForCausalLM.from_pretrained(subject_name).to(subject_device)
 subject_tokenizer = AutoTokenizer.from_pretrained(subject_name)
 subject_tokenizer.pad_token = subject_tokenizer.eos_token
 subject.config.pad_token_id = subject_tokenizer.eos_token_id
-from transformers import BitsAndBytesConfig
-
-scorer_device = "cuda:1"
-scorer_name = "meta-llama/Meta-Llama-3.1-8B"
+scorer_device = "cuda:7"
+scorer_name = "google/gemma-2-27b"
 scorer = AutoModelForCausalLM.from_pretrained(
     scorer_name,
     device_map={"": scorer_device},
@@ -50,6 +74,7 @@ scorer.generation_config.pad_token_id = scorer_tokenizer.eos_token_id
 explainer_device = scorer_device
 explainer = scorer
 explainer_tokenizer = scorer_tokenizer
+
 
 from dataclasses import dataclass
 import copy
@@ -138,26 +163,26 @@ fs_examples = [
         ],
         explanation="storytelling"
     ),
-    # ExplainerNeuronFormatter(
-    #     intervention_examples=[
-    #         ExplainerInterventionExample(
-    #             prompt="He owned the watch for a long time. While he never said it was",
-    #             top_tokens=[" hers", " hers", " hers"],
-    #             top_p_increases=[0.09, 0.06, 0.06, 0.5]
-    #         ),
-    #         ExplainerInterventionExample(
-    #             prompt="For some reason",
-    #             top_tokens=[" she", " her", " hers"],
-    #             top_p_increases=[0.14, 0.01, 0.01]
-    #         ),
-    #         ExplainerInterventionExample(
-    #             prompt="insurance does not cover",
-    #             top_tokens=[" her", " women", " her's"],
-    #             top_p_increases=[0.10, 0.02, 0.01]
-    #         )
-    #     ],
-    #     explanation="she/her pronouns"
-    # )
+    ExplainerNeuronFormatter(
+        intervention_examples=[
+            ExplainerInterventionExample(
+                prompt="Given 4x is less than 10,",
+                top_tokens=[" 4", " 10", " 40", " 2"],
+                top_p_increases=[0.11, 0.04, 0.02, 0.01]
+            ),
+            ExplainerInterventionExample(
+                prompt="For some reason",
+                top_tokens=[" one", " 1", " fr"],
+                top_p_increases=[0.14, 0.01, 0.01]
+            ),
+            ExplainerInterventionExample(
+                prompt="insurance does not cover claims for accounts with",
+                top_tokens=[" one", " more", " 10"],
+                top_p_increases=[0.10, 0.02, 0.01]
+            )
+        ],
+        explanation="numbers"
+    )
 ]
 
 neuron_prompter = copy.deepcopy(fs_examples[0])
@@ -177,113 +202,65 @@ def get_scorer_predictiveness_prompt(prompt, explanation, few_shot_prompts=None,
         few_shot_prompt = ""
     return few_shot_prompt + f"Explanation: {explanation}\n<PROMPT>{prompt}</PROMPT>"
 
-few_shot_prompts = ["My favorite food is", "From west to east, the westmost of the seven"]
-few_shot_explanations = ["fruits and vegetables", "ateg"]
-few_shot_tokens = [" oranges", "WAY"]
-# few_shot_prompts = ["My favorite food is", "From west to east, the westmost of the seven", "He owned the watch for a long time. While he never said it was"]
-# few_shot_explanations = ["fruits and vegetables", "ateg", "she/her pronouns"]
-# few_shot_tokens = [" oranges", "WAY", " hers"]
+few_shot_prompts = ["My favorite food is", "From west to east, the westmost of the seven", "Given 4x is less than 10,"]
+few_shot_explanations = ["fruits and vegetables", "ateg", "numbers"]
+few_shot_tokens = [" oranges", "WAY", " 4"]
 print(get_scorer_predictiveness_prompt(few_shot_prompts[0], few_shot_explanations[0], few_shot_prompts, few_shot_explanations, few_shot_tokens))
-from functools import partial
 
+from functools import partial
 def intervene(module, input, output, intervention_strength=10.0, position=-1, feat=None):
     hiddens = output[0]  # the later elements of the tuple are the key value cache
     hiddens[:, position, :] += intervention_strength * feat.to(hiddens.device)  # type: ignore
-
-def get_texts(n, seed=42, randomize_length=True):
-    random.seed(seed)
-    texts = []
-    for _ in range(n):
-        
-        # sample a random text from the pile, and stop it at a random token position, less than 64 tokens
-        text = random.choice(pile)["text"]
-        tokenized_text = subject_tokenizer.encode(text, add_special_tokens=False, max_length=64, truncation=True)
-        if len(tokenized_text) < 1:
-            continue
-        if randomize_length:
-            stop_pos = random.randint(1, min(len(tokenized_text), 63))
-        else:
-            stop_pos = 63
-        text = subject_tokenizer.decode(tokenized_text[:stop_pos])
-        texts.append(text)
-    return texts
-
-n_explainer_texts = 3
-n_scorer_texts = 3
-n_explanations = 5
-# explainer_texts = get_texts(n_explainer_texts)
-# explainer_texts = ["Current religion:", "A country that is", "Many people believe that"]
-# scorer_texts = get_texts(n_scorer_texts)
-scorer_vocab = scorer_tokenizer.get_vocab()
-subject_vocab = subject_tokenizer.get_vocab()
-
-# Pre-compute the mapping of subject tokens to scorer tokens
-subject_to_scorer = {}
-text_subject_to_scorer = {}
-for subj_tok, subj_id in subject_vocab.items():
-    if subj_tok in scorer_vocab:
-        subject_to_scorer[subj_id] = scorer_vocab[subj_tok]
-        text_subject_to_scorer[subj_tok] = subj_tok
-    else:
-        for i in range(len(subj_tok) - 1, 0, -1):
-            if subj_tok[:i] in scorer_vocab:
-                subject_to_scorer[subj_id] = scorer_vocab[subj_tok[:i]]
-                text_subject_to_scorer[subj_tok] = subj_tok[:i]
-                break
-        else:
-            print(f"No scorer token found for '{subj_tok}'")
-            subject_to_scorer[subj_id] = len(scorer_vocab) - 3  # some very rare token
-            print(f"Using '{scorer_tokenizer.decode([len(scorer_vocab) - 3])}' as a placeholder for '{subj_tok}'")
-subject_ids = torch.tensor(list(subject_to_scorer.keys()), device=scorer_device)
-scorer_ids = torch.tensor(list(subject_to_scorer.values()), device=scorer_device)
+subject_layers = subject.model.layers
 n_intervention_tokens = 5
-n_candidate_texts = 500
-candidate_texts = get_texts(n_candidate_texts, randomize_length=False)
-from collections import Counter
-import torch
-import numpy as np
-from sae_auto_interp.autoencoders.OpenAI.model import Autoencoder
-from itertools import product
-from tqdm import tqdm
-import time
+scorer_intervention_strengths = [0, 10, 32, 100, 320, 1000]
+explainer_intervention_strength = 32
 
-try:
-    subject_layers = subject.transformer.h
-except:
-    subject_layers = subject.gpt_neox.layers
+path_to_params = hf_hub_download(
+    repo_id="google/gemma-scope-9b-pt-res",
+    filename=f"layer_{feat_layer}/width_131k/average_l0_51/params.npz",
+    force_download=False,
+)
 
-def get_encoder_decoder_weights(feat_idx, feat_layer, device, random_resid_direction=False):
-    # weight_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/weights/gpt2_128k"
-    # path = f"{weight_dir}/{feat_layer}.pt"
-    # state_dict = torch.load(path)
-    # ae = Autoencoder.from_state_dict(state_dict=state_dict)
-    # decoder_feat = ae.decoder.weight[:, feat_idx].to(device)
-    # encoder_feat = ae.encoder.weight[feat_idx, :].to(device)
-    weight_dir = f"/mnt/ssd-1/alexm/dictionary_learning/dictionaries/pythia-70m-deduped/resid_out_layer{feat_layer}/10_32768/ae.pt"
-    state_dict = torch.load(weight_dir)
-    encoder_feat = state_dict['encoder.weight'][feat_idx, :]
-    decoder_feat = state_dict['decoder.weight'][:, feat_idx]
+params = np.load(path_to_params)
+pt_params = {k: torch.from_numpy(v).to(subject_device) for k, v in params.items()}
+
+
+def get_encoder_decoder_weights(feat_idx, device, random_resid_direction):
+    encoder_feat = pt_params["W_enc"][feat_idx, :]
+    decoder_feat = pt_params["W_dec"][feat_idx, :]
     if random_resid_direction:
-        en_norm, de_norm = encoder_feat.norm(), decoder_feat.norm()
-        encoder_feat = torch.randn_like(encoder_feat)
         decoder_feat = torch.randn_like(decoder_feat)
-        encoder_feat = encoder_feat * en_norm / encoder_feat.norm()
-        decoder_feat = decoder_feat * de_norm / decoder_feat.norm()
     return encoder_feat, decoder_feat
 
-all_results = []
+
+def garbage_collect():
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
+        print("CUDA garbage collection performed.")
+
+assert subject_tokenizer.get_vocab() == scorer_tokenizer.get_vocab()
+from tqdm.auto import tqdm
+from itertools import product, islice
+import time
+from collections import Counter
+import pandas as pd
 
 random_resid_direction = False  # this is a random baseline
-feat_idxs = list(range(1000))
-feat_layers = [4, 2]
-save_path = f"counterfactual_results/neg_{subject_name.split('/')[-1]}_{len(feat_layers)}layers_{len(feat_idxs)}feats{'_random_dir' if random_resid_direction else ''}.json"
-total_iterations = len(feat_idxs) * len(feat_layers)
-for iter, (feat_idx, feat_layer) in enumerate(tqdm(product(feat_idxs, feat_layers), total=total_iterations)):
-    scorer_intervention_strengths = [0, -10, -32, -100, -320, -1000]
-    explainer_intervention_strength = -32
+save_path = f"counterfactual_results/{subject_name.split('/')[-1]}_{feat_layer}layer_{n_feats}feats{'_random_dir' if random_resid_direction else ''}.json"
+all_results = []
+n_explanations = 5
+n_scorer_texts = 10
+n_explainer_texts = 7
 
+
+for iter, record in enumerate(tqdm(loader)):
+    garbage_collect()
+    
+    feat_idx = record.feature.feature_index
     print("Loading autoencoder...", end="")
-    encoder_feat, decoder_feat = get_encoder_decoder_weights(feat_idx, feat_layer, subject_device, random_resid_direction)
+    encoder_feat, decoder_feat = get_encoder_decoder_weights(feat_idx, subject_device, random_resid_direction)
 
     ### Find examples where the feature activates
     # Remove any hooks
@@ -291,42 +268,12 @@ for iter, (feat_idx, feat_layer) in enumerate(tqdm(product(feat_idxs, feat_layer
         subject_layers[l]._forward_hooks.clear()
     print("done")
 
-    selection_time = time.time()
-    subtexts = []
-    subtext_acts = []
-    for text in tqdm(candidate_texts, total=len(candidate_texts)):
-        input_ids = subject_tokenizer(text, return_tensors="pt").input_ids.to(subject_device)
-        with torch.inference_mode():
-            out = subject(input_ids, output_hidden_states=True)
-            # hidden_states is actually one longer than the number of layers, because it includes the input embeddings
-            h = out.hidden_states[feat_layer + 1].squeeze(0)
-            # feat_acts = ae.activation(ae.encoder(h))[:, feat_idx]
-            feat_acts = h @ encoder_feat
-            # the first token position just has way higher norm all the time for some reason
-            feat_acts[0] = 0
-
-        for i in range(1, len(feat_acts) + 1):
-            reassembled_text = subject_tokenizer.decode(input_ids[0, :i])
-            subtexts.append(reassembled_text)
-            subtext_acts.append(feat_acts[i - 1].item())
-
-    # get a random sample of activating contexts
-    subtext_acts = torch.tensor(subtext_acts)
-    candidate_quantile = 0.994
-    candidate_indices = subtext_acts.topk(int(len(subtext_acts) * (1 - candidate_quantile))).indices
-    sampled_indices = np.random.choice(candidate_indices.numpy(), n_scorer_texts + n_explainer_texts, replace=False)
+    random.shuffle(record.train)  # type: ignore
+    scorer_texts = [subject_tokenizer.decode(e.tokens) for e in record.train[:n_scorer_texts]]  # type: ignore
+    explainer_texts = [subject_tokenizer.decode(e.tokens) for e in record.train[:n_explainer_texts]]  # type: ignore
     
-    # Get top k subtexts and their activations
-    sampled_subtexts = [subtexts[i] for i in sampled_indices]
-    sampled_activations = subtext_acts.numpy()[sampled_indices]
-
-    random.shuffle(sampled_subtexts)  # just as assurance
-    scorer_texts = sampled_subtexts[:n_scorer_texts]
-    explainer_texts = sampled_subtexts[n_scorer_texts:]
-    selection_time = time.time() - selection_time
-    print(f"Selection took {selection_time:.2f} seconds")
-
     # get explanation
+    print("Getting explanations...")
     def get_subject_logits(text, layer, intervention_strength=0.0, position=-1, feat=None):
         for l in range(len(subject_layers)):
             subject_layers[l]._forward_hooks.clear()
@@ -363,7 +310,14 @@ for iter, (feat_idx, feat_layer) in enumerate(tqdm(product(feat_idxs, feat_layer
     explainer_prompt = get_explainer_prompt(neuron_prompter, fs_examples)
     explainer_input_ids = explainer_tokenizer(explainer_prompt, return_tensors="pt").input_ids.to(explainer_device)
     with torch.inference_mode():
-        samples = explainer.generate(explainer_input_ids, max_new_tokens=100, eos_token_id=explainer_tokenizer.encode("\n")[-1], num_return_sequences=n_explanations)[:, explainer_input_ids.shape[1]:]
+        samples = explainer.generate(
+            explainer_input_ids,
+            max_new_tokens=20,
+            eos_token_id=explainer_tokenizer.encode("\n")[-1],
+            num_return_sequences=n_explanations,
+            temperature=0.7,
+            do_sample=True,
+        )[:, explainer_input_ids.shape[1]:]
     explanations = Counter([explainer_tokenizer.decode(sample).split("\n")[0].strip() for sample in samples])
     explainer_time = time.time() - explainer_time
     print(f"Explainer took {explainer_time:.2f} seconds")
@@ -397,7 +351,7 @@ for iter, (feat_idx, feat_layer) in enumerate(tqdm(product(feat_idxs, feat_layer
                     scorer_logits = scorer(scorer_input_ids).logits[0, -1, :]
                     scorer_logp = scorer_logits.log_softmax(dim=-1)
                 
-                current_pred_scores.append((intervened_probs[subject_ids] * scorer_logp[scorer_ids]).sum())
+                current_pred_scores.append((intervened_probs * scorer_logp).sum())
 
                 topk = intervened_probs.topk(n_intervention_tokens).indices
                 top_tokens = [subject_tokenizer.decode(i) for i in topk]
