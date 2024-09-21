@@ -1,33 +1,27 @@
+import json
+import sys
 from tqdm.auto import tqdm
-from itertools import product, islice
-import time
 from collections import Counter
 import pandas as pd
 
+from pathlib import Path
 import fire
 import torch
-from sae_auto_interp.config import ExperimentConfig, FeatureConfig
-from sae_auto_interp.features import (
+from ..config import ExperimentConfig, FeatureConfig
+from ..features import (
     FeatureDataset,
     FeatureLoader
 )
-from sae_auto_interp.features.constructors import default_constructor
-from sae_auto_interp.features.samplers import sample
-from sae_auto_interp.counterfactuals import ExplainerNeuronFormatter, ExplainerInterventionExample, get_explainer_prompt, few_shot_prompts, few_shot_explanations, few_shot_generations, scorer_separator, JumpReLUSAE, fs_examples
-from sae_auto_interp.features import FeatureDataset
+from ..features.constructors import default_constructor
+from ..features.samplers import sample
+from . import ExplainerNeuronFormatter, ExplainerInterventionExample, get_explainer_prompt, few_shot_prompts, few_shot_explanations, few_shot_generations, scorer_separator, JumpReLUSAE, fs_examples, garbage_collect, get_git_info, expl_given_generation_score
+from ..features import FeatureDataset
 from functools import partial
 import random
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import BitsAndBytesConfig
 from huggingface_hub import hf_hub_download
 import numpy as np
-
-
-
-def garbage_collect():
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
-        torch.cuda.ipc_collect()
 
 
 def get_feature_loader(feat_layer, n_feats, sae_model, n_train, n_test, n_quantiles):
@@ -55,26 +49,42 @@ def get_feature_loader(feat_layer, n_feats, sae_model, n_train, n_test, n_quanti
     loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
     return loader
 
+
 def main(
-    device = "cuda:6",
+    device = "cuda",
     n_tokens_per_explainer_example = 5,
     explainer_intervention_strength = 32,
     feat_layer = 32,
     sae_model = "gemma/131k",
     n_train=5,
-    n_test=10,
+    n_test=20,
     n_quantiles=5,
-    n_feats=10,
+    n_feats=300,
     max_generation_length = 8,
     n_explanations = 1,
     steering_strength = 10,
     random_resid_direction = False,
     random_explanations = False,
     explainer_name = "meta-llama/Meta-Llama-3.1-8B",
+    run_prefix = "",
 ):
+    subject_name = "google/gemma-2-9b"
+    config = locals().copy()
+    config.pop("device")
+    config["git_info"] = get_git_info()
+    config["run_command"] = ' '.join(sys.argv)
+
+    modifiers = ('_random_dir' if random_resid_direction else '') + ('_random_expl' if random_explanations else '')
+    save_dir = Path(__file__).parent.parent.parent / f"counterfactual_results/{run_prefix}{subject_name.split('/')[-1]}_{feat_layer}layer_{n_feats}feats{modifiers}"
+    save_path = save_dir / "generations.json"
+    config_save_path = save_dir / "config.json"
+    save_dir.mkdir(parents=True, exist_ok=True)
+    with open(config_save_path, "w") as f:
+        json.dump(config, f)
+    assert not save_path.exists(), f"Save path {save_path} already exists"
+
     loader = get_feature_loader(feat_layer, n_feats, sae_model, n_train, n_test, n_quantiles)
 
-    subject_name = "google/gemma-2-9b"
     subject = AutoModelForCausalLM.from_pretrained(subject_name).to(device)
     subject_tokenizer = AutoTokenizer.from_pretrained(subject_name)
     subject_tokenizer.pad_token = subject_tokenizer.eos_token
@@ -148,7 +158,7 @@ def main(
         return subject_tokenizer.decode(out[0]).removeprefix(subject_tokenizer.bos_token).removeprefix(text)
     
     
-    random_explanations_source = "counterfactual_results/generative_gemma-2-9b_32layer_150feats.json"
+    random_explanations_source = Path(__file__).parent.parent.parent / "counterfactual_results/generative_gemma-2-9b_32layer_150feats.json"
     random_explanations_df = pd.read_json(random_explanations_source)
     random_explanations_pool = [e for expl in random_explanations_df["explanations"] for e in expl]
     random.shuffle(random_explanations_pool)
@@ -157,12 +167,33 @@ def main(
     all_explainer_examples = [[get_preactivating_text(e) for e in pool[:n_train]] for pool in pools]
     all_scorer_examples = [[get_preactivating_text(e) for e in pool[n_train:]] for pool in pools]
 
-    modifiers = ('_random_dir' if random_resid_direction else '') + ('_random_expl' if random_explanations else '')
-    save_path = f"counterfactual_results/generative_{subject_name.split('/')[-1]}_{feat_layer}layer_{n_feats}feats{modifiers}.json"
-    all_results = []
+    all_results = [dict() for _ in range(len(all_scorer_examples))]
+    # do generation
+    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Generating completions")):
+        garbage_collect()
+        feat_idx = record.feature.feature_index
+        
+        # get completions
+        completions = []
+        for prompt, max_act in scorer_examples:            
+            # get generation with and without intervention
+            completions.append({"text": prompt, "max_act": max_act, "completions": dict()})
+            for name, strength in [("clean", 0), ("intervened", steering_strength * max_act)]:
+                completions[-1]["completions"][name] = generate_with_intervention(prompt, feat_layer, clamp_value=strength, feat_idx=feat_idx)
+        
+        all_results[iter].update({
+            "feat_idx": feat_idx,
+            "scorer_examples": scorer_examples,
+            "completions": completions,
+        })
+        if (iter - 1) % 10 == 0:
+            all_df = pd.DataFrame(all_results)
+            all_df.to_json(save_path)
+    all_df = pd.DataFrame(all_results)
+    all_df.to_json(save_path)
     
     # get intervention results
-    for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Intervention")):
+    for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer")):
         garbage_collect()        
         feat_idx = record.feature.feature_index
         decoder_feat = get_decoder_weight(feat_idx, device, random_resid_direction)
@@ -182,10 +213,14 @@ def main(
                     top_p_increases=top_p_increases
                 )
             )
-        all_results.append({
-            "feat_idx": feat_idx,
+        all_results[iter].update({
             "explainer_intervention_examples": intervention_examples,
         })
+        if (iter - 1) % 10 == 0:
+            all_df = pd.DataFrame(all_results)
+            all_df.to_json(save_path)
+    all_df = pd.DataFrame(all_results)
+    all_df.to_json(save_path)
 
     subject.cpu()
     sae.cpu()
@@ -208,7 +243,7 @@ def main(
     explainer.config.pad_token_id = explainer_tokenizer.eos_token_id
     explainer.generation_config.pad_token_id = explainer_tokenizer.eos_token_id
 
-    for iter, row in enumerate(tqdm(all_results)):
+    for iter, row in enumerate(tqdm(all_results, desc="Generating explanations")):
         garbage_collect()
         intervention_examples = row["explainer_intervention_examples"]
         neuron_prompter = ExplainerNeuronFormatter(intervention_examples=intervention_examples)
@@ -225,42 +260,13 @@ def main(
                 temperature=0.7,
                 do_sample=True,
             )[:, explainer_input_ids.shape[1]:]
-        explanations = Counter([explainer_tokenizer.decode(sample).split("\n")[0].strip() for sample in samples])
-
-        for ie in intervention_examples:
-            print(ie.top_tokens)
-            print(ie.top_p_increases)
-        print(explanations)
+        explanations = [explainer_tokenizer.decode(sample).split("\n")[0].strip() for sample in samples]
 
         all_results[iter].update({
-            "explanations": dict(explanations),
+            "explanations": explanations,
             "explainer_prompts": [example.prompt for example in intervention_examples],
             "explainer_examples": explainer_examples,
             "neuron_prompter": neuron_prompter,
-        })
-
-    explainer.cpu()
-    garbage_collect()
-    subject.to(device)
-    sae.to(device)
-
-    # do generation
-    for iter, (row, scorer_examples) in enumerate(tqdm(zip(all_results, all_scorer_examples), desc="Generation")):
-        garbage_collect()
-        generation_time = time.time()
-        # get completions
-        completions = []
-        for prompt, max_act in scorer_examples:            
-            # get generation with and without intervention
-            completions.append({"text": prompt, "max_act": max_act, "completions": dict()})
-            for name, strength in [("clean", 0), ("intervened", steering_strength * max_act)]:
-                completions[-1]["completions"][name] = generate_with_intervention(prompt, feat_layer, clamp_value=strength, feat_idx=feat_idx)
-        print(completions)
-        print(f"Generation took {time.time() - generation_time:.2f} seconds")
-
-        all_results[iter].update({
-            "scorer_examples": scorer_examples,
-            "completions": completions,
         })
         if (iter - 1) % 10 == 0:
             all_df = pd.DataFrame(all_results)
@@ -268,40 +274,9 @@ def main(
     all_df = pd.DataFrame(all_results)
     all_df.to_json(save_path)
 
-
-# def explain():
-#     # TODO
+    garbage_collect()
     
-#     # scorer_name = "google/gemma-2-27b"
-#     scorer_name = "meta-llama/Meta-Llama-3.1-8B"
-#     scorer = AutoModelForCausalLM.from_pretrained(
-#         scorer_name,
-#         device_map={"": device},
-#         torch_dtype=torch.bfloat16,
-#         quantization_config=BitsAndBytesConfig(
-#             load_in_4bit=True,
-#             bnb_4bit_compute_dtype=torch.bfloat16,
-#             bnb_4bit_use_double_quant=True,
-#             bnb_4bit_quant_type="nf4",
-#         )
-#     )
-#     scorer_tokenizer = AutoTokenizer.from_pretrained(scorer_name)
-#     scorer_tokenizer.pad_token = scorer_tokenizer.eos_token
-#     scorer.config.pad_token_id = scorer_tokenizer.eos_token_id
-#     scorer.generation_config.pad_token_id = scorer_tokenizer.eos_token_id
-
-
-# def score():
-#     # TODO
-#     # get KV cache for the scoring few-shot prompt
-#     scorer_prompt = get_scorer_surprisal_prompt(few_shot_prompts[0], few_shot_generations[0], few_shot_explanations[0], few_shot_prompts, few_shot_explanations, few_shot_generations)
-#     scorer_fs_prefix = scorer_prompt[:scorer_prompt.rfind(scorer_separator)]
-#     scorer_fs_ids = scorer_tokenizer(scorer_fs_prefix, return_tensors="pt").input_ids.to(device)
-
-#     with torch.inference_mode():
-#         out = scorer(scorer_fs_ids, return_dict=True, use_cache=True)
-#     scorer_fs_kv = out.past_key_values
-
-
-if __name__ == "__main__":
-    fire.Fire(main)
+    # score
+    # NOTE: we assume the scorer is the same as the explainer
+    expl_given_generation_score(explainer, explainer_tokenizer, str(save_path), device)
+    return str(save_dir)
