@@ -5,6 +5,7 @@ from collections import Counter
 import pandas as pd
 
 from pathlib import Path
+from typing import Callable
 import fire
 import torch
 from ..config import ExperimentConfig, FeatureConfig
@@ -50,24 +51,66 @@ def get_feature_loader(feat_layer, n_feats, sae_model, n_train, n_test, n_quanti
     return loader
 
 
+def tune_intervention_strength(
+        feat_idx,
+        feat_layer,
+        texts,
+        kl_threshold,
+        get_subject_logits: Callable,
+):
+    # do a binary search to get KL of kl_threshold
+    min_log_str, max_log_str = -1.0, 4.0
+    log_str = 2.0
+    rtol = 0.1
+    avg_kls = dict()
+    for i in range(10):
+        intervention_strength = 10 ** log_str
+        avg_kl = 0.0
+        for text, max_act in texts:
+            intervened_logps = get_subject_logits(text, feat_layer, clamp_value=intervention_strength, feat_idx=feat_idx).log_softmax(dim=0)
+            zeroed_logps = get_subject_logits(text, feat_layer, clamp_value=0, feat_idx=feat_idx).log_softmax(dim=0)  # TODO: should this clamp to 0?
+            kl = (zeroed_logps.exp() * (zeroed_logps - intervened_logps)).sum()
+            avg_kl += kl
+
+        avg_kl /= len(texts)
+        print(min_log_str, max_log_str, log_str, avg_kl)
+        avg_kls[intervention_strength] = float(avg_kl)
+        if np.isclose(float(avg_kl), kl_threshold, rtol=rtol):
+            break
+        elif avg_kl > kl_threshold:
+            max_log_str = log_str
+        else:
+            min_log_str = log_str
+
+        log_kls = np.log(np.array(sorted(list(avg_kls.values()))))
+        log_strs = np.log10(np.array(sorted(list(avg_kls.keys()), key=lambda k: avg_kls[k])))
+        if min(log_kls) <= np.log(kl_threshold) <= max(log_kls):
+            log_str = np.interp([np.log(kl_threshold)], log_kls, log_strs)[0]
+        else:
+            log_str = (min_log_str + max_log_str) / 2
+    else:
+        print(f"Binary search for intervention strength did not converge after {i} iterations")
+        print(f"Using {intervention_strength} with KL {avg_kl} when target is {kl_threshold}")
+
+    return 10 ** log_str, avg_kls
+
 def main(
     device = "cuda",
     n_tokens_per_explainer_example = 5,
-    explainer_intervention_strength = 32,
     feat_layer = 32,
     sae_model = "gemma/131k",
-    n_train=5,
-    n_test=20,
+    n_train=10,
+    n_test=40,
     n_quantiles=5,
     n_feats=300,
+    kl_threshold = 0.5,
     max_generation_length = 8,
-    n_explanations = 1,
-    steering_strength = 10,
-    random_resid_direction = False,
+    n_explanations = 5,
     random_explanations = False,
     explainer_name = "meta-llama/Meta-Llama-3.1-8B",
-    run_prefix = "",
+    run_prefix = "default",
 ):
+
     subject_name = "google/gemma-2-9b"
     config = locals().copy()
     config.pop("device")
@@ -84,7 +127,7 @@ def main(
 
     loader = get_feature_loader(feat_layer, n_feats, sae_model, n_train, n_test, n_quantiles)
 
-    subject = AutoModelForCausalLM.from_pretrained(subject_name).to(device)
+    subject = AutoModelForCausalLM.from_pretrained(subject_name, torch_dtype=torch.bfloat16).to(device)
     subject_tokenizer = AutoTokenizer.from_pretrained(subject_name)
     subject_tokenizer.pad_token = subject_tokenizer.eos_token
     subject.config.pad_token_id = subject_tokenizer.eos_token_id
@@ -97,23 +140,14 @@ def main(
     )
 
     params = np.load(path_to_params)
-    pt_params = {k: torch.from_numpy(v).to(device) for k, v in params.items()}
+    pt_params = {k: torch.from_numpy(v).to(device).to(torch.bfloat16) for k, v in params.items()}
 
-    def get_decoder_weight(feat_idx, device, random_resid_direction):
-        decoder_feat = pt_params["W_dec"][feat_idx, :]
-        if random_resid_direction:
-            new_feat = torch.randn_like(decoder_feat)
-            return new_feat * (decoder_feat.norm() / new_feat.norm())
-        return decoder_feat
+    decoder_weights = pt_params["W_dec"]
         
-    sae = JumpReLUSAE(params['W_enc'].shape[0], params['W_enc'].shape[1]).to(device)
+    sae = JumpReLUSAE(params['W_enc'].shape[0], params['W_enc'].shape[1]).to(device).to(torch.bfloat16)
     sae.load_state_dict(pt_params)
 
-    def addition_intervention(module, input, output, intervention_strength=10.0, position: int | slice = -1, feat=None):
-        hiddens = output[0]  # the later elements of the tuple are the key value cache
-        hiddens[:, position, :] += intervention_strength * feat.to(hiddens.device)  # type: ignore
-
-    def clamping_intervention(module, input, output, feat_idx=None, clamp_value=0.0, position: int | slice = slice(None)):
+    def clamping_intervention(module, input, output, feat_idx=None, clamp_value=0.0, position: int | slice = slice(0, 0)):
         hiddens = output[0]  # the later elements of the tuple are the key value cache
         
         encoding = sae.encode(hiddens)
@@ -122,16 +156,15 @@ def main(
         hiddens = sae.decode(encoding) + error
         return (hiddens, *output[1:])
 
-    def get_preactivating_text(example):
+    def get_first_activating_text(example):
         first_act_idx = (example.activations > 0).nonzero(as_tuple=True)[0][0]
-        idx = random.randint(max(0, first_act_idx - 1 - max_generation_length // 2), first_act_idx - 1) if first_act_idx > 0 else 0
         max_act = example.activations.max()
-        return subject_tokenizer.decode(example.tokens[:idx]), max_act.item()
+        return subject_tokenizer.decode(example.tokens[:first_act_idx + 1]), max_act.item()
     
-    def get_subject_logits(text, layer, intervention_strength=0.0, position=-1, feat=None):
+    def get_subject_logits(text, layer, clamp_value=0.0, position=-1, feat_idx=None):
         for l in range(len(subject_layers)):
             subject_layers[l]._forward_hooks.clear()
-        subject_layers[layer].register_forward_hook(partial(addition_intervention, intervention_strength=intervention_strength, position=-1, feat=feat))
+        subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=position, feat_idx=feat_idx))
 
         inputs = subject_tokenizer(text, return_tensors="pt", add_special_tokens=True).to(device)
         with torch.inference_mode():
@@ -144,8 +177,8 @@ def main(
             subject_layers[l]._forward_hooks.clear()
         
         inputs = subject_tokenizer(text, return_tensors="pt", add_special_tokens=True).to(device)
-        # x[:, slice(None), :] is equivalent to x[:, :, :]
-        subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, feat_idx=feat_idx))
+        intervention_start = inputs.input_ids.shape[1] - 1
+        subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=slice(intervention_start, None), feat_idx=feat_idx))
         with torch.inference_mode():
             out = subject.generate(
                 **inputs,
@@ -156,18 +189,23 @@ def main(
             )
 
         return subject_tokenizer.decode(out[0]).removeprefix(subject_tokenizer.bos_token).removeprefix(text)
-    
-    
-    random_explanations_source = Path(__file__).parent.parent.parent / "counterfactual_results/generative_gemma-2-9b_32layer_150feats.json"
-    random_explanations_df = pd.read_json(random_explanations_source)
-    random_explanations_pool = [e for expl in random_explanations_df["explanations"] for e in expl]
-    random.shuffle(random_explanations_pool)
 
+    # without replacement
     pools = [random.sample(record.train, len(record.train)) for record in loader]  # type: ignore
-    all_explainer_examples = [[get_preactivating_text(e) for e in pool[:n_train]] for pool in pools]
-    all_scorer_examples = [[get_preactivating_text(e) for e in pool[n_train:]] for pool in pools]
+    all_explainer_examples = [[get_first_activating_text(e) for e in pool[:n_train]] for pool in pools]
+    all_scorer_examples = [[get_first_activating_text(e) for e in pool[n_train:]] for pool in pools]
 
     all_results = [dict() for _ in range(len(all_scorer_examples))]
+
+    # get intervention strengths
+    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Tuning interventions")):
+        garbage_collect()
+        feat_idx = record.feature.feature_index
+        intervention_strength, avg_kls = tune_intervention_strength(feat_idx, feat_layer, scorer_examples, kl_threshold, get_subject_logits)
+        all_results[iter].update({
+            "intervention_strength": intervention_strength,
+            "avg_kl": avg_kls[intervention_strength],
+        })
 
     # do generation
     for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Generating completions")):
@@ -178,8 +216,8 @@ def main(
         completions = []
         for prompt, max_act in scorer_examples:            
             # get generation with and without intervention
-            completions.append({"text": prompt, "max_act": max_act, "completions": dict()})
-            for name, strength in [("clean", 0), ("intervened", steering_strength * max_act)]:
+            completions.append({"text": prompt.removeprefix(subject_tokenizer.bos_token), "max_act": max_act, "completions": dict()})
+            for name, strength in [("zeroed", 0), ("intervened", all_results[iter]["intervention_strength"])]:
                 completions[-1]["completions"][name] = generate_with_intervention(prompt, feat_layer, clamp_value=strength, feat_idx=feat_idx)
         
         all_results[iter].update({
@@ -194,6 +232,10 @@ def main(
     all_df.to_json(save_path)
     
     if random_explanations:
+        random_explanations_source = Path(__file__).parent.parent.parent / "counterfactual_results/generative_gemma-2-9b_32layer_150feats.json"  # TODO: change
+        random_explanations_df = pd.read_json(random_explanations_source)
+        random_explanations_pool = [e for expl in random_explanations_df["explanations"] for e in expl]
+        random.shuffle(random_explanations_pool)
         for iter, row in enumerate(tqdm(all_results, desc="Gathering random explanations")):
             expls = random.choices(random_explanations_pool, k=n_explanations)
             all_results[iter].update({
@@ -207,19 +249,18 @@ def main(
         for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer")):
             garbage_collect()        
             feat_idx = record.feature.feature_index
-            decoder_feat = get_decoder_weight(feat_idx, device, random_resid_direction)
 
             intervention_examples = []
             for prompt, act in explainer_examples:
-                clean_logits = get_subject_logits(prompt, feat_layer, intervention_strength=0.0, feat=decoder_feat)
-                intervened_logits = get_subject_logits(prompt, feat_layer, intervention_strength=explainer_intervention_strength, feat=decoder_feat)
-                top_probs = (intervened_logits.softmax(dim=-1) - clean_logits.softmax(dim=-1)).topk(n_tokens_per_explainer_example)
+                zeroed_logits = get_subject_logits(prompt, feat_layer, clamp_value=0.0, feat_idx=feat_idx)
+                intervened_logits = get_subject_logits(prompt, feat_layer, clamp_value=all_results[iter]["intervention_strength"], feat_idx=feat_idx)
+                top_probs = (intervened_logits.softmax(dim=-1) - zeroed_logits.softmax(dim=-1)).topk(n_tokens_per_explainer_example)
                 
                 top_tokens = [subject_tokenizer.decode(i) for i in top_probs.indices]
                 top_p_increases = top_probs.values.tolist()
                 intervention_examples.append(
                     ExplainerInterventionExample(
-                        prompt=prompt,
+                        prompt=prompt.removeprefix(subject_tokenizer.bos_token),
                         top_tokens=top_tokens,
                         top_p_increases=top_p_increases
                     )
@@ -284,8 +325,6 @@ def main(
                 all_df.to_json(save_path)
         all_df = pd.DataFrame(all_results)
         all_df.to_json(save_path)
-        
-
 
     garbage_collect()
     
