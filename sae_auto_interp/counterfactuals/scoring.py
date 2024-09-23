@@ -29,14 +29,14 @@ def expl_given_generation_score(scorer, scorer_tokenizer, completions_path, devi
         delta_conditional_entropy_by_explanation = dict()
         delta_conditional_entropy_sems_by_explanation = dict()
         for explanation in record["explanations"]:
-            surprisals = {"clean": [], "intervened": []}
+            surprisals = {"zeroed": [], "intervened": []}
 
             
             for i, (prompt, act) in enumerate(record["scorer_examples"]):
                             
                 for name, completion in record["completions"][i]["completions"].items():
                     text, expl_start_idx = get_scorer_surprisal_prompt(
-                        prompt, completion, explanation, return_explanation_start=True
+                        record["completions"][i]["text"], completion, explanation, return_explanation_start=True
                     )
                     scorer_prompt, expl = text[:expl_start_idx], text[expl_start_idx:]
                     
@@ -49,19 +49,21 @@ def expl_given_generation_score(scorer, scorer_tokenizer, completions_path, devi
                     labels = scorer_input_ids.clone()
                     labels[:, :scorer_prompt_ids.shape[1]] = -100
                     with torch.inference_mode():
-                        out = scorer(scorer_input_ids, labels=labels, use_cache=True, past_key_values=scorer_fs_kv)
+                        loss = scorer(scorer_input_ids, labels=labels, use_cache=True, past_key_values=scorer_fs_kv).loss
                         # HF averages over the sequence length, so we undo that
-                        surprisals[name].append(out.loss.item() * (scorer_input_ids.shape[1] - scorer_prompt_ids.shape[1]))
+                        surprisals[name].append(loss.item() * (scorer_input_ids.shape[1] - scorer_prompt_ids.shape[1]))
                 
             surprisals = {k: np.array(v) for k, v in surprisals.items()}
             surprisals_by_explanation[explanation] = surprisals
-            delta_conditional_entropy_by_explanation[explanation] = (surprisals["clean"] - surprisals["intervened"]).mean()
-            delta_conditional_entropy_sems_by_explanation[explanation] = (surprisals["clean"] - surprisals["intervened"]).std(ddof=1) / np.sqrt(len(surprisals["intervened"]))
+            delta_conditional_entropy_by_explanation[explanation] = (surprisals["zeroed"] - surprisals["intervened"]).mean()
+            delta_conditional_entropy_sems_by_explanation[explanation] = (surprisals["zeroed"] - surprisals["intervened"]).std(ddof=1) / np.sqrt(len(surprisals["intervened"]))
 
+        best_explanation = max(delta_conditional_entropy_by_explanation, key=lambda x: delta_conditional_entropy_by_explanation[x])
         record.update({
             "delta_conditional_entropy_by_explanation": delta_conditional_entropy_by_explanation,
             "delta_conditional_entropy_sems_by_explanation": delta_conditional_entropy_sems_by_explanation,
             "max_delta_conditional_entropy": max(delta_conditional_entropy_by_explanation.values()),
+            "best_explanation": best_explanation,
         })
         if iter % 10 == 0:
             pd.DataFrame(all_results).to_json(out_path, orient="records")
