@@ -68,12 +68,11 @@ def tune_intervention_strength(
         avg_kl = 0.0
         for text, max_act in texts:
             intervened_logps = get_subject_logits(text, feat_layer, clamp_value=intervention_strength, feat_idx=feat_idx).log_softmax(dim=0)
-            zeroed_logps = get_subject_logits(text, feat_layer, clamp_value=0, feat_idx=feat_idx).log_softmax(dim=0)  # TODO: should this clamp to 0?
+            zeroed_logps = get_subject_logits(text, feat_layer, clamp_value=0, feat_idx=feat_idx).log_softmax(dim=0)
             kl = (zeroed_logps.exp() * (zeroed_logps - intervened_logps)).sum()
             avg_kl += kl
 
         avg_kl /= len(texts)
-        print(min_log_str, max_log_str, log_str, avg_kl)
         avg_kls[intervention_strength] = float(avg_kl)
         if np.isclose(float(avg_kl), kl_threshold, rtol=rtol):
             break
@@ -141,8 +140,6 @@ def main(
 
     params = np.load(path_to_params)
     pt_params = {k: torch.from_numpy(v).to(device).to(torch.bfloat16) for k, v in params.items()}
-
-    decoder_weights = pt_params["W_dec"]
         
     sae = JumpReLUSAE(params['W_enc'].shape[0], params['W_enc'].shape[1]).to(device).to(torch.bfloat16)
     sae.load_state_dict(pt_params)
@@ -190,7 +187,7 @@ def main(
 
         return subject_tokenizer.decode(out[0]).removeprefix(subject_tokenizer.bos_token).removeprefix(text)
 
-    # without replacement
+    # random.sample is without replacement
     pools = [random.sample(record.train, len(record.train)) for record in loader]  # type: ignore
     all_explainer_examples = [[get_first_activating_text(e) for e in pool[:n_train]] for pool in pools]
     all_scorer_examples = [[get_first_activating_text(e) for e in pool[n_train:]] for pool in pools]
@@ -198,7 +195,8 @@ def main(
     all_results = [dict() for _ in range(len(all_scorer_examples))]
 
     # get intervention strengths
-    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Tuning interventions")):
+    # we use the test set to tune the intervention strengths because we want the KL to be ~exactly `kl_threshold` on the test set
+    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Tuning intervention strengths")):
         garbage_collect()
         feat_idx = record.feature.feature_index
         intervention_strength, avg_kls = tune_intervention_strength(feat_idx, feat_layer, scorer_examples, kl_threshold, get_subject_logits)
@@ -230,11 +228,37 @@ def main(
             all_df.to_json(save_path)
     all_df = pd.DataFrame(all_results)
     all_df.to_json(save_path)
+
+    def load_explainer():
+        subject.cpu()
+        sae.cpu()
+        garbage_collect()
+
+        # get explainer results
+        explainer = AutoModelForCausalLM.from_pretrained(
+            explainer_name,
+            device_map={"": device},
+            torch_dtype=torch.bfloat16,
+            quantization_config=BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_compute_dtype=torch.bfloat16,
+                bnb_4bit_use_double_quant=True,
+                bnb_4bit_quant_type="nf4",
+            )
+        )
+        explainer_tokenizer = AutoTokenizer.from_pretrained(explainer_name)
+        explainer_tokenizer.pad_token = explainer_tokenizer.eos_token
+        explainer.config.pad_token_id = explainer_tokenizer.eos_token_id
+        explainer.generation_config.pad_token_id = explainer_tokenizer.eos_token_id
+
+        return explainer, explainer_tokenizer
     
     if random_explanations:
-        random_explanations_source = Path(__file__).parent.parent.parent / "counterfactual_results/generative_gemma-2-9b_32layer_150feats.json"  # TODO: change
+        random_explanations_source = Path(__file__).parent.parent.parent / "counterfactual_results/nf=300_l=32_nt=10_nt=40_ne=10_ss=10_rrd=False_re=False_gemma-2-9b/generations_scores.json"  # TODO: change
         random_explanations_df = pd.read_json(random_explanations_source)
         random_explanations_pool = [e for expl in random_explanations_df["explanations"] for e in expl]
+        print(f"{Counter(random_explanations_pool)=}")
+        random_explanations_pool = list(set(random_explanations_pool))
         random.shuffle(random_explanations_pool)
         for iter, row in enumerate(tqdm(all_results, desc="Gathering random explanations")):
             expls = random.choices(random_explanations_pool, k=n_explanations)
@@ -244,6 +268,7 @@ def main(
                 "explainer_examples": [None] * n_explanations,
                 "neuron_prompter": None,
             })
+        explainer, explainer_tokenizer = load_explainer()
     else:
         # get intervention results
         for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer")):
@@ -274,26 +299,7 @@ def main(
         all_df = pd.DataFrame(all_results)
         all_df.to_json(save_path)
 
-        subject.cpu()
-        sae.cpu()
-        garbage_collect()
-
-        # get explainer results
-        explainer = AutoModelForCausalLM.from_pretrained(
-            explainer_name,
-            device_map={"": device},
-            torch_dtype=torch.bfloat16,
-            quantization_config=BitsAndBytesConfig(
-                load_in_4bit=True,
-                bnb_4bit_compute_dtype=torch.bfloat16,
-                bnb_4bit_use_double_quant=True,
-                bnb_4bit_quant_type="nf4",
-            )
-        )
-        explainer_tokenizer = AutoTokenizer.from_pretrained(explainer_name)
-        explainer_tokenizer.pad_token = explainer_tokenizer.eos_token
-        explainer.config.pad_token_id = explainer_tokenizer.eos_token_id
-        explainer.generation_config.pad_token_id = explainer_tokenizer.eos_token_id
+        explainer, explainer_tokenizer = load_explainer()
 
         for iter, row in enumerate(tqdm(all_results, desc="Generating explanations")):
             garbage_collect()
@@ -325,10 +331,8 @@ def main(
                 all_df.to_json(save_path)
         all_df = pd.DataFrame(all_results)
         all_df.to_json(save_path)
-
-    garbage_collect()
     
     # score
-    # NOTE: we assume the scorer is the same as the explainer
+    # NOTE: we currently require the scorer is the same as the explainer
     expl_given_generation_score(explainer, explainer_tokenizer, str(save_path), device)
     return str(save_dir)

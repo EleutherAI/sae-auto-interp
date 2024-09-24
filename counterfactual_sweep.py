@@ -5,12 +5,11 @@ base_cmd = "python /mnt/ssd-1/alexm/sae-auto-interp/counterfactual_pipeline.py "
 cfg_ranges = {
     "n_feats": [300],
     "layer": [32],
-    "n_train": [5, 10],
-    "n_test": [40],
-    "n_explanations": [1, 5, 10],
-    "steering_strength": [3, 10, 100],
-    "random_resid_direction": [True, False],
-    "random_explanations": [True, False],
+    "n_train": [10],
+    "n_test": [30],
+    "n_explanations": [5],
+    "kl_threshold": [0.33, 1.0, 3.0],
+    "random_explanations": [False],
 }
 
 keys, values = zip(*cfg_ranges.items())
