@@ -32,14 +32,16 @@ class JumpReLUSAE(nn.Module):
     return recon
   
   @classmethod
-  def from_pretrained(cls, path,type):
+  def from_pretrained(cls, path,type,device):
     path_to_params = hf_hub_download(
     repo_id="google/gemma-scope-9b-pt-"+type,
     filename=f"{path}/params.npz",
     force_download=False,
     )
     params = np.load(path_to_params)
-    pt_params = {k: torch.from_numpy(v).cuda() for k, v in params.items()}
+    pt_params = {k: torch.from_numpy(v) for k, v in params.items()}
     model = cls(params['W_enc'].shape[0], params['W_enc'].shape[1])
     model.load_state_dict(pt_params)
+    if device == "cuda":
+        model.cuda()
     return model

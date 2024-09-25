@@ -48,8 +48,8 @@ def load_llama3_neurons(
         submodule.ae.width = submodule.in_features
         submodule_dict[layer] = submodule
     
-    with model.edit(" "):
+    with model.edit(" ") as edited:
         for _, submodule in submodule_dict.items():
-            acts = submodule.input[0][0]
+            acts = submodule.input
             submodule.ae(acts, hook=True)
-    return submodule_dict
+    return submodule_dict,edited
