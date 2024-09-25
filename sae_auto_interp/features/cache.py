@@ -159,10 +159,9 @@ class FeatureCache:
 
                 with torch.no_grad():
                     buffer = {}
-                    with self.model.trace(batch, scan=False, validate=False):
+                    with self.model.trace(batch):
                         for module_path, submodule in self.submodule_dict.items():
                             buffer[module_path] = submodule.ae.output.save()
-
                     for module_path, latents in buffer.items():
                         self.cache.add(latents, batch_number, module_path)
 
@@ -206,26 +205,29 @@ class FeatureCache:
                 os.makedirs(module_dir, exist_ok=True)
                 output_file = f"{module_dir}/{start}_{end}.safetensors"
                 
-                mask = (features >= start) & (features < end)
+                mask = (features >= start) & (features <= end)
 
                 if mask.sum() == 0:
                     split_data = {
                         "locations": np.array([], dtype=np.uint32),
-                        "activations": np.array([], dtype=np.int8),
+                        "activations": np.array([], dtype=np.float16),
                     }
                     save_file(split_data, output_file)
                     continue
 
-                masked_locations = feature_locations[mask]
-                masked_activations = feature_activations[mask]
-                masked_locations[:,2] = masked_locations[:,2] - start
+                masked_locations = feature_locations[mask].numpy()
+                masked_activations = feature_activations[mask].half().numpy()
+                masked_locations[:,2] = masked_locations[:,2]-start.item()
                 if masked_locations[:,2].max() < 2**16 and masked_locations[:,0].max() < 2**16:
                     masked_locations = np.array(masked_locations, dtype=np.uint16)
                 else:
-                    masked_locations = np.array(masked_locations, dtype=np.uint32)
-                max_activation = masked_activations.max()
-                masked_activations = masked_activations/max_activation*10
-                masked_activations = np.array(masked_activations.round(), dtype=np.int8)
+                    print(masked_locations[:,2].max(), masked_locations[:,0].max())
+                    masked_locations = masked_locations.astype(np.uint32)
+                
+                module_dir = f"{save_dir}/{module_path}"
+                os.makedirs(module_dir, exist_ok=True)
+
+                output_file = f"{module_dir}/{start}_{end}.safetensors"
 
                 split_data = {
                     "locations": masked_locations,

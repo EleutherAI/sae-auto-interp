@@ -51,7 +51,7 @@ class TensorBuffer:
         locations = torch.tensor(split_data["locations"].astype(np.int64))
         
         locations[:,2] = locations[:,2]+first_feature
-        # 
+        
         wanted_locations = torch.isin(locations[:,2],self.features)
         locations = locations[wanted_locations]
         activations = activations[wanted_locations]
@@ -64,8 +64,6 @@ class TensorBuffer:
         split_activations = torch.split(activations,counts.tolist())
         
         for i in range(len(features)):
-            
-
             
             feature_locations = split_locations[i]
             feature_activations = split_activations[i]
