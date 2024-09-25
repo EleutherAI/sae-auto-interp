@@ -159,10 +159,9 @@ class FeatureCache:
 
                 with torch.no_grad():
                     buffer = {}
-                    with self.model.trace(batch, scan=False, validate=False):
+                    with self.model.trace(batch):
                         for module_path, submodule in self.submodule_dict.items():
                             buffer[module_path] = submodule.ae.output.save()
-
                     for module_path, latents in buffer.items():
                         self.cache.add(latents, batch_number, module_path)
 
@@ -204,18 +203,15 @@ class FeatureCache:
             for start, end in split_indices:
                 mask = (features >= start) & (features < end)
 
-                masked_locations = feature_locations[mask]
-                masked_activations = feature_activations[mask]
-                masked_locations[:,2] = masked_locations[:,2]-start
+                masked_locations = feature_locations[mask].numpy()
+                masked_activations = feature_activations[mask].half().numpy()
+                masked_locations[:,2] = masked_locations[:,2]-start.item()
                 if masked_locations[:,2].max() < 2**16 and masked_locations[:,0].max() < 2**16:
                     masked_locations = masked_locations.astype(np.uint16)
                 
                 else:
                     print(masked_locations[:,2].max(), masked_locations[:,0].max())
                     masked_locations = masked_locations.astype(np.uint32)
-                max_activation = masked_activations.max()
-                masked_activations = masked_activations/max_activation*10
-                masked_activations = masked_activations.round().astype(np.int8)
                 
                 module_dir = f"{save_dir}/{module_path}"
                 os.makedirs(module_dir, exist_ok=True)
