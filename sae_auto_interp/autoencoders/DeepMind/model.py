@@ -4,6 +4,8 @@ import torch.nn as nn
 from huggingface_hub import hf_hub_download
 
 # This is from the GemmaScope tutorial
+# https://colab.research.google.com/drive/17dQFYUYnuKnP6OwQPH9v_GSYUW5aj-Rp#scrollTo=WYfvS97fAFzq
+# Original repo: https://github.com/jbloomAus/SAELens 
 class JumpReLUSAE(nn.Module):
   def __init__(self, d_model, d_sae):
     super().__init__()
@@ -41,5 +43,3 @@ class JumpReLUSAE(nn.Module):
     model = cls(params['W_enc'].shape[0], params['W_enc'].shape[1])
     model.load_state_dict(pt_params)
     return model
-
-

@@ -4,7 +4,7 @@ base_cmd = "python /mnt/ssd-1/alexm/sae-auto-interp/counterfactual_pipeline.py "
 
 cfg_ranges = {
     "n_feats": [300],
-    "layer": [32],
+    "feat_layer": [24],
     "n_train": [10],
     "n_test": [30],
     "n_explanations": [5],

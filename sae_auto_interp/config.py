@@ -49,14 +49,17 @@ class FeatureConfig(Serializable):
 @dataclass
 class CacheConfig(Serializable):
 
-    dataset_repo: str = "kh4dien/fineweb-100m-sample"
-    """Dataset repository to use"""
+    dataset_repo: str = "EleutherAI/rpj-v2-sample"
+    """Repository to load dataset from"""
 
-    dataset_split: str = "train"
-    """Dataset split to use""" 
+    dataset_split: str = "train[:1%]"
+    """Split of dataset to load"""
 
     dataset_name: str = ""
-    """Dataset name to use"""
+    """Name of dataset to load"""
+
+    ctx_len: int = 64
+    """Length of each example"""
 
     batch_size: int = 32
     """Number of sequences to process in a batch"""
@@ -64,5 +67,5 @@ class CacheConfig(Serializable):
     n_tokens: int = 10_000_000
     """Number of tokens to cache"""
 
-    n_splits: int = 2
+    n_splits: int = 5
     """Number of splits to divide .safetensors into"""
