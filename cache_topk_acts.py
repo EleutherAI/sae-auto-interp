@@ -2,7 +2,8 @@ from nnsight import LanguageModel
 import torch
 from simple_parsing import ArgumentParser
 
-from sae_auto_interp.autoencoders import load_gemma_topk_latents
+from sae import SaeConfig
+from sae_auto_interp.autoencoders import load_random_eai_autoencoders
 from sae_auto_interp.config import CacheConfig
 from sae_auto_interp.features import FeatureCache
 from sae_auto_interp.utils import load_tokenized_data
@@ -13,16 +14,17 @@ SAVE_DIR = "/mnt/ssd-1/alexm/sae-auto-interp/cache/gemma_topk"
 
 def main(cfg: CacheConfig):
     model_name = "google/gemma-2-9b"
-    model = LanguageModel(model_name, device_map="auto", dispatch=True)
+    model = LanguageModel(model_name, device_map="auto", dispatch=True, torch_dtype=torch.float16)
 
-    model, submodule_dict = load_gemma_topk_latents(
+    submodule_dict, model = load_random_eai_autoencoders(
         model,
-        list(range(42)),
-        k=50,
+        list([24, 32, 41]),
+        cfg=SaeConfig(k=50, num_latents=131072, multi_topk=False),
+        seed=42,
     )
 
     module_filter = {
-        module : torch.arange(300).to('cuda:0') 
+        module : torch.arange(300).to('cuda') 
         for module in submodule_dict
     }
 
