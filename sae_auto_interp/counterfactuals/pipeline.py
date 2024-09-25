@@ -204,6 +204,7 @@ def main(
 
 
     def get_first_activating_text(example):
+        breakpoint()
         first_act_idx = (example.activations > 0).nonzero(as_tuple=True)[0][0]
         max_act = example.activations.max()
         return subject_tokenizer.decode(example.tokens[:first_act_idx + 1]), max_act.item()
