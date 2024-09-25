@@ -1,5 +1,5 @@
 from functools import partial
-from typing import List
+from typing import List, Any, Tuple, Optional, Dict
 import torch
 
 from sae import Sae
@@ -10,7 +10,30 @@ from .wrapper import AutoencoderLatents
 DEVICE = "cuda:0"
 
 
-def load_eai_autoencoders(model, ae_layers: list[int], weight_dir: str, module: str, randomize: bool = False, seed: int = 42, k: int = None):
+def load_eai_autoencoders(
+    model: Any,
+    ae_layers: List[int],
+    weight_dir: str,
+    module: str,
+    randomize: bool = False,
+    seed: int = 42,
+    k: Optional[int] = None
+) -> Tuple[Dict[str, Any], Any]:
+    """
+    Load EleutherAI autoencoders for specified layers and module.
+
+    Args:
+        model (Any): The model to load autoencoders for.
+        ae_layers (List[int]): List of layer indices to load autoencoders for.
+        weight_dir (str): Directory containing the autoencoder weights.
+        module (str): Module name ('mlp' or 'res').
+        randomize (bool, optional): Whether to randomize the autoencoder. Defaults to False.
+        seed (int, optional): Random seed for reproducibility. Defaults to 42.
+        k (Optional[int], optional): Number of top activations to keep. Defaults to None.
+
+    Returns:
+        Tuple[Dict[str, Any], Any]: A tuple containing the submodules dictionary and the edited model.
+    """
     submodules = {}
 
     for layer in ae_layers:
@@ -27,6 +50,10 @@ def load_eai_autoencoders(model, ae_layers: list[int], weight_dir: str, module: 
         if randomize:
             sae = Sae.load_from_hub(weight_dir,hookpoint=submodule, device=DEVICE).to(dtype=model.dtype)
             sae = Sae(sae.d_in, sae.cfg, device=DEVICE, dtype=model.dtype, decoder=False)
+            # Randomize the weights
+            sae.encoder.weight.data.uniform_(-1,1)
+            sae.W_dec = sae.encoder.weight.data.T
+            
         
         def _forward(sae, k,x):
             encoded = sae.pre_acts(x)
@@ -50,9 +77,9 @@ def load_eai_autoencoders(model, ae_layers: list[int], weight_dir: str, module: 
             sae, partial(_forward, sae, k), width=sae.d_in * sae.cfg.expansion_factor
         )
 
-        submodules[submodule._module_path] = submodule
+        submodules[submodule.path] = submodule
 
-    with model.edit(" "):
+    with model.edit("") as edited:
         for path, submodule in submodules.items():
             if "embed" not in path and "mlp" not in path:
                 acts = submodule.output[0]
@@ -60,4 +87,4 @@ def load_eai_autoencoders(model, ae_layers: list[int], weight_dir: str, module: 
                 acts = submodule.output
             submodule.ae(acts, hook=True)
 
-    return submodules
+    return submodules,edited
