@@ -138,7 +138,7 @@ def pool_max_activation_windows(
     ctx_indices = flat_indices//ctx_len
     index_within_ctx = flat_indices%ctx_len
     unique_ctx_indices,inverses,lengths = torch.unique_consecutive(ctx_indices,return_counts=True,return_inverse=True)
-    max_buffer = torch.segment_reduce(buffer_output.activations, 'max', lengths=lengths)
+    max_buffer = torch.segment_reduce(buffer_output.activations.float(), 'max', lengths=lengths)
 
     new_tensor=torch.zeros(len(unique_ctx_indices),ctx_len,dtype=buffer_output.activations.dtype)
     new_tensor[inverses,index_within_ctx]=buffer_output.activations

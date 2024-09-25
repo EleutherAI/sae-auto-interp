@@ -1,11 +1,12 @@
 import json
 import sys
+import inspect
 from tqdm.auto import tqdm
 from collections import Counter
 import pandas as pd
 
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Literal
 import fire
 import torch
 from ..config import ExperimentConfig, FeatureConfig
@@ -13,9 +14,24 @@ from ..features import (
     FeatureDataset,
     FeatureLoader
 )
+from ..autoencoders.OpenAI.model import TopK, ACTIVATIONS_CLASSES
 from ..features.constructors import default_constructor
 from ..features.samplers import sample
-from . import ExplainerNeuronFormatter, ExplainerInterventionExample, get_explainer_prompt, few_shot_prompts, few_shot_explanations, few_shot_generations, scorer_separator, JumpReLUSAE, fs_examples, garbage_collect, get_git_info, expl_given_generation_score
+from ..autoencoders.DeepMind.model import JumpReLUSAE
+from . import (
+    ExplainerNeuronFormatter, 
+    ExplainerInterventionExample, 
+    get_explainer_prompt, 
+    few_shot_prompts, 
+    few_shot_explanations, 
+    few_shot_generations, 
+    scorer_separator, 
+    fs_examples, 
+    garbage_collect, 
+    get_git_info, 
+    expl_given_generation_score, 
+    LAYER_TO_L0
+)
 from ..features import FeatureDataset
 from functools import partial
 import random
@@ -25,14 +41,20 @@ from huggingface_hub import hf_hub_download
 import numpy as np
 
 
-def get_feature_loader(feat_layer, n_feats, sae_model, n_train, n_test, n_quantiles):
+def get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, latents: Literal["sae", "neuron"] = "sae"):
     module = f".model.layers.{feat_layer}"
+    if latents == "sae":
+        width = 131072
+        raw_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/raw_features/google/gemma/131k"    
+    elif latents == "neuron":
+        width = 3584
+        raw_dir = "/mnt/ssd-1/alexm/sae-auto-interp/cache/gemma_topk"
     feature_dict = {f"{module}": torch.arange(0, n_feats)}
-    feature_cfg = FeatureConfig(width=131072, n_splits=5, max_examples=100000, min_examples=200)
+    feature_cfg = FeatureConfig(width=width, n_splits=5, max_examples=100000, min_examples=200)
     experiment_cfg = ExperimentConfig(n_random=0, example_ctx_len=64, n_quantiles=n_quantiles, n_examples_test=0, n_examples_train=(n_train + n_test) // n_quantiles, train_type="quantiles", test_type="even")
 
     dataset = FeatureDataset(
-            raw_dir=f"/mnt/ssd-1/gpaulo/SAE-Zoology/raw_features/{sae_model}",
+            raw_dir=raw_dir,
             cfg=feature_cfg,
             modules=[module],
             features=feature_dict,  # type: ignore
@@ -93,11 +115,26 @@ def tune_intervention_strength(
 
     return 10 ** log_str, avg_kls
 
+
+def consume_all_args(func):
+    """Fire doesn't raise an error when it encounters unconsumed arguments, it just ignores them.
+    This decorator makes it so that we raise an error when unconsumed arguments are found."""
+    def wrapper(*args, **kwargs):
+        sig = inspect.signature(func)
+        try:
+            bound_args = sig.bind(*args, **kwargs)
+        except TypeError as e:
+            raise ValueError(f"Unconsumed arguments found: {e}")
+        
+        return func(*bound_args.args, **bound_args.kwargs)
+    return wrapper
+
+
+@consume_all_args
 def main(
     device = "cuda",
     n_tokens_per_explainer_example = 5,
     feat_layer = 32,
-    sae_model = "gemma/131k",
     n_train=10,
     n_test=40,
     n_quantiles=5,
@@ -108,6 +145,7 @@ def main(
     random_explanations = False,
     explainer_name = "meta-llama/Meta-Llama-3.1-8B",
     run_prefix = "default",
+    latents: Literal["sae", "neuron"] = "sae",
 ):
 
     subject_name = "google/gemma-2-9b"
@@ -124,7 +162,7 @@ def main(
         json.dump(config, f)
     assert not save_path.exists(), f"Save path {save_path} already exists"
 
-    loader = get_feature_loader(feat_layer, n_feats, sae_model, n_train, n_test, n_quantiles)
+    loader = get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, latents=latents)
 
     subject = AutoModelForCausalLM.from_pretrained(subject_name, torch_dtype=torch.bfloat16).to(device)
     subject_tokenizer = AutoTokenizer.from_pretrained(subject_name)
@@ -132,26 +170,38 @@ def main(
     subject.config.pad_token_id = subject_tokenizer.eos_token_id
     subject_layers = subject.model.layers
     
-    path_to_params = hf_hub_download(
-        repo_id="google/gemma-scope-9b-pt-res",
-        filename=f"layer_{feat_layer}/width_131k/average_l0_51/params.npz",
-        force_download=False,
-    )
+    if latents == "sae":
+        path_to_params = hf_hub_download(
+            repo_id="google/gemma-scope-9b-pt-res",
+            filename=f"layer_{feat_layer}/width_131k/average_l0_{LAYER_TO_L0[feat_layer]}/params.npz",
+            force_download=False,
+        )
 
-    params = np.load(path_to_params)
-    pt_params = {k: torch.from_numpy(v).to(device).to(torch.bfloat16) for k, v in params.items()}
-        
-    sae = JumpReLUSAE(params['W_enc'].shape[0], params['W_enc'].shape[1]).to(device).to(torch.bfloat16)
-    sae.load_state_dict(pt_params)
+        params = np.load(path_to_params)
+        pt_params = {k: torch.from_numpy(v).to(device).to(torch.bfloat16) for k, v in params.items()}
+            
+        sae = JumpReLUSAE(params['W_enc'].shape[0], params['W_enc'].shape[1]).to(device).to(torch.bfloat16)
+        sae.load_state_dict(pt_params)
+    
+        def clamping_intervention(module, input, output, feat_idx=None, clamp_value=0.0, position: int | slice = slice(0, 0)):
+            hiddens = output[0]  # the later elements of the tuple are the key value cache
+            
+            encoding = sae.encode(hiddens)
+            error = hiddens - sae.decode(encoding)
+            encoding[:, position, feat_idx] = clamp_value
+            hiddens = sae.decode(encoding) + error
+            return (hiddens, *output[1:])
+    else:
+        def clamping_intervention(module, input, output, feat_idx=None, clamp_value=0.0, position: int | slice = slice(0, 0)):
+            hiddens = output[0]  # the later elements of the tuple are the key value cache
+            
+            # TODO: it is pretty janky that we're hard-coding this
+            # I should check to make sure the acts match
+            topk = TopK(50, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
+            
+            hiddens[:, position, feat_idx] += clamp_value - topk(hiddens)[:, position, feat_idx]
+            return (hiddens, *output[1:])
 
-    def clamping_intervention(module, input, output, feat_idx=None, clamp_value=0.0, position: int | slice = slice(0, 0)):
-        hiddens = output[0]  # the later elements of the tuple are the key value cache
-        
-        encoding = sae.encode(hiddens)
-        error = hiddens - sae.decode(encoding)
-        encoding[:, position, feat_idx] = clamp_value
-        hiddens = sae.decode(encoding) + error
-        return (hiddens, *output[1:])
 
     def get_first_activating_text(example):
         first_act_idx = (example.activations > 0).nonzero(as_tuple=True)[0][0]
@@ -231,7 +281,8 @@ def main(
 
     def load_explainer():
         subject.cpu()
-        sae.cpu()
+        if "sae" in locals():
+            sae.cpu()
         garbage_collect()
 
         # get explainer results

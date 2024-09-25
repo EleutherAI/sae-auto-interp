@@ -202,25 +202,30 @@ class FeatureCache:
             features = feature_locations[:, 2]
 
             for start, end in split_indices:
+                module_dir = f"{save_dir}/{module_path}"
+                os.makedirs(module_dir, exist_ok=True)
+                output_file = f"{module_dir}/{start}_{end}.safetensors"
+                
                 mask = (features >= start) & (features < end)
+
+                if mask.sum() == 0:
+                    split_data = {
+                        "locations": np.array([], dtype=np.uint32),
+                        "activations": np.array([], dtype=np.int8),
+                    }
+                    save_file(split_data, output_file)
+                    continue
 
                 masked_locations = feature_locations[mask]
                 masked_activations = feature_activations[mask]
-                masked_locations[:,2] = masked_locations[:,2]-start
+                masked_locations[:,2] = masked_locations[:,2] - start
                 if masked_locations[:,2].max() < 2**16 and masked_locations[:,0].max() < 2**16:
-                    masked_locations = masked_locations.astype(np.uint16)
-                
+                    masked_locations = np.array(masked_locations, dtype=np.uint16)
                 else:
-                    print(masked_locations[:,2].max(), masked_locations[:,0].max())
-                    masked_locations = masked_locations.astype(np.uint32)
+                    masked_locations = np.array(masked_locations, dtype=np.uint32)
                 max_activation = masked_activations.max()
                 masked_activations = masked_activations/max_activation*10
-                masked_activations = masked_activations.round().astype(np.int8)
-                
-                module_dir = f"{save_dir}/{module_path}"
-                os.makedirs(module_dir, exist_ok=True)
-
-                output_file = f"{module_dir}/{start}_{end}.safetensors"
+                masked_activations = np.array(masked_activations.round(), dtype=np.int8)
 
                 split_data = {
                     "locations": masked_locations,
