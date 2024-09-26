@@ -6,7 +6,7 @@ from .generation.generation import GenerationScorer
 from .scorer import Scorer
 from .simulator.oai_simulator import OpenAISimulator
 from .surprisal.surprisal import SurprisalScorer
-
+from .embedding.embedding import EmbedingScorer
 __all__ = [
     "FuzzingScorer",
     "GenerationScorer",
@@ -17,4 +17,5 @@ __all__ = [
     "get_neighbors",
     "load_neighbors",
     "SurprisalScorer",
+    "EmbedingScorer"
 ]
