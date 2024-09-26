@@ -9,7 +9,8 @@ You will be given a list of text examples on which special words are selected an
 - Try to produce a concise final description. Simply describe the text features that are common in the examples, and what patterns you found.
 - If the examples are uninformative, you don't need to mention them. Don't focus on giving examples of important tokens, but try to summarize the patterns found in the examples.
 - Do not mention the marker tokens (<< >>) in your explanation.
-- The last line of your response must be the formatted explanation."""
+- Do not make lists of possible explanations. Keep you explanation short and concise.
+- The last line of your response must be the formatted explanation, using [EXPLANATION]:"""
 
 ### EXAMPLE 1 ###
 
