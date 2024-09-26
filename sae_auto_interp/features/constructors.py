@@ -132,16 +132,16 @@ def pool_max_activation_windows(
         ctx_len (int): The context length.
         max_examples (int): The maximum number of examples.
     """
-    buffer_output.activations = buffer_output.activations.to(torch.float32)  # type: ignore
+    activations = buffer_output.activations.to(torch.float32)  # type: ignore
     flat_indices = buffer_output.locations[:, 0] * tokens.shape[1] + buffer_output.locations[:, 1]
     num_contexts = tokens.numel()//ctx_len
     ctx_indices = flat_indices//ctx_len
     index_within_ctx = flat_indices%ctx_len
     unique_ctx_indices,inverses,lengths = torch.unique_consecutive(ctx_indices,return_counts=True,return_inverse=True)
-    max_buffer = torch.segment_reduce(buffer_output.activations, 'max', lengths=lengths)
+    max_buffer = torch.segment_reduce(activations, 'max', lengths=lengths)
 
-    new_tensor=torch.zeros(len(unique_ctx_indices),ctx_len,dtype=buffer_output.activations.dtype)
-    new_tensor[inverses,index_within_ctx]=buffer_output.activations
+    new_tensor=torch.zeros(len(unique_ctx_indices),ctx_len,dtype=activations.dtype)
+    new_tensor[inverses,index_within_ctx]=activations
 
     buffer_tokens = tokens.reshape(-1,ctx_len)
     buffer_tokens = buffer_tokens[unique_ctx_indices]
