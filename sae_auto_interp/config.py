@@ -29,8 +29,6 @@ class ExperimentConfig(Serializable):
     """Type of sampler to use for testing"""
 
 
-
-
 @dataclass
 class FeatureConfig(Serializable):
     width: int 

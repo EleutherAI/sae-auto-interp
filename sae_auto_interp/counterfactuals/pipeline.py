@@ -243,7 +243,7 @@ def main(
 
     # get intervention strengths
     # we use the test set to tune the intervention strengths because we want the KL to be ~exactly `kl_threshold` on the test set
-    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Tuning intervention strengths")):
+    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Tuning intervention strengths", total=len(all_scorer_examples))):
         garbage_collect()
         feat_idx = record.feature.feature_index
         intervention_strength, avg_kls = tune_intervention_strength(feat_idx, feat_layer, [ids for ids, _ in scorer_examples], kl_threshold, get_subject_logits)
@@ -253,7 +253,7 @@ def main(
         })
 
     # do generation
-    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Generating completions")):
+    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Generating completions", total=len(all_scorer_examples))):
         garbage_collect()
         feat_idx = record.feature.feature_index
         
@@ -309,7 +309,7 @@ def main(
         print(f"{Counter(random_explanations_pool)=}")
         random_explanations_pool = list(set(random_explanations_pool))
         random.shuffle(random_explanations_pool)
-        for iter, row in enumerate(tqdm(all_results, desc="Gathering random explanations")):
+        for iter, row in enumerate(tqdm(all_results, desc="Gathering random explanations", total=len(all_results))):
             expls = random.choices(random_explanations_pool, k=n_explanations)
             all_results[iter].update({
                 "explanations": expls,
@@ -320,7 +320,7 @@ def main(
         explainer, explainer_tokenizer = load_explainer()
     else:
         # get intervention results
-        for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer")):
+        for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer", total=len(all_explainer_examples))):
             garbage_collect()        
             feat_idx = record.feature.feature_index
 
@@ -358,7 +358,7 @@ def main(
             neuron_prompter = ExplainerNeuronFormatter(intervention_examples=intervention_examples)
 
             # TODO: improve the few-shot examples
-            explainer_prompt = get_explainer_prompt(neuron_prompter, fs_examples)
+            explainer_prompt = get_explainer_prompt(neuron_prompter, fs_examples)            
             explainer_input_ids = explainer_tokenizer(explainer_prompt, return_tensors="pt").input_ids.to(device)
             with torch.inference_mode():
                 samples = explainer.generate(

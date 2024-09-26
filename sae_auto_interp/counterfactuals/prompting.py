@@ -28,42 +28,42 @@ class ExplainerNeuronFormatter:
 
 
 def get_explainer_prompt(neuron_prompter: ExplainerNeuronFormatter, few_shot_examples: list[ExplainerNeuronFormatter] | None = None) -> str:
-        prompt = "We're studying neurons in a transformer model. We want to know how intervening on them affects the model's output.\n\n" \
-            "For each neuron, we'll show you a few prompts where we intervened on that neuron at the final token position, and the tokens whose logits increased the most.\n\n" \
-            "The tokens are shown in descending order of their probability increase, given in parentheses. Your job is to give a short summary of what outputs the neuron promotes.\n\n"
-        
-        i = 1
-        for few_shot_example in few_shot_examples or []:
-            assert few_shot_example.explanation is not None
-            prompt += f"Neuron {i}\n" + few_shot_example.text() + "\n\n"
-            i += 1
+    prompt = "We're studying neurons in a transformer model. We want to know how intervening on them affects the model's output.\n\n" \
+        "For each neuron, we'll show you a few prompts where we intervened on that neuron at the final token position, and the tokens whose logits increased the most.\n\n" \
+        "The tokens are shown in descending order of their probability increase, given in parentheses. Your job is to give a short summary of what outputs the neuron promotes.\n\n"
+    
+    i = 1
+    for few_shot_example in few_shot_examples or []:
+        assert few_shot_example.explanation is not None
+        prompt += f"Neuron {i}\n" + few_shot_example.text() + "\n\n"
+        i += 1
 
-        prompt += f"Neuron {i}\n"
-        prompt += neuron_prompter.text()
+    prompt += f"Neuron {i}\n"
+    prompt += neuron_prompter.text()
 
-        return prompt
+    return prompt
 
 
 fs_examples = [
     ExplainerNeuronFormatter(
         intervention_examples=[
             ExplainerInterventionExample(
-                prompt="My favorite food is",
-                top_tokens=[" oranges", " bananas", " apples"],
-                top_p_increases=[0.81, 0.09, 0.02]
+                prompt="Given 4x is less than 10,",
+                top_tokens=[" 4", " 10", " 40", " 2"],
+                top_p_increases=[0.11, 0.04, 0.02, 0.01]
             ),
             ExplainerInterventionExample(
-                prompt="Whenever I would see",
-                top_tokens=[" fruit", " a", " apples", " red"],
-                top_p_increases=[0.09, 0.06, 0.06, 0.05]
+                prompt="For some reason",
+                top_tokens=[" one", " 1", " fr"],
+                top_p_increases=[0.14, 0.01, 0.01]
             ),
             ExplainerInterventionExample(
-                prompt="I like to eat",
-                top_tokens=[" fro", " fruit", " oranges", " bananas", " strawberries"],
-                top_p_increases=[0.14, 0.13, 0.11, 0.10, 0.03]
+                prompt="insurance does not cover claims for accounts with",
+                top_tokens=[" one", " more", " 10"],
+                top_p_increases=[0.10, 0.02, 0.01]
             )
         ],
-        explanation="fruits"
+        explanation="numbers"
     ),
     ExplainerNeuronFormatter(
         intervention_examples=[
@@ -88,23 +88,28 @@ fs_examples = [
     ExplainerNeuronFormatter(
         intervention_examples=[
             ExplainerInterventionExample(
-                prompt="Given 4x is less than 10,",
-                top_tokens=[" 4", " 10", " 40", " 2"],
-                top_p_increases=[0.11, 0.04, 0.02, 0.01]
+                prompt="My favorite food is",
+                top_tokens=[" oranges", " bananas", " apples"],
+                top_p_increases=[0.81, 0.09, 0.029]
             ),
             ExplainerInterventionExample(
-                prompt="For some reason",
-                top_tokens=[" one", " 1", " fr"],
-                top_p_increases=[0.14, 0.01, 0.01]
+                prompt=" to eat",
+                top_tokens=[" fro", " fruit", " oranges", " bananas", " strawberries"],
+                top_p_increases=[0.14, 0.13, 0.11, 0.1, 0.032]
             ),
             ExplainerInterventionExample(
-                prompt="insurance does not cover claims for accounts with",
-                top_tokens=[" one", " more", " 10"],
-                top_p_increases=[0.10, 0.02, 0.01]
-            )
+                prompt="",
+                top_tokens=["Oranges", " the", " oranges", " sweet", "Apple", "\"", " apples", " a", " bananas", " red"],
+                top_p_increases=[0.038, 0.025, 0.024, 0.019, 0.018, 0.017, 0.016, 0.015, 0.014, 0.013],
+            ),
+            ExplainerInterventionExample(
+                prompt="Whenever they would see",
+                top_tokens=[" fruit", " a", " apples", " red"],
+                top_p_increases=[0.09, 0.06, 0.06, 0.05]
+            ),
         ],
-        explanation="numbers"
-    )
+        explanation="fruits and vegetables"
+    ),
 ]
 
 scorer_separator = "<PASSAGE>\n"
