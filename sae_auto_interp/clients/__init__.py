@@ -1,5 +1,4 @@
 from .client import Client
-from .huggingface import HuggingFace
 from .local import Local
 from .offline import Offline
 from .openrouter import OpenRouter
