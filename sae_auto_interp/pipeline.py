@@ -1,6 +1,6 @@
 import asyncio
 from functools import wraps
-from typing import Callable, AsyncIterable
+from typing import Callable, AsyncIterable, Any, List
 
 from tqdm.asyncio import tqdm
 
@@ -10,38 +10,25 @@ import cProfile
 import io
 import pstats
 
-def process_wrapper(function, preprocess=None, postprocess=None):
+def process_wrapper(function: Callable, preprocess: Callable = None, postprocess: Callable = None) -> Callable:
     """
     Wraps a function with optional preprocessing and postprocessing steps.
-    Also adds timing and profiling capabilities.
+
+    Args:
+        function (Callable): The main function to be wrapped.
+        preprocess (Callable, optional): A function to preprocess the input. Defaults to None.
+        postprocess (Callable, optional): A function to postprocess the output. Defaults to None.
+
+    Returns:
+        Callable: The wrapped function.
     """
     @wraps(function)
-    async def wrapped(input):
-        # Preprocess step
+    async def wrapped(input: Any):
         if preprocess is not None:
             input = preprocess(input)
 
-        ## Profiling setup
-        # pr = cProfile.Profile()
-        # pr.enable()
-
-        # Timing and function execution
-        #start_time = time.time()
         results = await function(input)
-        #end_time = time.time()
-        #print(f"Finished processing item, {results}")
-        # Profiling teardown
-        # pr.disable()
-        # s = io.StringIO()
-        # ps = pstats.Stats(pr, stream=s).sort_stats('cumulative')
-        # ps.print_stats()
-
-        # Logging
-        #print(f"Function {function.name} took {end_time - start_time:.2f} seconds")
-        #print(f"Profiling results for {function.name}:")
-        #print(s.getvalue())
-
-        # Postprocess step
+        
         if postprocess is not None:
             results = postprocess(results)
         
@@ -52,14 +39,27 @@ def process_wrapper(function, preprocess=None, postprocess=None):
 
 class Pipe:
     """
-    Represents a pipe of functions to be executed with the same imput.
+    Represents a pipe of functions to be executed with the same input.
     """
-    def __init__(
-        self,
-        *functions: list[Callable],
-    ):
+    def __init__(self, *functions: List[Callable]):
+        """
+        Initialize the Pipe with a list of functions.
+
+        Args:
+            *functions (List[Callable]): Functions to be executed in the pipe.
+        """
         self.functions = functions
-    async def __call__(self, input):
+
+    async def __call__(self, input: Any) -> List[Any]:
+        """
+        Execute all functions in the pipe with the given input.
+
+        Args:
+            input (Any): The input to be processed by all functions.
+
+        Returns:
+            List[Any]: The results of all functions.
+        """
         tasks = [function(input) for function in self.functions]
 
         return await asyncio.gather(*tasks)
@@ -70,10 +70,25 @@ class Pipeline:
     """
     Manages the execution of multiple pipes, handling concurrency and progress tracking.
     """
-    def __init__(self, *pipes):
+    def __init__(self, *pipes: List[Pipe]):
+        """
+        Initialize the Pipeline with a list of pipes.
+
+        Args:
+            *pipes (List[Pipe]): Pipes to be executed in the pipeline.
+        """
         self.pipes = pipes
 
-    async def run(self, max_concurrent: int = 10):
+    async def run(self, max_concurrent: int = 10) -> List[Any]:
+        """
+        Run the pipeline with a maximum number of concurrent tasks.
+
+        Args:
+            max_concurrent (int, optional): Maximum number of concurrent tasks. Defaults to 10.
+
+        Returns:
+            List[Any]: The results of all processed items.
+        """
         results = []
         semaphore = asyncio.Semaphore(max_concurrent)
         tasks = set()
@@ -105,9 +120,15 @@ class Pipeline:
         progress_bar.close()
         return results
 
-    async def generate_items(self):
+    async def generate_items(self) -> AsyncIterable[Any]:
         """
         Generates items from the first pipe, which can be an async iterable or a callable.
+
+        Yields:
+            Any: Items generated from the first pipe.
+
+        Raises:
+            TypeError: If the first pipe is neither an async iterable nor a callable.
         """
         first_pipe = self.pipes[0]
         
@@ -121,19 +142,20 @@ class Pipeline:
         else:
             raise TypeError("The first pipe must be an async iterable or a callable")
 
-    async def process_item(self, item,semaphore,count):
+    async def process_item(self, item: Any, semaphore: asyncio.Semaphore, count: int) -> Any:
         """
         Processes a single item through all pipes except the first one.
-        Includes timing for each pipe.
+
+        Args:
+            item (Any): The item to be processed.
+            semaphore (asyncio.Semaphore): Semaphore for controlling concurrency.
+            count (int): The count of the current item being processed.
+
+        Returns:
+            Any: The processed item.
         """
         async with semaphore:
             result = item
-            for i, pipe in enumerate(self.pipes[1:], start=1):  # Skip the first pipe (FeatureLoader)
-                #start_time = time.time()
-                #print(f"Processing item {count} in pipe {i}")
-                #if asyncio.iscoroutinefunction(pipe):
+            for pipe in self.pipes[1:]:
                 result = await pipe(result)
-                #end_time = time.time()
-                #print(f"Pipe {i} took {end_time - start_time:.2f} seconds")
-        #print(f"Finished processing item {count}")
         return result
