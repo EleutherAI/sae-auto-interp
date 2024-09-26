@@ -11,6 +11,7 @@ cfg_ranges = {
     "kl_threshold": [0.33, 1.0, 3.0],
     "random_explanations": [False],
     "latents": ["random"],
+    "raise_if_exists": [False],
 }
 
 keys, values = zip(*cfg_ranges.items())
