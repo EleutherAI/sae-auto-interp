@@ -140,6 +140,7 @@ def main(
     random_explanations = False,
     explainer_name = "meta-llama/Meta-Llama-3.1-8B",
     run_prefix = "default",
+    raise_if_exists = True,
     latents: Literal["sae", "random"] = "sae",
 ):
     assert latents in ["sae", "random"]
@@ -149,13 +150,15 @@ def main(
     config["git_info"] = get_git_info()
     config["run_command"] = ' '.join(sys.argv)
 
-    save_dir = Path(__file__).parent.parent.parent / f"counterfactual_results/{run_prefix}_{subject_name.split('/')[-1]}"
+    path_root = Path(__file__).parent.parent.parent
+    save_dir = path_root / f"counterfactual_results/{run_prefix}_{subject_name.split('/')[-1]}"
     save_path = save_dir / "generations.json"
     config_save_path = save_dir / "config.json"
     save_dir.mkdir(parents=True, exist_ok=True)
     with open(config_save_path, "w") as f:
         json.dump(config, f)
-    assert not save_path.exists() or "debug" in run_prefix, f"Save path {save_path} already exists"
+    if raise_if_exists:
+        assert not save_path.exists() or "debug" in run_prefix, f"Save path {save_path} already exists"
 
     loader = get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, sae_width, latents=latents)
 
@@ -179,7 +182,7 @@ def main(
     
     else:
         k = 50
-        params = torch.load(f"cache/gemma_topk/layer_{feat_layer}/width_{sae_width}/k_{k}_seed_42/params.pt")
+        params = torch.load(path_root / f"cache/gemma_topk/layer_{feat_layer}/width_{sae_width}/k_{k}_seed_42/params.pt")
         sae = Autoencoder(sae_width, params["encoder.weight"].shape[1], activation=ACTIVATIONS_CLASSES["TopK"](k=k), normalize=False, tied=False)
         sae.encoder.weight.data = params["encoder.weight"]
         sae.decoder.weight.data = params["decoder.weight"]
@@ -226,161 +229,176 @@ def main(
             out = subject.generate(
                 inputs,
                 max_new_tokens=max_generation_length,
-                num_return_sequences=1,  # TODO: maybe things could speed up if we use larger n, or batch sizes
+                num_return_sequences=1,
                 temperature=1.0,
                 do_sample=True,
             )
 
-        input = subject_tokenizer.decode(ids)
-        return subject_tokenizer.decode(out[0]).removeprefix(subject_tokenizer.bos_token).removeprefix(input)
+        outs = []
+        for i in range(out.shape[0]):
+            input = subject_tokenizer.decode(ids[i])
+            out = subject_tokenizer.decode(out[i])
+            outs.append(out.removeprefix(subject_tokenizer.bos_token).removeprefix(input))
+        return outs
 
-    # random.sample is without replacement
-    pools = [random.sample(record.train, len(record.train)) for record in loader]  # type: ignore
-    all_explainer_examples = [[get_first_activating_text(e) for e in pool[:n_train]] for pool in pools]
-    all_scorer_examples = [[get_first_activating_text(e) for e in pool[n_train:]] for pool in pools]
+    if not save_path.exists():
+        # random.sample is without replacement
+        pools = [random.sample(record.train, len(record.train)) for record in loader]  # type: ignore
+        all_explainer_examples = [[get_first_activating_text(e) for e in pool[:n_train]] for pool in pools]
+        all_scorer_examples = [[get_first_activating_text(e) for e in pool[n_train:]] for pool in pools]
 
-    all_results = [dict() for _ in range(len(all_scorer_examples))]
+        all_results = [dict() for _ in range(len(all_scorer_examples))]
 
-    # get intervention strengths
-    # we use the test set to tune the intervention strengths because we want the KL to be ~exactly `kl_threshold` on the test set
-    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Tuning intervention strengths", total=len(all_scorer_examples))):
-        garbage_collect()
-        feat_idx = record.feature.feature_index
-        intervention_strength, avg_kls = tune_intervention_strength(feat_idx, feat_layer, [ids for ids, _ in scorer_examples], kl_threshold, get_subject_logits)
-        all_results[iter].update({
-            "intervention_strength": intervention_strength,
-            "avg_kl": avg_kls[intervention_strength],
-        })
+        # get intervention strengths
+        # we use the test set to tune the intervention strengths because we want the KL to be ~exactly `kl_threshold` on the test set
+        for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Tuning intervention strengths", total=len(all_scorer_examples))):
+            garbage_collect()
+            feat_idx = record.feature.feature_index
+            intervention_strength, avg_kls = tune_intervention_strength(feat_idx, feat_layer, [ids for ids, _ in scorer_examples], kl_threshold, get_subject_logits)
+            all_results[iter].update({
+                "intervention_strength": intervention_strength,
+                "avg_kl": avg_kls[intervention_strength],
+            })
 
-    # do generation
-    for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Generating completions", total=len(all_scorer_examples))):
-        garbage_collect()
-        feat_idx = record.feature.feature_index
+        # do generation
+        for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Generating completions", total=len(all_scorer_examples))):
+            garbage_collect()
+            feat_idx = record.feature.feature_index
+            
+            # get completions
+            completions = []
+            generation_batch_size = 4
+            for i in range(0, len(scorer_examples), generation_batch_size):
+                batch_ids = [ids for ids, _ in scorer_examples[i:i+generation_batch_size]]
+                for ii in range(len(batch_ids)):
+                    prompt = subject_tokenizer.decode(batch_ids[ii]).removeprefix(subject_tokenizer.bos_token)
+                    completions.append({"text": prompt, "max_act": scorer_examples[i + ii][1], "completions": dict()})
+                
+                # get generation with and without intervention
+                for name, strength in [("clean", None), ("intervened", all_results[iter]["intervention_strength"])]:
+                    outs = generate_with_intervention(batch_ids, feat_layer, clamp_value=strength, feat_idx=feat_idx)
+                    for ii in range(len(batch_ids)):
+                        completions[-1]["completions"][name] = outs[ii]
+
+                # prompt = subject_tokenizer.decode(ids)
+                # completions.append({"text": prompt, "max_act": max_act, "completions": dict()})
+                # for name, strength in [("clean", None), ("intervened", all_results[iter]["intervention_strength"])]:
+                #     completions[-1]["completions"][name] = generate_with_intervention(ids, feat_layer, clamp_value=strength, feat_idx=feat_idx)
+            
+            all_results[iter].update({
+                "feat_idx": feat_idx,
+                "scorer_examples": [subject_tokenizer.decode(ids) for ids, _ in scorer_examples],
+                "completions": completions,
+            })
+            if (iter - 1) % 10 == 0:
+                all_df = pd.DataFrame(all_results)
+                all_df.to_json(save_path)
+        all_df = pd.DataFrame(all_results)
+        all_df.to_json(save_path)
+
+        def load_explainer():
+            subject.cpu()
+            if "sae" in locals():
+                sae.cpu()
+            garbage_collect()
+
+            # get explainer results
+            explainer = AutoModelForCausalLM.from_pretrained(
+                explainer_name,
+                device_map={"": device},
+                torch_dtype=torch.bfloat16,
+                quantization_config=BitsAndBytesConfig(
+                    load_in_4bit=True,
+                    bnb_4bit_compute_dtype=torch.bfloat16,
+                    bnb_4bit_use_double_quant=True,
+                    bnb_4bit_quant_type="nf4",
+                )
+            )
+            explainer_tokenizer = AutoTokenizer.from_pretrained(explainer_name)
+            explainer_tokenizer.pad_token = explainer_tokenizer.eos_token
+            explainer.config.pad_token_id = explainer_tokenizer.eos_token_id
+            explainer.generation_config.pad_token_id = explainer_tokenizer.eos_token_id
+
+            return explainer, explainer_tokenizer
         
-        # get completions
-        completions = []
-        for ids, max_act in scorer_examples:            
-            # get generation with and without intervention
-            prompt = subject_tokenizer.decode(ids)
-            completions.append({"text": prompt.removeprefix(subject_tokenizer.bos_token), "max_act": max_act, "completions": dict()})
-            for name, strength in [("clean", None), ("intervened", all_results[iter]["intervention_strength"])]:
-                completions[-1]["completions"][name] = generate_with_intervention(ids, feat_layer, clamp_value=strength, feat_idx=feat_idx)
-        
-        all_results[iter].update({
-            "feat_idx": feat_idx,
-            "scorer_examples": [subject_tokenizer.decode(ids) for ids, _ in scorer_examples],
-            "completions": completions,
-        })
-        if (iter - 1) % 10 == 0:
+        if random_explanations:
+            random_explanations_source = path_root / "counterfactual_results/nf=300_l=32_nt=10_nt=40_ne=10_ss=10_rrd=False_re=False_gemma-2-9b/generations_scores.json"  # TODO: change
+            random_explanations_df = pd.read_json(random_explanations_source)
+            random_explanations_pool = [e for expl in random_explanations_df["explanations"] for e in expl]
+            print(f"{Counter(random_explanations_pool)=}")
+            random_explanations_pool = list(set(random_explanations_pool))
+            random.shuffle(random_explanations_pool)
+            for iter, row in enumerate(tqdm(all_results, desc="Gathering random explanations", total=len(all_results))):
+                expls = random.choices(random_explanations_pool, k=n_explanations)
+                all_results[iter].update({
+                    "explanations": expls,
+                    "explainer_prompts": [None] * n_explanations,
+                    "explainer_examples": [None] * n_explanations,
+                    "neuron_prompter": None,
+                })
+            explainer, explainer_tokenizer = load_explainer()
+        else:
+            # get intervention results
+            for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer", total=len(all_explainer_examples))):
+                garbage_collect()        
+                feat_idx = record.feature.feature_index
+
+                intervention_examples = []
+                for ids, act in explainer_examples:
+                    clean_logits = get_subject_logits(ids, feat_layer, clamp_value=None, feat_idx=feat_idx)
+                    intervened_logits = get_subject_logits(ids, feat_layer, clamp_value=all_results[iter]["intervention_strength"], feat_idx=feat_idx)
+                    top_probs = (intervened_logits.softmax(dim=-1) - clean_logits.softmax(dim=-1)).topk(n_tokens_per_explainer_example)
+                    
+                    top_tokens = [subject_tokenizer.decode(i) for i in top_probs.indices]
+                    top_p_increases = top_probs.values.tolist()
+                    prompt = subject_tokenizer.decode(ids)
+                    intervention_examples.append(
+                        ExplainerInterventionExample(
+                            prompt=prompt.removeprefix(subject_tokenizer.bos_token),
+                            top_tokens=top_tokens,
+                            top_p_increases=top_p_increases
+                        )
+                    )
+                all_results[iter].update({
+                    "explainer_intervention_examples": intervention_examples,
+                    "explainer_examples": [subject_tokenizer.decode(ids) for ids, _ in explainer_examples],
+                })
+                if (iter - 1) % 10 == 0:
+                    all_df = pd.DataFrame(all_results)
+                    all_df.to_json(save_path)
             all_df = pd.DataFrame(all_results)
             all_df.to_json(save_path)
-    all_df = pd.DataFrame(all_results)
-    all_df.to_json(save_path)
 
-    def load_explainer():
-        subject.cpu()
-        if "sae" in locals():
-            sae.cpu()
-        garbage_collect()
+            explainer, explainer_tokenizer = load_explainer()
 
-        # get explainer results
-        explainer = AutoModelForCausalLM.from_pretrained(
-            explainer_name,
-            device_map={"": device},
-            torch_dtype=torch.bfloat16,
-            quantization_config=BitsAndBytesConfig(
-                load_in_4bit=True,
-                bnb_4bit_compute_dtype=torch.bfloat16,
-                bnb_4bit_use_double_quant=True,
-                bnb_4bit_quant_type="nf4",
-            )
-        )
-        explainer_tokenizer = AutoTokenizer.from_pretrained(explainer_name)
-        explainer_tokenizer.pad_token = explainer_tokenizer.eos_token
-        explainer.config.pad_token_id = explainer_tokenizer.eos_token_id
-        explainer.generation_config.pad_token_id = explainer_tokenizer.eos_token_id
+            for iter, row in enumerate(tqdm(all_results, desc="Generating explanations")):
+                garbage_collect()
+                intervention_examples = row["explainer_intervention_examples"]
+                neuron_prompter = ExplainerNeuronFormatter(intervention_examples=intervention_examples)
 
-        return explainer, explainer_tokenizer
-    
-    if random_explanations:
-        random_explanations_source = Path(__file__).parent.parent.parent / "counterfactual_results/nf=300_l=32_nt=10_nt=40_ne=10_ss=10_rrd=False_re=False_gemma-2-9b/generations_scores.json"  # TODO: change
-        random_explanations_df = pd.read_json(random_explanations_source)
-        random_explanations_pool = [e for expl in random_explanations_df["explanations"] for e in expl]
-        print(f"{Counter(random_explanations_pool)=}")
-        random_explanations_pool = list(set(random_explanations_pool))
-        random.shuffle(random_explanations_pool)
-        for iter, row in enumerate(tqdm(all_results, desc="Gathering random explanations", total=len(all_results))):
-            expls = random.choices(random_explanations_pool, k=n_explanations)
-            all_results[iter].update({
-                "explanations": expls,
-                "explainer_prompts": [None] * n_explanations,
-                "explainer_examples": [None] * n_explanations,
-                "neuron_prompter": None,
-            })
-        explainer, explainer_tokenizer = load_explainer()
-    else:
-        # get intervention results
-        for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer", total=len(all_explainer_examples))):
-            garbage_collect()        
-            feat_idx = record.feature.feature_index
+                explainer_prompt = get_explainer_prompt(neuron_prompter, fs_examples)            
+                explainer_input_ids = explainer_tokenizer(explainer_prompt, return_tensors="pt").input_ids.to(device)
+                with torch.inference_mode():
+                    samples = explainer.generate(
+                        explainer_input_ids,
+                        max_new_tokens=20,
+                        eos_token_id=explainer_tokenizer.encode("\n")[-1],
+                        num_return_sequences=n_explanations,
+                        temperature=0.7,
+                        do_sample=True,
+                    )[:, explainer_input_ids.shape[1]:]
+                explanations = [explainer_tokenizer.decode(sample).split("\n")[0].strip() for sample in samples]
 
-            intervention_examples = []
-            for ids, act in explainer_examples:
-                clean_logits = get_subject_logits(ids, feat_layer, clamp_value=None, feat_idx=feat_idx)
-                intervened_logits = get_subject_logits(ids, feat_layer, clamp_value=all_results[iter]["intervention_strength"], feat_idx=feat_idx)
-                top_probs = (intervened_logits.softmax(dim=-1) - clean_logits.softmax(dim=-1)).topk(n_tokens_per_explainer_example)
-                
-                top_tokens = [subject_tokenizer.decode(i) for i in top_probs.indices]
-                top_p_increases = top_probs.values.tolist()
-                prompt = subject_tokenizer.decode(ids)
-                intervention_examples.append(
-                    ExplainerInterventionExample(
-                        prompt=prompt.removeprefix(subject_tokenizer.bos_token),
-                        top_tokens=top_tokens,
-                        top_p_increases=top_p_increases
-                    )
-                )
-            all_results[iter].update({
-                "explainer_intervention_examples": intervention_examples,
-                "explainer_examples": [subject_tokenizer.decode(ids) for ids, _ in explainer_examples],
-            })
-            if (iter - 1) % 10 == 0:
-                all_df = pd.DataFrame(all_results)
-                all_df.to_json(save_path)
-        all_df = pd.DataFrame(all_results)
-        all_df.to_json(save_path)
-
-        explainer, explainer_tokenizer = load_explainer()
-
-        for iter, row in enumerate(tqdm(all_results, desc="Generating explanations")):
-            garbage_collect()
-            intervention_examples = row["explainer_intervention_examples"]
-            neuron_prompter = ExplainerNeuronFormatter(intervention_examples=intervention_examples)
-
-            # TODO: improve the few-shot examples
-            explainer_prompt = get_explainer_prompt(neuron_prompter, fs_examples)            
-            explainer_input_ids = explainer_tokenizer(explainer_prompt, return_tensors="pt").input_ids.to(device)
-            with torch.inference_mode():
-                samples = explainer.generate(
-                    explainer_input_ids,
-                    max_new_tokens=20,
-                    eos_token_id=explainer_tokenizer.encode("\n")[-1],
-                    num_return_sequences=n_explanations,
-                    temperature=0.7,
-                    do_sample=True,
-                )[:, explainer_input_ids.shape[1]:]
-            explanations = [explainer_tokenizer.decode(sample).split("\n")[0].strip() for sample in samples]
-
-            all_results[iter].update({
-                "explanations": explanations,
-                "explainer_prompts": [example.prompt for example in intervention_examples],
-                "neuron_prompter": neuron_prompter,
-            })
-            if (iter - 1) % 10 == 0:
-                all_df = pd.DataFrame(all_results)
-                all_df.to_json(save_path)
-        all_df = pd.DataFrame(all_results)
-        all_df.to_json(save_path)
+                all_results[iter].update({
+                    "explanations": explanations,
+                    "explainer_prompts": [example.prompt for example in intervention_examples],
+                    "neuron_prompter": neuron_prompter,
+                })
+                if (iter - 1) % 10 == 0:
+                    all_df = pd.DataFrame(all_results)
+                    all_df.to_json(save_path)
+            all_df = pd.DataFrame(all_results)
+            all_df.to_json(save_path)
     
     # score
     # NOTE: we currently require the scorer is the same as the explainer

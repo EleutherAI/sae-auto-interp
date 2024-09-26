@@ -32,7 +32,7 @@ def expl_given_generation_score(scorer, scorer_tokenizer, completions_path, devi
             surprisals = {"zeroed": [], "intervened": []}
 
             
-            for i, (prompt, act) in enumerate(record["scorer_examples"]):
+            for i in range(len(record["completions"])):
                             
                 for name, completion in record["completions"][i]["completions"].items():
                     text, expl_start_idx = get_scorer_surprisal_prompt(
