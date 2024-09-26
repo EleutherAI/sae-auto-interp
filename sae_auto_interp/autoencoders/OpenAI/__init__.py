@@ -78,8 +78,11 @@ def load_random_oai_autoencoders(
             save_path.parent.mkdir(parents=True, exist_ok=True)
             torch.save(sae.state_dict(), save_path)
         
+        def _forward(ae, x):
+            return ae.encode(x)[0]
+        
         submodule.ae = AutoencoderLatents(
-            sae, lambda x: sae.encode(x)[0], width=n_latents
+            sae, partial(_forward, sae), width=n_latents
         )
 
         submodules[submodule.path] = submodule

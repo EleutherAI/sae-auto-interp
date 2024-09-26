@@ -14,7 +14,7 @@ SAVE_DIR = "/mnt/ssd-1/alexm/sae-auto-interp/cache/gemma_topk"
 
 def main(cfg: CacheConfig):
     model_name = "google/gemma-2-9b"
-    model = LanguageModel(model_name, device_map="auto", dispatch=True, torch_dtype=torch.float16)
+    model = LanguageModel(model_name, device_map="auto", dispatch=True, torch_dtype=torch.bfloat16)
 
     submodule_dict, model = load_random_oai_autoencoders(
         model,
@@ -36,7 +36,7 @@ def main(cfg: CacheConfig):
         cfg.dataset_repo,
         cfg.dataset_split,
     )
-
+    
     cache = FeatureCache(
         model, submodule_dict, batch_size=cfg.batch_size, filters=module_filter
     )

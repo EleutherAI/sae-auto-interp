@@ -84,8 +84,8 @@ def tune_intervention_strength(
         avg_kl = 0.0
         for ids in ids_s:
             intervened_logps = get_subject_logits(ids, feat_layer, clamp_value=intervention_strength, feat_idx=feat_idx).log_softmax(dim=0)
-            zeroed_logps = get_subject_logits(ids, feat_layer, clamp_value=0, feat_idx=feat_idx).log_softmax(dim=0)
-            kl = (zeroed_logps.exp() * (zeroed_logps - intervened_logps)).sum()
+            clean_logps = get_subject_logits(ids, feat_layer, clamp_value=None, feat_idx=feat_idx).log_softmax(dim=0)  # no intervention
+            kl = (clean_logps.exp() * (clean_logps - intervened_logps)).sum()
             avg_kl += kl
 
         avg_kl /= len(ids_s)
@@ -188,9 +188,10 @@ def main(
         sae.to(device).to(subject.dtype)
 
 
-    def clamping_intervention(module, input, output, feat_idx=None, clamp_value=0.0, position: int | slice = slice(0, 0)):
+    def clamping_intervention(module, input, output, feat_idx=None, clamp_value=None, position: int | slice = slice(0, 0)):
+        if clamp_value is None:
+            return
         hiddens = output[0]  # the later elements of the tuple are the key value cache
-        
         encoding = sae.encode(hiddens)
         if latents == "random":
             encoding = encoding[0]  # OpenAI's topK SAE also returns "info"
@@ -202,22 +203,19 @@ def main(
     def get_first_activating_text(example):
         first_act_idx = (example.activations > 0).nonzero(as_tuple=True)[0][0]
         max_act = example.activations.max()
-        # return example.tokens[:first_act_idx + 1], max_act.item()
-        return example.tokens, max_act.item()
+        return example.tokens[:first_act_idx + 1], max_act.item()
     
-    def get_subject_logits(ids, layer, clamp_value=0.0, position=-1, feat_idx=None):
+    def get_subject_logits(ids, layer, clamp_value=None, position=-1, feat_idx=None):
         for l in range(len(subject_layers)):
             subject_layers[l]._forward_hooks.clear()
-        # TODO:
-        subject_layers[layer - 1].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=position, feat_idx=feat_idx))
-        # subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=position, feat_idx=feat_idx))
+        subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=position, feat_idx=feat_idx))
 
         with torch.inference_mode():
             outputs = subject(ids.unsqueeze(0).to(device))
 
         return outputs.logits[0, -1, :]
     
-    def generate_with_intervention(ids, layer, clamp_value=0.0, feat_idx=None):
+    def generate_with_intervention(ids, layer, clamp_value=None, feat_idx=None):
         for l in range(len(subject_layers)):
             subject_layers[l]._forward_hooks.clear()
         
@@ -265,7 +263,7 @@ def main(
             # get generation with and without intervention
             prompt = subject_tokenizer.decode(ids)
             completions.append({"text": prompt.removeprefix(subject_tokenizer.bos_token), "max_act": max_act, "completions": dict()})
-            for name, strength in [("zeroed", 0), ("intervened", all_results[iter]["intervention_strength"])]:
+            for name, strength in [("clean", None), ("intervened", all_results[iter]["intervention_strength"])]:
                 completions[-1]["completions"][name] = generate_with_intervention(ids, feat_layer, clamp_value=strength, feat_idx=feat_idx)
         
         all_results[iter].update({
@@ -328,9 +326,9 @@ def main(
 
             intervention_examples = []
             for ids, act in explainer_examples:
-                zeroed_logits = get_subject_logits(ids, feat_layer, clamp_value=0.0, feat_idx=feat_idx)
+                clean_logits = get_subject_logits(ids, feat_layer, clamp_value=None, feat_idx=feat_idx)
                 intervened_logits = get_subject_logits(ids, feat_layer, clamp_value=all_results[iter]["intervention_strength"], feat_idx=feat_idx)
-                top_probs = (intervened_logits.softmax(dim=-1) - zeroed_logits.softmax(dim=-1)).topk(n_tokens_per_explainer_example)
+                top_probs = (intervened_logits.softmax(dim=-1) - clean_logits.softmax(dim=-1)).topk(n_tokens_per_explainer_example)
                 
                 top_tokens = [subject_tokenizer.decode(i) for i in top_probs.indices]
                 top_p_increases = top_probs.values.tolist()
