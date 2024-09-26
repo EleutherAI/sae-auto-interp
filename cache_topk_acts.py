@@ -2,8 +2,8 @@ from nnsight import LanguageModel
 import torch
 from simple_parsing import ArgumentParser
 
-from sae import SaeConfig
-from sae_auto_interp.autoencoders import load_random_eai_autoencoders
+
+from sae_auto_interp.autoencoders import load_random_oai_autoencoders
 from sae_auto_interp.config import CacheConfig
 from sae_auto_interp.features import FeatureCache
 from sae_auto_interp.utils import load_tokenized_data
@@ -16,11 +16,13 @@ def main(cfg: CacheConfig):
     model_name = "google/gemma-2-9b"
     model = LanguageModel(model_name, device_map="auto", dispatch=True, torch_dtype=torch.float16)
 
-    submodule_dict, model = load_random_eai_autoencoders(
+    submodule_dict, model = load_random_oai_autoencoders(
         model,
         list([24, 32, 41]),
-        cfg=SaeConfig(k=50, num_latents=131072, multi_topk=False),
+        n_latents=131072,
+        k=50,
         seed=42,
+        save_dir=SAVE_DIR,
     )
 
     module_filter = {

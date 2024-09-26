@@ -14,7 +14,7 @@ from ..features import (
     FeatureDataset,
     FeatureLoader
 )
-from ..autoencoders.OpenAI.model import TopK, ACTIVATIONS_CLASSES
+from ..autoencoders.OpenAI.model import TopK, ACTIVATIONS_CLASSES, Autoencoder
 from ..features.constructors import default_constructor
 from ..features.samplers import sample
 from ..autoencoders.DeepMind.model import JumpReLUSAE
@@ -22,10 +22,6 @@ from . import (
     ExplainerNeuronFormatter, 
     ExplainerInterventionExample, 
     get_explainer_prompt, 
-    few_shot_prompts, 
-    few_shot_explanations, 
-    few_shot_generations, 
-    scorer_separator, 
     fs_examples, 
     garbage_collect, 
     get_git_info, 
@@ -41,13 +37,11 @@ from huggingface_hub import hf_hub_download
 import numpy as np
 
 
-def get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, latents: Literal["sae", "neuron"] = "sae"):
+def get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, width, latents: Literal["sae", "random"] = "sae"):
     module = f".model.layers.{feat_layer}"
     if latents == "sae":
-        width = 131072
-        raw_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/raw_features/google/gemma/131k"    
-    elif latents == "neuron":
-        width = 3584
+        raw_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/raw_features/gemma/131k"    
+    else:
         raw_dir = "/mnt/ssd-1/alexm/sae-auto-interp/cache/gemma_topk"
     feature_dict = {f"{module}": torch.arange(0, n_feats)}
     feature_cfg = FeatureConfig(width=width, n_splits=5, max_examples=100000, min_examples=200)
@@ -76,7 +70,7 @@ def get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, latent
 def tune_intervention_strength(
         feat_idx,
         feat_layer,
-        texts,
+        ids_s,
         kl_threshold,
         get_subject_logits: Callable,
 ):
@@ -88,13 +82,13 @@ def tune_intervention_strength(
     for i in range(10):
         intervention_strength = 10 ** log_str
         avg_kl = 0.0
-        for text, max_act in texts:
-            intervened_logps = get_subject_logits(text, feat_layer, clamp_value=intervention_strength, feat_idx=feat_idx).log_softmax(dim=0)
-            zeroed_logps = get_subject_logits(text, feat_layer, clamp_value=0, feat_idx=feat_idx).log_softmax(dim=0)
+        for ids in ids_s:
+            intervened_logps = get_subject_logits(ids, feat_layer, clamp_value=intervention_strength, feat_idx=feat_idx).log_softmax(dim=0)
+            zeroed_logps = get_subject_logits(ids, feat_layer, clamp_value=0, feat_idx=feat_idx).log_softmax(dim=0)
             kl = (zeroed_logps.exp() * (zeroed_logps - intervened_logps)).sum()
             avg_kl += kl
 
-        avg_kl /= len(texts)
+        avg_kl /= len(ids_s)
         avg_kls[intervention_strength] = float(avg_kl)
         if np.isclose(float(avg_kl), kl_threshold, rtol=rtol):
             break
@@ -140,14 +134,15 @@ def main(
     n_quantiles=5,
     n_feats=300,
     kl_threshold = 0.5,
+    sae_width = 131072,
     max_generation_length = 8,
     n_explanations = 5,
     random_explanations = False,
     explainer_name = "meta-llama/Meta-Llama-3.1-8B",
     run_prefix = "default",
-    latents: Literal["sae", "neuron"] = "sae",
+    latents: Literal["sae", "random"] = "sae",
 ):
-
+    assert latents in ["sae", "random"]
     subject_name = "google/gemma-2-9b"
     config = locals().copy()
     config.pop("device")
@@ -160,9 +155,9 @@ def main(
     save_dir.mkdir(parents=True, exist_ok=True)
     with open(config_save_path, "w") as f:
         json.dump(config, f)
-    assert not save_path.exists(), f"Save path {save_path} already exists"
+    assert not save_path.exists() or "debug" in run_prefix, f"Save path {save_path} already exists"
 
-    loader = get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, latents=latents)
+    loader = get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, sae_width, latents=latents)
 
     subject = AutoModelForCausalLM.from_pretrained(subject_name, torch_dtype=torch.bfloat16).to(device)
     subject_tokenizer = AutoTokenizer.from_pretrained(subject_name)
@@ -171,72 +166,75 @@ def main(
     subject_layers = subject.model.layers
     
     if latents == "sae":
+        sae_width_str = "131k" if sae_width == 131072 else None
         path_to_params = hf_hub_download(
             repo_id="google/gemma-scope-9b-pt-res",
-            filename=f"layer_{feat_layer}/width_131k/average_l0_{LAYER_TO_L0[feat_layer]}/params.npz",
+            filename=f"layer_{feat_layer}/width_{sae_width_str}/average_l0_{LAYER_TO_L0[feat_layer]}/params.npz",
             force_download=False,
         )
-
         params = np.load(path_to_params)
-        pt_params = {k: torch.from_numpy(v).to(device).to(torch.bfloat16) for k, v in params.items()}
-            
+        pt_params = {k: torch.from_numpy(v).to(device).to(torch.bfloat16) for k, v in params.items()}   
         sae = JumpReLUSAE(params['W_enc'].shape[0], params['W_enc'].shape[1]).to(device).to(torch.bfloat16)
         sae.load_state_dict(pt_params)
     
-        def clamping_intervention(module, input, output, feat_idx=None, clamp_value=0.0, position: int | slice = slice(0, 0)):
-            hiddens = output[0]  # the later elements of the tuple are the key value cache
-            
-            encoding = sae.encode(hiddens)
-            error = hiddens - sae.decode(encoding)
-            encoding[:, position, feat_idx] = clamp_value
-            hiddens = sae.decode(encoding) + error
-            return (hiddens, *output[1:])
     else:
-        def clamping_intervention(module, input, output, feat_idx=None, clamp_value=0.0, position: int | slice = slice(0, 0)):
-            hiddens = output[0]  # the later elements of the tuple are the key value cache
-            
-            # TODO: it is pretty janky that we're hard-coding this
-            # I should check to make sure the acts match
-            topk = TopK(50, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
-            
-            hiddens[:, position, feat_idx] += clamp_value - topk(hiddens)[:, position, feat_idx]
-            return (hiddens, *output[1:])
+        k = 50
+        params = torch.load(f"cache/gemma_topk/layer_{feat_layer}/width_{sae_width}/k_{k}_seed_42/params.pt")
+        sae = Autoencoder(sae_width, params["encoder.weight"].shape[1], activation=ACTIVATIONS_CLASSES["TopK"](k=k), normalize=False, tied=False)
+        sae.encoder.weight.data = params["encoder.weight"]
+        sae.decoder.weight.data = params["decoder.weight"]
+        sae.pre_bias.data = params["pre_bias"]
+        sae.latent_bias.data = params["latent_bias"]
+        sae.to(device).to(subject.dtype)
 
+
+    def clamping_intervention(module, input, output, feat_idx=None, clamp_value=0.0, position: int | slice = slice(0, 0)):
+        hiddens = output[0]  # the later elements of the tuple are the key value cache
+        
+        encoding = sae.encode(hiddens)
+        if latents == "random":
+            encoding = encoding[0]  # OpenAI's topK SAE also returns "info"
+        error = hiddens - sae.decode(encoding)  # type: ignore
+        encoding[:, position, feat_idx] = clamp_value  # type: ignore
+        hiddens = sae.decode(encoding) + error  # type: ignore
+        return (hiddens, *output[1:])
 
     def get_first_activating_text(example):
-        breakpoint()
         first_act_idx = (example.activations > 0).nonzero(as_tuple=True)[0][0]
         max_act = example.activations.max()
-        return subject_tokenizer.decode(example.tokens[:first_act_idx + 1]), max_act.item()
+        # return example.tokens[:first_act_idx + 1], max_act.item()
+        return example.tokens, max_act.item()
     
-    def get_subject_logits(text, layer, clamp_value=0.0, position=-1, feat_idx=None):
+    def get_subject_logits(ids, layer, clamp_value=0.0, position=-1, feat_idx=None):
         for l in range(len(subject_layers)):
             subject_layers[l]._forward_hooks.clear()
-        subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=position, feat_idx=feat_idx))
+        # TODO:
+        subject_layers[layer - 1].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=position, feat_idx=feat_idx))
+        # subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=position, feat_idx=feat_idx))
 
-        inputs = subject_tokenizer(text, return_tensors="pt", add_special_tokens=True).to(device)
         with torch.inference_mode():
-            outputs = subject(**inputs)
+            outputs = subject(ids.unsqueeze(0).to(device))
 
         return outputs.logits[0, -1, :]
     
-    def generate_with_intervention(text, layer, clamp_value=0.0, feat_idx=None):
+    def generate_with_intervention(ids, layer, clamp_value=0.0, feat_idx=None):
         for l in range(len(subject_layers)):
             subject_layers[l]._forward_hooks.clear()
         
-        inputs = subject_tokenizer(text, return_tensors="pt", add_special_tokens=True).to(device)
-        intervention_start = inputs.input_ids.shape[1] - 1
+        inputs = ids.to(device).unsqueeze(0)
+        intervention_start = inputs.shape[1] - 1
         subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=slice(intervention_start, None), feat_idx=feat_idx))
         with torch.inference_mode():
             out = subject.generate(
-                **inputs,
+                inputs,
                 max_new_tokens=max_generation_length,
                 num_return_sequences=1,  # TODO: maybe things could speed up if we use larger n, or batch sizes
                 temperature=1.0,
                 do_sample=True,
             )
 
-        return subject_tokenizer.decode(out[0]).removeprefix(subject_tokenizer.bos_token).removeprefix(text)
+        input = subject_tokenizer.decode(ids)
+        return subject_tokenizer.decode(out[0]).removeprefix(subject_tokenizer.bos_token).removeprefix(input)
 
     # random.sample is without replacement
     pools = [random.sample(record.train, len(record.train)) for record in loader]  # type: ignore
@@ -250,7 +248,7 @@ def main(
     for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Tuning intervention strengths")):
         garbage_collect()
         feat_idx = record.feature.feature_index
-        intervention_strength, avg_kls = tune_intervention_strength(feat_idx, feat_layer, scorer_examples, kl_threshold, get_subject_logits)
+        intervention_strength, avg_kls = tune_intervention_strength(feat_idx, feat_layer, [ids for ids, _ in scorer_examples], kl_threshold, get_subject_logits)
         all_results[iter].update({
             "intervention_strength": intervention_strength,
             "avg_kl": avg_kls[intervention_strength],
@@ -263,15 +261,16 @@ def main(
         
         # get completions
         completions = []
-        for prompt, max_act in scorer_examples:            
+        for ids, max_act in scorer_examples:            
             # get generation with and without intervention
+            prompt = subject_tokenizer.decode(ids)
             completions.append({"text": prompt.removeprefix(subject_tokenizer.bos_token), "max_act": max_act, "completions": dict()})
             for name, strength in [("zeroed", 0), ("intervened", all_results[iter]["intervention_strength"])]:
-                completions[-1]["completions"][name] = generate_with_intervention(prompt, feat_layer, clamp_value=strength, feat_idx=feat_idx)
+                completions[-1]["completions"][name] = generate_with_intervention(ids, feat_layer, clamp_value=strength, feat_idx=feat_idx)
         
         all_results[iter].update({
             "feat_idx": feat_idx,
-            "scorer_examples": scorer_examples,
+            "scorer_examples": [subject_tokenizer.decode(ids) for ids, _ in scorer_examples],
             "completions": completions,
         })
         if (iter - 1) % 10 == 0:
@@ -328,13 +327,14 @@ def main(
             feat_idx = record.feature.feature_index
 
             intervention_examples = []
-            for prompt, act in explainer_examples:
-                zeroed_logits = get_subject_logits(prompt, feat_layer, clamp_value=0.0, feat_idx=feat_idx)
-                intervened_logits = get_subject_logits(prompt, feat_layer, clamp_value=all_results[iter]["intervention_strength"], feat_idx=feat_idx)
+            for ids, act in explainer_examples:
+                zeroed_logits = get_subject_logits(ids, feat_layer, clamp_value=0.0, feat_idx=feat_idx)
+                intervened_logits = get_subject_logits(ids, feat_layer, clamp_value=all_results[iter]["intervention_strength"], feat_idx=feat_idx)
                 top_probs = (intervened_logits.softmax(dim=-1) - zeroed_logits.softmax(dim=-1)).topk(n_tokens_per_explainer_example)
                 
                 top_tokens = [subject_tokenizer.decode(i) for i in top_probs.indices]
                 top_p_increases = top_probs.values.tolist()
+                prompt = subject_tokenizer.decode(ids)
                 intervention_examples.append(
                     ExplainerInterventionExample(
                         prompt=prompt.removeprefix(subject_tokenizer.bos_token),
@@ -344,6 +344,7 @@ def main(
                 )
             all_results[iter].update({
                 "explainer_intervention_examples": intervention_examples,
+                "explainer_examples": [subject_tokenizer.decode(ids) for ids, _ in explainer_examples],
             })
             if (iter - 1) % 10 == 0:
                 all_df = pd.DataFrame(all_results)
@@ -375,7 +376,6 @@ def main(
             all_results[iter].update({
                 "explanations": explanations,
                 "explainer_prompts": [example.prompt for example in intervention_examples],
-                "explainer_examples": explainer_examples,
                 "neuron_prompter": neuron_prompter,
             })
             if (iter - 1) % 10 == 0:

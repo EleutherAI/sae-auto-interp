@@ -11,7 +11,7 @@ from tqdm.auto import tqdm
 def expl_given_generation_score(scorer, scorer_tokenizer, completions_path, device):
     all_results = pd.read_json(completions_path).to_dict(orient="records")
     out_path = completions_path.replace(".json", "_scores.json")
-    assert not os.path.exists(out_path), f"Output path {out_path} already exists"
+    assert not os.path.exists(out_path) or "debug" in out_path, f"Output path {out_path} already exists"
     
     # get KV cache for the scoring few-shot prompt
     scorer_prompt = get_scorer_surprisal_prompt(few_shot_prompts[0], few_shot_generations[0], few_shot_explanations[0], few_shot_prompts, few_shot_explanations, few_shot_generations)
