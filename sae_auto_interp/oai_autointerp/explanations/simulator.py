@@ -382,7 +382,8 @@ def _parse_no_logprobs_completion_json(
     zero_prediction = [0] * len(tokens)
 
     try:
-        # completion = json.loads(completion)
+        #TODO: we need to standardize the output format of the clients
+        completion = json.loads(completion.text)
         if "activations" not in completion:
             logger.error(
                 "The key 'activations' is not in the completion:\n%s\nExpected Tokens:\n%s",
@@ -568,7 +569,7 @@ class LogprobFreeExplanationTokenSimulator(NeuronSimulator):
                 response, tokens
             )
         else:
-            prompt = self._make_simulation_prompt(
+            prompt = self._make_simulation_prompt_json(
                 tokens,
                 self.explanation,
             )
@@ -579,7 +580,7 @@ class LogprobFreeExplanationTokenSimulator(NeuronSimulator):
             # assert len(response["choices"]) == 1
             choice = response["choices"][0]
             completion = choice["message"]["content"]
-            predicted_activations = _parse_no_logprobs_completion(completion, tokens)
+            predicted_activations = _parse_no_logprobs_completion_json(completion, tokens)
 
         result = SequenceSimulation(
             activation_scale=ActivationScale.SIMULATED_NORMALIZED_ACTIVATIONS,
@@ -607,7 +608,7 @@ class LogprobFreeExplanationTokenSimulator(NeuronSimulator):
 
 For each document, you will see the full text of the document, then the tokens in the document with the activation left blank. You will print, in valid json, the exact same tokens verbatim, but with the activation values filled in according to the explanation. Pay special attention to the explanation's description of the context and order of tokens or words.
 
-Fill out the activation values from 0 to 10. Please think carefully.";
+Fill out the activation values with integer values from 0 to 10. Don't use negative numbers. Please think carefully.";
 """,
         )
 
