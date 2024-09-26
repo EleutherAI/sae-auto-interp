@@ -10,6 +10,9 @@ from .client import Client
 # Change depending on what model you'd like to use.
 PROVIDER = {"order": ["Together", "DeepInfra"]}
 
+class Response:
+    def __init__(self, response):
+        self.text = response
 
 class OpenRouter(Client):
     def __init__(
@@ -27,7 +30,8 @@ class OpenRouter(Client):
 
     def postprocess(self, response):
         response_json = response.json()
-        return response_json["choices"][0]["message"]["content"]
+        msg = response_json["choices"][0]["message"]["content"]
+        return Response(msg)
 
     async def generate(
         self, prompt: str, raw: bool = False, max_retries: int = 2, **kwargs
@@ -46,7 +50,6 @@ class OpenRouter(Client):
                 response = await self.client.post(
                     url=self.url, json=data, headers=self.headers
                 )
-
                 if raw:
                     return response.json()
 
