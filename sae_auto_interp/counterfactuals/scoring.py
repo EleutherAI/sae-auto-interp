@@ -29,7 +29,7 @@ def expl_given_generation_score(scorer, scorer_tokenizer, completions_path, devi
         delta_conditional_entropy_by_explanation = dict()
         delta_conditional_entropy_sems_by_explanation = dict()
         for explanation in record["explanations"]:
-            surprisals = {"zeroed": [], "intervened": []}
+            surprisals = {"clean": [], "intervened": []}
 
             
             for i in range(len(record["completions"])):
@@ -55,8 +55,8 @@ def expl_given_generation_score(scorer, scorer_tokenizer, completions_path, devi
                 
             surprisals = {k: np.array(v) for k, v in surprisals.items()}
             surprisals_by_explanation[explanation] = surprisals
-            delta_conditional_entropy_by_explanation[explanation] = (surprisals["zeroed"] - surprisals["intervened"]).mean()
-            delta_conditional_entropy_sems_by_explanation[explanation] = (surprisals["zeroed"] - surprisals["intervened"]).std(ddof=1) / np.sqrt(len(surprisals["intervened"]))
+            delta_conditional_entropy_by_explanation[explanation] = (surprisals["clean"] - surprisals["intervened"]).mean()
+            delta_conditional_entropy_sems_by_explanation[explanation] = (surprisals["clean"] - surprisals["intervened"]).std(ddof=1) / np.sqrt(len(surprisals["intervened"]))
 
         best_explanation = max(delta_conditional_entropy_by_explanation, key=lambda x: delta_conditional_entropy_by_explanation[x])
         record.update({

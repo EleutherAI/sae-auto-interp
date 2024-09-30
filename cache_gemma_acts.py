@@ -43,6 +43,10 @@ def main(cfg: CacheConfig, args):
         model, 
         submodule_dict, 
         batch_size=cfg.batch_size,
+        filters= {
+            module : torch.arange(5000).to('cuda') 
+            for module in submodule_dict
+        }
     )
 
     cache.run(cfg.n_tokens, tokens)
@@ -51,16 +55,16 @@ def main(cfg: CacheConfig, args):
     if random:
         name = name + "_random"
 
-    if not os.path.exists(f"raw_features_gemma_{size}{name}"):
-        os.makedirs(f"raw_features_gemma_{size}{name}")
+    if not os.path.exists(f"cache/gemma_sae_{size}{name}"):
+        os.makedirs(f"cache/gemma_sae_{size}{name}")
 
     cache.save_splits(
         n_splits=cfg.n_splits, 
-        save_dir=f"raw_features_gemma_{size}{name}"
+        save_dir=f"cache/gemma_sae_{size}{name}"
     )
 
     cache.save_config(
-        save_dir=f"raw_features_gemma_{size}{name}",
+        save_dir=f"cache/gemma_sae_{size}{name}",
         cfg=cfg,
         model_name="google/gemma-2-9b"
     )
