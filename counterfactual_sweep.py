@@ -4,14 +4,14 @@ base_cmd = "python /mnt/ssd-1/alexm/sae-auto-interp/counterfactual_pipeline.py "
 
 cfg_ranges = {
     "n_feats": [300],
-    "feat_layer": [32, 41],
+    "feat_layer": [8, 16, 24, 32, 40, 41],
     "n_train": [10],
     "n_test": [30],
     "n_explanations": [5],
-    "kl_threshold": [0.33, 1.0, 3.0],
-    "random_explanations": [False],
-    "latents": ["random"],
-    "raise_if_exists": [False],
+    "kl_threshold": [0.033, 0.1, 0.33, 1.0, 3.0],
+    "random_explanations": [True],
+    "latents": ["sae"],
+    # "zero_ablate": [True],
 }
 
 keys, values = zip(*cfg_ranges.items())
