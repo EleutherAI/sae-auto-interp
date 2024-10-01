@@ -23,7 +23,7 @@ for cfg in cfgs:
         "".join([word[0] for word in k.split("_")]) + "=" + str(v)
         for k, v in cfg.items()
     ])
-    run_path = f"/mnt/ssd-1/alexm/sae-auto-interp/counterfactual_results/{run_name}/generations.json"
+    run_path = f"/mnt/ssd-1/alexm/sae-auto-interp/counterfactual_results/{run_name}_gemma-2-9b/generations.json"
     cmd += f" --expl_path \"{run_path}\" "
     cmd += " --explainer_name \"meta-llama/Meta-Llama-3.1-8B\" "
     print(cmd)
