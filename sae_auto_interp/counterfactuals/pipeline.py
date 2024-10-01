@@ -97,7 +97,7 @@ def tune_intervention_strength(
     log_str = 2.0
     rtol = 0.1
     avg_kls = dict()
-    for i in range(20):
+    for i in range(10):
         intervention_strength = 10 ** log_str
         avg_kl = get_avg_kl(feat_idx, feat_layer, ids_s, intervention_strength, clamp_value=None, get_subject_logits=get_subject_logits)
         avg_kls[intervention_strength] = float(avg_kl)
