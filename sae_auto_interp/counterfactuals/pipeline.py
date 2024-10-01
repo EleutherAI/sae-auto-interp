@@ -71,11 +71,11 @@ def get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, width,
     return loader
 
 
-def get_avg_kl(feat_idx, feat_layer, ids_s, clamp_value, get_subject_logits):
+def get_avg_kl(feat_idx, feat_layer, ids_s, intervention_strength, clamp_value, get_subject_logits):
     avg_kl = 0.0
     for ids in ids_s:
-        intervened_logps = get_subject_logits(ids, feat_layer, clamp_value=clamp_value, feat_idx=feat_idx).log_softmax(dim=0)
-        clean_logps = get_subject_logits(ids, feat_layer, clamp_value=None, feat_idx=feat_idx).log_softmax(dim=0)  # no intervention
+        intervened_logps = get_subject_logits(ids, feat_layer, intervention_strength=intervention_strength, clamp_value=clamp_value, feat_idx=feat_idx).log_softmax(dim=0)
+        clean_logps = get_subject_logits(ids, feat_layer, intervention_strength=None, clamp_value=None, feat_idx=feat_idx).log_softmax(dim=0)  # no intervention
         kl = (clean_logps.exp() * (clean_logps - intervened_logps)).sum()
         avg_kl += kl
 
@@ -90,6 +90,8 @@ def tune_intervention_strength(
         kl_threshold,
         get_subject_logits: Callable,
 ):
+    # sometimes it's not exactly monotonic, but this is usually quite close to kl_threshold because the deltas are small
+    
     # do a binary search to get KL of kl_threshold
     min_log_str, max_log_str = -3.0, 4.0
     log_str = 2.0
@@ -97,7 +99,7 @@ def tune_intervention_strength(
     avg_kls = dict()
     for i in range(20):
         intervention_strength = 10 ** log_str
-        avg_kl = get_avg_kl(feat_idx, feat_layer, ids_s, intervention_strength, get_subject_logits)
+        avg_kl = get_avg_kl(feat_idx, feat_layer, ids_s, intervention_strength, clamp_value=None, get_subject_logits=get_subject_logits)
         avg_kls[intervention_strength] = float(avg_kl)
         if np.isclose(float(avg_kl), kl_threshold, rtol=rtol):
             break
@@ -105,18 +107,19 @@ def tune_intervention_strength(
             max_log_str = log_str
         else:
             min_log_str = log_str
-
+            
         log_kls = np.log(np.array(sorted(list(avg_kls.values()))))
         log_strs = np.log10(np.array(sorted(list(avg_kls.keys()), key=lambda k: avg_kls[k])))
-        if min(log_kls) <= np.log(kl_threshold) <= max(log_kls):
+        if (min(log_kls) <= np.log(kl_threshold) <= max(log_kls)):
             log_str = np.interp([np.log(kl_threshold)], log_kls, log_strs)[0]
         else:
             log_str = (min_log_str + max_log_str) / 2
     else:
-        print(f"Binary search for intervention strength did not converge after {i} iterations")
+        print(f"Binary search for intervention strength did not converge after {i + 1} iterations")
         print(f"Using {intervention_strength} with KL {avg_kl} when target is {kl_threshold}")
+        print(f"{avg_kls=}")
 
-    return intervention_strength, avg_kls
+    return float(intervention_strength), avg_kls
 
 
 def consume_all_args(func):
@@ -146,7 +149,6 @@ def main(
     sae_width = 131072,
     max_generation_length = 8,
     n_explanations = 5,
-    random_explanations = False,
     explainer_name = "meta-llama/Meta-Llama-3.1-8B",
     run_prefix = "default",
     raise_if_exists = True,
@@ -200,15 +202,19 @@ def main(
         sae.to(device).to(subject.dtype)
 
 
-    def clamping_intervention(module, input, output, feat_idx=None, clamp_value=None, position: int | slice = slice(0, 0)):
-        if clamp_value is None:
+    def intervene_on_feat(module, input, output, feat_idx=None, intervention_strength=None, clamp_value=None, position: int | slice = slice(0, 0)):
+        if intervention_strength is None and clamp_value is None:
             return
+        assert intervention_strength is None or clamp_value is None
         hiddens = output[0]  # the later elements of the tuple are the key value cache
         encoding = sae.encode(hiddens)
         if latents == "random":
             encoding = encoding[0]  # OpenAI's topK SAE also returns "info"
         error = hiddens - sae.decode(encoding)  # type: ignore
-        encoding[:, position, feat_idx] = clamp_value  # type: ignore
+        if intervention_strength is not None:
+            encoding[:, position, feat_idx] += intervention_strength  # type: ignore
+        else:
+            encoding[:, position, feat_idx] = clamp_value  # type: ignore
         hiddens = sae.decode(encoding) + error  # type: ignore
         return (hiddens, *output[1:])
 
@@ -217,23 +223,23 @@ def main(
         max_act = example.activations.max()
         return example.tokens[:first_act_idx + 1], max_act.item()
     
-    def get_subject_logits(ids, layer, clamp_value=None, position=-1, feat_idx=None):
+    def get_subject_logits(ids, layer, intervention_strength=None, clamp_value=None, position=-1, feat_idx=None):
         for l in range(len(subject_layers)):
             subject_layers[l]._forward_hooks.clear()
-        subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=position, feat_idx=feat_idx))
+        subject_layers[layer].register_forward_hook(partial(intervene_on_feat, intervention_strength=intervention_strength, clamp_value=clamp_value, position=position, feat_idx=feat_idx))
 
         with torch.inference_mode():
             outputs = subject(ids.unsqueeze(0).to(device))
 
         return outputs.logits[0, -1, :]
     
-    def generate_with_intervention(ids, layer, clamp_value=None, feat_idx=None):
+    def generate_with_intervention(ids, layer, intervention_strength=None, clamp_value=None, feat_idx=None):
         for l in range(len(subject_layers)):
             subject_layers[l]._forward_hooks.clear()
         
         inputs = ids.to(device).unsqueeze(0)
         intervention_start = inputs.shape[1] - 1
-        subject_layers[layer].register_forward_hook(partial(clamping_intervention, clamp_value=clamp_value, position=slice(intervention_start, None), feat_idx=feat_idx))
+        subject_layers[layer].register_forward_hook(partial(intervene_on_feat, intervention_strength=intervention_strength, clamp_value=clamp_value, position=slice(intervention_start, None), feat_idx=feat_idx))
         with torch.inference_mode():
             out = subject.generate(
                 inputs,
@@ -288,13 +294,13 @@ def main(
             feat_idx = record.feature.feature_index
             ids_s = [ids for ids, _ in scorer_examples]
             if zero_ablate:
-                intervention_strength = 0
-                avg_kl = get_avg_kl(feat_idx, feat_layer, ids_s, intervention_strength, get_subject_logits)
+                intervention_strength = None
+                avg_kl = get_avg_kl(feat_idx, feat_layer, ids_s, None, clamp_value=0, get_subject_logits=get_subject_logits)
             else:
                 intervention_strength, avg_kls = tune_intervention_strength(feat_idx, feat_layer, ids_s, kl_threshold, get_subject_logits)
                 avg_kl = avg_kls[intervention_strength]
             all_results[iter].update({
-                "intervention_strength": float(intervention_strength),
+                "intervention_strength": intervention_strength,
                 "avg_kl": float(avg_kl),
             })
 
@@ -310,7 +316,8 @@ def main(
                 prompt = subject_tokenizer.decode(ids)
                 completions.append({"text": prompt.removeprefix(subject_tokenizer.bos_token), "max_act": float(max_act), "completions": dict()})
                 for name, strength in [("clean", None), ("intervened", all_results[iter]["intervention_strength"])]:
-                    completions[-1]["completions"][name] = generate_with_intervention(ids, feat_layer, clamp_value=strength, feat_idx=feat_idx)
+                    cv = 0 if name == "intervened" and zero_ablate else None
+                    completions[-1]["completions"][name] = generate_with_intervention(ids, feat_layer, intervention_strength=strength, clamp_value=cv, feat_idx=feat_idx)
         
             all_results[iter].update({
                 "feat_idx": int(feat_idx),
@@ -318,86 +325,68 @@ def main(
                 "completions": completions,
             })
             
-        if random_explanations:
-            # TODO: this is kind of a hack
-            random_explanations_source = str(save_path).replace("re=True", "re=False").replace("generations", "generations_scores")
-            random_explanations_df = pd.read_json(random_explanations_source)
-            random_explanations_pool = [e for expl in random_explanations_df["explanations"] for e in expl]
-            print(f"{Counter(random_explanations_pool)=}")
-            random_explanations_pool = list(set(random_explanations_pool))
-            random.shuffle(random_explanations_pool)
-            for iter, row in enumerate(tqdm(all_results, desc="Gathering random explanations", total=len(all_results))):
-                expls = random.choices(random_explanations_pool, k=n_explanations)
-                all_results[iter].update({
-                    "explanations": expls,
-                    "explainer_prompts": [None] * n_explanations,
-                    "explainer_examples": [None] * n_explanations,
-                    "neuron_prompter": None,
-                })
-            explainer, explainer_tokenizer = load_explainer()
-        else:
-            # get intervention results
-            for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer", total=len(all_explainer_examples))):
-                garbage_collect()        
-                feat_idx = record.feature.feature_index
+        # get intervention results
+        for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer", total=len(all_explainer_examples))):
+            garbage_collect()        
+            feat_idx = record.feature.feature_index
 
-                intervention_examples = []
-                for ids, act in explainer_examples:
-                    clean_logits = get_subject_logits(ids, feat_layer, clamp_value=None, feat_idx=feat_idx)
-                    intervened_logits = get_subject_logits(ids, feat_layer, clamp_value=all_results[iter]["intervention_strength"], feat_idx=feat_idx)
-                    top_probs = (intervened_logits.softmax(dim=-1) - clean_logits.softmax(dim=-1)).topk(n_tokens_per_explainer_example)
-                    
-                    top_tokens = [subject_tokenizer.decode(i) for i in top_probs.indices]
-                    top_p_increases = top_probs.values.tolist()
-                    prompt = subject_tokenizer.decode(ids)
-                    intervention_examples.append(
-                        ExplainerInterventionExample(
-                            prompt=prompt.removeprefix(subject_tokenizer.bos_token),
-                            top_tokens=top_tokens,
-                            top_p_increases=top_p_increases
-                        )
+            intervention_examples = []
+            for ids, act in explainer_examples:
+                clean_logits = get_subject_logits(ids, feat_layer, intervention_strength=None, clamp_value=None, feat_idx=feat_idx)
+                intervened_logits = get_subject_logits(ids, feat_layer, intervention_strength=all_results[iter]["intervention_strength"], clamp_value=0 if zero_ablate else None, feat_idx=feat_idx)
+                top_probs = (intervened_logits.softmax(dim=-1) - clean_logits.softmax(dim=-1)).topk(n_tokens_per_explainer_example)
+                
+                top_tokens = [subject_tokenizer.decode(i) for i in top_probs.indices]
+                top_p_increases = top_probs.values.tolist()
+                prompt = subject_tokenizer.decode(ids)
+                intervention_examples.append(
+                    ExplainerInterventionExample(
+                        prompt=prompt.removeprefix(subject_tokenizer.bos_token),
+                        top_tokens=top_tokens,
+                        top_p_increases=top_p_increases
                     )
-                all_results[iter].update({
-                    "explainer_intervention_examples": intervention_examples,
-                    "explainer_examples": [subject_tokenizer.decode(ids) for ids, _ in explainer_examples],
-                })
-                if (iter - 1) % 10 == 0:
-                    all_df = pd.DataFrame(all_results)
-                    all_df.to_json(save_path)
-            all_df = pd.DataFrame(all_results)
-            all_df.to_json(save_path)
+                )
+            all_results[iter].update({
+                "explainer_intervention_examples": intervention_examples,
+                "explainer_examples": [subject_tokenizer.decode(ids) for ids, _ in explainer_examples],
+            })
+            if (iter - 1) % 10 == 0:
+                all_df = pd.DataFrame(all_results)
+                all_df.to_json(save_path)
+        all_df = pd.DataFrame(all_results)
+        all_df.to_json(save_path)
 
-            explainer, explainer_tokenizer = load_explainer()
+        explainer, explainer_tokenizer = load_explainer()
 
-            for iter, row in enumerate(tqdm(all_results, desc="Generating explanations")):
-                garbage_collect()
-                intervention_examples = row["explainer_intervention_examples"]
-                neuron_prompter = ExplainerNeuronFormatter(intervention_examples=intervention_examples)
+        for iter, row in enumerate(tqdm(all_results, desc="Generating explanations")):
+            garbage_collect()
+            intervention_examples = row["explainer_intervention_examples"]
+            neuron_prompter = ExplainerNeuronFormatter(intervention_examples=intervention_examples)
 
-                explainer_prompt = get_explainer_prompt(neuron_prompter, fs_examples)            
-                explainer_input_ids = explainer_tokenizer(explainer_prompt, return_tensors="pt").input_ids.to(device)
-                with torch.inference_mode():
-                    samples = explainer.generate(
-                        explainer_input_ids,
-                        max_new_tokens=20,
-                        eos_token_id=explainer_tokenizer.encode("\n")[-1],
-                        num_return_sequences=n_explanations,
-                        temperature=0.7,
-                        do_sample=True,
-                    )[:, explainer_input_ids.shape[1]:]
-                explanations = [explainer_tokenizer.decode(sample).split("\n")[0].strip() for sample in samples]
+            explainer_prompt = get_explainer_prompt(neuron_prompter, fs_examples)            
+            explainer_input_ids = explainer_tokenizer(explainer_prompt, return_tensors="pt").input_ids.to(device)
+            with torch.inference_mode():
+                samples = explainer.generate(
+                    explainer_input_ids,
+                    max_new_tokens=20,
+                    eos_token_id=explainer_tokenizer.encode("\n")[-1],
+                    num_return_sequences=n_explanations,
+                    temperature=0.7,
+                    do_sample=True,
+                )[:, explainer_input_ids.shape[1]:]
+            explanations = [explainer_tokenizer.decode(sample).split("\n")[0].strip() for sample in samples]
 
-                all_results[iter].update({
-                    "explanations": explanations,
-                    "explainer_prompts": [example.prompt for example in intervention_examples],
-                    "neuron_prompter": neuron_prompter,
-                })
-                if (iter - 1) % 10 == 0:
-                    all_df = pd.DataFrame(all_results)
-                    all_df.to_json(save_path)
-            all_df = pd.DataFrame(all_results)
-            all_df.to_json(save_path)
-    
+            all_results[iter].update({
+                "explanations": explanations,
+                "explainer_prompts": [example.prompt for example in intervention_examples],
+                "neuron_prompter": neuron_prompter,
+            })
+            if (iter - 1) % 10 == 0:
+                all_df = pd.DataFrame(all_results)
+                all_df.to_json(save_path)
+        all_df = pd.DataFrame(all_results)
+        all_df.to_json(save_path)
+
     # score
     # NOTE: we currently require the scorer is the same as the explainer
     expl_given_generation_score(explainer, explainer_tokenizer, str(save_path), device)
