@@ -10,7 +10,7 @@ from tqdm.auto import tqdm
 
 def expl_given_generation_score(scorer, scorer_tokenizer, completions_path, device):
     all_results = pd.read_json(completions_path).to_dict(orient="records")
-    out_path = completions_path.replace("generations.json", "_scores.json")
+    out_path = completions_path.replace("generations.json", "generations_scores.json")
     assert not os.path.exists(out_path) or "debug" in out_path, f"Output path {out_path} already exists"
     
     # get KV cache for the scoring few-shot prompt
@@ -35,8 +35,11 @@ def expl_given_generation_score(scorer, scorer_tokenizer, completions_path, devi
             for i in range(len(record["completions"])):
                             
                 for name, completion in record["completions"][i]["completions"].items():
+                    subj_prompt = record["completions"][i]["text"]
+                    completion = completion.removeprefix(subj_prompt)
+                    record["completions"][i]["completions"][name] = completion
                     text, expl_start_idx = get_scorer_surprisal_prompt(
-                        record["completions"][i]["text"], completion, explanation, return_explanation_start=True
+                        subj_prompt, completion, explanation, return_explanation_start=True
                     )
                     scorer_prompt, expl = text[:expl_start_idx], text[expl_start_idx:]
                     

@@ -166,10 +166,10 @@ def main(
     save_path = save_dir / "generations.json"
     config_save_path = save_dir / "config.json"
     save_dir.mkdir(parents=True, exist_ok=True)
-    with open(config_save_path, "w") as f:
-        json.dump(config, f)
     if raise_if_exists:
         assert not (save_dir / "generations_scores.json").exists() or "debug" in run_prefix, f"Save path {save_path} already exists"
+    with open(config_save_path, "w") as f:
+        json.dump(config, f)
 
     loader = get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, sae_width, latents=latents)
 
@@ -249,8 +249,7 @@ def main(
                 do_sample=True,
             )
 
-        input = subject_tokenizer.decode(ids)
-        return subject_tokenizer.decode(out[0]).removeprefix(subject_tokenizer.bos_token).removeprefix(input)
+        return subject_tokenizer.decode(out[0]).removeprefix(subject_tokenizer.bos_token)
     
     def load_explainer():
         subject.cpu()
