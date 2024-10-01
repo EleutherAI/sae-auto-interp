@@ -18,7 +18,7 @@ def main(cfg: CacheConfig):
 
     submodule_dict, model = load_random_oai_autoencoders(
         model,
-        list([24, 32, 41]),
+        list([8, 16, 40]),
         n_latents=131072,
         k=50,
         seed=42,
