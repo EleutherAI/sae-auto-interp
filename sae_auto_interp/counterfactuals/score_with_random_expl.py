@@ -31,7 +31,7 @@ def load_explainer(explainer_name, device):
 
 
 def main(expl_path: Path | str, explainer_name: str = "meta-llama/Meta-Llama-3.1-8B", device: str = "cuda"):
-    save_path = Path(str(expl_path).replace("re=False", "re=True"))
+    save_path = Path(str(expl_path).replace("re=False", "re=True")).parent / "generations.json"
     random_explanations_df = pd.read_json(expl_path)
     all_expls = [e for l in random_explanations_df["explanations"].tolist() for e in l]
     if Counter(all_expls).most_common(1)[0][1] / len(all_expls) > 0.25:

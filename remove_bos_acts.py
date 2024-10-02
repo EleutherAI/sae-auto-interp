@@ -5,14 +5,14 @@ import numpy as np
 import glob
 import time
 
-time.sleep(50 * 60 * 1)
-
 files = glob.glob("cache/gemma_sae_131k/.*/*.safetensors")
 for file in files:
     print(file)
     data = load_file(file)
     locations = data["locations"]
     activations = data["activations"]
+    if len(locations) == 0:
+        continue
     print(locations[0])
     print(locations[-1])
     new_locations = locations[locations[:,1]!=0]
