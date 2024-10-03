@@ -16,6 +16,7 @@ class DefaultExplainer(Explainer):
         tokenizer,
         verbose: bool = False,
         activations: bool = False,
+        cot: bool = False,
         threshold: float = 0.6,
         **generation_kwargs,
     ):
@@ -24,7 +25,7 @@ class DefaultExplainer(Explainer):
         self.verbose = verbose
 
         self.activations = activations
-
+        self.cot = cot
         self.threshold = threshold
         self.generation_kwargs = generation_kwargs
 
@@ -108,4 +109,5 @@ class DefaultExplainer(Explainer):
         return build_prompt(
             examples=highlighted_examples,
             activations=self.activations,
+            cot=self.cot,
         )

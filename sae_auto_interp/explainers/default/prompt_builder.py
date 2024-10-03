@@ -30,15 +30,16 @@ def build_examples(
 def build_prompt(
     examples,
     activations: bool = False,
+    cot: bool = False,
 ):
     
     messages = system(
-        
+        cot=cot,
     )
 
     few_shot_examples = build_examples(
-    
         activations=activations,
+        cot=cot,
     )
 
     messages.extend(few_shot_examples)
