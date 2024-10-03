@@ -94,7 +94,7 @@ class EmbedingScorer(Scorer):
 
     def _query(self, explanation: str, samples: list[Sample]) -> list[EmbedingOutput]:
 
-        explanation_prompt = "Instruct: Retrieve senteces that could be related to the explanation:\nQuery:" + explanation 
+        explanation_prompt = "Instruct: Retrieve sentences that could be related to the explanation.\nQuery:" + explanation 
         query_embeding = self.model.encode(explanation_prompt)
         
         samples_text = [sample.text for sample in samples]
@@ -103,8 +103,8 @@ class EmbedingScorer(Scorer):
         # sample_embedings = []
         # for i in range(0, len(samples_text), 10):
         #     sample_embedings.extend(self.model.encode(samples_text[i:i+10]))
-        
-        similarity = self.model.similarity(query_embeding,samples_text)[0]
+        sample_embedings = self.model.encode(samples_text)
+        similarity = self.model.similarity(query_embeding,sample_embedings)[0]
         
         results = []
         for i in range(len(samples)):
