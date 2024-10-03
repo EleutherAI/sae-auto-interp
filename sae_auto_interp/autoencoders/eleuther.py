@@ -72,9 +72,12 @@ def load_eai_autoencoders(
         elif "gpt2" in weight_dir:
             submodule = model.transformer.h[layer]
         else:
-            submodule = model.gpt_neox.layers[layer]
+            if module == "res":
+                submodule = model.gpt_neox.layers[layer]
+            else:
+                submodule = model.gpt_neox.layers[layer].mlp
         submodule.ae = AutoencoderLatents(
-            sae, partial(_forward, sae, k), width=sae.d_in * sae.cfg.expansion_factor
+            sae, partial(_forward, sae, k), width=sae.encoder.weight.shape[0]
         )
 
         submodules[submodule.path] = submodule
