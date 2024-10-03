@@ -4,7 +4,7 @@ from typing import List
 import torch
 
 from ..wrapper import AutoencoderLatents
-from .model import Autoencoder
+from ..Custom.openai import Autoencoder
 
 DEVICE = "cuda:0"
 

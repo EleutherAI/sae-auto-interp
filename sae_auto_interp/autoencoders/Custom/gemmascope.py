@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 from huggingface_hub import hf_hub_download
 
+
 # This is from the GemmaScope tutorial
 class JumpReLUSAE(nn.Module):
   def __init__(self, d_model, d_sae):
@@ -30,10 +31,10 @@ class JumpReLUSAE(nn.Module):
     return recon
   
   @classmethod
-  def from_pretrained(cls, path,type,device):
+  def from_pretrained(cls, model_name_or_path,position,device):
     path_to_params = hf_hub_download(
-    repo_id="google/gemma-scope-9b-pt-"+type,
-    filename=f"{path}/params.npz",
+    repo_id=model_name_or_path,
+    filename=f"{position}/params.npz",
     force_download=False,
     )
     params = np.load(path_to_params)
@@ -43,5 +44,3 @@ class JumpReLUSAE(nn.Module):
     if device == "cuda":
         model.cuda()
     return model
-
-

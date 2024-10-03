@@ -1,7 +1,7 @@
 from typing import List
 import torch
 from functools import partial
-from ..OpenAI.model import ACTIVATIONS_CLASSES, TopK
+from ..Custom.openai import ACTIVATIONS_CLASSES, TopK
 
 DEVICE = "cuda:0"
 
