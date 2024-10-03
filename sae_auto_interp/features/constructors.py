@@ -4,52 +4,6 @@ from torchtyping import TensorType
 from .features import FeatureRecord, prepare_examples
 from .loader import BufferOutput
 
-def _to_dense(tokens, activations, locations):
-    """
-    Reconstruct dense tensor from sparse activations.
-
-    Args:
-        tokens (TensorType["batch", "seq"]): The input tokens.
-        activations (TensorType["activations"]): The activations.
-        locations (TensorType["locations", 2]): The locations of the activations.
-
-    Returns:
-        Tuple[TensorType["batch", "seq"], TensorType["batch", "seq"]]: The token batches and dense activations.
-    """
-    num_sequences, seq_len = tokens.shape
-    sparse_activations = torch.sparse_coo_tensor(
-        locations.t(), activations, (num_sequences, seq_len)
-    )
-    dense_activations = sparse_activations.to_dense()
-
-    unique_sequence_pos = torch.unique_consecutive(locations[:, 0])
-    token_batches = tokens[unique_sequence_pos]
-    dense_activations = dense_activations[unique_sequence_pos]
-
-    return token_batches, dense_activations
-
-def _reconstruct_examples(dense_activations, token_batches, ctx_len):
-    """
-    Reconstruct examples from dense activations and token batches.
-
-    Args:
-        dense_activations (TensorType["batch", "seq"]): The dense activations.
-        token_batches (TensorType["batch", "seq"]): The token batches.
-        ctx_len (int): The context length.
-
-    Returns:
-        Tuple[TensorType["examples", "ctx_len"], TensorType["examples", "ctx_len"], TensorType["batch", "ctx_len"]]: The token windows, activation windows, and average pools.
-    """
-    avg_pools = torch.nn.functional.max_pool1d(
-        dense_activations, kernel_size=ctx_len, stride=ctx_len
-    )
-
-    activation_windows = dense_activations.unfold(1, ctx_len, ctx_len).reshape(
-        -1, ctx_len
-    )
-    token_windows = token_batches.unfold(1, ctx_len, ctx_len).reshape(-1, ctx_len)
-
-    return token_windows, activation_windows, avg_pools
 
 def _top_k_pools(max_buffer,split_activations, buffer_tokens, ctx_len, max_examples):
     """
@@ -91,7 +45,6 @@ def pool_max_activation_windows(
         max_examples (int): The maximum number of examples.
     """
     flat_indices = buffer_output.locations[:, 0] * tokens.shape[1] + buffer_output.locations[:, 1]
-    num_contexts = tokens.numel()//ctx_len
     ctx_indices = flat_indices//ctx_len
     index_within_ctx = flat_indices%ctx_len
     unique_ctx_indices,inverses,lengths = torch.unique_consecutive(ctx_indices,return_counts=True,return_inverse=True)
