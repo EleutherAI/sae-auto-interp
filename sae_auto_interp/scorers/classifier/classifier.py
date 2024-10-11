@@ -39,7 +39,6 @@ class Classifier(Scorer):
         record: FeatureRecord,
     ) -> list[ClassifierOutput]:
         samples = self._prepare(record)
-
         random.shuffle(samples)
         samples = self._batch(samples)
         results = await self._query(
@@ -84,19 +83,22 @@ class Classifier(Scorer):
         prompt = self._build_prompt(explanation, batch)
         if self.log_prob:
             self.generation_kwargs["logprobs"] = True
-            self.generation_kwargs["top_logprobs"] = 5
+            self.generation_kwargs["top_logprobs"] = 10
         response = await self.client.generate(prompt, **self.generation_kwargs)
         if response is None:
             array = [-1] * self.batch_size
+            conditional_probabilities = [-1] * self.batch_size
             probabilities = [-1] * self.batch_size
+            
         else:
             selections = response.text
             logprobs = response.logprobs if self.log_prob else None
             try:
-                array, probabilities = self._parse(selections, logprobs)
+                array,conditional_probabilities, probabilities = self._parse(selections, logprobs)
             except Exception as e:
                 logger.error(f"Parsing selections failed: {e}")
                 array = [-1] * self.batch_size
+                conditional_probabilities = [-1] * self.batch_size
                 probabilities = [-1] * self.batch_size
 
         results = []
@@ -111,6 +113,7 @@ class Classifier(Scorer):
             response.append(prediction)
             if self.log_prob:
                 result.probability = probabilities[i]
+                result.conditional_probability = conditional_probabilities[i]
             results.append(result)
 
             if self.verbose:
@@ -125,21 +128,21 @@ class Classifier(Scorer):
             array = json.loads(match.group(0))
             assert len(array) == self.batch_size
             if self.log_prob:
-                probabilities = self._parse_logprobs(logprobs)
-                assert len(probabilities) == self.batch_size
-                return array, probabilities
+                conditional_probabilities,probabilities = self._parse_logprobs(logprobs)
+                assert len(conditional_probabilities) == self.batch_size
+                return array, conditional_probabilities, probabilities
+            conditional_probabilities = None
             probabilities = None
-            return array, probabilities
+            return array, conditional_probabilities, probabilities
         except (json.JSONDecodeError, AssertionError, AttributeError) as e:
             logger.error(f"Parsing array failed: {e}")
-            if self.log_prob:
-                return [-1] * self.batch_size, [-1] * self.batch_size
-            return [-1] * self.batch_size
+            return [-1] * self.batch_size, [-1] * self.batch_size, [-1] * self.batch_size
 
     def _parse_logprobs(self, logprobs):
         #Logprobs will be a list of 5 probabilites for each token in the response
         # The response will be in the form of [x, x, x, ...] for each position we
         # need to get the probability of 1 or 0 
+        conditional_probabilities = []
         probabilities = []
         
         for i in range(len(logprobs)):
@@ -155,10 +158,12 @@ class Classifier(Scorer):
                     elif "1" in token:
                         prob_1 += np.exp(logprob).item()
                 if prob_0+prob_1>0:
-                    probabilities.append(prob_1/(prob_0+prob_1))
+                    conditional_probabilities.append(prob_1/(prob_0+prob_1))
+                    probabilities.append(prob_1)
                 else:
+                    conditional_probabilities.append(0)
                     probabilities.append(0)
-        return probabilities
+        return conditional_probabilities,probabilities
 
 
 
