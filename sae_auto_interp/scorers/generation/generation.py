@@ -1,4 +1,4 @@
-from ...clients import Client, create_response_model
+from ...clients import Client
 from ..scorer import Scorer, ScorerResult
 from .prompts import get_gen_scorer_template
 import re
