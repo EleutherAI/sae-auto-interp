@@ -13,19 +13,9 @@ class Local(Client):
     def __init__(self, model: str, base_url="http://localhost:8000/v1"):
         super().__init__(model)
         self.client = AsyncOpenAI(base_url=base_url, api_key="EMPTY", timeout=None)
-        self.model = model
         self.tokenizer = AutoTokenizer.from_pretrained(model)
 
-    async def generate(
-        self, 
-        prompt: str, 
-        use_legacy_api: bool = False,
-        max_retries: int = 2,
-        **kwargs
-    ) -> Response:
-        """
-        Wrapper method for vLLM post requests.
-        """
+    async def generate(self, prompt: Union[str, List[Dict[str, str]]], use_legacy_api: bool = False, max_retries: int = 2, **kwargs) -> Response:
         try:
             for attempt in range(max_retries):
                 try:
@@ -43,29 +33,22 @@ class Local(Client):
                         )
                     if response is None:
                         raise Exception("Response is None")
-                    return self.postprocess(response)
-
+                    return await self.process_response(response)
                 except json.JSONDecodeError as e:
                     logger.warning(f"Attempt {attempt + 1}: Invalid JSON response, retrying... {e}")
-                
                 except Exception as e:
                     logger.warning(f"Attempt {attempt + 1}: {str(e)}, retrying...")
-                
                 await asyncio.sleep(1)
         except Exception as e:
             logger.error(f"All retry attempts failed. Most recent error: {e}")
             raise
-    
-    def postprocess(self, response: dict) -> Response:
-        """
-        Postprocess the response from the API.
-        """
-        new_response=Response(
-                text=response.choices[0].message.content,
-                logprobs=response.choices[0].logprobs,
-            prompt_logprobs=response.choices[0].prompt_logprobs
+
+    async def process_response(self, raw_response: Any) -> Response:
+        return Response(
+            text=raw_response.choices[0].message.content,
+            logprobs=raw_response.choices[0].logprobs,
+            prompt_logprobs=raw_response.choices[0].prompt_logprobs
         )
-        return new_response
 
 
 
