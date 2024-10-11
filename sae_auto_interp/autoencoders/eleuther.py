@@ -4,7 +4,7 @@ import torch
 
 from sae import Sae
 
-from .OpenAI.model import ACTIVATIONS_CLASSES, TopK
+from .Custom.openai import ACTIVATIONS_CLASSES, TopK
 from .wrapper import AutoencoderLatents
 
 DEVICE = "cuda:0"
