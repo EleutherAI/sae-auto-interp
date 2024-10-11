@@ -1,14 +1,18 @@
-from typing import Callable, Optional, Union, Any, Literal, Dict
+from dataclasses import dataclass, field
+from functools import partial
+from typing import Any, Callable, Dict, List, Literal, Optional, Tuple
+
 import torch
 from simple_parsing import Serializable
-from functools import partial
 
+
+@dataclass
 class AutoencoderConfig(Serializable):
-    model_name_or_path: str 
+    model_name_or_path: str = "model"
     autoencoder_type: Literal["SAE", "SAE_LENS", "NEURONS", "CUSTOM"] = "SAE"
     device: Optional[str] = None
     hookpoints: Optional[List[str]] = None
-    kwargs: Dict[str, Any] = {}
+    kwargs: Dict[str, Any] = field(default_factory=dict)
 
 class AutoencoderLatents(torch.nn.Module):
     """
@@ -71,11 +75,10 @@ class AutoencoderLatents(torch.nn.Module):
             if custom_name is None:
                 raise ValueError("custom_name must be specified for CUSTOM autoencoder")
             if custom_name == "gemmascope":
-                from Custom.gemmascope import JumpReLUSAE
-                position = config.kwargs.get("position", None)
-                assert position is not None, "position must be specified for gemmascope autoencoder"
-                sae = JumpReLUSAE.from_pretrained(model_name_or_path,position,device)
+                from .Custom.gemmascope import JumpReLUSAE
+                sae = JumpReLUSAE.from_pretrained(model_name_or_path,hookpoint,device)
                 forward_function = choose_forward_function(config, sae)
+                width = sae.W_enc.data.shape[1]
             if custom_name == "openai":
                 raise NotImplementedError("OpenAI autoencoder not implemented yet")
                 from Custom.openai import Autoencoder
@@ -115,10 +118,34 @@ def choose_forward_function(autoencoder_config: AutoencoderConfig, autoencoder: 
         else:
             raise ValueError(f"Unsupported custom autoencoder: {autoencoder_config.kwargs.get('custom_name', None)}")
 
-def hook_submodule(autoencoder_config: AutoencoderConfig, submodule: Any, model: Any):
-    
+def get_submodule(model:Any,autoencoder_config:AutoencoderConfig,hookpoint:str)->Any:
+
+    if autoencoder_config.autoencoder_type == "SAE":
+        if "res" in hookpoint:
+            submodule = model.model.get_submodule(hookpoint)
+        elif "mlp" in hookpoint:
+            layer = int(hookpoint.split(".")[-1])
+            submodule = model.model.layers[layer].mlp
+        else:
+            raise ValueError(f"Unsupported hookpoint: {hookpoint}")
+        return submodule
+    elif autoencoder_config.autoencoder_type == "SAE_LENS":
+        raise NotImplementedError("SAE_LENS not implemented yet")
+        #return model.get_submodule(hookpoint)
+    elif autoencoder_config.autoencoder_type == "CUSTOM":
+        if autoencoder_config.kwargs.get("custom_name", None) == "gemmascope":
+            layer = int(hookpoint.split("/")[0].split("_")[-1])
+            model_name = autoencoder_config.model_name_or_path
+            if "res" in model_name:
+                submodule = model.model.layers[layer]
+            if "mlp" in model_name:
+                submodule = model.model.layers[layer].post_feedforward_layernorm
+            return submodule
+
+def hook_submodule( submodule: Any, model: Any,module_path:str,autoencoder_config:AutoencoderConfig)->Tuple[Any,Any]:
+    #TODO: This should take into account the autoencoder config, but for now I think this is valid for all
     with model.edit("") as edited:
-        if "embed" not in submodule.path and "mlp" not in submodule.path:
+        if "embed" not in module_path and "mlp" not in module_path:
             acts = submodule.output[0]
         else:
             acts = submodule.output
@@ -130,13 +157,12 @@ def load_autoencoder_into_model(
     model: Any,
     autoencoder_config: AutoencoderConfig,
     **kwargs
-) -> Tuple[List[Any], Any]:
+) -> Tuple[Dict[str,Any], Any]:
     """
     Load an autoencoder and hook it into the model using nnsight.
 
     Args:
         model (Any): The main model to hook the autoencoder into.
-        hookpoints (list[str]): List of paths to the submodules to hook the autoencoder into.
         autoencoder_config (AutoencoderConfig): Configuration for the autoencoder.
 
     Returns:
@@ -152,9 +178,9 @@ def load_autoencoder_into_model(
             autoencoder_config,
             module_path,
         )
-        submodule = model.get_submodule(module_path)
-        autoencoder.ae = autoencoder
-        submodule,edited_model = hook_submodule(autoencoder_config, submodule, edited_model)
+        submodule = get_submodule(edited_model,autoencoder_config,module_path)
+        submodule.ae = autoencoder
+        submodule,edited_model = hook_submodule(submodule, edited_model,module_path,autoencoder_config)
         
         submodules[submodule.path] = submodule
 
