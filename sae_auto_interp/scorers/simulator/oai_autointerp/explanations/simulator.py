@@ -12,7 +12,7 @@ from typing import Any , Optional, Sequence, Union
 import numpy as np
 from pydantic import BaseModel
 
-from ...clients.client import Client
+from sae_auto_interp.clients.client import Client
 from ..activations.activation_records import (
     calculate_max_activation,
     format_activation_records,
