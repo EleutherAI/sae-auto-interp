@@ -10,14 +10,14 @@ class ExperimentConfig(Serializable):
     n_examples_train: int = 40
     """Number of examples to sample for training"""
 
-    example_ctx_len: int = 20
-    """Length of each example"""
-
     n_examples_test: int = 5
     """Number of examples to sample for testing"""
 
     n_quantiles: int = 20
     """Number of quantiles to sample"""
+
+    example_ctx_len: int = 32
+    """Length of each example"""
 
     n_random: int = 50
     """Number of random examples to sample"""
@@ -25,7 +25,7 @@ class ExperimentConfig(Serializable):
     train_type: Literal["top", "random", "quantiles"] = "random"
     """Type of sampler to use for training"""
 
-    test_type: Literal["even", "activation"] = "even"
+    test_type: Literal["quantiles", "activation"] = "quantiles"
     """Type of sampler to use for testing"""
 
 
