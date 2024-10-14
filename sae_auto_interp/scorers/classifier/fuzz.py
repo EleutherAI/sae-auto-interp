@@ -65,6 +65,11 @@ class FuzzingScorer(Classifier, Scorer):
             **defaults,
         )
 
+        assert (
+            len(record.test) > 0 
+            and len(record.test[0]) > 0
+        ), "No test records found"
+
         for i, examples in enumerate(record.test):
             samples.extend(
                 examples_to_samples(

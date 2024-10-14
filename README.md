@@ -224,7 +224,7 @@ pipeline = Pipeline(
 )
 
 asyncio.run(pipeline.run())
-```
+``` 
 
 ## Simulation
 
@@ -246,7 +246,7 @@ Example scripts can be found in `demos`. Some of these scripts can be called fro
 
 # Experiments
 
-The experiments discussed in [link] were mostly run in a legacy version of this code, which can be found in the [Experiments](https://github.com/EleutherAI/sae-auto-interp/tree/Experiments) branch.
+The experiments discussed in [the blog post](https://blog.eleuther.ai/autointerp/) were mostly run in a legacy version of this code, which can be found in the [Experiments](https://github.com/EleutherAI/sae-auto-interp/tree/Experiments) branch.
 
 
 # License
