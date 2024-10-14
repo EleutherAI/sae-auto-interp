@@ -1,6 +1,6 @@
 from .classifier.fuzz import FuzzingScorer
 from .classifier.neighbor import NeighborScorer
-from .classifier.recall import RecallScorer
+from .classifier.detection import DetectionScorer
 from .classifier.utils import get_neighbors, load_neighbors
 from .generation.generation import GenerationScorer
 from .scorer import Scorer
@@ -12,7 +12,7 @@ __all__ = [
     "GenerationScorer",
     "NeighborScorer",
     "OpenAISimulator",
-    "RecallScorer",
+    "DetectionScorer",
     "Scorer",
     "get_neighbors",
     "load_neighbors",
