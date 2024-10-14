@@ -289,7 +289,8 @@ class FeatureCache:
             features = feature_locations[:, 2]
 
             for start, end in split_indices:
-                mask = (features >= start) & (features < end)
+                
+                mask = (features >= start) & (features <= end)
 
                 masked_locations = feature_locations[mask].numpy()
                 masked_activations = feature_activations[mask].half().numpy()

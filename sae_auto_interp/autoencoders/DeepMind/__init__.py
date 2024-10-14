@@ -39,4 +39,3 @@ def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,in
             submodule.ae(acts, hook=True)
 
     return submodules, edited
-
