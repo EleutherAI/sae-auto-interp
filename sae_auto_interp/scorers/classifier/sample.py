@@ -17,8 +17,8 @@ DEFAULT_MESSAGE = (
 
 @dataclass
 class ClassifierOutput:
-    id: int
-    """Hashed tokens"""
+    text: str
+    """Text"""
 
     distance: float | int
     """Quantile or neighbor distance"""
@@ -40,23 +40,23 @@ class Sample(NamedTuple):
 
 
 def examples_to_samples(
-    examples: List[Example],
+    examples: list[Example],
     tokenizer: PreTrainedTokenizer,
     n_incorrect: int = 0,
     threshold: float = 0.3,
     highlighted: bool = False,
     **sample_kwargs,
-) -> List[Sample]:
+) -> list[Sample]:
     samples = []
 
     for example in examples:
-        text = _prepare_text(example, tokenizer, n_incorrect, threshold, highlighted)
+        text,clean = _prepare_text(example, tokenizer, n_incorrect, threshold, highlighted)
 
         samples.append(
             Sample(
                 text=text,
                 data=ClassifierOutput(
-                    id=hash(example), highlighted=highlighted, **sample_kwargs
+                    text=clean, highlighted=highlighted, **sample_kwargs
                 ),
             )
         )
@@ -65,8 +65,6 @@ def examples_to_samples(
 
 
 # NOTE: Should reorganize below, it's a little confusing
-# TODO: Currently highlights entire example if extras have no activations
-
 
 def _prepare_text(
     example,
@@ -76,10 +74,10 @@ def _prepare_text(
     highlighted: bool,
 ):
     str_toks = tokenizer.batch_decode(example.tokens)
-
+    clean = "".join(str_toks)
     # Just return text if there's no highlighting
     if not highlighted:
-        return "".join(str_toks)
+        return clean,clean
 
     threshold = threshold * example.max_activation
 
@@ -90,7 +88,7 @@ def _prepare_text(
         def check(i):
             return example.activations[i] >= threshold
 
-        return _highlight(str_toks, check)
+        return _highlight(str_toks, check),clean
 
     # Highlight n_incorrect tokens with activations
     # below threshold if incorrect example
@@ -110,7 +108,7 @@ def _prepare_text(
     def check(i):
         return i in random_indices
 
-    return _highlight(str_toks, check)
+    return _highlight(str_toks, check),clean
 
 
 def _highlight(tokens, check):

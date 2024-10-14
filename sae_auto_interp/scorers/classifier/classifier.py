@@ -3,13 +3,13 @@ import json
 import random
 import re
 from abc import abstractmethod
-from typing import List
 
 import numpy as np
 from transformers import PreTrainedTokenizer
 
 from ...clients.client import Client
 from ...features import FeatureRecord
+from ...logger import logger
 from ..scorer import Scorer, ScorerResult
 from .sample import ClassifierOutput, Sample
 
@@ -37,40 +37,46 @@ class Classifier(Scorer):
     async def __call__(
         self,
         record: FeatureRecord,
-    ) -> List[ClassifierOutput]:
+    ) -> list[ClassifierOutput]:
         samples = self._prepare(record)
 
         random.shuffle(samples)
-
+        samples = self._batch(samples)
         results = await self._query(
             record.explanation,
-            self._batch(samples),
+            samples,
         )
-
+        
         return ScorerResult(record=record, score=results)
 
     @abstractmethod
-    def _prepare(self, record: FeatureRecord) -> List[List[Sample]]:
+    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
         pass
 
     async def _query(
         self,
         explanation: str,
-        batches: List[List[Sample]],
-    ) -> List[Sample]:
+        batches: list[list[Sample]],
+    ) -> list[Sample]:
         """
         Send and gather batches of samples to the model.
         """
+        sem = asyncio.Semaphore(1)
 
-        tasks = [self._generate(explanation, batch) for batch in batches]
-
+        async def _process(explanation, batch):
+            async with sem:
+                result = await self._generate(explanation, batch)
+                return result
+    
+        tasks = [asyncio.create_task(_process(explanation, batch)) for batch in batches]
         results = await asyncio.gather(*tasks)
 
         return sum(results, [])
+    
 
     async def _generate(
-        self, explanation: str, batch: List[Sample]
-    ) -> List[ClassifierOutput]:
+        self, explanation: str, batch: list[Sample]
+    ) -> list[ClassifierOutput]:
         """
         Generate predictions for a batch of samples.
         """
@@ -79,54 +85,54 @@ class Classifier(Scorer):
         if self.log_prob:
             self.generation_kwargs["logprobs"] = True
             self.generation_kwargs["top_logprobs"] = 5
-            #self.generation_kwargs["echo"] = True
-            #self.generation_kwargs["stop"] = "]"
-            response = await self.client.generate(prompt, **self.generation_kwargs,raw=True)
-            if response is None:
+        response = await self.client.generate(prompt, **self.generation_kwargs)
+        if response is None:
+            array = [-1] * self.batch_size
+            probabilities = [-1] * self.batch_size
+        else:
+            selections = response.text
+            logprobs = response.logprobs if self.log_prob else None
+            try:
+                array, probabilities = self._parse(selections, logprobs)
+            except Exception as e:
+                logger.error(f"Parsing selections failed: {e}")
                 array = [-1] * self.batch_size
                 probabilities = [-1] * self.batch_size
-            else:
-                selections = response.choices[0].message.content
-                logprobs = response.choices[0].logprobs.content
-                array, probabilities = self._parse(selections, logprobs)
-        else:
-            selections = await self.client.generate(prompt, **self.generation_kwargs)
-            if selections is None:
-                array = [-1] * self.batch_size
-            else:
-                array = self._parse(selections)
 
-        
         results = []
-
+        correct = []
+        response = []
         for i, sample in enumerate(batch):
             result = sample.data
             prediction = array[i] 
             result.prediction = prediction
             result.correct = prediction == result.ground_truth
+            correct.append(result.ground_truth)
+            response.append(prediction)
             if self.log_prob:
                 result.probability = probabilities[i]
             results.append(result)
 
             if self.verbose:
                 result.text = sample.text
-
         return results
 
-    def _parse(self, string,logprobs=None):
+    def _parse(self, string, logprobs=None):
         pattern = r"\[.*?\]"
         match = re.search(pattern, string)
 
         try:
             array = json.loads(match.group(0))
             assert len(array) == self.batch_size
-            if logprobs:
+            if self.log_prob:
                 probabilities = self._parse_logprobs(logprobs)
                 assert len(probabilities) == self.batch_size
                 return array, probabilities
-            return array
-        except (json.JSONDecodeError, AssertionError, AttributeError):
-            if logprobs:
+            probabilities = None
+            return array, probabilities
+        except (json.JSONDecodeError, AssertionError, AttributeError) as e:
+            logger.error(f"Parsing array failed: {e}")
+            if self.log_prob:
                 return [-1] * self.batch_size, [-1] * self.batch_size
             return [-1] * self.batch_size
 
@@ -160,7 +166,7 @@ class Classifier(Scorer):
     def _build_prompt(
         self,
         explanation: str,
-        batch: List[Sample],
+        batch: list[Sample],
     ) -> str:
         """
         Prepare prompt for generation.
@@ -169,7 +175,7 @@ class Classifier(Scorer):
         examples = "\n".join(
             f"Example {i}: {sample.text}" for i, sample in enumerate(batch)
         )
-
+        
         return self.prompt(explanation=explanation, examples=examples)
 
     def _batch(self, samples):
