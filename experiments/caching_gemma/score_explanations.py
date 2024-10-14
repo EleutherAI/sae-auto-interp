@@ -68,7 +68,7 @@ def main(args):
         client = Offline("meta-llama/Meta-Llama-3.1-8B-Instruct",max_memory=0.8,max_model_len=5120,num_gpus=1)
         SCORE_OUT_DIR = f"results/scores/{sae_model}/{experiment_name}_scorer_8b"
     elif scorer_size == "claude":
-        client = OpenRouter("anthropic/claude-3.5-sonnet",api_key="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")
+        client = OpenRouter("anthropic/claude-3.5-sonnet",api_key=os.getenv("OPENROUTER_API_KEY"))
         SCORE_OUT_DIR = f"results/scores/{sae_model}/{experiment_name}_scorer_claude"
     
     

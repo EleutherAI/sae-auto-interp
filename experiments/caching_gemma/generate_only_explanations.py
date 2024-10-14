@@ -54,7 +54,7 @@ def main(args):
     elif explainer_size == "8b":
         client = Offline("meta-llama/Meta-Llama-3.1-8B-Instruct",max_memory=0.8,max_model_len=5120,num_gpus=1)
     elif explainer_size == "claude":
-        client = OpenRouter("anthropic/claude-3.5-sonnet",api_key="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")
+        client = OpenRouter("anthropic/claude-3.5-sonnet",api_key=os.getenv("OPENROUTER_API_KEY"))
         
     ### Build Explainer pipe ###
     def explainer_postprocess(result):
