@@ -4,4 +4,4 @@ from .offline import Offline
 from .openrouter import OpenRouter
 from .outlines import Outlines
 
-__all__ = ["Client", "Local", "OpenRouter", "Outlines", "HuggingFace", "Offline"]
+__all__ = ["Client", "Local", "OpenRouter", "Outlines", "Offline"]
