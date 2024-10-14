@@ -1,7 +1,4 @@
-from torchtyping import TensorType
 from transformers import AutoTokenizer
-
-from .features import FeatureRecord
 
 
 def load_tokenized_data(
@@ -17,10 +14,12 @@ def load_tokenized_data(
     """
     from datasets import load_dataset
     from transformer_lens import utils
-
+    print(dataset_repo,dataset_name,dataset_split)
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
-
-    tokens = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len)
+    if "rpj" in dataset_repo:
+        tokens = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name="raw_content")
+    else:
+        tokens = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name="text")
 
     tokens = tokens.shuffle(seed)["tokens"]
 
@@ -38,36 +37,6 @@ def load_filter(path: str, device: str = "cuda:0"):
     return {key: torch.tensor(value, device=device) for key, value in filter.items()}
 
 
-def display(
-    record: FeatureRecord, tokenizer: AutoTokenizer, threshold: float = 0.0, n: int = 10
-) -> str:
-    from IPython.core.display import HTML, display
-
-    def _to_string(tokens: TensorType["seq"], activations: TensorType["seq"]) -> str:
-        result = []
-        i = 0
-
-        max_act = max(activations)
-        _threshold = max_act * threshold
-
-        while i < len(tokens):
-            if activations[i] > _threshold:
-                result.append("<mark>")
-                while i < len(tokens) and activations[i] > _threshold:
-                    result.append(tokens[i])
-                    i += 1
-                result.append("</mark>")
-            else:
-                result.append(tokens[i])
-                i += 1
-        return "".join(result)
-
-    strings = [
-        _to_string(tokenizer.batch_decode(example.tokens), example.activations)
-        for example in record.examples[:n]
-    ]
-
-    display(HTML("<br><br>".join(strings)))
 
 
 def load_tokenizer(model):

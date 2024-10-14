@@ -1,7 +1,7 @@
 from typing import List
 
 from ...features import Example
-from ...oai_autointerp import (
+from .oai_autointerp import (
     ActivationRecord,
     ExplanationNeuronSimulator,
     LogprobFreeExplanationTokenSimulator,
@@ -48,10 +48,14 @@ class OpenAISimulator(Scorer):
             score=result,
         )
 
-    def to_activation_records(self, examples: List[Example]) -> List[ActivationRecord]:
+    def to_activation_records(self, examples: list[Example]) -> list[ActivationRecord]:
         return [
-            ActivationRecord(
-                self.tokenizer.batch_decode(example.tokens), example.activations.half()
-            )
-            for example in examples
+            [
+                ActivationRecord(
+                    self.tokenizer.batch_decode(example.tokens), example.normalized_activations.half()
+                )
+                for example in quantiles
+            ]
+            for quantiles in examples
         ]
+        
