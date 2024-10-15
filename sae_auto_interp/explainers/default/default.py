@@ -86,10 +86,9 @@ class DefaultExplainer(Explainer):
     def _join_activations(self, example):
         activations = []
 
-        threshold = 0.6
-        for i, normalized in enumerate(example.normalized_activations):
-            if example.normalized_activations[i] > threshold:
-                activations.append((example.str_toks[i], int(normalized)))
+        for i, activation in enumerate(example.activations):
+            if activation > example.max_activation * self.threshold:
+                activations.append((example.str_toks[i], int(example.normalized_activations[i])))
 
         acts = ", ".join(f'("{item[0]}" : {item[1]})' for item in activations)
 
