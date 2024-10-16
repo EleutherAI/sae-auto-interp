@@ -1,9 +1,9 @@
 from functools import partial
 from typing import List, Any, Tuple, Optional, Dict
 import torch
-
-from sae import Sae
-
+import torch.nn as nn
+from sae import Sae, SaeConfig
+from pathlib import Path
 from .Custom.openai import ACTIVATIONS_CLASSES, TopK
 from .wrapper import AutoencoderLatents
 
@@ -51,9 +51,9 @@ def load_eai_autoencoders(
             sae = Sae.load_from_hub(weight_dir,hookpoint=submodule, device=DEVICE).to(dtype=model.dtype)
             sae = Sae(sae.d_in, sae.cfg, device=DEVICE, dtype=model.dtype, decoder=False)
             # Randomize the weights
-            sae.encoder.weight.data.uniform_(-1,1)
+            sae.encoder.weight.data.normal_(-1,1)
+            sae.encoder.weight.data = sae.encoder.weight.data / torch.norm(sae.encoder.weight.data, dim=0, keepdim=True)
             sae.W_dec = sae.encoder.weight.data.T
-            
         
         def _forward(sae, k,x):
             encoded = sae.pre_acts(x)

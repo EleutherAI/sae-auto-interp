@@ -43,15 +43,15 @@ def split_quantiles(
     random.seed(seed)
 
     quantile_size = len(examples) // n_quantiles
-
+    samples_per_quantile = n_samples // n_quantiles
     samples = []
     for i in range(n_quantiles):
         quantile = examples[i * quantile_size : (i + 1) * quantile_size]
-        if len(quantile) < n_samples:
+        if len(quantile) < samples_per_quantile:
             sample = quantile
-            logger.info(f"Quantile {i} has less than {n_samples} samples, using all samples")
+            logger.info(f"Quantile {i} has less than {samples_per_quantile} samples, using all samples")
         else:
-            sample = random.sample(quantile, n_samples)
+            sample = random.sample(quantile, samples_per_quantile)
         samples.append(sample)
 
     return samples
@@ -98,11 +98,11 @@ def test(
     max_activation: float,
     n_test: int,
     n_quantiles: int,
-    test_type: Literal["even", "activation"],
+    test_type: Literal["quantiles", "activation"],
     
 ):
     match test_type:
-        case "even":
+        case "quantiles":
             selected_examples = split_quantiles(examples, n_quantiles, n_test)
             for quantile in selected_examples:
                 for example in quantile:

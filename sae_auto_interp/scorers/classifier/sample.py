@@ -65,8 +65,6 @@ def examples_to_samples(
 
 
 # NOTE: Should reorganize below, it's a little confusing
-# TODO: Currently highlights entire example if extras have no activations
-
 
 def _prepare_text(
     example,
