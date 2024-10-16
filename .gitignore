@@ -17,6 +17,11 @@ processed*
 extras*
 redoing*
 weights*
+temp*
+tests*
+wandb*
+simulation_data*
+output*
 .nfs*
 
 processed_features/
