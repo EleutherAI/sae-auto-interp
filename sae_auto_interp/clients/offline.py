@@ -27,8 +27,12 @@ class Offline(Client):
         super().__init__(model)
         self.queue = asyncio.Queue()
         self.task = None
-        self.client = LLM(model=model, gpu_memory_utilization=max_memory, enable_prefix_caching=prefix_caching, tensor_parallel_size=num_gpus, max_model_len=max_model_len, enforce_eager=enforce_eager,enable_lora=True)
-        self.sampling_params = SamplingParams(max_tokens=500, temperature=0.01)
+        if lora_path is not None:
+            enable_lora = True
+        else:
+            enable_lora = False
+        self.client = LLM(model=model, gpu_memory_utilization=max_memory, enable_prefix_caching=prefix_caching, tensor_parallel_size=num_gpus, max_model_len=max_model_len, enforce_eager=enforce_eager,enable_lora=enable_lora)
+        self.sampling_params = SamplingParams(max_tokens=500, temperature=0.7)
         self.tokenizer = AutoTokenizer.from_pretrained(model)
         self.batch_size = batch_size
         if lora_path is not None:

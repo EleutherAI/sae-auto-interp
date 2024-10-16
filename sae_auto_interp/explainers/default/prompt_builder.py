@@ -17,7 +17,7 @@ def build_examples(
                 "content": prompt,
             },
             {
-                "role": "system",
+                "role": "assistant",
                 "content": response,
             },
         ]
