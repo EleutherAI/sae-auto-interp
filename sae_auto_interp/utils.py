@@ -7,7 +7,7 @@ def load_tokenized_data(
     dataset_repo: str,
     dataset_split: str,
     dataset_name: str = "",
-    column_name: str = "text",
+    column_name: str = "raw_content",
     seed: int = 22,
 ) -> torch.Tensor:
     """
