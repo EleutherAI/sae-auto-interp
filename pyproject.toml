@@ -16,7 +16,11 @@ dependencies = [
     "sae@git+https://github.com/EleutherAI/sae",
     "safetensors",
     "simple_parsing",
-    "torchtyping"
+    "torchtyping",
+    "fire",
+    "blobfile",
+    "transformer_lens",
+    "bitsandbytes",
 ]
 
 [tool.pyright]

@@ -1,7 +1,7 @@
 from typing import List
 
 from ...features import Example
-from ...oai_autointerp import (
+from .oai_autointerp import (
     ActivationRecord,
     ExplanationNeuronSimulator,
     LogprobFreeExplanationTokenSimulator,
