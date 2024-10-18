@@ -7,6 +7,7 @@ def load_tokenized_data(
     dataset_repo: str,
     dataset_split: str,
     dataset_name: str = "",
+    dataset_row: str = "raw_content",
     seed: int = 22,
 ):
     """
@@ -16,10 +17,7 @@ def load_tokenized_data(
     from transformer_lens import utils
     print(dataset_repo,dataset_name,dataset_split)
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
-    if "rpj" in dataset_repo:
-        tokens = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name="raw_content")
-    else:
-        tokens = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name="text")
+    tokens = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name=dataset_row)
 
     tokens = tokens.shuffle(seed)["tokens"]
 
