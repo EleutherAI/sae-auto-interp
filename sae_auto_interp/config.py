@@ -49,14 +49,17 @@ class FeatureConfig(Serializable):
 @dataclass
 class CacheConfig(Serializable):
 
-    dataset_repo: str = "kh4dien/fineweb-100m-sample"
+    dataset_repo: str = "EleutherAI/rpj-v2-sample"
     """Dataset repository to use"""
 
-    dataset_split: str = "train"
+    dataset_split: str = "train[:1%]"
     """Dataset split to use""" 
 
     dataset_name: str = ""
     """Dataset name to use"""
+
+    dataset_row: str = "raw_content"
+    """Dataset row to use"""
 
     batch_size: int = 32
     """Number of sequences to process in a batch"""
