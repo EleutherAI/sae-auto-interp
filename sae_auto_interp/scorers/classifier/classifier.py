@@ -183,3 +183,6 @@ class Classifier(Scorer):
             samples[i : i + self.batch_size]
             for i in range(0, len(samples), self.batch_size)
         ]
+
+    def call_sync(self, record: FeatureRecord) -> list[ClassifierOutput]:
+        return asyncio.run(self.__call__(record))
