@@ -45,7 +45,7 @@ class Classifier(Scorer):
             record.explanation,
             samples,
         )
-        
+        #print(results)
         return ScorerResult(record=record, score=results)
 
     @abstractmethod
@@ -85,6 +85,7 @@ class Classifier(Scorer):
             self.generation_kwargs["logprobs"] = True
             self.generation_kwargs["top_logprobs"] = 10
         response = await self.client.generate(prompt, **self.generation_kwargs)
+        #print(response)
         if response is None:
             array = [-1] * self.batch_size
             conditional_probabilities = [-1] * self.batch_size
@@ -188,3 +189,6 @@ class Classifier(Scorer):
             samples[i : i + self.batch_size]
             for i in range(0, len(samples), self.batch_size)
         ]
+
+    def call_sync(self, record: FeatureRecord) -> list[ClassifierOutput]:
+        return asyncio.run(self.__call__(record))
