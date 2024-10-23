@@ -1,4 +1,5 @@
 import re
+import asyncio
 
 import torch
 
@@ -61,8 +62,12 @@ class DefaultExplainer(Explainer):
         result = f"Example {index}: "
 
         threshold = example.max_activation * self.threshold
-        str_toks = self.tokenizer.batch_decode(example.tokens)
-        example.str_toks = str_toks
+        if self.tokenizer is not None:
+            str_toks = self.tokenizer.batch_decode(example.tokens)
+            example.str_toks = str_toks
+        else:
+            str_toks = example.tokens
+            example.str_toks = str_toks
         activations = example.activations
 
         def check(i):
@@ -110,3 +115,6 @@ class DefaultExplainer(Explainer):
             activations=self.activations,
             cot=self.cot,
         )
+
+    def call_sync(self, record):
+        return asyncio.run(self.__call__(record))
