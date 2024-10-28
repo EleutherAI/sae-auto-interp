@@ -21,6 +21,10 @@ dependencies = [
     "blobfile",
     "transformer_lens",
     "bitsandbytes",
+    "flask",
+    "vllm",
+    "aiofiles",
+    "sentence_transformers"
 ]
 
 [tool.pyright]
