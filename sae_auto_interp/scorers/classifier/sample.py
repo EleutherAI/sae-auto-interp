@@ -92,7 +92,7 @@ def _prepare_text(
     clean = "".join(str_toks)
     # Just return text if there's no highlighting
     if not highlighted:
-        return clean,clean,str_toks
+        return clean,str_toks
 
     threshold = threshold * example.max_activation
 

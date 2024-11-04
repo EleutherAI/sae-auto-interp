@@ -11,7 +11,7 @@ with open("/mnt/ssd-1/gpaulo/SAE-Zoology/extras/explanations_16k/model.layers.0.
     explanation_data = json.load(f)
 tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-9b")
 
-actual_data = activation_data["features"][0]
+actual_data = activation_data["features"][10]
 activations = actual_data["activations"]
 for activation in activations:
     activation["tokens"] = tokenizer.batch_decode(activation["tokens"]) # If you have the tokens already decoded, you can skip this step
@@ -43,25 +43,31 @@ def test_generate_explanation():
     print(response.json())
 
 def test_generate_score(score_type):
-    url = f"{BASE_URL}/generate_score_fuzz_detection"
-    
-    
-    data = {
-        "activations": activations[10:], # Using only the other activations for testing
-        "explanation": explanation,
-        "api_key": API_KEY,
-        "model": MODEL,
-        "type": score_type
-    }
-    
+    if score_type == "embedding":
+        url = f"{BASE_URL}/generate_score_embedding"
+        data = {
+            "activations": activations, # Using only the other activations for testing
+            "explanation": explanation,
+        }
+    else:
+        url = f"{BASE_URL}/generate_score_fuzz_detection" 
+        data = {
+            "activations": activations[10:], # Using only the other activations for testing
+            "explanation": explanation,
+            "api_key": API_KEY,
+            "model": MODEL,
+            "type": score_type
+        }
+        
     # Send the request
     response = requests.post(url, json=data)
     
     print(f"Generate Score ({score_type}) Response:")
-    print(response.status_code)
+    #print(response.status_code)
     print(response.json())
 
 if __name__ == "__main__":
     #test_generate_explanation()
     #test_generate_score("fuzz")
-    test_generate_score("detection")
+    #test_generate_score("detection")
+    test_generate_score("embedding")

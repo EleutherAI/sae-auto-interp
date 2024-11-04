@@ -17,7 +17,7 @@ from ..scorer import Scorer, ScorerResult
 
 
 @dataclass
-class EmbedingOutput:
+class EmbeddingOutput:
     text: str
     """The text that was used to evaluate the similarity"""
 
@@ -31,30 +31,30 @@ class EmbedingOutput:
 class Sample(NamedTuple):
     text: str
     activations: list[float]
-    data: EmbedingOutput
+    data: EmbeddingOutput
 
 
-class EmbedingScorer(Scorer):
-    name = "embeding"
+class EmbeddingScorer(Scorer):
+    name = "embedding"
 
     def __init__(
         self,
         model,
-        tokenizer,
-        verbose: bool,
-        batch_size: int,
+        tokenizer: PreTrainedTokenizer | None = None,
+        verbose: bool = False,
         **generation_kwargs,
     ):
         self.model = model
         self.verbose = verbose
         self.tokenizer = tokenizer
-        self.batch_size = batch_size
         self.generation_kwargs = generation_kwargs
-        
+    
+
+ 
     async def __call__(
         self,
         record: FeatureRecord,
-    ) -> list[EmbedingOutput]:
+    ) -> list[EmbeddingOutput]:
         samples = self._prepare(record)
 
         random.shuffle(samples)
@@ -64,6 +64,10 @@ class EmbedingScorer(Scorer):
         )
         
         return ScorerResult(record=record, score=results)
+
+    def call_sync(self, record: FeatureRecord) -> list[EmbeddingOutput]:
+        return asyncio.run(self.__call__(record))
+
 
     def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
         """
@@ -92,11 +96,10 @@ class EmbedingScorer(Scorer):
 
 
 
-    def _query(self, explanation: str, samples: list[Sample]) -> list[EmbedingOutput]:
+    def _query(self, explanation: str, samples: list[Sample]) -> list[EmbeddingOutput]:
 
         explanation_prompt = "Instruct: Retrieve sentences that could be related to the explanation.\nQuery:" + explanation 
         query_embeding = self.model.encode(explanation_prompt)
-        
         samples_text = [sample.text for sample in samples]
     
         # # Temporary batching
@@ -123,13 +126,16 @@ def examples_to_samples(
 ) -> list[Sample]:
     samples = []    
     for example in examples:
-        text = "".join(tokenizer.batch_decode(example.tokens))
+        if tokenizer is not None:
+            text = "".join(tokenizer.batch_decode(example.tokens))
+        else:
+            text = "".join(example.tokens)
         activations = example.activations.tolist()
         samples.append(
             Sample(
                 text=text,
                 activations=activations,
-                data=EmbedingOutput(
+                data=EmbeddingOutput(
                     text=text,
                     **sample_kwargs
                 ),

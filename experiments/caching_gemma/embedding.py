@@ -19,7 +19,7 @@ from sae_auto_interp.features import (
 from sae_auto_interp.features.constructors import default_constructor
 from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
-from sae_auto_interp.scorers import EmbedingScorer
+from sae_auto_interp.scorers import EmbeddingScorer
 
 
 def main(args):
@@ -84,7 +84,7 @@ def main(args):
     #model = SentenceTransformer("nvidia/NV-Embed-v2", trust_remote_code=True).cuda()
     scorer_pipe = Pipe(
         process_wrapper(
-            EmbedingScorer(model,tokenizer, batch_size=shown_examples,verbose=False),
+            EmbeddingScorer(model,tokenizer, batch_size=shown_examples,verbose=False),
             preprocess=scorer_preprocess,
             postprocess=partial(scorer_postprocess, score_dir="embedding"),
         ),
