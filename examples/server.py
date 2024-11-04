@@ -4,22 +4,19 @@ import torch
 import os
 import pandas as pd
 from functools import partial
-
+from sentence_transformers import SentenceTransformer
 from sae_auto_interp.clients import OpenRouter
-from sae_auto_interp.config import ExperimentConfig, FeatureConfig
+from sklearn.metrics import roc_auc_score
+
+
 from sae_auto_interp.explainers import DefaultExplainer
-from sae_auto_interp.features import FeatureDataset, FeatureLoader, FeatureRecord, Feature, Example
-from sae_auto_interp.features.constructors import default_constructor
-from sae_auto_interp.features.samplers import sample
-from sae_auto_interp.pipeline import Pipeline, process_wrapper
-from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
+from sae_auto_interp.features import FeatureRecord, Feature, Example
+from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer,EmbeddingScorer
 
 app = Flask(__name__)
 
 # Global variables
-client = None
-explainer_pipe = None
-
+model = None
 def calculate_balanced_accuracy(dataframe):
     tp = len(dataframe[(dataframe["ground_truth"]==True) & (dataframe["correct"]==True)])
     tn = len(dataframe[(dataframe["ground_truth"]==False) & (dataframe["correct"]==True)])
@@ -40,17 +37,21 @@ def per_feature_scores_fuzz_detection(score_data):
     data = [d for d in score_data if d.prediction != -1]
     
     data_df = pd.DataFrame(data)
-    print(data_df)
     
     balanced_accuracy = calculate_balanced_accuracy(data_df)
     return balanced_accuracy
 
-def initialize_globals():
-    # Make the folder for storing the explanations
-    os.makedirs("explanations", exist_ok=True)
-    # Make the folder for storing the scores
-    os.makedirs("scores", exist_ok=True)
+def per_feature_scores_embedding(score_data):
+    data_df = pd.DataFrame(score_data)
+    data_df["ground_truth"] = data_df["distance"]>0
+    print(data_df)
+    auc_score = roc_auc_score(data_df["ground_truth"],data_df["similarity"])
+    return auc_score
 
+def initialize_globals():
+    global model
+    model = SentenceTransformer("dunzhang/stella_en_400M_v5", trust_remote_code=True).cuda()
+    
 # Initialize globals when the app starts
 initialize_globals()
 
@@ -152,6 +153,48 @@ def generate_score_fuzz_detection():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route('/generate_score_embedding', methods=['POST'])
+def generate_score_embedding():
+    """
+    Generate a score for a given set of activations and explanation. This endpoint expects
+    a JSON object with the following fields:
+    - activations: A list of dictionaries, each containing a 'tokens' key with a list of token strings and a 'values' key with a list of activation values.
+    - explanation: The explanation to use for the score.
+    """
+    global model
+
+    data = request.json
+    
+    if not data or 'activations' not in data:
+        return jsonify({"error": "Missing required data"}), 400
+    if 'explanation' not in data:
+        return jsonify({"error": "Missing explanation"}), 400
+    try:
+        feature = Feature(f"feature", 0)
+        activating_examples = []
+        non_activating_examples = []
+        for activation in data['activations']:
+            example = Example(activation['tokens'], torch.tensor(activation['values']))
+            if sum(activation['values']) > 0:
+                activating_examples.append(example)
+            else:
+                non_activating_examples.append(example)
+        feature_record = FeatureRecord(feature)
+        feature_record.test = [activating_examples]
+        feature_record.extra_examples = non_activating_examples
+        feature_record.random_examples = non_activating_examples
+        feature_record.explanation = data['explanation']
+        scorer =  EmbeddingScorer(model)
+        result = scorer.call_sync(feature_record)  # Use call_sync instead of __call__
+        #print(result.score)
+        score = per_feature_scores_embedding(result.score)
+        return jsonify({"score": score,"breakdown": result.score}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
