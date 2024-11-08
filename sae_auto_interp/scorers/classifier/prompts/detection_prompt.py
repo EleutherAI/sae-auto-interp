@@ -10,7 +10,7 @@ For each example in turn, return 1 if the sentence is correctly labeled or 0 if 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/6048
 DSCORER_EXAMPLE_ONE = """Feature explanation: Words related to American football positions, specifically the tight end position.
 
-Text examples:
+Test examples:
 
 Example 0:<|endoftext|>Getty ImagesĊĊPatriots tight end Rob Gronkowski had his bossâĢĻ
 Example 1: names of months used in The Lord of the Rings:ĊĊâĢľâĢ¦the
@@ -24,7 +24,7 @@ DSCORER_RESPONSE_ONE = "[1,0,0,0,1]"
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/9396
 DSCORER_EXAMPLE_TWO = """Feature explanation: The word "guys" in the phrase "you guys".
 
-Text examples:
+Test examples:
 
 Example 0: enact an individual health insurance mandate?âĢĿ, Pelosi's response was to dismiss both
 Example 1: birth control access<|endoftext|> but I assure you women in Kentucky aren't laughing as they struggle
@@ -38,7 +38,7 @@ DSCORER_RESPONSE_TWO = "[0,0,0,0,0]"
 # https://www.neuronpedia.org/gpt2-small/8-res-jb/12654
 DSCORER_EXAMPLE_THREE = """Feature explanation: "of" before words that start with a capital letter.
 
-Text examples:
+Test examples:
 
 Example 0: climate, TomblinâĢĻs Chief of Staff Charlie Lorensen said.Ċ
 Example 1: no wonderworking relics, no true Body and Blood of Christ, no true Baptism
