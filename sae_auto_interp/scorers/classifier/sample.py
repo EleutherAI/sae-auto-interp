@@ -58,7 +58,7 @@ def examples_to_samples(
     samples = []
 
     for example in examples:
-        text,clean,str_toks = _prepare_text(example, tokenizer, n_incorrect, threshold, highlighted)
+        text,str_toks = _prepare_text(example, tokenizer, n_incorrect, threshold, highlighted)
 
         samples.append(
             Sample(
@@ -90,7 +90,7 @@ def _prepare_text(
     clean = "".join(str_toks)
     # Just return text if there's no highlighting
     if not highlighted:
-        return clean,clean,str_toks
+        return clean,str_toks
 
     threshold = threshold * example.max_activation
 
@@ -101,7 +101,7 @@ def _prepare_text(
         def check(i):
             return example.activations[i] >= threshold
 
-        return _highlight(str_toks, check),clean,str_toks
+        return _highlight(str_toks, check),str_toks
 
     # Highlight n_incorrect tokens with activations
     # below threshold if incorrect example
@@ -110,7 +110,7 @@ def _prepare_text(
     # Rare case where there are no tokens below threshold
     if below_threshold.dim() == 0:
         logger.error("Failed to prepare example.")
-        return DEFAULT_MESSAGE,DEFAULT_MESSAGE,str_toks
+        return DEFAULT_MESSAGE,str_toks
 
     random.seed(22)
 
@@ -121,7 +121,7 @@ def _prepare_text(
     def check(i):
         return i in random_indices
 
-    return _highlight(str_toks, check),clean,str_toks
+    return _highlight(str_toks, check),str_toks
 
 
 def _highlight(tokens, check):
