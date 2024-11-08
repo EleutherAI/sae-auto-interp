@@ -11,7 +11,6 @@ class AutoencoderConfig(Serializable):
     model_name_or_path: str = "model"
     autoencoder_type: Literal["SAE", "SAE_LENS", "NEURONS", "CUSTOM"] = "SAE"
     device: Optional[str] = None
-    hookpoints: Optional[List[str]] = None
     kwargs: Dict[str, Any] = field(default_factory=dict)
 
 class AutoencoderLatents(torch.nn.Module):
@@ -156,6 +155,7 @@ def hook_submodule( submodule: Any, model: Any,module_path:str,autoencoder_confi
 def load_autoencoder_into_model(
     model: Any,
     autoencoder_config: AutoencoderConfig,
+    hookpoints: List[str],
     **kwargs
 ) -> Tuple[Dict[str,Any], Any]:
     """
@@ -171,7 +171,6 @@ def load_autoencoder_into_model(
 
     submodules = {}
     edited_model = model
-    hookpoints = autoencoder_config.hookpoints
     assert hookpoints is not None, "Hookpoints must be specified in autoencoder_config"
     for module_path in hookpoints:
         autoencoder = AutoencoderLatents.from_pretrained(
