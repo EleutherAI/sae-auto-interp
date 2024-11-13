@@ -23,12 +23,13 @@ class AutoencoderLatents(torch.nn.Module):
         autoencoder: Any,
         forward_function: Callable,
         width: int,
+        hookpoint: str,
     ) -> None:
         super().__init__()
         self.ae = autoencoder
         self._forward = forward_function
         self.width = width
-
+        self.hookpoint = hookpoint
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self._forward(x)
 
@@ -42,7 +43,6 @@ class AutoencoderLatents(torch.nn.Module):
         device = config.device or ('cuda' if torch.cuda.is_available() else 'cpu')
         autoencoder_type = config.autoencoder_type
         model_name_or_path = config.model_name_or_path
-
         if autoencoder_type == "SAE":
             from sae import Sae
             local = kwargs.get("local",None)
@@ -88,7 +88,7 @@ class AutoencoderLatents(torch.nn.Module):
         else:
             raise ValueError(f"Unsupported autoencoder type: {autoencoder_type}")
 
-        return cls(sae, forward_function, width)
+        return cls(sae, forward_function, width, hookpoint)
     @classmethod
     def random(cls, config: AutoencoderConfig, hookpoint: str, **kwargs):
         pass
@@ -166,7 +166,8 @@ def load_autoencoder_into_model(
         autoencoder_config (AutoencoderConfig): Configuration for the autoencoder.
 
     Returns:
-        Tuple[List[Any], Any]: The list of submodules with the autoencoder attached and the edited model.
+        Tuple[List[Any], Any]: The list of submodules with the autoencoder attached
+        Model with the autoencoder hooked in
     """
 
     submodules = {}

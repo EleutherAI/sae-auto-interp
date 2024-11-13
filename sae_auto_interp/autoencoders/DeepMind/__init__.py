@@ -1,5 +1,5 @@
 from functools import partial
-from .model import JumpReLUSAE
+from ..Custom.gemmascope import JumpReLUSAE
 from typing import List, Dict
 import torch
 from ..wrapper import AutoencoderLatents
