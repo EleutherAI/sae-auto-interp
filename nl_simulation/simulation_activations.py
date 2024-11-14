@@ -10,7 +10,7 @@ import torch
 from nnsight import LanguageModel
 from safetensors.numpy import load_file
 from simple_parsing import ArgumentParser
-from lib.simulator import Simulator
+from nl.simulator import Simulator
 from tqdm import tqdm
 
 from sae_auto_interp.clients import Offline

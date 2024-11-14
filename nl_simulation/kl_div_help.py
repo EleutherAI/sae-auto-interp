@@ -10,14 +10,14 @@ import torch
 from nnsight import LanguageModel
 from safetensors.numpy import load_file
 from simple_parsing import ArgumentParser
-from lib.fuzz import FuzzingScorer
+from nl.fuzz import FuzzingScorer
 
 from sae_auto_interp.clients import Offline
 from sae_auto_interp.features.features import Example, Feature, FeatureRecord
 from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
 from sae_auto_interp.utils import load_tokenized_data
 import glob
-from lib.autoencoders import AutoencoderConfig, AutoencoderLatents
+from nl.autoencoders import AutoencoderConfig, AutoencoderLatents
 
 import pandas as pd
 

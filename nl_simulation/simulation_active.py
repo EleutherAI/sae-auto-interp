@@ -10,7 +10,7 @@ import torch
 from nnsight import LanguageModel
 from safetensors.numpy import load_file
 from simple_parsing import ArgumentParser
-from lib.fuzz import FuzzingScorer
+from nl.fuzz import FuzzingScorer
 
 from sae_auto_interp.clients import Offline
 from sae_auto_interp.features.features import Example, Feature, FeatureRecord

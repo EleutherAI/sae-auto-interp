@@ -84,7 +84,7 @@ def scorer_postprocess(result,output_folder):
             f.write(orjson.dumps(saving_result))
     return result
     
-def coalest_results(SCORES_FOLDER):
+def merge_results(SCORES_FOLDER):
     all_files = glob.glob(os.path.join(SCORES_FOLDER, "*.txt"))
     all_results = []
     for file in all_files:
@@ -155,7 +155,7 @@ def main(args):
 
     all_data = []
     for i in range(args.start_sentence,args.start_sentence+args.num_sentences):
-        data = coalest_results(f"{SCORES_FOLDER}{i}")
+        data = merge_results(f"{SCORES_FOLDER}{i}")
         all_data.append(data)
     all_data = pd.concat(all_data)
     # sort the locations by the locations[:,2]
