@@ -9,8 +9,7 @@ from vllm import LLM, SamplingParams
 from ..logger import logger
 from .client import Client, Response
 from vllm.distributed.parallel_state import destroy_model_parallel, destroy_distributed_environment
-
-
+import json
 
 @dataclass
 class Top_Logprob:
@@ -22,10 +21,16 @@ class Logprobs:
     token: str
     top_logprobs: list[Top_Logprob]
 
+@dataclass
+class Statistics:
+    num_prompt_tokens: int
+    num_new_tokens: int
+    num_generated_tokens: int
+
 class Offline(Client):
     provider = "offline"
 
-    def __init__(self, model: str, max_memory: float=0.85,prefix_caching:bool=True,batch_size:int=100,max_model_len:int=4096,num_gpus:int=2,enforce_eager:bool=False):
+    def __init__(self, model: str, max_memory: float=0.85,prefix_caching:bool=True,batch_size:int=100,max_model_len:int=4096,num_gpus:int=2,enforce_eager:bool=False,statistics:bool=False):
         super().__init__(model)
         self.model = model  
         self.queue = asyncio.Queue()
@@ -34,6 +39,7 @@ class Offline(Client):
         self.sampling_params = SamplingParams(max_tokens=500, temperature=0.7)
         self.tokenizer= AutoTokenizer.from_pretrained(model)
         self.batch_size=batch_size
+        self.statistics=statistics
         
 
     async def process_func(self, batches: Union[str, List[Dict[str, str]]], kwargs):
@@ -47,19 +53,35 @@ class Offline(Client):
                 self.sampling_params.logprobs = kwarg["top_logprobs"]
             if "prompt_logprobs" in kwarg:
                 self.sampling_params.prompt_logprobs = kwarg["prompt_logprobs"]
+            if "max_tokens" in kwarg:
+                self.sampling_params.max_tokens = kwarg["max_tokens"]
+            if "temperature" in kwarg:
+                self.sampling_params.temperature = kwarg["temperature"]
         loop = asyncio.get_running_loop()
         prompts=[]
+        if self.statistics:
+            statistics=[]
         for batch in batches:
             prompt = self.tokenizer.apply_chat_template(batch, add_generation_prompt=True, tokenize=True)
             prompts.append(prompt)
+            if self.statistics:
+                non_cached_tokens = len(self.tokenizer.apply_chat_template(batch[-1:], add_generation_prompt=True, tokenize=True))
+                statistics.append(Statistics(num_prompt_tokens=len(prompt), num_new_tokens=non_cached_tokens, num_generated_tokens=0))
         response = await loop.run_in_executor(
             None, 
             partial(self.client.generate, prompt_token_ids=prompts, sampling_params=self.sampling_params, use_tqdm=False)
         )
         
         new_response = []   
-        for r in response:
+        for i,r in enumerate(response):
             logprobs,prompt_logprobs=self._parse_logprobs(r)
+            if self.statistics:
+                statistics[i].num_generated_tokens = len(r.outputs[0].token_ids )
+                # save the statistics to a file, name is a hash of the prompt
+                statistics[i].prompt = batches[i][-1]['content']
+                statistics[i].response = r.outputs[0].text
+                with open(f"statistics/{hash(batches[i][-1]['content'][-100:])}.json", "w") as f:
+                    json.dump(statistics[i].__dict__, f)
             new_response.append(Response(text=r.outputs[0].text, logprobs=logprobs, prompt_logprobs=prompt_logprobs))
         return new_response
 
