@@ -63,10 +63,12 @@ async def _simulate_and_score_sequence(
     
     simulation = await simulator.simulate(activations.tokens)
     logging.debug(simulation)
-    rsquared_score = score_from_simulation(activations, simulation, rsquared_score_from_sequences)
-    absolute_dev_explained_score = score_from_simulation(
-        activations, simulation, absolute_dev_explained_score_from_sequences
-    )
+    #rsquared_score = score_from_simulation(activations, simulation, rsquared_score_from_sequences)
+    #absolute_dev_explained_score = score_from_simulation(
+    #    activations, simulation, absolute_dev_explained_score_from_sequences
+    #)
+    rsquared_score = 0
+    absolute_dev_explained_score = 0
     scored_sequence_simulation = ScoredSequenceSimulation(
         distance=quantile,
         simulation=simulation,
@@ -117,10 +119,12 @@ def aggregate_scored_sequence_simulations(
         if len(all_true_activations) > 0
         else None
     )
-    rsquared_score = rsquared_score_from_sequences(all_true_activations, all_expected_values)
-    absolute_dev_explained_score = absolute_dev_explained_score_from_sequences(
-        all_true_activations, all_expected_values
-    )
+    #rsquared_score = rsquared_score_from_sequences(all_true_activations, all_expected_values)
+    #absolute_dev_explained_score = absolute_dev_explained_score_from_sequences(
+    #    all_true_activations, all_expected_values
+    #)
+    rsquared_score = 0
+    absolute_dev_explained_score = 0
 
     scored_sequence_simulations = [default(s) for s in scored_sequence_simulations]
 
@@ -138,6 +142,7 @@ def aggregate_scored_sequence_simulations(
 async def simulate_and_score(
     simulator: NeuronSimulator,
     activation_records: Sequence[ActivationRecord],
+    non_activation_records: Sequence[ActivationRecord],
 ) -> ScoredSimulation:
     """
     Score an explanation of a neuron by how well it predicts activations on the given text
@@ -158,13 +163,28 @@ async def simulate_and_score(
             for quantile, activation_quantile in enumerate(activation_records)
         ]
     )
+    non_activation_scored_sequence_simulations = await asyncio.gather(
+        *[
+            _simulate_and_score_sequence(
+                simulator,
+                non_activation_record,
+                -1
+            )
+            for non_activation_record in non_activation_records
+        ]
+    )
 
     # with open('test.txt', 'w') as f:
     #     f.write(str(scored_sequence_simulations))
     # return scored_sequence_simulations
 
     values = []
+    all_activated = []
     for distance,sequence in enumerate(scored_sequence_simulations):
         values.append(aggregate_scored_sequence_simulations(sequence,distance+1))
+        all_activated.extend(sequence)
+    values.append(aggregate_scored_sequence_simulations(non_activation_scored_sequence_simulations,-1))
+    all_data = all_activated+non_activation_scored_sequence_simulations
+    values.append(aggregate_scored_sequence_simulations(all_data,0))
     return values
 
