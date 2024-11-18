@@ -34,15 +34,17 @@ class OpenRouter(Client):
         return Response(msg)
 
     async def generate(
-        self, prompt: str, raw: bool = False, max_retries: int = 2, **kwargs
+        self, prompt: str, raw: bool = False, max_retries: int = 1, **kwargs
     ) -> str:
         kwargs.pop("schema", None)
-
+        max_tokens = kwargs.pop("max_tokens", 500)
+        temperature = kwargs.pop("temperature", 1.0)
         data = {
             "model": self.model,
             "messages": prompt,
             # "provider": PROVIDER,
-            **kwargs,
+            "max_tokens": max_tokens,
+            "temperature": temperature,
         }
 
         for attempt in range(max_retries):
@@ -52,7 +54,6 @@ class OpenRouter(Client):
                 )
                 if raw:
                     return response.json()
-
                 result = self.postprocess(response)
 
                 return result
