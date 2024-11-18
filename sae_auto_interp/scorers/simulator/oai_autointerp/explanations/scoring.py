@@ -31,7 +31,10 @@ def score_from_simulation(
     simulation: SequenceSimulation,
     score_function: Callable[[Sequence[float] | np.ndarray, Sequence[float] | np.ndarray], float],
 ) -> float:
-    return score_function(real_activations.activations, simulation.expected_activations)
+    if len(simulation.expected_activations) > 0:
+        return score_function(real_activations.activations, simulation.expected_activations)
+    else:
+        return 0
 
 
 def rsquared_score_from_sequences(
@@ -116,8 +119,8 @@ def aggregate_scored_sequence_simulations(
         all_expected_values.extend(scored_sequence_simulation.simulation.expected_activations)
     ev_correlation_score = (
         correlation_score(all_true_activations, all_expected_values)
-        if len(all_true_activations) > 0
-        else None
+        if (len(all_true_activations) > 0 and len(all_expected_values) > 0)
+        else 0
     )
     #rsquared_score = rsquared_score_from_sequences(all_true_activations, all_expected_values)
     #absolute_dev_explained_score = absolute_dev_explained_score_from_sequences(
@@ -163,16 +166,17 @@ async def simulate_and_score(
             for quantile, activation_quantile in enumerate(activation_records)
         ]
     )
-    non_activation_scored_sequence_simulations = await asyncio.gather(
-        *[
-            _simulate_and_score_sequence(
-                simulator,
-                non_activation_record,
-                -1
-            )
-            for non_activation_record in non_activation_records
-        ]
-    )
+    if len(non_activation_records) > 0:
+        non_activation_scored_sequence_simulations = await asyncio.gather(
+            *[
+                _simulate_and_score_sequence(
+                    simulator,
+                    non_activation_record[0],
+                    -1
+                )
+                for non_activation_record in non_activation_records
+            ]
+        )
 
     # with open('test.txt', 'w') as f:
     #     f.write(str(scored_sequence_simulations))
@@ -181,10 +185,15 @@ async def simulate_and_score(
     values = []
     all_activated = []
     for distance,sequence in enumerate(scored_sequence_simulations):
-        values.append(aggregate_scored_sequence_simulations(sequence,distance+1))
-        all_activated.extend(sequence)
-    values.append(aggregate_scored_sequence_simulations(non_activation_scored_sequence_simulations,-1))
-    all_data = all_activated+non_activation_scored_sequence_simulations
-    values.append(aggregate_scored_sequence_simulations(all_data,0))
+        without_errors = []
+        for s in sequence:
+            if len(s.simulation.expected_activations) > 0:
+                without_errors.append(s)
+        values.append(aggregate_scored_sequence_simulations(without_errors,distance+1))
+        all_activated.extend(without_errors)
+    if len(non_activation_records) > 0:
+        #values.append(aggregate_scored_sequence_simulations(non_activation_scored_sequence_simulations,-1))
+        all_data = all_activated+non_activation_scored_sequence_simulations
+        values.append(aggregate_scored_sequence_simulations(all_data,0))
     return values
 

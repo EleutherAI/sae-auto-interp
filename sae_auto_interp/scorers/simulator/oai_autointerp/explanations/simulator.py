@@ -552,27 +552,32 @@ class LogprobFreeExplanationTokenSimulator(NeuronSimulator):
                 tokens,
                 self.explanation,
             )
-            sampling_params = {"max_tokens": 2000, "temperature": 0.0}
-            response = await self.client.generate(
-                prompt, sampling_params=sampling_params
-            )
+            try:
+                response = await self.client.generate(
+                    prompt, max_tokens=1000
+                )
 
-            predicted_activations = _parse_no_logprobs_completion_json(
-                response, tokens
-            )
+                predicted_activations = _parse_no_logprobs_completion_json(
+                    response, tokens
+                )
+            except Exception as e:
+                predicted_activations = []
         else:
             prompt = self._make_simulation_prompt_json(
                 tokens,
                 self.explanation,
             )
-            response = await self.client.generate(
-                prompt, max_tokens=1000, temperature=0.0
-            )
-            predicted_activations = []
-            # assert len(response["choices"]) == 1
-            choice = response["choices"][0]
-            completion = choice["message"]["content"]
-            predicted_activations = _parse_no_logprobs_completion_json(completion, tokens)
+            try:
+                response = await self.client.generate(
+                    prompt, max_tokens=1000, temperature=0.0
+                )
+                predicted_activations = []
+                # assert len(response["choices"]) == 1
+                choice = response["choices"][0]
+                completion = choice["message"]["content"]
+                predicted_activations = _parse_no_logprobs_completion_json(completion, tokens)
+            except Exception as e:
+                predicted_activations = []
 
         result = SequenceSimulation(
             activation_scale=ActivationScale.SIMULATED_NORMALIZED_ACTIVATIONS,

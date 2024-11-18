@@ -40,9 +40,12 @@ class OpenAISimulator(Scorer):
         )
 
         valid_activation_records = self.to_activation_records(record.test)
-        non_activation_records = self.to_activation_records([record.random_examples])
+        if len(record.random_examples) > 0:
+            non_activation_records = self.to_activation_records([record.random_examples])
+        else:
+            non_activation_records = []
 
-        result = await simulate_and_score(simulator, valid_activation_records, non_activation_records[0])
+        result = await simulate_and_score(simulator, valid_activation_records, non_activation_records)
 
         return ScorerResult(
             record=record,
