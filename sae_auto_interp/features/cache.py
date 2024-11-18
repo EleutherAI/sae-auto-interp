@@ -204,43 +204,61 @@ class FeatureCache:
             if module_path in filters:
                 filtered_submodules[module_path] = self.submodule_dict[module_path]
         self.submodule_dict = filtered_submodules
-
-    def run(self, n_tokens: int, tokens: TensorType["batch", "seq"]):
+    def run(self, n_tokens: int, tokens: TensorType["batch", "seq"], save_every: int = 1000):
         """
-        Run the feature caching process.
+        Run the feature caching process with incremental saving.
 
         Args:
             n_tokens (int): Total number of tokens to process.
             tokens (TensorType["batch", "seq"]): Input tokens.
+            save_every (int): Number of tokens after which the cache is saved to disk.
         """
         token_batches = self.load_token_batches(n_tokens, tokens)
-
         total_tokens = 0
         total_batches = len(token_batches)
         tokens_per_batch = token_batches[0].numel()
+
+        # Temporary directory to store intermediate cache files
+        os.makedirs(self.cache.temp_dir, exist_ok=True)
+        buffer = {}  # Temporary in-memory buffer for caching latents
 
         with tqdm(total=total_batches, desc="Caching features") as pbar:
             for batch_number, batch in enumerate(token_batches):
                 total_tokens += tokens_per_batch
 
                 with torch.no_grad():
-                    buffer = {}
                     with self.model.trace(batch):
                         for module_path, submodule in self.submodule_dict.items():
-                            buffer[module_path] = submodule.ae.output.save()
-                    for module_path, latents in buffer.items():
-                        self.cache.add(latents, batch_number, module_path)
+                            latents = submodule.ae.output.save()
+                            buffer.setdefault(module_path, []).append(latents)
 
-                    del buffer
+                # Save latents incrementally
+                if total_tokens >= save_every or batch_number == total_batches - 1:
+                    self._save_incremental_cache(buffer, batch_number)
+                    buffer.clear()
                     torch.cuda.empty_cache()
 
-                # Update the progress bar
+                # Update progress bar
                 pbar.update(1)
                 pbar.set_postfix({"Total Tokens": f"{total_tokens:,}"})
 
         print(f"Total tokens processed: {total_tokens:,}")
-        self.cache.save()
 
+   
+        # self.cache.merge_temp_files()
+    def _save_incremental_cache(self, buffer: Dict[str, list], batch_number: int):
+        """
+        Save the cached latents to disk incrementally.
+
+        Args:
+            buffer (dict): In-memory buffer of latents.
+            batch_number (int): Current batch number.
+        """
+        for module_path, latents in buffer.items():
+            filename = os.path.join(self.cache.temp_dir, f"{module_path}_batch_{batch_number}.pt")
+            torch.save(latents, filename)  # Use safe_save for safetensors if desired
+
+    
     def save(self, save_dir):
         """
         Save the cached features to disk.
