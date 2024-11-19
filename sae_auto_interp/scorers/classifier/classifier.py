@@ -85,7 +85,11 @@ class Classifier(Scorer):
         if self.log_prob:
             self.generation_kwargs["logprobs"] = True
             self.generation_kwargs["top_logprobs"] = 5
-        response = await self.client.generate(prompt, **self.generation_kwargs)
+        try:
+            response = await self.client.generate(prompt, **self.generation_kwargs)
+        except Exception as e:
+            logger.error(f"Error generating text: {e}")
+            response = None
         if response is None:
             array = [-1] * self.batch_size
             probabilities = [-1] * self.batch_size
