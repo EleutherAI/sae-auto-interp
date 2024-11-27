@@ -248,11 +248,10 @@ class FeatureCache:
         self.cache.merge_temp_files()
     def merge_temp_files(self):
 
-        # Ensure the output directory exists
         os.makedirs(self.cache.output_dir, exist_ok=True)
 
         for module_path in self.submodule_dict.keys():
-            # Find all temp files for the current submodule
+
             temp_files = glob.glob(os.path.join(self.cache.temp_dir, f"{module_path}_batch_*.pt"))
 
             if not temp_files:
@@ -261,22 +260,16 @@ class FeatureCache:
 
             merged_activations = []
 
-            # Load and append all activations
+
             for temp_file in sorted(temp_files, key=lambda x: int(x.split('_batch_')[-1].split('.pt')[0])):
                 activations = torch.load(temp_file)
                 merged_activations.extend(activations)  # Assuming activations are list-like
-            
-            # Save merged activations to the output directory
             merged_filename = os.path.join(self.cache.output_dir, f"{module_path}_merged.pt")
-            torch.save(merged_activations, merged_filename)  # Use safe_save for safetensors if needed
-
-            # Optionally delete temporary files after merging
+            torch.save(merged_activations, merged_filename)  
             for temp_file in temp_files:
                 os.remove(temp_file)
 
             print(f"Merged activations for {module_path} saved to {merged_filename}")
-
-        # Cleanup temporary directory
         if os.path.exists(self.cache.temp_dir) and not os.listdir(self.cache.temp_dir):
             os.rmdir(self.cache.temp_dir)
         print("Temporary files merged and cleaned up.")
