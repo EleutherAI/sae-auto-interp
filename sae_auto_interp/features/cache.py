@@ -2,7 +2,7 @@ import json
 import os
 from collections import defaultdict
 from typing import Dict
-
+import glob
 import numpy as np
 import torch
 from safetensors.numpy import save_file
@@ -245,7 +245,42 @@ class FeatureCache:
         print(f"Total tokens processed: {total_tokens:,}")
 
    
-        # self.cache.merge_temp_files()
+        self.cache.merge_temp_files()
+    def merge_temp_files(self):
+
+        # Ensure the output directory exists
+        os.makedirs(self.cache.output_dir, exist_ok=True)
+
+        for module_path in self.submodule_dict.keys():
+            # Find all temp files for the current submodule
+            temp_files = glob.glob(os.path.join(self.cache.temp_dir, f"{module_path}_batch_*.pt"))
+
+            if not temp_files:
+                print(f"No temporary files found for submodule: {module_path}")
+                continue
+
+            merged_activations = []
+
+            # Load and append all activations
+            for temp_file in sorted(temp_files, key=lambda x: int(x.split('_batch_')[-1].split('.pt')[0])):
+                activations = torch.load(temp_file)
+                merged_activations.extend(activations)  # Assuming activations are list-like
+            
+            # Save merged activations to the output directory
+            merged_filename = os.path.join(self.cache.output_dir, f"{module_path}_merged.pt")
+            torch.save(merged_activations, merged_filename)  # Use safe_save for safetensors if needed
+
+            # Optionally delete temporary files after merging
+            for temp_file in temp_files:
+                os.remove(temp_file)
+
+            print(f"Merged activations for {module_path} saved to {merged_filename}")
+
+        # Cleanup temporary directory
+        if os.path.exists(self.cache.temp_dir) and not os.listdir(self.cache.temp_dir):
+            os.rmdir(self.cache.temp_dir)
+        print("Temporary files merged and cleaned up.")
+
     def _save_incremental_cache(self, buffer: Dict[str, list], batch_number: int):
         """
         Save the cached latents to disk incrementally.
