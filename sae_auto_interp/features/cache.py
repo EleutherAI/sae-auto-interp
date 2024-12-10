@@ -12,7 +12,7 @@ from tqdm import tqdm
 from sae_auto_interp.config import CacheConfig
 
 
-class Cache:
+class InMemoryCache:
     """
     The Cache class stores feature locations and activations for modules.
     It provides methods for adding, saving, and retrieving non-zero activations.
@@ -161,7 +161,7 @@ class FeatureCache:
         self.batch_size = batch_size
         self.width = list(submodule_dict.values())[0].ae.width
 
-        self.cache = Cache(filters, batch_size=batch_size)
+        self.cache = InMemoryCache(filters, batch_size=batch_size)
         if filters is not None:
             self.filter_submodules(filters)
 
@@ -214,6 +214,7 @@ class FeatureCache:
             tokens (TensorType["batch", "seq"]): Input tokens.
         """
         token_batches = self.load_token_batches(n_tokens, tokens)
+        # del tokens
 
         total_tokens = 0
         total_batches = len(token_batches)
@@ -232,7 +233,8 @@ class FeatureCache:
                         self.cache.add(latents, batch_number, module_path)
 
                     del buffer
-                    torch.cuda.empty_cache()
+                    # The fact that he has this line means there's probably a memory leak
+                    # torch.cuda.empty_cache()
 
                 # Update the progress bar
                 pbar.update(1)

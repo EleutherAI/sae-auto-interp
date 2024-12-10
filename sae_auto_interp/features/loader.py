@@ -136,7 +136,7 @@ class FeatureDataset:
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
-        self.tokenizer = load_tokenizer(cache_config["model_name"])
+        self.tokenizer = load_tokenizer(self.cfg.tokenizer_or_model_name)
         self.tokens = load_tokenized_data(
             cache_config["ctx_len"],
             self.tokenizer,

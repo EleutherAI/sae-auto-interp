@@ -45,6 +45,9 @@ class FeatureConfig(Serializable):
     n_splits: int = 5
     """Number of splits that features were devided into"""
 
+    tokenizer_or_model_name: str = "data/tinystories/restricted_tokenizer_v2"
+    """Name of tokenizer, often the same as the model name"""
+
 
 @dataclass
 class CacheConfig(Serializable):
