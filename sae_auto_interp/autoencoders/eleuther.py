@@ -15,6 +15,7 @@ def load_eai_autoencoders(
     ae_layers: List[int],
     weight_dir: str,
     module: str,
+    transcoder: bool = False,
     randomize: bool = False,
     seed: int = 42,
     k: Optional[int] = None
@@ -77,7 +78,7 @@ def load_eai_autoencoders(
             else:
                 submodule = model.gpt_neox.layers[layer].mlp
         submodule.ae = AutoencoderLatents(
-            sae, partial(_forward, sae, k), width=sae.encoder.weight.shape[0]
+            sae, partial(_forward, sae, k), width=sae.encoder.weight.shape[0],hookpoint=submodule.path
         )
 
         submodules[submodule.path] = submodule
@@ -85,9 +86,15 @@ def load_eai_autoencoders(
     with model.edit("") as edited:
         for path, submodule in submodules.items():
             if "embed" not in path and "mlp" not in path:
-                acts = submodule.output[0]
+                if transcoder:
+                    acts = submodule.input[0]
+                else:
+                    acts = submodule.output[0]
             else:
-                acts = submodule.output
+                if transcoder:
+                    acts = submodule.input
+                else:
+                    acts = submodule.output
             submodule.ae(acts, hook=True)
 
     return submodules,edited
