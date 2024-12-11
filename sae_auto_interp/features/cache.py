@@ -120,7 +120,6 @@ class Cache:
         else:
             nonzero_feature_locations = torch.nonzero(latents.abs() > 1e-5)
             nonzero_feature_activations = latents[latents.abs() > 1e-5]
-        
         # Return all nonzero features if no filter is provided
         if self.filters is None:
             return nonzero_feature_locations, nonzero_feature_activations
