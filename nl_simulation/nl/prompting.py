@@ -90,7 +90,9 @@ You will be given a certain explanation of a feature of text, such as "male pron
 
 These features of text are normally identified by looking for specific words or patterns in the text. There are many features associated with a single token, and sometimes the feature is related with the previous token.
 
-Your job is to identify how much the the last token, which is marked between << and >>, represents the feature. You will output a integer between 0 and 9, where 0 is a faint relation to the explanation and 9 is a strong relation.
+Your job is to identify how much the the last token, which is marked between << and >>, represents the feature. You will output a integer between 0 and 9, where 0 is a no relation to the explanation and 9 is a strong relation.
+
+Most of the tokens should have no relation. The ones that are related, should more likely be given 1 than 2, 2 than 3, and so on. Only give a 9 if the description exactly matches the token.
 
 You must return your response in a valid Python list. Do not return anything else besides a Python list.
 """
@@ -104,7 +106,7 @@ EXPLANATION_EXAMPLE_ONE_A_SIM = """The term culture and its variations, often us
 Text examples:
 
 Example 1: s central and expat friendly neighborhood at Spanish Panama. Spanish language immersion programs include airport pickup, tours and ecotourism, <<cultural>>
-Example 2: This issue, like free trade, divides both parties along class lines. There is a strong openning for a <<culturally>> 
+Example 2: This issue, like free trade, divides both parties along class lines. There is a strong opening for a <<culturally>> 
 """
 
 EXPLANATION_RESPONSE_ONE_A_SIM = "[9,4]"
@@ -325,4 +327,3 @@ def simulation_prompt(examples, explanation):
     ]
 
     return prompt
-    

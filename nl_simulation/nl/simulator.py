@@ -41,9 +41,6 @@ class Simulator(Scorer):
         verbose: bool = False,
         batch_size: int = 1,
         log_prob: bool = False,
-        contexts:bool = False,
-        score:bool=False,
-        soft:bool=False,
         **generation_kwargs,
     ):
         self.client = client
@@ -53,10 +50,7 @@ class Simulator(Scorer):
         self.batch_size = batch_size
         self.generation_kwargs = generation_kwargs
         self.log_prob = log_prob
-        self.contexts = contexts # not used
-        self.score = score # not used
-        self.soft = soft # not used
-       
+
         self.prompt = simulation_prompt
     async def __call__(
         self,
@@ -81,12 +75,6 @@ class Simulator(Scorer):
                 tokenizer=self.tokenizer,
             )
     
-        # if self.contexts:
-        #     explanation = ""
-        #     for example in record.train:
-        #         explanation += _highlight(example,self.tokenizer) + "\n"
-            
-        #     record.explanation = explanation
         return samples
 
     async def _query(
