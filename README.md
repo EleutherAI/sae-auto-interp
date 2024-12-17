@@ -14,6 +14,10 @@ Install this library as a local editable installation. Run the following command
 
 ```pip install -e .```
 
+Then install FlashAttention-2.
+
+```pip install flash-attn --no-build-isolation```
+
 # Loading Autoencoders
 
 This library uses NNsight to load and edit a model with autoencoders. We provide wrappers to load GPT-2 autoencoders trained by [OpenAI](https://github.com/openai/sparse_autoencoder), for the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for some SAEs train by EleutherAI using [SAE](https://github.com/EleutherAI/sae). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
