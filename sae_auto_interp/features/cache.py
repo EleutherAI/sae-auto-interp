@@ -154,6 +154,11 @@ class FeatureCache:
             batch_size (int): Size of batches for processing.
             filters (Dict[str, TensorType["indices"]], optional): Filters for selecting specific features.
         """
+
+        # Model must use FA2 to allow for efficient packing
+        if not hasattr(model.config, "_attn_implementation") or model.config._attn_implementation != "flash_attention_2":
+            raise ValueError("Model must use FlashAttention-2. Please enable it before initializing FeatureCache.")
+        
         self.model = model
         self.submodule_dict = submodule_dict
 
@@ -224,7 +229,8 @@ class FeatureCache:
 
                 with torch.no_grad():
                     buffer = {}
-                    with self.model.trace(batch):
+                    # position_ids is required for FA2
+                    with self.model.trace({"input_ids": batch["input_ids"]}, position_ids=batch["position_ids"]):
                         for module_path, submodule in self.submodule_dict.items():
                             buffer[module_path] = submodule.ae.output.save()
                     for module_path, latents in buffer.items():
