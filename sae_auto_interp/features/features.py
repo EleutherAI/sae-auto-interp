@@ -96,6 +96,8 @@ class FeatureRecord:
         self.train = []
         self.test = []
 
+    def __repr__(self):
+        return f"FeatureRecord(feature={self.feature} examples.len={len(self.examples)}) train.len={len(self.train)} test.len={len(self.test)}"
     @property
     def max_activation(self):
         """
