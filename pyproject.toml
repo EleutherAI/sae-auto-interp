@@ -25,14 +25,11 @@ dependencies = [
     "zstandard>=0.23.0",
     "numba>=0.60.0",
 ]
-dev-dependencies = [
-    "pyright",
-    "ruff",
-]
 
 [sources.sae]
 git = "https://github.com/EleutherAI/sae"
 
+# ruff configuration (preserved from the original pyproject.toml)
 [tool.ruff]
 # TODO: Clean up or remove experiments folder.
 exclude = ["experiments", "**/prompts/*", "**/prompts.py","**/simulator.py"]
@@ -54,4 +51,5 @@ sae = { git = "https://github.com/EleutherAI/sae" }
 [dependency-groups]
 dev = [
     "ruff>=0.8.5",
+    "pyright",
 ]
