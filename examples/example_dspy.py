@@ -30,17 +30,20 @@ dotenv.load_dotenv()
 secret_value_0 = os.environ["DSPY_AUTOINTERP_TEST0"]
 # llama_8b = dsp.modules.groq_client.GroqLM(secret_value_0,
 #                                   "llama3-8b-8192")
-llama_8b = LM("llama-3.2-1b-preview",
+llama_8b = LM(
+    # "llama-3.1-8b-instant",
+    # "gemma2-9b-it",
+    "llama-3.3-70b-specdec",
               api_key=secret_value_0, api_base="https://api.groq.com/openai/v1/",
               )
 client = DSPy(llama_8b)
 print(asyncio.run(client.generate("Hello world!")))
 #%%
 
-# start_feature = 13107
-start_feature = 0
-n_features = 16383 - 13107
-# n_features = 1
+start_feature = 13107
+# start_feature = 0
+# n_features = 16383 - 13107
+n_features = 16
 module = ".model.layers.10"
 feature_dict = {f"{module}": torch.arange(start_feature, start_feature + n_features)}
 feature_cfg = FeatureConfig.load_json("extra_raw_features/config.json")

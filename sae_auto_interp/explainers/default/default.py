@@ -53,7 +53,7 @@ class DefaultExplainer(Explainer):
 
     def parse_explanation(self, text: str) -> str:
         try:
-            match = re.search(r"\[EXPLANATION\]:\s*(.*)", text, re.DOTALL)
+            match = re.search(r"\[EXPLANATION\]:\s*(.*)\n?", text, re.DOTALL)
             return match.group(1).strip() if match else "Explanation could not be parsed."
         except Exception as e:
             logger.error(f"Explanation parsing regex failed: {e}")
