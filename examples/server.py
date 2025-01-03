@@ -1,8 +1,6 @@
-from flask import Flask, request, jsonify
-import asyncio
-import torch
-import os
+
 import pandas as pd
+<<<<<<< HEAD
 from functools import partial
 
 from sae_auto_interp.clients import OpenRouter
@@ -13,6 +11,17 @@ from sae_auto_interp.features.constructors import default_constructor
 from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipeline, process_wrapper
 from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
+=======
+import torch
+from flask import Flask, jsonify, request
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics import roc_auc_score
+
+from sae_auto_interp.clients import OpenRouter
+from sae_auto_interp.explainers import DefaultExplainer
+from sae_auto_interp.features import Example, Feature, FeatureRecord
+from sae_auto_interp.scorers import DetectionScorer, EmbeddingScorer, FuzzingScorer
+>>>>>>> e4bb340... Run ruff, start integrating scorer
 
 app = Flask(__name__)
 
@@ -76,7 +85,7 @@ def generate_explanation():
     if 'model' not in data:
         return jsonify({"error": "Missing model"}), 400
     try:
-        feature = Feature(f"feature", 0)
+        feature = Feature("feature", 0)
         examples = []
         for activation in data['activations']:
             example = Example(activation['tokens'], torch.tensor(activation['values']))
@@ -123,7 +132,7 @@ def generate_score_fuzz_detection():
     if 'type' not in data:
         return jsonify({"error": "Missing type"}), 400
     try:
-        feature = Feature(f"feature", 0)
+        feature = Feature("feature", 0)
         activating_examples = []
         non_activating_examples = []
         for activation in data['activations']:
@@ -153,5 +162,50 @@ def generate_score_fuzz_detection():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+<<<<<<< HEAD
+=======
+@app.route('/generate_score_embedding', methods=['POST'])
+def generate_score_embedding():
+    """
+    Generate a score for a given set of activations and explanation. This endpoint expects
+    a JSON object with the following fields:
+    - activations: A list of dictionaries, each containing a 'tokens' key with a list of token strings and a 'values' key with a list of activation values.
+    - explanation: The explanation to use for the score.
+    """
+    global model
+
+    data = request.json
+    
+    if not data or 'activations' not in data:
+        return jsonify({"error": "Missing required data"}), 400
+    if 'explanation' not in data:
+        return jsonify({"error": "Missing explanation"}), 400
+    try:
+        feature = Feature("feature", 0)
+        activating_examples = []
+        non_activating_examples = []
+        for activation in data['activations']:
+            example = Example(activation['tokens'], torch.tensor(activation['values']))
+            if sum(activation['values']) > 0:
+                activating_examples.append(example)
+            else:
+                non_activating_examples.append(example)
+        feature_record = FeatureRecord(feature)
+        feature_record.test = [activating_examples]
+        feature_record.extra_examples = non_activating_examples
+        feature_record.random_examples = non_activating_examples
+        feature_record.explanation = data['explanation']
+        scorer =  EmbeddingScorer(model)
+        result = scorer.call_sync(feature_record)  # Use call_sync instead of __call__
+        #print(result.score)
+        score = per_feature_scores_embedding(result.score)
+        return jsonify({"score": score,"breakdown": result.score}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+>>>>>>> e4bb340... Run ruff, start integrating scorer
 if __name__ == '__main__':
     app.run(debug=True)

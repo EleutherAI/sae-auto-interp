@@ -1,17 +1,9 @@
-import asyncio
-import json
 import random
-import re
-import time
-from abc import abstractmethod
 from dataclasses import dataclass
-from typing import List, NamedTuple
+from typing import NamedTuple
 
-import numpy as np
-import torch
-from sentence_transformers import SentenceTransformer
 from transformers import PreTrainedTokenizer
-from ...clients.client import Client
+
 from ...features import Example, FeatureRecord
 from ..scorer import Scorer, ScorerResult
 

@@ -1,9 +1,13 @@
 import json
 from asyncio import sleep
+from typing import Any, Dict, List, Union
+
 import httpx
+
 from ..logger import logger
 from .client import Client, Response
-from typing import Union, List, Dict, Any
+
+
 class OpenRouter(Client):
     def __init__(
         self,

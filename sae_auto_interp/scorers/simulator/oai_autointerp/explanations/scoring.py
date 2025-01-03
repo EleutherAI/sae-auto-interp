@@ -5,8 +5,8 @@ import logging
 from typing import Any, Callable, Sequence
 
 import numpy as np
-from ..activations.activations import ActivationRecord
 
+from ..activations.activations import ActivationRecord
 from ..explanations.explanations import (
     ScoredSequenceSimulation,
     ScoredSimulation,

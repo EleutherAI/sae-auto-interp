@@ -1,41 +1,34 @@
-import json
-import sys
 import inspect
-from tqdm.auto import tqdm
-from collections import Counter
-import pandas as pd
-
+import json
+import random
+import sys
+from functools import partial
 from pathlib import Path
 from typing import Callable, Literal
-import fire
+
+import numpy as np
+import pandas as pd
 import torch
+from huggingface_hub import hf_hub_download
+from tqdm.auto import tqdm
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+from ..autoencoders.DeepMind.model import JumpReLUSAE
+from ..autoencoders.OpenAI.model import ACTIVATIONS_CLASSES, Autoencoder
 from ..config import ExperimentConfig, FeatureConfig
-from ..features import (
-    FeatureDataset,
-    FeatureLoader
-)
-from ..autoencoders.OpenAI.model import TopK, ACTIVATIONS_CLASSES, Autoencoder
+from ..features import FeatureDataset, FeatureLoader
 from ..features.constructors import default_constructor
 from ..features.samplers import sample
-from ..autoencoders.DeepMind.model import JumpReLUSAE
 from . import (
-    ExplainerNeuronFormatter, 
-    ExplainerInterventionExample, 
-    get_explainer_prompt, 
-    fs_examples, 
-    garbage_collect, 
-    get_git_info, 
-    expl_given_generation_score, 
-    LAYER_TO_L0
+    LAYER_TO_L0,
+    ExplainerInterventionExample,
+    ExplainerNeuronFormatter,
+    expl_given_generation_score,
+    fs_examples,
+    garbage_collect,
+    get_explainer_prompt,
+    get_git_info,
 )
-from ..features import FeatureDataset
-from functools import partial
-import random
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from transformers import BitsAndBytesConfig
-from huggingface_hub import hf_hub_download
-import numpy as np
-
 
 PATH_ROOT = Path(__file__).parent.parent.parent
 

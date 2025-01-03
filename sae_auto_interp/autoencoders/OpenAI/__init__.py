@@ -1,11 +1,11 @@
 from functools import partial
 from pathlib import Path
-from typing import List, Any, Callable, Dict, Tuple
+from typing import Any, Callable, Dict, List, Tuple
 
 import torch
 
+from ..Custom.openai import ACTIVATIONS_CLASSES, Autoencoder
 from ..wrapper import AutoencoderLatents
-from ..Custom.openai import Autoencoder,ACTIVATIONS_CLASSES
 
 DEVICE = "cuda:0"
 

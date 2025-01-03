@@ -1,13 +1,11 @@
-import re
 import asyncio
-
-import torch
+import re
 
 from sae_auto_interp.explainers.explainer import Explainer, ExplainerResult
 from sae_auto_interp.explainers.prompt_builder import build_prompt
-import time
+
 from ...logger import logger
-import numpy as np
+
 
 class OutputExplainer(Explainer):
     name = "output"

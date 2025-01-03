@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
+
 import blobfile as bf
 import orjson
 from torchtyping import TensorType

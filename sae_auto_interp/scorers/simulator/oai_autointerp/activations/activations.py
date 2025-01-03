@@ -2,7 +2,7 @@
 # related helper functions.
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import Optional
 
 from simple_parsing import Serializable
 

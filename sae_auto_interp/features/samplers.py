@@ -1,10 +1,11 @@
 import random
 from collections import deque
-from typing import List, Literal
+from typing import Literal
 
 from ..config import ExperimentConfig
-from .features import Example, FeatureRecord
 from ..logger import logger
+from .features import Example, FeatureRecord
+
 
 def split_activation_quantiles(
     examples: list[Example], 
@@ -74,7 +75,7 @@ def train(
         case "random":
             random.seed(seed)
             if n_train > len(examples):
-                logger.warning(f"n_train is greater than the number of examples, using all examples")
+                logger.warning("n_train is greater than the number of examples, using all examples")
                 for example in examples:
                     example.normalized_activations = (example.activations * 10 / max_activation).floor()
                 return examples
@@ -133,8 +134,8 @@ def sample(
     if cfg.n_examples_test > 0: 
         _test = test(
             examples,
-        max_activation,
-        cfg.n_examples_test,
+            max_activation,
+            cfg.n_examples_test,
             cfg.n_quantiles,
             cfg.test_type,   
         )

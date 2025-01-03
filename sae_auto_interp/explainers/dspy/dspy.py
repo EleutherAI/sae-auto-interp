@@ -1,10 +1,11 @@
-import re
-from ..explainer import Explainer, ExplainerResult
-from ...logger import logger
-from typing import Optional, List
-from pydantic import BaseModel
+from typing import List, Optional
+
 import dspy
+from pydantic import BaseModel
+
 from ...features.features import FeatureRecord
+from ...logger import logger
+from ..explainer import Explainer, ExplainerResult
 
 
 class DSPyExplainer(Explainer):
@@ -13,6 +14,7 @@ class DSPyExplainer(Explainer):
     def __init__(self,
                  client: Optional[dspy.LM],
                  tokenizer,
+                 verbose: bool = False,
                  **generation_kwargs,
                  ):
         self.client = client
@@ -23,6 +25,7 @@ class DSPyExplainer(Explainer):
             self.explainer,
             trainset=TRAINSET,
         )
+        self.verbose = verbose
 
     async def __call__(self, record: FeatureRecord):
         tokenizer = self.tokenizer
@@ -37,6 +40,8 @@ class DSPyExplainer(Explainer):
             for ex in records
         ]
         result = self.explainer(feature_examples=records, lm=self.client)
+        if self.verbose:
+            logger.debug(f"Explainer result: {result}")
         return ExplainerResult(
             record,
             result.explanation

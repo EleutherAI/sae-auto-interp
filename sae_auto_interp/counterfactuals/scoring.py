@@ -1,11 +1,18 @@
 import os
 
-from . import get_scorer_surprisal_prompt, scorer_separator, few_shot_prompts, few_shot_explanations, few_shot_generations, garbage_collect
-
 import numpy as np
 import pandas as pd
 import torch
 from tqdm.auto import tqdm
+
+from . import (
+    few_shot_explanations,
+    few_shot_generations,
+    few_shot_prompts,
+    garbage_collect,
+    get_scorer_surprisal_prompt,
+    scorer_separator,
+)
 
 
 def expl_given_generation_score(scorer, scorer_tokenizer, completions_path, device):

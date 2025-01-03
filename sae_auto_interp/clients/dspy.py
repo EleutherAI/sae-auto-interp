@@ -1,12 +1,13 @@
-import os
 
-from .client import Client
 import asyncio
+import traceback
+from types import SimpleNamespace
+
 import dspy
 import litellm
+
 from ..logger import logger
-from types import SimpleNamespace
-import traceback
+from .client import Client
 
 
 class DSPy(Client):

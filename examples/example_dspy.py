@@ -19,7 +19,6 @@ from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 
 import dotenv
-import dspy
 import torch
 from dspy import LM
 
@@ -33,8 +32,9 @@ from sae_auto_interp.pipeline import Pipeline, process_wrapper
 from sae_auto_interp.scorers import DetectionScorer, FuzzingScorer
 
 #%%
-USE_OPENROUTER = False
-USE_BIG_LLAMA = True
+USE_OPENROUTER = True
+USE_BIG_LLAMA = False
+LOAD_PYTHIA = False
 #%%
 def top_level_await(fn):
     # https://stackoverflow.com/a/61331974
@@ -66,18 +66,26 @@ client = DSPy(dspy_lm)
 print(top_level_await(client.generate("Hello world!")))
 #%%
 
-# cache_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/extras/transcoders" \
-#             "/raw_features/pythia_pile/SAE-2-seed-4k"
-# module = ".gpt_neox.layers.6.mlp"
+if LOAD_PYTHIA:
+    # cache_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/extras/transcoders" \
+    #             "/raw_features/pythia_pile/SAE-2-seed-4k"
+    cache_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/extras/transcoders" \
+                "/raw_features/pythia_pile/SkipTranscoder"
+    module = ".gpt_neox.layers.6.mlp"
+else:
+    cache_dir = "../extra_raw_features"
+    module = ".model.layers.10"
 
-cache_dir = "../extra_raw_features"
-module = ".model.layers.10"
-
-start_feature = 13107
-n_features = 16
+if LOAD_PYTHIA:
+    start_feature = 0
+    n_features = 16
+else:
+    start_feature = 13107
+    n_features = 16
 feature_dict = {f"{module}": torch.arange(start_feature, start_feature + n_features)}
 feature_cfg = FeatureConfig.load_json(f"{cache_dir}/{module}/config.json")
-feature_cfg.width = 16384
+if not LOAD_PYTHIA:
+    feature_cfg.width = 16384
 dataset = FeatureDataset(
     raw_dir=cache_dir,
     cfg=feature_cfg,
@@ -87,8 +95,6 @@ dataset = FeatureDataset(
 experiment_cfg = ExperimentConfig(
     train_type="top",
     test_type="quantiles",
-    n_examples_train=5,
-    n_examples_test=5
 )
 constructor = partial(
     default_constructor,
@@ -99,6 +105,7 @@ constructor = partial(
 )
 sampler = partial(sample, cfg=experiment_cfg)
 loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
+
 #%%
 def visualize_record(record):
     print(record)
@@ -141,18 +148,26 @@ default_explainer = DefaultExplainer(
 dspy_explainer = DSPyExplainer(
     client.client,
     tokenizer=dataset.tokenizer,
+    verbose=True,
 )
 explainer_pipe = process_wrapper(
-    default_explainer,
-    # dspy_explainer,
+    # default_explainer,
+    dspy_explainer,
     preprocess=explainer_preprocess,
     postprocess=explainer_postprocess,
 )
 
-def scorer_preprocess(x):
-    return x
+def scorer_preprocess(result):
+    record = result.record
+    record.explanation = result.explanation
+    record.extra_examples = record.random_examples
+
+    return record
 def scorer_postprocess(x):
-    print("Scorer output:", x)
+    corrects = [c.correct for c in x.score]
+    print("Accuracy:", sum(map(int, corrects)) / len(corrects))
+    trues = [c.ground_truth for c in x.score]
+    print("Ground truth:", sum(map(int, trues)) / len(trues))
     return x
 
 fuzzing_scorer = FuzzingScorer(
@@ -165,11 +180,11 @@ detection_scorer = DetectionScorer(
     client,
     tokenizer=dataset.tokenizer,
     verbose=True,
-    log_prob=True,
+    log_prob=False,
 )
 scorer_pipe = process_wrapper(
-    # fuzzing_scorer,
-    detection_scorer,
+    fuzzing_scorer,
+    # detection_scorer,
     preprocess=scorer_preprocess,
     postprocess=scorer_postprocess,
 )
@@ -177,12 +192,14 @@ scorer_pipe = process_wrapper(
 record_first = next(iter(loader))
 visualize_record(record_first)
 #%%
-from sae_auto_interp.logger import logger
 import logging
+
+from sae_auto_interp.logger import logger
+
 logger.setLevel(logging.DEBUG)
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 # top_level_await(explainer_pipe(record_first)).explanation
-# top_level_await(dspy_explainer(record_first))
+# top_level_await(dspy_explainer(record_first)).explanation
 top_level_await(default_explainer(record_first)).explanation
 #%%
 pipe = Pipeline(
@@ -193,3 +210,4 @@ pipe = Pipeline(
 
 # asyncio.run(pipe.run(1))
 top_level_await(pipe.run(1))
+# %%

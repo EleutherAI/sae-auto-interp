@@ -1,8 +1,16 @@
 from functools import partial
+<<<<<<< HEAD
 from ..Custom.gemmascope import JumpReLUSAE
 from typing import List, Dict
+=======
+from typing import Dict, List
+
+>>>>>>> e4bb340... Run ruff, start integrating scorer
 import torch
+
 from ..wrapper import AutoencoderLatents
+from .model import JumpReLUSAE
+
 DEVICE = "cuda:0"
 
 

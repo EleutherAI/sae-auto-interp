@@ -1,13 +1,14 @@
 import random
-from collections import Counter
 import warnings
-from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-import torch
-import pandas as pd
+from collections import Counter
 from pathlib import Path
 
+import pandas as pd
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
 from sae_auto_interp.counterfactuals.pipeline import expl_given_generation_score
+
 
 def load_explainer(explainer_name, device):
     # get explainer results

@@ -1,14 +1,23 @@
 import asyncio
+import json
 from dataclasses import dataclass
 from functools import partial
-from typing import Any, Dict, List, Union
+from typing import Dict, List, Union
 
 from transformers import AutoTokenizer
 from vllm import LLM, SamplingParams
+from vllm.distributed.parallel_state import (
+    destroy_distributed_environment,
+    destroy_model_parallel,
+)
 
 from ..logger import logger
 from .client import Client, Response
+<<<<<<< HEAD
 from vllm.distributed.parallel_state import destroy_model_parallel, destroy_distributed_environment
+=======
+
+>>>>>>> e4bb340... Run ruff, start integrating scorer
 
 @dataclass
 class Top_Logprob:

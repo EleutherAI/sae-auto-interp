@@ -1,13 +1,12 @@
-from typing import List
 
 from ...features import Example
+from ..scorer import Scorer, ScorerResult
 from .oai_autointerp import (
     ActivationRecord,
     ExplanationNeuronSimulator,
     LogprobFreeExplanationTokenSimulator,
     simulate_and_score,
 )
-from ..scorer import Scorer, ScorerResult
 
 
 class OpenAISimulator(Scorer):

@@ -1,5 +1,4 @@
 from math import ceil
-from typing import List
 
 import torch
 from transformers import PreTrainedTokenizer
@@ -56,6 +55,8 @@ class FuzzingScorer(Classifier, Scorer):
         all_examples = []
         for test in record.test:
             all_examples.extend(test)
+
+        assert len(record.test) > 0 and len(record.test[0]) > 0, "No test records found"
         n_incorrect = self.average_n_activations(all_examples)
         samples = examples_to_samples(
             record.extra_examples,
@@ -64,11 +65,6 @@ class FuzzingScorer(Classifier, Scorer):
             n_incorrect=n_incorrect,
             **defaults,
         )
-
-        assert (
-            len(record.test) > 0 
-            and len(record.test[0]) > 0
-        ), "No test records found"
 
         for i, examples in enumerate(record.test):
             samples.extend(

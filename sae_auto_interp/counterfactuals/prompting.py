@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-import copy
+
 
 @dataclass
 class ExplainerInterventionExample:

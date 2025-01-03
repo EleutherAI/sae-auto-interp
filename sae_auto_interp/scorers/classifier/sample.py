@@ -1,6 +1,6 @@
 import random
 from dataclasses import dataclass
-from typing import List, NamedTuple
+from typing import NamedTuple
 
 import torch
 from transformers import PreTrainedTokenizer

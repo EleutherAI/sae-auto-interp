@@ -1,6 +1,6 @@
 import json
+
 import requests
-import random
 from transformers import AutoTokenizer
 
 # Load the activation data from the JSON file

@@ -33,7 +33,6 @@ dev-dependencies = [
 [sources.sae]
 git = "https://github.com/EleutherAI/sae"
 
-# ruff configuration (preserved from the original pyproject.toml)
 [tool.ruff]
 # TODO: Clean up or remove experiments folder.
 exclude = ["experiments", "**/prompts/*", "**/prompts.py","**/simulator.py"]
