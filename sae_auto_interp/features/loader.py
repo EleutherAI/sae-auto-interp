@@ -143,7 +143,7 @@ class FeatureDataset:
             cache_config["dataset_repo"],
             cache_config["dataset_split"],
             cache_config["dataset_name"],
-            cache_config["dataset_column_name"],
+            **(dict(dataset_row=cache_config["dataset_row"]) if "dataset_row" in cache_config else {}),
         )
    
     def _edges(self):
