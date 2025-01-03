@@ -6,6 +6,7 @@ import dspy
 import litellm
 from ..logger import logger
 from types import SimpleNamespace
+import traceback
 
 
 class DSPy(Client):
@@ -29,6 +30,10 @@ class DSPy(Client):
         sleep_time: float = 90.0,
         **kwargs
     ):
+        kwargs = dict(
+            max_tokens=500,
+            temperature=1.0
+        ) | kwargs
         logger.debug(f"DSPy prompt input: {prompt}")
         for i in range(max_retries):
             try:
@@ -40,6 +45,7 @@ class DSPy(Client):
                 logger.debug(f"DSPy gen: {response}")
                 return SimpleNamespace(text=response[0])
             except litellm.RateLimitError:
+                traceback.print_exc()
                 if i < max_retries - 1:
                     logger.warning(f"Attempt {i+1} failed, retrying...")
                     await asyncio.sleep(sleep_time)
