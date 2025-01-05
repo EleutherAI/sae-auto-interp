@@ -13,11 +13,7 @@ from vllm.distributed.parallel_state import (
 
 from ..logger import logger
 from .client import Client, Response
-<<<<<<< HEAD
-from vllm.distributed.parallel_state import destroy_model_parallel, destroy_distributed_environment
-=======
 
->>>>>>> e4bb340... Run ruff, start integrating scorer
 
 @dataclass
 class Top_Logprob:
