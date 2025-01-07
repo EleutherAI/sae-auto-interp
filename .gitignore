@@ -5,6 +5,7 @@
 *.log
 *workspace
 raw_features/*
+*raw_features/*
 results/*
 extras/*
 temp/*

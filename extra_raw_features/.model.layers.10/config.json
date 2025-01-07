@@ -1,0 +1,1 @@
+{"dataset_repo": "kh4dien/fineweb-100m-sample", "dataset_split": "train", "dataset_name": "", "dataset_row": "text", "batch_size": 32, "ctx_len": 256, "n_tokens": 10000000, "n_splits": 5, "model_name": "google/gemma-2-9b"}

@@ -2,12 +2,13 @@
 import asyncio
 import traceback
 from types import SimpleNamespace
+from typing import Any
 
 import dspy
 import litellm
 
 from ..logger import logger
-from .client import Client
+from .client import Client, Response
 
 
 class DSPy(Client):
@@ -44,7 +45,7 @@ class DSPy(Client):
                     response = self.client(prompt, **kwargs)
                 logger.debug(f"DSPy prompt: {prompt}")
                 logger.debug(f"DSPy gen: {response}")
-                return SimpleNamespace(text=response[0])
+                return response
             except litellm.RateLimitError:
                 traceback.print_exc()
                 if i < max_retries - 1:
@@ -53,3 +54,6 @@ class DSPy(Client):
 
         logger.error("All retry attempts failed.")
         raise RuntimeError("Failed to generate text after multiple attempts.")
+
+    async def process_response(self, raw_response: Any) -> Response:
+        return SimpleNamespace(text=raw_response[0])

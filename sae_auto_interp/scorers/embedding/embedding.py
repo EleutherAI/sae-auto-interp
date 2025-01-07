@@ -26,7 +26,7 @@ class Sample(NamedTuple):
     data: EmbedingOutput
 
 
-class EmbedingScorer(Scorer):
+class EmbeddingScorer(Scorer):
     name = "embeding"
 
     def __init__(

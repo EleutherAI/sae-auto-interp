@@ -2,7 +2,7 @@ import asyncio
 import json
 from dataclasses import dataclass
 from functools import partial
-from typing import Dict, List, Union
+from typing import Dict, List, Union, Any
 
 from transformers import AutoTokenizer
 from vllm import LLM, SamplingParams
