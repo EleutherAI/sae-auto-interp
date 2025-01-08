@@ -2,7 +2,8 @@ from functools import partial
 from typing import List, Any, Tuple, Optional, Dict
 import torch
 import torch.nn as nn
-from sae import Sae, SaeConfig
+from sae.sae import Sae
+from sae.config import SaeConfig
 from pathlib import Path
 from .OpenAI.model import ACTIVATIONS_CLASSES, TopK
 from .wrapper import AutoencoderLatents
@@ -38,7 +39,8 @@ def load_eai_autoencoders(
 
     for layer in ae_layers:
         if module=="mlp":
-            submodule = f"layers.{layer}.{module}"
+            # submodule = f"layers.{layer}.{module}"
+            submodule = f"transformer.h.{layer}.mlp"
         elif module=="res":
             submodule = f"layers.{layer}"
         
@@ -75,7 +77,8 @@ def load_eai_autoencoders(
             if module == "res":
                 submodule = model.gpt_neox.layers[layer]
             else:
-                submodule = model.gpt_neox.layers[layer].mlp
+                submodule = model.transformer.h[layer].mlp
+                # submodule = model.gpt_neox.layers[layer].mlp
         submodule.ae = AutoencoderLatents(
             sae, partial(_forward, sae, k), width=sae.encoder.weight.shape[0]
         )

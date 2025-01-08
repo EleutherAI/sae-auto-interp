@@ -315,7 +315,7 @@ class FeatureLoader:
             async for record in self._aprocess_buffer(buffer):
                 yield record
 
-    async def _aprocess_buffer(self, buffer):
+    async def _aprocess_buffer(self, buffer: TensorBuffer):
         """
         Asynchronously process a buffer.
 

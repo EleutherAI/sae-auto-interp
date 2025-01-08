@@ -139,6 +139,3 @@ def sample(
             cfg.test_type,   
         )
         record.test = _test
-
-    
-    
