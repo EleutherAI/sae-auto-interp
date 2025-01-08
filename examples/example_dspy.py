@@ -1,5 +1,8 @@
 #%%
 import sys
+import os
+if os.getcwd().endswith("-auto-interp"):
+    os.chdir("examples")
 
 if ".." not in sys.path:
     sys.path.append("..")
@@ -29,7 +32,7 @@ from sae_auto_interp.features import FeatureDataset, FeatureLoader
 from sae_auto_interp.features.constructors import default_constructor
 from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipeline, process_wrapper
-from sae_auto_interp.scorers import DetectionScorer, FuzzingScorer
+from sae_auto_interp.scorers import DetectionScorer, FuzzingScorer, DSPyClassifier
 
 #%%
 USE_OPENROUTER = True
@@ -63,7 +66,7 @@ else:
     )
 client = DSPy(dspy_lm)
 # print(asyncio.run(client.generate("Hello world!")))
-print(top_level_await(client.generate("Hello world!")))
+# print(top_level_await(client.generate("Hello world!")))
 #%%
 
 if LOAD_PYTHIA:
@@ -80,7 +83,8 @@ if LOAD_PYTHIA:
     start_feature = 0
     n_features = 16
 else:
-    start_feature = 13107
+    # start_feature = 13107
+    start_feature = 0
     n_features = 16
 feature_dict = {f"{module}": torch.arange(start_feature, start_feature + n_features)}
 feature_cfg = FeatureConfig.load_json(f"{cache_dir}/{module}/config.json")
@@ -95,6 +99,9 @@ dataset = FeatureDataset(
 experiment_cfg = ExperimentConfig(
     train_type="top",
     test_type="quantiles",
+    n_examples_train=20,
+    n_examples_test=10,
+    n_quantiles=5,
 )
 constructor = partial(
     default_constructor,
@@ -129,7 +136,7 @@ async def visualize_loader(loader):
     async for record in loader:
         visualize_record(record)
 
-top_level_await(visualize_loader(loader))
+# top_level_await(visualize_loader(loader))
 #%%
 # explainer_pipe = lambda x: print(x)
 def explainer_preprocess(x):
@@ -150,18 +157,11 @@ dspy_explainer = DSPyExplainer(
     tokenizer=dataset.tokenizer,
     verbose=True,
 )
-explainer_pipe = process_wrapper(
-    # default_explainer,
-    dspy_explainer,
-    preprocess=explainer_preprocess,
-    postprocess=explainer_postprocess,
-)
 
 def scorer_preprocess(result):
     record = result.record
     record.explanation = result.explanation
     record.extra_examples = record.random_examples
-
     return record
 def scorer_postprocess(x):
     corrects = [c.correct for c in x.score]
@@ -174,7 +174,7 @@ fuzzing_scorer = FuzzingScorer(
     client,
     tokenizer=dataset.tokenizer,
     verbose=True,
-    log_prob=True,
+    log_prob=False,
 )
 detection_scorer = DetectionScorer(
     client,
@@ -182,15 +182,6 @@ detection_scorer = DetectionScorer(
     verbose=True,
     log_prob=False,
 )
-scorer_pipe = process_wrapper(
-    fuzzing_scorer,
-    # detection_scorer,
-    preprocess=scorer_preprocess,
-    postprocess=scorer_postprocess,
-)
-#%%
-record_first = next(iter(loader))
-visualize_record(record_first)
 #%%
 import logging
 
@@ -200,8 +191,22 @@ logger.setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.WARNING)
 # top_level_await(explainer_pipe(record_first)).explanation
 # top_level_await(dspy_explainer(record_first)).explanation
-top_level_await(default_explainer(record_first)).explanation
+# top_level_await(default_explainer(record_first)).explanation
 #%%
+explainer_pipe = process_wrapper(
+    # default_explainer,
+    dspy_explainer,
+    preprocess=explainer_preprocess,
+    postprocess=explainer_postprocess,
+)
+scorer_pipe = process_wrapper(
+    DSPyClassifier(
+        fuzzing_scorer,
+        # detection_scorer,
+    ),
+    preprocess=scorer_preprocess,
+    postprocess=scorer_postprocess,
+)
 pipe = Pipeline(
     loader,
     explainer_pipe,

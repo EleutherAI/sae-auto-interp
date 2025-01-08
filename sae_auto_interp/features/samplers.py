@@ -44,7 +44,7 @@ def split_quantiles(
     random.seed(seed)
 
     quantile_size = len(examples) // n_quantiles
-    samples_per_quantile = n_samples // n_quantiles
+    samples_per_quantile = max(1, n_samples // n_quantiles)
     samples = []
     for i in range(n_quantiles):
         quantile = examples[i * quantile_size : (i + 1) * quantile_size]
@@ -140,6 +140,3 @@ def sample(
             cfg.test_type,   
         )
         record.test = _test
-
-    
-    

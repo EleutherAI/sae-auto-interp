@@ -25,12 +25,12 @@ class ExampleClassifier(dspy.Signature):
 
     Some examples might be mislabeled. Your task is to determine if every single token within << and >> is correctly labeled. Consider that all provided examples could be correct, none of the examples could be correct, or a mix. An example is only correct if every marked token is representative of the feature
 
-    For each example in turn, return true if the sentence is correctly labeled or false if the tokens are mislabeled. You must return your response in a valid Python list. Give probabilities for each example."""
+    For each example in turn, return true if the sentence is correctly labeled or false if the tokens are mislabeled. You must return your response in a valid Python list. Give probabilities for each example. Never output None."""
     
     feature_description: str = dspy.InputField(desc="Feature explanation")
     feature_examples: List[str] = dspy.InputField(desc="Test examples")
     is_feature: List[bool] = dspy.OutputField(desc="Whether the example is correctly labeled")
-    is_feature_probabilities: List[float] = dspy.OutputField(desc="Predicted probabilities for each example")
+    # is_feature_probabilities: List[float] = dspy.OutputField(desc="Predicted probabilities for each example")
 
 
 class NoncomposableDSPyClassifier(Classifier):
@@ -60,22 +60,22 @@ class NoncomposableDSPyClassifier(Classifier):
         Generate predictions for a batch of samples.
         """
 
-        batched_input = dict(explanation=explanation, feature_examples=[sample.text for sample in batch])
-        result = self.module(batched_input)
+        batched_input = dict(feature_description=explanation, feature_examples=[sample.text for sample in batch])
+        result = self.module(**batched_input, lm=self.client)
         results = []
         correct = []
         response = []
         for i, sample in enumerate(batch):
-            result = sample.data
+            data = sample.data
             prediction = result.is_feature[i]
-            result.prediction = prediction
-            result.correct = prediction == result.ground_truth
-            correct.append(result.ground_truth)
+            data.prediction = prediction
+            data.correct = prediction == data.ground_truth
+            correct.append(data.ground_truth)
             response.append(prediction)
             if self.log_prob:
-                result.probability = result.is_feature_probabilities[i]
-                result.conditional_probability = 1
-            results.append(result)
+                data.probability = result.is_feature_probabilities[i]
+                data.conditional_probability = 1
+            results.append(data)
 
             if self.verbose:
                 result.text = sample.text
@@ -86,10 +86,12 @@ class DSPyClassifier(NoncomposableDSPyClassifier):
         assert isinstance(classifier.client, DSPy)
         client = classifier.client.client
         module = dspy.Predict(ExampleClassifier)
-        self.explainer = dspy.LabeledFewShot().compile(
-            self.explainer,
+        module = dspy.LabeledFewShot().compile(
+            module,
             trainset=TRAINSET,
         )
+        self.explainer = module
+        self.base_classifier = classifier
         super().__init__(
             client, module,
             tokenizer=classifier.tokenizer,
