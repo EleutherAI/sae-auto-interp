@@ -55,4 +55,5 @@ sae = { git = "https://github.com/EleutherAI/sae" }
 dev = [
     "ruff>=0.8.5",
     "pyright",
+    "nest-asyncio>=1.6.0",
 ]

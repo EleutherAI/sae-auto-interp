@@ -35,40 +35,55 @@ from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipeline, process_wrapper
 from sae_auto_interp.scorers import DetectionScorer, DSPyClassifier, FuzzingScorer
 
+import logging
+
+import nest_asyncio
+nest_asyncio.apply()
+logging.basicConfig(level=logging.WARNING)
+
 #%%
 USE_OPENROUTER = True
-USE_BIG_LLAMA = True
+USE_BIG_LLAMA = False
 LOAD_PYTHIA = False
 #%%
 def top_level_await(fn):
     # https://stackoverflow.com/a/61331974
     try:
-        asyncio.get_running_loop()
-        with ThreadPoolExecutor(1) as pool:
-            return pool.submit(lambda: asyncio.run(fn)).result()
+        return asyncio.get_running_loop().run_until_complete(fn)
     except RuntimeError:  # 'RuntimeError: There is no current event loop...'
         return asyncio.run(fn)
 
 
 environ = dotenv.dotenv_values(os.getcwd() + "/.env")
 if USE_OPENROUTER:
+    or_model = (
+        "meta-llama/llama-3.3-70b-instruct"
+        if USE_BIG_LLAMA else
+        # "meta-llama/llama-3.1-8b-instruct"
+        "meta-llama/llama-3-8b-instruct"
+    )
     dspy_lm = LM(
-        "openrouter/" + (
-            "meta-llama/llama-3.3-70b-instruct" if USE_BIG_LLAMA
-            else "meta-llama/llama-3.1-8b-instruct"
-        ),
+        # "openrouter/" + or_model,
+        "openrouter/" + or_model,
         api_key=environ["OPENROUTER_API_KEY"],
         num_retries=16,
+        # api_base="https://api.openrouter.io/v1/",
     )
+    client = DSPy(dspy_lm)
+    # from sae_auto_interp.clients import OpenRouter
+    # client = OpenRouter(or_model, api_key=environ["OPENROUTER_API_KEY"])
 else:
     dspy_lm = LM(
         "llama-3.3-70b-specdec" if USE_BIG_LLAMA else "llama-3.1-8b-instant",
         api_key=environ["GROQ_API_KEY"],
         api_base="https://api.groq.com/openai/v1/",
     )
-client = DSPy(dspy_lm)
-# print(asyncio.run(client.generate("Hello world!")))
-# print(top_level_await(client.generate("Hello world!")))
+    client = DSPy(dspy_lm)
+prompt = [
+    {"role": "user", "content": "What is the capital of France?"},
+]
+# print(await client.generate(prompt))
+print(top_level_await(client.generate(prompt)))
 #%%
 
 if LOAD_PYTHIA:
@@ -87,7 +102,7 @@ if LOAD_PYTHIA:
 else:
     # start_feature = 13107
     start_feature = 0
-    n_features = 16
+    n_features = 48
 feature_dict = {f"{module}": torch.arange(start_feature, start_feature + n_features)}
 feature_cfg = FeatureConfig.load_json(f"{cache_dir}/{module}/config.json")
 if not LOAD_PYTHIA:
@@ -151,7 +166,7 @@ def explainer_postprocess(x):
 default_explainer = DefaultExplainer(
     client,
     tokenizer=dataset.tokenizer,
-    threshold=0.5,
+    # threshold=0.5,
     activations=True,
 )
 dspy_explainer = DSPyExplainer(
@@ -175,15 +190,10 @@ detection_scorer = DetectionScorer(
     batch_size=5,
 )
 #%%
-import logging
 
 from sae_auto_interp.logger import logger
-
 logger.setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.WARNING)
-# top_level_await(explainer_pipe(record_first)).explanation
-# top_level_await(dspy_explainer(record_first)).explanation
-# top_level_await(default_explainer(record_first)).explanation
 #%%
 def scorer_preprocess(result):
     record = result.record

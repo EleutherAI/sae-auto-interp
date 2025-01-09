@@ -3678,6 +3678,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "nest-asyncio" },
     { name = "pyright" },
     { name = "ruff" },
 ]
@@ -3706,6 +3707,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "nest-asyncio", specifier = ">=1.6.0" },
     { name = "pyright" },
     { name = "ruff", specifier = ">=0.8.5" },
 ]

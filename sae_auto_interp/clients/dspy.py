@@ -1,6 +1,5 @@
 import asyncio
 import traceback
-from types import SimpleNamespace
 from typing import Any
 
 import dspy
@@ -43,7 +42,7 @@ class DSPy(Client):
                     response = self.client(prompt, **kwargs)
                 logger.debug(f"DSPy prompt: {prompt}")
                 logger.debug(f"DSPy gen: {response}")
-                return SimpleNamespace(text=response[0])
+                return Response(text=response[0])
             except litellm.RateLimitError:
                 traceback.print_exc()
                 if i < max_retries - 1:
