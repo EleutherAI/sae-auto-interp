@@ -2,6 +2,7 @@ import asyncio
 import json
 import random
 import re
+import traceback
 from abc import abstractmethod
 
 import numpy as np
@@ -135,8 +136,9 @@ class Classifier(Scorer):
             conditional_probabilities = None
             probabilities = None
             return array, conditional_probabilities, probabilities
-        except (json.JSONDecodeError, AssertionError, AttributeError) as e:
-            logger.error(f"Parsing array failed: {e}")
+        except (json.JSONDecodeError, AssertionError, AttributeError):
+            logger.error("Parsing array failed:")
+            traceback.print_exc()
             return [-1] * self.batch_size, [-1] * self.batch_size, [-1] * self.batch_size
 
     def _parse_logprobs(self, logprobs):

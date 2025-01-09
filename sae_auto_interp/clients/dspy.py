@@ -12,7 +12,8 @@ from .client import Client, Response
 
 class DSPy(Client):
     """
-    DSPy Client.
+    DSPy Client. Wrapper over DSPy's LM, which is a wrapper over LiteLLM.
+    Not asynchronous because DSPy doesn't expose an async API.
     """
 
     provider = "dspy"

@@ -1,21 +1,13 @@
-import asyncio
-import json
-import random
-import re
-from abc import abstractmethod
 
-import numpy as np
+from typing import List, Literal
+
+import dspy
 from transformers import PreTrainedTokenizer
 
-from .classifier import Classifier
-from ...clients.client import Client
 from ...clients import DSPy
 from ...features import FeatureRecord
-from ...logger import logger
-from ..scorer import Scorer, ScorerResult
+from .classifier import Classifier
 from .sample import ClassifierOutput, Sample
-from typing import List
-import dspy
 
 
 class ExampleClassifier(dspy.Signature):
@@ -29,7 +21,7 @@ class ExampleClassifier(dspy.Signature):
     
     feature_description: str = dspy.InputField(desc="Feature explanation")
     feature_examples: List[str] = dspy.InputField(desc="Test examples")
-    is_feature: List[bool] = dspy.OutputField(desc="Whether the example is correctly labeled")
+    is_feature: List[Literal[0, 1]] = dspy.OutputField(desc="Whether the example is correctly labeled")
     # is_feature_probabilities: List[float] = dspy.OutputField(desc="Predicted probabilities for each example")
 
 

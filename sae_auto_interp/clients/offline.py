@@ -1,8 +1,7 @@
 import asyncio
-import json
 from dataclasses import dataclass
 from functools import partial
-from typing import Dict, List, Union, Any
+from typing import Any, Dict, List, Union
 
 from transformers import AutoTokenizer
 from vllm import LLM, SamplingParams

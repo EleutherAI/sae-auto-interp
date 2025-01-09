@@ -1,6 +1,7 @@
 #%%
-import sys
 import os
+import sys
+
 if os.getcwd().endswith("-auto-interp"):
     os.chdir("examples")
 
@@ -32,11 +33,11 @@ from sae_auto_interp.features import FeatureDataset, FeatureLoader
 from sae_auto_interp.features.constructors import default_constructor
 from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipeline, process_wrapper
-from sae_auto_interp.scorers import DetectionScorer, FuzzingScorer, DSPyClassifier
+from sae_auto_interp.scorers import DetectionScorer, DSPyClassifier, FuzzingScorer
 
 #%%
 USE_OPENROUTER = True
-USE_BIG_LLAMA = False
+USE_BIG_LLAMA = True
 LOAD_PYTHIA = False
 #%%
 def top_level_await(fn):
@@ -49,19 +50,20 @@ def top_level_await(fn):
         return asyncio.run(fn)
 
 
-dotenv.load_dotenv()
+environ = dotenv.dotenv_values(os.getcwd() + "/.env")
 if USE_OPENROUTER:
     dspy_lm = LM(
         "openrouter/" + (
             "meta-llama/llama-3.3-70b-instruct" if USE_BIG_LLAMA
             else "meta-llama/llama-3.1-8b-instruct"
         ),
-        api_key=os.environ["OPENROUTER_API_KEY"]
+        api_key=environ["OPENROUTER_API_KEY"],
+        num_retries=16,
     )
 else:
     dspy_lm = LM(
         "llama-3.3-70b-specdec" if USE_BIG_LLAMA else "llama-3.1-8b-instant",
-        api_key=os.environ["GROQ_API_KEY"],
+        api_key=environ["GROQ_API_KEY"],
         api_base="https://api.groq.com/openai/v1/",
     )
 client = DSPy(dspy_lm)
@@ -99,9 +101,9 @@ dataset = FeatureDataset(
 experiment_cfg = ExperimentConfig(
     train_type="top",
     test_type="quantiles",
-    n_examples_train=20,
-    n_examples_test=10,
-    n_quantiles=5,
+    n_examples_train=50,
+    n_examples_test=50,
+    n_quantiles=10,
 )
 constructor = partial(
     default_constructor,
@@ -158,29 +160,19 @@ dspy_explainer = DSPyExplainer(
     verbose=True,
 )
 
-def scorer_preprocess(result):
-    record = result.record
-    record.explanation = result.explanation
-    record.extra_examples = record.random_examples
-    return record
-def scorer_postprocess(x):
-    corrects = [c.correct for c in x.score]
-    print("Accuracy:", sum(map(int, corrects)) / len(corrects))
-    trues = [c.ground_truth for c in x.score]
-    print("Ground truth:", sum(map(int, trues)) / len(trues))
-    return x
-
 fuzzing_scorer = FuzzingScorer(
     client,
     tokenizer=dataset.tokenizer,
     verbose=True,
     log_prob=False,
+    batch_size=5,
 )
 detection_scorer = DetectionScorer(
     client,
     tokenizer=dataset.tokenizer,
     verbose=True,
     log_prob=False,
+    batch_size=5,
 )
 #%%
 import logging
@@ -193,6 +185,21 @@ logging.basicConfig(level=logging.WARNING)
 # top_level_await(dspy_explainer(record_first)).explanation
 # top_level_await(default_explainer(record_first)).explanation
 #%%
+def scorer_preprocess(result):
+    record = result.record
+    record.explanation = result.explanation
+    record.extra_examples = record.random_examples
+    print("Explanation for scorer:", record.explanation)
+    return record
+def scorer_postprocess(x):
+    corrects = [c.correct for c in x.score]
+    # print("Accuracy:", sum(map(int, corrects)) / len(corrects))
+    # trues = [c.ground_truth for c in x.score]
+    # print("Ground truth:", sum(map(int, trues)) / len(trues))
+    # return x
+    return list(map(int, corrects))
+
+
 explainer_pipe = process_wrapper(
     # default_explainer,
     dspy_explainer,
@@ -213,6 +220,6 @@ pipe = Pipeline(
     scorer_pipe
 )
 
-# asyncio.run(pipe.run(1))
-top_level_await(pipe.run(1))
+corrects = top_level_await(pipe.run(1))
+sum(map(sum, corrects)) / sum(map(len, corrects))
 # %%
