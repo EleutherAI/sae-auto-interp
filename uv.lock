@@ -3657,6 +3657,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "aiofiles" },
+    { name = "asyncer" },
     { name = "blobfile" },
     { name = "datasets" },
     { name = "dspy" },
@@ -3686,6 +3687,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "aiofiles" },
+    { name = "asyncer", specifier = ">=0.0.8" },
     { name = "blobfile" },
     { name = "datasets" },
     { name = "dspy", specifier = ">=2.6.0rc5" },

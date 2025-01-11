@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 import dspy
+from asyncer import asyncify
 from pydantic import BaseModel
 
 from ...features.features import FeatureRecord
@@ -14,13 +15,14 @@ class DSPyExplainer(Explainer):
     def __init__(self,
                  client: Optional[dspy.LM],
                  tokenizer,
+                 cot: bool = False,
                  verbose: bool = False,
                  **generation_kwargs,
                  ):
         self.client = client
         self.tokenizer = tokenizer
         self.generation_kwargs = generation_kwargs
-        self.explainer = dspy.Predict(Explanations)
+        self.explainer = (dspy.ChainOfThought if cot else dspy.Predict)(Explanations)
         self.explainer = dspy.LabeledFewShot().compile(
             self.explainer,
             trainset=TRAINSET,
@@ -39,7 +41,7 @@ class DSPyExplainer(Explainer):
             )
             for ex in records
         ]
-        result = self.explainer(feature_examples=records, lm=self.client)
+        result = await asyncify(self.explainer)(feature_examples=records, lm=self.client)
         if self.verbose:
             logger.debug(f"Explainer result: {result}")
         return ExplainerResult(

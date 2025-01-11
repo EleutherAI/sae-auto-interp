@@ -4,6 +4,7 @@ from typing import Any
 
 import dspy
 import litellm
+from asyncer import asyncify
 
 from ..logger import logger
 from .client import Client, Response
@@ -37,9 +38,9 @@ class DSPy(Client):
         for i in range(max_retries):
             try:
                 if isinstance(prompt, list) and isinstance(prompt[0], dict):
-                    response = self.client(messages=prompt, **kwargs)
+                    response = await asyncify(self.client)(messages=prompt, **kwargs)
                 else:
-                    response = self.client(prompt, **kwargs)
+                    response = await asyncify(self.client)(prompt, **kwargs)
                 logger.debug(f"DSPy prompt: {prompt}")
                 logger.debug(f"DSPy gen: {response}")
                 return Response(text=response[0])

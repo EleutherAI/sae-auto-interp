@@ -1,4 +1,6 @@
 #%%
+# VLLM_WORKER_MULTIPROC_METHOD=spawn; CUDA_VISIBLE_DEVICES=6,7 vllm serve "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --tensor-parallel-size 2
+
 import os
 import sys
 
@@ -18,11 +20,13 @@ except AttributeError:
     pass
 #%%
 import asyncio
+import logging
 import os
-from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 
 import dotenv
+import nest_asyncio
+import orjson
 import torch
 from dspy import LM
 
@@ -35,15 +39,13 @@ from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipeline, process_wrapper
 from sae_auto_interp.scorers import DetectionScorer, DSPyClassifier, FuzzingScorer
 
-import logging
-
-import nest_asyncio
 nest_asyncio.apply()
 logging.basicConfig(level=logging.WARNING)
 
 #%%
-USE_OPENROUTER = True
-USE_BIG_LLAMA = False
+# LM_PROVIDER = "openrouter"
+LM_PROVIDER = "vllm"
+USE_BIG_LLAMA = True
 LOAD_PYTHIA = False
 #%%
 def top_level_await(fn):
@@ -55,7 +57,7 @@ def top_level_await(fn):
 
 
 environ = dotenv.dotenv_values(os.getcwd() + "/.env")
-if USE_OPENROUTER:
+if LM_PROVIDER == "openrouter":
     or_model = (
         "meta-llama/llama-3.3-70b-instruct"
         if USE_BIG_LLAMA else
@@ -67,12 +69,20 @@ if USE_OPENROUTER:
         "openrouter/" + or_model,
         api_key=environ["OPENROUTER_API_KEY"],
         num_retries=16,
-        # api_base="https://api.openrouter.io/v1/",
+        # api_base="https://openrouter.ai/v1/",
     )
     client = DSPy(dspy_lm)
     # from sae_auto_interp.clients import OpenRouter
     # client = OpenRouter(or_model, api_key=environ["OPENROUTER_API_KEY"])
-else:
+elif LM_PROVIDER == "vllm":
+    assert USE_BIG_LLAMA
+    dspy_lm = LM(
+        "openai/hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
+        api_base="http://localhost:8000/v1/",
+        api_key="u"
+    )
+    client = DSPy(dspy_lm)
+elif LM_PROVIDER == "groq":
     dspy_lm = LM(
         "llama-3.3-70b-specdec" if USE_BIG_LLAMA else "llama-3.1-8b-instant",
         api_key=environ["GROQ_API_KEY"],
@@ -92,16 +102,18 @@ if LOAD_PYTHIA:
     cache_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/extras/transcoders" \
                 "/raw_features/pythia_pile/SkipTranscoder"
     module = ".gpt_neox.layers.6.mlp"
+    sae_model = "pythia_pile-skiptranscoder"
 else:
     cache_dir = "../extra_raw_features"
     module = ".model.layers.10"
+    sae_model = "gemma/16k"
 
 if LOAD_PYTHIA:
     start_feature = 0
     n_features = 16
 else:
-    # start_feature = 13107
-    start_feature = 0
+    start_feature = 13107
+    # start_feature = 0
     n_features = 48
 feature_dict = {f"{module}": torch.arange(start_feature, start_feature + n_features)}
 feature_cfg = FeatureConfig.load_json(f"{cache_dir}/{module}/config.json")
@@ -156,17 +168,10 @@ async def visualize_loader(loader):
 # top_level_await(visualize_loader(loader))
 #%%
 # explainer_pipe = lambda x: print(x)
-def explainer_preprocess(x):
-    return x
-def explainer_postprocess(x):
-    print("Before dspy:")
-    visualize_record(x.record)
-    print("After dspy:", x)
-    return x
 default_explainer = DefaultExplainer(
     client,
     tokenizer=dataset.tokenizer,
-    # threshold=0.5,
+    threshold=0.2,
     activations=True,
 )
 dspy_explainer = DSPyExplainer(
@@ -191,10 +196,25 @@ detection_scorer = DetectionScorer(
 )
 #%%
 
-from sae_auto_interp.logger import logger
-logger.setLevel(logging.DEBUG)
+# logger.setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.WARNING)
 #%%
+experiment_name = "example_dspy"
+results_suffix = f"{sae_model}{module}/{experiment_name}"
+results_dir = "../results"
+os.makedirs(f"{results_dir}/explanations/{results_suffix}", exist_ok=True)
+
+def explainer_preprocess(x):
+    return x
+def explainer_postprocess(result):
+    with open(
+        f"{results_dir}/explanations/{results_suffix}/{result.record.feature}.txt",
+        "wb",
+    ) as f:
+        f.write(orjson.dumps(result.explanation))
+
+    return result
+
 def scorer_preprocess(result):
     record = result.record
     record.explanation = result.explanation
@@ -203,7 +223,7 @@ def scorer_preprocess(result):
     return record
 def scorer_postprocess(x):
     corrects = [c.correct for c in x.score]
-    # print("Accuracy:", sum(map(int, corrects)) / len(corrects))
+    print("Accuracy:", sum(map(int, corrects)) / len(corrects))
     # trues = [c.ground_truth for c in x.score]
     # print("Ground truth:", sum(map(int, trues)) / len(trues))
     # return x
@@ -230,6 +250,6 @@ pipe = Pipeline(
     scorer_pipe
 )
 
-corrects = top_level_await(pipe.run(1))
+corrects = top_level_await(pipe.run(80))
 sum(map(sum, corrects)) / sum(map(len, corrects))
 # %%

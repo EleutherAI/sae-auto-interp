@@ -2,13 +2,15 @@
 from typing import List, Literal
 
 import dspy
+from asyncer import asyncify
+from pydantic import ValidationError, field_validator
 from transformers import PreTrainedTokenizer
 
 from ...clients import DSPy
 from ...features import FeatureRecord
+from ...logger import logger
 from .classifier import Classifier
 from .sample import ClassifierOutput, Sample
-from pydantic import validator
 
 
 class ExampleClassifier(dspy.Signature):
@@ -25,9 +27,10 @@ class ExampleClassifier(dspy.Signature):
     is_feature: List[Literal[0, 1]] = dspy.OutputField(desc="Whether the example is correctly labeled")
     # is_feature_probabilities: List[float] = dspy.OutputField(desc="Predicted probabilities for each example")
 
-    @validator("is_feature", "feature_examples")
-    def check_length(cls, v, values):
-        if len(v) != len(values["feature_examples"]):
+    @field_validator("is_feature", mode="after")
+    @classmethod
+    def check_length(cls, v, info):
+        if len(v) != len(info.data["feature_examples"]):
             raise ValueError("Length of is_feature and feature_examples must be the same")
         return v
 
@@ -60,7 +63,22 @@ class NoncomposableDSPyClassifier(Classifier):
         """
 
         batched_input = dict(feature_description=explanation, feature_examples=[sample.text for sample in batch])
-        result = self.module(**batched_input, lm=self.client)
+        try:
+            result = await asyncify(self.module)(**batched_input, lm=self.client)
+            ExampleClassifier.model_validate(ExampleClassifier(
+                # you can see the Javascript in this one
+                **result.toDict(),
+                **batched_input
+            ))
+        except ValidationError as e:
+            logger.error(f"DSPy validation error: {e}")
+            results = []
+            for sample in batch:
+                data = sample.data
+                data.prediction = -1
+                data.correct = False
+                results.append(data)
+            return results
         results = []
         correct = []
         response = []
