@@ -1,5 +1,6 @@
 #%%
-# VLLM_WORKER_MULTIPROC_METHOD=spawn; CUDA_VISIBLE_DEVICES=6,7 vllm serve "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --tensor-parallel-size 2
+# VLLM_WORKER_MULTIPROC_METHOD=spawn CUDA_VISIBLE_DEVICES=6,7 vllm serve "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --tensor-parallel-size 2 --enforce-eager
+# CUDA_VISIBLE_DEVICES=6,7 python -m sglang.launch_server --model-path  "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --port 8000 --host 0.0.0.0 --tensor-parallel-size=2 --mem-fraction-static=0.5
 
 import os
 import sys
@@ -46,7 +47,6 @@ logging.basicConfig(level=logging.WARNING)
 # LM_PROVIDER = "openrouter"
 LM_PROVIDER = "vllm"
 USE_BIG_LLAMA = True
-LOAD_PYTHIA = False
 #%%
 def top_level_await(fn):
     # https://stackoverflow.com/a/61331974
@@ -95,6 +95,7 @@ prompt = [
 # print(await client.generate(prompt))
 print(top_level_await(client.generate(prompt)))
 #%%
+LOAD_PYTHIA = False
 
 if LOAD_PYTHIA:
     # cache_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/extras/transcoders" \
@@ -104,7 +105,7 @@ if LOAD_PYTHIA:
     module = ".gpt_neox.layers.6.mlp"
     sae_model = "pythia_pile-skiptranscoder"
 else:
-    cache_dir = "../extra_raw_features"
+    cache_dir = "../raw_features"
     module = ".model.layers.10"
     sae_model = "gemma/16k"
 
@@ -231,16 +232,16 @@ def scorer_postprocess(x):
 
 
 explainer_pipe = process_wrapper(
-    # default_explainer,
-    dspy_explainer,
+    default_explainer,
+    # dspy_explainer,
     preprocess=explainer_preprocess,
     postprocess=explainer_postprocess,
 )
 scorer_pipe = process_wrapper(
-    DSPyClassifier(
+    # DSPyClassifier(
         fuzzing_scorer,
         # detection_scorer,
-    ),
+    # ),
     preprocess=scorer_preprocess,
     postprocess=scorer_postprocess,
 )
