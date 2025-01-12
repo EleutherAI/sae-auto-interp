@@ -1,6 +1,6 @@
 #%%
 # VLLM_WORKER_MULTIPROC_METHOD=spawn CUDA_VISIBLE_DEVICES=6,7 vllm serve "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --tensor-parallel-size 2 --enforce-eager
-# CUDA_VISIBLE_DEVICES=6,7 python -m sglang.launch_server --model-path  "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --port 8000 --host 0.0.0.0 --tensor-parallel-size=2 --mem-fraction-static=0.5
+# CUDA_VISIBLE_DEVICES=6,7 python -m sglang.launch_server --model-path  "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --port 8000 --host 0.0.0.0 --tensor-parallel-size=2 --mem-fraction-static=0.6
 
 import os
 import sys
@@ -23,6 +23,7 @@ except AttributeError:
 import asyncio
 import logging
 import os
+import time
 from functools import partial
 
 import dotenv
@@ -47,6 +48,7 @@ logging.basicConfig(level=logging.WARNING)
 # LM_PROVIDER = "openrouter"
 LM_PROVIDER = "vllm"
 USE_BIG_LLAMA = True
+CACHE_SOURCE = "new"
 #%%
 def top_level_await(fn):
     # https://stackoverflow.com/a/61331974
@@ -95,8 +97,6 @@ prompt = [
 # print(await client.generate(prompt))
 print(top_level_await(client.generate(prompt)))
 #%%
-CACHE_SOURCE = "new"
-
 if CACHE_SOURCE == "pythia":
     # cache_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/extras/transcoders" \
     #             "/raw_features/pythia_pile/SAE-2-seed-4k"
@@ -139,7 +139,7 @@ experiment_cfg = ExperimentConfig(
 )
 constructor = partial(
     default_constructor,
-    tokens=dataset.tokens,
+    token_loader=lambda: dataset.load_tokens(),
     n_random=experiment_cfg.n_random,
     ctx_len=experiment_cfg.example_ctx_len,
     max_examples=feature_cfg.max_examples
@@ -178,13 +178,13 @@ default_explainer = DefaultExplainer(
     tokenizer=dataset.tokenizer,
     threshold=0.2,
     activations=True,
-    cot=True,
+    cot=False,
 )
 dspy_explainer = DSPyExplainer(
     client.client,
     tokenizer=dataset.tokenizer,
     verbose=True,
-    cot=True,
+    cot=False,
 )
 
 fuzzing_scorer = FuzzingScorer(
@@ -244,11 +244,11 @@ explainer_pipe = process_wrapper(
     postprocess=explainer_postprocess,
 )
 scorer_pipe = process_wrapper(
-    DSPyClassifier(
+    # DSPyClassifier(
         fuzzing_scorer,
         # detection_scorer,
-        cot=True,
-    ),
+        # cot=False,
+    # ),
     preprocess=scorer_preprocess,
     postprocess=scorer_postprocess,
 )
@@ -258,6 +258,8 @@ pipe = Pipeline(
     scorer_pipe
 )
 
+start_time = time.time()
 corrects = top_level_await(pipe.run(16))
+print("Elapsed time:", time.time() - start_time)
 sum(map(sum, corrects)) / sum(map(len, corrects))
 # %%

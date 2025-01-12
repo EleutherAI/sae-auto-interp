@@ -1,9 +1,9 @@
 from functools import partial
-from ..Custom.gemmascope import JumpReLUSAE
 from typing import Dict
 
 import torch
 
+from ..Custom.gemmascope import JumpReLUSAE
 from ..wrapper import AutoencoderLatents
 
 DEVICE = "cuda:0"
