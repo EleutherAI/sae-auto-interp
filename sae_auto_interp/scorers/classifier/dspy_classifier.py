@@ -99,10 +99,10 @@ class NoncomposableDSPyClassifier(Classifier):
         return results
 
 class DSPyClassifier(NoncomposableDSPyClassifier):
-    def __init__(self, classifier):
+    def __init__(self, classifier, cot: bool = False):
         assert isinstance(classifier.client, DSPy)
         client = classifier.client.client
-        module = dspy.Predict(ExampleClassifier)
+        module = (dspy.Predict if not cot else dspy.ChainOfThought)(ExampleClassifier)
         module = dspy.LabeledFewShot().compile(
             module,
             trainset=TRAINSET,

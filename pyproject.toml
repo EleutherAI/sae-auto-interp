@@ -29,10 +29,9 @@ dependencies = [
     "sglang[all]>=0.4.1.post5",
     "flashinfer==0.1.6",
 ]
-dev-dependencies = [
-    "pyright",
-    "ruff",
-]
+
+[tool.setuptools]
+py-modules = ["sae_auto_interp"]
 
 [sources.sae]
 git = "https://github.com/EleutherAI/sae"

@@ -79,7 +79,7 @@ elif LM_PROVIDER == "vllm":
     dspy_lm = LM(
         "openai/hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         api_base="http://localhost:8000/v1/",
-        api_key="u"
+        api_key="u",
     )
     client = DSPy(dspy_lm)
 elif LM_PROVIDER == "groq":
@@ -95,21 +95,25 @@ prompt = [
 # print(await client.generate(prompt))
 print(top_level_await(client.generate(prompt)))
 #%%
-LOAD_PYTHIA = False
+CACHE_SOURCE = "new"
 
-if LOAD_PYTHIA:
+if CACHE_SOURCE == "pythia":
     # cache_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/extras/transcoders" \
     #             "/raw_features/pythia_pile/SAE-2-seed-4k"
     cache_dir = "/mnt/ssd-1/gpaulo/SAE-Zoology/extras/transcoders" \
                 "/raw_features/pythia_pile/SkipTranscoder"
     module = ".gpt_neox.layers.6.mlp"
     sae_model = "pythia_pile-skiptranscoder"
-else:
+elif CACHE_SOURCE == "gemma":
     cache_dir = "../raw_features"
     module = ".model.layers.10"
     sae_model = "gemma/16k"
+elif CACHE_SOURCE == "new":
+    cache_dir = "../raw_features/new"
+    module = ".model.layers.10"
+    sae_model = "gemma/16k"
 
-if LOAD_PYTHIA:
+if CACHE_SOURCE == "pythia":
     start_feature = 0
     n_features = 16
 else:
@@ -118,7 +122,7 @@ else:
     n_features = 48
 feature_dict = {f"{module}": torch.arange(start_feature, start_feature + n_features)}
 feature_cfg = FeatureConfig.load_json(f"{cache_dir}/{module}/config.json")
-if not LOAD_PYTHIA:
+if CACHE_SOURCE == "gemma":
     feature_cfg.width = 16384
 dataset = FeatureDataset(
     raw_dir=cache_dir,
@@ -174,11 +178,13 @@ default_explainer = DefaultExplainer(
     tokenizer=dataset.tokenizer,
     threshold=0.2,
     activations=True,
+    cot=True,
 )
 dspy_explainer = DSPyExplainer(
     client.client,
     tokenizer=dataset.tokenizer,
     verbose=True,
+    cot=True,
 )
 
 fuzzing_scorer = FuzzingScorer(
@@ -232,16 +238,17 @@ def scorer_postprocess(x):
 
 
 explainer_pipe = process_wrapper(
-    default_explainer,
-    # dspy_explainer,
+    # default_explainer,
+    dspy_explainer,
     preprocess=explainer_preprocess,
     postprocess=explainer_postprocess,
 )
 scorer_pipe = process_wrapper(
-    # DSPyClassifier(
+    DSPyClassifier(
         fuzzing_scorer,
         # detection_scorer,
-    # ),
+        cot=True,
+    ),
     preprocess=scorer_preprocess,
     postprocess=scorer_postprocess,
 )
@@ -251,6 +258,6 @@ pipe = Pipeline(
     scorer_pipe
 )
 
-corrects = top_level_await(pipe.run(80))
+corrects = top_level_await(pipe.run(16))
 sum(map(sum, corrects)) / sum(map(len, corrects))
 # %%
