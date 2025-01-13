@@ -238,7 +238,12 @@ Surprisal scoring computes the loss over some examples and uses a base model. We
 
 Embedding scoring uses a small embedding model through `sentence_transformers` to embed the examples do retrival. It also does not use VLLM but run the model directly. The setup is similar as above but for a example check `embedding.py` in the experiments folder.
 
+# Breaking changes in v0.2
 
+
+`features.cache`: Dataset tokens are now saved in safetensors files together with the activations.
+
+`features.constructors.default_constructor`: `tokens` was renamed to `token_loader`, which must be a callable for lazy loading. Instead of passing `tokens=dataset.tokens`, pass `token_loader=lambda: dataset.load_tokens()` (assuming `dataset` is a `FeatureDataset` instance).
 
 # Scripts
 
