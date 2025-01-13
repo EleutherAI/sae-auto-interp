@@ -206,6 +206,15 @@ detection_scorer = DetectionScorer(
 # logger.setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.WARNING)
 #%%
+from sae_auto_interp.dspy_pipeline import evaluate_classifier_pipeline
+
+print(evaluate_classifier_pipeline(
+    loader,
+    dataset.tokenizer,
+    client.client
+))
+exit()
+#%%
 experiment_name = "example_dspy"
 results_suffix = f"{sae_model}{module}/{experiment_name}"
 results_dir = "../results"

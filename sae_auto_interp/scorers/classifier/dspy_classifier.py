@@ -1,11 +1,12 @@
 
-from typing import List, Literal
+from typing import List, Literal, Union
 
 import dspy
 from asyncer import asyncify
 from pydantic import ValidationError, field_validator
 from transformers import PreTrainedTokenizer
 
+from ...explainers.dspy import DSPyFeatureExample
 from ...clients import DSPy
 from ...features import FeatureRecord
 from ...logger import logger
@@ -23,7 +24,9 @@ class ExampleClassifier(dspy.Signature):
     For each example in turn, return true if the sentence is correctly labeled or false if the tokens are mislabeled. You must return your response in a valid Python list. Give probabilities for each example. Never output None."""
     
     feature_description: str = dspy.InputField(desc="Feature explanation")
-    feature_examples: List[str] = dspy.InputField(desc="Test examples")
+    feature_examples: List[Union[str, DSPyFeatureExample]] = dspy.InputField(
+        desc="Test examples"
+    )
     is_feature: List[Literal[0, 1]] = dspy.OutputField(desc="Whether the example is correctly labeled")
     # is_feature_probabilities: List[float] = dspy.OutputField(desc="Predicted probabilities for each example")
 
@@ -102,24 +105,30 @@ class DSPyClassifier(NoncomposableDSPyClassifier):
     def __init__(self, classifier, cot: bool = False):
         assert isinstance(classifier.client, DSPy)
         client = classifier.client.client
-        module = (dspy.Predict if not cot else dspy.ChainOfThought)(ExampleClassifier)
-        module = dspy.LabeledFewShot().compile(
-            module,
-            trainset=TRAINSET,
-        )
-        self.explainer = module
+        self.classifier_module = dspy_classifier_module(cot=cot)
         self.base_classifier = classifier
         super().__init__(
-            client, module,
+            client,
+            self.classifier_module,
             tokenizer=classifier.tokenizer,
             verbose=classifier.verbose,
             batch_size=classifier.batch_size,
             log_prob=classifier.log_prob,
-            **classifier.generation_kwargs
+            **classifier.generation_kwargs,
         )
     
     def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
         return self.base_classifier._prepare(record)
+
+
+def dspy_classifier_module(cot: bool = False):
+    module = (dspy.Predict if not cot else dspy.ChainOfThought)(ExampleClassifier)
+    module = dspy.LabeledFewShot().compile(
+        module,
+        trainset=TRAINSET,
+    )
+    return module
+
 
 TRAINSET = [
     dspy.Example(

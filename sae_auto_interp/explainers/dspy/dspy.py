@@ -22,11 +22,7 @@ class DSPyExplainer(Explainer):
         self.client = client
         self.tokenizer = tokenizer
         self.generation_kwargs = generation_kwargs
-        self.explainer = (dspy.ChainOfThought if cot else dspy.Predict)(Explanations)
-        self.explainer = dspy.LabeledFewShot().compile(
-            self.explainer,
-            trainset=TRAINSET,
-        )
+        self.explainer = dspy_explainer_module(cot=cot)
         self.verbose = verbose
 
     async def __call__(self, record: FeatureRecord):
@@ -48,6 +44,15 @@ class DSPyExplainer(Explainer):
             record,
             result.explanation
         )
+
+
+def dspy_explainer_module(cot: bool = False):
+    explainer = (dspy.ChainOfThought if cot else dspy.Predict)(Explanations)
+    explainer = dspy.LabeledFewShot().compile(
+        explainer,
+        trainset=TRAINSET,
+    )
+    return explainer
 
 
 class FeatureExample(BaseModel):
