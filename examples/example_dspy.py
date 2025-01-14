@@ -82,6 +82,7 @@ elif LM_PROVIDER == "vllm":
         "openai/hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         api_base="http://localhost:8000/v1/",
         api_key="u",
+        cache=False,
     )
     client = DSPy(dspy_lm)
 elif LM_PROVIDER == "groq":
