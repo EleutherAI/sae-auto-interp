@@ -82,7 +82,7 @@ elif LM_PROVIDER == "vllm":
         "openai/hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         api_base="http://localhost:8000/v1/",
         api_key="u",
-        cache=False,
+        # cache=False,
     )
     client = DSPy(dspy_lm)
 elif LM_PROVIDER == "groq":
@@ -207,12 +207,14 @@ detection_scorer = DetectionScorer(
 # logger.setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.WARNING)
 #%%
-from sae_auto_interp.dspy_pipeline import evaluate_classifier_pipeline
+from sae_auto_interp.dspy_pipeline import train_classifier_pipeline, evaluate_classifier_pipeline
 
+trained = train_classifier_pipeline(loader, dataset.tokenizer, client.client)
 print(evaluate_classifier_pipeline(
     loader,
     dataset.tokenizer,
-    client.client
+    client.client,
+    classifier=trained
 ))
 exit()
 #%%

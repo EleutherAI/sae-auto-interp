@@ -77,8 +77,9 @@ def fuzz_corrupt_feature_example(
     # )
 
 
-def split_explanation_scoring(
+def split_detection_scoring(
     source_set: Iterable[FeatureRecord],
+    method: Literal["fuzz", "detect"],
     tokenizer
 ):
     train_records = feature_record_generator_to_feature_example_list(
@@ -95,18 +96,20 @@ def split_explanation_scoring(
         train_records, test_records, random_records
     ):
         test_records = random.sample(test_records, len(test_records))
-        # test_records_corrupted = [
-        #     fuzz_corrupt_feature_example(x, do_fuzz=True) for x in test_records[: len(test_records) // 2]
-        # ]
+        if method == "fuzz":
+            test_records_corrupted = [
+                fuzz_corrupt_feature_example(x, do_fuzz=True) for x in test_records[: len(test_records) // 2]
+            ]
         num_tokens = [fuzz_corrupt_feature_example(x, do_fuzz=False, return_counts=True) for x in test_records]
         avg_num_tokens = int(sum(num_tokens) / len(num_tokens))
         test_records_uncorrupted = [
             fuzz_corrupt_feature_example(x, do_fuzz=False)
             for x in test_records[len(test_records) // 2 :]
         ]
-        test_records_corrupted = [
-            fuzz_corrupt_feature_example(x, do_fuzz=True, n_incorrect=avg_num_tokens) for x in random_records[: len(test_records) // 2]
-        ]
+        if method == "detect":
+            test_records_corrupted = [
+                fuzz_corrupt_feature_example(x, do_fuzz=True, n_incorrect=avg_num_tokens) for x in random_records[: len(test_records) // 2]
+            ]
         test_labels = [0] * len(test_records_corrupted) + [1] * len(
             test_records_uncorrupted
         )
@@ -119,38 +122,51 @@ def split_explanation_scoring(
     return all_train_records, all_test_records, all_test_labels
 
 
+def accuracy_score(predictions, labels):
+    return sum([p == l for p, l in zip(predictions.is_feature, labels)]) / len(labels)
+
+
 def evaluate_classifier_pipeline(
     training_set: Iterable[FeatureRecord],
     tokenizer,
     model: dspy.LM,
     seed=2,
+    method: str = "detect",
+    classifier=None,
     **pipeline_kwargs,
 ):
     random.seed(seed)
-    train_records, test_records, test_labels = split_explanation_scoring(training_set, tokenizer)
-    base_classifier = DSPyClassifierPipeline(**pipeline_kwargs)
-    base_classifier.set_lm(model)
-    predictions = dspy.Parallel()(list(zip(repeat(base_classifier), zip(train_records, test_records))))
-    # print(predictions)
+    train_records, test_records, test_labels = split_detection_scoring(training_set, method, tokenizer)
+    if classifier is None:
+        classifier = DSPyClassifierPipeline(**pipeline_kwargs)
+    classifier.set_lm(model)
+    predictions = dspy.Parallel()(list(zip(repeat(classifier), zip(train_records, test_records))))
     accuracies = []
     for test_label, prediction in zip(test_labels, predictions):
-        correct = [p == l for p, l in zip(prediction.is_feature, test_label)]
-        # print(sum(correct) / len(correct))
-        accuracies.append(sum(correct) / len(correct))
+        accuracies.append(accuracy_score(prediction, test_label))
     return sum(accuracies) / len(accuracies)
 
 
-# def train_classifier_pipeline(
-#     training_set: Iterable[FeatureRecord],
-#     tokenizer,
-#     prompt_model: dspy.LM,
-#     task_model: dspy.LM,
-#     **pipeline_kwargs,
-# ):
-#     train_records, test_records, test_labels = split_explanation_scoring(training_set, tokenizer)
-#     base_classifier = DSPyClassifierPipeline(**pipeline_kwargs)
-#     dspy.evaluate.answer_exact_match()
-#     dspy.MIPROv2(metric=feature_accuracy, prompt_model=prompt_model, task_model=task_model)
+def train_classifier_pipeline(
+    training_set: Iterable[FeatureRecord],
+    tokenizer,
+    model: dspy.LM,
+    seed=2,
+    method: str = "detect",
+    **pipeline_kwargs,
+):
+    random.seed(seed)
+    train_records, test_records, test_labels = split_detection_scoring(training_set, method, tokenizer)
+    base_classifier = DSPyClassifierPipeline(**pipeline_kwargs)
+    base_classifier.set_lm(model)
+    mipro = dspy.MIPROv2(metric=accuracy_score, prompt_model=model, task_model=model, )
+    classifier = mipro.compile(base_classifier, trainset=[dspy.Example(
+        feature_examples=tr, test_examples=te,
+        label=la,
+        minibatch=False,
+    ) for tr, te, la in zip(train_records, test_records, test_labels)])
+    return classifier
+    
 
 
 def feature_record_generator_to_feature_example_list(
