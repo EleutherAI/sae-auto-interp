@@ -120,8 +120,9 @@ if CACHE_SOURCE == "pythia":
 else:
     start_feature = 13107
     # start_feature = 0
-    n_features = 48
+    n_features = 100
 feature_dict = {f"{module}": torch.arange(start_feature, start_feature + n_features)}
+feature_dict_eval = {f"{module}": torch.arange(start_feature + n_features, start_feature + 2 * n_features)}
 feature_cfg = FeatureConfig.load_json(f"{cache_dir}/{module}/config.json")
 if CACHE_SOURCE == "gemma":
     feature_cfg.width = 16384
@@ -130,6 +131,12 @@ dataset = FeatureDataset(
     cfg=feature_cfg,
     modules=[module],
     features=feature_dict,
+)
+dataset_eval = FeatureDataset(
+    raw_dir=cache_dir,
+    cfg=feature_cfg,
+    modules=[module],
+    features=feature_dict_eval,
 )
 experiment_cfg = ExperimentConfig(
     train_type="top",
@@ -147,6 +154,7 @@ constructor = partial(
 )
 sampler = partial(sample, cfg=experiment_cfg)
 loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
+loader_eval = FeatureLoader(dataset_eval, constructor=constructor, sampler=sampler)
 
 #%%
 def visualize_record(record):
@@ -209,11 +217,24 @@ logging.basicConfig(level=logging.WARNING)
 #%%
 from sae_auto_interp.dspy_pipeline import train_classifier_pipeline, evaluate_classifier_pipeline
 
-trained = train_classifier_pipeline(loader, dataset.tokenizer, client.client)
-print(evaluate_classifier_pipeline(
+print(
+    "Basic eval accuracy:",
+    evaluate_classifier_pipeline(
+        loader_eval, dataset.tokenizer, client.client, explainer_few_shot=False, classifier_few_shot=False
+    ),
+)
+trained = train_classifier_pipeline(
     loader,
     dataset.tokenizer,
     client.client,
+    explainer_few_shot=False,
+    classifier_few_shot=False,
+    eval_loader=loader_eval,
+)
+print("Trained eval accuracy:", evaluate_classifier_pipeline(
+    loader_eval,
+    dataset.tokenizer,
+    client.client,  
     classifier=trained
 ))
 exit()

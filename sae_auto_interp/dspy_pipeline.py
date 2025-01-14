@@ -5,6 +5,8 @@ Adapter for use from outside code, functions for training and evaluation.
 """
 
 from itertools import repeat
+
+import dspy.evaluate.evaluate
 from more_itertools import chunked as batched
 import random
 import dspy
@@ -16,18 +18,21 @@ from .scorers.classifier.dspy_classifier import dspy_classifier_module
 
 
 class DSPyClassifierPipeline(dspy.Module):
-    def __init__(self, explainer_cot: bool = False, scorer_cot: bool = False, batch_size: int = 5):
-        self.explainer = dspy_explainer_module(cot=explainer_cot)
-        self.scorer = dspy_classifier_module(cot=scorer_cot)
+    def __init__(self, explainer_cot: bool = False, classifier_cot: bool = False,
+                 explainer_few_shot: bool = True, classifier_few_shot: bool = True, batch_size: int = 5):
+        self.explainer = dspy_explainer_module(cot=explainer_cot, few_shot=explainer_few_shot)
+        self.classifier = dspy_classifier_module(
+            cot=classifier_cot, few_shot=classifier_few_shot
+        )
         self.batch_size = batch_size
     
     def forward(self, feature_examples: List[DSPyFeatureExample], test_examples: List[str]) -> dspy.Prediction:
         explanation = self.explainer(feature_examples=feature_examples[:10]).explanation    
         predictions = []
         for batch in batched(test_examples, self.batch_size):
-            prediction_batch = self.scorer(feature_description=explanation, feature_examples=batch)
+            prediction_batch = self.classifier(feature_description=explanation, feature_examples=batch)
             if len(prediction_batch.is_feature) != len(batch):
-                raise ValueError("Scorer returned wrong number of predictions")
+                raise ValueError("Classifier returned wrong number of predictions")
             predictions.extend(prediction_batch.is_feature)
         return dspy.Prediction(is_feature=predictions)
 
@@ -38,6 +43,7 @@ def fuzz_corrupt_feature_example(
     return_counts: bool = False,
     threshold: float = 0.2,
     n_incorrect = None,
+    insert_brackets: bool = True,
 ):
     activated_indices = [i for i, (_, act) in enumerate(feature_example.tokens_and_activations) if act > threshold]
     if return_counts:
@@ -45,7 +51,7 @@ def fuzz_corrupt_feature_example(
     indices_we_can_sample_from = set(range(len(feature_example.tokens))) - set(activated_indices)
     if n_incorrect is None:
         n_incorrect = len(activated_indices)
-    random_indices = random.sample(indices_we_can_sample_from, n_incorrect)
+    random_indices = random.sample(indices_we_can_sample_from, min(n_incorrect, len(indices_we_can_sample_from)))
     selected_indices = random_indices if do_fuzz else activated_indices
 
     # new_activations = feature_example.tokens_and_activations[:]
@@ -55,7 +61,10 @@ def fuzz_corrupt_feature_example(
     #     new_activations[i] = (new_activations[i][0], random.random() * feature_example.max_activation)
     
     text = []
-    left, right = "<<", ">>"
+    if insert_brackets:
+        left, right = "<<", ">>"
+    else:
+        left, right = "", ""
     i = 0
     while i < len(feature_example.tokens):
         if i in selected_indices:
@@ -77,9 +86,9 @@ def fuzz_corrupt_feature_example(
     # )
 
 
-def split_detection_scoring(
+def split_classification_scoring(
     source_set: Iterable[FeatureRecord],
-    method: Literal["fuzz", "detect"],
+    method: Literal["fuzz", "pseudo_fuzz", "detect"],
     tokenizer
 ):
     train_records = feature_record_generator_to_feature_example_list(
@@ -98,7 +107,7 @@ def split_detection_scoring(
         test_records = random.sample(test_records, len(test_records))
         if method == "fuzz":
             test_records_corrupted = [
-                fuzz_corrupt_feature_example(x, do_fuzz=True) for x in test_records[: len(test_records) // 2]
+                fuzz_corrupt_feature_example(x, do_fuzz=True, insert_brackets=method != "detect") for x in test_records[: len(test_records) // 2]
             ]
         num_tokens = [fuzz_corrupt_feature_example(x, do_fuzz=False, return_counts=True) for x in test_records]
         avg_num_tokens = int(sum(num_tokens) / len(num_tokens))
@@ -106,9 +115,13 @@ def split_detection_scoring(
             fuzz_corrupt_feature_example(x, do_fuzz=False)
             for x in test_records[len(test_records) // 2 :]
         ]
-        if method == "detect":
+        if method == "pseudo_fuzz":
             test_records_corrupted = [
-                fuzz_corrupt_feature_example(x, do_fuzz=True, n_incorrect=avg_num_tokens) for x in random_records[: len(test_records) // 2]
+                fuzz_corrupt_feature_example(x, do_fuzz=True, n_incorrect=avg_num_tokens, insert_brackets=True) for x in random_records[: len(test_records) // 2]
+            ]
+        elif method == "detect":
+            test_records_corrupted = [
+                fuzz_corrupt_feature_example(x, do_fuzz=False, n_incorrect=avg_num_tokens, insert_brackets=False) for x in random_records[: len(test_records) // 2]
             ]
         test_labels = [0] * len(test_records_corrupted) + [1] * len(
             test_records_uncorrupted
@@ -119,32 +132,51 @@ def split_detection_scoring(
         all_train_records.append(train_records)
         all_test_records.append(test_records)
         all_test_labels.append(test_labels)
-    return all_train_records, all_test_records, all_test_labels
+    train_records, test_records, test_labels = all_train_records, all_test_records, all_test_labels
+    
+    return [
+        dspy.Example(
+            feature_examples=tr,
+            test_examples=te,
+            label=la,
+        ).with_inputs("feature_examples", "test_examples")
+        for tr, te, la in zip(train_records, test_records, test_labels)
+    ]
 
 
-def accuracy_score(predictions, labels):
+def accuracy_score(labels, predictions, trace=None):
+    if not isinstance(labels, (list, tuple)):
+        labels = labels.label
+    if predictions is None:
+        return 0.0
     return sum([p == l for p, l in zip(predictions.is_feature, labels)]) / len(labels)
 
 
 def evaluate_classifier_pipeline(
-    training_set: Iterable[FeatureRecord],
+    evaluation_set: Iterable[FeatureRecord],
     tokenizer,
     model: dspy.LM,
     seed=2,
-    method: str = "detect",
+    method: str = "pseudo_fuzz",
     classifier=None,
     **pipeline_kwargs,
 ):
     random.seed(seed)
-    train_records, test_records, test_labels = split_detection_scoring(training_set, method, tokenizer)
+    evalset = split_classification_scoring(evaluation_set, method, tokenizer)
     if classifier is None:
         classifier = DSPyClassifierPipeline(**pipeline_kwargs)
     classifier.set_lm(model)
-    predictions = dspy.Parallel()(list(zip(repeat(classifier), zip(train_records, test_records))))
-    accuracies = []
-    for test_label, prediction in zip(test_labels, predictions):
-        accuracies.append(accuracy_score(prediction, test_label))
-    return sum(accuracies) / len(accuracies)
+    # predictions = dspy.Parallel()(list(zip(repeat(classifier), zip(train_records, test_records))))
+    return dspy.evaluate.Evaluate(
+        devset=evalset,
+        display_table=False,
+        display_progress=True,
+        max_errors=float("inf"),
+    )(classifier, metric=accuracy_score)
+    # accuracies = []
+    # for test_label, prediction in zip(test_labels, predictions):
+    #     accuracies.append(accuracy_score(test_label, prediction))
+    # return sum(accuracies) / len(accuracies)
 
 
 def train_classifier_pipeline(
@@ -152,19 +184,21 @@ def train_classifier_pipeline(
     tokenizer,
     model: dspy.LM,
     seed=2,
-    method: str = "detect",
+    method: str = "pseudo_fuzz",
+    eval_loader=None,
     **pipeline_kwargs,
 ):
     random.seed(seed)
-    train_records, test_records, test_labels = split_detection_scoring(training_set, method, tokenizer)
+    trainset = split_classification_scoring(training_set, method, tokenizer)
     base_classifier = DSPyClassifierPipeline(**pipeline_kwargs)
     base_classifier.set_lm(model)
-    mipro = dspy.MIPROv2(metric=accuracy_score, prompt_model=model, task_model=model, )
-    classifier = mipro.compile(base_classifier, trainset=[dspy.Example(
-        feature_examples=tr, test_examples=te,
-        label=la,
-        minibatch=False,
-    ) for tr, te, la in zip(train_records, test_records, test_labels)])
+    dspy.configure(lm=model)
+    # optimizer = dspy.MIPROv2(metric=accuracy_score, prompt_model=model, task_model=model,
+    #                      metric_threshold=0.7, auto="medium")
+    optimizer = dspy.BootstrapFewShotWithRandomSearch(metric=accuracy_score, metric_threshold=0.7, num_candidate_programs=4)
+    classifier = optimizer.compile(base_classifier, trainset=trainset,
+                            **(dict(valset=split_classification_scoring(eval_loader, method, tokenizer)) if eval_loader is not None else {})
+                               )
     return classifier
     
 

@@ -46,12 +46,13 @@ class DSPyExplainer(Explainer):
         )
 
 
-def dspy_explainer_module(cot: bool = False):
+def dspy_explainer_module(cot: bool = False, few_shot: bool = True):
     explainer = (dspy.ChainOfThought if cot else dspy.Predict)(Explanations)
-    explainer = dspy.LabeledFewShot().compile(
-        explainer,
-        trainset=TRAINSET,
-    )
+    if few_shot:
+        explainer = dspy.LabeledFewShot().compile(
+            explainer,
+            trainset=TRAINSET,
+        )
     return explainer
 
 

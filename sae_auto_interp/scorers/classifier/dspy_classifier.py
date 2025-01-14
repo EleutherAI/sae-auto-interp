@@ -121,12 +121,13 @@ class DSPyClassifier(NoncomposableDSPyClassifier):
         return self.base_classifier._prepare(record)
 
 
-def dspy_classifier_module(cot: bool = False):
+def dspy_classifier_module(cot: bool = False, few_shot: bool = True):
     module = (dspy.Predict if not cot else dspy.ChainOfThought)(ExampleClassifier)
-    module = dspy.LabeledFewShot().compile(
-        module,
-        trainset=TRAINSET,
-    )
+    if few_shot:
+        module = dspy.LabeledFewShot().compile(
+            module,
+            trainset=TRAINSET,
+        )
     return module
 
 
