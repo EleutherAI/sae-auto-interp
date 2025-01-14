@@ -24,6 +24,9 @@ class ExampleClassifier(dspy.Signature):
     For each example in turn, return true if the sentence is correctly labeled or false if the tokens are mislabeled. You must return your response in a valid Python list. Give probabilities for each example. Never output None."""
     
     feature_description: str = dspy.InputField(desc="Feature explanation")
+    train_examples: List[Union[str, DSPyFeatureExample]] = dspy.InputField(
+        desc="Training examples", default=[]
+    )
     feature_examples: List[Union[str, DSPyFeatureExample]] = dspy.InputField(
         desc="Test examples"
     )

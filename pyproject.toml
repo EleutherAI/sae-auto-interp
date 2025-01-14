@@ -28,6 +28,8 @@ dependencies = [
     "outlines==0.0.44",
     "sglang[all]>=0.4.1.post5",
     "flashinfer==0.1.6",
+    "matplotlib>=3.10.0",
+    "seaborn>=0.13.2",
 ]
 
 [tool.setuptools]

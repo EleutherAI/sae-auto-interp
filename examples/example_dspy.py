@@ -31,6 +31,9 @@ import nest_asyncio
 import orjson
 import torch
 from dspy import LM
+from matplotlib import pyplot as plt
+import seaborn as sns
+import numpy as np
 
 from sae_auto_interp.clients import DSPy
 from sae_auto_interp.config import ExperimentConfig, FeatureConfig
@@ -120,7 +123,7 @@ if CACHE_SOURCE == "pythia":
 else:
     start_feature = 13107
     # start_feature = 0
-    n_features = 100
+    n_features = 20
 feature_dict = {f"{module}": torch.arange(start_feature, start_feature + n_features)}
 feature_dict_eval = {f"{module}": torch.arange(start_feature + n_features, start_feature + 2 * n_features)}
 feature_cfg = FeatureConfig.load_json(f"{cache_dir}/{module}/config.json")
@@ -141,9 +144,9 @@ dataset_eval = FeatureDataset(
 experiment_cfg = ExperimentConfig(
     train_type="top",
     test_type="quantiles",
-    n_examples_train=50,
-    n_examples_test=50,
-    n_quantiles=10,
+    n_examples_train=25,
+    n_examples_test=25,
+    n_quantiles=5,
 )
 constructor = partial(
     default_constructor,
@@ -217,27 +220,45 @@ logging.basicConfig(level=logging.WARNING)
 #%%
 from sae_auto_interp.dspy_pipeline import train_classifier_pipeline, evaluate_classifier_pipeline
 
-print(
-    "Basic eval accuracy:",
-    evaluate_classifier_pipeline(
-        loader_eval, dataset.tokenizer, client.client, explainer_few_shot=False, classifier_few_shot=False
-    ),
+
+_, basic_eval_scores = evaluate_classifier_pipeline(
+    loader_eval, dataset.tokenizer, client.client,
 )
+#%%
+optimizer_method = "bootstrap"
 trained = train_classifier_pipeline(
     loader,
     dataset.tokenizer,
     client.client,
     explainer_few_shot=False,
     classifier_few_shot=False,
-    eval_loader=loader_eval,
+    optimizer_method=optimizer_method,
+    # eval_loader=loader_eval,
+    n_aux_examples=5,
 )
-print("Trained eval accuracy:", evaluate_classifier_pipeline(
+#%%
+trained_eval_accuracy, trained_eval_scores = evaluate_classifier_pipeline(
     loader_eval,
     dataset.tokenizer,
     client.client,  
     classifier=trained
-))
-exit()
+)
+#%%
+sns.set()
+def plot_model(eval_scores, model_label):
+    plt.hist(
+        [x * 100 for x in eval_scores],
+        label=f"{model_label}, accuracy: {sum(eval_scores) / len(eval_scores) * 100:.2f}%",
+        alpha=0.8,
+        bins=np.arange(0, 101, 5),
+    )
+    plt.legend()
+    plt.xlabel(f"Accuracy on {len(list(loader_eval))} Gemma 131k features")
+    plt.xlim(0, 100)
+trained_label = f"{optimizer_method}, no few-shot"
+plot_model(basic_eval_scores, "baseline: handwritten few-shot examples")
+plot_model(trained_eval_scores, trained_label)
+plt.title(f"DSPy classifier evaluation, metric: pseudo_fuzz")
 #%%
 experiment_name = "example_dspy"
 results_suffix = f"{sae_model}{module}/{experiment_name}"

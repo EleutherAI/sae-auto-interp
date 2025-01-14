@@ -19,18 +19,23 @@ from .scorers.classifier.dspy_classifier import dspy_classifier_module
 
 class DSPyClassifierPipeline(dspy.Module):
     def __init__(self, explainer_cot: bool = False, classifier_cot: bool = False,
-                 explainer_few_shot: bool = True, classifier_few_shot: bool = True, batch_size: int = 5):
+                 explainer_few_shot: bool = True, classifier_few_shot: bool = True,
+                 batch_size: int = 5, n_aux_examples: int = 0):
         self.explainer = dspy_explainer_module(cot=explainer_cot, few_shot=explainer_few_shot)
         self.classifier = dspy_classifier_module(
             cot=classifier_cot, few_shot=classifier_few_shot
         )
         self.batch_size = batch_size
+        self.n_aux_examples = n_aux_examples
     
     def forward(self, feature_examples: List[DSPyFeatureExample], test_examples: List[str]) -> dspy.Prediction:
         explanation = self.explainer(feature_examples=feature_examples[:10]).explanation    
         predictions = []
         for batch in batched(test_examples, self.batch_size):
-            prediction_batch = self.classifier(feature_description=explanation, feature_examples=batch)
+            prediction_batch = self.classifier(
+                feature_description=explanation,
+                train_examples=feature_examples[:self.n_aux_examples],
+                feature_examples=batch)
             if len(prediction_batch.is_feature) != len(batch):
                 raise ValueError("Classifier returned wrong number of predictions")
             predictions.extend(prediction_batch.is_feature)
@@ -172,6 +177,7 @@ def evaluate_classifier_pipeline(
         display_table=False,
         display_progress=True,
         max_errors=float("inf"),
+        return_all_scores=True
     )(classifier, metric=accuracy_score)
     # accuracies = []
     # for test_label, prediction in zip(test_labels, predictions):
@@ -185,6 +191,7 @@ def train_classifier_pipeline(
     model: dspy.LM,
     seed=2,
     method: str = "pseudo_fuzz",
+    optimizer_method: Literal["mipro", "bootstrap"] = "mipro",
     eval_loader=None,
     **pipeline_kwargs,
 ):
@@ -193,11 +200,16 @@ def train_classifier_pipeline(
     base_classifier = DSPyClassifierPipeline(**pipeline_kwargs)
     base_classifier.set_lm(model)
     dspy.configure(lm=model)
-    # optimizer = dspy.MIPROv2(metric=accuracy_score, prompt_model=model, task_model=model,
-    #                      metric_threshold=0.7, auto="medium")
-    optimizer = dspy.BootstrapFewShotWithRandomSearch(metric=accuracy_score, metric_threshold=0.7, num_candidate_programs=4)
+    if optimizer_method == "mipro":
+        optimizer = dspy.MIPROv2(metric=accuracy_score, prompt_model=model, task_model=model,
+                            metric_threshold=0.7, auto="light")
+    else:
+        optimizer = dspy.BootstrapFewShotWithRandomSearch(
+            metric=accuracy_score,
+            metric_threshold=0.7, num_candidate_programs=4)
     classifier = optimizer.compile(base_classifier, trainset=trainset,
-                            **(dict(valset=split_classification_scoring(eval_loader, method, tokenizer)) if eval_loader is not None else {})
+                            **(dict(valset=split_classification_scoring(eval_loader, method, tokenizer)) if eval_loader is not None else {}),
+                            **(dict(minibatch_size=4, requires_permission_to_run=False) if optimizer_method == "mipro" else {}),
                                )
     return classifier
     
