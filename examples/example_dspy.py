@@ -123,7 +123,7 @@ if CACHE_SOURCE == "pythia":
 else:
     start_feature = 13107
     # start_feature = 0
-    n_features = 20
+    n_features = 50
 feature_dict = {f"{module}": torch.arange(start_feature, start_feature + n_features)}
 feature_dict_eval = {f"{module}": torch.arange(start_feature + n_features, start_feature + 2 * n_features)}
 feature_cfg = FeatureConfig.load_json(f"{cache_dir}/{module}/config.json")
@@ -142,7 +142,7 @@ dataset_eval = FeatureDataset(
     features=feature_dict_eval,
 )
 experiment_cfg = ExperimentConfig(
-    train_type="top",
+    train_type="quantiles",
     test_type="quantiles",
     n_examples_train=25,
     n_examples_test=25,
@@ -221,8 +221,9 @@ logging.basicConfig(level=logging.WARNING)
 from sae_auto_interp.dspy_pipeline import train_classifier_pipeline, evaluate_classifier_pipeline
 
 
+classification_method = "fuzz"
 _, basic_eval_scores = evaluate_classifier_pipeline(
-    loader_eval, dataset.tokenizer, client.client,
+    loader_eval, dataset.tokenizer, client.client, method=classification_method
 )
 #%%
 optimizer_method = "bootstrap"
@@ -234,17 +235,19 @@ trained = train_classifier_pipeline(
     classifier_few_shot=False,
     optimizer_method=optimizer_method,
     # eval_loader=loader_eval,
-    n_aux_examples=5,
+    n_aux_examples=0,
+    method=classification_method,
 )
 #%%
 trained_eval_accuracy, trained_eval_scores = evaluate_classifier_pipeline(
     loader_eval,
     dataset.tokenizer,
-    client.client,  
-    classifier=trained
+    client.client,
+    classifier=trained,
+    method=classification_method,
 )
 #%%
-sns.set()
+sns.set_theme()
 def plot_model(eval_scores, model_label):
     plt.hist(
         [x * 100 for x in eval_scores],
@@ -256,9 +259,23 @@ def plot_model(eval_scores, model_label):
     plt.xlabel(f"Accuracy on {len(list(loader_eval))} Gemma 131k features")
     plt.xlim(0, 100)
 trained_label = f"{optimizer_method}, no few-shot"
+try:
+    basic_eval_scores
+except NameError:
+    basic_eval_scores = [0.5]
 plot_model(basic_eval_scores, "baseline: handwritten few-shot examples")
 plot_model(trained_eval_scores, trained_label)
-plt.title(f"DSPy classifier evaluation, metric: pseudo_fuzz")
+plt.title(f"DSPy classifier evaluation, method: {classification_method}")
+#%%
+from scipy.stats import ttest_ind
+from scipy.stats import wilcoxon
+
+# Apply Welch's t-test (for unequal variances)
+t_stat, p_value = ttest_ind(basic_eval_scores, trained_eval_scores, equal_var=False)
+print(f"Welch's t-test: t-statistic = {t_stat}, p-value = {p_value}")
+# Apply Wilcoxon signed-rank test (for paired samples)
+stat, p_value = wilcoxon(basic_eval_scores, trained_eval_scores, alternative='less')
+print(f"Wilcoxon signed-rank test: statistic = {stat}, p-value = {p_value}")
 #%%
 experiment_name = "example_dspy"
 results_suffix = f"{sae_model}{module}/{experiment_name}"

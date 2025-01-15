@@ -204,13 +204,18 @@ def train_classifier_pipeline(
         optimizer = dspy.MIPROv2(metric=accuracy_score, prompt_model=model, task_model=model,
                             metric_threshold=0.7, auto="light")
     else:
+        # optimizer = dspy.BootstrapFewShotWithOptuna(
         optimizer = dspy.BootstrapFewShotWithRandomSearch(
             metric=accuracy_score,
-            metric_threshold=0.7, num_candidate_programs=4)
+            metric_threshold=0.7,
+            num_candidate_programs=12,
+            max_errors=float("inf"),
+        )
     classifier = optimizer.compile(base_classifier, trainset=trainset,
                             **(dict(valset=split_classification_scoring(eval_loader, method, tokenizer)) if eval_loader is not None else {}),
                             **(dict(minibatch_size=4, requires_permission_to_run=False) if optimizer_method == "mipro" else {}),
-                               )
+                            # **(dict(max_demos=4) if optimizer_method == "bootstrap" else {})
+                            )
     return classifier
     
 
