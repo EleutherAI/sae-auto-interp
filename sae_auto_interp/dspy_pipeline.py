@@ -20,13 +20,15 @@ from .scorers.classifier.dspy_classifier import dspy_classifier_module
 class DSPyClassifierPipeline(dspy.Module):
     def __init__(self, explainer_cot: bool = False, classifier_cot: bool = False,
                  explainer_few_shot: bool = True, classifier_few_shot: bool = True,
-                 batch_size: int = 5, n_aux_examples: int = 0):
+                 batch_size: int = 5, n_aux_examples: int = 0,
+                 ignore_errors: bool = False):
         self.explainer = dspy_explainer_module(cot=explainer_cot, few_shot=explainer_few_shot)
         self.classifier = dspy_classifier_module(
             cot=classifier_cot, few_shot=classifier_few_shot
         )
         self.batch_size = batch_size
         self.n_aux_examples = n_aux_examples
+        self.ignore_errors = ignore_errors
     
     def forward(self, feature_examples: List[DSPyFeatureExample], test_examples: List[str]) -> dspy.Prediction:
         explanation = self.explainer(feature_examples=feature_examples[:10]).explanation    
@@ -37,8 +39,12 @@ class DSPyClassifierPipeline(dspy.Module):
                 train_examples=feature_examples[:self.n_aux_examples],
                 feature_examples=batch)
             if len(prediction_batch.is_feature) != len(batch):
-                raise ValueError("Classifier returned wrong number of predictions")
-            predictions.extend(prediction_batch.is_feature)
+                if self.ignore_errors:
+                    predictions.extend([0] * len(batch))
+                else:
+                    raise ValueError("Classifier returned wrong number of predictions")
+            else:
+                predictions.extend(prediction_batch.is_feature)
         return dspy.Prediction(is_feature=predictions)
 
 
@@ -59,12 +65,6 @@ def fuzz_corrupt_feature_example(
     random_indices = random.sample(indices_we_can_sample_from, min(n_incorrect, len(indices_we_can_sample_from)))
     selected_indices = random_indices if do_fuzz else activated_indices
 
-    # new_activations = feature_example.tokens_and_activations[:]
-    # for i in activated_indices:
-    #     new_activations[i] = (new_activations[i][0], 0.0)
-    # for i in random_indices:
-    #     new_activations[i] = (new_activations[i][0], random.random() * feature_example.max_activation)
-    
     text = []
     if insert_brackets:
         left, right = "<<", ">>"
@@ -82,7 +82,13 @@ def fuzz_corrupt_feature_example(
             text.append(feature_example.tokens[i])
             i += 1
     return "".join(text)
-    
+
+    # new_activations = feature_example.tokens_and_activations[:]
+    # for i in activated_indices:
+    #     new_activations[i] = (new_activations[i][0], 0.0)
+    # for i in random_indices:
+    #     new_activations[i] = (new_activations[i][0], random.random() * feature_example.max_activation)
+
     # return DSPyFeatureExample(
     #     text=feature_example.text,
     #     max_activation=feature_example.max_activation,
@@ -110,12 +116,21 @@ def split_classification_scoring(
         train_records, test_records, random_records
     ):
         test_records = random.sample(test_records, len(test_records))
+        num_tokens = [
+            fuzz_corrupt_feature_example(x, do_fuzz=False, return_counts=True)
+            for x in test_records
+        ]
+        avg_num_tokens = int(sum(num_tokens) / len(num_tokens))
         if method == "fuzz":
             test_records_corrupted = [
-                fuzz_corrupt_feature_example(x, do_fuzz=True, insert_brackets=method != "detect") for x in test_records[: len(test_records) // 2]
+                fuzz_corrupt_feature_example(
+                    x,
+                    do_fuzz=True,
+                    insert_brackets=True,
+                    n_incorrect=avg_num_tokens,
+                )
+                for x in test_records[: len(test_records) // 2]
             ]
-        num_tokens = [fuzz_corrupt_feature_example(x, do_fuzz=False, return_counts=True) for x in test_records]
-        avg_num_tokens = int(sum(num_tokens) / len(num_tokens))
         test_records_uncorrupted = [
             fuzz_corrupt_feature_example(x, do_fuzz=False)
             for x in test_records[len(test_records) // 2 :]

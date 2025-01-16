@@ -50,6 +50,7 @@ logging.basicConfig(level=logging.WARNING)
 #%%
 # LM_PROVIDER = "openrouter"
 LM_PROVIDER = "vllm"
+# LM_PROVIDER = "together"
 USE_BIG_LLAMA = True
 CACHE_SOURCE = "new"
 #%%
@@ -61,7 +62,7 @@ def top_level_await(fn):
         return asyncio.run(fn)
 
 
-environ = dotenv.dotenv_values(os.getcwd() + "/.env")
+environ = dotenv.dotenv_values(os.getcwd() + "/../.env")
 if LM_PROVIDER == "openrouter":
     or_model = (
         "meta-llama/llama-3.3-70b-instruct"
@@ -86,6 +87,14 @@ elif LM_PROVIDER == "vllm":
         api_base="http://localhost:8000/v1/",
         api_key="u",
         # cache=False,
+    )
+    client = DSPy(dspy_lm)
+elif LM_PROVIDER == "together":
+    assert USE_BIG_LLAMA
+    dspy_lm = LM(
+        "openai/meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
+        api_key=environ["TOGETHER_API_KEY"],
+        api_base="https://api.together.xyz/v1/",
     )
     client = DSPy(dspy_lm)
 elif LM_PROVIDER == "groq":
@@ -142,7 +151,7 @@ dataset_eval = FeatureDataset(
     features=feature_dict_eval,
 )
 experiment_cfg = ExperimentConfig(
-    train_type="quantiles",
+    train_type="top",
     test_type="quantiles",
     n_examples_train=25,
     n_examples_test=25,
@@ -223,7 +232,8 @@ from sae_auto_interp.dspy_pipeline import train_classifier_pipeline, evaluate_cl
 
 classification_method = "fuzz"
 _, basic_eval_scores = evaluate_classifier_pipeline(
-    loader_eval, dataset.tokenizer, client.client, method=classification_method
+    loader_eval, dataset.tokenizer, client.client, method=classification_method,
+    n_aux_examples=10,
 )
 #%%
 optimizer_method = "bootstrap"
@@ -235,8 +245,10 @@ trained = train_classifier_pipeline(
     classifier_few_shot=False,
     optimizer_method=optimizer_method,
     # eval_loader=loader_eval,
-    n_aux_examples=0,
+    n_aux_examples=10,
     method=classification_method,
+    batch_size=1,
+    ignore_errors=True,
 )
 #%%
 trained_eval_accuracy, trained_eval_scores = evaluate_classifier_pipeline(
@@ -266,6 +278,9 @@ except NameError:
 plot_model(basic_eval_scores, "baseline: handwritten few-shot examples")
 plot_model(trained_eval_scores, trained_label)
 plt.title(f"DSPy classifier evaluation, method: {classification_method}")
+plt.savefig("pic.png")
+#%%
+trained.save("trained_classifier_bs1_c10", save_program=True)
 #%%
 from scipy.stats import ttest_ind
 from scipy.stats import wilcoxon
