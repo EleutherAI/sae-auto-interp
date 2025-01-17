@@ -72,10 +72,11 @@ class TensorBuffer:
         first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
         activations = torch.tensor(split_data["activations"])
         locations = torch.tensor(split_data["locations"].astype(np.int64))
-        if hasattr(split_data, "tokens"):
+        if "tokens" in split_data:
             tokens = torch.tensor(split_data["tokens"].astype(np.int64))
         else:
             tokens = None
+        print(tokens.shape)
         
         locations[:,2] = locations[:,2] + first_feature
         
@@ -146,7 +147,6 @@ class FeatureDataset:
             cache_config = json.load(f)
         temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
         self.tokenizer = temp_model.tokenizer
- 
         self.cache_config = cache_config
 
     def load_tokens(self):
