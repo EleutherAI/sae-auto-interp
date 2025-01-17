@@ -76,7 +76,6 @@ class TensorBuffer:
             tokens = torch.tensor(split_data["tokens"].astype(np.int64))
         else:
             tokens = None
-        print(tokens.shape)
         
         locations[:,2] = locations[:,2] + first_feature
         
