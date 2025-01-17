@@ -7,13 +7,13 @@ from simple_parsing import Serializable
 @dataclass
 class ExperimentConfig(Serializable):
     
-    n_examples_train: int = 40
+    n_examples_train: int = 50
     """Number of examples to sample for training"""
 
-    n_examples_test: int = 5
+    n_examples_test: int = 50
     """Number of examples to sample for testing"""
 
-    n_quantiles: int = 20
+    n_quantiles: int = 10
     """Number of quantiles to sample"""
 
     example_ctx_len: int = 32
@@ -22,7 +22,7 @@ class ExperimentConfig(Serializable):
     n_random: int = 50
     """Number of random examples to sample"""
 
-    train_type: Literal["top", "random", "quantiles"] = "random"
+    train_type: Literal["top", "random", "quantiles"] = "quantiles"
     """Type of sampler to use for training"""
 
     test_type: Literal["quantiles", "activation"] = "quantiles"
