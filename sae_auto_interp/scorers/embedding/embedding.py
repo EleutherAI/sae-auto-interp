@@ -24,7 +24,7 @@ class EmbeddingOutput:
     distance: float | int
     """Quantile or neighbor distance"""
 
-    similarity: list[float] = 0
+    similarity: float = 0
     """What is the similarity of the example to the explanation"""
 
 
