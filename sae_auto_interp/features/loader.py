@@ -8,6 +8,7 @@ import torch
 from safetensors.numpy import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
+from nnsight import LanguageModel
 
 from sae_auto_interp.utils import (
     load_tokenized_data,
@@ -143,7 +144,9 @@ class FeatureDataset:
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
-        self.tokenizer = load_tokenizer(cache_config["model_name"])
+        temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
+        self.tokenizer = temp_model.tokenizer
+ 
         self.cache_config = cache_config
 
     def load_tokens(self):
