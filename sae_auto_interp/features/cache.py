@@ -30,12 +30,14 @@ class Cache:
         """
         self.feature_locations = defaultdict(list)
         self.feature_activations = defaultdict(list)
+        self.tokens = defaultdict(list)
         self.filters = filters
         self.batch_size = batch_size
 
     def add(
         self,
         latents: TensorType["batch", "sequence", "feature"],
+        tokens: TensorType["batch", "sequence"],
         batch_number: int,
         module_path: str,
     ):
@@ -44,17 +46,20 @@ class Cache:
 
         Args:
             latents (TensorType["batch", "sequence", "feature"]): Latent activations.
+            tokens (TensorType["batch", "sequence"]): Input tokens.
             batch_number (int): Current batch number.
             module_path (str): Path of the module.
         """
         feature_locations, feature_activations = self.get_nonzeros(latents, module_path)
         feature_locations = feature_locations.cpu()
         feature_activations = feature_activations.cpu()
+        tokens = tokens.cpu()
 
         # Adjust batch indices
         feature_locations[:, 0] += batch_number * self.batch_size
         self.feature_locations[module_path].append(feature_locations)
         self.feature_activations[module_path].append(feature_activations)
+        self.tokens[module_path].append(tokens)
 
     def save(self):
         """
@@ -67,6 +72,10 @@ class Cache:
 
             self.feature_activations[module_path] = torch.cat(
                 self.feature_activations[module_path], dim=0
+            )
+            
+            self.tokens[module_path] = torch.cat(
+                self.tokens[module_path], dim=0
             )
 
     def get_nonzeros_batch(self, latents: TensorType["batch", "seq", "feature"]):
@@ -112,7 +121,8 @@ class Cache:
             module_path (str): Path of the module.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor]: Non-zero feature locations and activations.
+            Tuple[TensorType["num_nonzero", 3], TensorType["num_nonzero"]]:
+                Non-zero feature locations and activations.
         """
         size = latents.shape[1] * latents.shape[0] * latents.shape[2]
         if size > torch.iinfo(torch.int32).max:
@@ -228,7 +238,7 @@ class FeatureCache:
                         for module_path, submodule in self.submodule_dict.items():
                             buffer[module_path] = submodule.ae.output.save()
                     for module_path, latents in buffer.items():
-                        self.cache.add(latents, batch_number, module_path)
+                        self.cache.add(latents, batch, batch_number, module_path)
 
                     del buffer
                     torch.cuda.empty_cache()
@@ -240,12 +250,13 @@ class FeatureCache:
         print(f"Total tokens processed: {total_tokens:,}")
         self.cache.save()
 
-    def save(self, save_dir):
+    def save(self, save_dir, save_tokens: bool = True):
         """
         Save the cached features to disk.
 
         Args:
             save_dir (str): Directory to save the features.
+            save_tokens (bool): Whether to save the dataset tokens used to generate the cache. Defaults to
         """
         for module_path in self.cache.feature_locations.keys():
             output_file = f"{save_dir}/{module_path}.safetensors"
@@ -254,6 +265,8 @@ class FeatureCache:
                 "locations": self.cache.feature_locations[module_path],
                 "activations": self.cache.feature_activations[module_path],
             }
+            if save_tokens:
+                data["tokens"] = self.cache.tokens[module_path]
 
             save_file(data, output_file)
 
@@ -272,19 +285,21 @@ class FeatureCache:
         # Adjust end by one
         return list(zip(boundaries[:-1], boundaries[1:] - 1))
 
-    def save_splits(self, n_splits: int, save_dir):
+    def save_splits(self, n_splits: int, save_dir, save_tokens: bool = True):
         """
         Save the cached features in splits.
 
         Args:
             n_splits (int): Number of splits to generate.
             save_dir (str): Directory to save the splits.
+            save_tokens (bool): Whether to save the dataset tokens used to generate the cache. Defaults to True.
         """
         split_indices = self._generate_split_indices(n_splits)
 
         for module_path in self.cache.feature_locations.keys():
             feature_locations = self.cache.feature_locations[module_path]
             feature_activations = self.cache.feature_activations[module_path]
+            tokens = self.cache.tokens[module_path].numpy()
             features = feature_locations[:, 2]
 
             for start, end in split_indices:
@@ -309,6 +324,8 @@ class FeatureCache:
                     "locations": masked_locations,
                     "activations": masked_activations,
                 }
+                if save_tokens:
+                    split_data["tokens"] = tokens
 
                 save_file(split_data, output_file)
 

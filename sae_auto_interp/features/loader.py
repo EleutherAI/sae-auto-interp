@@ -27,10 +27,12 @@ class BufferOutput(NamedTuple):
         feature (Feature): The feature associated with this output.
         locations (TensorType["locations", 2]): Tensor of feature locations.
         activations (TensorType["locations"]): Tensor of feature activations.
+        tokens (TensorType["tokens"]): Tensor of all tokens.
     """
     feature: Feature
     locations: TensorType["locations", 2]
     activations: TensorType["locations"]
+    tokens: TensorType["tokens"]
 
 
 class TensorBuffer:
@@ -70,6 +72,10 @@ class TensorBuffer:
         first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
         activations = torch.tensor(split_data["activations"])
         locations = torch.tensor(split_data["locations"].astype(np.int64))
+        if hasattr(split_data, "tokens"):
+            tokens = torch.tensor(split_data["tokens"].astype(np.int64))
+        else:
+            tokens = None
         
         locations[:,2] = locations[:,2] + first_feature
         
@@ -95,7 +101,8 @@ class TensorBuffer:
                 yield BufferOutput(
                     Feature(self.module_path, int(features[i].item())),
                     feature_locations,
-                    feature_activations
+                    feature_activations,
+                    tokens
                 )
 
     def reset(self):
@@ -139,17 +146,30 @@ class FeatureDataset:
             cache_config = json.load(f)
         temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
         self.tokenizer = temp_model.tokenizer
-        print(cache_config)
-        self.tokens = load_tokenized_data(
-            cache_config["ctx_len"],
-            self.tokenizer,
-            cache_config["dataset_repo"],
-            cache_config["dataset_split"],
-            cache_config["dataset_name"],
-            cache_config["dataset_column_name"],
-        )
-        print(self.tokenizer.decode(self.tokens[0]))
-   
+ 
+        self.cache_config = cache_config
+
+    def load_tokens(self):
+        """
+        Load tokenized data for the dataset.
+        Caches the tokenized data if not already loaded.
+        
+        Returns:
+            torch.Tensor: The tokenized dataset.
+        """
+        if not hasattr(self, "tokens"):
+            self.tokens = load_tokenized_data(
+                self.cache_config["ctx_len"],
+                self.tokenizer,
+                self.cache_config["dataset_repo"],
+                self.cache_config["dataset_split"],
+                self.cache_config["dataset_name"],
+                column_name=self.cache_config.get(
+                    "column_name", self.cache_config.get("dataset_row", "raw_content")
+                ),
+            )
+        return self.tokens
+
     def _edges(self):
         """Generate edge indices for feature splits."""
         return torch.linspace(0, self.cfg.width, steps=self.cfg.n_splits + 1).long()
