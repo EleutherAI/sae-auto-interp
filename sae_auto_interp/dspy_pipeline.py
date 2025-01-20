@@ -11,7 +11,11 @@ from more_itertools import chunked as batched
 import random
 import dspy
 import dspy.evaluate
-from .explainers.dspy import dspy_explainer_module, DSPyFeatureExample
+from .explainers.dspy import (
+    dspy_explainer_module,
+    DSPyFeatureExample,
+    feature_record_generator_to_feature_example_list,
+)
 from .features import FeatureRecord
 from typing import List, Iterable, Literal
 from .scorers.classifier.dspy_classifier import dspy_classifier_module
@@ -233,34 +237,3 @@ def train_classifier_pipeline(
                             )
     return classifier
     
-
-
-def feature_record_generator_to_feature_example_list(
-    feature_record_generator: Iterable[FeatureRecord],
-    extract_record: Literal["train", "test", "random"],
-    tokenizer,
-) -> List[List[DSPyFeatureExample]]:
-    """Convert a generator of FeatureRecords to a list of lists of DSPyFeatureExamples for use in the DSPy pipeline.
-
-    Args:
-        feature_record_generator (Iterable[FeatureRecord]): the generator of FeatureRecords to convert
-            May be obtained from a features.FeatureLoader
-        tokenizer (Tokenizer): the tokenizer to use for decoding tokens
-
-    Returns:
-        List[List[DSPyFeatureExample]]: The list of lists of DSPyFeatureExamples corresponding to each of the input features.
-    """
-    return [
-        [
-            DSPyFeatureExample(
-                text=tokenizer.decode(ex.tokens),
-                max_activation=max(ex.activations.tolist()),
-                tokens=tokenizer.batch_decode(ex.tokens),
-                tokens_and_activations=list(
-                    zip(tokenizer.batch_decode(ex.tokens), ex.activations.tolist())
-                ),
-            )
-            for ex in (record.train if extract_record == "train" else (y for x in record.test for y in x) if extract_record == "test" else record.random_examples)
-        ]
-        for record in feature_record_generator
-    ]

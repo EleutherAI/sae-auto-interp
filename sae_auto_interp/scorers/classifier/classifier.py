@@ -3,6 +3,7 @@ import json
 import random
 import re
 import traceback
+import dataclasses
 from abc import abstractmethod
 
 import numpy as np
@@ -40,6 +41,7 @@ class Classifier(Scorer):
         record: FeatureRecord,
     ) -> list[ClassifierOutput]:
         samples = self._prepare(record)
+        samples = [dataclasses.replace(sample, record=record) for sample in samples]
         random.shuffle(samples)
         samples = self._batch(samples)
         results = await self._query(

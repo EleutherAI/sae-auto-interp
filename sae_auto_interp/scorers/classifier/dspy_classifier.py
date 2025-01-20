@@ -1,12 +1,15 @@
 
-from typing import List, Literal, Union
+from typing import List, Literal, Union, Optional
 
 import dspy
 from asyncer import asyncify
 from pydantic import ValidationError, field_validator
 from transformers import PreTrainedTokenizer
 
-from ...explainers.dspy import DSPyFeatureExample
+from ...explainers.dspy import (
+    DSPyFeatureExample,
+    feature_record_generator_to_feature_example_list,
+)
 from ...clients import DSPy
 from ...features import FeatureRecord
 from ...logger import logger
@@ -50,13 +53,15 @@ class NoncomposableDSPyClassifier(Classifier):
         verbose: bool,
         batch_size: int,
         log_prob: bool,
+        n_aux_examples: int = 0,
         **generation_kwargs,
     ):
         self.client = client
         self.module = module
         self.tokenizer = tokenizer
         self.verbose = verbose
-
+        
+        self.n_aux_examples = n_aux_examples
         self.batch_size = batch_size
         self.generation_kwargs = generation_kwargs
         self.log_prob = log_prob
@@ -68,7 +73,13 @@ class NoncomposableDSPyClassifier(Classifier):
         Generate predictions for a batch of samples.
         """
 
-        batched_input = dict(feature_description=explanation, feature_examples=[sample.text for sample in batch])
+        batched_input = dict(
+            feature_description=explanation,
+            train_examples=feature_record_generator_to_feature_example_list(
+                [batch[0].record], extract_record="train", tokenizer=self.tokenizer
+            )[: self.n_aux_examples],
+            feature_examples=[sample.text for sample in batch],
+        )
         try:
             result = await asyncify(self.module)(**batched_input, lm=self.client)
             ExampleClassifier.model_validate(ExampleClassifier(
@@ -104,19 +115,29 @@ class NoncomposableDSPyClassifier(Classifier):
                 result.text = sample.text
         return results
 
+
 class DSPyClassifier(NoncomposableDSPyClassifier):
-    def __init__(self, classifier, cot: bool = False):
+    def __init__(self, classifier,
+                 module = None,
+                 batch_size: Optional[int] = None, cot: bool = False,
+                 few_shot: bool = True, n_aux_examples: int = 0
+                 ):
+        if batch_size is None:
+            batch_size = classifier.batch_size
         assert isinstance(classifier.client, DSPy)
         client = classifier.client.client
-        self.classifier_module = dspy_classifier_module(cot=cot)
+        if module is None:
+            module = dspy_classifier_module(cot=cot, few_shot=few_shot)
+        self.classifier_module = module
         self.base_classifier = classifier
         super().__init__(
             client,
             self.classifier_module,
             tokenizer=classifier.tokenizer,
             verbose=classifier.verbose,
-            batch_size=classifier.batch_size,
+            batch_size=batch_size,
             log_prob=classifier.log_prob,
+            n_aux_examples=n_aux_examples,
             **classifier.generation_kwargs,
         )
     

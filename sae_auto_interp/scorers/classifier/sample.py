@@ -1,11 +1,10 @@
 import random
 from dataclasses import dataclass
-from typing import NamedTuple
 
 import torch
 from transformers import PreTrainedTokenizer
 
-from ...features import Example
+from ...features import Example, FeatureRecord
 from ...logger import logger
 
 L = "<<"
@@ -42,9 +41,11 @@ class ClassifierOutput:
     """Whether the prediction is correct"""
 
 
-class Sample(NamedTuple):
+@dataclass
+class Sample:
     text: str
     data: ClassifierOutput
+    record: FeatureRecord = None
 
 
 def examples_to_samples(

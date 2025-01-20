@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Iterable, Literal
 
 import dspy
 from asyncer import asyncify
@@ -58,11 +58,48 @@ def dspy_explainer_module(cot: bool = False, few_shot: bool = True):
 
 class FeatureExample(BaseModel):
     """A text snippet that is an example that activates a feature."""
-    
+
     text: str
     max_activation: float
     tokens: list[str]
     tokens_and_activations: list[tuple[str, float]]
+
+
+def feature_record_generator_to_feature_example_list(
+    feature_record_generator: Iterable[FeatureRecord],
+    extract_record: Literal["train", "test", "random"],
+    tokenizer,
+) -> List[List[FeatureExample]]:
+    """Convert a generator of FeatureRecords to a list of lists of DSPyFeatureExamples for use in the DSPy pipeline.
+
+    Args:
+        feature_record_generator (Iterable[FeatureRecord]): the generator of FeatureRecords to convert
+            May be obtained from a features.FeatureLoader
+        tokenizer (Tokenizer): the tokenizer to use for decoding tokens
+
+    Returns:
+        List[List[FeatureExample]]: The list of lists of FeatureExamples corresponding to each of the input features.
+    """
+    return [
+        [
+            FeatureExample(
+                text=tokenizer.decode(ex.tokens),
+                max_activation=max(ex.activations.tolist()),
+                tokens=tokenizer.batch_decode(ex.tokens),
+                tokens_and_activations=list(
+                    zip(tokenizer.batch_decode(ex.tokens), ex.activations.tolist())
+                ),
+            )
+            for ex in (
+                record.train
+                if extract_record == "train"
+                else (y for x in record.test for y in x)
+                if extract_record == "test"
+                else record.random_examples
+            )
+        ]
+        for record in feature_record_generator
+    ]
 
 
 class Explanations(dspy.Signature):
