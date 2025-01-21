@@ -1,6 +1,7 @@
+from typing import Callable, Optional
+
 import torch
 from torchtyping import TensorType
-from typing import Callable, Optional
 
 from .features import FeatureRecord, prepare_examples
 from .loader import BufferOutput

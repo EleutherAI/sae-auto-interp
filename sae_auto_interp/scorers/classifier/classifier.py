@@ -1,9 +1,9 @@
 import asyncio
+import dataclasses
 import json
 import random
 import re
 import traceback
-import dataclasses
 from abc import abstractmethod
 
 import numpy as np

@@ -1,4 +1,4 @@
-from typing import List, Optional, Iterable, Literal
+from typing import Iterable, List, Literal, Optional
 
 import dspy
 from asyncer import asyncify

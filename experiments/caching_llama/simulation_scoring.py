@@ -1,11 +1,12 @@
 import asyncio
+import os
 from functools import partial
 
 import orjson
 import torch
 from simple_parsing import ArgumentParser
-import os
-from sae_auto_interp.clients import Local,Outlines
+
+from sae_auto_interp.clients import Outlines
 from sae_auto_interp.config import ExperimentConfig, FeatureConfig
 from sae_auto_interp.explainers import explanation_loader
 from sae_auto_interp.features import FeatureDataset

@@ -1,59 +1,36 @@
 import asyncio
 import json
 import os
+import shutil
 import time
-from functools import partial
 from dataclasses import dataclass, field
-from typing import List, Literal, Union, Optional
-from sae_auto_interp.dspy_pipeline import (
-    train_classifier_pipeline,
-    evaluate_classifier_pipeline,
-    DSPyClassifierPipeline
-)
-from pathlib import Path
-import dspy
-
-import orjson
-import torch
-from simple_parsing import ArgumentParser
-
-from sae_auto_interp.clients import Offline
-from sae_auto_interp.config import ExperimentConfig, FeatureConfig
-from sae_auto_interp.explainers import DefaultExplainer
-from sae_auto_interp.scorers.classifier.dspy_classifier import (
-    DSPyClassifier,
-)
-from sae_auto_interp.features import FeatureDataset, FeatureLoader
-from sae_auto_interp.features.constructors import default_constructor
-from sae_auto_interp.features.samplers import sample
-from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
-from sae_auto_interp.scorers import DetectionScorer, FuzzingScorer
-from sae_auto_interp.logger import logger
-
-import asyncio
-import logging
-import os
-import time
 from functools import partial
+from pathlib import Path
+from typing import List, Literal, Optional
 
 import dotenv
-import nest_asyncio
+import dspy
 import orjson
 import torch
 from dspy import LM
-from matplotlib import pyplot as plt
-import seaborn as sns
-import numpy as np
+from simple_parsing import ArgumentParser
 
 from sae_auto_interp.clients import DSPy
 from sae_auto_interp.config import ExperimentConfig, FeatureConfig
+from sae_auto_interp.dspy_pipeline import (
+    DSPyClassifierPipeline,
+    train_classifier_pipeline,
+)
 from sae_auto_interp.explainers import DefaultExplainer, DSPyExplainer
 from sae_auto_interp.features import FeatureDataset, FeatureLoader
 from sae_auto_interp.features.constructors import default_constructor
 from sae_auto_interp.features.samplers import sample
+from sae_auto_interp.logger import logger
 from sae_auto_interp.pipeline import Pipeline, process_wrapper
 from sae_auto_interp.scorers import DetectionScorer, DSPyClassifier, FuzzingScorer
-
+from sae_auto_interp.scorers.classifier.dspy_classifier import (
+    DSPyClassifier,
+)
 
 
 @dataclass
@@ -62,7 +39,27 @@ class DSPyModelConfig:
     preload_few_shot: bool = False
     use_cot: bool = False
     n_aux_examples: int = 0
+    drop_out_explainer_prob: float = 0.0
     batch_size: int = 5
+    
+    @property
+    def pipeline_kwargs(self):
+        """Return kwargs for the DSPyClassifierPipeline"""
+        return dict(
+            explainer_few_shot=self.preload_few_shot,
+            classifier_few_shot=self.preload_few_shot,
+            n_aux_examples=self.n_aux_examples,
+            drop_out_explainer_prob=self.drop_out_explainer_prob,
+            batch_size=self.batch_size,
+            ignore_errors=True,
+        )
+    
+    @property
+    def classifier_kwargs(self):
+        """Return kwargs for the DSPyClassifier"""
+        return dict(batch_size=self.batch_size,
+                cot=self.use_cot, few_shot=self.preload_few_shot,
+                n_aux_examples=self.n_aux_examples)
 
 
 @dataclass
@@ -71,13 +68,14 @@ class DSPyExperimentConfig:
     module: str
     save_dir: Optional[str] = None
     load_dirs: List[str] = field(default_factory=list)
+    experiment_name: Optional[str] = None
 
     classification_method: Literal["fuzz", "detect", "pseudo_fuzz"] = "pseudo_fuzz"
     features_train: int = 50
     features_test: int = 250
     
     model_config: DSPyModelConfig = DSPyModelConfig()
-    
+
     lm_provider: Literal["vllm", "openrouter"] = "vllm"
     experiment_options: ExperimentConfig = ExperimentConfig()
     feature_config: FeatureConfig = FeatureConfig()
@@ -94,13 +92,7 @@ class DSPyExperimentConfig:
 
 
 def dspy_classifier_pipeline_from_config(config: DSPyExperimentConfig):
-    return DSPyClassifierPipeline(
-        explainer_few_shot=config.model_config.preload_few_shot,
-        classifier_few_shot=config.model_config.preload_few_shot,
-        n_aux_examples=config.model_config.n_aux_examples,
-        batch_size=config.model_config.batch_size,
-        ignore_errors=True,
-    )
+    return DSPyClassifierPipeline(**config.model_config.pipeline_kwargs,)
 
 
 class DSPyExperiment:
@@ -121,13 +113,9 @@ class DSPyExperiment:
                 self._loader_train,
                 self._dataset_train.tokenizer,
                 self._lm,
-                explainer_few_shot=self.config.model_config.preload_few_shot,
-                classifier_few_shot=self.config.model_config.preload_few_shot,
                 optimizer_method=self.config.model_config.optimizer,
-                n_aux_examples=self.config.model_config.n_aux_examples,
                 method=self.config.classification_method,
-                batch_size=self.config.model_config.batch_size,
-                ignore_errors=True,
+                **self.config.model_config.pipeline_kwargs
             )
         save_dir = Path(self.config.save_dir)
         save_dir.mkdir(parents=True, exist_ok=True)
@@ -137,7 +125,7 @@ class DSPyExperiment:
             
     async def evaluate(self):
         # all default settings
-        default_dspy_config = DSPyExperimentConfig()
+        default_dspy_config = DSPyExperimentConfig(feature_dir=None, module=None)
         default_dspy_pipeline = dspy_classifier_pipeline_from_config(default_dspy_config)
         # non-DSPy pipeline
         default_explainer = DefaultExplainer(
@@ -201,10 +189,11 @@ class DSPyExperiment:
             logger.debug(f"Accuracy: {sum(map(sum, corrects)) / sum(map(len, corrects))}")
             return [sum(c) / len(c) for c in corrects]
 
-        async def evaluate_dspy_module(module, config):
-            explainer = DSPyExplainer(
-                self._lm, self.tokenizer, config.model_config.use_cot
-            )
+        async def evaluate_dspy_module(module, config, explainer=None, scorer=None):
+            if explainer is None:
+                explainer = DSPyExplainer(
+                    self._lm, self.tokenizer, config.model_config.use_cot
+                )
             if self.config.classification_method == "detect":
                 base_scorer = DetectionScorer(
                     self._client,
@@ -226,31 +215,57 @@ class DSPyExperiment:
                 raise ValueError(
                     "Only detect and pseudo_fuzz are supported for non-DSPy evaluation"
                 )
-            scorer = DSPyClassifier(
-                base_scorer, module=module.classifier, batch_size=config.model_config.batch_size,
-                cot=config.model_config.use_cot, few_shot=config.model_config.preload_few_shot,
-                n_aux_examples=config.model_config.n_aux_examples
-            )
+            if scorer is None:
+                scorer = DSPyClassifier(
+                    base_scorer, module=module.classifier, **config.model_config.classifier_kwargs
+                )
             accuracies_pipeline = await evaluate_default_pipeline(explainer, scorer)
             return accuracies_pipeline
 
+        save_dir = Path(self.config.save_dir)
+        modules_path = save_dir / "modules"
+        modules_path.mkdir(parents=True, exist_ok=True)
+        
+        dspy_accuracies, default_accuracies, dspy_explainer_accuracies, dspy_scorer_accuracies = {}, {}, {}, {}
+        
+        def save_accuracies():
+            accuracies = dict(
+                dspy_accuracies=dspy_accuracies,
+                default_accuracies=default_accuracies,
+                dspy_explainer_accuracies=dspy_explainer_accuracies,
+                dspy_scorer_accuracies=dspy_scorer_accuracies,
+            )
+            with open(save_dir / "accuracies.json", "w") as f:
+                f.write(json.dumps(accuracies, indent=4))
+        
         # DSPy modules
         for load_dir in self.config.load_dirs:
             with open(Path(load_dir) / "config.json") as f:
                 config = DSPyExperimentConfig.load_json(f.read())
             module = dspy.load(Path(load_dir) / "module")
             accuracies_pipeline = await evaluate_dspy_module(module, config)
-            print(accuracies_pipeline)
+            module_path = modules_path / f"{config.experiment_name}"
+            shutil.copytree(load_dir, module_path, dirs_exist_ok=True)
+            dspy_accuracies[config.experiment_name] = accuracies_pipeline
+            save_accuracies()
+            
+            accuracies_pipeline_explainer = await evaluate_dspy_module(module, config, scorer=default_scorer)
+            dspy_explainer_accuracies[config.experiment_name] = accuracies_pipeline_explainer
+            save_accuracies()
+            accuracies_pipeline_scorer = await evaluate_dspy_module(module, config, explainer=default_explainer)
+            dspy_scorer_accuracies[config.experiment_name] = accuracies_pipeline_scorer
+            save_accuracies()
+
         # default
-        accuracies_default = evaluate_default_pipeline(
+        default_accuracies = evaluate_default_pipeline(
             default_explainer, default_scorer
         )
-        print(accuracies_default)
-        # mixtures
+        save_accuracies()
 
     def _load_client(self):
         dotenv.load_dotenv()
         environ = os.environ
+        config = self.config
         lm_provider = config.lm_provider
         if lm_provider == "openrouter":
             or_model = "meta-llama/llama-3.3-70b-instruct"
@@ -335,7 +350,6 @@ class DSPyExperiment:
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--feature_dir", type=str, default="raw_features/new")
-    parser.add_argument("--model", type=str, default="gemma/16k")
     parser.add_argument("--module", type=str, default=".model.layers.10")
     parser.add_arguments(ExperimentConfig, dest="experiment_options", default=ExperimentConfig(
         train_type="quantiles", test_type="quantiles", n_examples_train=25, n_examples_test=25, n_quantiles=5,
@@ -354,6 +368,11 @@ if __name__ == "__main__":
     subparsers = parser.add_subparsers(dest="command")
 
     train_parser = subparsers.add_parser("train")
+    train_parser.add_argument(
+        "--experiment_name",
+        type=int,
+        help="Name of the experiment to identify it",
+    )
     train_parser.add_argument(
         "--n_aux_examples",
         type=int,
@@ -418,10 +437,12 @@ if __name__ == "__main__":
             optimizer=args.optimizer,
             preload_few_shot=args.preload_few_shot,
             n_aux_examples=args.n_aux_examples,
+            drop_out_explainer_prob=0.0,
             use_cot=args.use_cot,
             batch_size=args.batch_size,
         )
         config.save_dir = args.save_dir
+        config.experiment_name = args.experiment_name
     elif evaluate:
         config.load_dirs = args.load_dirs
     experiment = DSPyExperiment(config)
@@ -432,3 +453,4 @@ if __name__ == "__main__":
         asyncio.run(experiment.evaluate())
     else:
         raise ValueError("Unknown command. Use --help for help")
+    

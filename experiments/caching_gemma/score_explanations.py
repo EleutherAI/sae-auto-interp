@@ -6,17 +6,14 @@ import orjson
 import torch
 from simple_parsing import ArgumentParser
 
-from sae_auto_interp.clients import Offline,OpenRouter
+from sae_auto_interp.clients import Offline, OpenRouter
 from sae_auto_interp.config import ExperimentConfig, FeatureConfig
-from sae_auto_interp.explainers import  explanation_loader,random_explanation_loader
-from sae_auto_interp.features import (
-    FeatureDataset,
-    FeatureLoader
-)
+from sae_auto_interp.explainers import explanation_loader, random_explanation_loader
+from sae_auto_interp.features import FeatureDataset, FeatureLoader
 from sae_auto_interp.features.constructors import default_constructor
 from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
-from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
+from sae_auto_interp.scorers import FuzzingScorer
 
 
 def main(args):

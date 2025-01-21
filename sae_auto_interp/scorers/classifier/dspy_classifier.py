@@ -1,16 +1,16 @@
-
-from typing import List, Literal, Union, Optional
+import random
+from typing import List, Literal, Optional, Union
 
 import dspy
 from asyncer import asyncify
 from pydantic import ValidationError, field_validator
 from transformers import PreTrainedTokenizer
 
+from ...clients import DSPy
 from ...explainers.dspy import (
     DSPyFeatureExample,
     feature_record_generator_to_feature_example_list,
 )
-from ...clients import DSPy
 from ...features import FeatureRecord
 from ...logger import logger
 from .classifier import Classifier
@@ -54,6 +54,7 @@ class NoncomposableDSPyClassifier(Classifier):
         batch_size: int,
         log_prob: bool,
         n_aux_examples: int = 0,
+        drop_out_explainer_prob: float = 0.0,
         **generation_kwargs,
     ):
         self.client = client
@@ -63,6 +64,7 @@ class NoncomposableDSPyClassifier(Classifier):
         
         self.n_aux_examples = n_aux_examples
         self.batch_size = batch_size
+        self.drop_out_explainer_prob = drop_out_explainer_prob
         self.generation_kwargs = generation_kwargs
         self.log_prob = log_prob
 
@@ -74,7 +76,7 @@ class NoncomposableDSPyClassifier(Classifier):
         """
 
         batched_input = dict(
-            feature_description=explanation,
+            feature_description=explanation if random.random() > self.drop_out_explainer_prob else "",
             train_examples=feature_record_generator_to_feature_example_list(
                 [batch[0].record], extract_record="train", tokenizer=self.tokenizer
             )[: self.n_aux_examples],
@@ -117,11 +119,16 @@ class NoncomposableDSPyClassifier(Classifier):
 
 
 class DSPyClassifier(NoncomposableDSPyClassifier):
-    def __init__(self, classifier,
-                 module = None,
-                 batch_size: Optional[int] = None, cot: bool = False,
-                 few_shot: bool = True, n_aux_examples: int = 0
-                 ):
+    def __init__(
+        self,
+        classifier,
+        module=None,
+        batch_size: Optional[int] = None,
+        cot: bool = False,
+        few_shot: bool = True,
+        n_aux_examples: int = 0,
+        drop_out_explainer_prob: float = 0.0,
+    ):
         if batch_size is None:
             batch_size = classifier.batch_size
         assert isinstance(classifier.client, DSPy)
@@ -138,6 +145,7 @@ class DSPyClassifier(NoncomposableDSPyClassifier):
             batch_size=batch_size,
             log_prob=classifier.log_prob,
             n_aux_examples=n_aux_examples,
+            drop_out_explainer_prob=drop_out_explainer_prob,
             **classifier.generation_kwargs,
         )
     

@@ -28,12 +28,12 @@ from functools import partial
 
 import dotenv
 import nest_asyncio
+import numpy as np
 import orjson
+import seaborn as sns
 import torch
 from dspy import LM
 from matplotlib import pyplot as plt
-import seaborn as sns
-import numpy as np
 
 from sae_auto_interp.clients import DSPy
 from sae_auto_interp.config import ExperimentConfig, FeatureConfig
@@ -42,7 +42,7 @@ from sae_auto_interp.features import FeatureDataset, FeatureLoader
 from sae_auto_interp.features.constructors import default_constructor
 from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipeline, process_wrapper
-from sae_auto_interp.scorers import DetectionScorer, DSPyClassifier, FuzzingScorer
+from sae_auto_interp.scorers import DetectionScorer, FuzzingScorer
 
 nest_asyncio.apply()
 logging.basicConfig(level=logging.WARNING)
@@ -227,8 +227,10 @@ detection_scorer = DetectionScorer(
 # logger.setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.WARNING)
 #%%
-from sae_auto_interp.dspy_pipeline import train_classifier_pipeline, evaluate_classifier_pipeline
-
+from sae_auto_interp.dspy_pipeline import (
+    evaluate_classifier_pipeline,
+    train_classifier_pipeline,
+)
 
 classification_method = "fuzz"
 _, basic_eval_scores = evaluate_classifier_pipeline(
@@ -282,8 +284,7 @@ plt.savefig("pic.png")
 #%%
 trained.save("trained_classifier_bs1_c10", save_program=True)
 #%%
-from scipy.stats import ttest_ind
-from scipy.stats import wilcoxon
+from scipy.stats import ttest_ind, wilcoxon
 
 # Apply Welch's t-test (for unequal variances)
 t_stat, p_value = ttest_ind(basic_eval_scores, trained_eval_scores, equal_var=False)

@@ -1,12 +1,12 @@
+import os
+
 from nnsight import LanguageModel
 from simple_parsing import ArgumentParser
-import torch
+
 from sae_auto_interp.autoencoders import load_gemma_autoencoders
 from sae_auto_interp.config import CacheConfig
 from sae_auto_interp.features import FeatureCache
 from sae_auto_interp.utils import load_tokenized_data
-import os
-
 
 l0_dict_mlp = {
     "16k": {0:50,

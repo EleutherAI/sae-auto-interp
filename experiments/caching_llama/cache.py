@@ -1,11 +1,14 @@
+import os
+
+import torch
 from nnsight import LanguageModel
 from simple_parsing import ArgumentParser
-import torch
+
 from sae_auto_interp.autoencoders import load_eai_autoencoders
 from sae_auto_interp.config import CacheConfig
 from sae_auto_interp.features import FeatureCache
 from sae_auto_interp.utils import load_tokenized_data
-import os
+
 
 def main(cfg: CacheConfig, args): 
 

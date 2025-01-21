@@ -15,7 +15,7 @@ from sae_auto_interp.features import (
 from sae_auto_interp.features.constructors import default_constructor
 from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
-from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
+from sae_auto_interp.scorers import DetectionScorer, FuzzingScorer
 from sae_auto_interp.utils import (
     load_tokenized_data,
     load_tokenizer,

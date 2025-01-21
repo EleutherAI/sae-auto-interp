@@ -4,20 +4,21 @@ A dspy.Module-based pipeline for explanation and scoring.
 Adapter for use from outside code, functions for training and evaluation.
 """
 
-from itertools import repeat
 
-import dspy.evaluate.evaluate
-from more_itertools import chunked as batched
 import random
+from typing import Iterable, List, Literal
+
 import dspy
 import dspy.evaluate
+import dspy.evaluate.evaluate
+from more_itertools import chunked as batched
+
 from .explainers.dspy import (
-    dspy_explainer_module,
     DSPyFeatureExample,
+    dspy_explainer_module,
     feature_record_generator_to_feature_example_list,
 )
 from .features import FeatureRecord
-from typing import List, Iterable, Literal
 from .scorers.classifier.dspy_classifier import dspy_classifier_module
 
 
@@ -25,6 +26,7 @@ class DSPyClassifierPipeline(dspy.Module):
     def __init__(self, explainer_cot: bool = False, classifier_cot: bool = False,
                  explainer_few_shot: bool = True, classifier_few_shot: bool = True,
                  batch_size: int = 5, n_aux_examples: int = 0,
+                 drop_out_explainer_prob: float = 0.0,
                  ignore_errors: bool = False):
         self.explainer = dspy_explainer_module(cot=explainer_cot, few_shot=explainer_few_shot)
         self.classifier = dspy_classifier_module(
@@ -32,10 +34,14 @@ class DSPyClassifierPipeline(dspy.Module):
         )
         self.batch_size = batch_size
         self.n_aux_examples = n_aux_examples
+        self.drop_out_explainer_prob = drop_out_explainer_prob
         self.ignore_errors = ignore_errors
     
     def forward(self, feature_examples: List[DSPyFeatureExample], test_examples: List[str]) -> dspy.Prediction:
-        explanation = self.explainer(feature_examples=feature_examples[:10]).explanation    
+        if random.random() < self.drop_out_explainer_prob:
+            explanation = self.explainer(feature_examples=feature_examples[:10]).explanation
+        else:
+            explanation = ""
         predictions = []
         for batch in batched(test_examples, self.batch_size):
             prediction_batch = self.classifier(

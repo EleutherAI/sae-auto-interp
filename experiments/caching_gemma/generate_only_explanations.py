@@ -1,20 +1,17 @@
 import asyncio
 import json
 import os
+import time
 from functools import partial
 
 import orjson
 import torch
-import time
 from simple_parsing import ArgumentParser
 
-from sae_auto_interp.clients import Offline,OpenRouter
+from sae_auto_interp.clients import Offline, OpenRouter
 from sae_auto_interp.config import ExperimentConfig, FeatureConfig
 from sae_auto_interp.explainers import DefaultExplainer
-from sae_auto_interp.features import (
-    FeatureDataset,
-    FeatureLoader
-)
+from sae_auto_interp.features import FeatureDataset, FeatureLoader
 from sae_auto_interp.features.constructors import default_constructor
 from sae_auto_interp.features.samplers import sample
 from sae_auto_interp.pipeline import Pipeline, process_wrapper
