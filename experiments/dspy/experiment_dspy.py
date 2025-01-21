@@ -282,6 +282,7 @@ class DSPyExperiment:
                 api_base="http://localhost:8000/v1/",
                 api_key="placeholder",
                 # cache=False,
+                timeout=999,
             )
             client = DSPy(dspy_lm)
         elif lm_provider == "together":

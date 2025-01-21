@@ -1,27 +1,17 @@
 
-import pandas as pd
-<<<<<<< HEAD
-from functools import partial
 
-from sae_auto_interp.clients import OpenRouter
-from sae_auto_interp.config import ExperimentConfig, FeatureConfig
-from sae_auto_interp.explainers import DefaultExplainer
-from sae_auto_interp.features import FeatureDataset, FeatureLoader, FeatureRecord, Feature, Example
-from sae_auto_interp.features.constructors import default_constructor
-from sae_auto_interp.features.samplers import sample
-from sae_auto_interp.pipeline import Pipeline, process_wrapper
-from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
-=======
+import pandas as pd
 import torch
 from flask import Flask, jsonify, request
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics import roc_auc_score
 
 from sae_auto_interp.clients import OpenRouter
 from sae_auto_interp.explainers import DefaultExplainer
-from sae_auto_interp.features import Example, Feature, FeatureRecord
+from sae_auto_interp.features import (
+    Example,
+    Feature,
+    FeatureRecord,
+)
 from sae_auto_interp.scorers import DetectionScorer, EmbeddingScorer, FuzzingScorer
->>>>>>> e4bb340... Run ruff, start integrating scorer
 
 app = Flask(__name__)
 
@@ -162,8 +152,7 @@ def generate_score_fuzz_detection():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-<<<<<<< HEAD
-=======
+
 @app.route('/generate_score_embedding', methods=['POST'])
 def generate_score_embedding():
     """
@@ -205,7 +194,5 @@ def generate_score_embedding():
         return jsonify({"error": str(e)}), 500
 
 
-
->>>>>>> e4bb340... Run ruff, start integrating scorer
 if __name__ == '__main__':
     app.run(debug=True)

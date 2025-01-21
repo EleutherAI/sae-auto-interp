@@ -23,7 +23,7 @@ if __name__ == "__main__":
         save_dir="base",
         classification_method="pseudo_fuzz",
         features_train=50,
-        features_test=250,
+        features_test=60,
         model_config=DSPyModelConfig(
             optimizer="bootstrap",
             n_aux_examples=10,
