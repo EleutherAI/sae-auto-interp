@@ -63,12 +63,12 @@ class Classifier(Scorer):
         """
         Send and gather batches of samples to the model.
         """
-        sem = asyncio.Semaphore(1)
+        # sem = asyncio.Semaphore(1)
 
         async def _process(explanation, batch):
-            async with sem:
-                result = await self._generate(explanation, batch)
-                return result
+            # async with sem:
+            result = await self._generate(explanation, batch)
+            return result
     
         tasks = [asyncio.create_task(_process(explanation, batch)) for batch in batches]
         results = await asyncio.gather(*tasks)
@@ -130,7 +130,7 @@ class Classifier(Scorer):
 
         try:
             array = json.loads(match.group(0))
-            assert len(array) == self.batch_size
+            assert len(array) == self.batch_size, f"Expected {self.batch_size} results, got {len(array)}"
             if self.log_prob:
                 conditional_probabilities,probabilities = self._parse_logprobs(logprobs)
                 assert len(conditional_probabilities) == self.batch_size

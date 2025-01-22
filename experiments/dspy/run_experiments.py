@@ -23,10 +23,10 @@ if __name__ == "__main__":
         save_dir="base",
         classification_method="pseudo_fuzz",
         features_train=50,
-        features_test=60,
+        features_test=100,
         model_config=DSPyModelConfig(
             optimizer="bootstrap",
-            n_aux_examples=10,
+            n_aux_examples=0,
             drop_out_explainer_prob=0.0,
             batch_size=10,
             use_cot=False
@@ -41,21 +41,27 @@ if __name__ == "__main__":
         base_experiment,
         replace(
             base_experiment,
+            experiment_name="n_aux_10",
+            save_dir="n_aux_10",
+            model_config=replace(base_experiment.model_config, n_aux_examples=10)
+        ),
+        replace(
+            base_experiment,
             experiment_name="batch_size_1",
             save_dir="batch_size_1",
             model_config=replace(base_experiment.model_config, batch_size=1)
         ),
         replace(
             base_experiment,
-            experiment_name="dropout_1.0",
-            save_dir="dropout_1.0",
-            model_config=replace(base_experiment.model_config, drop_out_explainer_prob=1.0)
+            experiment_name="batch_size_1_aux",
+            save_dir="batch_size_1_aux",
+            model_config=replace(base_experiment.model_config, batch_size=1, n_aux_examples=3)
         ),
         replace(
             base_experiment,
-            experiment_name="n_aux_0",
-            save_dir="n_aux_0",
-            model_config=replace(base_experiment.model_config, n_aux_examples=0)
+            experiment_name="dropout_1.0",
+            save_dir="dropout_1.0",
+            model_config=replace(base_experiment.model_config, drop_out_explainer_prob=1.0, n_aux_examples=10)
         ),
         replace(
             base_experiment,
@@ -67,7 +73,7 @@ if __name__ == "__main__":
             base_experiment,
             experiment_name="cot_bs1",
             save_dir="cot_bs1",
-            model_config=replace(base_experiment.model_config, use_cot=True, batch_size=1)
+            model_config=replace(base_experiment.model_config, use_cot=True, batch_size=1, n_aux_examples=3)
         )
     ]
     configs = [

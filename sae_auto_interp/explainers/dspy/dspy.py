@@ -17,12 +17,15 @@ class DSPyExplainer(Explainer):
                  tokenizer,
                  cot: bool = False,
                  verbose: bool = False,
+                 module=None,
                  **generation_kwargs,
                  ):
         self.client = client
         self.tokenizer = tokenizer
         self.generation_kwargs = generation_kwargs
-        self.explainer = dspy_explainer_module(cot=cot)
+        if module is None:
+            module = dspy_explainer_module(cot=cot)
+        self.explainer = module
         self.verbose = verbose
 
     async def __call__(self, record: FeatureRecord):
@@ -37,6 +40,7 @@ class DSPyExplainer(Explainer):
             )
             for ex in records
         ]
+        # result = self.explainer(feature_examples=records, lm=self.client)
         result = await asyncify(self.explainer)(feature_examples=records, lm=self.client)
         if self.verbose:
             logger.debug(f"Explainer result: {result}")

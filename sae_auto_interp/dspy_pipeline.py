@@ -6,8 +6,11 @@ Adapter for use from outside code, functions for training and evaluation.
 
 
 import random
+from itertools import repeat
 from typing import Iterable, List, Literal
 
+import concurrent.futures
+from dspy.utils.parallelizer import ParallelExecutor
 import dspy
 import dspy.evaluate
 import dspy.evaluate.evaluate
@@ -19,6 +22,7 @@ from .explainers.dspy import (
     feature_record_generator_to_feature_example_list,
 )
 from .features import FeatureRecord
+from .logger import logger
 from .scorers.classifier.dspy_classifier import dspy_classifier_module
 
 
@@ -42,19 +46,56 @@ class DSPyClassifierPipeline(dspy.Module):
             explanation = self.explainer(feature_examples=feature_examples[:10]).explanation
         else:
             explanation = ""
+
+        # for batch in batched(test_examples, self.batch_size):
+        #     prediction_batch = self.classifier(
+        #         feature_description=explanation,
+        #         train_examples=feature_examples[: self.n_aux_examples],
+        #         feature_examples=batch,
+        #     )
+        #     if len(prediction_batch.is_feature) != len(batch):
+        #         if self.ignore_errors:
+        #             logger.error("Classifier returned wrong number of predictions")
+        #             predictions.extend([0] * len(batch))
+        #         else:
+        #             raise ValueError("Classifier returned wrong number of predictions")
+        #     else:
+        #         predictions.extend(prediction_batch.is_feature)
+        
         predictions = []
-        for batch in batched(test_examples, self.batch_size):
+        def classify(batch):
             prediction_batch = self.classifier(
                 feature_description=explanation,
-                train_examples=feature_examples[:self.n_aux_examples],
-                feature_examples=batch)
+                train_examples=feature_examples[: self.n_aux_examples],
+                feature_examples=batch,
+            )
             if len(prediction_batch.is_feature) != len(batch):
                 if self.ignore_errors:
-                    predictions.extend([0] * len(batch))
+                    logger.error("Classifier returned wrong number of predictions")
+                    return [0] * len(batch)
                 else:
                     raise ValueError("Classifier returned wrong number of predictions")
             else:
-                predictions.extend(prediction_batch.is_feature)
+                return prediction_batch.is_feature
+        # predictions_nested = dspy.Parallel()(list(zip(repeat(classify), batched(test_examples, self.batch_size))))
+
+        # executor = ParallelExecutor(
+        #     num_threads=8,
+        #     max_errors=float("inf") if self.ignore_errors else 10,
+        #     disable_progress_bar=True,
+        # )
+        # predictions_nested = executor.execute(classify, list(batched(test_examples, self.batch_size)))
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+            futures = [
+                executor.submit(classify, batch)
+                for batch in batched(test_examples, self.batch_size)
+            ]
+            predictions_nested = [
+                future.result() for future in concurrent.futures.as_completed(futures)
+            ]
+
+        predictions = [p for sublist in predictions_nested for p in sublist]
         return dspy.Prediction(is_feature=predictions)
 
 
@@ -202,7 +243,8 @@ def evaluate_classifier_pipeline(
         display_table=False,
         display_progress=True,
         max_errors=float("inf"),
-        return_all_scores=True
+        return_all_scores=True,
+        num_threads=1
     )(classifier, metric=accuracy_score)
     # accuracies = []
     # for test_label, prediction in zip(test_labels, predictions):
@@ -235,6 +277,7 @@ def train_classifier_pipeline(
             metric_threshold=0.7,
             num_candidate_programs=12,
             max_errors=float("inf"),
+            num_threads=1,
         )
     classifier = optimizer.compile(base_classifier, trainset=trainset,
                             **(dict(valset=split_classification_scoring(eval_loader, method, tokenizer)) if eval_loader is not None else {}),

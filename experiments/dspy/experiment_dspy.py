@@ -7,8 +7,10 @@ from dataclasses import dataclass, field
 from functools import partial
 from pathlib import Path
 from typing import List, Literal, Optional
+import random
 
 import dotenv
+import numpy as np
 import dspy
 import orjson
 import torch
@@ -20,6 +22,7 @@ from sae_auto_interp.config import ExperimentConfig, FeatureConfig
 from sae_auto_interp.dspy_pipeline import (
     DSPyClassifierPipeline,
     train_classifier_pipeline,
+    evaluate_classifier_pipeline
 )
 from sae_auto_interp.explainers import DefaultExplainer, DSPyExplainer
 from sae_auto_interp.features import FeatureDataset, FeatureLoader
@@ -184,15 +187,17 @@ class DSPyExperiment:
                 scorer_pipe
             )
             start_time = time.time()
-            corrects = await pipe.run(16)
-            logger.debug(f"Elapsed time: {time.time() - start_time}")
-            logger.debug(f"Accuracy: {sum(map(sum, corrects)) / sum(map(len, corrects))}")
+            # corrects = await pipe.run(100)
+            corrects = await pipe.run(1)
+            print(f"Elapsed time: {time.time() - start_time}")
+            print(f"Accuracy: {sum(map(sum, corrects)) / sum(map(len, corrects))}")
             return [sum(c) / len(c) for c in corrects]
 
         async def evaluate_dspy_module(module, config, explainer=None, scorer=None):
             if explainer is None:
                 explainer = DSPyExplainer(
-                    self._lm, self.tokenizer, config.model_config.use_cot
+                    self._lm, tokenizer=self.tokenizer, cot=config.model_config.use_cot,
+                    module=module.explainer
                 )
             if self.config.classification_method == "detect":
                 base_scorer = DetectionScorer(
@@ -236,31 +241,41 @@ class DSPyExperiment:
                 dspy_scorer_accuracies=dspy_scorer_accuracies,
             )
             with open(save_dir / "accuracies.json", "w") as f:
-                f.write(json.dumps(accuracies, indent=4))
+                f.write(json.dumps(accuracies))
+
+        # default
+        default_accuracies = await evaluate_default_pipeline(
+            default_explainer, default_scorer
+        )
+        save_accuracies()
         
         # DSPy modules
         for load_dir in self.config.load_dirs:
             with open(Path(load_dir) / "config.json") as f:
                 config = DSPyExperimentConfig.load_json(f.read())
             module = dspy.load(Path(load_dir) / "module")
+            print("Evaluating pure", config.experiment_name)
             accuracies_pipeline = await evaluate_dspy_module(module, config)
+            # accuracies_pipeline = evaluate_classifier_pipeline(
+            #     self._loader_eval,
+            #     self.tokenizer,
+            #     self._lm,
+            #     method=self.config.classification_method,
+            #     classifier=module,
+            # )
             module_path = modules_path / f"{config.experiment_name}"
             shutil.copytree(load_dir, module_path, dirs_exist_ok=True)
             dspy_accuracies[config.experiment_name] = accuracies_pipeline
             save_accuracies()
             
+            print("Evaluating with default scorer", config.experiment_name)
             accuracies_pipeline_explainer = await evaluate_dspy_module(module, config, scorer=default_scorer)
             dspy_explainer_accuracies[config.experiment_name] = accuracies_pipeline_explainer
             save_accuracies()
+            print("Evaluating with default explainer", config.experiment_name)
             accuracies_pipeline_scorer = await evaluate_dspy_module(module, config, explainer=default_explainer)
             dspy_scorer_accuracies[config.experiment_name] = accuracies_pipeline_scorer
             save_accuracies()
-
-        # default
-        default_accuracies = evaluate_default_pipeline(
-            default_explainer, default_scorer
-        )
-        save_accuracies()
 
     def _load_client(self):
         dotenv.load_dotenv()
@@ -282,7 +297,7 @@ class DSPyExperiment:
                 api_base="http://localhost:8000/v1/",
                 api_key="placeholder",
                 # cache=False,
-                timeout=999,
+                timeout=9999,
             )
             client = DSPy(dspy_lm)
         elif lm_provider == "together":
@@ -433,6 +448,11 @@ if __name__ == "__main__":
     )
     train = args.command == "train"
     evaluate = args.command in ("eval", "evaluate")
+    
+    random.seed(2)
+    torch.manual_seed(2)
+    np.random.seed(2)
+    
     if train:
         config.model_config = DSPyModelConfig(
             optimizer=args.optimizer,

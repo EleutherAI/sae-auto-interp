@@ -79,11 +79,12 @@ class NoncomposableDSPyClassifier(Classifier):
             feature_description=explanation if random.random() > self.drop_out_explainer_prob else "",
             train_examples=feature_record_generator_to_feature_example_list(
                 [batch[0].record], extract_record="train", tokenizer=self.tokenizer
-            )[: self.n_aux_examples],
+            )[0][: self.n_aux_examples],
             feature_examples=[sample.text for sample in batch],
-        )
+        )   
         try:
             result = await asyncify(self.module)(**batched_input, lm=self.client)
+            # result = self.module(**batched_input, lm=self.client)
             ExampleClassifier.model_validate(ExampleClassifier(
                 # you can see the Javascript in this one
                 **result.toDict(),
