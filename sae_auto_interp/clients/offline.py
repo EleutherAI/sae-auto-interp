@@ -97,6 +97,7 @@ class Offline(Client):
         return await future
 
     def _parse_logprobs(self,response):
+        response_tokens = response.outputs[0].token_ids
         logprobs=response.outputs[0].logprobs
         prompt_logprobs=response.prompt_logprobs
         if logprobs is None and prompt_logprobs is None:
@@ -109,7 +110,7 @@ class Offline(Client):
                 top_logprobs = []
                 decoded_token = ""
                 for token, logprob in log_prob_dict.items():
-                    if logprob.rank==1:
+                    if token == response_tokens[i]:
                         decoded_token = logprob.decoded_token
                         top_logprobs.append(Top_Logprob(token=decoded_token, logprob=logprob.logprob))
                     else:
