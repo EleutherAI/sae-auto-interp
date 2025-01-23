@@ -115,6 +115,7 @@ class FeatureDataset:
         cfg: FeatureConfig,
         modules: Optional[List[str]] = None,
         features: Optional[Dict[str, Union[int, torch.Tensor]]] = None,
+        tokenizer = None, # TODO: add typing
     ):
         """
         Initialize a FeatureDataset.
@@ -136,7 +137,11 @@ class FeatureDataset:
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
-        self.tokenizer = load_tokenizer(cache_config["model_name"])
+        if tokenizer is not None:        
+            temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
+            self.tokenizer = temp_model.tokenizer
+        else:
+            self.tokenizer = tokenizer
         self.tokens = load_tokenized_data(
             cache_config["ctx_len"],
             self.tokenizer,
