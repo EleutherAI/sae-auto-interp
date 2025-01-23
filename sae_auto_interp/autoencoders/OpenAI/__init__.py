@@ -30,12 +30,12 @@ def load_oai_autoencoders(model, ae_layers: list[int], weight_dir: str):
 
         submodules[submodule._module_path] = submodule
 
-    with model.edit(" "):
+    with model.edit(" ") as edited:
         for _, submodule in submodules.items():
             acts = submodule.output[0]
             submodule.ae(acts, hook=True)
 
-    return submodules
+    return submodules, edited
 
 
 def load_random_oai_autoencoders(
