@@ -173,7 +173,8 @@ class FeatureRecord:
                 else:
                     result.append(tokens[i])
                     i += 1
-                return "".join(result)
+                    
+            return "".join(result)
         
         strings = [
             _to_string(tokenizer.batch_decode(example.tokens), example.activations)

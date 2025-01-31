@@ -33,7 +33,7 @@ class JumpReLUSAE(nn.Module):
   @classmethod
   def from_pretrained(cls, path,type,device):
     path_to_params = hf_hub_download(
-    repo_id="google/gemma-scope-9b-pt-"+type,
+    repo_id="google/gemma-scope-2b-pt-"+type,
     filename=f"{path}/params.npz",
     force_download=False,
     )

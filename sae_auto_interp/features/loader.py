@@ -8,6 +8,7 @@ import torch
 from safetensors.numpy import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
+from transformers import AutoTokenizer
 
 from sae_auto_interp.utils import (
     load_tokenized_data,
@@ -138,8 +139,7 @@ class FeatureDataset:
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:        
-            temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
-            self.tokenizer = temp_model.tokenizer
+            self.tokenizer = AutoTokenizer.from_pretrained(cache_config["model_name"])
         else:
             self.tokenizer = tokenizer
         self.tokens = load_tokenized_data(

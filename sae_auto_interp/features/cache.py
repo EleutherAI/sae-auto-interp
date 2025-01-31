@@ -4,6 +4,7 @@ from collections import defaultdict
 from typing import Dict
 
 import numpy as np
+import nnsight as ns
 import torch
 from safetensors.numpy import save_file
 from torchtyping import TensorType
@@ -143,6 +144,7 @@ class FeatureCache:
         self,
         model,
         submodule_dict: Dict,
+        width: int,
         batch_size: int,
         filters: Dict[str, TensorType["indices"]] = None,
     ):
@@ -159,7 +161,7 @@ class FeatureCache:
         self.submodule_dict = submodule_dict
 
         self.batch_size = batch_size
-        self.width = list(submodule_dict.values())[0].ae.width
+        self.width = width
 
         self.cache = Cache(filters, batch_size=batch_size)
         if filters is not None:
@@ -226,8 +228,10 @@ class FeatureCache:
                 with torch.no_grad():
                     buffer = {}
                     with self.model.trace(batch):
-                        for module_path, submodule in self.submodule_dict.items():
-                            buffer[module_path] = submodule.ae.output.save()
+                        for path, (sae, submodule) in self.submodule_dict.items():
+                            acts = submodule.output[0]
+                            buffer[path] = ns.apply(sae.encode, acts).save()
+                    
                     for module_path, latents in buffer.items():
                         self.cache.add(latents, batch_number, module_path)
 

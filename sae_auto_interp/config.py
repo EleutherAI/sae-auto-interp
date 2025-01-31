@@ -49,25 +49,25 @@ class FeatureConfig(Serializable):
 @dataclass
 class CacheConfig(Serializable):
 
-    dataset_repo: str = "EleutherAI/rpj-v2-sample"
+    dataset_repo: str = "kh4dien/fineweb-100m-sample"
     """Dataset repository to use"""
 
-    dataset_split: str = "train[:1%]"
+    dataset_split: str = "train[:10%]"
     """Dataset split to use""" 
 
     dataset_name: str = ""
     """Dataset name to use"""
 
-    dataset_row: str = "raw_content"
+    dataset_row: str = "text"
     """Dataset row to use"""
 
-    batch_size: int = 32
+    batch_size: int = 8
     """Number of sequences to process in a batch"""
 
     ctx_len: int = 256
     """Context length of the autoencoder. Each batch is shape (batch_size, ctx_len)"""
 
-    n_tokens: int = 10_000_000
+    n_tokens: int = 1_000_000
     """Number of tokens to cache"""
 
     n_splits: int = 5
