@@ -44,6 +44,7 @@ def split_quantiles(
 
     quantile_size = len(examples) // n_quantiles
     samples_per_quantile = n_samples // n_quantiles
+    assert samples_per_quantile > 0, "n_samples must be greater than n_quantiles"
     samples = []
     for i in range(n_quantiles):
         quantile = examples[i * quantile_size : (i + 1) * quantile_size]
@@ -99,7 +100,6 @@ def test(
     n_test: int,
     n_quantiles: int,
     test_type: Literal["quantiles", "activation"],
-    
 ):
     match test_type:
         case "quantiles":
@@ -130,11 +130,16 @@ def sample(
         n_quantiles=cfg.n_quantiles,
     )
     record.train = _train
+
+    # Check for no test contamination
+    if cfg.train_type == "top":
+        examples = examples[:cfg.n_examples_train]
+
     if cfg.n_examples_test > 0: 
         _test = test(
             examples,
-        max_activation,
-        cfg.n_examples_test,
+            max_activation,
+            cfg.n_examples_test,
             cfg.n_quantiles,
             cfg.test_type,   
         )
