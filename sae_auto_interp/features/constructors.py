@@ -101,23 +101,23 @@ def random_activation_windows(
 
 def default_constructor(
     record: FeatureRecord,
-    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]],
     buffer_output: BufferOutput,
     n_random: int,
     ctx_len: int,
     max_examples: int,
+    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]] = None,
 ):
     """
     Construct feature examples using pool max activation windows and random activation windows.
 
     Args:
         record (FeatureRecord): The feature record to update.
-        token_loader (Optional[Callable[[], TensorType["batch", "seq"]]]):
-            An optional function that creates the dataset tokens.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
         n_random (int): Number of random examples to generate.
         ctx_len (int): Context length for each example.
         max_examples (int): Maximum number of examples to generate.
+        token_loader (Optional[Callable[[], TensorType["batch", "seq"]]]):
+            An optional function that creates the dataset tokens.
     """
     tokens = buffer_output.tokens
     if tokens is None:
