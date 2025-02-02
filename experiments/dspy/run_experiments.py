@@ -10,6 +10,7 @@ from .experiment_dspy import (
 )
 
 if __name__ == "__main__":
+    os.environ["DSPY_CACHEDIR"] = "~/.cache/dspy"
     # experiments we need
     # no tuning
     # batch size: 1, (10)
@@ -23,46 +24,51 @@ if __name__ == "__main__":
         save_dir="base",
         classification_method="pseudo_fuzz",
         features_train=50,
-        features_test=100,
+        features_test=500,
         model_config=DSPyModelConfig(
             optimizer="bootstrap",
             n_aux_examples=0,
             drop_out_explainer_prob=0.0,
-            batch_size=10,
+            batch_size=5,
             use_cot=False
         ),
         lm_provider="vllm",
+        lm_name="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         experiment_options=ExperimentConfig(
             n_examples_train=25, n_examples_test=25, n_quantiles=5,
             train_type="quantiles", test_type="quantiles"
         ),
     )
+    ds_config = dict(
+        lm_name="casperhansen/deepseek-r1-distill-llama-70b-awq",
+        lm_api_address="http://localhost:8001/v1"
+    )
     configs = [
         base_experiment,
-        replace(
-            base_experiment,
-            experiment_name="n_aux_10",
-            save_dir="n_aux_10",
-            model_config=replace(base_experiment.model_config, n_aux_examples=10)
-        ),
+        # replace(
+        #     base_experiment,
+        #     experiment_name="n_aux_10",
+        #     save_dir="n_aux_10",
+        #     model_config=replace(base_experiment.model_config, n_aux_examples=10)
+        # ),
         replace(
             base_experiment,
             experiment_name="batch_size_1",
             save_dir="batch_size_1",
             model_config=replace(base_experiment.model_config, batch_size=1)
         ),
-        replace(
-            base_experiment,
-            experiment_name="batch_size_1_aux",
-            save_dir="batch_size_1_aux",
-            model_config=replace(base_experiment.model_config, batch_size=1, n_aux_examples=3)
-        ),
-        replace(
-            base_experiment,
-            experiment_name="dropout_1.0",
-            save_dir="dropout_1.0",
-            model_config=replace(base_experiment.model_config, drop_out_explainer_prob=1.0, n_aux_examples=10)
-        ),
+        # replace(
+        #     base_experiment,
+        #     experiment_name="batch_size_1_aux",
+        #     save_dir="batch_size_1_aux",
+        #     model_config=replace(base_experiment.model_config, batch_size=1, n_aux_examples=10)
+        # ),
+        # replace(
+        #     base_experiment,
+        #     experiment_name="dropout_1.0",
+        #     save_dir="dropout_1.0",
+        #     model_config=replace(base_experiment.model_config, drop_out_explainer_prob=1.0, n_aux_examples=10)
+        # ),
         replace(
             base_experiment,
             experiment_name="cot",
@@ -74,6 +80,18 @@ if __name__ == "__main__":
             experiment_name="cot_bs1",
             save_dir="cot_bs1",
             model_config=replace(base_experiment.model_config, use_cot=True, batch_size=1, n_aux_examples=3)
+        ),
+        # replace(
+        #     base_experiment,
+        #     experiment_name="deepseek",
+        #     save_dir="deepseek",
+        #     **ds_config,
+        # )
+        replace(
+            base_experiment,
+            experiment_name="mipro",
+            save_dir="mipro",
+            model_config=replace(base_experiment.model_config, optimizer="mipro"),
         )
     ]
     configs = [

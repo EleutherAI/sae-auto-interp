@@ -1,6 +1,7 @@
 #%%
 # VLLM_WORKER_MULTIPROC_METHOD=spawn CUDA_VISIBLE_DEVICES=6,7 vllm serve "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --tensor-parallel-size 2 --enforce-eager
-# CUDA_VISIBLE_DEVICES=6,7 python -m sglang.launch_server --model-path  "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --port 8000 --host 0.0.0.0 --tensor-parallel-size=2 --mem-fraction-static=0.6
+# CUDA_VISIBLE_DEVICES=6,7 python -m sglang.launch_server --model-path "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --port 8000 --host 0.0.0.0 --tensor-parallel-size=2 --mem-fraction-static=0.8
+# CUDA_VISIBLE_DEVICES=2,3 python -m sglang.launch_server --model-path "casperhansen/deepseek-r1-distill-llama-70b-awq" --port 8001 --host 0.0.0.0 --tensor-parallel-size=2 --mem-fraction-static=0.8
 
 import os
 import sys
@@ -83,7 +84,8 @@ if LM_PROVIDER == "openrouter":
 elif LM_PROVIDER == "vllm":
     assert USE_BIG_LLAMA
     dspy_lm = LM(
-        "openai/hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
+        # "openai/hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
+        "openai/casperhansen/deepseek-r1-distill-llama-70b-awq",
         api_base="http://localhost:8000/v1/",
         api_key="u",
         # cache=False,
@@ -232,11 +234,14 @@ from sae_auto_interp.dspy_pipeline import (
     train_classifier_pipeline,
 )
 
-classification_method = "fuzz"
+classification_method = "pseudo_fuzz"
 _, basic_eval_scores = evaluate_classifier_pipeline(
     loader_eval, dataset.tokenizer, client.client, method=classification_method,
-    n_aux_examples=10,
+    n_aux_examples=0,
+    # explainer_cot=True, classifier_cot=True,
 )
+#%%
+sum(map(sum, basic_eval_scores)) / sum(map(len, basic_eval_scores))
 #%%
 optimizer_method = "bootstrap"
 trained = train_classifier_pipeline(

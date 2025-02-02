@@ -31,7 +31,7 @@ class DSPyClassifierPipeline(dspy.Module):
                  explainer_few_shot: bool = True, classifier_few_shot: bool = True,
                  batch_size: int = 5, n_aux_examples: int = 0,
                  drop_out_explainer_prob: float = 0.0,
-                 ignore_errors: bool = False):
+                 ignore_errors: bool = True):
         self.explainer = dspy_explainer_module(cot=explainer_cot, few_shot=explainer_few_shot)
         self.classifier = dspy_classifier_module(
             cot=classifier_cot, few_shot=classifier_few_shot
@@ -42,10 +42,12 @@ class DSPyClassifierPipeline(dspy.Module):
         self.ignore_errors = ignore_errors
     
     def forward(self, feature_examples: List[DSPyFeatureExample], test_examples: List[str]) -> dspy.Prediction:
-        if random.random() < self.drop_out_explainer_prob:
+        if random.random() > self.drop_out_explainer_prob:
             explanation = self.explainer(feature_examples=feature_examples[:10]).explanation
         else:
             explanation = ""
+
+        predictions = []
 
         # for batch in batched(test_examples, self.batch_size):
         #     prediction_batch = self.classifier(
@@ -61,8 +63,8 @@ class DSPyClassifierPipeline(dspy.Module):
         #             raise ValueError("Classifier returned wrong number of predictions")
         #     else:
         #         predictions.extend(prediction_batch.is_feature)
+        # return dspy.Prediction(is_feature=predictions)
         
-        predictions = []
         def classify(batch):
             prediction_batch = self.classifier(
                 feature_description=explanation,
@@ -86,7 +88,7 @@ class DSPyClassifierPipeline(dspy.Module):
         # )
         # predictions_nested = executor.execute(classify, list(batched(test_examples, self.batch_size)))
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=32) as executor:
             futures = [
                 executor.submit(classify, batch)
                 for batch in batched(test_examples, self.batch_size)
@@ -244,7 +246,7 @@ def evaluate_classifier_pipeline(
         display_progress=True,
         max_errors=float("inf"),
         return_all_scores=True,
-        num_threads=1
+        num_threads=1,
     )(classifier, metric=accuracy_score)
     # accuracies = []
     # for test_label, prediction in zip(test_labels, predictions):
@@ -277,7 +279,7 @@ def train_classifier_pipeline(
             metric_threshold=0.7,
             num_candidate_programs=12,
             max_errors=float("inf"),
-            num_threads=1,
+            num_threads=8,
         )
     classifier = optimizer.compile(base_classifier, trainset=trainset,
                             **(dict(valset=split_classification_scoring(eval_loader, method, tokenizer)) if eval_loader is not None else {}),

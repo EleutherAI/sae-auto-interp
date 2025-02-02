@@ -80,6 +80,8 @@ class DSPyExperimentConfig:
     model_config: DSPyModelConfig = DSPyModelConfig()
 
     lm_provider: Literal["vllm", "openrouter"] = "vllm"
+    lm_name: Optional[str] = None
+    lm_api_address: Optional[str] = None
     experiment_options: ExperimentConfig = ExperimentConfig()
     feature_config: FeatureConfig = FeatureConfig()
     
@@ -293,8 +295,8 @@ class DSPyExperiment:
             client = DSPy(dspy_lm)
         elif lm_provider == "vllm":
             dspy_lm = LM(
-                "openai/hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
-                api_base="http://localhost:8000/v1/",
+                f"openai/{config.lm_name or 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4'}",
+                api_base=config.lm_api_address or "http://localhost:8000/v1",
                 api_key="placeholder",
                 # cache=False,
                 timeout=9999,

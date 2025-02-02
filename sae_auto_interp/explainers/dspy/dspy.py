@@ -41,9 +41,18 @@ class DSPyExplainer(Explainer):
             for ex in records
         ]
         # result = self.explainer(feature_examples=records, lm=self.client)
-        result = await asyncify(self.explainer)(feature_examples=records, lm=self.client)
+        try:
+            result = await asyncify(self.explainer)(feature_examples=records, lm=self.client)
+        except ValueError:
+            result = Explanations(
+                feature_examples=records,
+                shared_features=[""],
+                hypothesis="",
+                explanation=""
+            )
         if self.verbose:
             logger.debug(f"Explainer result: {result}")
+        # print(f"Explainer result: {result}")
         return ExplainerResult(
             record,
             result.explanation
