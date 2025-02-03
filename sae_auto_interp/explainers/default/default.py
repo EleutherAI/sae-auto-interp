@@ -57,6 +57,7 @@ class DefaultExplainer(Explainer):
         except Exception as e:
             logger.error(f"Explanation parsing regex failed: {e}")
             raise
+    
     def _highlight(self, index, example):
         result = f"Example {index}: "
 
