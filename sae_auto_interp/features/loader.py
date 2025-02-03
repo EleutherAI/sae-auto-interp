@@ -1,7 +1,7 @@
 import asyncio
 import json
 import os
-from typing import Callable, Dict, List, NamedTuple, Optional, Union
+from typing import Callable, Dict, List, NamedTuple, Optional, Union, cast
 
 import numpy as np
 import torch
@@ -83,6 +83,7 @@ class TensorBuffer:
         locations = locations[indices]
         unique_features, counts = torch.unique_consecutive(locations[:,2], return_counts=True)
         features = unique_features
+
         split_locations = torch.split(locations, counts.tolist())
         split_activations = torch.split(activations, counts.tolist())
         
@@ -106,10 +107,6 @@ class TensorBuffer:
 
 
 class FeatureDataset:
-    """
-    Dataset which constructs TensorBuffers for each module and feature.
-    """
-
     def __init__(
         self,
         raw_dir: str,
@@ -119,7 +116,7 @@ class FeatureDataset:
         tokenizer = None, # TODO: add typing
     ):
         """
-        Initialize a FeatureDataset.
+        Initialize a FeatureDataset which constructs TensorBuffers for each module and feature.
 
         Args:
             raw_dir (str): Directory containing raw feature data.
@@ -204,7 +201,6 @@ class FeatureDataset:
 
                 # Adjust end by one as the path avoids overlap
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
-                
                 self.buffers.append(
                     TensorBuffer(
                         path,
@@ -333,6 +329,7 @@ class FeatureLoader:
         """
         for data in buffer:
             if data is not None:
+                data = cast(BufferOutput, data)
                 record = await self._aprocess_feature(data)
                 if record is not None:
                     yield record

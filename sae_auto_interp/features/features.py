@@ -14,7 +14,7 @@ class Example:
     Attributes:
         tokens (TensorType["seq"]): Tokenized input sequence.
         activations (TensorType["seq"]): Activation values for the input sequence.
-        normalized_activations (TensorType["seq"]): Normalized activation values.
+        normalized_activations (TensorType["seq"]): Activations quantized to integers in [0, 10].
     """
     tokens: TensorType["seq"]
     activations: TensorType["seq"]
@@ -79,6 +79,8 @@ class FeatureRecord:
 
     Attributes:
         feature (Feature): The feature associated with the record.
+        examples: list[Example]: Example sequences where the feature activations,
+          assumed to be sorted in descending order by max activation
     """
 
     def __init__(

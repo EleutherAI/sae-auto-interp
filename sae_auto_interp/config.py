@@ -8,33 +8,31 @@ from simple_parsing import Serializable
 class ExperimentConfig(Serializable):
     
     n_examples_train: int = 40
-    """Number of examples to sample for training"""
+    """Number of examples to sample for feature explanation generation."""
 
     n_examples_test: int = 5
-    """Number of examples to sample for testing"""
+    """Number of examples to sample for feature explanation testing."""
 
     n_quantiles: int = 20
-    """Number of quantiles to sample"""
+    """Number of feature activation quantiles to sample."""
 
     example_ctx_len: int = 32
-    """Length of each example"""
+    """Length of each example sequence."""
 
     n_random: int = 50
-    """Number of random examples to sample"""
+    """Number of random examples to sample."""
 
-    train_type: Literal["top", "random", "quantiles"] = "random"
-    """Type of sampler to use for training"""
+    train_type: Literal["top", "random", "quantiles"] = "quantiles"
+    """Type of sampler to use for feature explanation generation."""
 
     test_type: Literal["quantiles", "activation"] = "quantiles"
-    """Type of sampler to use for testing"""
-
-
+    """Type of sampler to use for feature explanation testing."""
 
 
 @dataclass
 class FeatureConfig(Serializable):
     width: int = 131072
-    """Number of features in the autoencoder"""
+    """Number of features in each autoencoder"""
 
     min_examples: int = 200
     """Minimum number of examples for a feature to be included"""
@@ -48,27 +46,26 @@ class FeatureConfig(Serializable):
 
 @dataclass
 class CacheConfig(Serializable):
-
     dataset_repo: str = "EleutherAI/rpj-v2-sample"
-    """Dataset repository to use"""
+    """Dataset repository to use for generating feature activations."""
 
     dataset_split: str = "train[:1%]"
-    """Dataset split to use""" 
+    """Dataset split to use for generating feature activations.""" 
 
     dataset_name: str = ""
-    """Dataset name to use"""
+    """Dataset name to use."""
 
     dataset_row: str = "raw_content"
-    """Dataset row to use"""
+    """Dataset row to use."""
 
     batch_size: int = 32
-    """Number of sequences to process in a batch"""
+    """Number of sequences to process in a batch."""
 
     ctx_len: int = 256
-    """Context length of the autoencoder. Each batch is shape (batch_size, ctx_len)"""
+    """Context length of the autoencoder. Each batch is shape (batch_size, ctx_len)."""
 
     n_tokens: int = 10_000_000
-    """Number of tokens to cache"""
+    """Number of tokens to cache."""
 
     n_splits: int = 5
-    """Number of splits to divide .safetensors into"""
+    """Number of splits to divide .safetensors into."""

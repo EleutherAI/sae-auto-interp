@@ -236,8 +236,6 @@ Surprisal scoring computes the loss over some examples and uses a base model. We
 
 Embedding scoring uses a small embedding model through `sentence_transformers` to embed the examples do retrival. It also does not use VLLM but run the model directly. The setup is similar as above but for a example check `embedding.py` in the experiments folder.
 
-
-
 # Scripts
 
 Example scripts can be found in `demos`. Some of these scripts can be called from the CLI, as seen in examples found in `scripts`. These baseline scripts should allow anyone to start generating and scoring explanations in any SAE they are interested in. One always needs to first cache the activations of the features of any given SAE, and then generating explanations and scoring them can be done at the same time.
@@ -245,7 +243,6 @@ Example scripts can be found in `demos`. Some of these scripts can be called fro
 # Experiments
 
 The experiments discussed in [the blog post](https://blog.eleuther.ai/autointerp/) were mostly run in a legacy version of this code, which can be found in the [Experiments](https://github.com/EleutherAI/sae-auto-interp/tree/Experiments) branch.
-
 
 # License
 

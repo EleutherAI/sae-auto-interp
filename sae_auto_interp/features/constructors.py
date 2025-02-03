@@ -5,7 +5,13 @@ from .features import FeatureRecord, prepare_examples
 from .loader import BufferOutput
 
 
-def _top_k_pools(max_buffer,split_activations, buffer_tokens, ctx_len, max_examples):
+def _top_k_pools(
+        max_buffer: TensorType["batch"], 
+        split_activations: TensorType["activations"], 
+        buffer_tokens: TensorType["batch", "ctx_len"], 
+        ctx_len: int, 
+        max_examples: int
+    ):
     """
     Get the top k activation pools.
 
