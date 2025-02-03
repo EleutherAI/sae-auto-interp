@@ -51,8 +51,7 @@ def split_quantiles(
     seed: int = 22
 ):
     """
-    For each quantile, randomly select (n_samples // n_quantiles) samples from a unique contiguous 
-    slice of the examples.
+    Randomly select (n_samples // n_quantiles) samples from each quantile.
     """
     random.seed(seed)
 
