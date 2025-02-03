@@ -1,35 +1,45 @@
 import random
 from collections import deque
-from typing import List, Literal
+from typing import Literal, cast
+from torchtyping import TensorType
 
 from ..config import ExperimentConfig
 from .features import Example, FeatureRecord
 from ..logger import logger
 
-def split_activation_quantiles(
-    examples: list[Example], 
-    n_quantiles: int,
-    n_samples: int,
-    seed: int = 22
-):
+
+def split_activation_quantiles(examples: list[Example], n_quantiles: int, n_samples: int, seed: int = 22):
+    """
+    Split the examples into n_quantiles and sample n_samples from each quantile.
+    """
     random.seed(seed)
 
-    max_activation = examples[0].max_activation
+    examples = deque(sorted(examples, key=lambda x: x.max_activation))
+    max_activation = examples[-1].max_activation
+    assert max_activation > examples[0].max_activation
+
+    # For 4 quantiles, thresholds are 0.25, 0.5, 0.75
     thresholds = [max_activation * i / n_quantiles for i in range(1, n_quantiles)]
 
     samples = []
-    examples = deque(examples)
-
     for threshold in thresholds:
+        # Get all examples in quantile
         quantile = []
         while examples and examples[0].max_activation < threshold:
             quantile.append(examples.popleft())
+            
+        if len(quantile) < n_samples:
+            samples.append(quantile)  # Take all available
+            logger.warning(f"Quantile has {len(quantile)} examples, fewer than requested {n_samples}")
+        else:
+            samples.append(random.sample(quantile, n_samples))
 
-        sample = random.sample(quantile, n_samples)
-        samples.append(sample)
-
-    sample = random.sample(examples, n_samples)
-    samples.append(sample)
+    # Handle final quantile
+    if len(examples) < n_samples:
+        samples.append(list(examples))
+        logger.warning(f"Final quantile has {len(examples)} examples, fewer than requested {n_samples}")
+    else:
+        samples.append(random.sample(list(examples), n_samples))
     
     return samples
 
@@ -40,13 +50,20 @@ def split_quantiles(
     n_samples: int,
     seed: int = 22
 ):
+    """
+    For each quantile, randomly select (n_samples // n_quantiles) samples from a unique contiguous 
+    slice of the examples.
+    """
     random.seed(seed)
 
     quantile_size = len(examples) // n_quantiles
     samples_per_quantile = n_samples // n_quantiles
-    samples = []
+    samples: list[list[Example]] = []
     for i in range(n_quantiles):
+        # Take an evenly spaced slice of the examples for the quantile
         quantile = examples[i * quantile_size : (i + 1) * quantile_size]
+
+        # Take a random sample of the examples. If there are less than samples_per_quantile, use all samples
         if len(quantile) < samples_per_quantile:
             sample = quantile
             logger.info(f"Quantile {i} has less than {samples_per_quantile} samples, using all samples")
@@ -83,12 +100,11 @@ def train(
                 example.normalized_activations = (example.activations * 10 / max_activation).floor()
             return selected_examples
         case "quantiles":
-            
             selected_examples_quantiles = split_quantiles(examples, n_quantiles, n_train)
             selected_examples = []
             for quantile in selected_examples_quantiles:
                 for example in quantile:
-                    example.normalized_activations = (example.activations * 10 / max_activation).floor()
+                    example.normalized_activations = cast(TensorType["seq"], (example.activations * 10 / max_activation).floor())
                 selected_examples.extend(quantile)
             return selected_examples
 

@@ -2,7 +2,7 @@ from math import ceil
 from typing import List
 
 import torch
-from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
 from ...features import FeatureRecord
@@ -18,7 +18,7 @@ class FuzzingScorer(Classifier, Scorer):
     def __init__(
         self,
         client: Client,
-        tokenizer: PreTrainedTokenizer,
+        tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
         verbose: bool = False,
         batch_size: int = 1,
         threshold: float = 0.3,
@@ -48,6 +48,10 @@ class FuzzingScorer(Classifier, Scorer):
         """
         Prepare and shuffle a list of samples for classification.
         """
+        assert (
+            len(record.test) > 0 
+            and len(record.test[0]) > 0
+        ), "No test records found"
 
         defaults = {
             "highlighted": True,
@@ -64,11 +68,6 @@ class FuzzingScorer(Classifier, Scorer):
             n_incorrect=n_incorrect,
             **defaults,
         )
-
-        assert (
-            len(record.test) > 0 
-            and len(record.test[0]) > 0
-        ), "No test records found"
 
         for i, examples in enumerate(record.test):
             samples.extend(
