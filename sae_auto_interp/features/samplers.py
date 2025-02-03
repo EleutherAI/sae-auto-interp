@@ -38,18 +38,11 @@ def split_activation_quantiles(examples: list[Example], n_quantiles: int, n_samp
         while examples and examples[0].max_activation < threshold:
             quantile.append(examples.popleft())
             
-        if len(quantile) < n_samples:
-            samples.append(quantile)  # Take all available
-            logger.warning(f"Quantile has {len(quantile)} examples, fewer than requested {n_samples}")
-        else:
-            samples.append(random.sample(quantile, n_samples))
+        sample = random.sample(quantile, n_samples)
+        samples.append(sample)
 
-    # Handle final quantile
-    if len(examples) < n_samples:
-        samples.append(list(examples))
-        logger.warning(f"Final quantile has {len(examples)} examples, fewer than requested {n_samples}")
-    else:
-        samples.append(random.sample(list(examples), n_samples))
+    sample = random.sample(examples, n_samples)
+    samples.append(sample)
     
     return samples
 

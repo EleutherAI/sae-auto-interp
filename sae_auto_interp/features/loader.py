@@ -66,10 +66,11 @@ class TensorBuffer:
             Union[BufferOutput, None]: BufferOutput if enough examples, None otherwise.
         """
         split_data = load_file(self.tensor_path)
+        first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
         activations = torch.tensor(split_data["activations"])
         locations = torch.tensor(split_data["locations"].astype(np.int64))
         
-        locations[:,2] = locations[:,2] + torch.from_numpy(split_data["feature_start_idx"])
+        locations[:,2] = locations[:,2] + first_feature
         
         if self.features is not None:
             wanted_locations = torch.isin(locations[:,2], self.features)
