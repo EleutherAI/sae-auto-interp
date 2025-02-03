@@ -41,7 +41,7 @@ class Pipe:
     """
     Represents a pipe of functions to be executed with the same input.
     """
-    def __init__(self, *functions: List[Callable]):
+    def __init__(self, *functions: Callable):
         """
         Initialize the Pipe with a list of functions.
 
@@ -70,14 +70,15 @@ class Pipeline:
     """
     Manages the execution of multiple pipes, handling concurrency and progress tracking.
     """
-    def __init__(self, *pipes: List[Pipe]):
+    def __init__(self, loader: AsyncIterable | Callable, *pipes: Pipe | Callable):
         """
         Initialize the Pipeline with a list of pipes.
 
         Args:
+            loader (Callable): The loader to be executed first.
             *pipes (List[Pipe]): Pipes to be executed in the pipeline.
         """
-        self.pipes = pipes
+        self.pipes = [loader] + list(pipes)
 
     async def run(self, max_concurrent: int = 10) -> List[Any]:
         """

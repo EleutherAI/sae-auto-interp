@@ -53,6 +53,7 @@ class Classifier(Scorer):
     def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
         pass
 
+
     async def _query(
         self,
         explanation: str,
@@ -121,6 +122,7 @@ class Classifier(Scorer):
                 result.text = sample.text
         return results
 
+    
     def _parse(self, string, logprobs=None):
         pattern = r"\[.*?\]"
         match = re.search(pattern, string)
@@ -163,8 +165,6 @@ class Classifier(Scorer):
                 else:
                     probabilities.append(0)
         return probabilities
-
-
 
 
     def _build_prompt(

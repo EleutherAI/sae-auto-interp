@@ -35,7 +35,7 @@ class OpenRouter(Client):
 
     async def generate(
         self, prompt: str, raw: bool = False, max_retries: int = 1, **kwargs
-    ) -> str:
+    ) -> Response:
         kwargs.pop("schema", None)
         max_tokens = kwargs.pop("max_tokens", 500)
         temperature = kwargs.pop("temperature", 1.0)
