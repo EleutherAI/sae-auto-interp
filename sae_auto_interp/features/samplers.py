@@ -7,16 +7,26 @@ from ..config import ExperimentConfig
 from .features import Example, FeatureRecord
 from ..logger import logger
 
-
+            
 def split_activation_quantiles(examples: list[Example], n_quantiles: int, n_samples: int, seed: int = 22):
     """
+    TODO review this, there is a possible bug here: `examples[0].max_activation < threshold`
+
     Split the examples into n_quantiles and sample n_samples from each quantile.
+
+    Args:
+        examples: list of Examples, assumed to be in descending sorted order by max_activation
+        n_quantiles: number of quantiles to split the examples into
+        n_samples: number of samples to sample from each quantile
+        seed: seed for the random number generator
+
+    Returns:
+        list of lists of Examples, each inner list contains n_samples from a unique quantile
     """
     random.seed(seed)
 
-    examples = deque(sorted(examples, key=lambda x: x.max_activation))
-    max_activation = examples[-1].max_activation
-    assert max_activation > examples[0].max_activation
+    examples = deque(examples)
+    max_activation = examples[0].max_activation
 
     # For 4 quantiles, thresholds are 0.25, 0.5, 0.75
     thresholds = [max_activation * i / n_quantiles for i in range(1, n_quantiles)]
