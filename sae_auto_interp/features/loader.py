@@ -60,6 +60,8 @@ class TensorBuffer:
         self.features = features
         self.min_examples = min_examples
         
+   
+
     def __iter__(self):
         """
         Iterate over the buffer, yielding BufferOutput objects.
@@ -67,6 +69,22 @@ class TensorBuffer:
         Yields:
             Union[BufferOutput, None]: BufferOutput if enough examples, None otherwise.
         """
+        features, split_locations, split_activations, tokens = self.load()
+        
+        for i in range(len(features)):
+            feature_locations = split_locations[i]
+            feature_activations = split_activations[i]
+            if len(feature_locations) < self.min_examples:
+                yield None
+            else:
+                yield BufferOutput(
+                    Feature(self.module_path, int(features[i].item())),
+                    feature_locations,
+                    feature_activations,
+                    tokens
+                )
+
+    def load(self):
         split_data = load_file(self.tensor_path)
         first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
         activations = torch.tensor(split_data["activations"])
@@ -90,19 +108,11 @@ class TensorBuffer:
         features = unique_features
         split_locations = torch.split(locations, counts.tolist())
         split_activations = torch.split(activations, counts.tolist())
-        
-        for i in range(len(features)):
-            feature_locations = split_locations[i]
-            feature_activations = split_activations[i]
-            if len(feature_locations) < self.min_examples:
-                yield None
-            else:
-                yield BufferOutput(
-                    Feature(self.module_path, int(features[i].item())),
-                    feature_locations,
-                    feature_activations,
-                    tokens
-                )
+
+        return features, split_locations, split_activations, tokens
+
+
+
 
     def reset(self):
         """Reset the buffer state."""
