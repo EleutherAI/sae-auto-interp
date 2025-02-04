@@ -10,13 +10,13 @@ class ExperimentConfig(Serializable):
     n_examples_train: int = 40
     """Number of examples to sample for feature explanation generation."""
 
-    n_examples_test: int = 5
+    n_examples_test: int = 20
     """Number of examples to sample for feature explanation testing."""
 
-    n_quantiles: int = 20
+    n_quantiles: int = 10
     """Number of feature activation quantiles to sample."""
 
-    example_ctx_len: int = 32
+    example_ctx_len: int = 256
     """Length of each example sequence."""
 
     n_random: int = 50

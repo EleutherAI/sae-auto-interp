@@ -165,7 +165,6 @@ class FeatureCache:
         if filters is not None:
             self.filter_submodules(filters)
 
-        print(submodule_dict.keys())
 
     def load_token_batches(
         self, n_tokens: int, tokens: TensorType["batch", "sequence"]
@@ -232,7 +231,7 @@ class FeatureCache:
                         self.cache.add(latents, batch_number, module_path)
 
                     del buffer
-                    torch.cuda.empty_cache()
+                torch.cuda.empty_cache()
 
                 # Update the progress bar
                 pbar.update(1)
@@ -282,23 +281,25 @@ class FeatureCache:
             save_dir (str): Directory to save the splits.
         """
         split_indices = self._generate_split_indices(n_splits)
-
         for module_path in self.cache.feature_locations.keys():
             feature_locations = self.cache.feature_locations[module_path]
             feature_activations = self.cache.feature_activations[module_path]
-            features = feature_locations[:, 2]
+            
+            feature_indices = feature_locations[:, 2]
 
             for start, end in split_indices:
-                
-                mask = (features >= start) & (features <= end)
+                mask = (feature_indices >= start) & (feature_indices <= end)
 
-                masked_locations = feature_locations[mask].numpy()
                 masked_activations = feature_activations[mask].half().numpy()
-                masked_locations[:,2] = masked_locations[:,2]-start.item()
-                if masked_locations[:,2].max() < 2**16 and masked_locations[:,0].max() < 2**16:
+                
+                masked_locations = feature_locations[mask].numpy()
+                
+                # Optimization to reduce the max value to enable a smaller dtype
+                masked_locations[:, 2] = masked_locations[:, 2] - start.item() 
+
+                if masked_locations[:, 2].max() < 2**16 and masked_locations[:, 0].max() < 2**16:
                     masked_locations = masked_locations.astype(np.uint16)
                 else:
-                    print(masked_locations[:,2].max(), masked_locations[:,0].max())
                     masked_locations = masked_locations.astype(np.uint32)
                 
                 module_dir = f"{save_dir}/{module_path}"

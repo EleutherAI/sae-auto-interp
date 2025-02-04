@@ -11,6 +11,7 @@ def load_tokenized_data(
     dataset_name: str = "",
     dataset_row: str = "raw_content",
     seed: int = 22,
+    add_bos_token: bool = True,
 ):
     """
     Load a huggingface dataset, tokenize it, and shuffle.
@@ -19,7 +20,7 @@ def load_tokenized_data(
     from transformer_lens import utils
     print(dataset_repo,dataset_name,dataset_split)
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
-    tokens_ds = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name=dataset_row)
+    tokens_ds = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name=dataset_row, add_bos_token=add_bos_token)
     tokens_ds = tokens_ds.shuffle(seed)
 
     tokens = cast(TensorType["batch_size", "ctx_len"], tokens_ds["tokens"])
