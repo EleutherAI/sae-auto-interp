@@ -205,10 +205,10 @@ scorer_pipe = Pipe(
         postprocess=partial(scorer_postprocess, score_dir=recall_dir),
     ),
     process_wrapper(
-            FuzzingScorer(client, tokenizer=tokenizer, batch_size=cfg.batch_size),
-            preprocess=scorer_preprocess,
-            postprocess=partial(scorer_postprocess, score_dir=fuzz_dir),
-        ),
+        FuzzingScorer(client, tokenizer=tokenizer, batch_size=cfg.batch_size),
+        preprocess=scorer_preprocess,
+        postprocess=partial(scorer_postprocess, score_dir=fuzz_dir),
+    ),
 )
 ```
 

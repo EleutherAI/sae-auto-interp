@@ -95,8 +95,8 @@ class FeatureRecord:
         """
         self.feature = feature
         self.examples = []
-        self.train = []
-        self.test = []
+        self.train: list[list[Example]] = []
+        self.test: list[list[Example]] = []
 
     @property
     def max_activation(self):

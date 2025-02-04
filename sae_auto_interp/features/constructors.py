@@ -26,7 +26,7 @@ def _top_k_pools(
         Tuple[TensorType["examples", "ctx_len"], TensorType["examples", "ctx_len"]]: The token windows and activation windows.
     """
     k = min(max_examples, len(max_buffer))
-    top_values,top_indices = torch.topk(max_buffer, k,sorted=True)
+    top_values,top_indices = torch.topk(max_buffer, k, sorted=True)
 
     activation_windows = torch.stack([split_activations[i] for i in top_indices])
     token_windows = buffer_tokens[top_indices]
@@ -53,19 +53,32 @@ def pool_max_activation_windows(
     flat_indices = buffer_output.locations[:, 0] * tokens.shape[1] + buffer_output.locations[:, 1]
     ctx_indices = flat_indices//ctx_len
     index_within_ctx = flat_indices%ctx_len
-    unique_ctx_indices,inverses,lengths = torch.unique_consecutive(ctx_indices,return_counts=True,return_inverse=True)
+
+    torch.testing.assert_close(ctx_indices, buffer_output.locations[:, 0])
+    torch.testing.assert_close(index_within_ctx, buffer_output.locations[:, 1])
+
+    # unique_ctx_indices: array of distinct context window indices in order of first appearance. i.e. sequential integers from 0 to 3903
+    # inverses: maps each activation back to its index in unique_ctx_indices (can be used to dereference the context window idx of each activation)
+    # lengths: the number of activations per unique context window index
+    unique_ctx_indices, inverses, lengths = torch.unique_consecutive(ctx_indices, return_counts=True, return_inverse=True)
+
+    # Get the max activation magnitude within each context window
     max_buffer = torch.segment_reduce(buffer_output.activations, 'max', lengths=lengths)
 
-    new_tensor=torch.zeros(len(unique_ctx_indices),ctx_len,dtype=buffer_output.activations.dtype)
-    new_tensor[inverses,index_within_ctx]=buffer_output.activations
+    # Create a zeros tensor with the same shape as the activations tensor
+    new_tensor= torch.zeros(len(unique_ctx_indices), ctx_len, dtype=buffer_output.activations.dtype)
 
-    buffer_tokens = tokens.reshape(-1,ctx_len)
+    # Deduplicate the context windows
+    new_tensor[inverses, index_within_ctx] = buffer_output.activations
+
+    # Does nothing if tokens is already at the context length
+    buffer_tokens = tokens.reshape(-1, ctx_len)
+    # Does nothing
     buffer_tokens = buffer_tokens[unique_ctx_indices]
 
     token_windows, activation_windows = _top_k_pools(
-        max_buffer,new_tensor, buffer_tokens, ctx_len, max_examples
+        max_buffer, new_tensor, buffer_tokens, ctx_len, max_examples
     )
-
     record.examples = prepare_examples(token_windows, activation_windows)
 
 def random_activation_windows(

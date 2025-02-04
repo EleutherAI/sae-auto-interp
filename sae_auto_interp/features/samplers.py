@@ -31,7 +31,7 @@ def split_activation_quantiles(examples: list[Example], n_quantiles: int, n_samp
     # For 4 quantiles, thresholds are 0.25, 0.5, 0.75
     thresholds = [max_activation * i / n_quantiles for i in range(1, n_quantiles)]
 
-    samples = []
+    samples: list[list[Example]] = []
     for threshold in thresholds:
         # Get all examples in quantile
         quantile = []
@@ -117,7 +117,6 @@ def test(
     n_test: int,
     n_quantiles: int,
     test_type: Literal["quantiles", "activation"],
-    
 ):
     match test_type:
         case "quantiles":
