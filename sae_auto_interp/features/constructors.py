@@ -90,7 +90,14 @@ def random_activation_windows(
     mask[unique_batch_pos] = False
 
     available_indices = mask.nonzero().squeeze()
-    selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_random,))]
+    #print(batch_size,len(available_indices),unique_batch_pos.shape)
+    # TODO:What to do when the latent is active at least once in each batch?
+    if available_indices.numel() < n_random:
+        print("No available indices")
+        record.random_examples = []
+        return
+    else:
+        selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_random,))]
 
     toks = tokens[selected_indices, 10 : 10 + ctx_len]
 
