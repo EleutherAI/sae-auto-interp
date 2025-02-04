@@ -64,19 +64,20 @@ def load_eai_autoencoders(
                 trained_k = sae.cfg.k
             topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
             return topk(encoded)
-
-        if "llama" in weight_dir:
-            if module == "res":
-                submodule = model.model.layers[layer]
-            else:
-                submodule = model.model.layers[layer].mlp
-        elif "gpt2" in weight_dir:
-            submodule = model.transformer.h[layer]
-        else:
+        if "pythia" in weight_dir:
             if module == "res":
                 submodule = model.gpt_neox.layers[layer]
             else:
                 submodule = model.gpt_neox.layers[layer].mlp
+
+        elif "gpt2" in weight_dir:
+            submodule = model.transformer.h[layer]
+        else:
+            if module == "res":
+                submodule = model.model.layers[layer]
+            else:
+                submodule = model.model.layers[layer].mlp
+            
         submodule.ae = AutoencoderLatents(
             sae, partial(_forward, sae, k), width=sae.encoder.weight.shape[0],hookpoint=submodule.path
         )
