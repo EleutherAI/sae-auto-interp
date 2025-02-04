@@ -5,14 +5,13 @@ from typing import Callable, Dict, List, NamedTuple, Optional, Union
 
 import numpy as np
 import torch
+from nnsight import LanguageModel
 from safetensors.numpy import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
-from nnsight import LanguageModel
 
 from sae_auto_interp.utils import (
     load_tokenized_data,
-    load_tokenizer,
 )
 
 from ..config import FeatureConfig
@@ -121,6 +120,7 @@ class FeatureDataset:
         self,
         raw_dir: str,
         cfg: FeatureConfig,
+        tokenizer: Optional[Callable] = None,
         modules: Optional[List[str]] = None,
         features: Optional[Dict[str, Union[int, torch.Tensor]]] = None,
     ):
@@ -144,8 +144,11 @@ class FeatureDataset:
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
-        temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
-        self.tokenizer = temp_model.tokenizer
+        if tokenizer is None:
+            temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
+            self.tokenizer = temp_model.tokenizer
+        else:
+            self.tokenizer = tokenizer
         self.cache_config = cache_config
 
     def load_tokens(self):
@@ -164,7 +167,7 @@ class FeatureDataset:
                 self.cache_config["dataset_split"],
                 self.cache_config["dataset_name"],
                 column_name=self.cache_config.get(
-                    "column_name", self.cache_config.get("dataset_row", "raw_content")
+                    "dataset_column_name", self.cache_config.get("dataset_row", "raw_content")
                 ),
             )
         return self.tokens

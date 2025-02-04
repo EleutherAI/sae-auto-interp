@@ -1,5 +1,6 @@
-from transformers import AutoTokenizer
 import torch
+from transformers import AutoTokenizer
+
 
 def load_tokenized_data(
     ctx_len: int,
@@ -58,18 +59,3 @@ def load_filter(path: str, device: str = "cuda:0") -> dict:
 
 
 
-def load_tokenizer(model: str) -> AutoTokenizer:
-    """
-    Loads tokenizer to the default NNsight configuration.
-
-    Args:
-        model (str): The model name or path to load the tokenizer from.
-
-    Returns:
-        AutoTokenizer: The configured tokenizer.
-    """
-
-    tokenizer = AutoTokenizer.from_pretrained(model, padding_side="left")
-    tokenizer._pad_token = tokenizer._eos_token
-
-    return tokenizer
