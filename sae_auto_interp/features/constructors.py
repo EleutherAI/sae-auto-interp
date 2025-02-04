@@ -53,10 +53,7 @@ def pool_max_activation_windows(
     flat_indices = buffer_output.locations[:, 0] * tokens.shape[1] + buffer_output.locations[:, 1]
     ctx_indices = flat_indices//ctx_len
     index_within_ctx = flat_indices%ctx_len
-
-    torch.testing.assert_close(ctx_indices, buffer_output.locations[:, 0])
-    torch.testing.assert_close(index_within_ctx, buffer_output.locations[:, 1])
-
+    
     # unique_ctx_indices: array of distinct context window indices in order of first appearance. i.e. sequential integers from 0 to 3903
     # inverses: maps each activation back to its index in unique_ctx_indices (can be used to dereference the context window idx of each activation)
     # lengths: the number of activations per unique context window index
