@@ -1,4 +1,5 @@
 from typing import Iterable, List, Literal, Optional
+import traceback
 
 import dspy
 from asyncer import asyncify
@@ -44,6 +45,8 @@ class DSPyExplainer(Explainer):
         try:
             result = await asyncify(self.explainer)(feature_examples=records, lm=self.client)
         except ValueError:
+            logger.error(f"Error in explainer:")
+            traceback.print_exc()
             result = Explanations(
                 feature_examples=records,
                 shared_features=[""],

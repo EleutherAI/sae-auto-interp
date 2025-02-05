@@ -1,5 +1,6 @@
 import asyncio
 import os
+os.environ["DSPY_CACHEDIR"] = "/mnt/ssd-1/nev/dspy_cache"
 from dataclasses import replace
 
 from .experiment_dspy import (
@@ -10,7 +11,7 @@ from .experiment_dspy import (
 )
 
 if __name__ == "__main__":
-    os.environ["DSPY_CACHEDIR"] = "~/.cache/dspy"
+    # os.environ["DSPY_CACHEDIR"] = "~/.cache/dspy"
     # experiments we need
     # no tuning
     # batch size: 1, (10)
@@ -45,30 +46,30 @@ if __name__ == "__main__":
     )
     configs = [
         base_experiment,
-        # replace(
-        #     base_experiment,
-        #     experiment_name="n_aux_10",
-        #     save_dir="n_aux_10",
-        #     model_config=replace(base_experiment.model_config, n_aux_examples=10)
-        # ),
+        replace(
+            base_experiment,
+            experiment_name="n_aux_10",
+            save_dir="n_aux_10",
+            model_config=replace(base_experiment.model_config, n_aux_examples=10)
+        ),
         replace(
             base_experiment,
             experiment_name="batch_size_1",
             save_dir="batch_size_1",
             model_config=replace(base_experiment.model_config, batch_size=1)
         ),
-        # replace(
-        #     base_experiment,
-        #     experiment_name="batch_size_1_aux",
-        #     save_dir="batch_size_1_aux",
-        #     model_config=replace(base_experiment.model_config, batch_size=1, n_aux_examples=10)
-        # ),
-        # replace(
-        #     base_experiment,
-        #     experiment_name="dropout_1.0",
-        #     save_dir="dropout_1.0",
-        #     model_config=replace(base_experiment.model_config, drop_out_explainer_prob=1.0, n_aux_examples=10)
-        # ),
+        replace(
+            base_experiment,
+            experiment_name="batch_size_1_aux",
+            save_dir="batch_size_1_aux",
+            model_config=replace(base_experiment.model_config, batch_size=1, n_aux_examples=10)
+        ),
+        replace(
+            base_experiment,
+            experiment_name="dropout_1.0",
+            save_dir="dropout_1.0",
+            model_config=replace(base_experiment.model_config, drop_out_explainer_prob=1.0)
+        ),
         replace(
             base_experiment,
             experiment_name="cot",
@@ -81,18 +82,30 @@ if __name__ == "__main__":
             save_dir="cot_bs1",
             model_config=replace(base_experiment.model_config, use_cot=True, batch_size=1, n_aux_examples=3)
         ),
-        # replace(
-        #     base_experiment,
-        #     experiment_name="deepseek",
-        #     save_dir="deepseek",
-        #     **ds_config,
-        # )
+        replace(
+            base_experiment,
+            experiment_name="deepseek",
+            save_dir="deepseek",
+            **ds_config,
+        ),
         replace(
             base_experiment,
             experiment_name="mipro",
             save_dir="mipro",
             model_config=replace(base_experiment.model_config, optimizer="mipro"),
-        )
+        ),
+        replace(
+            base_experiment,
+            experiment_name="mipro_cot",
+            save_dir="mipro_cot",
+            model_config=replace(base_experiment.model_config, optimizer="mipro", use_cot=True),
+        ),
+        replace(
+            base_experiment,
+            experiment_name="no_optim",
+            save_dir="no_optim",
+            model_config=replace(base_experiment.model_config, optimizer="none"),
+        ),
     ]
     configs = [
         replace(config, save_dir=f"results/dspy_experiments/{config.save_dir}") for config in configs

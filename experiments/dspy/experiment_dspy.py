@@ -112,7 +112,7 @@ class DSPyExperiment:
     
     def train(self):
         if self.config.model_config.optimizer == "none":
-            module = dspy_classifier_pipeline_from_config(config)
+            module = dspy_classifier_pipeline_from_config(self.config)
         else:
             module = train_classifier_pipeline(
                 self._loader_train,
@@ -140,6 +140,13 @@ class DSPyExperiment:
             activations=True,
             cot=False,
         )
+        default_expainer_cot = DefaultExplainer(
+            self._client,
+            tokenizer=self.tokenizer,
+            threshold=0.2,
+            activations=True,
+            cot=True,
+        )
         if self.config.classification_method == "detect":
             default_scorer = DetectionScorer(
                 self._client,
@@ -148,6 +155,14 @@ class DSPyExperiment:
                 log_prob=False,
                 batch_size=5,
             )
+            default_scorer_cot = DetectionScorer(
+                self._client,
+                tokenizer=self.tokenizer,
+                verbose=True,
+                log_prob=False,
+                batch_size=5,
+                cot=True,
+            )
         elif self.config.classification_method == "pseudo_fuzz":
             default_scorer = FuzzingScorer(
                 self._client,
@@ -155,6 +170,14 @@ class DSPyExperiment:
                 verbose=True,
                 log_prob=False,
                 batch_size=5,
+            )
+            default_scorer_cot = FuzzingScorer(
+                self._client,
+                tokenizer=self.tokenizer,
+                verbose=True,
+                log_prob=False,
+                batch_size=5,
+                cot=True,
             )
         else:
             raise ValueError("Only detect and pseudo_fuzz are supported for non-DSPy pipelines")
@@ -233,12 +256,13 @@ class DSPyExperiment:
         modules_path = save_dir / "modules"
         modules_path.mkdir(parents=True, exist_ok=True)
         
-        dspy_accuracies, default_accuracies, dspy_explainer_accuracies, dspy_scorer_accuracies = {}, {}, {}, {}
+        dspy_accuracies, default_accuracies, default_accuracies_cot, dspy_explainer_accuracies, dspy_scorer_accuracies = {}, {}, {}, {}, {}
         
         def save_accuracies():
             accuracies = dict(
                 dspy_accuracies=dspy_accuracies,
                 default_accuracies=default_accuracies,
+                default_accuracies_cot=default_accuracies_cot,
                 dspy_explainer_accuracies=dspy_explainer_accuracies,
                 dspy_scorer_accuracies=dspy_scorer_accuracies,
             )
@@ -248,6 +272,10 @@ class DSPyExperiment:
         # default
         default_accuracies = await evaluate_default_pipeline(
             default_explainer, default_scorer
+        )
+        save_accuracies()
+        default_accuracies_cot = await evaluate_default_pipeline(
+            default_expainer_cot, default_scorer_cot
         )
         save_accuracies()
         
