@@ -17,14 +17,16 @@ def load_tokenized_data(
     Load a huggingface dataset, tokenize it, and shuffle.
     """
     from datasets import load_dataset
-    from transformer_lens import utils
+    from sae.data import chunk_and_tokenize
+    
     print(dataset_repo,dataset_name,dataset_split)
+
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
-    tokens_ds = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name=dataset_row, add_bos_token=add_bos_token)
+    tokens_ds = chunk_and_tokenize(data, tokenizer, max_seq_len=ctx_len, text_key=dataset_row)
     tokens_ds = tokens_ds.shuffle(seed)
 
-    tokens = cast(TensorType["batch_size", "ctx_len"], tokens_ds["tokens"])
-
+    tokens = cast(TensorType["batch", "seq"], tokens_ds["input_ids"])
+    
     return tokens
 
 

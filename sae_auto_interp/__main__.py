@@ -160,13 +160,13 @@ async def process_cache(
         args.run_cfg.explainer_model,
         max_memory=0.8,
         # Explainer models context length - must be able to accomodate the longest set of examples
-        max_model_len=11_000,
+        max_model_len=8192,
         num_gpus=args.run_cfg.num_gpus,
     )
 
     constructor = partial(
         default_constructor,
-        tokens=dataset.tokens,
+        token_loader=None,
         n_random=args.experiment_cfg.n_random,
         ctx_len=args.experiment_cfg.example_ctx_len,
         max_examples=args.feature_cfg.max_examples,
