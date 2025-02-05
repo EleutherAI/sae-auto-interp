@@ -286,9 +286,9 @@ def populate_cache(
     latents_path.mkdir(parents=True, exist_ok=True)
 
     data = load_dataset(cfg.dataset_repo, name=cfg.dataset_name, split=cfg.dataset_split)
-    tokens_ds = chunk_and_tokenize(data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row)
-    tokens_ds = tokens_ds.shuffle(run_cfg.seed)
-    tokens = tokens_ds["input_ids"]
+    data = data.shuffle(run_cfg.seed)
+    data = chunk_and_tokenize(data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row)
+    tokens = data["input_ids"]
 
     if filter_tokens is not None:
         flattened_tokens = tokens.flatten()
