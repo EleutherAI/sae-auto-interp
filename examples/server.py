@@ -5,13 +5,13 @@ import os
 import pandas as pd
 from functools import partial
 from sentence_transformers import SentenceTransformer
-from sae_auto_interp.clients import OpenRouter
+from delphi.clients import OpenRouter
 from sklearn.metrics import roc_auc_score
 
 
-from sae_auto_interp.explainers import DefaultExplainer
-from sae_auto_interp.features import FeatureRecord, Feature, Example
-from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer,EmbeddingScorer
+from delphi.explainers import DefaultExplainer
+from delphi.features import FeatureRecord, Feature, Example
+from delphi.scorers import FuzzingScorer, DetectionScorer,EmbeddingScorer
 
 app = Flask(__name__)
 
