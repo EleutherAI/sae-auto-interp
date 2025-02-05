@@ -2,7 +2,7 @@ from functools import partial, reduce
 from typing import List, Any, Tuple, Optional, Dict
 import torch
 from nnsight import LanguageModel
-from sae import Sae
+from sparsify import Sae
 from pathlib import Path
 from .OpenAI.model import ACTIVATIONS_CLASSES, TopK
 from .wrapper import AutoencoderLatents
