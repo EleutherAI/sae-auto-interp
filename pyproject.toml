@@ -13,7 +13,8 @@ dependencies = [
     "datasets",
     "nnsight",
     "orjson",
-    "sae@git+https://github.com/EleutherAI/sae",
+    "sae@git+https://github.com/EleutherAI/sae@4c73890dfe94529037fa5d0f2592124f80f41f56",  # before the sparsify rename
+    "transformers<4.48.0",  # necessary for monet
     "safetensors",
     "simple_parsing",
     "torchtyping",
