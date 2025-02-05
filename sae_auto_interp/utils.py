@@ -1,3 +1,4 @@
+from nnsight import LanguageModel
 from transformers import AutoTokenizer
 import torch
 
@@ -70,6 +71,5 @@ def load_tokenizer(model: str) -> AutoTokenizer:
     """
 
     tokenizer = AutoTokenizer.from_pretrained(model, padding_side="left")
-    tokenizer._pad_token = tokenizer._eos_token
-
+    tokenizer._pad_token = tokenizer._eos_token if hasattr(tokenizer, "_eos_token") else tokenizer.eos_token
     return tokenizer
