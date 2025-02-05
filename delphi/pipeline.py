@@ -5,11 +5,6 @@ from typing import Callable, AsyncIterable, Any, List
 from tqdm.asyncio import tqdm
 
 
-import time
-import cProfile
-import io
-import pstats
-
 def process_wrapper(function: Callable, preprocess: Callable = None, postprocess: Callable = None) -> Callable:
     """
     Wraps a function with optional preprocessing and postprocessing steps.
@@ -104,9 +99,7 @@ class Pipeline:
 
         async for item in self.generate_items():
             number_of_items += 1
-            #start_time = time.time()
             task = asyncio.create_task(process_and_update(item, semaphore, number_of_items))
-            #end_time = time.time()
             tasks.add(task)
             task.add_done_callback(tasks.discard)
             
