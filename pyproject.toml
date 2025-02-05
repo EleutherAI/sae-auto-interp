@@ -27,11 +27,11 @@ dependencies = [
 ]
 
 [tool.pyright]
-include = ["sae_auto_interp*"]
+include = ["delphi*"]
 reportPrivateImportUsage = false
 
 [tool.setuptools.packages.find]
-include = ["sae_auto_interp*"]
+include = ["delphi*"]
 
 [tool.ruff]
 # TODO: Clean up or remove experiments folder.
