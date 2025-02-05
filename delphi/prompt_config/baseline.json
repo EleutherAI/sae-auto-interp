@@ -1,0 +1,32 @@
+{
+  "name": "baseline",
+  "explainer_prompts": {
+    "system": "You are a meticulous AI researcher conducting an important investigation into patterns found in language...",
+    "few_shot": [
+      "Example 1...",
+      "Example 2..."
+    ]
+  },
+  "detection_prompts": {
+    "system": "You are an intelligent and meticulous linguistics researcher...",
+    "few_shot": [
+      "Example 1...", 
+      "Example 2..."
+    ]
+  },
+  "fuzzing_prompts": {
+    "system": "You are an intelligent and meticulous linguistics researcher...",
+    "few_shot": [
+      "Example 1...",
+      "Example 2..."
+    ]
+  },
+  "simulation_prompts": {
+    "system": "We're studying neurons in a neural network...",
+    "few_shot": [
+      "Example 1...",
+      "Example 2..."
+    ]
+  },
+  "model": "meta-llama/Meta-Llama-3.1-8B-Instruct"
+} 

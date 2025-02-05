@@ -9,7 +9,7 @@ from safetensors.numpy import save_file
 from torchtyping import TensorType
 from tqdm import tqdm
 
-from sae_auto_interp.config import CacheConfig
+from delphi.config import CacheConfig
 
 
 class Cache:
