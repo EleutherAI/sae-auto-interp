@@ -7,12 +7,17 @@ from dataclasses import dataclass
 from multiprocessing import cpu_count
 import asyncio
 import re
+import os
 
 from simple_parsing import ArgumentParser, field
 import torch
 from torch import Tensor
 import torch.nn as nn
-from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast, BitsAndBytesConfig
+from transformers import (
+    PreTrainedTokenizer,
+    PreTrainedTokenizerFast,
+    BitsAndBytesConfig,
+)
 import orjson
 from torchtyping import TensorType
 from nnsight import LanguageModel
@@ -26,17 +31,13 @@ from delphi.features import FeatureDataset, FeatureLoader
 from delphi.features.constructors import default_constructor
 from delphi.features.samplers import sample
 from delphi.pipeline import Pipeline, process_wrapper
-from delphi.clients import Offline
+from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig
 from delphi.features import FeatureCache
 from delphi.utils import assert_type
 from delphi.scorers import FuzzingScorer, DetectionScorer
 from delphi.pipeline import Pipe
-from delphi.autoencoders.eleuther import load_eleuther_sparse_models
-from delphi.autoencoders.openai import load_oai_autoencoders
-from delphi.autoencoders.deepmind import load_gemma_autoencoders
-
-from sae.sae import Sae
+from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
 
 
 @dataclass
@@ -51,17 +52,11 @@ class RunConfig:
         default="EleutherAI/sae-llama-3-8b-32x",
         positional=True,
     )
-    """Name of the sparse models associated with the model to explain. If the model
-    is not loadable with sparsify then this should be the directory containing the
-    sparse model weights."""
+    """Name of the models associated with the model to explain, or path to
+    directory containing its weights. Models must be loadable with sparsify."""
 
     hookpoints: list[str] = list_field()
     """List of hookpoints to load SAEs for."""
-
-    sparse_library: str = field(
-        default="sparsify",
-    )
-    """Name of the library used to load sparsifying models."""
 
     explainer_model: str = field(
         default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
@@ -73,8 +68,13 @@ class RunConfig:
     )
     """Maximum length of the explainer model context window."""
 
+    explainer_provider: str = field(
+        default="offline",
+    )
+    """Provider to use for explanation generation. Options are 'offline' for local models and 'openrouter' for API calls."""
+
     name: str = ""
-    """The name of the run. If not provided the run may overwrite existing files."""
+    """The name of the run. Results will be saved in a directory with this name."""
 
     overwrite: list[str] = list_field()
     """Whether to overwrite existing parts of the run. Options are 'cache', 'scores', and 'visualize'."""
@@ -113,7 +113,7 @@ def load_artifacts(run_cfg: RunConfig):
         dtype = "auto"
 
     model = LanguageModel(
-        run_cfg.model, 
+        run_cfg.model,
         device_map={"": "cuda"},
         quantization_config=(
             BitsAndBytesConfig(load_in_8bit=run_cfg.load_in_8bit)
@@ -122,40 +122,16 @@ def load_artifacts(run_cfg: RunConfig):
         ),
         torch_dtype=dtype,
         token=run_cfg.hf_token,
-        dispatch=True
+        dispatch=True,
     )
 
     # Add SAE hooks to the model
-    if run_cfg.sparse_library in ["sae", "sparsify"]:
-        submodule_name_to_submodule, model = load_eleuther_sparse_models(
-            model, # type: ignore
-            run_cfg.sparse_model,
-            run_cfg.hookpoints,
-            k=run_cfg.max_features,
-        )
-    elif run_cfg.sparse_library == "openai" or run_cfg.sparse_library == "gemma":
-        if not Path(run_cfg.sparse_model).exists():
-            raise ValueError("sparse_model must be path to on-disk weights for models not loadable with sparsify")
-        
-        # Parse layer indices from hookpoints
-        layers = []
-        for hookpoint in run_cfg.hookpoints:
-            # regex for first contiguous digits
-            match = re.search(r'\d+', hookpoint)
-            if match:
-                layers.append(int(match.group()))
-        
-        submodule_name_to_submodule, model = {
-            "openai": load_oai_autoencoders,
-            "gemma": load_gemma_autoencoders,
-        }[run_cfg.sparse_library](
-            model, # type: ignore
-            ae_layers=layers,
-            weight_dir=run_cfg.sparse_model
-        )
-    else:
-        raise ValueError(f"Sparse library {run_cfg.sparse_library} not supported")
-    
+    submodule_name_to_submodule, model = load_and_hook_sparsify_models(
+        model,  # type: ignore
+        run_cfg.sparse_model,
+        run_cfg.hookpoints,
+        k=run_cfg.max_features,
+    )
     model = assert_type(LanguageModel, model)
 
     return run_cfg.hookpoints, submodule_name_to_submodule, model, model.tokenizer
@@ -201,13 +177,28 @@ async def process_cache(
         tokenizer=tokenizer,
     )
 
-    client = Offline(
-        run_cfg.explainer_model,
-        max_memory=0.8,
-        # Explainer models context length - must be able to accomodate the longest set of examples
-        max_model_len=run_cfg.explainer_model_max_len,
-        num_gpus=run_cfg.num_gpus,
-    )
+    if run_cfg.explainer_provider == "offline":
+        client = Offline(
+            run_cfg.explainer_model,
+            max_memory=0.8,
+            # Explainer models context length - must be able to accomodate the longest set of examples
+            max_model_len=run_cfg.explainer_model_max_len,
+            num_gpus=run_cfg.num_gpus,
+        )
+    elif run_cfg.explainer_provider == "openrouter":
+        if "OPENROUTER_API_KEY" not in os.environ or not os.environ["OPENROUTER_API_KEY"]:
+            raise ValueError(
+                "OPENROUTER_API_KEY environment variable not set. Set `--explainer-provider offline` to use a local explainer model."
+            )
+
+        client = OpenRouter(
+            run_cfg.explainer_model,
+            api_key=os.environ["OPENROUTER_API_KEY"],
+        )
+    else:
+        raise ValueError(
+            f"Explainer provider {run_cfg.explainer_provider} not supported"
+        )
 
     constructor = partial(
         default_constructor,
@@ -295,16 +286,22 @@ def populate_cache(
     """
     latents_path.mkdir(parents=True, exist_ok=True)
 
-    data = load_dataset(cfg.dataset_repo, name=cfg.dataset_name, split=cfg.dataset_split)
+    data = load_dataset(
+        cfg.dataset_repo, name=cfg.dataset_name, split=cfg.dataset_split
+    )
     data = data.shuffle(run_cfg.seed)
-    data = chunk_and_tokenize(data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row)
+    data = chunk_and_tokenize(
+        data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row
+    )
     tokens = data["input_ids"]
 
     if filter_tokens is not None:
         flattened_tokens = tokens.flatten()
         mask = ~torch.isin(flattened_tokens, filter_tokens)
         masked_tokens = flattened_tokens[mask]
-        truncated_tokens = masked_tokens[:len(masked_tokens) - (len(masked_tokens) % cfg.ctx_len)]
+        truncated_tokens = masked_tokens[
+            : len(masked_tokens) - (len(masked_tokens) % cfg.ctx_len)
+        ]
         tokens = truncated_tokens.reshape(-1, cfg.ctx_len)
 
     tokens = cast(TensorType["batch", "seq"], tokens)
@@ -333,10 +330,6 @@ async def run():
     parser.add_arguments(RunConfig, dest="run_cfg")
     args = parser.parse_args()
 
-    feature_range = torch.arange(args.run_cfg.max_features) if args.run_cfg.max_features else None
-
-    hookpoints, submodule_name_to_submodule, hooked_model, tokenizer = load_artifacts(args)
-
     base_path = Path("results")
     if args.run_cfg.name:
         base_path = base_path / args.run_cfg.name
@@ -344,6 +337,14 @@ async def run():
     latents_path = base_path / "latents"
     explanations_path = base_path / "explanations"
     scores_path = base_path / "scores"
+
+    feature_range = (
+        torch.arange(args.run_cfg.max_features) if args.run_cfg.max_features else None
+    )
+
+    hookpoints, submodule_name_to_submodule, hooked_model, tokenizer = load_artifacts(
+        args.run_cfg
+    )
 
     if (
         not glob(str(latents_path / ".*")) + glob(str(latents_path / "*"))

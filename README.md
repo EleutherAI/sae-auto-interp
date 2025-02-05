@@ -12,6 +12,14 @@ Install this library as a local editable installation. Run the following command
 
 ```pip install -e .```
 
+## Getting Started
+
+To run a minimal pipeline from the command line, you can use the following command:
+
+`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --max_features 100 --hookpoints layers.5 --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]'`
+
+This will cache the activations of the first 10 million tokens of EleutherAI/rpj-v2-sample, generate explanations for the first 100 features using the explainer model, then score the explanations using fuzzing and detection scorers.
+
 # Loading Autoencoders
 
 This library uses NNsight to load and edit a model with sparse auxiliary models. We provide wrappers to load GPT-2 autoencoders trained by [OpenAI](https://github.com/openai/sparse_autoencoder), for the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for SAEs and transcoders trained by EleutherAI using [SAE](https://github.com/EleutherAI/sae). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
@@ -24,7 +32,7 @@ The first step to generate explanations is to cache sparse model activations. To
 from sae.data import chunk_and_tokenize
 from sae_auto_interp.features import FeatureCache
 
-data = load_dataset("EleutherAI", name="rpj-v2-sample", split="train[:1%]")
+data = load_dataset("EleutherAI/rpj-v2-sample", split="train[:1%]")
 tokens = chunk_and_tokenize(data, tokenizer, max_seq_len=256, text_key="raw_content")["input_ids"]
 
 cache = FeatureCache(

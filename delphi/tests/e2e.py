@@ -1,18 +1,12 @@
 from pathlib import Path
-import json
 import orjson
 import torch
 from torch import Tensor
 import pandas as pd
-import plotly.io as pio
 import asyncio
-import lovely_tensors as lt
 
 from delphi.config import ExperimentConfig, FeatureConfig, CacheConfig
 from delphi.__main__ import RunConfig, populate_cache, process_cache, load_artifacts
-
-lt.monkey_patch()
-pio.kaleido.scope.mathjax = None  # https://github.com/plotly/plotly.py/issues/3469
 
 
 def parse_score_file(file_path):
@@ -49,7 +43,6 @@ def build_df(path: Path, target_modules: list[str], range: Tensor | None):
     print(scores_types)
     for score_type in scores_types:
         score_type_path = path / score_type
-        # TODO update glob to only include files with a target_module in the name
         for module in target_modules:
             for score_file in list(score_type_path.glob(f"*{module}*")) + list(
                 score_type_path.glob(f".*{module}*")
@@ -101,13 +94,12 @@ async def new_main():
         overwrite=["cache", "scores", "visualize"],
         model="EleutherAI/pythia-160m",
         sparse_model="EleutherAI/sae-pythia-160m-32k",
-        sparse_library="sparsify",
         explainer_model="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         hookpoints=["layers.3"],
         explainer_model_max_len=4208,
         max_features=100,
         seed=22,
-        num_gpus=torch.cuda.device_count(),
+        num_gpus=torch.cuda.device_count()
     )
 
     feature_range = torch.arange(run_cfg.max_features) if run_cfg.max_features else None
