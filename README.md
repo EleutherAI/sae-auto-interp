@@ -1,40 +1,48 @@
 # Introduction
 
+Delphi was the home of a temple to Phoebus Apollo, which famously had the inscription, 'Know Thyself.' This library lets language models know themselves through automated interpretability.
+
 This library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) features. The explainer and scorer models can be run locally or accessed using API calls via OpenRouter.
 
-The branch used for the article [Automatically Interpreting Millions of Features in Large Language Models](https://arxiv.org/pdf/2410.13928) is the legacy branch [article_version](https://github.com/EleutherAI/sae-auto-interp/tree/article_version), that branch contains the scripts to reproduce our experiments. Note that we're still actively improving the codebase and that the newest version on the main branch could require slightly different usage.
+The library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) features. The explainer and scorer models can be run locally or acessed using API calls via OpenRouter.
 
+The library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) features. The explainer and scorer models can be run locally or acessed using API calls via OpenRouter.
 
+The branch used for the article [Automatically Interpreting Millions of Features in Large Language Models](https://arxiv.org/pdf/2410.13928) is the legacy branch [article_version](https://github.com/EleutherAI/delphi/tree/article_version), that branch contains the scripts to reproduce our experiments. Note that we're still actively improving the codebase and that the newest version on the main branch could require slightly different usage.
 
 ## Installation
 
-Install this library as a local editable installation. Run the following command from the `sae-auto-interp` directory.
+Install this library as a local editable installation. Run the following command from the `delphi` directory.
 
 ```pip install -e .```
 
+## Getting Started
+
+To run a minimal pipeline from the command line, you can use the following command:
+
+`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --max_features 100 --hookpoints layers.5 --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]'`
+
+This will cache the activations of the first 10 million tokens of EleutherAI/rpj-v2-sample, generate explanations for the first 100 features using the explainer model, then score the explanations using fuzzing and detection scorers.
+
 # Loading Autoencoders
 
-This library uses NNsight to load and edit a model with autoencoders. We provide wrappers to load GPT-2 autoencoders trained by [OpenAI](https://github.com/openai/sparse_autoencoder), for the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for some SAEs train by EleutherAI using [SAE](https://github.com/EleutherAI/sae). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
+This library uses NNsight to load and edit a model with sparse auxiliary models. We provide wrappers to load GPT-2 autoencoders trained by [OpenAI](https://github.com/openai/sparse_autoencoder), for the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for SAEs and transcoders trained by EleutherAI using [SAE](https://github.com/EleutherAI/sae). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
 
 # Caching
 
-The first step to generate explanations is to cache autoencoder activations. To do so, load your autoencoders into the model, load the tokens you want to cache the activations from, create a `FeatureCache` object and run it. We recommend caching over at least 10M tokens.
+The first step to generate explanations is to cache sparse model activations. To do so, load your sparse models into the base model, load the tokens you want to cache the activations from, create a `FeatureCache` object and run it. We recommend caching over at least 10M tokens.
 
 ```python
-from sae_auto_interp.utils import load_tokenized_data
+from sae.data import chunk_and_tokenize
 from sae_auto_interp.features import FeatureCache
 
-tokens = load_tokenized_data(
-        ctx_len=256,
-        tokenizer=model.tokenizer,
-        dataset_repo="EleutherAI/rpj-v2-sample",
-        dataset_split="train[:1%]",
-)
+data = load_dataset("EleutherAI/rpj-v2-sample", split="train[:1%]")
+tokens = chunk_and_tokenize(data, tokenizer, max_seq_len=256, text_key="raw_content")["input_ids"]
 
 cache = FeatureCache(
     model,
     submodule_dict,
-    batch_size = 8,
+    batch_size = 8
 )
 
 cache.run(n_tokens = 10_000_000, tokens=tokens)
@@ -53,18 +61,18 @@ Safetensors are split into shards over the width of the autoencoder.
 
 # Loading Feature Records
 
-The `.features` module provides utilities for reconstructing and sampling various statistics for SAE features. In this version of the code you needed to specify the width of the autoencoder, the minimum number examples for a feature to be included and the maximum number of examples to include, as well as the number of splits to divide the features into.
+The `.features` module provides utilities for reconstructing and sampling various statistics for sparse features. In this version of the code you needed to specify the width of the autoencoder, the minimum number examples for a feature to be included and the maximum number of examples to include, as well as the number of splits to divide the features into.
 
 ```python
 from sae_auto_interp.features import FeatureLoader, FeatureDataset
 from sae_auto_interp.config import FeatureConfig
 
 #
-cfg = FeatureConfig(width=131072,min_examples=200,max_examples=10000,n_splits=5)
+cfg = FeatureConfig(width=131072, min_examples=200, max_examples=10000, n_splits=5)
 
 dataset = FeatureDataset(
     raw_dir="feature_folder",
-    modules=[".model.layer.0"],# This a list of the different caches to load from
+    modules=[".model.layer.0"], # This a list of the different caches to load from
     cfg=cfg,
 )
 ```
@@ -205,10 +213,10 @@ scorer_pipe = Pipe(
         postprocess=partial(scorer_postprocess, score_dir=recall_dir),
     ),
     process_wrapper(
-            FuzzingScorer(client, tokenizer=tokenizer, batch_size=cfg.batch_size),
-            preprocess=scorer_preprocess,
-            postprocess=partial(scorer_postprocess, score_dir=fuzz_dir),
-        ),
+        FuzzingScorer(client, tokenizer=tokenizer, batch_size=cfg.batch_size),
+        preprocess=scorer_preprocess,
+        postprocess=partial(scorer_postprocess, score_dir=fuzz_dir),
+    ),
 )
 ```
 
@@ -242,7 +250,7 @@ Example scripts can be found in `demos`. Some of these scripts can be called fro
 
 # Experiments
 
-The experiments discussed in [the blog post](https://blog.eleuther.ai/autointerp/) were mostly run in a legacy version of this code, which can be found in the [Experiments](https://github.com/EleutherAI/sae-auto-interp/tree/Experiments) branch.
+The experiments discussed in [the blog post](https://blog.eleuther.ai/autointerp/) were mostly run in a legacy version of this code, which can be found in the [Experiments](https://github.com/EleutherAI/delphi/tree/Experiments) branch.
 
 # License
 

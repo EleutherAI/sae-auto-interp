@@ -5,6 +5,7 @@ import torch
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
+from ...features.features import Example
 from ...features import FeatureRecord
 from ..scorer import Scorer
 from .classifier import Classifier
@@ -37,7 +38,10 @@ class FuzzingScorer(Classifier, Scorer):
         self.threshold = threshold
         self.prompt = prompt
 
-    def average_n_activations(self, examples) -> float:
+    def mean_n_activations_ceil(self, examples: list[Example]):
+        """
+        Calculate the ceiling of the average number of activations in each example.
+        """
         avg = sum(
             len(torch.nonzero(example.activations)) for example in examples
         ) / len(examples)
@@ -58,9 +62,11 @@ class FuzzingScorer(Classifier, Scorer):
             "tokenizer": self.tokenizer,
         }
         all_examples = []
-        for test in record.test:
-            all_examples.extend(test)
-        n_incorrect = self.average_n_activations(all_examples)
+        for examples_chunk in record.test:
+            all_examples.extend(examples_chunk)
+
+        n_incorrect = self.mean_n_activations_ceil(all_examples)
+
         samples = examples_to_samples(
             record.extra_examples,
             distance=-1,
