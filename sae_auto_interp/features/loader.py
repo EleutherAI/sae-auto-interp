@@ -1,18 +1,17 @@
 import asyncio
 import json
 import os
-from typing import Callable, Dict, List, NamedTuple, Optional, Union, cast
+from typing import Callable, Dict, List, NamedTuple, Optional, Union
 
 import numpy as np
 import torch
+from nnsight import LanguageModel
 from safetensors.numpy import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
-from nnsight import LanguageModel
 
 from sae_auto_interp.utils import (
     load_tokenized_data,
-    load_tokenizer,
 )
 
 from ..config import FeatureConfig
@@ -27,10 +26,12 @@ class BufferOutput(NamedTuple):
         feature (Feature): The feature associated with this output.
         locations (TensorType["locations", 2]): Tensor of feature locations.
         activations (TensorType["locations"]): Tensor of feature activations.
+        tokens (TensorType["tokens"]): Tensor of all tokens.
     """
     feature: Feature
     locations: TensorType["locations", 2]
     activations: TensorType["locations"]
+    tokens: TensorType["tokens"]
 
 
 class TensorBuffer:
@@ -66,10 +67,30 @@ class TensorBuffer:
         Yields:
             Union[BufferOutput, None]: BufferOutput if enough examples, None otherwise.
         """
+        features, split_locations, split_activations, tokens = self.load()
+        
+        for i in range(len(features)):
+            feature_locations = split_locations[i]
+            feature_activations = split_activations[i]
+            if len(feature_locations) < self.min_examples:
+                yield None
+            else:
+                yield BufferOutput(
+                    Feature(self.module_path, int(features[i].item())),
+                    feature_locations,
+                    feature_activations,
+                    tokens
+                )
+
+    def load(self):
         split_data = load_file(self.tensor_path)
         first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
         activations = torch.tensor(split_data["activations"])
         locations = torch.tensor(split_data["locations"].astype(np.int64))
+        if "tokens" in split_data:
+            tokens = torch.tensor(split_data["tokens"].astype(np.int64))
+        else:
+            tokens = None
         
         locations[:,2] = locations[:,2] + first_feature
         
@@ -83,21 +104,13 @@ class TensorBuffer:
         locations = locations[indices]
         unique_features, counts = torch.unique_consecutive(locations[:,2], return_counts=True)
         features = unique_features
-
         split_locations = torch.split(locations, counts.tolist())
         split_activations = torch.split(activations, counts.tolist())
-        
-        for i in range(len(features)):
-            feature_locations = split_locations[i]
-            feature_activations = split_activations[i]
-            if len(feature_locations) < self.min_examples:
-                yield None
-            else:
-                yield BufferOutput(
-                    Feature(self.module_path, int(features[i].item())),
-                    feature_locations,
-                    feature_activations
-                )
+
+        return features, split_locations, split_activations, tokens
+
+
+
 
     def reset(self):
         """Reset the buffer state."""
@@ -107,16 +120,20 @@ class TensorBuffer:
 
 
 class FeatureDataset:
+    """
+    Dataset which constructs TensorBuffers for each module and feature.
+    """
+
     def __init__(
         self,
         raw_dir: str,
         cfg: FeatureConfig,
+        tokenizer: Optional[Callable] = None,
         modules: Optional[List[str]] = None,
         features: Optional[Dict[str, Union[int, torch.Tensor]]] = None,
-        tokenizer = None, # TODO: add typing
     ):
         """
-        Initialize a FeatureDataset which constructs TensorBuffers for each module and feature.
+        Initialize a FeatureDataset.
 
         Args:
             raw_dir (str): Directory containing raw feature data.
@@ -135,20 +152,34 @@ class FeatureDataset:
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
-        if tokenizer is None:        
+        if tokenizer is None:
             temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
             self.tokenizer = temp_model.tokenizer
         else:
             self.tokenizer = tokenizer
-        self.tokens = load_tokenized_data(
-            cache_config["ctx_len"],
-            self.tokenizer,
-            cache_config["dataset_repo"],
-            cache_config["dataset_split"],
-            cache_config["dataset_name"],
-            cache_config["dataset_row"],
-        )
-   
+        self.cache_config = cache_config
+
+    def load_tokens(self):
+        """
+        Load tokenized data for the dataset.
+        Caches the tokenized data if not already loaded.
+        
+        Returns:
+            torch.Tensor: The tokenized dataset.
+        """
+        if not hasattr(self, "tokens"):
+            self.tokens = load_tokenized_data(
+                self.cache_config["ctx_len"],
+                self.tokenizer,
+                self.cache_config["dataset_repo"],
+                self.cache_config["dataset_split"],
+                self.cache_config["dataset_name"],
+                column_name=self.cache_config.get(
+                    "dataset_column_name", self.cache_config.get("dataset_row", "raw_content")
+                ),
+            )
+        return self.tokens
+
     def _edges(self):
         """Generate edge indices for feature splits."""
         return torch.linspace(0, self.cfg.width, steps=self.cfg.n_splits + 1).long()
@@ -201,6 +232,7 @@ class FeatureDataset:
 
                 # Adjust end by one as the path avoids overlap
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
+                
                 self.buffers.append(
                     TensorBuffer(
                         path,
@@ -329,7 +361,6 @@ class FeatureLoader:
         """
         for data in buffer:
             if data is not None:
-                data = cast(BufferOutput, data)
                 record = await self._aprocess_feature(data)
                 if record is not None:
                     yield record

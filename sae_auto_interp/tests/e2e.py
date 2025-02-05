@@ -6,10 +6,12 @@ from glob import glob
 from simple_parsing import ArgumentParser, field
 import json
 
+from datasets import load_dataset
+from sae.data import chunk_and_tokenize
 import torch
 from torch import Tensor
 import torch.nn as nn
-from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 import pandas as pd
 import numpy as np
 from scipy import stats
@@ -33,25 +35,11 @@ from sae_auto_interp.clients import Offline
 from sae_auto_interp.autoencoders import load_gemma_autoencoders
 from sae_auto_interp.config import CacheConfig
 from sae_auto_interp.features import FeatureCache
-from sae_auto_interp.utils import load_tokenized_data, assert_type
+from sae_auto_interp.utils import assert_type
 from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
 from sae_auto_interp.pipeline import Pipe
 
 pio.kaleido.scope.mathjax = None  # https://github.com/plotly/plotly.py/issues/3469
-
-import torch.distributed as dist
-import multiprocessing.shared_memory as shared_memory
-import atexit
-
-
-def cleanup_process_group():
-    try:
-        if dist.is_initialized():
-            dist.destroy_process_group()
-    except Exception as e:
-        print(e)
-
-atexit.register(cleanup_process_group)
 
 
 async def process_cache(
@@ -100,13 +88,13 @@ async def process_cache(
         "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         max_memory=0.8,
         # Explainer models context length - must be able to accomodate the longest set of examples
-        max_model_len=8192,  
+        max_model_len=11_000,  
         num_gpus=8,
     )
 
     constructor = partial(
         default_constructor,
-        tokens=dataset.tokens,
+        token_loader=None,
         n_random=experiment_cfg.n_random,
         ctx_len=experiment_cfg.example_ctx_len,
         max_examples=feature_cfg.max_examples,
@@ -174,18 +162,7 @@ async def process_cache(
     )
     number_of_parallel_latents = 11
 
-    try:
-        # asyncio.run(pipeline.run(number_of_parallel_latents))
-        await pipeline.run(number_of_parallel_latents)
-    except Exception as e:
-        print(e)
-    finally:
-        cleanup_process_group()
-        # Clean up any remaining async tasks
-        tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
-        for task in tasks:
-            task.cancel()
-        await asyncio.gather(*tasks, return_exceptions=True)
+    await pipeline.run(number_of_parallel_latents)
 
 
 def populate_cache(
@@ -204,20 +181,22 @@ def populate_cache(
         dataset_split="train[:1%]",
         batch_size=8,
         ctx_len=256,
-        n_tokens=1_000_000,
         n_splits=5,
+        n_tokens=1_000_000,
     )
 
-    tokens = load_tokenized_data(
-        ctx_len=cfg.ctx_len,
-        tokenizer=tokenizer,
-        dataset_repo=cfg.dataset_repo,
-        dataset_split=cfg.dataset_split,
-        dataset_name=cfg.dataset_name,
-        add_bos_token=False,
-    )
-    tokens = cast(TensorType["batch", "seq"], tokens)
-    print(tokens.shape)
+    SEED = 22
+    data = load_dataset(cfg.dataset_repo, name=cfg.dataset_name, split=cfg.dataset_split)
+    tokens_ds = chunk_and_tokenize(data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row)
+    tokens_ds = tokens_ds.shuffle(SEED)
+
+    tokens = cast(TensorType["batch", "seq"], tokens_ds["input_ids"])
+
+    mask = (tokens != 2).flatten()
+    masked_tokens = tokens.flatten()[mask]
+    truncated_tokens = masked_tokens[:len(masked_tokens) - (len(masked_tokens) % cfg.ctx_len)]
+    tokens = truncated_tokens.reshape(-1, cfg.ctx_len)
+
 
     cache = FeatureCache(
         hooked_model,
@@ -416,9 +395,10 @@ def load_artifacts():
     )
     hooked_model = assert_type(LanguageModel, hooked_model)
 
-    tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-9b")
+    tokenizer = hooked_model.tokenizer
 
     return modules, submodule_to_sae, hooked_model, tokenizer
+
 
 @dataclass
 class Args:
@@ -435,11 +415,6 @@ async def main():
     parser.add_arguments(Args, dest="args")
     args = parser.parse_args().args
 
-    feature_range = torch.arange(100)
-    (modules, submodule_to_sae, hooked_model, tokenizer) = (
-        load_artifacts()
-    )
-
     base_path = Path("results")
 
     # Nest named runs in the results folder and do not overwrite
@@ -453,6 +428,11 @@ async def main():
     explanations_path = base_path / "explanations"
     scores_path = base_path / "scores"
     visualizations_path = base_path / "visualizations"
+
+    feature_range = torch.arange(100)
+    (modules, submodule_to_sae, hooked_model, tokenizer) = (
+        load_artifacts()
+    )
 
     if (
         not glob(str(latents_path / ".*")) + glob(str(latents_path / "*"))
