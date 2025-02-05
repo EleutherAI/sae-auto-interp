@@ -37,19 +37,20 @@ def main(args):
 
     
     constructor=partial(
-            default_constructor,
-            token_loader=lambda: dataset.load_tokens(),
-            n_random=experiment_cfg.n_random, 
-            ctx_len=experiment_cfg.example_ctx_len, 
-            max_examples=feature_cfg.max_examples
-        )
+        default_constructor,
+        # token_loader=lambda: dataset.load_tokens(),
+        token_loader=None,
+        n_random=experiment_cfg.n_random, 
+        ctx_len=experiment_cfg.example_ctx_len, 
+        max_examples=feature_cfg.max_examples
+    )
     sampler=partial(sample,cfg=experiment_cfg)
     loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
     ### Load client ###
     
     # client = Offline("hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",max_memory=0.8,max_model_len=5120)
     client = OpenRouter("hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4", api_key="hey",
-                        base_url="http://localhost:8000/api/v1/chat/completions")
+                        base_url="http://localhost:8000/v1/chat/completions")
     
     ### Build Explainer pipe ###
     def explainer_postprocess(result):
@@ -100,14 +101,14 @@ def main(args):
     with open(f"results/scores/{sae_model}/{experiment_name}/fuzz/experiment_config.json", "w") as f:
         f.write(json.dumps(experiment_cfg.to_dict()))
 
-
+    log_prob = False
     scorer_pipe = Pipe(process_wrapper(
-            DetectionScorer(client, tokenizer=dataset.tokenizer, batch_size=shown_examples,verbose=False,log_prob=True),
+            DetectionScorer(client, tokenizer=dataset.tokenizer, batch_size=shown_examples,verbose=False,log_prob=log_prob),
             preprocess=scorer_preprocess,
             postprocess=partial(scorer_postprocess, score_dir="detection"),
         ),
         process_wrapper(
-            FuzzingScorer(client, tokenizer=dataset.tokenizer, batch_size=shown_examples,verbose=False,log_prob=True),
+            FuzzingScorer(client, tokenizer=dataset.tokenizer, batch_size=shown_examples,verbose=False,log_prob=log_prob),
             preprocess=scorer_preprocess,
             postprocess=partial(scorer_postprocess, score_dir="fuzz"),
         )

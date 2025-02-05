@@ -1,4 +1,5 @@
 import json
+import traceback
 from asyncio import sleep
 
 import httpx
@@ -50,7 +51,7 @@ class OpenRouter(Client):
         for attempt in range(max_retries):
             try:
                 response = await self.client.post(
-                    url=self.url, json=data, headers=self.headers
+                    url=self.url, json=data, headers=self.headers, timeout=999
                 )
                 if raw:
                     return response.json()
@@ -64,6 +65,7 @@ class OpenRouter(Client):
                 )
 
             except Exception as e:
+                traceback.print_exc()
                 logger.warning(f"Attempt {attempt + 1}: {str(e)}, retrying...")
 
             await sleep(1)

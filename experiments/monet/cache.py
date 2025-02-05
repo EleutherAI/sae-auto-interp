@@ -77,7 +77,7 @@ def main():
             tokenizer=tokenizer,
             dataset_repo="EleutherAI/fineweb-edu-dedup-10b",
             dataset_split="train[:1%]",
-            column_name="text"
+            dataset_row="text"
     )
 
     cache = FeatureCache(

@@ -6,7 +6,7 @@ from simple_parsing import Serializable
 
 @dataclass
 class ExperimentConfig(Serializable):
-    n_examples_train: int = 40
+    n_examples_train: int = 50
     """Number of examples to sample for feature explanation generation."""
 
     n_examples_test: int = 50
