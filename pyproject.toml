@@ -14,6 +14,7 @@ dependencies = [
     "nnsight",
     "orjson",
     "sparsify@git+https://github.com/EleutherAI/sparsify",
+    "transformers<4.48.0",  # necessary for monet
     "safetensors",
     "simple_parsing",
     "torchtyping",

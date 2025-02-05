@@ -155,7 +155,8 @@ class FeatureDataset:
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:
-            temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
+            temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False,
+                                       trust_remote_code=True)
             self.tokenizer = temp_model.tokenizer
         else:
             self.tokenizer = tokenizer
@@ -176,7 +177,7 @@ class FeatureDataset:
                 self.cache_config["dataset_repo"],
                 self.cache_config["dataset_split"],
                 self.cache_config["dataset_name"],
-                column_name=self.cache_config.get(
+                dataset_row=self.cache_config.get(
                     "dataset_column_name", self.cache_config.get("dataset_row", "raw_content")
                 ),
             )

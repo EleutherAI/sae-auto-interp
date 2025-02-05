@@ -2,6 +2,7 @@ import json
 import os
 from collections import defaultdict
 from typing import Dict
+import gc
 
 import numpy as np
 import torch
@@ -213,6 +214,15 @@ class FeatureCache:
                 filtered_submodules[module_path] = self.submodule_dict[module_path]
         self.submodule_dict = filtered_submodules
 
+    @torch.inference_mode()
+    def cache_one(self, batch_number: int, batch: TensorType["batch", "sequence"]):
+        buffer = {}
+        with self.model.trace(batch):
+            for module_path, submodule in self.submodule_dict.items():
+                buffer[module_path] = submodule.ae.output.save()
+        for module_path, latents in buffer.items():
+            self.cache.add(latents, batch, batch_number, module_path)
+
     def run(self, n_tokens: int, tokens: TensorType["batch", "seq"]):
         """
         Run the feature caching process.
@@ -231,15 +241,8 @@ class FeatureCache:
             for batch_number, batch in enumerate(token_batches):
                 total_tokens += tokens_per_batch
 
-                with torch.no_grad():
-                    buffer = {}
-                    with self.model.trace(batch):
-                        for module_path, submodule in self.submodule_dict.items():
-                            buffer[module_path] = submodule.ae.output.save()
-                    for module_path, latents in buffer.items():
-                        self.cache.add(latents, batch, batch_number, module_path)
-
-                    del buffer
+                self.cache_one(batch_number, batch)
+                gc.collect()
                 torch.cuda.empty_cache()
 
                 # Update the progress bar

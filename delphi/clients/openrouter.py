@@ -70,3 +70,6 @@ class OpenRouter(Client):
 
         logger.error("All retry attempts failed.")
         raise RuntimeError("Failed to generate text after multiple attempts.")
+
+    def process_response(self, raw_response):
+        return raw_response
