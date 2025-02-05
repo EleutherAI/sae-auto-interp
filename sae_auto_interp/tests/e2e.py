@@ -8,8 +8,8 @@ import plotly.io as pio
 import asyncio
 import lovely_tensors as lt
 
-from delphi.config import ExperimentConfig, FeatureConfig, CacheConfig
-from delphi.__main__ import RunConfig, populate_cache, process_cache, load_artifacts
+from sae_auto_interp.config import ExperimentConfig, FeatureConfig, CacheConfig
+from sae_auto_interp.__main__ import RunConfig, populate_cache, process_cache, load_artifacts
 
 lt.monkey_patch()
 pio.kaleido.scope.mathjax = None  # https://github.com/plotly/plotly.py/issues/3469

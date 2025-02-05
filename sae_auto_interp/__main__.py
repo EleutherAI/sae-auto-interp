@@ -20,19 +20,19 @@ from sae.data import chunk_and_tokenize
 from simple_parsing import field, list_field
 from transformers import AutoModel, BitsAndBytesConfig
 
-from delphi.config import ExperimentConfig, FeatureConfig
-from delphi.explainers import DefaultExplainer
-from delphi.features import FeatureDataset, FeatureLoader
-from delphi.features.constructors import default_constructor
-from delphi.features.samplers import sample
-from delphi.pipeline import Pipeline, process_wrapper
-from delphi.clients import Offline
-from delphi.config import CacheConfig
-from delphi.features import FeatureCache
-from delphi.utils import load_tokenized_data, assert_type
-from delphi.scorers import FuzzingScorer, DetectionScorer
-from delphi.pipeline import Pipe
-from delphi.autoencoders.eleuther import load_eleuther_topk_sparse_models
+from sae_auto_interp.config import ExperimentConfig, FeatureConfig
+from sae_auto_interp.explainers import DefaultExplainer
+from sae_auto_interp.features import FeatureDataset, FeatureLoader
+from sae_auto_interp.features.constructors import default_constructor
+from sae_auto_interp.features.samplers import sample
+from sae_auto_interp.pipeline import Pipeline, process_wrapper
+from sae_auto_interp.clients import Offline
+from sae_auto_interp.config import CacheConfig
+from sae_auto_interp.features import FeatureCache
+from sae_auto_interp.utils import load_tokenized_data, assert_type
+from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
+from sae_auto_interp.pipeline import Pipe
+from sae_auto_interp.autoencoders.eleuther import load_eleuther_topk_sparse_models
 
 from sae.sae import Sae
 

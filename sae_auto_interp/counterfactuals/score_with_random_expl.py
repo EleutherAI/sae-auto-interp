@@ -7,7 +7,7 @@ import torch
 import pandas as pd
 from pathlib import Path
 
-from delphi.counterfactuals.pipeline import expl_given_generation_score
+from sae_auto_interp.counterfactuals.pipeline import expl_given_generation_score
 
 def load_explainer(explainer_name, device):
     # get explainer results
