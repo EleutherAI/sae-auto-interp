@@ -260,7 +260,7 @@ def train_classifier_pipeline(
     model: dspy.LM,
     seed=2,
     method: str = "pseudo_fuzz",
-    optimizer_method: Literal["mipro", "bootstrap"] = "mipro",
+    optimizer_method: Literal["none", "mipro", "bootstrap"] = "mipro",
     eval_loader=None,
     **pipeline_kwargs,
 ):
@@ -269,10 +269,10 @@ def train_classifier_pipeline(
     base_classifier = DSPyClassifierPipeline(**pipeline_kwargs)
     base_classifier.set_lm(model)
     dspy.configure(lm=model)
-    if optimizer_method == "mipro":
-        optimizer = dspy.MIPROv2(metric=accuracy_score, prompt_model=model, task_model=model,
-                            metric_threshold=0.7, auto="light")
-    else:
+    if optimizer_method.startswith("mipro"):
+        optimizer = dspy.MIPROv2(metric=accuracy_score, prompt_model=model, task_model=model, metric_threshold=0.7,
+                                 auto="light" if "_" not in optimizer_method else optimizer_method.split("_")[1])
+    elif optimizer_method == "bootstrap":
         # optimizer = dspy.BootstrapFewShotWithOptuna(
         optimizer = dspy.BootstrapFewShotWithRandomSearch(
             metric=accuracy_score,
@@ -281,10 +281,13 @@ def train_classifier_pipeline(
             max_errors=float("inf"),
             num_threads=8,
         )
-    classifier = optimizer.compile(base_classifier, trainset=trainset,
-                            **(dict(valset=split_classification_scoring(eval_loader, method, tokenizer)) if eval_loader is not None else {}),
-                            **(dict(minibatch_size=4, requires_permission_to_run=False) if optimizer_method == "mipro" else {}),
-                            # **(dict(max_demos=4) if optimizer_method == "bootstrap" else {})
-                            )
+    if optimizer_method == "none":
+        classifier = base_classifier
+    else:
+        classifier = optimizer.compile(base_classifier, trainset=trainset,
+                                **(dict(valset=split_classification_scoring(eval_loader, method, tokenizer)) if eval_loader is not None else {}),
+                                **(dict(minibatch_size=4, requires_permission_to_run=False) if optimizer_method == "mipro" else {}),
+                                # **(dict(max_demos=4) if optimizer_method == "bootstrap" else {})
+                                )
     return classifier
     
