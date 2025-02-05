@@ -30,7 +30,7 @@ class AutoencoderLatents(torch.nn.Module):
         self._forward = forward_function
         self.width = width
         self.hookpoint = hookpoint
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x) -> torch.Tensor:
         return self._forward(x)
 
     @classmethod
