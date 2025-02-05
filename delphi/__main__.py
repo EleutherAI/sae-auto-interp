@@ -6,19 +6,19 @@ from glob import glob
 from dataclasses import dataclass
 from multiprocessing import cpu_count
 import asyncio
+import re
 
 from simple_parsing import ArgumentParser, field
 import torch
 from torch import Tensor
 import torch.nn as nn
-from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast, BitsAndBytesConfig
 import orjson
 from torchtyping import TensorType
 from nnsight import LanguageModel
 from datasets import load_dataset
 from sae.data import chunk_and_tokenize
 from simple_parsing import field, list_field
-from transformers import AutoModel, BitsAndBytesConfig
 
 from delphi.config import ExperimentConfig, FeatureConfig
 from delphi.explainers import DefaultExplainer
@@ -29,10 +29,12 @@ from delphi.pipeline import Pipeline, process_wrapper
 from delphi.clients import Offline
 from delphi.config import CacheConfig
 from delphi.features import FeatureCache
-from delphi.utils import load_tokenized_data, assert_type
+from delphi.utils import assert_type
 from delphi.scorers import FuzzingScorer, DetectionScorer
 from delphi.pipeline import Pipe
-from delphi.autoencoders.eleuther import load_eleuther_topk_sparse_models
+from delphi.autoencoders.eleuther import load_eleuther_sparse_models
+from delphi.autoencoders.openai import load_oai_autoencoders
+from delphi.autoencoders.deepmind import load_gemma_autoencoders
 
 from sae.sae import Sae
 
@@ -49,7 +51,9 @@ class RunConfig:
         default="EleutherAI/sae-llama-3-8b-32x",
         positional=True,
     )
-    """Name of the sparse models associated with the model to explain."""
+    """Name of the sparse models associated with the model to explain. If the model
+    is not loadable with sparsify then this should be the directory containing the
+    sparse model weights."""
 
     hookpoints: list[str] = list_field()
     """List of hookpoints to load SAEs for."""
@@ -100,19 +104,6 @@ class RunConfig:
     """Seed for the random number generator."""
 
 
-def load_from_sae(args):
-
-    # Add SAE hooks to the model
-    submodule_to_sparse_model = {}
-    if len(args.hookpoints) == 1:
-        sparse_model = Sae.load_from_hub(args.sparse_model, hookpoint=args.hookpoints[0])
-        submodule_to_sparse_model[args.hookpoints[0]] = sparse_model
-    else:
-        sparse_models = Sae.load_many(args.sparse_model)
-        for hookpoint in args.hookpoints:
-            submodule_to_sparse_model[hookpoint] = sparse_models[hookpoint]
-
-
 def load_artifacts(run_cfg: RunConfig):
     if run_cfg.load_in_8bit:
         dtype = torch.float16
@@ -135,17 +126,36 @@ def load_artifacts(run_cfg: RunConfig):
     )
 
     # Add SAE hooks to the model
-    submodule_name_to_submodule, model = {
-        'sparsify': load_eleuther_topk_sparse_models,
-        'sae': load_eleuther_topk_sparse_models,
-        # 'gemma': 
-    }[run_cfg.sparse_library](
-        model, # type: ignore
-        run_cfg.sparse_model,
-        run_cfg.hookpoints,
-        disk_path=None,
-        k=run_cfg.max_features,
-    )
+    if run_cfg.sparse_library in ["sae", "sparsify"]:
+        submodule_name_to_submodule, model = load_eleuther_sparse_models(
+            model, # type: ignore
+            run_cfg.sparse_model,
+            run_cfg.hookpoints,
+            k=run_cfg.max_features,
+        )
+    elif run_cfg.sparse_library == "openai" or run_cfg.sparse_library == "gemma":
+        if not Path(run_cfg.sparse_model).exists():
+            raise ValueError("sparse_model must be path to on-disk weights for models not loadable with sparsify")
+        
+        # Parse layer indices from hookpoints
+        layers = []
+        for hookpoint in run_cfg.hookpoints:
+            # regex for first contiguous digits
+            match = re.search(r'\d+', hookpoint)
+            if match:
+                layers.append(int(match.group()))
+        
+        submodule_name_to_submodule, model = {
+            "openai": load_oai_autoencoders,
+            "gemma": load_gemma_autoencoders,
+        }[run_cfg.sparse_library](
+            model, # type: ignore
+            ae_layers=layers,
+            weight_dir=run_cfg.sparse_model
+        )
+    else:
+        raise ValueError(f"Sparse library {run_cfg.sparse_library} not supported")
+    
     model = assert_type(LanguageModel, model)
 
     return run_cfg.hookpoints, submodule_name_to_submodule, model, model.tokenizer

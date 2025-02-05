@@ -93,7 +93,7 @@ def load_eai_autoencoders(
     return submodules, edited
 
 
-def resolve_path(model, path_segments):
+def resolve_path(model, path_segments: List[str]) -> List[str] | None:
     """Attempt to resolve the path segments to the model in the case where it has been wrapped 
     (e.g. by a LanguageModel, causal model, or classifier)."""
     # If the first segment is a valid attribute, return the path segments
@@ -116,7 +116,7 @@ def resolve_path(model, path_segments):
     return None
 
 
-def load_eleuther_topk_sparse_models(
+def load_eleuther_sparse_models(
     model: LanguageModel,
     name: str,
     hookpoints: List[str],
@@ -128,7 +128,8 @@ def load_eleuther_topk_sparse_models(
 
     Args:
         model (Any): The model to load autoencoders for.
-        name (str): The name of the sparse model to load.
+        name (str): The name of the sparse model to load. If the model is on-disk this is the path
+            to the directory containing the sparse model weights.
         hookpoints (List[str]): List of hookpoints to load autoencoders for.
         disk_path (Path, optional): Path to load autoencoders from disk. Defaults to None.
         k (Optional[int], optional): Number of top activations to keep. Defaults to None.
@@ -138,19 +139,20 @@ def load_eleuther_topk_sparse_models(
     """
     # Load the sparse models
     hookpoint_to_sparse = {}
-    if disk_path is not None:
+    name_path = Path(name)  
+    if name_path.exists():
         for hookpoint in hookpoints:
-            hookpoint_to_sparse[hookpoint] = Sae.load_from_disk(disk_path/hookpoint, device=DEVICE)
+            hookpoint_to_sparse[hookpoint] = Sae.load_from_disk(name_path / hookpoint, device=DEVICE)
     else:
         sparse_models = Sae.load_many(name)
         hookpoint_to_sparse.update({hookpoint: sparse_models[hookpoint] for hookpoint in hookpoints})
 
+    # Add sparse models to submodules
     def forward_fn(sae, k, x):
         encoded = sae.pre_acts(x)
         trained_k = k if k is not None else sae.cfg.k
         return TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())(encoded)
 
-    # Add sparse models to submodules
     submodules = {}
     for hookpoint, sparse_model in hookpoint_to_sparse.items():
         path_segments = resolve_path(model, hookpoint.split('.'))
@@ -166,7 +168,7 @@ def load_eleuther_topk_sparse_models(
         )
         submodules[hookpoint] = submodule
 
-    # Edit model to collect activations
+    # Edit base model to collect sparse model activations
     with model.edit("") as edited:
         for path, submodule in submodules.items():
             acts = submodule.output[0] if "embed" not in path and "mlp" not in path else submodule.output
