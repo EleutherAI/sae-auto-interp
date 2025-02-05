@@ -13,14 +13,17 @@ dependencies = [
     "datasets",
     "nnsight",
     "orjson",
-    "sae@git+https://github.com/EleutherAI/sae",
+    "sparsify@git+https://github.com/EleutherAI/sparsify",
     "safetensors",
     "simple_parsing",
     "torchtyping",
     "fire",
     "blobfile",
-    "transformer_lens",
     "bitsandbytes",
+    "flask",
+    "vllm",
+    "aiofiles",
+    "sentence_transformers"
 ]
 
 [tool.pyright]
