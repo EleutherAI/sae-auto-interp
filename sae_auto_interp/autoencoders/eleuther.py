@@ -2,7 +2,11 @@ from functools import partial
 from typing import List, Any, Tuple, Optional, Dict
 import torch
 import torch.nn as nn
+<<<<<<< HEAD
 from sae import Sae, SaeConfig
+=======
+from sparsify import Sae, SaeConfig
+>>>>>>> 23351f7affd824427645ff6ffcedf4a724f85de8
 from pathlib import Path
 from .OpenAI.model import ACTIVATIONS_CLASSES, TopK
 from .wrapper import AutoencoderLatents
