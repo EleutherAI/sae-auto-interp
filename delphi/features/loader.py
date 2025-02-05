@@ -10,7 +10,7 @@ from safetensors.numpy import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
 
-from sae_auto_interp.utils import (
+from delphi.utils import (
     load_tokenized_data,
 )
 
