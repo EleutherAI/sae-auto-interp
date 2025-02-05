@@ -38,7 +38,7 @@ from sae_auto_interp.scorers.classifier.dspy_classifier import (
 
 @dataclass
 class DSPyModelConfig:
-    optimizer: Literal["none", "mipro", "bootstrap"] = "bootstrap"
+    optimizer: Literal["none", "mipro", "mipro_heavy", "bootstrap"] = "bootstrap"
     preload_few_shot: bool = False
     use_cot: bool = False
     n_aux_examples: int = 0
@@ -111,17 +111,14 @@ class DSPyExperiment:
         return self._dataset_train.tokenizer
     
     def train(self):
-        if self.config.model_config.optimizer == "none":
-            module = dspy_classifier_pipeline_from_config(self.config)
-        else:
-            module = train_classifier_pipeline(
-                self._loader_train,
-                self._dataset_train.tokenizer,
-                self._lm,
-                optimizer_method=self.config.model_config.optimizer,
-                method=self.config.classification_method,
-                **self.config.model_config.pipeline_kwargs
-            )
+        module = train_classifier_pipeline(
+            self._loader_train,
+            self._dataset_train.tokenizer,
+            self._lm,
+            optimizer_method=self.config.model_config.optimizer,
+            method=self.config.classification_method,
+            **self.config.model_config.pipeline_kwargs
+        )
         save_dir = Path(self.config.save_dir)
         save_dir.mkdir(parents=True, exist_ok=True)
         module.save(save_dir / "module", save_program=True)
@@ -438,7 +435,7 @@ if __name__ == "__main__":
     train_parser.add_argument(
         "--optimizer",
         type=str,
-        choices=["none", "mipro", "bootstrap"],
+        choices=["none", "mipro", "mipro_heavy", "bootstrap"],
         default="bootstrap",
         help="DSPy optimizer to use",
     )
