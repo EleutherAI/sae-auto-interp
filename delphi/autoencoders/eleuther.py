@@ -116,11 +116,10 @@ def resolve_path(model, path_segments: List[str]) -> List[str] | None:
     return None
 
 
-def load_eleuther_sparse_models(
+def load_and_hook_sparsify_models(
     model: LanguageModel,
     name: str,
     hookpoints: List[str],
-    disk_path: Path | None = None,
     k: Optional[int] = None
 ) -> Tuple[Dict[str, Any], Any]:
     """
