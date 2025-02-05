@@ -42,18 +42,6 @@ def load_filter(path: str, device: str = "cuda:0"):
 
 
 
-
-def load_tokenizer(model):
-    """
-    Loads tokenizer to the default NNsight configuration.
-    """
-
-    tokenizer = AutoTokenizer.from_pretrained(model, padding_side="left")
-    tokenizer._pad_token = tokenizer._eos_token if hasattr(tokenizer, "_eos_token") else tokenizer.eos_token
-
-    return tokenizer
-
-
 T = TypeVar("T")
 
 
