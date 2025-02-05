@@ -1,8 +1,8 @@
 import logging
 
-LOG_PATH = "sae_auto_interp.log"
+LOG_PATH = "delphi.log"
 
-logger = logging.getLogger("sae_auto_interp")
+logger = logging.getLogger("delphi")
 logger.setLevel(logging.INFO)
 
 file_handler = logging.FileHandler(LOG_PATH)

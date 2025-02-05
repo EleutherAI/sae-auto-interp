@@ -29,8 +29,8 @@ This library uses NNsight to load and edit a model with sparse auxiliary models.
 The first step to generate explanations is to cache sparse model activations. To do so, load your sparse models into the base model, load the tokens you want to cache the activations from, create a `FeatureCache` object and run it. We recommend caching over at least 10M tokens.
 
 ```python
-from sae.data import chunk_and_tokenize
-from sae_auto_interp.features import FeatureCache
+from sparsify.data import chunk_and_tokenize
+from delphi.features import FeatureCache
 
 data = load_dataset("EleutherAI/rpj-v2-sample", split="train[:1%]")
 tokens = chunk_and_tokenize(data, tokenizer, max_seq_len=256, text_key="raw_content")["input_ids"]
@@ -60,8 +60,8 @@ Safetensors are split into shards over the width of the autoencoder.
 The `.features` module provides utilities for reconstructing and sampling various statistics for sparse features. In this version of the code you needed to specify the width of the autoencoder, the minimum number examples for a feature to be included and the maximum number of examples to include, as well as the number of splits to divide the features into.
 
 ```python
-from sae_auto_interp.features import FeatureLoader, FeatureDataset
-from sae_auto_interp.config import FeatureConfig
+from delphi.features import FeatureLoader, FeatureDataset
+from delphi.config import FeatureConfig
 
 #
 cfg = FeatureConfig(width=131072, min_examples=200, max_examples=10000, n_splits=5)
@@ -86,9 +86,9 @@ loader = FeatureLoader(
 We have a simple sampler and constructor that take arguments from the `ExperimentConfig` object. The constructor defines builds the context windows from the cached activations and tokens, and the sampler divides these contexts into a training and testing set, used to generate explanations and evaluate them.
 
 ```python
-from sae_auto_interp.features.constructors import default_constructor
-from sae_auto_interp.features.samplers import sample
-from sae_auto_interp.config import ExperimentConfig
+from delphi.features.constructors import default_constructor
+from delphi.features.samplers import sample
+from delphi.config import ExperimentConfig
 
 cfg = ExperimentConfig(
     n_examples_train=40, # Number of examples shown to the explainer model
@@ -111,8 +111,8 @@ sampler = partial(sample, cfg=cfg)
 We currently support using OpenRouter's OpenAI compatible API or running locally with VLLM. Define the client you want to use, then create an explainer from the `.explainers` module. 
 
 ```python
-from sae_auto_interp.explainers import DefaultExplainer
-from sae_auto_interp.clients import Offline,OpenRouter
+from delphi.explainers import DefaultExplainer
+from delphi.clients import Offline,OpenRouter
 
 # Run locally with VLLM
 client = Offline("meta-llama/Meta-Llama-3.1-8B-Instruct",max_memory=0.8,max_model_len=5120,num_gpus=1)
@@ -130,7 +130,7 @@ explainer = DefaultExplainer(
 The explainer should be added to a pipe, which will send the explanation requests to the client. The pipe should have a function that happens after the request is completed, to e.g. save the data, and could also have a function that happens before the request is sent, e.g to transform some of the data.
 
 ```python
-from sae_auto_interp.pipeline import process_wrapper
+from delphi.pipeline import process_wrapper
 
 def explainer_postprocess(result):
 
@@ -146,7 +146,7 @@ explainer_pipe = process_wrapper(explainer,
 The pipe should then be used in a pipeline. Running the pipeline will send requests to the client in batches of paralel requests.
 
 ```python
-from sae_auto_interp.pipeline import Pipeline
+from delphi.pipeline import Pipeline
 import asyncio
 
 pipeline = Pipeline(
@@ -172,8 +172,8 @@ RecallScorer(
 You can then create a pipe to run the scorer. The pipe should have a pre-processer, that takes the results from the previous pipe and a post processor, that saves the scores. An scorer should always be run after a explainer pipe, but the explainer pipe can be used to load saved explanations.
 
 ```python
-from sae_auto_interp.scorers import FuzzingScorer, RecallScorer
-from sae_auto_interp.explainers import  explanation_loader,random_explanation_loader
+from delphi.scorers import FuzzingScorer, RecallScorer
+from delphi.explainers import  explanation_loader,random_explanation_loader
 
 
 # Because we are running the explainer and scorer separately, we need to add the explanation and extra examples back to the record

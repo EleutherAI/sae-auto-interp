@@ -7,16 +7,16 @@ import orjson
 import torch
 from simple_parsing import ArgumentParser
 
-from sae_auto_interp.clients import Offline, OpenRouter
-from sae_auto_interp.config import ExperimentConfig, FeatureConfig
-from sae_auto_interp.features import FeatureDataset, FeatureLoader
-from sae_auto_interp.features.constructors import default_constructor
-from sae_auto_interp.features.samplers import sample
-from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
-from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
+from delphi.clients import Offline, OpenRouter
+from delphi.config import ExperimentConfig, FeatureConfig
+from delphi.features import FeatureDataset, FeatureLoader
+from delphi.features.constructors import default_constructor
+from delphi.features.samplers import sample
+from delphi.pipeline import Pipe, Pipeline, process_wrapper
+from delphi.scorers import FuzzingScorer, DetectionScorer
 import aiofiles
 import json
-from sae_auto_interp.features import FeatureRecord
+from delphi.features import FeatureRecord
 
 class ExplainerResult(NamedTuple):
     record: FeatureRecord
