@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sae_auto_interp"
+name = "delphi"
 version = "0.1.0"
 description = "Automated Interpretability"
 readme = "README.md"
