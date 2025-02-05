@@ -22,7 +22,7 @@ import orjson
 from torchtyping import TensorType
 from nnsight import LanguageModel
 from datasets import load_dataset
-from sae.data import chunk_and_tokenize
+from sparsify.data import chunk_and_tokenize
 from simple_parsing import field, list_field
 
 from delphi.config import ExperimentConfig, FeatureConfig
