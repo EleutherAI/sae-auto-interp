@@ -6,18 +6,17 @@ from simple_parsing import Serializable
 
 @dataclass
 class ExperimentConfig(Serializable):
-    
     n_examples_train: int = 40
     """Number of examples to sample for feature explanation generation."""
 
-    n_examples_test: int = 5
+    n_examples_test: int = 50
     """Number of examples to sample for feature explanation testing."""
 
-    n_quantiles: int = 20
+    n_quantiles: int = 10
     """Number of feature activation quantiles to sample."""
 
     example_ctx_len: int = 32
-    """Length of each example sequence."""
+    """Length of each sampled example sequence. Longer sequences reduce detection scoring performance."""
 
     n_random: int = 50
     """Number of random examples to sample."""
@@ -31,13 +30,13 @@ class ExperimentConfig(Serializable):
 
 @dataclass
 class FeatureConfig(Serializable):
-    width: int = 131072
+    width: int = 131_072
     """Number of features in each autoencoder"""
 
     min_examples: int = 200
     """Minimum number of examples for a feature to be included"""
 
-    max_examples: int = 10000
+    max_examples: int = 10_000
     """Maximum number of examples for a feature to included"""
 
     n_splits: int = 5

@@ -33,7 +33,7 @@ def main(args):
     sae_model = args.model
     feature_dict = {f"{module}": torch.arange(start_feature,start_feature+n_features)}
     dataset = FeatureDataset(
-        raw_dir=f"raw_features",
+        raw_dir="raw_features",
         cfg=feature_cfg,
         modules=[module],
         features=feature_dict,
@@ -42,7 +42,7 @@ def main(args):
     
     constructor=partial(
             default_constructor,
-            tokens=dataset.tokens,
+            token_loader=lambda: dataset.load_tokens(),
             n_random=experiment_cfg.n_random, 
             ctx_len=experiment_cfg.example_ctx_len, 
             max_examples=feature_cfg.max_examples

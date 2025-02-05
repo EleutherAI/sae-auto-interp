@@ -11,19 +11,22 @@ def load_tokenized_data(
     dataset_name: str = "",
     dataset_row: str = "raw_content",
     seed: int = 22,
+    add_bos_token: bool = True,
 ):
     """
     Load a huggingface dataset, tokenize it, and shuffle.
     """
     from datasets import load_dataset
-    from transformer_lens import utils
+    from sae.data import chunk_and_tokenize
+    
     print(dataset_repo,dataset_name,dataset_split)
+
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
-    tokens_ds = utils.tokenize_and_concatenate(data, tokenizer, max_length=ctx_len,column_name=dataset_row)
+    tokens_ds = chunk_and_tokenize(data, tokenizer, max_seq_len=ctx_len, text_key=dataset_row)
     tokens_ds = tokens_ds.shuffle(seed)
 
-    tokens = cast(TensorType["batch_size", "ctx_len"], tokens_ds["tokens"])
-
+    tokens = cast(TensorType["batch", "seq"], tokens_ds["input_ids"])
+    
     return tokens
 
 
@@ -37,18 +40,6 @@ def load_filter(path: str, device: str = "cuda:0"):
 
     return {key: torch.tensor(value, device=device) for key, value in filter.items()}
 
-
-
-
-def load_tokenizer(model):
-    """
-    Loads tokenizer to the default NNsight configuration.
-    """
-
-    tokenizer = AutoTokenizer.from_pretrained(model, padding_side="left")
-    tokenizer._pad_token = tokenizer._eos_token if hasattr(tokenizer, "_eos_token") else tokenizer.eos_token
-
-    return tokenizer
 
 
 T = TypeVar("T")

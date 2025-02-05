@@ -1,6 +1,4 @@
-from typing import List
-
-from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
 from ...features import FeatureRecord
@@ -15,7 +13,7 @@ class DetectionScorer(Classifier):
     def __init__(
         self,
         client: Client,
-        tokenizer: PreTrainedTokenizer,
+        tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
         verbose: bool = False,
         batch_size: int = 10,
         log_prob: bool = False,

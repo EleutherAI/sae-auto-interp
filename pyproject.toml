@@ -19,7 +19,6 @@ dependencies = [
     "torchtyping",
     "fire",
     "blobfile",
-    "transformer_lens",
     "bitsandbytes",
     "flask",
     "vllm",
