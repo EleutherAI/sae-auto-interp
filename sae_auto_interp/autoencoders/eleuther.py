@@ -1,8 +1,8 @@
-from functools import partial
+from functools import partial, reduce
 from typing import List, Any, Tuple, Optional, Dict
 import torch
-import torch.nn as nn
-from sae import Sae, SaeConfig
+from nnsight import LanguageModel
+from sae import Sae
 from pathlib import Path
 from .OpenAI.model import ACTIVATIONS_CLASSES, TopK
 from .wrapper import AutoencoderLatents
@@ -90,4 +90,86 @@ def load_eai_autoencoders(
                 acts = submodule.output
             submodule.ae(acts, hook=True)
 
-    return submodules,edited
+    return submodules, edited
+
+
+def resolve_path(model, path_segments):
+    """Attempt to resolve the path segments to the model in the case where it has been wrapped 
+    (e.g. by a LanguageModel, causal model, or classifier)."""
+    # If the first segment is a valid attribute, return the path segments
+    if hasattr(model, path_segments[0]):
+        return path_segments
+
+    # Look for the first actual model inside potential wrappers
+    for attr_name, attr in model.named_children():
+        if isinstance(attr, (torch.nn.Module, LanguageModel)):
+            print(f"Checking wrapper model attribute: {attr_name}")
+            if hasattr(attr, path_segments[0]):
+                print(f"Found matching path in wrapper at {attr_name}.{path_segments[0]}")
+                return [attr_name] + path_segments
+            
+            # Recursively check deeper
+            deeper_path = resolve_path(attr, path_segments)
+            if deeper_path is not None:
+                print(f"Found deeper matching path starting with {attr_name}")
+                return [attr_name] + deeper_path
+    return None
+
+
+def load_eleuther_topk_sparse_models(
+    model: LanguageModel,
+    name: str,
+    hookpoints: List[str],
+    disk_path: Path | None = None,
+    k: Optional[int] = None
+) -> Tuple[Dict[str, Any], Any]:
+    """
+    Load EleutherAI autoencoders for specified layers and module.
+
+    Args:
+        model (Any): The model to load autoencoders for.
+        name (str): The name of the sparse model to load.
+        hookpoints (List[str]): List of hookpoints to load autoencoders for.
+        disk_path (Path, optional): Path to load autoencoders from disk. Defaults to None.
+        k (Optional[int], optional): Number of top activations to keep. Defaults to None.
+
+    Returns:
+        Tuple[Dict[str, Any], Any]: A tuple containing the submodules dictionary and the edited model.
+    """
+    # Load the sparse models
+    hookpoint_to_sparse = {}
+    if disk_path is not None:
+        for hookpoint in hookpoints:
+            hookpoint_to_sparse[hookpoint] = Sae.load_from_disk(disk_path/hookpoint, device=DEVICE)
+    else:
+        sparse_models = Sae.load_many(name)
+        hookpoint_to_sparse.update({hookpoint: sparse_models[hookpoint] for hookpoint in hookpoints})
+
+    def forward_fn(sae, k, x):
+        encoded = sae.pre_acts(x)
+        trained_k = k if k is not None else sae.cfg.k
+        return TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())(encoded)
+
+    # Add sparse models to submodules
+    submodules = {}
+    for hookpoint, sparse_model in hookpoint_to_sparse.items():
+        path_segments = resolve_path(model, hookpoint.split('.'))
+        if path_segments is None:
+            raise ValueError(f"Could not find valid path for hookpoint: {hookpoint}")
+        
+        submodule = reduce(getattr, path_segments, model)
+
+        submodule.ae = AutoencoderLatents(
+            sparse_model,
+            partial(forward_fn, sparse_model, k),
+            width=sparse_model.encoder.weight.shape[0]
+        )
+        submodules[hookpoint] = submodule
+
+    # Edit model to collect activations
+    with model.edit("") as edited:
+        for path, submodule in submodules.items():
+            acts = submodule.output[0] if "embed" not in path and "mlp" not in path else submodule.output
+            submodule.ae(acts, hook=True)
+
+    return submodules, edited

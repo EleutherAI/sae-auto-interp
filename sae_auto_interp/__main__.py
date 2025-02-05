@@ -3,22 +3,20 @@ from functools import partial
 from pathlib import Path
 from dataclasses import dataclass
 from glob import glob
-from blinker import Namespace
-from simple_parsing import ArgumentParser, field
+from dataclasses import dataclass
+from multiprocessing import cpu_count
 import asyncio
+
+from simple_parsing import ArgumentParser, field
 import torch
 from torch import Tensor
 import torch.nn as nn
-from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 import orjson
 from torchtyping import TensorType
 from nnsight import LanguageModel
-
-from dataclasses import dataclass
-from multiprocessing import cpu_count
-
-import torch
-from torch import Tensor
+from datasets import load_dataset
+from sae.data import chunk_and_tokenize
 from simple_parsing import field, list_field
 from transformers import AutoModel, BitsAndBytesConfig
 
@@ -34,38 +32,48 @@ from sae_auto_interp.features import FeatureCache
 from sae_auto_interp.utils import load_tokenized_data, assert_type
 from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
 from sae_auto_interp.pipeline import Pipe
+from sae_auto_interp.autoencoders.eleuther import load_eleuther_topk_sparse_models
 
 from sae.sae import Sae
 
 
 @dataclass
-class RunConfig():
+class RunConfig:
     model: str = field(
         default="meta-llama/Meta-Llama-3-8B",
         positional=True,
     )
     """Name of the model to explain."""
 
-    sae: str = field(
+    sparse_model: str = field(
         default="EleutherAI/sae-llama-3-8b-32x",
         positional=True,
     )
-    """Name of the SAEs associated with the model to explain."""
+    """Name of the sparse models associated with the model to explain."""
+
+    hookpoints: list[str] = list_field()
+    """List of hookpoints to load SAEs for."""
+
+    sparse_library: str = field(
+        default="sparsify",
+    )
+    """Name of the library used to load sparsifying models."""
 
     explainer_model: str = field(
         default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
-        positional=True,
     )
     """Name of the model to use for explanation generation."""
+
+    explainer_model_max_len: int = field(
+        default=5120,
+    )
+    """Maximum length of the explainer model context window."""
 
     name: str = ""
     """The name of the run. If not provided the run may overwrite existing files."""
 
     overwrite: list[str] = list_field()
     """Whether to overwrite existing parts of the run. Options are 'cache', 'scores', and 'visualize'."""
-
-    hookpoints: list[str] = list_field()
-    """List of hookpoints to load SAEs for."""
 
     max_features: int | None = None
     """Maximum number of features to explain for each SAE."""
@@ -81,48 +89,72 @@ class RunConfig():
     )
     """Number of processes to use for preprocessing data"""
 
+    num_gpus: int = field(
+        default=1,
+    )
+    """Number of GPUs to use for explanation generation."""
+
+    seed: int = field(
+        default=22,
+    )
+    """Seed for the random number generator."""
 
 
-def load_artifacts(args):
-    if args.load_in_8bit:
+def load_from_sae(args):
+
+    # Add SAE hooks to the model
+    submodule_to_sparse_model = {}
+    if len(args.hookpoints) == 1:
+        sparse_model = Sae.load_from_hub(args.sparse_model, hookpoint=args.hookpoints[0])
+        submodule_to_sparse_model[args.hookpoints[0]] = sparse_model
+    else:
+        sparse_models = Sae.load_many(args.sparse_model)
+        for hookpoint in args.hookpoints:
+            submodule_to_sparse_model[hookpoint] = sparse_models[hookpoint]
+
+
+def load_artifacts(run_cfg: RunConfig):
+    if run_cfg.load_in_8bit:
         dtype = torch.float16
     elif torch.cuda.is_bf16_supported():
         dtype = torch.bfloat16
     else:
         dtype = "auto"
 
-    model = AutoModel.from_pretrained(
-        args.model,
+    model = LanguageModel(
+        run_cfg.model, 
         device_map={"": "cuda"},
         quantization_config=(
-            BitsAndBytesConfig(load_in_8bit=args.load_in_8bit)
-            if args.load_in_8bit
+            BitsAndBytesConfig(load_in_8bit=run_cfg.load_in_8bit)
+            if run_cfg.load_in_8bit
             else None
         ),
         torch_dtype=dtype,
-        token=args.hf_token,
+        token=run_cfg.hf_token,
+        dispatch=True
     )
 
-    model = LanguageModel(model, device_map="cuda")
-
     # Add SAE hooks to the model
-    submodule_to_sae = {}
-    if len(args.hookpoints) == 1:
-        sae = Sae.load_from_hub(args.sae, hookpoint=args.hookpoints[0])
-        submodule_to_sae[args.hookpoints[0]] = sae
-    else:
-        saes = Sae.load_many(args.sae)
-        for hookpoint in args.hookpoints:
-            submodule_to_sae[hookpoint] = saes[hookpoint]
-
+    submodule_name_to_submodule, model = {
+        'sparsify': load_eleuther_topk_sparse_models,
+        'sae': load_eleuther_topk_sparse_models,
+        # 'gemma': 
+    }[run_cfg.sparse_library](
+        model, # type: ignore
+        run_cfg.sparse_model,
+        run_cfg.hookpoints,
+        disk_path=None,
+        k=run_cfg.max_features,
+    )
     model = assert_type(LanguageModel, model)
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model)
+    return run_cfg.hookpoints, submodule_name_to_submodule, model, model.tokenizer
 
-    return args.hookpoints, submodule_to_sae, model, tokenizer
 
 async def process_cache(
-    args,
+    feature_cfg: FeatureConfig,
+    run_cfg: RunConfig,
+    experiment_cfg: ExperimentConfig,
     latents_path: Path,
     explanations_path: Path,
     scores_path: Path,
@@ -143,35 +175,38 @@ async def process_cache(
     fuzz_scores_path.mkdir(parents=True, exist_ok=True)
     detection_scores_path.mkdir(parents=True, exist_ok=True)
 
-    feature_dict = {
-        hook: feature_range for hook in hookpoints
-    }  # The latent range to explain
-    feature_dict = cast(dict[str, int | Tensor], feature_dict)
+    if feature_range is None:
+        feature_dict = None
+    else:
+        feature_dict = {
+            hook: feature_range for hook in hookpoints
+        }  # The latent range to explain
+        feature_dict = cast(dict[str, int | Tensor], feature_dict)
 
     dataset = FeatureDataset(
         raw_dir=str(latents_path),
-        cfg=args.feature_cfg,
+        cfg=feature_cfg,
         modules=hookpoints,
         features=feature_dict,
         tokenizer=tokenizer,
     )
 
     client = Offline(
-        args.run_cfg.explainer_model,
+        run_cfg.explainer_model,
         max_memory=0.8,
         # Explainer models context length - must be able to accomodate the longest set of examples
-        max_model_len=8192,
-        num_gpus=args.run_cfg.num_gpus,
+        max_model_len=run_cfg.explainer_model_max_len,
+        num_gpus=run_cfg.num_gpus,
     )
 
     constructor = partial(
         default_constructor,
         token_loader=None,
-        n_random=args.experiment_cfg.n_random,
-        ctx_len=args.experiment_cfg.example_ctx_len,
-        max_examples=args.feature_cfg.max_examples,
+        n_random=experiment_cfg.n_random,
+        ctx_len=experiment_cfg.example_ctx_len,
+        max_examples=feature_cfg.max_examples,
     )
-    sampler = partial(sample, cfg=args.experiment_cfg)
+    sampler = partial(sample, cfg=experiment_cfg)
     loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
 
     def explainer_postprocess(result):
@@ -233,36 +268,40 @@ async def process_cache(
         scorer_pipe,
     )
 
-    await pipeline.run(args.run_cfg.pipeline_num_proc)
+    await pipeline.run(run_cfg.pipeline_num_proc)
 
 
 def populate_cache(
-    args,
+    run_cfg: RunConfig,
+    cfg: CacheConfig,
     hooked_model: LanguageModel,
-    submodule_to_sae: dict[str, nn.Module],
+    submodule_name_to_submodule: dict[str, nn.Module],
     latents_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
+    filter_tokens: Tensor | None,
 ):
     """
     Populates an on-disk cache in `latents_path` with SAE feature activations.
     """
     latents_path.mkdir(parents=True, exist_ok=True)
 
-    cfg = args.cache_cfg
+    data = load_dataset(cfg.dataset_repo, name=cfg.dataset_name, split=cfg.dataset_split)
+    tokens_ds = chunk_and_tokenize(data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row)
+    tokens_ds = tokens_ds.shuffle(run_cfg.seed)
+    tokens = tokens_ds["input_ids"]
 
-    tokens = load_tokenized_data(
-        ctx_len=cfg.ctx_len,
-        tokenizer=tokenizer,
-        dataset_repo=cfg.dataset_repo,
-        dataset_split=cfg.dataset_split,
-        dataset_name=cfg.dataset_name,
-        add_bos_token=False,
-    )
+    if filter_tokens is not None:
+        flattened_tokens = tokens.flatten()
+        mask = ~torch.isin(flattened_tokens, filter_tokens)
+        masked_tokens = flattened_tokens[mask]
+        truncated_tokens = masked_tokens[:len(masked_tokens) - (len(masked_tokens) % cfg.ctx_len)]
+        tokens = truncated_tokens.reshape(-1, cfg.ctx_len)
+
     tokens = cast(TensorType["batch", "seq"], tokens)
 
     cache = FeatureCache(
         hooked_model,
-        submodule_to_sae,
+        submodule_name_to_submodule,
         batch_size=cfg.batch_size,
     )
     cache.run(cfg.n_tokens, tokens)
@@ -273,25 +312,24 @@ def populate_cache(
         save_dir=latents_path,
     )
 
-    cache.save_config(
-        save_dir=str(latents_path), cfg=cfg, model_name=args.model
-    )
+    cache.save_config(save_dir=str(latents_path), cfg=cfg, model_name=run_cfg.model)
+
 
 async def run():
     parser = ArgumentParser()
     parser.add_arguments(ExperimentConfig, dest="experiment_cfg")
     parser.add_arguments(FeatureConfig, dest="feature_cfg")
     parser.add_arguments(CacheConfig, dest="cache_cfg")
-    parser.add_arguments(RunConfig, dest="run_cfg")    
+    parser.add_arguments(RunConfig, dest="run_cfg")
     args = parser.parse_args()
 
-    feature_range = torch.arange(args.max_features) if args.max_features else None
-    
-    hookpoints, submodule_to_sae, hooked_model, tokenizer = load_artifacts(args)
+    feature_range = torch.arange(args.run_cfg.max_features) if args.run_cfg.max_features else None
+
+    hookpoints, submodule_name_to_submodule, hooked_model, tokenizer = load_artifacts(args)
 
     base_path = Path("results")
-    if args.name:
-        base_path = base_path / args.name
+    if args.run_cfg.name:
+        base_path = base_path / args.run_cfg.name
 
     latents_path = base_path / "latents"
     explanations_path = base_path / "explanations"
@@ -299,20 +337,30 @@ async def run():
 
     if (
         not glob(str(latents_path / ".*")) + glob(str(latents_path / "*"))
-        or "cache" in args.overwrite
+        or "cache" in args.run_cfg.overwrite
     ):
-        populate_cache(args, hooked_model, submodule_to_sae, latents_path, tokenizer)
+        populate_cache(
+            args.run_cfg,
+            args.cache_cfg,
+            hooked_model,
+            submodule_name_to_submodule,
+            latents_path,
+            tokenizer,
+            args.run_cfg.seed,
+        )
     else:
         print(f"Files found in {latents_path}, skipping cache population...")
 
-    del hooked_model, submodule_to_sae
-    
+    del hooked_model, submodule_name_to_submodule
+
     if (
         not glob(str(scores_path / ".*")) + glob(str(scores_path / "*"))
-        or "scores" in args.overwrite
+        or "scores" in args.run_cfg.overwrite
     ):
         await process_cache(
-            args,
+            args.feature_cfg,
+            args.run_cfg,
+            args.experiment_cfg,
             latents_path,
             explanations_path,
             scores_path,
