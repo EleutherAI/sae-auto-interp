@@ -121,6 +121,8 @@ class DSPyExperiment:
         )
         save_dir = Path(self.config.save_dir)
         save_dir.mkdir(parents=True, exist_ok=True)
+        if self.config.model_config.optimizer == "bootstrap":
+            module = module.candidate_programs[0]
         module.save(save_dir / "module", save_program=True)
         with open(save_dir / "config.json", "w") as f:
             f.write(self.config.save_json())

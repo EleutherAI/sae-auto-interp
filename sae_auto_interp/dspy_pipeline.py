@@ -273,7 +273,6 @@ def train_classifier_pipeline(
         optimizer = dspy.MIPROv2(metric=accuracy_score, prompt_model=model, task_model=model, metric_threshold=0.7,
                                  auto="light" if "_" not in optimizer_method else optimizer_method.split("_")[1])
     elif optimizer_method == "bootstrap":
-        # optimizer = dspy.BootstrapFewShotWithOptuna(
         optimizer = dspy.BootstrapFewShotWithRandomSearch(
             metric=accuracy_score,
             metric_threshold=0.7,
