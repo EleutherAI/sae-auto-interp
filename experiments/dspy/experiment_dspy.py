@@ -123,7 +123,7 @@ class DSPyExperiment:
         save_dir.mkdir(parents=True, exist_ok=True)
         if self.config.model_config.optimizer == "bootstrap":
             module = module.candidate_programs[0][-1]
-        module.save(save_dir / "module", save_program=True)
+        module.save(save_dir / "module")
         with open(save_dir / "config.json", "w") as f:
             f.write(self.config.save_json())
             

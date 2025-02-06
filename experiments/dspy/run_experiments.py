@@ -82,12 +82,12 @@ if __name__ == "__main__":
             save_dir="cot_bs1",
             model_config=replace(base_experiment.model_config, use_cot=True, batch_size=1, n_aux_examples=3)
         ),
-        replace(
-            base_experiment,
-            experiment_name="deepseek",
-            save_dir="deepseek",
-            **ds_config,
-        ),
+        # replace(
+        #     base_experiment,
+        #     experiment_name="deepseek",
+        #     save_dir="deepseek",
+        #     **ds_config,
+        # ),
         replace(
             base_experiment,
             experiment_name="mipro",

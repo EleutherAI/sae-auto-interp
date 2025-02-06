@@ -31,6 +31,7 @@ if __name__ == "__main__":
     axs[0, 0].set_title("Default pipeline")
     
     for name, acc in accuracies.get("dspy_accuracies", {}).items():
+        print(name, sum(acc) / len(acc))
         plot_hist(axs[0, 1], acc, name)
         axs[0, 1].set_title(f"pure dspy")
     
