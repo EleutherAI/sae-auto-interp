@@ -1,8 +1,7 @@
 import json
 from typing import Dict, List, Optional
+from tqdm import tqdm
 
-import cupy as cp
-import cupyx.scipy.sparse as cusparse
 import numpy as np
 import torch
 from safetensors.numpy import load_file
@@ -21,7 +20,7 @@ class NeighbourCalculator:
         
         feature_dataset: Optional['FeatureDataset'] = None,
         autoencoder: Optional["Autoencoder"] = None,
-        pre_activation_record: Optional['PreActivationRecord'] = None,
+        residual_stream_record: Optional['ResidualStreamRecord'] = None,
         number_of_neighbours: int = 10,
         neighbour_cache: Optional[Dict[str, Dict[int, List[int]]]] = None,
     ):
@@ -32,12 +31,12 @@ class NeighbourCalculator:
         Args:
             feature_dataset (Optional[FeatureDataset]): Dataset containing feature activations
             autoencoder (Optional[Autoencoder]): The trained autoencoder model
-            pre_activation_record (Optional[PreActivationRecord]): Record of pre-activation values
+            residual_stream_record (Optional[ResidualStreamRecord]): Record of residual stream values
         """
         self.feature_dataset = feature_dataset
         self.autoencoder = autoencoder
-        self.pre_activation_record = pre_activation_record
-        
+        self.residual_stream_record = residual_stream_record
+        self.number_of_neighbours = number_of_neighbours
 
         # load the neighbour cache from the path 
         if neighbour_cache is not None:
@@ -60,8 +59,8 @@ class NeighbourCalculator:
             self.neighbour_cache[method] = self._compute_similarity_neighbours()
             
         elif method == 'correlation':
-            if self.autoencoder is None or self.pre_activation_record is None:
-                raise ValueError("Autoencoder and pre-activation record are required for correlation-based neighbours")
+            if self.autoencoder is None or self.residual_stream_record is None:
+                raise ValueError("Autoencoder and residual stream record are required for correlation-based neighbours")
             self.neighbour_cache[method] = self._compute_correlation_neighbours()
             
         elif method == 'co-occurrence':
@@ -76,76 +75,109 @@ class NeighbourCalculator:
         """
         Compute neighbour lists based on weight similarity in the autoencoder.
         """
-
+        print("Computing similarity neighbours")
         # We use the encoder vectors to compute the similarity between features
-        encoder = self.autoencoder.encoder
+        encoder = self.autoencoder.encoder.cuda()
 
         weight_matrix_normalized = encoder.weight / encoder.weight.norm(dim=1, keepdim=True)
-
+        wT = weight_matrix_normalized.T
         # Compute the similarity between features
-        similarity_matrix = weight_matrix_normalized.T @ weight_matrix_normalized
+        done = False
+        batch_size = weight_matrix_normalized.shape[0]
+        number_features = batch_size
 
-        # Get the indices of the top k neighbours for each feature
-        top_k_indices = torch.topk(similarity_matrix, self.number_of_neighbours, dim=1).indices
+        neighbour_lists = {}
+        while not done:
+            try:
+               
+                for start in tqdm(range(0,number_features,batch_size)):
+                    rows = wT[start:start+batch_size]
+                    similarity_matrix = weight_matrix_normalized @ rows
+                    top_k_indices = torch.topk(similarity_matrix, self.number_of_neighbours+1, dim=1).indices
+                    neighbour_lists.update({i+start: top_k_indices[i].tolist()[1:] for i in range(len(top_k_indices))})
+                    del similarity_matrix
+                    torch.cuda.empty_cache()
+                done = True
+            except Exception:
+                batch_size = batch_size // 2
+                if batch_size < 2:
+                    raise ValueError("Batch size is too small to compute similarity matrix. You don't have enough memory.")
 
-        # Return the neighbour lists
-        return {i: top_k_indices[i].tolist() for i in range(len(top_k_indices))}
+
+        return neighbour_lists
 
     
     def _compute_correlation_neighbours(self) -> Dict[int, List[int]]:
         """
         Compute neighbour lists based on activation correlation patterns.
         """
-        
-        # the preactivation_matrix has the shape (number_of_samples,hidden_dimension)
-        preactivation_matrix = self.pre_activation_record
+        print("Computing correlation neighbours")
 
-        # compute the covariance matrix of the preactivation matrix
-        covariance_matrix = torch.cov(preactivation_matrix.T)
+         # the activation_matrix has the shape (number_of_samples,hidden_dimension)
+       
+        activations = torch.tensor(load_file(self.residual_stream_record+".safetensors")["activations"])
+
+       
+        estimator = CovarianceEstimator(activations.shape[1])
+        # batch the activations
+        batch_size = 10000
+        for i in tqdm(range(0,activations.shape[0],batch_size)):
+            estimator.update(activations[i:i+batch_size])
+
+        covariance_matrix = estimator.cov().cuda().half()
 
         # load the encoder
-        encoder_matrix = self.autoencoder.encoder.weight
+        encoder_matrix = self.autoencoder.encoder.weight.cuda().half()
 
-        # covariance between the features is u^T * covariance_matrix * u
-        covariance_between_features = encoder_matrix.T @ covariance_matrix @ encoder_matrix
+        covariance_between_features = torch.zeros((encoder_matrix.shape[0],encoder_matrix.shape[0]),device="cpu")
 
-        # the correlation is then the covariance devided by the product of the standard deviations
+        # do batches of features
+        batch_size = 1024
+        for start in tqdm(range(0,encoder_matrix.shape[0],batch_size)):
+            end = min(encoder_matrix.shape[0],start+batch_size)
+            encoder_rows = encoder_matrix[start:end]
+            
+            correlation = encoder_rows @ covariance_matrix @ encoder_matrix.T
+            covariance_between_features[start:end] = correlation.cpu()
 
-        product_of_std = torch.diag(covariance_matrix)**2
-
+        # the correlation is then the covariance divided by the product of the standard deviations
+        diagonal_covariance = torch.diag(covariance_between_features)
+        product_of_std = torch.sqrt(torch.outer(diagonal_covariance,diagonal_covariance)+1e-6)
         correlation_matrix = covariance_between_features / product_of_std
 
         # get the indices of the top k neighbours for each feature
-        top_k_indices = torch.topk(correlation_matrix, self.number_of_neighbours, dim=1).indices
+        top_k_indices = torch.topk(correlation_matrix, self.number_of_neighbours+1, dim=1).indices
 
         # return the neighbour lists
-        return {i: top_k_indices[i].tolist() for i in range(len(top_k_indices))}
+        return {i: top_k_indices[i].tolist()[1:] for i in range(len(top_k_indices))}
 
     
     def _compute_cooccurrence_neighbours(self) -> Dict[int, List[int]]:
         """
         Compute neighbour lists based on feature co-occurrence in the dataset.
+        If you run out of memory try reducing the token_batch_size
         """
-        # To be implemented
 
+
+
+        import cupy as cp
+        import cupyx.scipy.sparse as cusparse
+        print("Computing co-occurrence neighbours")
         paths = []
         for buffer in self.feature_dataset.buffers:
             paths.append(buffer.tensor_path)
         
         all_locations = []
-        all_activations = []
         for path in paths:
             split_data = load_file(path)
             first_feature = int(path.split("/")[-1].split("_")[0])
-            activations = torch.tensor(split_data["activations"])
             locations = torch.tensor(split_data["locations"].astype(np.int64))
             locations[:,2] = locations[:,2] + first_feature
+            # compute number of tokens 
             all_locations.append(locations)
-            all_activations.append(activations)
-        
+            
         # concatenate the locations and activations
-        locations = torch.cat(all_locations).cuda()
-        activations = torch.cat(all_activations).cuda()
+        locations = torch.cat(all_locations)
         n_features = int(torch.max(locations[:,2])) + 1
 
         # 1. Get unique values of first 2 dims (i.e. absolute token index) and their counts
@@ -163,23 +195,41 @@ class NeighbourCalculator:
         cols = cp.asarray(locations_flat)
         data = cp.ones(len(rows))
         sparse_matrix = cusparse.coo_matrix((data, (rows, cols)), shape=(n_features, n_tokens))
-        cooc_matrix = sparse_matrix @ sparse_matrix.T
+        token_batch_size = 100_000
+        cooc_matrix = cp.zeros((n_features, n_features), dtype=cp.float32)
+        
+        sparse_matrix_csc = sparse_matrix.tocsc()
+        for start in tqdm(range(0, n_tokens, token_batch_size)):
+            end = min(n_tokens, start + token_batch_size)
+            # Slice the sparse matrix to get a batch of tokens.
+            sub_matrix = sparse_matrix_csc[:, start:end]
+            # Compute the partial co-occurrence matrix for this batch.
+            partial_cooc = (sub_matrix @ sub_matrix.T).toarray()
+            cooc_matrix += partial_cooc
 
+        # Free temporary variables.
+        del rows, cols, data, sparse_matrix, sparse_matrix_csc
+        
+    
         # Compute Jaccard similarity
         def compute_jaccard(cooc_matrix):
             self_occurrence = cooc_matrix.diagonal()
             jaccard_matrix = cooc_matrix / (self_occurrence[:, None] + self_occurrence - cooc_matrix)
+            # remove the diagonal and keep the upper triangle
             return jaccard_matrix
 
-        del rows, cols, data, sparse_matrix
         # Compute Jaccard similarity matrix
         jaccard_matrix = compute_jaccard(cooc_matrix)
 
-        # get the indices of the top k neighbours for each feature
-        top_k_indices = torch.topk(jaccard_matrix, self.number_of_neighbours, dim=1).indices
 
+        jaccard_torch = torch.as_tensor(cp.asnumpy(jaccard_matrix))
+         # get the indices of the top k neighbours for each feature
+        top_k_indices = torch.topk(jaccard_torch, self.number_of_neighbours+1, dim=1).indices
+        del jaccard_matrix,cooc_matrix,jaccard_torch
+        torch.cuda.empty_cache()
+       
         # return the neighbour lists
-        return {i: top_k_indices[i].tolist() for i in range(len(top_k_indices))}
+        return {i: top_k_indices[i].tolist()[1:] for i in range(len(top_k_indices))}
 
 
 
@@ -191,19 +241,41 @@ class NeighbourCalculator:
             self._compute_neighbour_list(method)
 
 
-    def save_neighbour_cache(self) -> None:
+    def save_neighbour_cache(self, path: str) -> None:
         """
         Save the neighbour cache to the path as a json file
         """
-        with open(self.path, 'w') as f:
+        with open(path, 'w') as f:
             json.dump(self.neighbour_cache, f)
 
-    def load_neighbour_cache(self) -> Dict[str, Dict[int, List[int]]]:
+    def load_neighbour_cache(self, path: str) -> Dict[str, Dict[int, List[int]]]:
         """
         Load the neighbour cache from the path as a json file
         """
-        with open(self.path, 'r') as f:
+        with open(path, 'r') as f:
             return json.load(f)
 
 
 
+class CovarianceEstimator:
+    def __init__(self, n_features, *, device = None):
+        self.mean = torch.zeros(n_features, device=device)
+        self.cov_ = torch.zeros(n_features, n_features, device=device)
+        self.n = 0
+
+    def update(self, x: torch.Tensor):
+        n, d = x.shape
+        assert d == len(self.mean)
+
+        self.n += n
+
+        # Welford's online algorithm
+        delta = x - self.mean
+        self.mean.add_(delta.sum(dim=0), alpha=1 / self.n)
+        delta2 = x - self.mean
+
+        self.cov_.addmm_(delta.mH, delta2)
+
+    def cov(self):
+        """Return the estimated covariance matrix."""
+        return self.cov_ / self.n
