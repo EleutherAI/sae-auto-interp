@@ -31,16 +31,12 @@ class JumpReLUSAE(nn.Module):
     recon = self.decode(acts)
     return recon
   
-  @classmethod
-<<<<<<<< HEAD:sae_auto_interp/autoencoders/Custom/gemmascope.py
-  def from_pretrained(cls, model_name_or_path,position,device):
-========
-  def from_pretrained(cls, path: str, type: str, device: str) -> nn.Module:
->>>>>>>> 30d5e27537e1c108a9dda37e87e51dda9bfa4206:delphi/autoencoders/DeepMind/model.py
+@classmethod
+def from_pretrained(cls, path: str, type: str, device: str) -> nn.Module:
     path_to_params = hf_hub_download(
-    repo_id=model_name_or_path,
-    filename=f"{position}/params.npz",
-    force_download=False,
+        repo_id=path,
+        filename=f"{type}/params.npz",
+        force_download=False,
     )
     params = np.load(path_to_params)
     pt_params = {k: torch.from_numpy(v) for k, v in params.items()}

@@ -1,10 +1,12 @@
 from functools import partial, reduce
-from typing import List, Any, Tuple, Optional, Dict
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
 import torch
 from nnsight import LanguageModel
 from sparsify import Sae
-from pathlib import Path
-from .OpenAI.model import ACTIVATIONS_CLASSES, TopK
+
+from .Custom.openai import ACTIVATIONS_CLASSES, TopK
 from .wrapper import AutoencoderLatents
 
 DEVICE = "cuda:0"
@@ -15,6 +17,7 @@ def load_eai_autoencoders(
     ae_layers: List[int],
     weight_dir: str,
     module: str,
+    transcoder: bool = False,
     randomize: bool = False,
     seed: int = 42,
     k: Optional[int] = None
@@ -63,21 +66,22 @@ def load_eai_autoencoders(
                 trained_k = sae.cfg.k
             topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
             return topk(encoded)
-
-        if "llama" in weight_dir:
-            if module == "res":
-                submodule = model.model.layers[layer]
-            else:
-                submodule = model.model.layers[layer].mlp
-        elif "gpt2" in weight_dir:
-            submodule = model.transformer.h[layer]
-        else:
+        if "pythia" in weight_dir:
             if module == "res":
                 submodule = model.gpt_neox.layers[layer]
             else:
                 submodule = model.gpt_neox.layers[layer].mlp
+
+        elif "gpt2" in weight_dir:
+            submodule = model.transformer.h[layer]
+        else:
+            if module == "res":
+                submodule = model.model.layers[layer]
+            else:
+                submodule = model.model.layers[layer].mlp
+            
         submodule.ae = AutoencoderLatents(
-            sae, partial(_forward, sae, k), width=sae.encoder.weight.shape[0]
+            sae, partial(_forward, sae, k), width=sae.encoder.weight.shape[0],hookpoint=submodule.path
         )
 
         submodules[submodule.path] = submodule
@@ -85,14 +89,18 @@ def load_eai_autoencoders(
     with model.edit("") as edited:
         for path, submodule in submodules.items():
             if "embed" not in path and "mlp" not in path:
-                acts = submodule.output[0]
+                if transcoder:
+                    acts = submodule.input[0]
+                else:
+                    acts = submodule.output[0]
             else:
-                acts = submodule.output
+                if transcoder:
+                    acts = submodule.input
+                else:
+                    acts = submodule.output
             submodule.ae(acts, hook=True)
 
     return submodules, edited
-
-
 def resolve_path(model, path_segments: List[str]) -> List[str] | None:
     """Attempt to resolve the path segments to the model in the case where it has been wrapped 
     (e.g. by a LanguageModel, causal model, or classifier)."""
