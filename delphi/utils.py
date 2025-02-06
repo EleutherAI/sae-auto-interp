@@ -9,7 +9,7 @@ def load_tokenized_data(
     dataset_repo: str,
     dataset_split: str,
     dataset_name: str = "",
-    dataset_row: str = "raw_content",
+    dataset_column_name: str = "raw_content",
     seed: int = 22,
     add_bos_token: bool = True,
 ):
@@ -17,12 +17,10 @@ def load_tokenized_data(
     Load a huggingface dataset, tokenize it, and shuffle.
     """
     from datasets import load_dataset
-    from sae.data import chunk_and_tokenize
+    from sparsify.data import chunk_and_tokenize
     
-    print(dataset_repo,dataset_name,dataset_split)
-
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
-    tokens_ds = chunk_and_tokenize(data, tokenizer, max_seq_len=ctx_len, text_key=dataset_row)
+    tokens_ds = chunk_and_tokenize(data, tokenizer, max_seq_len=ctx_len, text_key=dataset_column_name)
     tokens_ds = tokens_ds.shuffle(seed)
 
     tokens = cast(TensorType["batch", "seq"], tokens_ds["input_ids"])
