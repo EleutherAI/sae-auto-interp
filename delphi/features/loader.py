@@ -145,11 +145,14 @@ class FeatureDataset:
         """
         self.cfg = cfg
         self.buffers = []
+        
 
         if features is None:
             self._build(raw_dir, modules)
         else:
             self._build_selected(raw_dir, modules, features)
+
+        self.everything = self._build_everything(raw_dir, modules)
 
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
@@ -244,76 +247,48 @@ class FeatureDataset:
                     )
                 )
 
+    def _build_everything(self, raw_dir: str, modules: List[str]):
+        """
+        Build a BufferOutput with the locations and activations of all features.
+        """
+        edges = self._edges()
+        everything = {}
+        all_locations = []
+        all_activations = []
+        tokens = None
+        for module in modules:
+            for start, end in zip(edges[:-1], edges[1:]):
+                path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
+                split_data = load_file(path)
+                first_feature = int(path.split("/")[-1].split("_")[0])
+                activations = torch.tensor(split_data["activations"])
+                locations = torch.tensor(split_data["locations"].astype(np.int64))
+                if tokens is None:
+                    if "tokens" in split_data:
+                        tokens = torch.tensor(split_data["tokens"].astype(np.int64))
+                    else:
+                        tokens = None
+                
+                locations[:,2] = locations[:,2] + first_feature
+                all_locations.append(locations)
+                all_activations.append(activations)
+
+        all_locations = torch.cat(all_locations)
+        all_activations = torch.cat(all_activations)
+        everything[module] = BufferOutput(-1, all_locations, all_activations, tokens)
+
+        
+
     def __len__(self):
         """Return the number of buffers in the dataset."""
         return len(self.buffers)
         
-    def load(
-        self,
-        collate: bool = False,
-        constructor: Optional[Callable] = None,
-        sampler: Optional[Callable] = None,
-        transform: Optional[Callable] = None,
-    ):
-        """
-        Load and process feature records from the dataset.
-
-        Args:
-            collate (bool): Whether to collate all records into a single list.
-            constructor (Optional[Callable]): Function to construct feature records.
-            sampler (Optional[Callable]): Function to sample from feature records.
-            transform (Optional[Callable]): Function to transform feature records.
-
-        Returns:
-            Union[List[FeatureRecord], Generator]: Processed feature records.
-        """
-        def _process(buffer_output: BufferOutput):
-            record = FeatureRecord(buffer_output.feature)
-            if constructor is not None:
-                constructor(record=record, buffer_output=buffer_output)
-
-            if sampler is not None:
-                sampler(record)
-
-            if transform is not None:
-                transform(record)
-
-            return record
-
-        def _worker(buffer):
-            return [
-                _process(data)
-                for data in tqdm(buffer, desc=f"Loading {buffer.module_path}")
-                if data is not None
-            ]
-
-        return self._load(collate, _worker)
-    
-    def _load(self, collate: bool, _worker: Callable):
-        """
-        Internal method to load feature records.
-
-        Args:
-            collate (bool): Whether to collate all records into a single list.
-            _worker (Callable): Function to process each buffer.
-
-        Returns:
-            Union[List[FeatureRecord], Generator]: Processed feature records.
-        """
-        if collate:
-            all_records = []
-            for buffer in self.buffers:
-                all_records.extend(_worker(buffer))
-            return all_records
-        else:
-            for buffer in self.buffers:
-                yield _worker(buffer)
-    
     def reset(self):
         """Reset all buffers in the dataset."""
         for buffer in self.buffers:
             buffer.reset()
 
+  
 class FeatureLoader:
     """
     Loader class for processing feature records from a FeatureDataset.
@@ -379,12 +354,13 @@ class FeatureLoader:
             Optional[FeatureRecord]: Processed feature record or None.
         """
         record = FeatureRecord(buffer_output.feature)
+        if self.transform is not None:
+            self.transform(record)
         if self.constructor is not None:
             self.constructor(record=record, buffer_output=buffer_output)
         if self.sampler is not None:
             self.sampler(record)
-        if self.transform is not None:
-            self.transform(record)
+        
         return record
 
     def __iter__(self):
@@ -425,10 +401,11 @@ class FeatureLoader:
             Optional[FeatureRecord]: Processed feature record or None.
         """
         record = FeatureRecord(buffer_output.feature)
+        if self.transform is not None:
+            self.transform(record)
         if self.constructor is not None:
             self.constructor(record=record, buffer_output=buffer_output)
         if self.sampler is not None:
             self.sampler(record)
-        if self.transform is not None:
-            self.transform(record)
+        
         return record

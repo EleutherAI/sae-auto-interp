@@ -1,6 +1,7 @@
+from typing import Callable, Optional
+
 import torch
 from torchtyping import TensorType
-from typing import Callable, Optional
 
 from .features import FeatureRecord, prepare_examples
 from .loader import BufferOutput
@@ -76,7 +77,7 @@ def pool_max_activation_windows(
     record.examples = prepare_examples(token_windows, activation_windows)
 
 def random_activation_windows(
-    record,
+    record: FeatureRecord,
     tokens: TensorType["batch", "seq"],
     buffer_output: BufferOutput,
     ctx_len: int,
@@ -95,6 +96,7 @@ def random_activation_windows(
     torch.manual_seed(22)
     if n_random == 0:
         return
+
     batch_size = tokens.shape[0]
     unique_batch_pos = buffer_output.locations[:, 0].unique()
 
@@ -117,6 +119,70 @@ def random_activation_windows(
         toks,
         torch.zeros_like(toks),
     )
+
+def neighbour_random_activation_windows(
+    record: FeatureRecord,
+    tokens: TensorType["batch", "seq"],
+    buffer_output: BufferOutput,
+    everything: BufferOutput,
+    ctx_len: int,
+    n_random: int,
+):
+    """
+    Generate random activation windows and update the feature record.
+
+    Args:
+        record (FeatureRecord): The feature record to update.
+        tokens (TensorType["batch", "seq"]): The input tokens.
+        buffer_output (BufferOutput): The buffer output containing activations and locations.
+        ctx_len (int): The context length.
+        n_random (int): The number of random examples to generate.
+    """
+    torch.manual_seed(22)
+    if n_random == 0:
+        return
+    
+    assert record.neighbours is not None, "Neighbours are not set, add them via a transform"
+
+    batch_size = tokens.shape[0]
+    
+    mask = torch.zeros(batch_size, dtype=torch.bool)
+    
+    for neighbour in record.neighbours:
+        # Get the possible batch positions where the neighbour is active
+        possible_locations = everything.locations[everything.locations[:, 0] == neighbour]
+        # Get the unique locations
+        unique_possible_locations = possible_locations.unique(dim=0)
+        # Set the mask to True for the unique locations
+        mask[unique_possible_locations[:, 1]] = True
+    
+    # Get the unique batch positions where the latent is active
+    unique_batch_pos_active = buffer_output.locations[:, 0].unique()
+    # Set the mask to False for the unique locations where the latent is active
+    mask[unique_batch_pos_active] = False
+
+    available_indices = mask.nonzero().squeeze()
+
+    # TODO:What to do when the latent is active at least once in each batch?
+    if available_indices.numel() < n_random:
+        print("No available indices")
+        record.random_examples = []
+        return
+    else:
+        # Select the batch positions
+        selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_random,))]
+        # Select the token positions
+        selected_positions = torch.randint(0, tokens.shape[1] - ctx_len, size=(n_random,))
+    
+
+    # Get tokens
+    toks = tokens[selected_indices, selected_positions : selected_positions + ctx_len]
+
+    record.random_examples = prepare_examples(
+        toks,
+        torch.zeros_like(toks),
+    )
+
 
 def default_constructor(
     record: FeatureRecord,
@@ -156,8 +222,8 @@ def default_constructor(
             )
     pool_max_activation_windows(
         record,
-        tokens=tokens,
         buffer_output=buffer_output,
+        tokens=tokens,
         ctx_len=ctx_len,
         max_examples=max_examples,
     )
@@ -168,3 +234,48 @@ def default_constructor(
         n_random=n_random,
         ctx_len=ctx_len,
     )
+
+def neighbour_constructor(
+    record: FeatureRecord,
+    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]],
+    buffer_output: BufferOutput,
+    everything: BufferOutput,
+    n_random: int,
+    ctx_len: int,
+    max_examples: int,
+):
+    """
+    Construct feature examples using pool max activation windows and random activation windows from neighbours.
+    """
+    tokens = everything.tokens
+    if tokens is None:
+        if token_loader is None:
+            raise ValueError("Either tokens or token_loader must be provided")
+        try:
+            tokens = token_loader()
+        except TypeError:
+            raise ValueError(
+                "Starting with v0.2, `tokens` was renamed to `token_loader`, "
+                "which must be a callable for lazy loading.\n\n"
+                "Instead of passing\n"
+                "`    tokens=dataset.tokens`,\n"
+                "pass\n"
+                "`    token_loader=lambda: dataset.load_tokens()`,\n"
+                "(assuming `dataset` is a `FeatureDataset` instance)."
+            )
+    pool_max_activation_windows(
+        record,
+        buffer_output=buffer_output,
+        tokens=tokens,
+        ctx_len=ctx_len,
+        max_examples=max_examples,
+    )
+    neighbour_random_activation_windows(
+        record,
+        tokens=tokens,
+        buffer_output=buffer_output,
+        everything=everything,
+        n_random=n_random,
+        ctx_len=ctx_len,
+    )
+    
