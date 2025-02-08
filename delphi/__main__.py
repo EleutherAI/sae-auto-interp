@@ -331,6 +331,7 @@ async def run(experiment_cfg: ExperimentConfig, feature_cfg: FeatureConfig, cach
     if run_cfg.name:
         base_path = base_path / run_cfg.name
 
+    base_path.mkdir(parents=True, exist_ok=True)
     with open(base_path / "run_config.json", "w") as f:
         json.dump(run_cfg.__dict__, f, indent=4)
 
