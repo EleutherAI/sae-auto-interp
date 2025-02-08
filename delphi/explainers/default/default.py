@@ -1,10 +1,8 @@
 import re
 import asyncio
-import torch
 
 from ..explainer import Explainer, ExplainerResult
 from .prompt_builder import build_prompt
-import time
 from ...logger import logger
 
 class DefaultExplainer(Explainer):
