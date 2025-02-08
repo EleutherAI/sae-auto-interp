@@ -30,6 +30,16 @@ class Example:
         """
         return self.activations.max()
 
+    @property
+    def max_activation_token(self):
+        """
+        Get the token with the maximum activation value.
+
+        Returns:
+            str: The token with the maximum activation value.
+        """
+        return self.tokens[self.activations.argmax()]
+
 
 def prepare_examples(tokens, activations):
     """

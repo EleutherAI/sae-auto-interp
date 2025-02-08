@@ -21,10 +21,15 @@ class ExperimentConfig(Serializable):
     n_random: int = 50
     """Number of random examples to sample."""
 
-    train_type: Literal["top", "random", "quantiles"] = "quantiles"
-    """Type of sampler to use for feature explanation generation."""
+    train_type: Literal["top", "random", "quantiles", "quantiles_top"] = "quantiles"
+    """Type of sampler to use for feature explanation generation.
+    quantiles randomly selects n examples spread evenly across the quantiles
+    quantiles_top selects n examples spread across the top n/n_quantiles samples in each quantile
+    top selects the top n examples
+    random selects n random examples
+    """
 
-    test_type: Literal["quantiles", "activation"] = "quantiles"
+    test_type: Literal["quantiles", "activation", "quantiles_top", "top"] = "quantiles"
     """Type of sampler to use for feature explanation testing."""
 
 

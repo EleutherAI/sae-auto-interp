@@ -76,11 +76,40 @@ def split_quantiles(
     return samples
 
 
+def split_quantiles_top(
+    examples: list[Example], 
+    n_quantiles: int, 
+    n_samples: int,
+    seed: int = 22
+):
+    """
+    Select the top (n_samples // n_quantiles) samples from each quantile.
+    """
+    random.seed(seed)
+
+    quantile_size = len(examples) // n_quantiles
+    samples_per_quantile = n_samples // n_quantiles
+    samples: list[list[Example]] = []
+    for i in range(n_quantiles):
+        # Take an evenly spaced slice of the examples for the quantile
+        quantile = examples[i * quantile_size : (i + 1) * quantile_size]
+
+        # Take a random sample of the examples. If there are less than samples_per_quantile, use all samples
+        if len(quantile) < samples_per_quantile:
+            sample = quantile
+            logger.info(f"Quantile {i} has less than {samples_per_quantile} samples, using all samples")
+        else:
+            sample = quantile[:samples_per_quantile]
+        samples.append(sample)
+
+    return samples
+
+
 def train(
     examples: list[Example],
     max_activation: float,
     n_train: int,
-    train_type: Literal["top", "random","quantiles"],
+    train_type: Literal["top", "random", "quantiles", "quantiles_top"],
     n_quantiles: int = 10,
     seed: int = 22,
 ):
@@ -109,6 +138,14 @@ def train(
                     example.normalized_activations = cast(TensorType["seq"], (example.activations * 10 / max_activation).floor())
                 selected_examples.extend(quantile)
             return selected_examples
+        case "quantiles_top":
+            selected_examples_quantiles = split_quantiles_top(examples, n_quantiles, n_train)
+            selected_examples = []
+            for quantile in selected_examples_quantiles:
+                for example in quantile:
+                    example.normalized_activations = cast(TensorType["seq"], (example.activations * 10 / max_activation).floor())
+                selected_examples.extend(quantile)
+            return selected_examples
 
 
 def test(
@@ -116,7 +153,7 @@ def test(
     max_activation: float,
     n_test: int,
     n_quantiles: int,
-    test_type: Literal["quantiles", "activation"],
+    test_type: Literal["quantiles", "activation", "quantiles_top", "top"],
 ):
     match test_type:
         case "quantiles":
@@ -127,6 +164,17 @@ def test(
             return selected_examples
         case "activation":
             selected_examples = split_activation_quantiles(examples, n_quantiles, n_test)
+            for quantile in selected_examples:
+                for example in quantile:
+                    example.normalized_activations = (example.activations * 10 / max_activation).floor()
+            return selected_examples
+        case "top":
+            selected_examples = examples[:n_test]
+            for example in selected_examples:
+                example.normalized_activations = (example.activations * 10 / max_activation).floor()
+            return selected_examples
+        case "quantiles_top":
+            selected_examples = split_quantiles_top(examples, n_quantiles, n_test)
             for quantile in selected_examples:
                 for example in quantile:
                     example.normalized_activations = (example.activations * 10 / max_activation).floor()

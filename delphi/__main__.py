@@ -27,6 +27,7 @@ from simple_parsing import field, list_field
 
 from delphi.config import ExperimentConfig, FeatureConfig
 from delphi.explainers import DefaultExplainer
+from delphi.explainers.filter_single_token_features import SkipSingleTokenFeaturesExplainer
 from delphi.features import FeatureDataset, FeatureLoader
 from delphi.features.constructors import default_constructor
 from delphi.features.samplers import sample
@@ -219,7 +220,8 @@ async def process_cache(
         return result
 
     explainer_pipe = process_wrapper(
-        DefaultExplainer(
+        SkipSingleTokenFeaturesExplainer(
+            20,
             client,
             tokenizer=dataset.tokenizer,
             threshold=0.3,
