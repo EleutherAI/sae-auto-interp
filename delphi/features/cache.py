@@ -286,7 +286,7 @@ class FeatureCache:
 
     def save_splits(self, n_splits: int, save_dir, save_tokens: bool = True):
         """
-        Save the cached features in splits.
+        Save the cached non-zero feature activations and locations in splits.
 
         Args:
             n_splits (int): Number of splits to generate.

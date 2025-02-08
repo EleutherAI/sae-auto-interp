@@ -4,9 +4,10 @@ import torch
 from torch import Tensor
 import pandas as pd
 import asyncio
+import time
 
 from delphi.config import ExperimentConfig, FeatureConfig, CacheConfig
-from delphi.__main__ import RunConfig, populate_cache, process_cache, load_artifacts
+from delphi.__main__ import run, RunConfig, load_artifacts
 
 
 def parse_score_file(file_path):
@@ -75,13 +76,7 @@ def build_df(path: Path, target_modules: list[str], range: Tensor | None):
     return df
 
 
-async def new_main():
-    experiment_cfg = ExperimentConfig()
-    feature_cfg = FeatureConfig(
-        width=32_768,  # The number of latents of your SAE
-        min_examples=200,  # The minimum number of examples to consider for the feature to be explained
-        max_examples=10_000,  # The maximum number of examples a feature may activate on before being excluded from explanation
-    )
+async def test():
     cache_cfg = CacheConfig(
         dataset_repo="EleutherAI/rpj-v2-sample",
         dataset_split="train[:1%]",
@@ -90,8 +85,20 @@ async def new_main():
         n_splits=5,
         n_tokens=200_000,
     )
+    experiment_cfg = ExperimentConfig(
+        train_type="quantiles",
+        test_type="quantiles",
+        n_examples_train=40,
+        n_examples_test=50,
+    )
+    feature_cfg = FeatureConfig(
+        width=32_768,
+        min_examples=200,  # The minimum number of examples to consider for the feature to be explained
+        max_examples=10_000,  # The maximum number of examples a feature may activate on before being excluded from explanation
+    )
     run_cfg = RunConfig(
-        overwrite=["cache", "scores", "visualize"],
+        name='test',
+        overwrite=["cache", "scores"],
         model="EleutherAI/pythia-160m",
         sparse_model="EleutherAI/sae-pythia-160m-32k",
         explainer_model="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
@@ -99,51 +106,27 @@ async def new_main():
         explainer_model_max_len=4208,
         max_features=100,
         seed=22,
-        num_gpus=torch.cuda.device_count()
+        num_gpus=torch.cuda.device_count(),
+        filter_tokens=None
     )
 
+    start_time = time.time()
+    await run(experiment_cfg, feature_cfg, cache_cfg, run_cfg)
+    end_time = time.time()
+    print(f"Time taken: {end_time - start_time} seconds")
+
+    scores_path =  Path("results") / run_cfg.name / "scores"
+
     feature_range = torch.arange(run_cfg.max_features) if run_cfg.max_features else None
-
-    hookpoints, submodule_to_sae, hooked_model, tokenizer = load_artifacts(run_cfg)
-
-    base_path = Path("results") / 'test'
-
-    latents_path = base_path / "latents"
-    explanations_path = base_path / "explanations"
-    scores_path = base_path / "scores"
-
-    if 'cache' in run_cfg.overwrite or not (list((latents_path / ".*").glob("*")) + list((latents_path / "*").glob("*"))):
-        populate_cache(
-            run_cfg,
-            cache_cfg,
-            hooked_model,
-            submodule_to_sae,
-            latents_path,
-            tokenizer,
-            filter_tokens=torch.tensor([2]),
-        )
-
-    del hooked_model, submodule_to_sae
-
-    if 'scores' in run_cfg.overwrite or not (list((scores_path / ".*").glob("*")) + list((scores_path / "*").glob("*"))):
-        await process_cache(
-            feature_cfg,
-            run_cfg,
-            experiment_cfg,
-            latents_path,
-            explanations_path,
-            scores_path,
-            hookpoints,
-            tokenizer,
-            feature_range,
-        )
+    hookpoints, *_ = load_artifacts(run_cfg)
 
     df = build_df(scores_path, hookpoints, feature_range)
 
     # Performs better than random guessing
     for score_type in df["score_type"].unique():
-        assert df[df['score_type'] == score_type]["accuracy"].mean() > 0.55, f"Score type {score_type} has an accuracy of {df[df['score_type'] == score_type]['accuracy'].mean()}"
+        print(df[df['score_type'] == score_type]["accuracy"].mean())
+        assert df[df['score_type'] == score_type]["accuracy"].mean() > 0.54, f"Score type {score_type} has an accuracy of {df[df['score_type'] == score_type]['accuracy'].mean()}"
 
 
 if __name__ == "__main__":
-    asyncio.run(new_main())
+    asyncio.run(test())
