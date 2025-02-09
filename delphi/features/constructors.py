@@ -76,7 +76,7 @@ def pool_max_activation_windows(
     record.examples = prepare_examples(token_windows, activation_windows)
 
 def random_activation_windows(
-    record,
+    record: FeatureRecord,
     tokens: TensorType["batch", "seq"],
     buffer_output: BufferOutput,
     ctx_len: int,

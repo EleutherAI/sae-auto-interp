@@ -27,25 +27,39 @@ class Statistics:
     num_new_tokens: int
     num_generated_tokens: int
 
+
 class Offline(Client):
     provider = "offline"
 
-    def __init__(self, model: str, max_memory: float=0.85,prefix_caching:bool=True,batch_size:int=100,max_model_len:int=4096,num_gpus:int=2,enforce_eager:bool=False,statistics:bool=False):
-        """Client for offline generation. Models not already present in the on-disk HuggingFace cache 
-        will be downloaded."""
+    def __init__(
+        self,
+        model: str,
+        max_memory: float = 0.85,
+        prefix_caching: bool = True,
+        batch_size: int = 100,
+        max_model_len: int = 4096,
+        num_gpus: int = 2,
+        enforce_eager: bool = False,
+        statistics: bool = False,
+    ):
+        """Client for offline generation. Models not already present in the on-disk HuggingFace cache
+        will be downloaded. Note that temperature must be increased for best-of-n sampling."""
         super().__init__(model)
-        self.model = model  
+        self.model = model
         self.queue = asyncio.Queue()
         self.task = None
         self.client = LLM(
-            model=model, gpu_memory_utilization=max_memory, enable_prefix_caching=prefix_caching, 
-            tensor_parallel_size=num_gpus, max_model_len=max_model_len,enforce_eager=enforce_eager
+            model=model,
+            gpu_memory_utilization=max_memory,
+            enable_prefix_caching=prefix_caching,
+            tensor_parallel_size=num_gpus,
+            max_model_len=max_model_len,
+            enforce_eager=enforce_eager,
         )
-        self.sampling_params = SamplingParams(max_tokens=500, temperature=0.7)
-        self.tokenizer= AutoTokenizer.from_pretrained(model)
-        self.batch_size=batch_size
-        self.statistics=statistics
-        
+        self.sampling_params = SamplingParams(max_tokens=500)
+        self.tokenizer = AutoTokenizer.from_pretrained(model)
+        self.batch_size = batch_size
+        self.statistics = statistics
 
     async def process_func(self, batches: Union[str, List[Dict[str, str]]], kwargs):
         """
@@ -72,11 +86,12 @@ class Offline(Client):
             if self.statistics:
                 non_cached_tokens = len(self.tokenizer.apply_chat_template(batch[-1:], add_generation_prompt=True, tokenize=True))
                 statistics.append(Statistics(num_prompt_tokens=len(prompt), num_new_tokens=non_cached_tokens, num_generated_tokens=0))
+        print("temperature: ", self.sampling_params.temperature)
         response = await loop.run_in_executor(
             None, 
             partial(self.client.generate, prompt_token_ids=prompts, sampling_params=self.sampling_params, use_tqdm=False)
         )
-        
+
         new_response = []   
         for i,r in enumerate(response):
             logprobs,prompt_logprobs=self._parse_logprobs(r)
@@ -98,7 +113,7 @@ class Offline(Client):
         if self.task is None:
             self.task = asyncio.create_task(self._process_batches())
         await self.queue.put((prompt, future, kwargs))
-        #print(f"Current queue size: {self.queue.qsize()} prompts")
+        # print(f"Current queue size: {self.queue.qsize()} prompts")
         return await future
 
     def _parse_logprobs(self,response):
@@ -121,10 +136,8 @@ class Offline(Client):
                     else:
                         top_logprobs.append(Top_Logprob(token=logprob.decoded_token, logprob=logprob.logprob))
                 logprobs_list.append(Logprobs(token=decoded_token, top_logprobs=top_logprobs))
-            
+
         return logprobs_list,prompt_logprobs
-            
-        
 
     async def _process_batches(self):
         """
@@ -151,14 +164,14 @@ class Offline(Client):
 
                 if asyncio.get_event_loop().time() - start_time > 1:  # Time-based batch cutoff
                     break
-                
+
             if not batch:
                 continue
             # Process the batch
             try:
                 results = await self.process_func(batch, batch_kwargs)
                 batch_count += 1
-                #print(f"Batch {batch_count} finished processing. {len(results)} prompts processed.")
+                # print(f"Batch {batch_count} finished processing. {len(results)} prompts processed.")
                 for result, future in zip(results, batch_futures):
                     if not future.done():
                         future.set_result(result)
@@ -167,7 +180,6 @@ class Offline(Client):
                 for future in batch_futures:
                     if not future.done():
                         future.set_exception(e)
-
 
     async def close(self):
         """
@@ -183,6 +195,3 @@ class Offline(Client):
                 await self.task
             except asyncio.CancelledError:
                 pass
-        
-        
-        
