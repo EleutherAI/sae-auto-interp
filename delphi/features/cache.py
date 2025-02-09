@@ -10,6 +10,7 @@ from safetensors.numpy import save_file
 from torchtyping import TensorType
 from tqdm import tqdm
 
+from delphi.utils import generate_split_indices
 from delphi.config import CacheConfig
 
 
@@ -282,10 +283,7 @@ class FeatureCache:
         Returns:
             List[Tuple[int, int]]: List of start and end indices for each split.
         """
-        boundaries = torch.linspace(0, self.width, steps=n_splits + 1).long()
-
-        # Adjust end by one
-        return list(zip(boundaries[:-1], boundaries[1:] - 1))
+        return generate_split_indices(n_splits)
 
     def save_splits(self, n_splits: int, save_dir, save_tokens: bool = True):
         """

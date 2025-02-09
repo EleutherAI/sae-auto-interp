@@ -35,7 +35,7 @@ class OpenRouter(Client):
         return Response(msg)
 
     async def generate(
-        self, prompt: str, raw: bool = False, max_retries: int = 1, **kwargs
+        self, prompt: str, raw: bool = False, max_retries: int = 10, **kwargs
     ) -> Response:
         kwargs.pop("schema", None)
         max_tokens = kwargs.pop("max_tokens", 500)
@@ -51,7 +51,7 @@ class OpenRouter(Client):
         for attempt in range(max_retries):
             try:
                 response = await self.client.post(
-                    url=self.url, json=data, headers=self.headers, timeout=999
+                    url=self.url, json=data, headers=self.headers, timeout=99999
                 )
                 if raw:
                     return response.json()

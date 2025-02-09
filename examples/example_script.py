@@ -17,6 +17,10 @@ from delphi.features.samplers import sample
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
 
+"""
+uv run python -m examples.example_script --model monet_cache_converted/850m --module .model.layers.4.router --features 6144  --width 262144
+uv run python -m sglang_router.launch_server --model-path "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --port 8000 --host 0.0.0.0 --tensor-parallel-size=2 --mem-fraction-static=0.8 --dp-size 2 
+"""
 # run with python examples/example_script.py --model gemma/16k --module .model.layers.10 --features 100 --experiment_name test
 
 def main(args):
@@ -29,7 +33,7 @@ def main(args):
     sae_model = args.model
     feature_dict = {f"{module}": torch.arange(start_feature,start_feature+n_features)}
     dataset = FeatureDataset(
-        raw_dir="results/monet_cache",
+        raw_dir=f"results/{args.model}",
         cfg=feature_cfg,
         modules=[module],
         features=feature_dict,

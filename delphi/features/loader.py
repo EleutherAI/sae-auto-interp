@@ -146,21 +146,24 @@ class FeatureDataset:
         self.cfg = cfg
         self.buffers = []
 
+        cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
+        with open(cache_config_dir, "r") as f:
+            cache_config = json.load(f)
+        self.cache_config = cache_config
+        self.cfg.n_splits = cache_config.get("n_splits", self.cfg.n_splits)
+        self.cfg.width = cache_config.get("width", self.cfg.width)
+
         if features is None:
             self._build(raw_dir, modules)
         else:
             self._build_selected(raw_dir, modules, features)
-
-        cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
-        with open(cache_config_dir, "r") as f:
-            cache_config = json.load(f)
+        
         if tokenizer is None:
             temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False,
                                        trust_remote_code=True)
             self.tokenizer = temp_model.tokenizer
         else:
             self.tokenizer = tokenizer
-        self.cache_config = cache_config
 
     def load_tokens(self):
         """

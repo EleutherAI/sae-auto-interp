@@ -2,6 +2,7 @@ from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizer
 from typing import cast
 from torchtyping import TensorType
 from typing import Any, Type, TypeVar, cast
+import numpy as np
 
 def load_tokenized_data(
     ctx_len: int,
@@ -17,7 +18,7 @@ def load_tokenized_data(
     Load a huggingface dataset, tokenize it, and shuffle.
     """
     from datasets import load_dataset
-    from sae.data import chunk_and_tokenize
+    from sparsify.data import chunk_and_tokenize
     
     print(dataset_repo,dataset_name,dataset_split)
 
@@ -51,3 +52,9 @@ def assert_type(typ: Type[T], obj: Any) -> T:
         raise TypeError(f"Expected {typ.__name__}, got {type(obj).__name__}")
 
     return cast(typ, obj)
+
+def generate_split_indices(total: int, n_splits: int):
+    boundaries = np.linspace(0, total, n_splits + 1).astype(np.int64)
+
+    # Adjust end by one
+    return np.stack((boundaries[:-1], boundaries[1:] - 1), axis=-1).tolist()

@@ -1,4 +1,5 @@
 import os
+from opt_einsum import contract as opt_einsum
 from nnsight import NNsight
 from simple_parsing import ArgumentParser
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -27,9 +28,12 @@ def to_dense(
 def parse_args():
     parser = ArgumentParser()
     parser.add_arguments(CacheConfig, dest="options")
-    parser.add_argument("--tokenizer_model", type=str, default="MonetLLM/monet-vd-850M-100BT-hf")
-    parser.add_argument("--model_ckpt", type=str, default="MonetLLM/monet-vd-850M-100BT-hf")
+    parser.add_argument("--size", type=str, default="850m")
+    parser.add_argument("--separate_moe", type=bool, default=True)
     args = parser.parse_args()
+    model_name = f"MonetLLM/monet-vd-{args.size.upper()}-100BT-hf"
+    args.tokenizer_model = model_name
+    args.model_ckpt = model_name
     cfg = args.options
 
     return cfg, args
@@ -48,6 +52,7 @@ def main():
         args.model_ckpt,
         device_map={"": f"cuda:{rank}"},
         trust_remote_code=True,
+        load_in_8bit=args.size == "4.1b",
     )
     model_config = model.config
 
@@ -57,13 +62,19 @@ def main():
     submodule_dict = {}
 
     for layer in range(0, len(model.model.layers), model_config.moe_groups):
+        @torch.compile
         def _forward(x):
             g1, g2 = x
-            return torch.cat([g1, g2], dim=-1).view(*g1.shape[:2], -1)
+            if args.separate_moe:
+                return torch.cat([g1, g2], dim=-1).view(*g1.shape[:2], -1)
+            else:
+                return torch.einsum("bshx,bshy->bsxy", g1, g2).view(*g1.shape[:2], -1)
 
         submodule = model.model.layers[layer].router
         submodule.ae = AutoencoderLatents(
-            None, _forward, width=model_config.moe_heads * model_config.moe_experts * 2, hookpoint=""
+            None, _forward,
+            width=model.config.moe_experts ** 2 if not args.separate_moe else model_config.moe_heads * model_config.moe_experts * 2,
+            hookpoint=""
         )
         submodule_dict[submodule.path] = submodule
 
@@ -73,11 +84,11 @@ def main():
             submodule.ae(acts, hook=True)
 
     tokens = load_tokenized_data(
-            ctx_len=512,
-            tokenizer=tokenizer,
-            dataset_repo="EleutherAI/fineweb-edu-dedup-10b",
-            dataset_split="train[:1%]",
-            dataset_row="text"
+        ctx_len=512,
+        tokenizer=tokenizer,
+        dataset_repo="EleutherAI/fineweb-edu-dedup-10b",
+        dataset_split="train[:1%]",
+        dataset_row="text"
     )
 
     cache = FeatureCache(
@@ -89,7 +100,7 @@ def main():
     with torch.inference_mode():
         cache.run(n_tokens = 10_000_000, tokens=tokens)
 
-    save_dir = "results/monet_cache"
+    save_dir = f"results/monet_cache{'/separate' if args.separate_moe else ''}/{args.size}"
 
     cache.save_splits(
         n_splits=cfg.n_splits, 
