@@ -37,6 +37,6 @@ for layer in (0, 4, 8, 12, 16, 20):
         except FileNotFoundError:
             print(f"Skipping layer {layer} for size {size}")
             continue
-        fig.suptitle(f"Monet {size.upper()} Layer {layer} first router")
+        fig.suptitle(f"Monet {size.upper()} Layer {layer}, both routers")
         os.makedirs(f"results/monet{size_name}/autointerp", exist_ok=True)
         fig.savefig(f"results/monet{size_name}/autointerp/{layer}.png")
