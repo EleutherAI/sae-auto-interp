@@ -1,4 +1,4 @@
-from typing import cast
+from typing import cast, Dict
 from functools import partial
 from pathlib import Path
 from dataclasses import dataclass
@@ -38,6 +38,43 @@ from delphi.utils import assert_type
 from delphi.scorers import FuzzingScorer, DetectionScorer
 from delphi.pipeline import Pipe
 from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
+from delphi.autoencoders.DeepMind import JumpReLUSAE
+from delphi.autoencoders.wrapper import AutoencoderLatents
+
+
+def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,int],size:str,type:str, hookpoints):
+    submodules = {}
+
+    for layer in ae_layers:
+    
+        path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
+        sae = JumpReLUSAE.from_pretrained(path,type,"cuda")
+        
+        sae.half()
+        def _forward(sae, x):
+            encoded = sae.encode(x)
+            return encoded
+        if type == "res":
+            submodule = model.model.layers[layer]
+        elif type == "mlp":
+            submodule = model.model.layers[layer].post_feedforward_layernorm
+        submodule.ae = AutoencoderLatents(
+            sae, partial(_forward, sae), width=sae.W_enc.shape[1]
+        )
+
+        hookpoint = [hookpoint for hookpoint in hookpoints if f"layers.{layer}" in hookpoint][0]
+
+        submodules[hookpoint] = submodule
+
+    with model.edit(" ") as edited:
+        for _, submodule in submodules.items():
+            if type == "res":
+                acts = submodule.output[0]
+            else:
+                acts = submodule.output
+            submodule.ae(acts, hook=True)
+
+    return submodules, edited
 
 
 @dataclass
@@ -103,7 +140,7 @@ class RunConfig:
     )
     """Seed for the random number generator."""
 
-    filter_tokens: list[int] | None = None
+    filter_bos: bool = False
     """Tokens to filter out from the cache."""
 
 
@@ -129,16 +166,31 @@ def load_artifacts(run_cfg: RunConfig):
     )
 
     # Add SAE hooks to the model
-    submodule_name_to_submodule, model = load_and_hook_sparsify_models(
-        model,  # type: ignore
-        run_cfg.sparse_model,
-        run_cfg.hookpoints,
-        k=run_cfg.max_features,
-    )
+    if 'gemma' not in run_cfg.sparse_model:
+        submodule_name_to_submodule, model = load_and_hook_sparsify_models(
+            model,  # type: ignore
+            run_cfg.sparse_model,
+            run_cfg.hookpoints,
+            k=run_cfg.max_features,
+        )
+    else:
+        # Doing a hack
+        print("Loading 131k l0=47 residual gemma autoencoders")
+        submodule_name_to_submodule, model = load_gemma_autoencoders(
+            model,
+            ae_layers=[10],
+            average_l0s={10: 47},
+            size="131k",
+            type="res",
+            hookpoints=run_cfg.hookpoints
+        )
+        for key, value in submodule_name_to_submodule.items():
+            submodule_name_to_submodule[key] = value.to(dtype)
+
+        
     model = assert_type(LanguageModel, model)
 
     return run_cfg.hookpoints, submodule_name_to_submodule, model, model.tokenizer
-
 
 async def process_cache(
     feature_cfg: FeatureConfig,
@@ -246,7 +298,7 @@ async def process_cache(
             DetectionScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=10,
+                batch_size=16,
                 verbose=False,
                 log_prob=False,
             ),
@@ -257,7 +309,7 @@ async def process_cache(
             FuzzingScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=10,
+                batch_size=16,
                 verbose=False,
                 log_prob=False,
             ),
@@ -282,7 +334,7 @@ def populate_cache(
     submodule_name_to_submodule: dict[str, nn.Module],
     latents_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
-    filter_tokens: Tensor | None,
+    filter_bos: bool,
 ):
     """
     Populates an on-disk cache in `latents_path` with SAE feature activations.
@@ -298,16 +350,20 @@ def populate_cache(
     )
     tokens = data["input_ids"]
 
-    if filter_tokens is not None:
-        flattened_tokens = tokens.flatten()
-        mask = ~torch.isin(flattened_tokens, filter_tokens)
-        masked_tokens = flattened_tokens[mask]
+    if filter_bos:
+        if tokenizer.bos_token_id is None:
+            print("Tokenizer does not have a BOS token, skipping BOS filtering")
+        else:
+            flattened_tokens = tokens.flatten()
+            mask = ~torch.isin(flattened_tokens, torch.tensor([tokenizer.bos_token_id]))
+            masked_tokens = flattened_tokens[mask]
         truncated_tokens = masked_tokens[
             : len(masked_tokens) - (len(masked_tokens) % cfg.ctx_len)
         ]
         tokens = truncated_tokens.reshape(-1, cfg.ctx_len)
 
     tokens = cast(TensorType["batch", "seq"], tokens)
+
 
     cache = FeatureCache(
         hooked_model,
@@ -323,7 +379,6 @@ def populate_cache(
     )
 
     cache.save_config(save_dir=str(latents_path), cfg=cfg, model_name=run_cfg.model)
-
 
 
 async def run(experiment_cfg: ExperimentConfig, feature_cfg: FeatureConfig, cache_cfg: CacheConfig, run_cfg: RunConfig):
@@ -358,7 +413,7 @@ async def run(experiment_cfg: ExperimentConfig, feature_cfg: FeatureConfig, cach
             submodule_name_to_submodule,
             latents_path,
             tokenizer,
-            filter_tokens=torch.tensor(run_cfg.filter_tokens) if run_cfg.filter_tokens else None,
+            filter_bos=run_cfg.filter_bos,
         )
     else:
         print(f"Files found in {latents_path}, skipping cache population...")
