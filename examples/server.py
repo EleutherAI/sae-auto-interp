@@ -136,7 +136,7 @@ def generate_score_fuzz_detection():
         feature_record = FeatureRecord(feature)
         feature_record.test = [activating_examples]
         feature_record.extra_examples = non_activating_examples
-        feature_record.random_examples = non_activating_examples
+        feature_record.negative_examples = non_activating_examples
         feature_record.explanation = data['explanation']
         
         client = OpenRouter(api_key=data['api_key'], model=data['model'])
@@ -183,7 +183,7 @@ def generate_score_embedding():
         feature_record = FeatureRecord(feature)
         feature_record.test = [activating_examples]
         feature_record.extra_examples = non_activating_examples
-        feature_record.random_examples = non_activating_examples
+        feature_record.negative_examples = non_activating_examples
         feature_record.explanation = data['explanation']
         scorer =  EmbeddingScorer(model)
         result = scorer.call_sync(feature_record)  # Use call_sync instead of __call__

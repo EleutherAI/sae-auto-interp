@@ -82,7 +82,7 @@ def main(args):
     def scorer_preprocess(result):
         record = result.record
         record.explanation = result.explanation
-        record.extra_examples = record.random_examples
+        record.extra_examples = record.negative_examples
 
         return record
 
