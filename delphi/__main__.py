@@ -298,7 +298,7 @@ async def process_cache(
             DetectionScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=16,
+                batch_size=10,
                 verbose=False,
                 log_prob=False,
             ),
@@ -309,7 +309,7 @@ async def process_cache(
             FuzzingScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=16,
+                batch_size=10,
                 verbose=False,
                 log_prob=False,
             ),
