@@ -40,8 +40,8 @@ class OpenAISimulator(Scorer):
         )
 
         valid_activation_records = self.to_activation_records(record.test)
-        if len(record.random_examples) > 0:
-            non_activation_records = self.to_activation_records([record.random_examples])
+        if len(record.negative_examples) > 0:
+            non_activation_records = self.to_activation_records([record.negative_examples])
         else:
             non_activation_records = []
 
