@@ -107,7 +107,7 @@ async def test():
         max_features=100,
         seed=22,
         num_gpus=torch.cuda.device_count(),
-        filter_tokens=None
+        filter_bos=True
     )
 
     start_time = time.time()
