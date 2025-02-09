@@ -31,15 +31,25 @@ def main(args):
     n_features = args.features  
     start_feature = 0
     sae_model = args.model
-    feature_dict = {f"{module}": torch.arange(start_feature,start_feature+n_features)}
+
+    raw_dir = f"results/{args.model}"
+    features = torch.arange(start_feature,start_feature+n_features)
+    cache_config_dir = f"{raw_dir}/{module}/config.json"
+    with open(cache_config_dir, "r") as f:
+        cache_config = json.load(f)
+    if "width" in cache_config:
+        feature_cfg.width = cache_config["width"]
+    if args.random_subset:
+        features = torch.randperm(cache_config["width"])[:n_features]
+    feature_dict = {f"{module}": features}
+
     dataset = FeatureDataset(
-        raw_dir=f"results/{args.model}",
+        raw_dir=raw_dir,
         cfg=feature_cfg,
         modules=[module],
         features=feature_dict,
     )
 
-    
     constructor=partial(
         default_constructor,
         # token_loader=lambda: dataset.load_tokens(),
@@ -138,6 +148,7 @@ if __name__ == "__main__":
     parser.add_argument("--module", type=str, default=".model.layers.10")
     parser.add_argument("--features", type=int, default=100)
     parser.add_argument("--experiment_name", type=str, default="default")
+    parser.add_argument("--random_subset", action="store_true")
     parser.add_arguments(ExperimentConfig, dest="experiment_options")
     parser.add_arguments(FeatureConfig, dest="feature_options")
     args = parser.parse_args()

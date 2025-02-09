@@ -1,4 +1,6 @@
 #%%
+%cd ..
+#%%
 from sae_dashboard.sae_vis_data import SaeVisConfig, SaeVisData
 from sae_dashboard.feature_data import FeatureData
 from sae_dashboard.components import FeatureTablesData, LogitsHistogramData, ActsHistogramData
@@ -6,8 +8,10 @@ from sae_dashboard.components import SequenceMultiGroupData, SequenceGroupData, 
 from sae_dashboard.sae_vis_runner import SaeVisRunner
 from sae_dashboard.utils_fns import FeatureStatistics
 from sae_dashboard.data_parsing_fns import get_logits_table_data
-# %%
-from itertools import batched
+try:
+    from itertools import batched
+except ImportError:
+    from more_itertools import chunked as batched
 from argparse import Namespace
 from delphi.config import ExperimentConfig, FeatureConfig
 from delphi.features import FeatureDataset, FeatureLoader
@@ -15,10 +19,14 @@ from delphi.features.constructors import default_constructor
 from delphi.features.samplers import sample
 from functools import partial
 import torch
+torch.set_grad_enabled(False)
 import numpy as np
 from sae_dashboard.utils_fns import ASYMMETRIC_RANGES_AND_PRECISIONS
 from tqdm.auto import tqdm
-
+from transformers import AutoModelForCausalLM, AutoConfig
+import gc
+import re
+#%%
 args = Namespace(
     module=".model.layers.16.router",
     feature_options=FeatureConfig(),
@@ -42,6 +50,33 @@ dataset = FeatureDataset(
 def set_record_buffer(record, buffer_output):
     record.buffer = buffer_output
 loader = FeatureLoader(dataset, constructor=set_record_buffer, sampler=lambda x: x, transform=lambda x: x)
+#%%
+cache_lm = AutoModelForCausalLM.from_pretrained(dataset.cache_config["model_name"], trust_remote_code=True, device_map="cpu")
+lm_head = cache_lm.lm_head
+#%%
+lm_config = AutoConfig.from_pretrained(dataset.cache_config["model_name"], trust_remote_code=True)
+#%%
+if (router_match := re.match(r"\.model\.layers\.(\d+)\.router", args.module)):
+    cache_lm
+    # monet model
+    layer = int(router_match.group(1))
+    affected_layers = list(range(layer, layer+lm_config.moe_groups))
+    total_bias = 0
+    for l in affected_layers:
+        moe = cache_lm.model.layers[l].moe
+        b1, b2 = moe.b1, moe.b2
+        x1_est = moe.u1.bias.reshape(lm_config.moe_experts, lm_config.moe_dim // 2)
+        x2_est = moe.u2.bias.reshape(lm_config.moe_experts, lm_config.moe_dim // 2)
+        b1 = b1 + moe.v11(x1_est.flatten(-2))
+        b2 = b2 + moe.v21(x2_est.flatten(-2))
+        b1 = torch.nn.functional.pad(b1, (0, lm_config.hidden_size // 2))
+        b2 = torch.nn.functional.pad(b2, (lm_config.hidden_size // 2, 0))
+        bias = (b1[:, None, :] + b2[None, :, :]).reshape(-1, lm_config.hidden_size)
+        total_bias = total_bias + bias
+    feature_to_resid = total_bias
+#%%
+del cache_lm
+gc.collect()
 #%%
 tokens = dataset.buffers[0].load()[3]
 n_sequences, max_seq_len = tokens.shape
@@ -80,6 +115,10 @@ for i, record in enumerate(tqdm(loader, total=args.features)):
     #         supposed_feature += 1
     #     continue
     # https://github.com/jbloomAus/SAEDashboard/blob/main/sae_dashboard/utils_fns.py
+    feature_id = record.buffer.locations[0, 2].item()
+    decoder_resid = feature_to_resid[feature_id]
+    logit_vector = lm_head(decoder_resid)
+    
     buffer = record.buffer
     activations, locations = buffer.activations, buffer.locations
     _max = activations.max()
@@ -98,10 +137,7 @@ for i, record in enumerate(tqdm(loader, total=args.features)):
         quantiles=quantiles + [1.0],
         ranges_and_precisions=ranges_and_precisions
     ))
-    
-    logit_vector = torch.linspace(0, 1e-3, 100, dtype=torch.float32)
-    
-    feature_id = record.buffer.locations[0, 2].item()
+        
     feature_data = FeatureData()
     feature_data.feature_tables_data = FeatureTablesData()
     feature_data.logits_histogram_data = LogitsHistogramData.from_data(
@@ -142,7 +178,6 @@ experiment_cfg = ExperimentConfig(
     train_type="quantiles"
 )
 sampler = partial(sample,cfg=experiment_cfg)
-sequence_loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
 constructor=partial(
     default_constructor,
     # token_loader=lambda: dataset.load_tokens(),
@@ -151,6 +186,7 @@ constructor=partial(
     ctx_len=experiment_cfg.example_ctx_len, 
     max_examples=feature_cfg.max_examples
 )
+sequence_loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
 for record in tqdm(sequence_loader):
     groups = []
     for quantile_index, quantile_data in enumerate(

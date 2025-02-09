@@ -19,7 +19,11 @@ for layer in (0, 4, 8, 12, 16, 20):
                     continue
                 if f"layers.{layer}" not in s:
                     continue
-                data = json.load(open(os.path.join(score_dir, s)))
+                try:
+                    data = json.load(open(os.path.join(score_dir, s)))
+                except ValueError:
+                    print("Error parsing", os.path.join(score_dir, s))
+                    continue
                 corrects = []
                 for text in data:
                     corrects.append(int(text["correct"]))
