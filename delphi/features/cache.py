@@ -283,7 +283,7 @@ class FeatureCache:
         Returns:
             List[Tuple[int, int]]: List of start and end indices for each split.
         """
-        return generate_split_indices(n_splits)
+        return generate_split_indices(self.width, n_splits)
 
     def save_splits(self, n_splits: int, save_dir, save_tokens: bool = True):
         """
@@ -303,6 +303,8 @@ class FeatureCache:
             feature_indices = feature_locations[:, 2]
 
             for start, end in split_indices:
+                if not isinstance(start, int):
+                    start = start.item()
                 mask = (feature_indices >= start) & (feature_indices <= end)
 
                 masked_activations = feature_activations[mask].half().numpy()
@@ -310,7 +312,7 @@ class FeatureCache:
                 masked_locations = feature_locations[mask].numpy()
                 
                 # Optimization to reduce the max value to enable a smaller dtype
-                masked_locations[:, 2] = masked_locations[:, 2] - start.item() 
+                masked_locations[:, 2] = masked_locations[:, 2] - start
 
                 if masked_locations[:, 2].max() < 2**16 and masked_locations[:, 0].max() < 2**16:
                     masked_locations = masked_locations.astype(np.uint16)

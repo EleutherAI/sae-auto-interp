@@ -1,55 +1,87 @@
 #%%
+import sys
+sys.path.append("..")
+from tqdm.auto import tqdm
 from argparse import Namespace
 from delphi.config import ExperimentConfig, FeatureConfig
 from delphi.features import FeatureDataset, FeatureLoader
 from delphi.features.constructors import default_constructor
 from delphi.features.samplers import sample
-import torch
-import json
-args = Namespace(
-    module=".model.layers.16.router",
-    experiment_options=ExperimentConfig(),
-    feature_options=FeatureConfig(),
-    features=100,
-    model="monet_cache_converted/850m"
-)
-module = args.module
-feature_cfg = args.feature_options
-experiment_cfg = args.experiment_options
-n_features = args.features  
-start_feature = 0
-sae_model = args.model
-
-raw_dir = f"results/{args.model}"
-features = torch.arange(start_feature,start_feature+n_features)
-feature_dict = {f"{module}": features}
-
-dataset = FeatureDataset(
-    raw_dir=raw_dir,
-    cfg=feature_cfg,
-    modules=[module],
-    features=feature_dict,
-)
-# %%
-def set_record_buffer(record, buffer_output):
-    record.buffer = buffer_output
-loader = FeatureLoader(dataset, constructor=set_record_buffer, sampler=lambda x: x, transform=lambda x: x)
-entropies = []
-for record in loader:
-    buffer = record.buffer
-    locations, activations, tokens = buffer.locations, buffer.activations, buffer.tokens
-    feature_id = record.feature.feature_index
-    all_tokens = tokens[locations[:, 0], locations[:, 1]]
-    _, token_counts = torch.unique(all_tokens, return_counts=True, sorted=False)
-    token_counts = token_counts.double()
-    token_probs = token_counts / token_counts.sum()
-    token_entropy = -(token_probs * token_probs.log2()).sum()
-    entropies.append(token_entropy.item())
-# %%
 import matplotlib.pyplot as plt
-plt.hist(entropies, bins=20)
-plt.xlabel("Entropy")
-plt.ylabel("Number of features")
-plt.title("Token entropy distribution")
-plt.show()
-# %%
+from collections import defaultdict
+import torch
+from pathlib import Path
+import numpy as np
+import json
+import os
+#%%
+def compute_entropy(cache_dir, module):
+    feature_cfg = FeatureConfig()
+    experiment_cfg = ExperimentConfig()
+    n_features = 1000
+    start_feature = 0
+    
+    max_feat = 0
+    for st_file in (Path(cache_dir) / module).glob(f"*.safetensors"):
+        start, end = map(int, st_file.stem.split("_"))
+        max_feat = max(max_feat, end)
+    feature_cfg.width = max_feat + 1
+
+    features = torch.arange(start_feature,start_feature+n_features)
+    feature_dict = {f"{module}": features}
+
+    dataset = FeatureDataset(
+        raw_dir=cache_dir,
+        cfg=feature_cfg,
+        modules=[module],
+        features=feature_dict,
+    )
+    def set_record_buffer(record, buffer_output):
+        record.buffer = buffer_output
+    loader = FeatureLoader(dataset, constructor=set_record_buffer, sampler=lambda x: x, transform=lambda x: x)
+    entropies = []
+    # for record in tqdm(loader, total=n_features):
+    for record in loader:
+        buffer = record.buffer
+        locations, activations, tokens = buffer.locations, buffer.activations, buffer.tokens
+        if tokens is None:
+            tokens = dataset.load_tokens()
+        feature_id = record.feature.feature_index
+        all_tokens = tokens[locations[:, 0], locations[:, 1]]
+        _, token_counts = torch.unique(all_tokens, return_counts=True, sorted=False)
+        token_counts = token_counts.double()
+        token_probs = token_counts / token_counts.sum()
+        token_entropy = -(token_probs * token_probs.log2()).sum()
+        entropies.append(token_entropy.item())
+    return entropies
+#%%
+caches_dir = Path("/mnt/ssd-1/gpaulo/finished_articles/transcoders_beat_saes/raw_features")
+model_info = {
+    "pythia410m": dict(layer=16, layers=list(range(12, 22))),
+    "pythia160m": dict(layer=10, layers=list(range(6, 16))),
+    "llama": dict(layer=22, layers=list(range(12, 28))),
+    "gemma": dict(layer=22, layers=list(range(12, 28))),
+}
+plots_dir = Path("results/entropy_plots")
+for model_dir in caches_dir.glob("*"):
+    model_name = model_dir.name
+    if model_name not in model_info:
+        continue
+    model_plots_dir = plots_dir / model_name
+    model_plots_dir.mkdir(exist_ok=True, parents=True)
+    type_layer_entropies = defaultdict(dict)
+    across_type_entropies = {}
+    for sae_type_dir in tqdm(list(model_dir.glob("*"))):
+        sae_type = sae_type_dir.name
+        for layer in tqdm(model_info[model_name]["layers"]):
+            prefix = "model" if "pythia" not in model_name else "gpt_neox"
+            module_name = f".{prefix}.layers.{layer}.mlp"
+            layer_dir = sae_type_dir / module_name
+            if not layer_dir.exists():
+                continue
+            entropy = compute_entropy(sae_type_dir, module_name)
+            type_layer_entropies[sae_type][layer] = entropy
+            if layer == model_info[model_name]["layer"]:
+                across_type_entropies[sae_type] = entropy
+    break
+#%%

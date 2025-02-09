@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 import time
+from pathlib import Path
 from functools import partial
 
 import orjson
@@ -39,6 +40,14 @@ def main(args):
         cache_config = json.load(f)
     if "width" in cache_config:
         feature_cfg.width = cache_config["width"]
+    
+    max_feat = 0
+    for st_file in (Path(raw_dir) / module).glob(f"*.safetensors"):
+        _, end = map(int, st_file.stem.split("_"))
+        max_feat = max(max_feat, end)
+    if max_feat != 0:
+        feature_cfg.width = max_feat + 1
+    
     if args.random_subset:
         features = torch.randperm(cache_config["width"])[:n_features]
     feature_dict = {f"{module}": features}
