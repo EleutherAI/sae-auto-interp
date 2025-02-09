@@ -16,7 +16,8 @@ class ExperimentConfig(Serializable):
     """Number of feature activation quantiles to sample."""
 
     example_ctx_len: int = 32
-    """Length of each sampled example sequence. Longer sequences reduce detection scoring performance."""
+    """Length of each sampled example sequence. Longer sequences 
+    reduce detection scoring performance in weak models."""
 
     n_random: int = 50
     """Number of random examples to sample."""

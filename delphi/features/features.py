@@ -95,6 +95,7 @@ class FeatureRecord:
         """
         self.feature = feature
         self.examples = []
+        self.random_examples = []
         self.train: list[list[Example]] = []
         self.test: list[list[Example]] = []
 

@@ -94,6 +94,7 @@ def random_activation_windows(
     """
     torch.manual_seed(22)
     if n_random == 0:
+        record.random_examples = []
         return
     batch_size = tokens.shape[0]
     unique_batch_pos = buffer_output.locations[:, 0].unique()
