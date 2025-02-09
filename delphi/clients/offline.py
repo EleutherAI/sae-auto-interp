@@ -86,7 +86,6 @@ class Offline(Client):
             if self.statistics:
                 non_cached_tokens = len(self.tokenizer.apply_chat_template(batch[-1:], add_generation_prompt=True, tokenize=True))
                 statistics.append(Statistics(num_prompt_tokens=len(prompt), num_new_tokens=non_cached_tokens, num_generated_tokens=0))
-        print("temperature: ", self.sampling_params.temperature)
         response = await loop.run_in_executor(
             None, 
             partial(self.client.generate, prompt_token_ids=prompts, sampling_params=self.sampling_params, use_tqdm=False)

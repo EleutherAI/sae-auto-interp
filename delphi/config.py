@@ -35,7 +35,9 @@ class FeatureConfig(Serializable):
     """Number of features in each autoencoder"""
 
     min_examples: int = 200
-    """Minimum number of examples for a feature to be explained and scored."""
+    """Minimum number of examples to generate for a single feature. 
+    If the number of activating examples is less than this, the 
+    feature will not be explained and scored."""
 
     max_examples: int = 10_000
     """Maximum number of examples to generate for a single feature."""
