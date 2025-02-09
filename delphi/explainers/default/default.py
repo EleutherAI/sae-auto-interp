@@ -16,6 +16,7 @@ class DefaultExplainer(Explainer):
         activations: bool = False,
         cot: bool = False,
         threshold: float = 0.6,
+        temperature: float = 0.,
         **generation_kwargs,
     ):
         self.client = client
@@ -25,14 +26,16 @@ class DefaultExplainer(Explainer):
         self.activations = activations
         self.cot = cot
         self.threshold = threshold
+        self.temperature = temperature
         self.generation_kwargs = generation_kwargs
 
-
     async def __call__(self, record):
-       
+
         messages = self._build_prompt(record.train)
-        
-        response = await self.client.generate(messages, **self.generation_kwargs)
+
+        response = await self.client.generate(
+            messages, temperature=self.temperature, **self.generation_kwargs
+        )
 
         try:
             explanation = self.parse_explanation(response.text)

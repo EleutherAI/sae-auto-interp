@@ -17,6 +17,7 @@ class DetectionScorer(Classifier):
         verbose: bool = False,
         batch_size: int = 10,
         log_prob: bool = False,
+        temperature: float = 0.,
         **generation_kwargs,
     ):
         super().__init__(
@@ -25,6 +26,7 @@ class DetectionScorer(Classifier):
             verbose=verbose,
             batch_size=batch_size,
             log_prob=log_prob,
+            temperature=temperature,
             **generation_kwargs,
         )
 
