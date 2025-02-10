@@ -10,7 +10,7 @@ from sklearn.metrics import roc_auc_score
 
 
 from delphi.explainers import DefaultExplainer
-from delphi.features import FeatureRecord, Feature, Example
+from delphi.latents import LatentRecord, Latent, Example
 from delphi.scorers import FuzzingScorer, DetectionScorer,EmbeddingScorer
 
 app = Flask(__name__)
@@ -32,7 +32,7 @@ def calculate_balanced_accuracy(dataframe):
         balanced_accuracy = (recall+tn/(tn+fp))/2
     return balanced_accuracy
 
-def per_feature_scores_fuzz_detection(score_data):
+def per_latent_scores_fuzz_detection(score_data):
     
     data = [d for d in score_data if d.prediction != -1]
     
@@ -41,7 +41,7 @@ def per_feature_scores_fuzz_detection(score_data):
     balanced_accuracy = calculate_balanced_accuracy(data_df)
     return balanced_accuracy
 
-def per_feature_scores_embedding(score_data):
+def per_latent_scores_embedding(score_data):
     data_df = pd.DataFrame(score_data)
     data_df["ground_truth"] = data_df["distance"]>0
     print(data_df)
@@ -77,18 +77,18 @@ def generate_explanation():
     if 'model' not in data:
         return jsonify({"error": "Missing model"}), 400
     try:
-        feature = Feature(f"feature", 0)
+        latent = Latent(f"latent", 0)
         examples = []
         for activation in data['activations']:
             example = Example(activation['tokens'], torch.tensor(activation['values']))
             examples.append(example)
-        feature_record = FeatureRecord(feature)
-        feature_record.train = examples
+        latent_record = LatentRecord(latent)
+        latent_record.train = examples
         
         client = OpenRouter(api_key=data['api_key'], model=data['model'])
 
         explainer = DefaultExplainer(client, tokenizer=None, threshold=0.6)
-        result = explainer.call_sync(feature_record)  # Use call_sync instead of __call__
+        result = explainer.call_sync(latent_record)  # Use call_sync instead of __call__
 
         return jsonify({"explanation": result.explanation}), 200
 
@@ -124,7 +124,7 @@ def generate_score_fuzz_detection():
     if 'type' not in data:
         return jsonify({"error": "Missing type"}), 400
     try:
-        feature = Feature(f"feature", 0)
+        latent = Latent(f"latent", 0)
         activating_examples = []
         non_activating_examples = []
         for activation in data['activations']:
@@ -133,22 +133,22 @@ def generate_score_fuzz_detection():
                 activating_examples.append(example)
             else:
                 non_activating_examples.append(example)
-        feature_record = FeatureRecord(feature)
-        feature_record.test = [activating_examples]
-        feature_record.extra_examples = non_activating_examples
-        feature_record.not_active = non_activating_examples
-        feature_record.explanation = data['explanation']
+        latent_record = LatentRecord(latent)
+        latent_record.test = [activating_examples]
+        latent_record.extra_examples = non_activating_examples
+        latent_record.not_active = non_activating_examples
+        latent_record.explanation = data['explanation']
         
         client = OpenRouter(api_key=data['api_key'], model=data['model'])
         if data['type'] == 'fuzz':
             # We can't use log_prob as it's not supported by OpenRouter
-            scorer = FuzzingScorer(client, tokenizer=None, batch_size=5,verbose=False,log_prob=False)
+            scorer = FuzzingScorer(client, tokenizer=None, n_examples_shown=5,verbose=False,log_prob=False)
         elif data['type'] == 'detection':
             # We can't use log_prob as it's not supported by OpenRouter
-            scorer = DetectionScorer(client, tokenizer=None, batch_size=5,verbose=False,log_prob=False)
-        result = scorer.call_sync(feature_record)  # Use call_sync instead of __call__
+            scorer = DetectionScorer(client, tokenizer=None, n_examples_shown=5,verbose=False,log_prob=False)
+        result = scorer.call_sync(latent_record)  # Use call_sync instead of __call__
         #print(result.score)
-        score = per_feature_scores_fuzz_detection(result.score)
+        score = per_latent_scores_fuzz_detection(result.score)
         return jsonify({"score": score,"breakdown": result.score}), 200
 
     except Exception as e:
@@ -171,7 +171,7 @@ def generate_score_embedding():
     if 'explanation' not in data:
         return jsonify({"error": "Missing explanation"}), 400
     try:
-        feature = Feature(f"feature", 0)
+        latent = Latent(f"latent", 0)
         activating_examples = []
         non_activating_examples = []
         for activation in data['activations']:
@@ -180,15 +180,15 @@ def generate_score_embedding():
                 activating_examples.append(example)
             else:
                 non_activating_examples.append(example)
-        feature_record = FeatureRecord(feature)
-        feature_record.test = [activating_examples]
-        feature_record.extra_examples = non_activating_examples
-        feature_record.negative_examples = non_activating_examples
-        feature_record.explanation = data['explanation']
+        latent_record = LatentRecord(latent)
+        latent_record.test = [activating_examples]
+        latent_record.extra_examples = non_activating_examples
+        latent_record.negative_examples = non_activating_examples
+        latent_record.explanation = data['explanation']
         scorer =  EmbeddingScorer(model)
-        result = scorer.call_sync(feature_record)  # Use call_sync instead of __call__
+        result = scorer.call_sync(latent_record)  # Use call_sync instead of __call__
         #print(result.score)
-        score = per_feature_scores_embedding(result.score)
+        score = per_latent_scores_embedding(result.score)
         return jsonify({"score": score,"breakdown": result.score}), 200
 
     except Exception as e:
