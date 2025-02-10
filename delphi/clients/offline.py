@@ -170,7 +170,7 @@ class Offline(Client):
             try:
                 results = await self.process_func(batch, batch_kwargs)
                 batch_count += 1
-                # print(f"Batch {batch_count} finished processing. {len(results)} prompts processed.")
+                
                 for result, future in zip(results, batch_futures):
                     if not future.done():
                         future.set_result(result)

@@ -38,7 +38,7 @@ class DetectionScorer(Classifier):
         """
 
         samples = examples_to_samples(
-            record.negative_examples,
+            record.not_active,
             distance=-1,
             ground_truth=False,
             tokenizer=self.tokenizer,
