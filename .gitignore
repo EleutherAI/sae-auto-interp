@@ -4,7 +4,7 @@
 *.safetensors
 *.log
 *workspace
-raw_features/*
+latents/*
 results/*
 extras/*
 temp/*

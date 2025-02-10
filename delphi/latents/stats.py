@@ -6,11 +6,11 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from . import FeatureRecord
+from . import LatentRecord
 
 
 def logits(
-    records: list[FeatureRecord],
+    records: list[LatentRecord],
     W_U: torch.nn.Module,
     W_dec: torch.nn.Module,
     k: int = 10,
@@ -20,7 +20,7 @@ def logits(
     Compute the top k logits via direct logit attribution for a set of records.
 
     Args:
-        records (list[FeatureRecord]): A list of feature records.
+        records (list[LatentRecord]): A list of latent records.
         W_U (torch.nn.Module): The linear layer for the encoder.
         W_dec (torch.nn.Module): The linear layer for the decoder.
         k (int): The number of top logits to compute.
@@ -30,9 +30,9 @@ def logits(
         decoded_top_logits (list[list[str]]): A list of top k logits for each record.
     """
 
-    feature_indices = [record.feature.feature_index for record in records]
+    latent_indices = [record.latent.latent_index for record in records]
 
-    narrowed_logits = torch.matmul(W_U, W_dec[:, feature_indices])
+    narrowed_logits = torch.matmul(W_U, W_dec[:, latent_indices])
 
     top_logits = torch.topk(narrowed_logits, k, dim=0).indices
 
@@ -48,7 +48,7 @@ def logits(
 
 
 def unigram(
-    record: FeatureRecord, k: int = 10, threshold: float = 0.0, negative_shift: int = 0
+    record: LatentRecord, k: int = 10, threshold: float = 0.0, negative_shift: int = 0
 ):
     avg_nonzero = []
     top_tokens = []
@@ -73,8 +73,8 @@ def unigram(
     return -1, np.mean(avg_nonzero)
 
 
-def cos(matrix, selected_features=[0]):
-    a = matrix[:, selected_features]
+def cos(matrix, selected_latents=[0]):
+    a = matrix[:, selected_latents]
     b = matrix
 
     a = F.normalize(a, p=2, dim=0)
@@ -85,25 +85,25 @@ def cos(matrix, selected_features=[0]):
     return cos_sim
 
 
-def get_neighbors(submodule_dict, feature_filter, k=10):
+def get_neighbors(submodule_dict, latent_filter, k=10):
     """
-    Get the required features for neighbor scoring.
+    Get the required latents for neighbor scoring.
 
     Returns:
         neighbors_dict: Nested dictionary of modules -> neighbors -> indices, values
-        per_layer_features (dict): A dictionary of features per layer
+        per_layer_latents (dict): A dictionary of latents per layer
     """
 
     neighbors_dict = defaultdict(dict)
-    per_layer_features = {}
+    per_layer_latents = {}
 
     for module_path, submodule in submodule_dict.items():
-        selected_features = feature_filter.get(module_path, False)
-        if not selected_features:
+        selected_latents = latent_filter.get(module_path, False)
+        if not selected_latents:
             continue
 
         W_D = submodule.ae.autoencoder._module.decoder.weight
-        cos_sim = cos(W_D, selected_features=selected_features)
+        cos_sim = cos(W_D, selected_latents=selected_latents)
         top = torch.topk(cos_sim, k=k)
 
         top_indices = top.indices
@@ -115,6 +115,6 @@ def get_neighbors(submodule_dict, feature_filter, k=10):
                 "values": values.tolist()[1:],
             }
 
-        per_layer_features[module_path] = torch.unique(top_indices).tolist()
+        per_layer_latents[module_path] = torch.unique(top_indices).tolist()
 
-    return neighbors_dict, per_layer_features
+    return neighbors_dict, per_layer_latents

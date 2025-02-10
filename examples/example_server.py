@@ -7,17 +7,17 @@ from transformers import AutoTokenizer
 with open("/mnt/ssd-1/gpaulo/SAE-Zoology/extras/neuronpedia/formatted_contexts/activating_contexts_16k/mlp/0/layer_0_contexts_chunk_1.json", "r") as f:
     activation_data = json.load(f)
 # Load the explanation data
-with open("/mnt/ssd-1/gpaulo/SAE-Zoology/extras/explanations_16k/model.layers.0.post_feedforward_layernorm_feature.json", "r") as f:
+with open("/mnt/ssd-1/gpaulo/SAE-Zoology/extras/explanations_16k/model.layers.0.post_feedforward_layernorm_latent.json", "r") as f:
     explanation_data = json.load(f)
 tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-9b")
 
-actual_data = activation_data["features"][10]
+actual_data = activation_data["latents"][10]
 activations = actual_data["activations"]
 for activation in activations:
     activation["tokens"] = tokenizer.batch_decode(activation["tokens"]) # If you have the tokens already decoded, you can skip this step
-feature_index = actual_data["feature_index"]
-print(feature_index)
-explanation = explanation_data[str(feature_index)]
+latent_index = actual_data["latent_index"]
+print(latent_index)
+explanation = explanation_data[str(latent_index)]
 # Server URL
 BASE_URL = "http://localhost:5000"
 

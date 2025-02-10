@@ -1,15 +1,15 @@
 # %%
 DSCORER_SYSTEM_PROMPT = """You are an intelligent and meticulous linguistics researcher.
 
-You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment". You will be given a few examples of text that contain this feature. Portions of the sentence which strongly represent this feature are between tokens << and >>.
+You will be given a certain latent of text, such as "male pronouns" or "text with negative sentiment". You will be given a few examples of text that contain this latent. Portions of the sentence which strongly represent this latent are between tokens << and >>.
 
-Some examples might be mislabeled. Your task is to determine if every single token within << and >> is correctly labeled. Consider that all provided examples could be correct, none of the examples could be correct, or a mix. An example is only correct if every marked token is representative of the feature
+Some examples might be mislabeled. Your task is to determine if every single token within << and >> is correctly labeled. Consider that all provided examples could be correct, none of the examples could be correct, or a mix. An example is only correct if every marked token is representative of the latent
 
 For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. You must return your response in a valid Python list. Do not return anything else besides a Python list.
 """
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/6048
-DSCORER_EXAMPLE_ONE = """Feature explanation: Words related to American football positions, specifically the tight end position.
+DSCORER_EXAMPLE_ONE = """Latent explanation: Words related to American football positions, specifically the tight end position.
 
 Test examples:
 
@@ -31,7 +31,7 @@ Example 4:<< line>>, with the left side âĢĶ namely<< tackle>> Byron Bell at<<
 DSCORER_RESPONSE_ONE = "[1,0,0,1,1]"
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/9396
-DSCORER_EXAMPLE_TWO = """Feature explanation: The word "guys" in the phrase "you guys".
+DSCORER_EXAMPLE_TWO = """Latent explanation: The word "guys" in the phrase "you guys".
 
 Test examples:
 
@@ -53,7 +53,7 @@ Example 4:<< the>><|endoftext|>ľI want to<< remind>> you all that 10 days ago (
 DSCORER_RESPONSE_TWO = "[0,0,0,0,0]"
 
 # https://www.neuronpedia.org/gpt2-small/8-res-jb/12654
-DSCORER_EXAMPLE_THREE = """Feature explanation: "of" before words that start with a capital letter.
+DSCORER_EXAMPLE_THREE = """Latent explanation: "of" before words that start with a capital letter.
 
 Test examples:
 
@@ -74,7 +74,7 @@ Example 4: and fair investigation not even include the Director<< of>> Athletics
 
 DSCORER_RESPONSE_THREE = "[1,1,1,1,1]"
 
-GENERATION_PROMPT = """Feature explanation: {explanation}
+GENERATION_PROMPT = """Latent explanation: {explanation}
 
 Text examples:
 

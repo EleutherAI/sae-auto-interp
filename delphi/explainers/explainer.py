@@ -6,25 +6,25 @@ from typing import NamedTuple
 
 import aiofiles
 
-from ..features.features import FeatureRecord
+from ..latents.latents import LatentRecord
 
 
 class ExplainerResult(NamedTuple):
-    record: FeatureRecord
-    """Feature record passed through to scorer."""
+    record: LatentRecord
+    """Latent record passed through to scorer."""
 
     explanation: str
-    """Generated explanation for feature."""
+    """Generated explanation for latent."""
 
 
 class Explainer(ABC):
     @abstractmethod
-    def __call__(self, record: FeatureRecord) -> ExplainerResult:
+    def __call__(self, record: LatentRecord) -> ExplainerResult:
         pass
 
 
-async def explanation_loader(record: FeatureRecord, explanation_dir: str) -> ExplainerResult:
-    async with aiofiles.open(f'{explanation_dir}/{record.feature}.txt', 'r') as f:
+async def explanation_loader(record: LatentRecord, explanation_dir: str) -> ExplainerResult:
+    async with aiofiles.open(f'{explanation_dir}/{record.latent}.txt', 'r') as f:
         explanation = json.loads(await f.read())
     
     return ExplainerResult(
@@ -32,10 +32,10 @@ async def explanation_loader(record: FeatureRecord, explanation_dir: str) -> Exp
         explanation=explanation
     )
 
-async def random_explanation_loader(record: FeatureRecord, explanation_dir: str) -> ExplainerResult:
+async def random_explanation_loader(record: LatentRecord, explanation_dir: str) -> ExplainerResult:
     explanations = [f for f in os.listdir(explanation_dir) if f.endswith(".txt")]
-    if str(record.feature) in explanations:
-        explanations.remove(str(record.feature))
+    if str(record.latent) in explanations:
+        explanations.remove(str(record.latent))
     random_explanation = random.choice(explanations)
     async with aiofiles.open(f'{explanation_dir}/{random_explanation}', 'r') as f:
         explanation = json.loads(await f.read())

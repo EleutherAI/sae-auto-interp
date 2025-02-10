@@ -2,7 +2,7 @@ import torch
 from torchtyping import TensorType
 from typing import Callable, Optional
 
-from .features import FeatureRecord, prepare_examples
+from .latents import LatentRecord, prepare_examples
 from .loader import BufferOutput
 
 
@@ -42,10 +42,10 @@ def pool_max_activation_windows(
     max_examples: int,
 ):
     """
-    Pool max activation windows from the buffer output and update the feature record.
+    Pool max activation windows from the buffer output and update the latent record.
 
     Args:
-        record (FeatureRecord): The feature record to update.
+        record (LatentRecord): The latent record to update.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
         tokens (TensorType["batch", "seq"]): The input tokens.
         ctx_len (int): The context length.
@@ -76,17 +76,17 @@ def pool_max_activation_windows(
     record.examples = prepare_examples(token_windows, activation_windows)
 
 def random_non_activating_windows(
-    record: FeatureRecord,
+    record: LatentRecord,
     tokens: TensorType["batch", "seq"],
     buffer_output: BufferOutput,
     ctx_len: int,
     n_not_active: int,
 ):
     """
-    Generate random non-activating sequence windows and update the feature record.
+    Generate random non-activating sequence windows and update the latent record.
 
     Args:
-        record (FeatureRecord): The feature record to update.
+        record (LatentRecord): The latent record to update.
         tokens (TensorType["batch", "seq"]): The input tokens.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
         ctx_len (int): The context length.
@@ -121,7 +121,7 @@ def random_non_activating_windows(
     )
 
 def default_constructor(
-    record: FeatureRecord,
+    record: LatentRecord,
     token_loader: Optional[Callable[[], TensorType["batch", "seq"]]] | None,
     buffer_output: BufferOutput,
     n_not_active: int,
@@ -129,10 +129,10 @@ def default_constructor(
     max_examples: int,
 ):
     """
-    Construct feature examples using pool max activation windows and random activation windows.
+    Construct latent examples using pool max activation windows and random activation windows.
 
     Args:
-        record (FeatureRecord): The feature record to update.
+        record (LatentRecord): The latent record to update.
         token_loader (Optional[Callable[[], TensorType["batch", "seq"]]]):
             An optional function that creates the dataset tokens.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
@@ -154,7 +154,7 @@ def default_constructor(
                 "`    tokens=dataset.tokens`,\n"
                 "pass\n"
                 "`    token_loader=lambda: dataset.load_tokens()`,\n"
-                "(assuming `dataset` is a `FeatureDataset` instance)."
+                "(assuming `dataset` is a `LatentDataset` instance)."
             )
     pool_max_activation_windows(
         record,

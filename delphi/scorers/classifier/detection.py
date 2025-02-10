@@ -1,7 +1,7 @@
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
-from ...features import FeatureRecord
+from ...latents import LatentRecord
 from .classifier import Classifier
 from .prompts.detection_prompt import prompt
 from .sample import Sample, examples_to_samples
@@ -45,7 +45,7 @@ class DetectionScorer(Classifier):
 
         self.prompt = prompt
 
-    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
         """
         Prepare and shuffle a list of samples for classification.
         """

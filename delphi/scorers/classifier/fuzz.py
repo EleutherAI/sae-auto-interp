@@ -5,8 +5,8 @@ import torch
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
-from ...features.features import Example
-from ...features import FeatureRecord
+from ...latents.latents import Example
+from ...latents import LatentRecord
 from ..scorer import Scorer
 from .classifier import Classifier
 from .prompts.fuzz_prompt import prompt
@@ -63,7 +63,7 @@ class FuzzingScorer(Classifier, Scorer):
 
         return ceil(avg)
 
-    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
         """
         Prepare and shuffle a list of samples for classification.
         """
