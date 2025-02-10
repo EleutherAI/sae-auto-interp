@@ -104,8 +104,8 @@ class Classifier(Scorer):
             logger.error(f"Error generating text: {e}")
             response = None
         if response is None:
-            predictions = [-1] * self.n_examples_shown
-            probabilities = [-1] * self.n_examples_shown
+            predictions = [None] * self.n_examples_shown
+            probabilities = [None] * self.n_examples_shown
         else:
             selections = response.text
             logprobs = response.logprobs if self.log_prob else None
@@ -113,21 +113,18 @@ class Classifier(Scorer):
                 predictions, probabilities = self._parse(selections, logprobs)
             except Exception as e:
                 logger.error(f"Parsing selections failed: {e}")
-                predictions = [-1] * self.n_examples_shown
-                probabilities = [-1] * self.n_examples_shown
+                predictions = [None] * self.n_examples_shown
+                probabilities = [None] * self.n_examples_shown
 
         results = []
-        correct = []
-        response = []
-
         for sample, prediction, probability in zip(batch, predictions, probabilities):
             result = sample.data
             result.prediction = prediction
-            result.correct = prediction == result.ground_truth
-            correct.append(result.ground_truth)
-            response.append(prediction)
-            if probability is not None:
-                result.probability = probability
+            if prediction is not None:
+                result.correct = prediction == result.ground_truth
+            else:
+                result.correct = None
+            result.probability = probability
             results.append(result)
 
             if self.verbose:
