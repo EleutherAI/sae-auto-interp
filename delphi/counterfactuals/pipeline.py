@@ -9,14 +9,14 @@ from pathlib import Path
 from typing import Callable, Literal
 import fire
 import torch
-from ..config import ExperimentConfig, FeatureConfig
-from ..features import (
-    FeatureDataset,
-    FeatureLoader
+from ..config import ExperimentConfig, LatentConfig
+from ..latents import (
+    LatentDataset,
+    LatentLoader
 )
 from ..autoencoders.OpenAI.model import TopK, ACTIVATIONS_CLASSES, Autoencoder
-from ..features.constructors import default_constructor
-from ..features.samplers import sample
+from ..latents.constructors import default_constructor
+from ..latents.samplers import sample
 from ..autoencoders.DeepMind.model import JumpReLUSAE
 from . import (
     ExplainerNeuronFormatter, 
@@ -28,7 +28,7 @@ from . import (
     expl_given_generation_score, 
     LAYER_TO_L0
 )
-from ..features import FeatureDataset
+from ..latents import LatentDataset
 from functools import partial
 import random
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -40,22 +40,22 @@ import numpy as np
 PATH_ROOT = Path(__file__).parent.parent.parent
 
 
-def get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, width, latents: Literal["sae", "random"] = "sae"):
+def get_latent_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, width, latents: Literal["sae", "random"] = "sae"):
     module = f".model.layers.{feat_layer}"
     if latents == "sae":
         assert width == 131072
         raw_dir = PATH_ROOT / "cache/gemma_sae_131k"    
     else:
         raw_dir = PATH_ROOT / "cache/gemma_topk"
-    feature_dict = {f"{module}": torch.arange(0, n_feats)}
-    feature_cfg = FeatureConfig(width=width, n_splits=5, max_examples=100000, min_examples=200)
+    latent_dict = {f"{module}": torch.arange(0, n_feats)}
+    latent_cfg = LatentConfig(width=width, n_splits=5, max_examples=100000, min_examples=200)
     experiment_cfg = ExperimentConfig(n_random=0, example_ctx_len=64, n_quantiles=n_quantiles, n_examples_test=0, n_examples_train=(n_train + n_test) // n_quantiles, train_type="quantiles", test_type="even")
 
-    dataset = FeatureDataset(
+    dataset = LatentDataset(
             raw_dir=str(raw_dir),
-            cfg=feature_cfg,
+            cfg=latent_cfg,
             modules=[module],
-            features=feature_dict,  # type: ignore
+            latents=latent_dict,  # type: ignore
     )
 
     constructor=partial(
@@ -63,11 +63,11 @@ def get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, width,
                 tokens=dataset.tokens,  # type: ignore
                 n_random=experiment_cfg.n_random, 
                 ctx_len=experiment_cfg.example_ctx_len, 
-                max_examples=feature_cfg.max_examples
+                max_examples=latent_cfg.max_examples
             )
 
     sampler=partial(sample,cfg=experiment_cfg)
-    loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
+    loader = LatentLoader(dataset, constructor=constructor, sampler=sampler)
     return loader
 
 
@@ -171,7 +171,7 @@ def main(
     with open(config_save_path, "w") as f:
         json.dump(config, f)
 
-    loader = get_feature_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, sae_width, latents=latents)
+    loader = get_latent_loader(feat_layer, n_feats, n_train, n_test, n_quantiles, sae_width, latents=latents)
 
     subject = AutoModelForCausalLM.from_pretrained(subject_name, torch_dtype=torch.bfloat16).to(device)
     subject_tokenizer = AutoTokenizer.from_pretrained(subject_name)
@@ -290,7 +290,7 @@ def main(
         # we use the test set to tune the intervention strengths because we want the KL to be ~exactly `kl_threshold` on the test set     
         for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Tuning intervention strengths", total=len(all_scorer_examples))):
             garbage_collect()
-            feat_idx = record.feature.feature_index
+            feat_idx = record.latent.latent_index
             ids_s = [ids for ids, _ in scorer_examples]
             if zero_ablate:
                 intervention_strength = None
@@ -306,7 +306,7 @@ def main(
         # do generation
         for iter, (record, scorer_examples) in enumerate(tqdm(zip(loader, all_scorer_examples), desc="Generating completions", total=len(all_scorer_examples))):
             garbage_collect()
-            feat_idx = record.feature.feature_index
+            feat_idx = record.latent.latent_index
             
             # get completions
             completions = []
@@ -327,7 +327,7 @@ def main(
         # get intervention results
         for iter, (record, explainer_examples) in enumerate(tqdm(zip(loader, all_explainer_examples), desc="Running interventions for explainer", total=len(all_explainer_examples))):
             garbage_collect()        
-            feat_idx = record.feature.feature_index
+            feat_idx = record.latent.latent_index
 
             intervention_examples = []
             for ids, act in explainer_examples:

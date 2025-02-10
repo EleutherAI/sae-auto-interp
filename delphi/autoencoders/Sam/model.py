@@ -13,7 +13,7 @@ class Dictionary(ABC):
     A dictionary consists of a collection of vectors, an encoder, and a decoder.
     """
 
-    dict_size: int  # number of features in the dictionary
+    dict_size: int  # number of latents in the dictionary
     activation_dim: int  # dimension of the activation vectors
 
     @abstractmethod
@@ -55,17 +55,17 @@ class AutoEncoder(Dictionary, nn.Module):
     def decode(self, f):
         return self.decoder(f) + self.bias
 
-    def forward(self, x, output_features=False, ghost_mask=None):
+    def forward(self, x, output_latents=False, ghost_mask=None):
         """
         Forward pass of an autoencoder.
         x : activations to be autoencoded
-        output_features : if True, return the encoded features as well as the decoded x
-        ghost_mask : if not None, run in "ghost mode" where features are masked
+        output_latents : if True, return the encoded latents as well as the decoded x
+        ghost_mask : if not None, run in "ghost mode" where latents are masked
         """
         if ghost_mask is None:  # normal mode
             f = self.encode(x)
             x_hat = self.decode(f)
-            if output_features:
+            if output_latents:
                 return x_hat, f
             else:
                 return x_hat
@@ -79,7 +79,7 @@ class AutoEncoder(Dictionary, nn.Module):
                 f_ghost
             )  # note that this only applies the decoder weight matrix, no bias
             x_hat = self.decode(f)
-            if output_features:
+            if output_latents:
                 return x_hat, x_ghost, f
             else:
                 return x_hat, x_ghost
@@ -113,8 +113,8 @@ class IdentityDict(Dictionary, nn.Module):
     def decode(self, f):
         return f
 
-    def forward(self, x, output_features=False, ghost_mask=None):
-        if output_features:
+    def forward(self, x, output_latents=False, ghost_mask=None):
+        if output_latents:
             return x, x
         else:
             return x

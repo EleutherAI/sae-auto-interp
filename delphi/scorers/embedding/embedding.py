@@ -12,7 +12,7 @@ import torch
 from sentence_transformers import SentenceTransformer
 from transformers import PreTrainedTokenizer
 from ...clients.client import Client
-from ...features import Example, FeatureRecord
+from ...latents import Example, LatentRecord
 from ..scorer import Scorer, ScorerResult
 
 
@@ -53,7 +53,7 @@ class EmbeddingScorer(Scorer):
  
     async def __call__(
         self,
-        record: FeatureRecord,
+        record: LatentRecord,
     ) -> list[EmbeddingOutput]:
         samples = self._prepare(record)
 
@@ -65,11 +65,11 @@ class EmbeddingScorer(Scorer):
         
         return ScorerResult(record=record, score=results)
 
-    def call_sync(self, record: FeatureRecord) -> list[EmbeddingOutput]:
+    def call_sync(self, record: LatentRecord) -> list[EmbeddingOutput]:
         return asyncio.run(self.__call__(record))
 
 
-    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
         """
         Prepare and shuffle a list of samples for classification.
         """

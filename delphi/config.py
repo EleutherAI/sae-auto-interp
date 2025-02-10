@@ -7,52 +7,52 @@ from simple_parsing import Serializable
 @dataclass
 class ExperimentConfig(Serializable):
     n_examples_train: int = 40
-    """Number of examples to sample for feature explanation generation."""
+    """Number of examples to sample for latent explanation generation."""
 
     n_examples_test: int = 50
-    """Number of examples to sample for feature explanation testing."""
+    """Number of examples to sample for latent explanation testing."""
 
     n_quantiles: int = 10
-    """Number of feature activation quantiles to sample."""
+    """Number of latent activation quantiles to sample."""
 
     example_ctx_len: int = 32
     """Length of each sampled example sequence. Longer sequences 
     reduce detection scoring performance in weak models."""
 
-    n_random: int = 50
-    """Number of random examples to sample."""
+    n_non_activating: int = 50
+    """Number of non-activating examples to sample."""
 
     train_type: Literal["top", "random", "quantiles"] = "quantiles"
-    """Type of sampler to use for feature explanation generation."""
+    """Type of sampler to use for latent explanation generation."""
 
     test_type: Literal["quantiles", "activation"] = "quantiles"
-    """Type of sampler to use for feature explanation testing."""
+    """Type of sampler to use for latent explanation testing."""
 
 
 @dataclass
-class FeatureConfig(Serializable):
+class LatentConfig(Serializable):
     width: int = 131_072
-    """Number of features in each autoencoder"""
+    """Number of latents in each autoencoder"""
 
     min_examples: int = 200
-    """Minimum number of examples to generate for a single feature. 
+    """Minimum number of examples to generate for a single latent. 
     If the number of activating examples is less than this, the 
-    feature will not be explained and scored."""
+    latent will not be explained and scored."""
 
     max_examples: int = 10_000
-    """Maximum number of examples to generate for a single feature."""
+    """Maximum number of examples to generate for a single latent."""
 
     n_splits: int = 5
-    """Number of splits that features will be divided into."""
+    """Number of splits that latents will be divided into."""
 
 
 @dataclass
 class CacheConfig(Serializable):
     dataset_repo: str = "EleutherAI/rpj-v2-sample"
-    """Dataset repository to use for generating feature activations."""
+    """Dataset repository to use for generating latent activations."""
 
     dataset_split: str = "train[:1%]"
-    """Dataset split to use for generating feature activations.""" 
+    """Dataset split to use for generating latent activations.""" 
 
     dataset_name: str = ""
     """Dataset name to use."""
