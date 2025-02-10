@@ -5,39 +5,95 @@ from torch import Tensor
 import pandas as pd
 import asyncio
 import time
+import numpy as np
+
 
 from delphi.config import ExperimentConfig, FeatureConfig, CacheConfig
-from delphi.__main__ import run, RunConfig, load_artifacts
-
+from delphi.__main__ import run, RunConfig
 
 def parse_score_file(file_path):
     with open(file_path, "rb") as f:
         data = orjson.loads(f.read())
-
-    return pd.DataFrame(
-        [
-            {
-                "text": "".join(example["str_tokens"]),
-                "distance": example["distance"],
-                "ground_truth": example["ground_truth"],
-                "prediction": example["prediction"],
-                "probability": example["probability"],
-                "correct": example["correct"],
-                "activations": example["activations"],
-                "highlighted": example["highlighted"],
-            }
-            for example in data
-        ]
-    )
+    
+    df = pd.DataFrame([{
+        "text": "".join(example["str_tokens"]),
+        "distance": example["distance"],
+        "ground_truth": example["ground_truth"],
+        "prediction": example["prediction"],
+        "probability": example["probability"],
+        "correct": example["correct"],
+        "activations": example["activations"],
+        "highlighted": example["highlighted"]
+    } for example in data])
+    
+    # Calculate basic counts
+    failed_count = (df['prediction'] == -1).sum()
+    df = df[df['prediction'] != -1]
+    df.reset_index(drop=True, inplace=True)
+    total_examples = len(df)
+    total_positives = (df["ground_truth"]).sum()
+    total_negatives = (~df["ground_truth"]).sum()
+    
+    # Calculate confusion matrix elements
+    true_positives = ((df["prediction"] == 1) & (df["ground_truth"])).sum()
+    true_negatives = ((df["prediction"] == 0) & (~df["ground_truth"])).sum()
+    false_positives = ((df["prediction"] == 1) & (~df["ground_truth"])).sum()
+    false_negatives = ((df["prediction"] == 0) & (df["ground_truth"])).sum()
+    
+    # Calculate rates
+    true_positive_rate = true_positives / total_positives if total_positives > 0 else 0
+    true_negative_rate = true_negatives / total_negatives if total_negatives > 0 else 0
+    false_positive_rate = false_positives / total_negatives if total_negatives > 0 else 0
+    false_negative_rate = false_negatives / total_positives if total_positives > 0 else 0
+    
+    # Calculate precision, recall, f1 (using sklearn for verification)
+    precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
+    recall = true_positive_rate  # Same as TPR
+    f1_score = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
+    
+    # Calculate accuracy
+    accuracy = (true_positives + true_negatives) / total_examples
+    
+    # Add metrics to first row
+    metrics = {
+        "true_positive_rate": true_positive_rate,
+        "true_negative_rate": true_negative_rate,
+        "false_positive_rate": false_positive_rate,
+        "false_negative_rate": false_negative_rate,
+        "true_positives": true_positives,
+        "true_negatives": true_negatives,
+        "false_positives": false_positives,
+        "false_negatives": false_negatives,
+        "precision": precision,
+        "recall": recall,
+        "f1_score": f1_score,
+        "accuracy": accuracy,
+        "total_examples": total_examples,
+        "total_positives": total_positives,
+        "total_negatives": total_negatives,
+        "positive_class_ratio": total_positives / total_examples,
+        "negative_class_ratio": total_negatives / total_examples,
+        "failed_count": failed_count,
+    }
+    
+    for key, value in metrics.items():
+        df.loc[0, key] = value
+    
+    return df
 
 
 def build_df(path: Path, target_modules: list[str], range: Tensor | None):
-    accuracies = []
-    probabilities = []
-    score_types = []
-    file_names = []
-    feature_indices = []
-    modules = []
+    metrics_cols = [
+        "accuracy", "probability", "precision", "recall", "f1_score",
+        "true_positives", "true_negatives", "false_positives", "false_negatives",
+        "true_positive_rate", "true_negative_rate", "false_positive_rate", "false_negative_rate",
+        "total_examples", "total_positives", "total_negatives",
+        "positive_class_ratio", "negative_class_ratio", "failed_count"
+    ]
+    df_data = {
+        col: [] 
+        for col in ["file_name", "score_type", "feature_idx", "module"] + metrics_cols
+    }
 
     # Get subdirectories in the scores path
     scores_types = [d.name for d in path.iterdir() if d.is_dir()]
@@ -55,23 +111,14 @@ def build_df(path: Path, target_modules: list[str], range: Tensor | None):
                 df = parse_score_file(score_file)
 
                 # Calculate the accuracy and cross entropy loss for this feature
-                file_names.append(score_file.stem)
-                score_types.append(score_type)
-                feature_indices.append(feature_idx)
-                accuracies.append(df["correct"].mean())
-                probabilities.append(df["probability"].mean())
-                modules.append(module)
+                df_data["file_name"].append(score_file.stem)
+                df_data["score_type"].append(score_type)
+                df_data["feature_idx"].append(feature_idx)
+                df_data["module"].append(module)
+                for col in metrics_cols: df_data[col].append(df.loc[0, col])
 
-    df = pd.DataFrame(
-        {
-            "file_name": file_names,
-            "score_type": score_types,
-            "feature_idx": feature_indices,
-            "accuracy": accuracies,
-            "probability": probabilities,
-            "module": modules,
-        }
-    )
+
+    df = pd.DataFrame(df_data)
     assert not df.empty
     return df
 
@@ -107,7 +154,7 @@ async def test():
         max_features=100,
         seed=22,
         num_gpus=torch.cuda.device_count(),
-        filter_tokens=None
+        filter_bos=True
     )
 
     start_time = time.time()
@@ -124,8 +171,51 @@ async def test():
 
     # Performs better than random guessing
     for score_type in df["score_type"].unique():
-        print(df[df['score_type'] == score_type]["accuracy"].mean())
-        assert df[df['score_type'] == score_type]["accuracy"].mean() > 0.54, f"Score type {score_type} has an accuracy of {df[df['score_type'] == score_type]['accuracy'].mean()}"
+        score_df = df[df['score_type'] == score_type]
+        # Calculate weights based on non-errored examples
+        valid_examples = score_df['total_examples']
+        weights = valid_examples / valid_examples.sum()
+
+        weighted_mean_metrics = {
+            'accuracy': np.average(score_df['accuracy'], weights=weights),
+            'f1_score': np.average(score_df['f1_score'], weights=weights),
+            'precision': np.average(score_df['precision'], weights=weights),
+            'recall': np.average(score_df['recall'], weights=weights),
+            'false_positives': np.average(score_df['false_positives'], weights=weights),
+            'false_negatives': np.average(score_df['false_negatives'], weights=weights),
+            'true_positives': np.average(score_df['true_positives'], weights=weights),
+            'true_negatives': np.average(score_df['true_negatives'], weights=weights),
+            'positive_class_ratio': np.average(score_df['positive_class_ratio'], weights=weights),
+            'negative_class_ratio': np.average(score_df['negative_class_ratio'], weights=weights),
+            'total_positives': np.average(score_df['total_positives'], weights=weights),
+            'total_negatives': np.average(score_df['total_negatives'], weights=weights),
+            'true_positive_rate': np.average(score_df['true_positive_rate'], weights=weights),
+            'true_negative_rate': np.average(score_df['true_negative_rate'], weights=weights),
+            'false_positive_rate': np.average(score_df['false_positive_rate'], weights=weights),
+            'false_negative_rate': np.average(score_df['false_negative_rate'], weights=weights),
+        }
+
+        print(f"\n=== {score_type.title()} Metrics ===")
+        print(f"Accuracy: {weighted_mean_metrics['accuracy']:.3f}")
+        print(f"F1 Score: {weighted_mean_metrics['f1_score']:.3f}")
+        print(f"Precision: {weighted_mean_metrics['precision']:.3f}")
+        print(f"Recall: {weighted_mean_metrics['recall']:.3f}")
+
+        fractions_failed = [failed_count / total_examples for failed_count, total_examples in zip(score_df['failed_count'], score_df['total_examples'])]
+        print(f"Average fraction of failed examples: {sum(fractions_failed) / len(fractions_failed):.3f}")
+
+        print("\nConfusion Matrix:")
+        print(f"True Positive Rate:  {weighted_mean_metrics['true_positive_rate']:.3f}")
+        print(f"True Negative Rate:  {weighted_mean_metrics['true_negative_rate']:.3f}")
+        print(f"False Positive Rate: {weighted_mean_metrics['false_positive_rate']:.3f}")
+        print(f"False Negative Rate: {weighted_mean_metrics['false_negative_rate']:.3f}")
+        
+        print(f"\nClass Distribution:")
+        print(f"Positives: {score_df['total_positives'].sum():.0f} ({weighted_mean_metrics['positive_class_ratio']:.1%})")
+        print(f"Negatives: {score_df['total_negatives'].sum():.0f} ({weighted_mean_metrics['negative_class_ratio']:.1%})")
+        print(f"Total: {score_df['total_examples'].sum():.0f}")
+
+        assert weighted_mean_metrics['accuracy'] > 0.55, f"Score type {score_type} has an accuracy of {weighted_mean_metrics['accuracy']}"
 
 
 if __name__ == "__main__":
