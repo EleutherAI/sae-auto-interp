@@ -147,7 +147,8 @@ class FeatureDataset:
         if features is None:
             self._build(raw_dir, modules)
         else:
-            self._build_selected(raw_dir, modules, features)
+            # TODO fix type error
+            self._build_selected(raw_dir, modules, features) # type: ignore
 
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
