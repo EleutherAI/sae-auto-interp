@@ -19,8 +19,8 @@ class ExperimentConfig(Serializable):
     """Length of each sampled example sequence. Longer sequences 
     reduce detection scoring performance in weak models."""
 
-    n_random: int = 50
-    """Number of random examples to sample."""
+    n_non_activating: int = 50
+    """Number of non-activating examples to sample."""
 
     train_type: Literal["top", "random", "quantiles"] = "quantiles"
     """Type of sampler to use for feature explanation generation."""
