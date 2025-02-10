@@ -1,5 +1,5 @@
 import json
-from typing import Dict, List, Optional
+from typing import  Optional
 from tqdm import tqdm
 
 import numpy as np
@@ -22,7 +22,7 @@ class NeighbourCalculator:
         autoencoder: Optional["Autoencoder"] = None,
         residual_stream_record: Optional['ResidualStreamRecord'] = None,
         number_of_neighbours: int = 10,
-        neighbour_cache: Optional[Dict[str, Dict[int, List[int]]]] = None,
+        neighbour_cache: Optional[dict[str, dict[int, list[tuple[int,float]]]]] = None,
     ):
         
         """
@@ -42,8 +42,8 @@ class NeighbourCalculator:
         if neighbour_cache is not None:
             self.neighbour_cache = neighbour_cache
         else:
-            # Dictionary to cache computed neighbour lists
-            self.neighbour_cache: Dict[str, Dict[int, List[int]]] = {}
+            # dictionary to cache computed neighbour lists
+            self.neighbour_cache: dict[str, dict[int, list[int]]] = {}
     
 
     def _compute_neighbour_list(self, method: str) -> None:
@@ -53,11 +53,14 @@ class NeighbourCalculator:
         Args:
             method (str): One of 'similarity', 'correlation', or 'co-occurrence'
         """
-        if method == 'similarity':
+        if method == 'similarity_encoder':
             if self.autoencoder is None:
                 raise ValueError("Autoencoder is required for similarity-based neighbours")
-            self.neighbour_cache[method] = self._compute_similarity_neighbours()
-            
+            self.neighbour_cache[method] = self._compute_similarity_neighbours("encoder")
+        elif method == 'similarity_decoder':
+            if self.autoencoder is None:
+                raise ValueError("Autoencoder is required for similarity-based neighbours")
+            self.neighbour_cache[method] = self._compute_similarity_neighbours("decoder")
         elif method == 'correlation':
             if self.autoencoder is None or self.residual_stream_record is None:
                 raise ValueError("Autoencoder and residual stream record are required for correlation-based neighbours")
@@ -71,15 +74,22 @@ class NeighbourCalculator:
         else:
             raise ValueError(f"Unknown method: {method}. Use 'similarity', 'correlation', or 'co-occurrence'")
     
-    def _compute_similarity_neighbours(self) -> Dict[int, List[int]]:
+    def _compute_similarity_neighbours(self, method: str) -> dict[int, list[int]]:
         """
         Compute neighbour lists based on weight similarity in the autoencoder.
         """
         print("Computing similarity neighbours")
         # We use the encoder vectors to compute the similarity between features
-        encoder = self.autoencoder.encoder.cuda()
+        if method == "encoder":
+            encoder = self.autoencoder.encoder.cuda()
+            weight_matrix_normalized = encoder.weight.data / encoder.weight.data.norm(dim=1, keepdim=True)
+        
+        elif method == "decoder":
+            decoder = self.autoencoder.W_dec.cuda()
+            weight_matrix_normalized = decoder.data / decoder.data.norm(dim=1, keepdim=True)
+        else:
+            raise ValueError(f"Unknown method: {method}. Use 'encoder' or 'decoder'")
 
-        weight_matrix_normalized = encoder.weight / encoder.weight.norm(dim=1, keepdim=True)
         wT = weight_matrix_normalized.T
         # Compute the similarity between features
         done = False
@@ -93,8 +103,8 @@ class NeighbourCalculator:
                 for start in tqdm(range(0,number_features,batch_size)):
                     rows = wT[start:start+batch_size]
                     similarity_matrix = weight_matrix_normalized @ rows
-                    top_k_indices = torch.topk(similarity_matrix, self.number_of_neighbours+1, dim=1).indices
-                    neighbour_lists.update({i+start: top_k_indices[i].tolist()[1:] for i in range(len(top_k_indices))})
+                    indices,values = torch.topk(similarity_matrix, self.number_of_neighbours+1, dim=1)
+                    neighbour_lists.update({i+start: list(zip(indices[i].tolist()[1:],values[i].tolist()[1:])) for i in range(len(indices))})
                     del similarity_matrix
                     torch.cuda.empty_cache()
                 done = True
@@ -107,7 +117,7 @@ class NeighbourCalculator:
         return neighbour_lists
 
     
-    def _compute_correlation_neighbours(self) -> Dict[int, List[int]]:
+    def _compute_correlation_neighbours(self) -> dict[int, list[int]]:
         """
         Compute neighbour lists based on activation correlation patterns.
         """
@@ -146,13 +156,13 @@ class NeighbourCalculator:
         correlation_matrix = covariance_between_features / product_of_std
 
         # get the indices of the top k neighbours for each feature
-        top_k_indices = torch.topk(correlation_matrix, self.number_of_neighbours+1, dim=1).indices
+        indices,values = torch.topk(correlation_matrix, self.number_of_neighbours+1, dim=1)
 
         # return the neighbour lists
-        return {i: top_k_indices[i].tolist()[1:] for i in range(len(top_k_indices))}
+        return {i: list(zip(indices[i].tolist()[1:],values[i].tolist()[1:])) for i in range(len(indices))}
 
     
-    def _compute_cooccurrence_neighbours(self) -> Dict[int, List[int]]:
+    def _compute_cooccurrence_neighbours(self) -> dict[int, list[int]]:
         """
         Compute neighbour lists based on feature co-occurrence in the dataset.
         If you run out of memory try reducing the token_batch_size
@@ -224,16 +234,16 @@ class NeighbourCalculator:
 
         jaccard_torch = torch.as_tensor(cp.asnumpy(jaccard_matrix))
          # get the indices of the top k neighbours for each feature
-        top_k_indices = torch.topk(jaccard_torch, self.number_of_neighbours+1, dim=1).indices
+        top_k_indices,values = torch.topk(jaccard_torch, self.number_of_neighbours+1, dim=1)
         del jaccard_matrix,cooc_matrix,jaccard_torch
         torch.cuda.empty_cache()
        
         # return the neighbour lists
-        return {i: top_k_indices[i].tolist()[1:] for i in range(len(top_k_indices))}
+        return {i: list(zip(top_k_indices[i].tolist()[1:],values[i].tolist()[1:])) for i in range(len(top_k_indices))}
 
 
 
-    def populate_neighbour_cache(self, methods: List[str]) -> None:
+    def populate_neighbour_cache(self, methods: list[str]) -> None:
         """
         Populate the neighbour cache with the computed neighbour lists
         """
@@ -248,7 +258,7 @@ class NeighbourCalculator:
         with open(path, 'w') as f:
             json.dump(self.neighbour_cache, f)
 
-    def load_neighbour_cache(self, path: str) -> Dict[str, Dict[int, List[int]]]:
+    def load_neighbour_cache(self, path: str) -> dict[str, dict[int, list[int]]]:
         """
         Load the neighbour cache from the path as a json file
         """
