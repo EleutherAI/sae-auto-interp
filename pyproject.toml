@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sae_auto_interp"
+name = "delphi"
 version = "0.2.0"
 description = "Automated Interpretability"
 readme = "README.md"
@@ -27,11 +27,11 @@ dependencies = [
 ]
 
 [tool.pyright]
-include = ["sae_auto_interp*"]
+include = ["delphi*"]
 reportPrivateImportUsage = false
 
 [tool.setuptools.packages.find]
-include = ["sae_auto_interp*"]
+include = ["delphi*"]
 
 [tool.ruff]
 # TODO: Clean up or remove experiments folder.

@@ -17,7 +17,7 @@ def load_tokenized_data(
     Load a huggingface dataset, tokenize it, and shuffle.
     """
     from datasets import load_dataset
-    from sae.data import chunk_and_tokenize
+    from sparsify.data import chunk_and_tokenize
     
     print(dataset_repo,dataset_name,dataset_split)
 

@@ -34,13 +34,13 @@ class FeatureConfig(Serializable):
     """Number of features in each autoencoder"""
 
     min_examples: int = 200
-    """Minimum number of examples for a feature to be included"""
+    """Minimum number of examples for a feature to be explained and scored."""
 
     max_examples: int = 10_000
-    """Maximum number of examples for a feature to included"""
+    """Maximum number of examples to generate for a single feature."""
 
     n_splits: int = 5
-    """Number of splits that features were devided into"""
+    """Number of splits that features will be divided into."""
 
 
 @dataclass
