@@ -17,6 +17,7 @@ class DetectionScorer(Classifier):
         verbose: bool = False,
         n_examples_shown: int = 10,
         log_prob: bool = False,
+        temperature: float = 0.,
         **generation_kwargs,
     ):
         """
@@ -38,6 +39,7 @@ class DetectionScorer(Classifier):
             verbose=verbose,
             n_examples_shown=n_examples_shown,
             log_prob=log_prob,
+            temperature=temperature,
             **generation_kwargs,
         )
 
@@ -49,7 +51,7 @@ class DetectionScorer(Classifier):
         """
 
         samples = examples_to_samples(
-            record.random_examples,
+            record.not_active,
             distance=-1,
             ground_truth=False,
             tokenizer=self.tokenizer,

@@ -1,5 +1,28 @@
 ### SYSTEM PROMPT ###
 
+SYSTEM_SINGLE_TOKEN = """Your job is to look for patterns in text. You will be given a list of WORDS, your task is to provide an explanation for what pattern best describes them. Here are some guidelines:
+- Produce a specific final description for the features common in the examples, and what patterns you found.
+- Don't focus on giving examples of important tokens, if the examples are uninformative, you don't need to mention them.
+- Do not make lists of possible explanations. Keep your explanations short and concise.
+- The last line of your response must be the formatted explanation, using [EXPLANATION]:
+
+Here are some example:
+
+WORDS: ['Thomas Edison', 'Steve Jobs', 'Alexander Graham Bell']
+[EXPLANATION]: Names of people who are inventors of technical fields
+
+WORDS: ['over the moon', 'till the cows come home', 'than meets the eye']
+[EXPLANATION]: Common idioms in text conveying positive sentiment.
+
+WORDS: ['er', 'er', 'er']
+[EXPLANATION]: The token "er".
+
+WORDS: ['house', 'a box', 'smoking area', 'way']
+[EXPLANATION]: Nouns representing a distinct objects that contains something, sometimes preciding a quotation mark.
+
+{prompt}
+"""
+
 SYSTEM = """You are a meticulous AI researcher conducting an important investigation into patterns found in language. Your task is to analyze text and provide an explanation that thoroughly encapsulates possible patterns found in it.
 Guidelines:
 
@@ -204,5 +227,13 @@ def system(cot=False):
         {
             "role": "system",
             "content": SYSTEM.format(prompt=prompt),
+        }
+    ]
+
+def system_single_token():
+    return [    
+        {
+            "role": "system",
+            "content": SYSTEM_SINGLE_TOKEN
         }
     ]
