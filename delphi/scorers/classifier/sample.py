@@ -29,16 +29,16 @@ class ClassifierOutput:
     ground_truth: bool
     """Whether the example is activating or not"""
 
-    prediction: bool = False
+    prediction: bool = False | None
     """Whether the model predicted the example activating or not"""
 
-    highlighted: bool = False
+    highlighted: bool = False 
     """Whether the sample is highlighted"""
 
-    probability: float = 0.0
+    probability: float = 0.0 | None
     """The probability of the example activating"""
 
-    correct: bool = False
+    correct: bool = False | None
     """Whether the prediction is correct"""
 
 
