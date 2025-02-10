@@ -1,6 +1,6 @@
 from typing import List
 
-from ...features import Example
+from ...latents import Example
 from .oai_autointerp import (
     ActivationRecord,
     ExplanationNeuronSimulator,

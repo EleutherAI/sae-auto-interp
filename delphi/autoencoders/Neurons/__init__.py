@@ -44,8 +44,8 @@ def load_llama3_neurons(
     for layer in layers:
         submodule = model.model.layers[layer].mlp.down_proj
 
-        submodule.ae = TopKNeurons(k, input_dim=submodule.in_features, rotate=rotate, seed=seed,device=DEVICE)
-        submodule.ae.width = submodule.in_features
+        submodule.ae = TopKNeurons(k, input_dim=submodule.in_latents, rotate=rotate, seed=seed,device=DEVICE)
+        submodule.ae.width = submodule.in_latents
         submodule_dict[layer] = submodule
     
     with model.edit(" ") as edited:

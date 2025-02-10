@@ -8,7 +8,7 @@ import numpy as np
 from transformers import PreTrainedTokenizer
 
 from ...clients.client import Client
-from ...features import FeatureRecord
+from ...latents import LatentRecord
 from ...logger import logger
 from ..scorer import Scorer, ScorerResult
 from .sample import ClassifierOutput, Sample
@@ -48,7 +48,7 @@ class Classifier(Scorer):
 
     async def __call__(
         self,
-        record: FeatureRecord,
+        record: LatentRecord,
     ) -> list[ClassifierOutput]:
         samples = self._prepare(record)
 
@@ -62,7 +62,7 @@ class Classifier(Scorer):
         return ScorerResult(record=record, score=results)
 
     @abstractmethod
-    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
         pass
 
 
@@ -205,5 +205,5 @@ class Classifier(Scorer):
             for i in range(0, len(samples), self.n_examples_shown)
         ]
 
-    def call_sync(self, record: FeatureRecord) -> list[ClassifierOutput]:
+    def call_sync(self, record: LatentRecord) -> list[ClassifierOutput]:
         return asyncio.run(self.__call__(record))

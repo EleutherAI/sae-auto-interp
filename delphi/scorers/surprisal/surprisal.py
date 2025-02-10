@@ -13,7 +13,7 @@ from torch.nn.functional import cross_entropy
 from transformers import PreTrainedTokenizer
 
 from ...clients.client import Client
-from ...features import Example, FeatureRecord
+from ...latents import Example, LatentRecord
 from ..scorer import Scorer, ScorerResult
 from .prompts import BASEPROMPT as base_prompt
 
@@ -60,7 +60,7 @@ class SurprisalScorer(Scorer):
         
     async def __call__(
         self,
-        record: FeatureRecord,
+        record: LatentRecord,
     ) -> list[SurprisalOutput]:
         samples = self._prepare(record)
 
@@ -72,7 +72,7 @@ class SurprisalScorer(Scorer):
         
         return ScorerResult(record=record, score=results)
 
-    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
         """
         Prepare and shuffle a list of samples for classification.
         """

@@ -8,7 +8,7 @@ import time
 import numpy as np
 
 
-from delphi.config import ExperimentConfig, FeatureConfig, CacheConfig
+from delphi.config import ExperimentConfig, LatentConfig, CacheConfig
 from delphi.__main__ import run, RunConfig
 
 def parse_score_file(file_path):
@@ -92,7 +92,7 @@ def build_df(path: Path, target_modules: list[str], range: Tensor | None):
     ]
     df_data = {
         col: [] 
-        for col in ["file_name", "score_type", "feature_idx", "module"] + metrics_cols
+        for col in ["file_name", "score_type", "latent_idx", "module"] + metrics_cols
     }
 
     # Get subdirectories in the scores path
@@ -104,16 +104,16 @@ def build_df(path: Path, target_modules: list[str], range: Tensor | None):
             for score_file in list(score_type_path.glob(f"*{module}*")) + list(
                 score_type_path.glob(f".*{module}*")
             ):
-                feature_idx = int(score_file.stem.split("feature")[-1])
-                if range is not None and feature_idx not in range:
+                latent_idx = int(score_file.stem.split("latent")[-1])
+                if range is not None and latent_idx not in range:
                     continue
 
                 df = parse_score_file(score_file)
 
-                # Calculate the accuracy and cross entropy loss for this feature
+                # Calculate the accuracy and cross entropy loss for this latent
                 df_data["file_name"].append(score_file.stem)
                 df_data["score_type"].append(score_type)
-                df_data["feature_idx"].append(feature_idx)
+                df_data["latent_idx"].append(latent_idx)
                 df_data["module"].append(module)
                 for col in metrics_cols: df_data[col].append(df.loc[0, col])
 
@@ -138,10 +138,10 @@ async def test():
         n_examples_train=40,
         n_examples_test=50,
     )
-    feature_cfg = FeatureConfig(
+    latent_cfg = LatentConfig(
         width=32_768,
-        min_examples=200,  # The minimum number of examples to consider for the feature to be explained
-        max_examples=10_000,  # The maximum number of examples a feature may activate on before being excluded from explanation
+        min_examples=200,  # The minimum number of examples to consider for the latent to be explained
+        max_examples=10_000,  # The maximum number of examples a latent may activate on before being excluded from explanation
     )
     run_cfg = RunConfig(
         name='test',
@@ -151,23 +151,23 @@ async def test():
         explainer_model="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         hookpoints=["layers.3"],
         explainer_model_max_len=4208,
-        max_features=100,
+        max_latents=100,
         seed=22,
         num_gpus=torch.cuda.device_count(),
         filter_bos=True
     )
 
     start_time = time.time()
-    await run(experiment_cfg, feature_cfg, cache_cfg, run_cfg)
+    await run(experiment_cfg, latent_cfg, cache_cfg, run_cfg)
     end_time = time.time()
     print(f"Time taken: {end_time - start_time} seconds")
 
     scores_path =  Path("results") / run_cfg.name / "scores"
 
-    feature_range = torch.arange(run_cfg.max_features) if run_cfg.max_features else None
+    latent_range = torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
     hookpoints, *_ = load_artifacts(run_cfg)
 
-    df = build_df(scores_path, hookpoints, feature_range)
+    df = build_df(scores_path, hookpoints, latent_range)
 
     # Performs better than random guessing
     for score_type in df["score_type"].unique():

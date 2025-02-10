@@ -9,34 +9,34 @@ import time
 from simple_parsing import ArgumentParser
 
 from delphi.clients import Offline
-from delphi.config import ExperimentConfig, FeatureConfig
+from delphi.config import ExperimentConfig, LatentConfig
 from delphi.explainers import DefaultExplainer
-from delphi.features import (
-    FeatureDataset,
-    FeatureLoader
+from delphi.latents import (
+    LatentDataset,
+    LatentLoader
 )
-from delphi.features.constructors import default_constructor
-from delphi.features.samplers import sample
+from delphi.latents.constructors import default_constructor
+from delphi.latents.samplers import sample
 from delphi.pipeline import Pipe,Pipeline, process_wrapper
 from delphi.scorers import FuzzingScorer, DetectionScorer
 
 
-# run with python examples/example_script.py --model gemma/16k --module .model.layers.10 --features 100 --experiment_name test
+# run with python examples/example_script.py --model gemma/16k --module .model.layers.10 --latents 100 --experiment_name test
 
 def main(args):
     module = args.module
-    feature_cfg = args.feature_options
+    latent_cfg = args.latent_options
     experiment_cfg = args.experiment_options
     shown_examples = args.shown_examples
-    n_features = args.features  
-    start_feature = args.start_feature
+    n_latents = args.latents  
+    start_latent = args.start_latent
     sae_model = args.model
-    feature_dict = {f"{module}": torch.arange(start_feature,start_feature+n_features)}
-    dataset = FeatureDataset(
-        raw_dir="raw_features",
-        cfg=feature_cfg,
+    latent_dict = {f"{module}": torch.arange(start_latent,start_latent+n_latents)}
+    dataset = LatentDataset(
+        raw_dir="raw_latents",
+        cfg=latent_cfg,
         modules=[module],
-        features=feature_dict,
+        latents=latent_dict,
     )
 
     
@@ -45,10 +45,10 @@ def main(args):
             token_loader=lambda: dataset.load_tokens(),
             n_random=experiment_cfg.n_random, 
             ctx_len=experiment_cfg.example_ctx_len, 
-            max_examples=feature_cfg.max_examples
+            max_examples=latent_cfg.max_examples
         )
     sampler=partial(sample,cfg=experiment_cfg)
-    loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
+    loader = LatentLoader(dataset, constructor=constructor, sampler=sampler)
     ### Load client ###
     
     client = Offline("hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",max_memory=0.8,max_model_len=5120)
@@ -56,7 +56,7 @@ def main(args):
     ### Build Explainer pipe ###
     def explainer_postprocess(result):
 
-        with open(f"results/explanations/{sae_model}/{experiment_name}/{result.record.feature}.txt", "wb") as f:
+        with open(f"results/explanations/{sae_model}/{experiment_name}/{result.record.latent}.txt", "wb") as f:
             f.write(orjson.dumps(result.explanation))
 
         return result
@@ -88,7 +88,7 @@ def main(args):
 
     def scorer_postprocess(result, score_dir):
         record = result.record
-        with open(f"results/scores/{sae_model}/{experiment_name}/{score_dir}/{record.feature}.txt", "wb") as f:
+        with open(f"results/scores/{sae_model}/{experiment_name}/{score_dir}/{record.latent}.txt", "wb") as f:
             f.write(orjson.dumps(result.score))
         
 
@@ -133,10 +133,10 @@ if __name__ == "__main__":
     parser.add_argument("--shown_examples", type=int, default=5)
     parser.add_argument("--model", type=str, default="gemma/16k")
     parser.add_argument("--module", type=str, default=".model.layers.10")
-    parser.add_argument("--features", type=int, default=100)
+    parser.add_argument("--latents", type=int, default=100)
     parser.add_argument("--experiment_name", type=str, default="default")
     parser.add_arguments(ExperimentConfig, dest="experiment_options")
-    parser.add_arguments(FeatureConfig, dest="feature_options")
+    parser.add_arguments(LatentConfig, dest="latent_options")
     args = parser.parse_args()
     experiment_name = args.experiment_name
     
