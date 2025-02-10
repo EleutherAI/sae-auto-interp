@@ -13,7 +13,6 @@ from ...logger import logger
 from ..scorer import Scorer, ScorerResult
 from .sample import ClassifierOutput, Sample
 
-
 class Classifier(Scorer):
     def __init__(
         self,
@@ -39,8 +38,8 @@ class Classifier(Scorer):
         record: FeatureRecord,
     ) -> list[ClassifierOutput]:
         samples = self._prepare(record)
-
         random.shuffle(samples)
+        
         samples = self._batch(samples)
         results = await self._query(
             record.explanation,

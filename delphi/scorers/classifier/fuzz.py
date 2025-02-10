@@ -66,14 +66,29 @@ class FuzzingScorer(Classifier, Scorer):
             all_examples.extend(examples_chunk)
 
         n_incorrect = self.mean_n_activations_ceil(all_examples)
+        if isinstance(record.random_examples[0], tuple):
+            # Here we are using neighbours
+            samples = []
+            for i, (examples, neighbour) in enumerate(record.random_examples):
+                samples.extend(
+                    examples_to_samples(
+                        examples,
+                        distance=-neighbour.distance,
+                        ground_truth=False,
+                        n_incorrect=n_incorrect,
+                        **defaults,
+                    )
+                )
+        elif isinstance(record.random_examples[0], Example):
+            # This is if we dont use neighbours
+            samples = examples_to_samples(
+                record.random_examples,
+                distance=-1,
+                ground_truth=False,
+                n_incorrect=n_incorrect,
+                **defaults,
+            )
 
-        samples = examples_to_samples(
-            record.extra_examples,
-            distance=-1,
-            ground_truth=False,
-            n_incorrect=n_incorrect,
-            **defaults,
-        )
 
         for i, examples in enumerate(record.test):
             samples.extend(
