@@ -3,10 +3,10 @@ from functools import partial
 from pathlib import Path
 from dataclasses import dataclass
 from glob import glob
+import json
 from dataclasses import dataclass
 from multiprocessing import cpu_count
 import asyncio
-import re
 import os
 
 from simple_parsing import ArgumentParser, field
@@ -22,7 +22,7 @@ import orjson
 from torchtyping import TensorType
 from nnsight import LanguageModel
 from datasets import load_dataset
-from sae.data import chunk_and_tokenize
+from sparsify.data import chunk_and_tokenize
 from simple_parsing import field, list_field
 
 from delphi.config import ExperimentConfig, FeatureConfig
@@ -102,6 +102,9 @@ class RunConfig:
         default=22,
     )
     """Seed for the random number generator."""
+
+    filter_tokens: list[int] | None = None
+    """Tokens to filter out from the cache."""
 
 
 def load_artifacts(run_cfg: RunConfig):
@@ -322,42 +325,40 @@ def populate_cache(
     cache.save_config(save_dir=str(latents_path), cfg=cfg, model_name=run_cfg.model)
 
 
-async def run():
-    parser = ArgumentParser()
-    parser.add_arguments(ExperimentConfig, dest="experiment_cfg")
-    parser.add_arguments(FeatureConfig, dest="feature_cfg")
-    parser.add_arguments(CacheConfig, dest="cache_cfg")
-    parser.add_arguments(RunConfig, dest="run_cfg")
-    args = parser.parse_args()
 
-    base_path = Path("results")
-    if args.run_cfg.name:
-        base_path = base_path / args.run_cfg.name
+async def run(experiment_cfg: ExperimentConfig, feature_cfg: FeatureConfig, cache_cfg: CacheConfig, run_cfg: RunConfig):
+    base_path = Path.cwd() / "results"
+    if run_cfg.name:
+        base_path = base_path / run_cfg.name
+
+    base_path.mkdir(parents=True, exist_ok=True)
+    with open(base_path / "run_config.json", "w") as f:
+        json.dump(run_cfg.__dict__, f, indent=4)
 
     latents_path = base_path / "latents"
     explanations_path = base_path / "explanations"
     scores_path = base_path / "scores"
 
     feature_range = (
-        torch.arange(args.run_cfg.max_features) if args.run_cfg.max_features else None
+        torch.arange(run_cfg.max_features) if run_cfg.max_features else None
     )
 
     hookpoints, submodule_name_to_submodule, hooked_model, tokenizer = load_artifacts(
-        args.run_cfg
+        run_cfg
     )
 
     if (
         not glob(str(latents_path / ".*")) + glob(str(latents_path / "*"))
-        or "cache" in args.run_cfg.overwrite
+        or "cache" in run_cfg.overwrite
     ):
         populate_cache(
-            args.run_cfg,
-            args.cache_cfg,
+            run_cfg,
+            cache_cfg,
             hooked_model,
             submodule_name_to_submodule,
             latents_path,
             tokenizer,
-            args.run_cfg.seed,
+            filter_tokens=torch.tensor(run_cfg.filter_tokens) if run_cfg.filter_tokens else None,
         )
     else:
         print(f"Files found in {latents_path}, skipping cache population...")
@@ -366,12 +367,12 @@ async def run():
 
     if (
         not glob(str(scores_path / ".*")) + glob(str(scores_path / "*"))
-        or "scores" in args.run_cfg.overwrite
+        or "scores" in run_cfg.overwrite
     ):
         await process_cache(
-            args.feature_cfg,
-            args.run_cfg,
-            args.experiment_cfg,
+            feature_cfg,
+            run_cfg,
+            experiment_cfg,
             latents_path,
             explanations_path,
             scores_path,
@@ -384,4 +385,11 @@ async def run():
 
 
 if __name__ == "__main__":
-    asyncio.run(run())
+    parser = ArgumentParser()
+    parser.add_arguments(ExperimentConfig, dest="experiment_cfg")
+    parser.add_arguments(FeatureConfig, dest="feature_cfg")
+    parser.add_arguments(CacheConfig, dest="cache_cfg")
+    parser.add_arguments(RunConfig, dest="run_cfg")
+    args = parser.parse_args()
+
+    asyncio.run(run(args.experiment_cfg, args.feature_cfg, args.cache_cfg, args.run_cfg))

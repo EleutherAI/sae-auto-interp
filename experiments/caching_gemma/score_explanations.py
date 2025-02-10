@@ -6,17 +6,17 @@ import orjson
 import torch
 from simple_parsing import ArgumentParser
 
-from sae_auto_interp.clients import Offline,OpenRouter
-from sae_auto_interp.config import ExperimentConfig, FeatureConfig
-from sae_auto_interp.explainers import  explanation_loader,random_explanation_loader
-from sae_auto_interp.features import (
+from delphi.clients import Offline,OpenRouter
+from delphi.config import ExperimentConfig, FeatureConfig
+from delphi.explainers import  explanation_loader,random_explanation_loader
+from delphi.features import (
     FeatureDataset,
     FeatureLoader
 )
-from sae_auto_interp.features.constructors import default_constructor
-from sae_auto_interp.features.samplers import sample
-from sae_auto_interp.pipeline import Pipe, Pipeline, process_wrapper
-from sae_auto_interp.scorers import FuzzingScorer, DetectionScorer
+from delphi.features.constructors import default_constructor
+from delphi.features.samplers import sample
+from delphi.pipeline import Pipe, Pipeline, process_wrapper
+from delphi.scorers import FuzzingScorer, DetectionScorer
 
 
 def main(args):
