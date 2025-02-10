@@ -80,7 +80,7 @@ def random_non_activating_windows(
     tokens: TensorType["batch", "seq"],
     buffer_output: BufferOutput,
     ctx_len: int,
-    n_negative: int,
+    n_not_active: int,
 ):
     """
     Generate random non-activating sequence windows and update the feature record.
@@ -90,11 +90,11 @@ def random_non_activating_windows(
         tokens (TensorType["batch", "seq"]): The input tokens.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
         ctx_len (int): The context length.
-        n_random (int): The number of random examples to generate.
+        n_not_active (int): The number of non activating examples to generate.
     """
     torch.manual_seed(22)
-    if n_negative == 0:
-        record.negative_examples = []
+    if n_not_active == 0:
+        record.not_active = []
         return
     
     batch_size = tokens.shape[0]
@@ -106,16 +106,16 @@ def random_non_activating_windows(
     available_indices = mask.nonzero().squeeze()
 
     # TODO:What to do when the latent is active at least once in each batch?
-    if available_indices.numel() < n_negative:
+    if available_indices.numel() < n_not_active:
         print("No available randomly sampled non-activating sequences")
-        record.negative_examples = []
+        record.not_active = []
         return
     else:
-        selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_negative,))]
+        selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_not_active,))]
 
     toks = tokens[selected_indices, 10 : 10 + ctx_len]
 
-    record.negative_examples = prepare_examples(
+    record.not_active = prepare_examples(
         toks,
         torch.zeros_like(toks),
     )
@@ -124,7 +124,7 @@ def default_constructor(
     record: FeatureRecord,
     token_loader: Optional[Callable[[], TensorType["batch", "seq"]]],
     buffer_output: BufferOutput,
-    n_random: int,
+    n_not_active: int,
     ctx_len: int,
     max_examples: int,
 ):
@@ -136,7 +136,7 @@ def default_constructor(
         token_loader (Optional[Callable[[], TensorType["batch", "seq"]]]):
             An optional function that creates the dataset tokens.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
-        n_random (int): Number of non-activating examples to randomly generate.
+        n_not_active (int): Number of non-activating examples to randomly generate.
         ctx_len (int): Context length for each example.
         max_examples (int): Maximum number of examples to generate.
     """
@@ -167,6 +167,6 @@ def default_constructor(
         record,
         tokens=tokens,
         buffer_output=buffer_output,
-        n_negative=n_random,
+        n_not_active=n_not_active,
         ctx_len=ctx_len,
     )
