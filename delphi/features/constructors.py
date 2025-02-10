@@ -4,8 +4,7 @@ import torch
 from torchtyping import TensorType
 
 from .features import FeatureRecord, prepare_examples
-from .loader import BufferOutput
-
+from .loader import BufferOutput, AllData
 
 def _top_k_pools(
         max_buffer: TensorType["batch"],
@@ -124,7 +123,7 @@ def neighbour_random_activation_windows(
     record: FeatureRecord,
     tokens: TensorType["batch", "seq"],
     buffer_output: BufferOutput,
-    everything: BufferOutput,
+    all_data: AllData,
     ctx_len: int,
     n_random: int,
 ):
@@ -146,42 +145,61 @@ def neighbour_random_activation_windows(
 
     batch_size = tokens.shape[0]
     
-    mask = torch.zeros(batch_size, dtype=torch.bool)
-    
-    for neighbour in record.neighbours:
-        # Get the possible batch positions where the neighbour is active
-        possible_locations = everything.locations[everything.locations[:, 0] == neighbour]
-        # Get the unique locations
-        unique_possible_locations = possible_locations.unique(dim=0)
-        # Set the mask to True for the unique locations
-        mask[unique_possible_locations[:, 1]] = True
-    
     # Get the unique batch positions where the latent is active
-    unique_batch_pos_active = buffer_output.locations[:, 0].unique()
-    # Set the mask to False for the unique locations where the latent is active
-    mask[unique_batch_pos_active] = False
-
-    available_indices = mask.nonzero().squeeze()
-
-    # TODO:What to do when the latent is active at least once in each batch?
-    if available_indices.numel() < n_random:
-        print("No available indices")
-        record.random_examples = []
-        return
-    else:
-        # Select the batch positions
-        selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_random,))]
-        # Select the token positions
-        selected_positions = torch.randint(0, tokens.shape[1] - ctx_len, size=(n_random,))
+    unique_batch_pos_active = buffer_output.locations[:, 0].unique_consecutive()
     
+    mask = torch.zeros(batch_size, dtype=torch.bool)
 
-    # Get tokens
-    toks = tokens[selected_indices, selected_positions : selected_positions + ctx_len]
+    # TODO: For now we use at most 10 examples per neighbour, we may want to allow a variable number of examples per neighbour
+    n_examples_per_neighbour = 10
 
-    record.random_examples = prepare_examples(
-        toks,
-        torch.zeros_like(toks),
-    )
+    number_examples = 0
+    available_features = all_data.features
+    all_examples = []
+    for neighbour in record.neighbours:
+        if number_examples >= n_random:
+            break
+        # find indice in all_data.features that matches the neighbour
+        indice = torch.where(available_features == neighbour.feature_index)[0]
+        if len(indice) == 0:
+            continue
+        # get the locations of the neighbour
+        locations = all_data.locations[indice]
+        # get the unique locations
+        unique_locations = locations[:,0].unique_consecutive(dim=0)
+
+        # Set the mask to True for the unique locations
+        mask[unique_locations] = True
+
+        # Set the mask to False for the unique locations where the latent is active
+        # TODO: we probably want to be less strict here, we could use parts of the batch where the latent is not active
+        mask[unique_batch_pos_active] = False
+
+        available_indices = mask.nonzero().flatten()
+
+        if available_indices.numel() == 0:
+            continue
+        size = min(n_examples_per_neighbour, len(available_indices))
+    
+        selected_indices = torch.randint(0, len(unique_locations), size=(size,))
+        selected_positions = torch.randint(0, tokens.shape[1] - ctx_len, size=(size,))
+    
+        range_indices = torch.arange(ctx_len, device=tokens.device).unsqueeze(0)  # Shape: (1, ctx_len)
+    
+        # Each selected_positions gives a unique starting index. We add the range tensor to get indices for each example.
+        positions = selected_positions.unsqueeze(1) + range_indices    
+
+        # Get tokens
+        toks = tokens[selected_indices].gather(dim=1, index=positions)
+
+        examples = prepare_examples(toks, torch.zeros_like(toks))
+        number_examples += len(examples)
+        all_examples.append((examples, neighbour))
+
+    if len(all_examples) == 0:
+        print("No examples found")
+
+    record.random_examples = all_examples
 
 
 def default_constructor(
@@ -239,7 +257,7 @@ def neighbour_constructor(
     record: FeatureRecord,
     token_loader: Optional[Callable[[], TensorType["batch", "seq"]]],
     buffer_output: BufferOutput,
-    everything: BufferOutput,
+    all_data: AllData,
     n_random: int,
     ctx_len: int,
     max_examples: int,
@@ -247,7 +265,7 @@ def neighbour_constructor(
     """
     Construct feature examples using pool max activation windows and random activation windows from neighbours.
     """
-    tokens = everything.tokens
+    tokens = all_data.tokens
     if tokens is None:
         if token_loader is None:
             raise ValueError("Either tokens or token_loader must be provided")
@@ -274,7 +292,7 @@ def neighbour_constructor(
         record,
         tokens=tokens,
         buffer_output=buffer_output,
-        everything=everything,
+        all_data=all_data,
         n_random=n_random,
         ctx_len=ctx_len,
     )
