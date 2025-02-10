@@ -136,7 +136,7 @@ def generate_score_fuzz_detection():
         feature_record = FeatureRecord(feature)
         feature_record.test = [activating_examples]
         feature_record.extra_examples = non_activating_examples
-        feature_record.negative_examples = non_activating_examples
+        feature_record.not_active = non_activating_examples
         feature_record.explanation = data['explanation']
         
         client = OpenRouter(api_key=data['api_key'], model=data['model'])

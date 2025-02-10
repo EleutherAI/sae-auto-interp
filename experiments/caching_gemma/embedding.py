@@ -68,7 +68,7 @@ def main(args):
         record = result.record
         
         record.explanation = result.explanation
-        record.extra_examples = record.negative_examples
+        record.extra_examples = record.not_active
 
 
         return record
