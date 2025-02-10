@@ -18,6 +18,13 @@ from ..config import FeatureConfig
 from ..features.features import Feature, FeatureRecord
 
 
+class AllData(NamedTuple):
+    features: list[TensorType["features"]]
+    locations: list[TensorType["locations", 2]]
+    activations: list[TensorType["locations"]]
+    tokens: TensorType["tokens"]
+
+
 class BufferOutput(NamedTuple):
     """
     Represents the output of a TensorBuffer.
@@ -32,8 +39,7 @@ class BufferOutput(NamedTuple):
     locations: TensorType["locations", 2]
     activations: TensorType["locations"]
     tokens: TensorType["tokens"]
-
-
+    
 class TensorBuffer:
     """
     Lazy loading buffer for cached splits.
@@ -112,8 +118,6 @@ class TensorBuffer:
         return features, split_locations, split_activations, tokens
 
 
-
-
     def reset(self):
         """Reset the buffer state."""
         self.start = 0
@@ -152,7 +156,7 @@ class FeatureDataset:
         else:
             self._build_selected(raw_dir, modules, features)
 
-        self.everything = self._build_everything(raw_dir, modules)
+        self.all_data = self._build_everything(raw_dir, modules)
 
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
@@ -252,32 +256,27 @@ class FeatureDataset:
         Build a BufferOutput with the locations and activations of all features.
         """
         edges = self._edges()
-        everything = {}
+        all_features = []
         all_locations = []
         all_activations = []
         tokens = None
+        all_data = {}
         for module in modules:
             for start, end in zip(edges[:-1], edges[1:]):
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
-                split_data = load_file(path)
-                first_feature = int(path.split("/")[-1].split("_")[0])
-                activations = torch.tensor(split_data["activations"])
-                locations = torch.tensor(split_data["locations"].astype(np.int64))
-                if tokens is None:
-                    if "tokens" in split_data:
-                        tokens = torch.tensor(split_data["tokens"].astype(np.int64))
-                    else:
-                        tokens = None
                 
-                locations[:,2] = locations[:,2] + first_feature
-                all_locations.append(locations)
-                all_activations.append(activations)
+                buffer = TensorBuffer(path, module, min_examples=self.cfg.min_examples)
+                features, locations, activations, tk = buffer.load()
+                all_features.extend(features)
+                all_locations.extend(locations)
+                all_activations.extend(activations)
+                if tokens is None:
+                    tokens = tk
+            all_features = torch.stack(all_features)
+            all_data[module] = AllData(all_features, all_locations, all_activations, tokens)
 
-        all_locations = torch.cat(all_locations)
-        all_activations = torch.cat(all_activations)
-        everything[module] = BufferOutput(-1, all_locations, all_activations, tokens)
 
-        
+        return all_data
 
     def __len__(self):
         """Return the number of buffers in the dataset."""
@@ -323,25 +322,14 @@ class FeatureLoader:
             FeatureRecord: Processed feature records.
         """
         for buffer in self.feature_dataset.buffers:
-            async for record in self._aprocess_buffer(buffer):
-                yield record
-
-    async def _aprocess_buffer(self, buffer):
-        """
-        Asynchronously process a buffer.
-
-        Args:
-            buffer (TensorBuffer): Buffer to process.
-
-        Yields:
-            Optional[FeatureRecord]: Processed feature record or None.
-        """
-        for data in buffer:
-            if data is not None:
-                record = await self._aprocess_feature(data)
-                if record is not None:
-                    yield record
-            await asyncio.sleep(0)  # Allow other coroutines to run
+            for data in buffer:
+                if data is not None:
+                    
+                    record = await self._aprocess_feature(data)
+                    if record is not None:
+                        print()
+                        yield record
+            await asyncio.sleep(0)
 
     async def _aprocess_feature(self, buffer_output: BufferOutput):
         """
@@ -360,52 +348,4 @@ class FeatureLoader:
             self.constructor(record=record, buffer_output=buffer_output)
         if self.sampler is not None:
             self.sampler(record)
-        
-        return record
-
-    def __iter__(self):
-        """
-        Synchronous iterator for processing feature records.
-
-        Yields:
-            FeatureRecord: Processed feature records.
-        """
-        for buffer in self.feature_dataset.buffers:
-            for record in self._process_buffer(buffer):
-                yield record
-
-    def _process_buffer(self, buffer):
-        """
-        Process a buffer synchronously.
-
-        Args:
-            buffer (TensorBuffer): Buffer to process.
-
-        Yields:
-            Optional[FeatureRecord]: Processed feature record or None.
-        """
-        for data in buffer:
-            if data is not None:
-                record = self._process_feature(data)
-                if record is not None:
-                    yield record
-
-    def _process_feature(self, buffer_output: BufferOutput):
-        """
-        Process a single feature synchronously.
-
-        Args:
-            buffer_output (BufferOutput): Feature data to process.
-
-        Returns:
-            Optional[FeatureRecord]: Processed feature record or None.
-        """
-        record = FeatureRecord(buffer_output.feature)
-        if self.transform is not None:
-            self.transform(record)
-        if self.constructor is not None:
-            self.constructor(record=record, buffer_output=buffer_output)
-        if self.sampler is not None:
-            self.sampler(record)
-        
         return record
