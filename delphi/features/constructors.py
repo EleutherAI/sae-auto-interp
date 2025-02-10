@@ -122,7 +122,7 @@ def random_non_activating_windows(
 
 def default_constructor(
     record: FeatureRecord,
-    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]],
+    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]] | None,
     buffer_output: BufferOutput,
     n_not_active: int,
     ctx_len: int,

@@ -18,7 +18,7 @@ class Client(ABC):
     async def generate(self, prompt: Union[str, List[Dict[str, str]]], **kwargs) -> Response:
         pass
 
-    @abstractmethod
-    async def process_response(self, raw_response: Any) -> Response:
-        pass
+    # @abstractmethod
+    # async def process_response(self, raw_response: Any) -> Response:
+    #     pass
 

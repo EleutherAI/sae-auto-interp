@@ -12,9 +12,10 @@ def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,in
     submodules = {}
 
     for layer in ae_layers:
+        model_name = f"google/gemma-scope-9b-pt-{type}"
     
         path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
-        sae = JumpReLUSAE.from_pretrained(path,type,"cuda")
+        sae = JumpReLUSAE.from_pretrained(model_name,path,"cuda")
         
         sae.half()
         def _forward(sae, x):
