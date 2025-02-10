@@ -16,7 +16,8 @@ class ExperimentConfig(Serializable):
     """Number of feature activation quantiles to sample."""
 
     example_ctx_len: int = 32
-    """Length of each sampled example sequence. Longer sequences reduce detection scoring performance."""
+    """Length of each sampled example sequence. Longer sequences 
+    reduce detection scoring performance in weak models."""
 
     n_random: int = 50
     """Number of random examples to sample."""
@@ -34,7 +35,9 @@ class FeatureConfig(Serializable):
     """Number of features in each autoencoder"""
 
     min_examples: int = 200
-    """Minimum number of examples for a feature to be explained and scored."""
+    """Minimum number of examples to generate for a single feature. 
+    If the number of activating examples is less than this, the 
+    feature will not be explained and scored."""
 
     max_examples: int = 10_000
     """Maximum number of examples to generate for a single feature."""

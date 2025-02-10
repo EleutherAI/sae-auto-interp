@@ -24,6 +24,7 @@ class FuzzingScorer(Classifier, Scorer):
         n_examples_shown: int = 10,
         threshold: float = 0.3,
         log_prob: bool = False,
+        temperature: float = 0.,
         **generation_kwargs,
     ):
         """
@@ -45,6 +46,7 @@ class FuzzingScorer(Classifier, Scorer):
             verbose=verbose,
             n_examples_shown=n_examples_shown,
             log_prob=log_prob,
+            temperature=temperature,
             **generation_kwargs,
         )
 

@@ -94,7 +94,8 @@ class FeatureRecord:
             feature (Feature): The feature associated with the record.
         """
         self.feature = feature
-        self.examples = []
+        self.examples: list[Example] = []
+        self.not_active: list[Example] = []
         self.train: list[list[Example]] = []
         self.test: list[list[Example]] = []
 

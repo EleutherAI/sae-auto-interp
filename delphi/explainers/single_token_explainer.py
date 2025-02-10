@@ -1,12 +1,12 @@
 import re
 import asyncio
 
-from ..explainer import Explainer, ExplainerResult
-from .prompt_builder import build_prompt
-from ...logger import logger
+from delphi.explainers.explainer import Explainer, ExplainerResult
+from delphi.explainers.default.prompt_builder import build_single_token_prompt
+from delphi.logger import logger
 
-class DefaultExplainer(Explainer):
-    name = "default"
+class SingleTokenExplainer(Explainer):
+    name = "single_token"
 
     def __init__(
         self,
@@ -32,7 +32,7 @@ class DefaultExplainer(Explainer):
     async def __call__(self, record):
 
         messages = self._build_prompt(record.train)
-
+        
         response = await self.client.generate(
             messages, temperature=self.temperature, **self.generation_kwargs
         )
@@ -58,10 +58,10 @@ class DefaultExplainer(Explainer):
         except Exception as e:
             logger.error(f"Explanation parsing regex failed: {e}")
             raise
-    
-    def _highlight(self, index, example):
-        result = f"Example {index}: "
 
+    def _highlight(self, index, example):
+        # result = f"Example {index}: "
+        result = f""
         threshold = example.max_activation * self.threshold
         if self.tokenizer is not None:
             str_toks = self.tokenizer.batch_decode(example.tokens)
@@ -77,14 +77,14 @@ class DefaultExplainer(Explainer):
         i = 0
         while i < len(str_toks):
             if check(i):
-                result += "<<"
+                # result += "<<"
 
                 while i < len(str_toks) and check(i):
                     result += str_toks[i]
                     i += 1
-                result += ">>"
+                # result += ">>"
             else:
-                result += str_toks[i]
+                # result += str_toks[i]
                 i += 1
 
         return "".join(result)
@@ -109,14 +109,9 @@ class DefaultExplainer(Explainer):
             if self.activations:
                 highlighted_examples.append(self._join_activations(example))
 
-        highlighted_examples = "\n".join(highlighted_examples)
-
-        return build_prompt(
+        return build_single_token_prompt(
             examples=highlighted_examples,
-            activations=self.activations,
-            cot=self.cot,
         )
 
     def call_sync(self, record):
         return asyncio.run(self.__call__(record))
-    

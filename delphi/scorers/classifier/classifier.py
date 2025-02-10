@@ -70,7 +70,7 @@ class Classifier(Scorer):
         self,
         explanation: str,
         batches: list[list[Sample]],
-    ) -> list[Sample]:
+    ) -> list[ClassifierOutput]:
         """
         Send and gather batches of samples to the model.
         """
@@ -104,30 +104,30 @@ class Classifier(Scorer):
             logger.error(f"Error generating text: {e}")
             response = None
         if response is None:
-            array = [-1] * self.batch_size
+            predictions = [-1] * self.batch_size
             probabilities = [-1] * self.batch_size
         else:
             selections = response.text
             logprobs = response.logprobs if self.log_prob else None
             try:
-                array, probabilities = self._parse(selections, logprobs)
+                predictions, probabilities = self._parse(selections, logprobs)
             except Exception as e:
                 logger.error(f"Parsing selections failed: {e}")
-                array = [-1] * self.batch_size
+                predictions = [-1] * self.batch_size
                 probabilities = [-1] * self.batch_size
 
         results = []
         correct = []
         response = []
-        for i, sample in enumerate(batch):
+
+        for sample, prediction, probability in zip(batch, predictions, probabilities):
             result = sample.data
-            prediction = array[i] 
             result.prediction = prediction
             result.correct = prediction == result.ground_truth
             correct.append(result.ground_truth)
             response.append(prediction)
-            if self.log_prob:
-                result.probability = probabilities[i]
+            if probability is not None:
+                result.probability = probability
             results.append(result)
 
             if self.verbose:
@@ -136,35 +136,41 @@ class Classifier(Scorer):
 
     
     def _parse(self, string, logprobs=None):
+        """Extract binary predictions and probabilities from a string and 
+        optionally its token logprobs."""
+        # Matches the first instance of text enclosed in square brackets
         pattern = r"\[.*?\]"
         match = re.search(pattern, string)
 
-        try:
-            array = json.loads(match.group(0))
-            assert len(array) == self.batch_size
-            if self.log_prob:
-                probabilities = self._parse_logprobs(logprobs)
-                assert len(probabilities) == self.batch_size
-                return array, probabilities
-            probabilities = None
-            return array, probabilities
-        except (json.JSONDecodeError, AssertionError, AttributeError) as e:
-            logger.error(f"Parsing array failed: {e}")
-            if self.log_prob:
-                return [-1] * self.batch_size, [-1] * self.batch_size
-            return [-1] * self.batch_size
+        predictions: list[int] = json.loads(match.group(0))
+        assert len(predictions) == self.batch_size
+        probabilities = (
+            self._parse_logprobs(logprobs)
+            if logprobs is not None
+            else [None] * self.batch_size
+        )
 
-    def _parse_logprobs(self, logprobs):
-        #Logprobs will be a list of 5 probabilites for each token in the response
-        # The response will be in the form of [x, x, x, ...] for each position we
-        # need to get the probability of 1 or 0 
-        probabilities = []
+        return predictions, probabilities
+
+
+    def _parse_logprobs(self, logprobs: list):
+        """
+        Extracts normalized probabilities of '1' vs '0' tokens from the top n log probabilities for each 
+        token in a response string of form '[x, x, x, ...]'. The normalized probability is computed as 
+        P(1)/(P(0) + P(1)), where P(0) and P(1) are summed over all matching tokens in the top 5 candidates.
+
+        Args:
+            logprobs (list): Contains top n log probabilities for each token in the response.
+
+        Returns:
+            list: Normalized probabilities between 0 and 1, where each value represents P(token='1')."""
+        binary_probabilities: list[float] = []
         
         for i in range(len(logprobs)):
             if "1" in logprobs[i].token or "0" in logprobs[i].token:
                 top_logprobs = logprobs[i].top_logprobs
-                prob_0 = 0
-                prob_1 = 0
+                prob_0 = 0.
+                prob_1 = 0.
                 for i in range(len(top_logprobs)):
                     token = top_logprobs[i].token
                     logprob = top_logprobs[i].logprob
@@ -172,11 +178,13 @@ class Classifier(Scorer):
                         prob_0 += np.exp(logprob).item()
                     elif "1" in token:
                         prob_1 += np.exp(logprob).item()
-                if prob_0+prob_1>0:
-                    probabilities.append(prob_1/(prob_0+prob_1))
+                if prob_0 + prob_1 > 0:
+                    binary_probabilities.append(prob_1 / (prob_0 + prob_1))
                 else:
-                    probabilities.append(0)
-        return probabilities
+                    binary_probabilities.append(0.)
+
+        assert len(binary_probabilities) == self.batch_size
+        return binary_probabilities
 
 
     def _build_prompt(
