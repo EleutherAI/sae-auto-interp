@@ -104,8 +104,8 @@ class Classifier(Scorer):
             logger.error(f"Error generating text: {e}")
             response = None
         if response is None:
-            predictions = [-1] * self.batch_size
-            probabilities = [-1] * self.batch_size
+            predictions = [-1] * self.n_examples_shown
+            probabilities = [-1] * self.n_examples_shown
         else:
             selections = response.text
             logprobs = response.logprobs if self.log_prob else None
@@ -113,8 +113,8 @@ class Classifier(Scorer):
                 predictions, probabilities = self._parse(selections, logprobs)
             except Exception as e:
                 logger.error(f"Parsing selections failed: {e}")
-                predictions = [-1] * self.batch_size
-                probabilities = [-1] * self.batch_size
+                predictions = [-1] * self.n_examples_shown
+                probabilities = [-1] * self.n_examples_shown
 
         results = []
         correct = []
@@ -143,11 +143,11 @@ class Classifier(Scorer):
         match = re.search(pattern, string)
 
         predictions: list[int] = json.loads(match.group(0))
-        assert len(predictions) == self.batch_size
+        assert len(predictions) == self.n_examples_shown
         probabilities = (
             self._parse_logprobs(logprobs)
             if logprobs is not None
-            else [None] * self.batch_size
+            else [None] * self.n_examples_shown
         )
 
         return predictions, probabilities
@@ -183,7 +183,7 @@ class Classifier(Scorer):
                 else:
                     binary_probabilities.append(0.)
 
-        assert len(binary_probabilities) == self.batch_size
+        assert len(binary_probabilities) == self.n_examples_shown
         return binary_probabilities
 
 
@@ -204,8 +204,8 @@ class Classifier(Scorer):
 
     def _batch(self, samples):
         return [
-            samples[i : i + self.batch_size]
-            for i in range(0, len(samples), self.batch_size)
+            samples[i : i + self.n_examples_shown]
+            for i in range(0, len(samples), self.n_examples_shown)
         ]
 
     def call_sync(self, record: FeatureRecord) -> list[ClassifierOutput]:

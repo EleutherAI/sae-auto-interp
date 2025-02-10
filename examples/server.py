@@ -142,10 +142,10 @@ def generate_score_fuzz_detection():
         client = OpenRouter(api_key=data['api_key'], model=data['model'])
         if data['type'] == 'fuzz':
             # We can't use log_prob as it's not supported by OpenRouter
-            scorer = FuzzingScorer(client, tokenizer=None, batch_size=5,verbose=False,log_prob=False)
+            scorer = FuzzingScorer(client, tokenizer=None, n_examples_shown=5,verbose=False,log_prob=False)
         elif data['type'] == 'detection':
             # We can't use log_prob as it's not supported by OpenRouter
-            scorer = DetectionScorer(client, tokenizer=None, batch_size=5,verbose=False,log_prob=False)
+            scorer = DetectionScorer(client, tokenizer=None, n_examples_shown=5,verbose=False,log_prob=False)
         result = scorer.call_sync(feature_record)  # Use call_sync instead of __call__
         #print(result.score)
         score = per_feature_scores_fuzz_detection(result.score)
