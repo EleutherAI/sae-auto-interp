@@ -8,14 +8,13 @@ import torch
 from nnsight import LanguageModel
 from safetensors.numpy import load_file
 from torchtyping import TensorType
-from tqdm import tqdm
 
 from delphi.utils import (
     load_tokenized_data,
 )
 
-from ..config import FeatureConfig
-from ..features.features import Feature, FeatureRecord
+from ..config import LatentConfig
+from .latents import Latent, LatentRecord
 
 
 class AllData(NamedTuple):
@@ -30,12 +29,12 @@ class BufferOutput(NamedTuple):
     Represents the output of a TensorBuffer.
 
     Attributes:
-        feature (Feature): The feature associated with this output.
-        locations (TensorType["locations", 2]): Tensor of feature locations.
-        activations (TensorType["locations"]): Tensor of feature activations.
+        latent (Latent): The latent associated with this output.
+        locations (TensorType["locations", 2]): Tensor of latent locations.
+        activations (TensorType["locations"]): Tensor of latent activations.
         tokens (TensorType["tokens"]): Tensor of all tokens.
     """
-    feature: Feature
+    latent: Latent
     locations: TensorType["locations", 2]
     activations: TensorType["locations"]
     tokens: TensorType["tokens"]
@@ -49,7 +48,7 @@ class TensorBuffer:
         self,
         path: str,
         module_path: str,
-        features: Optional[TensorType["features"]] = None,
+        latents: Optional[TensorType["latents"]] = None,
         min_examples: int = 120,
     ):
         """
@@ -58,12 +57,12 @@ class TensorBuffer:
         Args:
             path (str): Path to the tensor file.
             module_path (str): Path of the module.
-            features (Optional[TensorType["features"]]): Tensor of feature indices.
+            latents (Optional[TensorType["latents"]]): Tensor of latent indices.
             min_examples (int): Minimum number of examples required. Defaults to 120.
         """
         self.tensor_path = path
         self.module_path = module_path
-        self.features = features
+        self.latents = latents
         self.min_examples = min_examples
         
    
@@ -75,24 +74,24 @@ class TensorBuffer:
         Yields:
             Union[BufferOutput, None]: BufferOutput if enough examples, None otherwise.
         """
-        features, split_locations, split_activations, tokens = self.load()
+        latents, split_locations, split_activations, tokens = self.load()
         
-        for i in range(len(features)):
-            feature_locations = split_locations[i]
-            feature_activations = split_activations[i]
-            if len(feature_locations) < self.min_examples:
+        for i in range(len(latents)):
+            latent_locations = split_locations[i]
+            latent_activations = split_activations[i]
+            if len(latent_locations) < self.min_examples:
                 yield None
             else:
                 yield BufferOutput(
-                    Feature(self.module_path, int(features[i].item())),
-                    feature_locations,
-                    feature_activations,
+                    Latent(self.module_path, int(latents[i].item())),
+                    latent_locations,
+                    latent_activations,
                     tokens
                 )
 
     def load(self):
         split_data = load_file(self.tensor_path)
-        first_feature = int(self.tensor_path.split("/")[-1].split("_")[0])
+        first_latent = int(self.tensor_path.split("/")[-1].split("_")[0])
         activations = torch.tensor(split_data["activations"])
         locations = torch.tensor(split_data["locations"].astype(np.int64))
         if "tokens" in split_data:
@@ -100,22 +99,22 @@ class TensorBuffer:
         else:
             tokens = None
         
-        locations[:,2] = locations[:,2] + first_feature
+        locations[:,2] = locations[:,2] + first_latent
         
-        if self.features is not None:
-            wanted_locations = torch.isin(locations[:,2], self.features)
+        if self.latents is not None:
+            wanted_locations = torch.isin(locations[:,2], self.latents)
             locations = locations[wanted_locations]
             activations = activations[wanted_locations]
         
         indices = torch.argsort(locations[:,2], stable=True)
         activations = activations[indices]
         locations = locations[indices]
-        unique_features, counts = torch.unique_consecutive(locations[:,2], return_counts=True)
-        features = unique_features
+        unique_latents, counts = torch.unique_consecutive(locations[:,2], return_counts=True)
+        latents = unique_latents
         split_locations = torch.split(locations, counts.tolist())
         split_activations = torch.split(activations, counts.tolist())
 
-        return features, split_locations, split_activations, tokens
+        return latents, split_locations, split_activations, tokens
 
 
     def reset(self):
@@ -125,36 +124,37 @@ class TensorBuffer:
         self.locations = None
 
 
-class FeatureDataset:
+class LatentDataset:
     """
-    Dataset which constructs TensorBuffers for each module and feature.
+    Dataset which constructs TensorBuffers for each module and latent.
     """
 
     def __init__(
         self,
         raw_dir: str,
-        cfg: FeatureConfig,
+        cfg: LatentConfig,
         tokenizer: Optional[Callable] = None,
         modules: Optional[List[str]] = None,
-        features: Optional[Dict[str, Union[int, torch.Tensor]]] = None,
+        latents: Optional[Dict[str, Union[int, torch.Tensor]]] = None,
     ):
         """
-        Initialize a FeatureDataset.
+        Initialize a LatentDataset.
 
         Args:
-            raw_dir (str): Directory containing raw feature data.
-            cfg (FeatureConfig): Configuration for feature processing.
+            raw_dir (str): Directory containing raw latent data.
+            cfg (LatentConfig): Configuration for latent processing.
             modules (Optional[List[str]]): List of module names to include.
-            features (Optional[Dict[str, Union[int, torch.Tensor]]]): Dictionary of features per module.
+            latents (Optional[Dict[str, Union[int, torch.Tensor]]]): Dictionary of latents per module.
         """
         self.cfg = cfg
         self.buffers = []
         
 
-        if features is None:
+        if latents is None:
             self._build(raw_dir, modules)
         else:
-            self._build_selected(raw_dir, modules, features)
+            # TODO fix type error
+            self._build_selected(raw_dir, modules, latents) # type: ignore
 
         self.all_data = self._build_everything(raw_dir, modules)
 
@@ -190,15 +190,15 @@ class FeatureDataset:
         return self.tokens
 
     def _edges(self):
-        """Generate edge indices for feature splits."""
+        """Generate edge indices for latent splits."""
         return torch.linspace(0, self.cfg.width, steps=self.cfg.n_splits + 1).long()
 
     def _build(self, raw_dir: str, modules: Optional[List[str]] = None):
         """
-        Build dataset buffers which load all cached features.
+        Build dataset buffers which load all cached latents.
 
         Args:
-            raw_dir (str): Directory containing raw feature data.
+            raw_dir (str): Directory containing raw latent data.
             modules (Optional[List[str]]): List of module names to include.
         """
         edges = self._edges()
@@ -213,29 +213,29 @@ class FeatureDataset:
                 )
 
     def _build_selected(
-        self, raw_dir: str, modules: List[str], features: Dict[str, Union[int, torch.Tensor]]
+        self, raw_dir: str, modules: List[str], latents: Dict[str, Union[int, torch.Tensor]]
     ):
         """
-        Build a dataset buffer which loads only selected features.
+        Build a dataset buffer which loads only selected latents.
 
         Args:
-            raw_dir (str): Directory containing raw feature data.
+            raw_dir (str): Directory containing raw latent data.
             modules (List[str]): List of module names to include.
-            features (Dict[str, Union[int, torch.Tensor]]): Dictionary of features per module.
+            latents (Dict[str, Union[int, torch.Tensor]]): Dictionary of latents per module.
         """
         edges = self._edges()
 
         for module in modules:
-            selected_features = features[module]
-            if isinstance(selected_features, int):
-                selected_features = torch.tensor([selected_features])
+            selected_latents = latents[module]
+            if isinstance(selected_latents, int):
+                selected_latents = torch.tensor([selected_latents])
             
-            bucketized = torch.bucketize(selected_features, edges, right=True)
+            bucketized = torch.bucketize(selected_latents, edges, right=True)
             unique_buckets = torch.unique(bucketized)
 
             for bucket in unique_buckets:
                 mask = bucketized == bucket
-                _selected_features = selected_features[mask]
+                _selected_latents = selected_latents[mask]
 
                 start, end = edges[bucket.item() - 1], edges[bucket.item()]
 
@@ -246,7 +246,7 @@ class FeatureDataset:
                     TensorBuffer(
                         path,
                         module,
-                        _selected_features,
+                        _selected_latents,
                         min_examples=self.cfg.min_examples,
                     )
                 )
@@ -287,61 +287,60 @@ class FeatureDataset:
         for buffer in self.buffers:
             buffer.reset()
 
-  
-class FeatureLoader:
+class LatentLoader:
     """
-    Loader class for processing feature records from a FeatureDataset.
+    Loader class for processing latent records from a LatentDataset.
     """
 
     def __init__(
         self,
-        feature_dataset: 'FeatureDataset',
+        latent_dataset: 'LatentDataset',
         constructor: Optional[Callable] = None,
         sampler: Optional[Callable] = None,
         transform: Optional[Callable] = None
     ):
         """
-        Initialize a FeatureLoader.
+        Initialize a LatentLoader.
 
         Args:
-            feature_dataset (FeatureDataset): The dataset to load features from.
-            constructor (Optional[Callable]): Function to construct feature records.
-            sampler (Optional[Callable]): Function to sample from feature records.
-            transform (Optional[Callable]): Function to transform feature records.
+            latent_dataset (LatentDataset): The dataset to load latents from.
+            constructor (Optional[Callable]): Function to construct latent records.
+            sampler (Optional[Callable]): Function to sample from latent records.
+            transform (Optional[Callable]): Function to transform latent records.
         """
-        self.feature_dataset = feature_dataset
+        self.latent_dataset = latent_dataset
         self.constructor = constructor
         self.sampler = sampler
         self.transform = transform
 
     async def __aiter__(self):
         """
-        Asynchronous iterator for processing feature records.
+        Asynchronous iterator for processing latent records.
 
         Yields:
-            FeatureRecord: Processed feature records.
+            LatentRecord: Processed latent records.
         """
-        for buffer in self.feature_dataset.buffers:
+        for buffer in self.latent_dataset.buffers:
             for data in buffer:
                 if data is not None:
                     
-                    record = await self._aprocess_feature(data)
+                    record = await self._aprocess_latent(data)
                     if record is not None:
                         print()
                         yield record
             await asyncio.sleep(0)
 
-    async def _aprocess_feature(self, buffer_output: BufferOutput):
+    async def _aprocess_latent(self, buffer_output: BufferOutput):
         """
-        Asynchronously process a single feature.
+        Asynchronously process a single latent.
 
         Args:
-            buffer_output (BufferOutput): Feature data to process.
+            buffer_output (BufferOutput): Latent data to process.
 
         Returns:
-            Optional[FeatureRecord]: Processed feature record or None.
+            Optional[LatentRecord]: Processed latent record or None.
         """
-        record = FeatureRecord(buffer_output.feature)
+        record = LatentRecord(buffer_output.latent)
         if self.transform is not None:
             self.transform(record)
         if self.constructor is not None:

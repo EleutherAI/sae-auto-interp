@@ -109,18 +109,18 @@ class LatentAtivationBuffer:
         Initialize the Cache.
 
         Args:
-            filters (Dict[str, TensorType["indices"]], optional): Filters for selecting specific features.
+            filters (Dict[str, TensorType["indices"]], optional): Filters for selecting specific latents.
             batch_size (int): Size of batches for processing. Defaults to 64.
         """
-        self.feature_locations = defaultdict(list)
-        self.feature_activations = defaultdict(list)
+        self.latent_locations = defaultdict(list)
+        self.latent_activations = defaultdict(list)
         self.tokens = defaultdict(list)
         self.filters = filters
         self.batch_size = batch_size
 
     def add(
         self,
-        latents: TensorType["batch", "sequence", "feature"],
+        latents: TensorType["batch", "sequence", "latent"],
         tokens: TensorType["batch", "sequence"],
         batch_number: int,
         module_path: str,
@@ -129,53 +129,53 @@ class LatentAtivationBuffer:
         Add the latents from a module to the cache.
 
         Args:
-            latents (TensorType["batch", "sequence", "feature"]): Latent activations.
+            latents (TensorType["batch", "sequence", "latent"]): Latent activations.
             tokens (TensorType["batch", "sequence"]): Input tokens.
             batch_number (int): Current batch number.
             module_path (str): Path of the module.
         """
-        feature_locations, feature_activations = self._get_nonzeros(latents, module_path)
-        feature_locations = feature_locations.cpu()
-        feature_activations = feature_activations.cpu()
+        latent_locations, latent_activations = self.get_nonzeros(latents, module_path)
+        latent_locations = latent_locations.cpu()
+        latent_activations = latent_activations.cpu()
         tokens = tokens.cpu()
 
         # Adjust batch indices
-        feature_locations[:, 0] += batch_number * self.batch_size
-        self.feature_locations[module_path].append(feature_locations)
-        self.feature_activations[module_path].append(feature_activations)
+        latent_locations[:, 0] += batch_number * self.batch_size
+        self.latent_locations[module_path].append(latent_locations)
+        self.latent_activations[module_path].append(latent_activations)
         self.tokens[module_path].append(tokens)
 
     def save(self):
         """
-        Concatenate the feature locations and activations for all modules.
+        Concatenate the latent locations and activations for all modules.
         """
-        for module_path in self.feature_locations.keys():
-            self.feature_locations[module_path] = torch.cat(
-                self.feature_locations[module_path], dim=0
+        for module_path in self.latent_locations.keys():
+            self.latent_locations[module_path] = torch.cat(
+                self.latent_locations[module_path], dim=0
             )
 
-            self.feature_activations[module_path] = torch.cat(
-                self.feature_activations[module_path], dim=0
+            self.latent_activations[module_path] = torch.cat(
+                self.latent_activations[module_path], dim=0
             )
 
             self.tokens[module_path] = torch.cat(
                 self.tokens[module_path], dim=0
             )
 
-    def _get_nonzeros_batch(self, latents: TensorType["batch", "seq", "feature"]):
+    def get_nonzeros_batch(self, latents: TensorType["batch", "seq", "latent"]):
         """
         Get non-zero activations for large batches that exceed int32 max value.
 
         Args:
-            latents (TensorType["batch", "seq", "feature"]): Input latent activations.
+            latents (TensorType["batch", "seq", "latent"]): Input latent activations.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor]: Non-zero feature locations and activations.
+            Tuple[torch.Tensor, torch.Tensor]: Non-zero latent locations and activations.
         """
         # Calculate the maximum batch size that fits within sys.maxsize
         max_batch_size = torch.iinfo(torch.int32).max // (latents.shape[1] * latents.shape[2])
-        nonzero_feature_locations = []
-        nonzero_feature_activations = []
+        nonzero_latent_locations = []
+        nonzero_latent_activations = []
         
         for i in range(0, latents.shape[0], max_batch_size):
             batch = latents[i:i+max_batch_size]
@@ -186,50 +186,50 @@ class LatentAtivationBuffer:
             
             # Adjust indices to account for batching
             batch_locations[:, 0] += i 
-            nonzero_feature_locations.append(batch_locations)
-            nonzero_feature_activations.append(batch_activations)
+            nonzero_latent_locations.append(batch_locations)
+            nonzero_latent_activations.append(batch_activations)
         
         # Concatenate results
-        nonzero_feature_locations = torch.cat(nonzero_feature_locations, dim=0)
-        nonzero_feature_activations = torch.cat(nonzero_feature_activations, dim=0)
-        return nonzero_feature_locations, nonzero_feature_activations
+        nonzero_latent_locations = torch.cat(nonzero_latent_locations, dim=0)
+        nonzero_latent_activations = torch.cat(nonzero_latent_activations, dim=0)
+        return nonzero_latent_locations, nonzero_latent_activations
 
-    def _get_nonzeros(
-        self, latents: TensorType["batch", "seq", "feature"], module_path: str
+    def get_nonzeros(
+        self, latents: TensorType["batch", "seq", "latent"], module_path: str
     ):
         """
-        Get the nonzero feature locations and activations.
+        Get the nonzero latent locations and activations.
 
         Args:
-            latents (TensorType["batch", "seq", "feature"]): Input latent activations.
+            latents (TensorType["batch", "seq", "latent"]): Input latent activations.
             module_path (str): Path of the module.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor]: Non-zero feature locations and activations.
+            Tuple[torch.Tensor, torch.Tensor]: Non-zero latent locations and activations.
         """
         size = latents.shape[1] * latents.shape[0] * latents.shape[2]
         if size > torch.iinfo(torch.int32).max:
-            nonzero_feature_locations, nonzero_feature_activations = self._get_nonzeros_batch(latents)
+            nonzero_latent_locations, nonzero_latent_activations = self.get_nonzeros_batch(latents)
         else:
-            nonzero_feature_locations = torch.nonzero(latents.abs() > 1e-5)
-            nonzero_feature_activations = latents[latents.abs() > 1e-5]
+            nonzero_latent_locations = torch.nonzero(latents.abs() > 1e-5)
+            nonzero_latent_activations = latents[latents.abs() > 1e-5]
         
-        # Return all nonzero features if no filter is provided
+        # Return all nonzero latents if no filter is provided
         if self.filters is None:
-            return nonzero_feature_locations, nonzero_feature_activations
+            return nonzero_latent_locations, nonzero_latent_activations
 
-        # Return only the selected features if a filter is provided
+        # Return only the selected latents if a filter is provided
         else:
-            selected_features = self.filters[module_path]
-            mask = torch.isin(nonzero_feature_locations[:, 2], selected_features)
+            selected_latents = self.filters[module_path]
+            mask = torch.isin(nonzero_latent_locations[:, 2], selected_latents)
 
-            return nonzero_feature_locations[mask], nonzero_feature_activations[mask]
+            return nonzero_latent_locations[mask], nonzero_latent_activations[mask]
 
 
 
-class FeatureCache(BaseCache):
+class LatentCache(BaseCache):
     """
-    FeatureCache manages the caching of feature activations for a model.
+    LatentCache manages the caching of latent activations for a model.
     It handles the process of running the model, storing activations, and saving them to disk.
     """
 
@@ -241,13 +241,13 @@ class FeatureCache(BaseCache):
         filters: Dict[str, TensorType["indices"]] = None,
     ):
         """
-        Initialize the FeatureCache.
+        Initialize the LatentCache.
 
         Args:
-            model: The model to cache features for.
+            model: The model to cache latents for.
             submodule_dict (Dict): Dictionary of submodules to cache.
             batch_size (int): Size of batches for processing.
-            filters (Dict[str, TensorType["indices"]], optional): Filters for selecting specific features.
+            filters (Dict[str, TensorType["indices"]], optional): Filters for selecting specific latents.
         """
         super().__init__(model, submodule_dict, batch_size, filters)
         self.width = list(submodule_dict.values())[0].ae.width
@@ -257,7 +257,7 @@ class FeatureCache(BaseCache):
 
     def run(self, n_tokens: int, tokens: TensorType["batch", "seq"]):
         """
-        Run the feature caching process.
+        Run the latent caching process.
 
         Args:
             n_tokens (int): Total number of tokens to process.
@@ -269,7 +269,7 @@ class FeatureCache(BaseCache):
         total_batches = len(token_batches)
         tokens_per_batch = token_batches[0].numel()
 
-        with tqdm(total=total_batches, desc="Caching features") as pbar:
+        with tqdm(total=total_batches, desc="Caching latents") as pbar:
             for batch_number, batch in enumerate(token_batches):
                 total_tokens += tokens_per_batch
 
@@ -293,18 +293,18 @@ class FeatureCache(BaseCache):
 
     def save(self, save_dir, save_tokens: bool = True):
         """
-        Save the cached features to disk.
+        Save the cached latents to disk.
 
         Args:
-            save_dir (str): Directory to save the features.
+            save_dir (str): Directory to save the latents.
             save_tokens (bool): Whether to save the dataset tokens used to generate the cache. Defaults to True.
         """
-        for module_path in self.buffer.feature_locations.keys():
+        for module_path in self.buffer.latent_locations.keys():
             output_file = f"{save_dir}/{module_path}.safetensors"
 
             data = {
-                "locations": self.buffer.feature_locations[module_path],
-                "activations": self.buffer.feature_activations[module_path],
+                "locations": self.buffer.latent_locations[module_path],
+                "activations": self.buffer.latent_activations[module_path],
             }
             if save_tokens:
                 data["tokens"] = self.buffer.tokens[module_path]
@@ -313,7 +313,7 @@ class FeatureCache(BaseCache):
 
     def save_splits(self, n_splits: int, save_dir, save_tokens: bool = True):
         """
-        Save the cached features in splits.
+        Save the cached non-zero latent activations and locations in splits.
 
         Args:
             n_splits (int): Number of splits to generate.
@@ -321,19 +321,19 @@ class FeatureCache(BaseCache):
             save_tokens (bool): Whether to save the dataset tokens used to generate the cache. Defaults to True.
         """
         split_indices = self._generate_split_indices(n_splits)
-        for module_path in self.buffer.feature_locations.keys():
-            feature_locations = self.buffer.feature_locations[module_path]
-            feature_activations = self.buffer.feature_activations[module_path]
+        for module_path in self.buffer.latent_locations.keys():
+            latent_locations = self.buffer.latent_locations[module_path]
+            latent_activations = self.buffer.latent_activations[module_path]
             tokens = self.buffer.tokens[module_path].numpy()
             
-            feature_indices = feature_locations[:, 2]
+            latent_indices = latent_locations[:, 2]
 
             for start, end in split_indices:
-                mask = (feature_indices >= start) & (feature_indices <= end)
+                mask = (latent_indices >= start) & (latent_indices <= end)
 
-                masked_activations = feature_activations[mask].half().numpy()
+                masked_activations = latent_activations[mask].half().numpy()
                 
-                masked_locations = feature_locations[mask].numpy()
+                masked_locations = latent_locations[mask].numpy()
                 
                 # Optimization to reduce the max value to enable a smaller dtype
                 masked_locations[:, 2] = masked_locations[:, 2] - start.item() 
@@ -359,14 +359,14 @@ class FeatureCache(BaseCache):
 
     def save_config(self, save_dir: str, cfg: CacheConfig, model_name: str):
         """
-        Save the configuration for the cached features.
+        Save the configuration for the cached latents.
 
         Args:
             save_dir (str): Directory to save the configuration.
             cfg (CacheConfig): Configuration object.
             model_name (str): Name of the model.
         """
-        for module_path in self.buffer.feature_locations.keys():
+        for module_path in self.buffer.latent_locations.keys():
             config_file = f"{save_dir}/{module_path}/config.json"
             with open(config_file, "w") as f:
                 config_dict = cfg.to_dict()

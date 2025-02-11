@@ -1,14 +1,14 @@
 DSCORER_SYSTEM_PROMPT = """You are an intelligent and meticulous linguistics researcher.
 
-You will be given a certain feature of text, such as "male pronouns" or "text with negative sentiment".
+You will be given a certain latent of text, such as "male pronouns" or "text with negative sentiment".
 
-You will then be given several text examples. Your task is to determine which examples possess the feature.
+You will then be given several text examples. Your task is to determine which examples possess the latent.
 
 For each example in turn, return 1 if the sentence is correctly labeled or 0 if the tokens are mislabeled. You must return your response in a valid Python list. Do not return anything else besides a Python list.
 """
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/6048
-DSCORER_EXAMPLE_ONE = """Feature explanation: Words related to American football positions, specifically the tight end position.
+DSCORER_EXAMPLE_ONE = """Latent explanation: Words related to American football positions, specifically the tight end position.
 
 Test examples:
 
@@ -22,7 +22,7 @@ Example 4: line, with the left side âĢĶ namely tackle Byron Bell at tackle an
 DSCORER_RESPONSE_ONE = "[1,0,0,0,1]"
 
 # https://www.neuronpedia.org/gpt2-small/6-res-jb/9396
-DSCORER_EXAMPLE_TWO = """Feature explanation: The word "guys" in the phrase "you guys".
+DSCORER_EXAMPLE_TWO = """Latent explanation: The word "guys" in the phrase "you guys".
 
 Test examples:
 
@@ -36,7 +36,7 @@ Example 4: the<|endoftext|>ľI want to remind you all that 10 days ago (director
 DSCORER_RESPONSE_TWO = "[0,0,0,0,0]"
 
 # https://www.neuronpedia.org/gpt2-small/8-res-jb/12654
-DSCORER_EXAMPLE_THREE = """Feature explanation: "of" before words that start with a capital letter.
+DSCORER_EXAMPLE_THREE = """Latent explanation: "of" before words that start with a capital letter.
 
 Test examples:
 
@@ -49,7 +49,7 @@ Example 4: and fair investigation not even include the Director of Athletics? Â
 
 DSCORER_RESPONSE_THREE = "[1,1,1,1,1]"
 
-GENERATION_PROMPT = """Feature explanation: {explanation}
+GENERATION_PROMPT = """Latent explanation: {explanation}
 
 Text examples:
 

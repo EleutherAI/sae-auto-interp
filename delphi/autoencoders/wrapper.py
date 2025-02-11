@@ -1,3 +1,5 @@
+
+
 from dataclasses import dataclass, field
 from functools import partial
 from typing import Any, Callable, Dict, List, Literal, Optional, Tuple
@@ -17,19 +19,16 @@ class AutoencoderLatents(torch.nn.Module):
     """
     Unified wrapper for different types of autoencoders, compatible with nnsight.
     """
-
     def __init__(
         self,
         autoencoder: Any,
         forward_function: Callable,
         width: int,
-        hookpoint: str,
     ) -> None:
         super().__init__()
         self.ae = autoencoder
         self._forward = forward_function
         self.width = width
-        self.hookpoint = hookpoint
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self._forward(x)
 

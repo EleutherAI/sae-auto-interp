@@ -128,31 +128,37 @@ def load_and_hook_sparsify_models(
     model: LanguageModel,
     name: str,
     hookpoints: List[str],
-    k: Optional[int] = None
+    k: Optional[int] = None,
+    device: str | torch.device | None = None
 ) -> Tuple[Dict[str, Any], Any]:
     """
-    Load EleutherAI autoencoders for specified layers and module.
+    Load sparsify autoencoders for specified hookpoints.
 
     Args:
         model (Any): The model to load autoencoders for.
         name (str): The name of the sparse model to load. If the model is on-disk this is the path
             to the directory containing the sparse model weights.
         hookpoints (List[str]): List of hookpoints to load autoencoders for.
-        disk_path (Path, optional): Path to load autoencoders from disk. Defaults to None.
         k (Optional[int], optional): Number of top activations to keep. Defaults to None.
+        device (str | torch.device | None, optional): The device to load the sparse models on.
+            If not specified the sparse models will be loaded on the same device as the base model.
 
     Returns:
         Tuple[Dict[str, Any], Any]: A tuple containing the submodules dictionary and the edited model.
     """
+    if device is None:
+        device = model.device
+
     # Load the sparse models
     hookpoint_to_sparse = {}
     name_path = Path(name)  
     if name_path.exists():
         for hookpoint in hookpoints:
-            hookpoint_to_sparse[hookpoint] = Sae.load_from_disk(name_path / hookpoint, device=DEVICE)
+            hookpoint_to_sparse[hookpoint] = Sae.load_from_disk(name_path / hookpoint, device=device)
     else:
-        sparse_models = Sae.load_many(name)
+        sparse_models = Sae.load_many(name, device=device)
         hookpoint_to_sparse.update({hookpoint: sparse_models[hookpoint] for hookpoint in hookpoints})
+        del sparse_models
 
     # Add sparse models to submodules
     def forward_fn(sae, k, x):

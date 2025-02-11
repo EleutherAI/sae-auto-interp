@@ -9,7 +9,7 @@ from transformers import AutoTokenizer
 @dataclass
 class Example:
     """
-    A single example of feature data.
+    A single example of latent data.
 
     Attributes:
         tokens (TensorType["seq"]): Tokenized input sequence.
@@ -52,49 +52,50 @@ def prepare_examples(tokens, activations):
     ]
 
 @dataclass
-class Feature:
+class Latent:
     """
-    A feature extracted from a model's activations.
+    A latent extracted from a model's activations.
 
     Attributes:
-        module_name (str): The module name associated with the feature.
-        feature_index (int): The index of the feature within the module.
+        module_name (str): The module name associated with the latent.
+        latent_index (int): The index of the latent within the module.
     """
     module_name: str
-    feature_index: int
+    latent_index: int
 
     def __repr__(self) -> str:
         """
-        Return a string representation of the feature.
+        Return a string representation of the latent.
 
         Returns:
-            str: A string representation of the feature.
+            str: A string representation of the latent.
         """
-        return f"{self.module_name}_feature{self.feature_index}"
+        return f"{self.module_name}_latent{self.latent_index}"
 
 
-class FeatureRecord:
+class LatentRecord:
     """
-    A record of feature data.
+    A record of latent data.
 
     Attributes:
-        feature (Feature): The feature associated with the record.
-        examples: list[Example]: Example sequences where the feature activations,
+        latent (Latent): The latent associated with the record.
+        examples: list[Example]: Example sequences where the latent activations,
           assumed to be sorted in descending order by max activation
     """
 
     def __init__(
         self,
-        feature: Feature,
+        latent: Latent,
     ):
         """
-        Initialize the feature record.
+        Initialize the latent record.
 
         Args:
-            feature (Feature): The feature associated with the record.
+            latent (Latent): The latent associated with the record.
         """
-        self.feature = feature
-        self.examples = []
+        self.latent = latent
+        self.examples: list[Example] = []
+        self.not_active: list[Example] = []
         self.train: list[list[Example]] = []
         self.test: list[list[Example]] = []
         self.neighbours: list[int] = []
@@ -102,7 +103,7 @@ class FeatureRecord:
     @property
     def max_activation(self):
         """
-        Get the maximum activation value for the feature.
+        Get the maximum activation value for the latent.
 
         Returns:
             float: The maximum activation value.
@@ -111,13 +112,13 @@ class FeatureRecord:
 
     def save(self, directory: str, save_examples=False):
         """
-        Save the feature record to a file.
+        Save the latent record to a file.
 
         Args:
             directory (str): The directory to save the file in.
             save_examples (bool): Whether to save the examples. Defaults to False.
         """
-        path = f"{directory}/{self.feature}.json"
+        path = f"{directory}/{self.latent}.json"
         serializable = self.__dict__
 
         if not save_examples:
@@ -125,7 +126,7 @@ class FeatureRecord:
             serializable.pop("train")
             serializable.pop("test")
 
-        serializable.pop("feature")
+        serializable.pop("latent")
         with bf.BlobFile(path, "wb") as f:
             f.write(orjson.dumps(serializable))
     
@@ -137,7 +138,7 @@ class FeatureRecord:
         n: int = 10,
     ) -> str:
         """
-        Display the feature record in a formatted string.
+        Display the latent record in a formatted string.
 
         Args:
             tokenizer (AutoTokenizer): The tokenizer to use for decoding.

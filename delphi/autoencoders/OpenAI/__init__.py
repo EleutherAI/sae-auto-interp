@@ -66,7 +66,7 @@ def load_random_oai_autoencoders(
 
     for layer in ae_layers:
         submodule = model.model.layers[layer]
-        sae = Autoencoder(n_latents, submodule.mlp.gate_proj.in_features, activation=ACTIVATIONS_CLASSES["TopK"](k=k), normalize=False, tied=False)
+        sae = Autoencoder(n_latents, submodule.mlp.gate_proj.in_latents, activation=ACTIVATIONS_CLASSES["TopK"](k=k), normalize=False, tied=False)
         sae.to(DEVICE).to(model.dtype)
         # Randomize the weights
         sae.encoder.weight.data.normal_(0, 1, generator=generator)

@@ -9,16 +9,16 @@ from safetensors.numpy import load_file
 
 class NeighbourCalculator:
     """
-    Class to compute the neighbours of selected features using different methods:
+    Class to compute the neighbours of selected latents using different methods:
     - similarity: uses autoencoder weights
     - correlation: uses pre-activation records and autoencoder
-    - co-occurrence: uses feature dataset statistics
+    - co-occurrence: uses latent dataset statistics
     """
 
     def __init__(
         self,
         
-        feature_dataset: Optional['FeatureDataset'] = None,
+        latent_dataset: Optional['LatentDataset'] = None,
         autoencoder: Optional["Autoencoder"] = None,
         residual_stream_record: Optional['ResidualStreamRecord'] = None,
         number_of_neighbours: int = 10,
@@ -29,11 +29,11 @@ class NeighbourCalculator:
         Initialize a NeighbourCalculator.
 
         Args:
-            feature_dataset (Optional[FeatureDataset]): Dataset containing feature activations
+            latent_dataset (Optional[LatentDataset]): Dataset containing latent activations
             autoencoder (Optional[Autoencoder]): The trained autoencoder model
             residual_stream_record (Optional[ResidualStreamRecord]): Record of residual stream values
         """
-        self.feature_dataset = feature_dataset
+        self.latent_dataset = latent_dataset
         self.autoencoder = autoencoder
         self.residual_stream_record = residual_stream_record
         self.number_of_neighbours = number_of_neighbours
@@ -67,8 +67,8 @@ class NeighbourCalculator:
             self.neighbour_cache[method] = self._compute_correlation_neighbours()
             
         elif method == 'co-occurrence':
-            if self.feature_dataset is None:
-                raise ValueError("Feature dataset is required for co-occurrence-based neighbours")
+            if self.latent_dataset is None:
+                raise ValueError("Latent dataset is required for co-occurrence-based neighbours")
             self.neighbour_cache[method] = self._compute_cooccurrence_neighbours()
             
         else:
@@ -174,7 +174,7 @@ class NeighbourCalculator:
         import cupyx.scipy.sparse as cusparse
         print("Computing co-occurrence neighbours")
         paths = []
-        for buffer in self.feature_dataset.buffers:
+        for buffer in self.latent_dataset.buffers:
             paths.append(buffer.tensor_path)
         
         all_locations = []

@@ -2,35 +2,43 @@
 
 Delphi was the home of a temple to Phoebus Apollo, which famously had the inscription, 'Know Thyself.' This library lets language models know themselves through automated interpretability.
 
-This library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) features. The explainer and scorer models can be run locally or accessed using API calls via OpenRouter.
+This library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) and transcoder features. The explainer and scorer models can be run locally or accessed using API calls via OpenRouter.
 
 The branch used for the article [Automatically Interpreting Millions of Features in Large Language Models](https://arxiv.org/pdf/2410.13928) is the legacy branch [article_version](https://github.com/EleutherAI/delphi/tree/article_version), that branch contains the scripts to reproduce our experiments. Note that we're still actively improving the codebase and that the newest version on the main branch could require slightly different usage.
 
-## Installation
+# Installation
 
 Install this library as a local editable installation. Run the following command from the `delphi` directory.
 
 ```pip install -e .```
 
-## Getting Started
+# Getting Started
 
-To run a minimal pipeline from the command line, you can use the following command:
+To run the default pipeline from the command line, use the following command:
 
-`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --max_features 100 --hookpoints layers.5 --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]'`
+`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]' --n_tokens 10_000_000 --max_features 100 --hookpoints layers.5`
 
-This will cache the activations of the first 10 million tokens of EleutherAI/rpj-v2-sample, generate explanations for the first 100 features using the explainer model, then score the explanations using fuzzing and detection scorers.
+This command will:
+1. Cache activations for the first 10 million tokens of EleutherAI/rpj-v2-sample.
+2. Generate explanations for the first 100 features of layer 5 using the specified explainer model.
+3. Score the explanations uses fuzzing and detection scorers.
+4. Log summary metrics including per-scorer F1 scores and confusion matrices.
 
-# Loading Autoencoders
+The pipeline is highly configurable and can also be called programmatically (see the [end-to-end test](https://github.com/EleutherAI/delphi/blob/main/delphi/tests/e2e.py) for an example).
+
+To use other scorer types, instantiate a custom pipeline.
+
+## Loading Autoencoders
 
 This library uses NNsight to load and edit a model with sparse auxiliary models. We provide wrappers to load GPT-2 autoencoders trained by [OpenAI](https://github.com/openai/sparse_autoencoder), for the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for SAEs and transcoders trained by EleutherAI using [SAE](https://github.com/EleutherAI/sae). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
 
-# Caching
+## Caching
 
 The first step to generate explanations is to cache sparse model activations. To do so, load your sparse models into the base model, load the tokens you want to cache the activations from, create a `FeatureCache` object and run it. We recommend caching over at least 10M tokens.
 
 ```python
-from sae.data import chunk_and_tokenize
-from sae_auto_interp.features import FeatureCache
+from sparsify.data import chunk_and_tokenize
+from delphi.features import FeatureCache
 
 data = load_dataset("EleutherAI/rpj-v2-sample", split="train[:1%]")
 tokens = chunk_and_tokenize(data, tokenizer, max_seq_len=256, text_key="raw_content")["input_ids"]
@@ -55,13 +63,13 @@ cache.save_splits(
 
 Safetensors are split into shards over the width of the autoencoder.
 
-# Loading Feature Records
+## Loading Feature Records
 
 The `.features` module provides utilities for reconstructing and sampling various statistics for sparse features. In this version of the code you needed to specify the width of the autoencoder, the minimum number examples for a feature to be included and the maximum number of examples to include, as well as the number of splits to divide the features into.
 
 ```python
-from sae_auto_interp.features import FeatureLoader, FeatureDataset
-from sae_auto_interp.config import FeatureConfig
+from delphi.features import FeatureLoader, FeatureDataset
+from delphi.config import FeatureConfig
 
 #
 cfg = FeatureConfig(width=131072, min_examples=200, max_examples=10000, n_splits=5)
@@ -86,9 +94,9 @@ loader = FeatureLoader(
 We have a simple sampler and constructor that take arguments from the `ExperimentConfig` object. The constructor defines builds the context windows from the cached activations and tokens, and the sampler divides these contexts into a training and testing set, used to generate explanations and evaluate them.
 
 ```python
-from sae_auto_interp.features.constructors import default_constructor
-from sae_auto_interp.features.samplers import sample
-from sae_auto_interp.config import ExperimentConfig
+from delphi.features.constructors import default_constructor
+from delphi.features.samplers import sample
+from delphi.config import ExperimentConfig
 
 cfg = ExperimentConfig(
     n_examples_train=40, # Number of examples shown to the explainer model
@@ -106,13 +114,13 @@ constructor = partial(default_constructor, tokens=dataset.tokens, n_random=cfg.n
 sampler = partial(sample, cfg=cfg)
 ```
 
-# Generating Explanations
+## Generating Explanations
 
 We currently support using OpenRouter's OpenAI compatible API or running locally with VLLM. Define the client you want to use, then create an explainer from the `.explainers` module. 
 
 ```python
-from sae_auto_interp.explainers import DefaultExplainer
-from sae_auto_interp.clients import Offline,OpenRouter
+from delphi.explainers import DefaultExplainer
+from delphi.clients import Offline,OpenRouter
 
 # Run locally with VLLM
 client = Offline("meta-llama/Meta-Llama-3.1-8B-Instruct",max_memory=0.8,max_model_len=5120,num_gpus=1)
@@ -130,7 +138,7 @@ explainer = DefaultExplainer(
 The explainer should be added to a pipe, which will send the explanation requests to the client. The pipe should have a function that happens after the request is completed, to e.g. save the data, and could also have a function that happens before the request is sent, e.g to transform some of the data.
 
 ```python
-from sae_auto_interp.pipeline import process_wrapper
+from delphi.pipeline import process_wrapper
 
 def explainer_postprocess(result):
 
@@ -146,7 +154,7 @@ explainer_pipe = process_wrapper(explainer,
 The pipe should then be used in a pipeline. Running the pipeline will send requests to the client in batches of paralel requests.
 
 ```python
-from sae_auto_interp.pipeline import Pipeline
+from delphi.pipeline import Pipeline
 import asyncio
 
 pipeline = Pipeline(
@@ -157,7 +165,7 @@ pipeline = Pipeline(
 asyncio.run(pipeline.run(n_processes))
 ```
 
-# Scoring Explanations
+## Scoring Explanations
 
 The process of running a scorer is similar to that of an explainer. You need to have a client running, and you need to create a Scorer from the '.scorer' module. You can either load the explanations you generated earlier, or generate new ones using the explainer pipe.
 
@@ -172,8 +180,8 @@ RecallScorer(
 You can then create a pipe to run the scorer. The pipe should have a pre-processer, that takes the results from the previous pipe and a post processor, that saves the scores. An scorer should always be run after a explainer pipe, but the explainer pipe can be used to load saved explanations.
 
 ```python
-from sae_auto_interp.scorers import FuzzingScorer, RecallScorer
-from sae_auto_interp.explainers import  explanation_loader,random_explanation_loader
+from delphi.scorers import FuzzingScorer, RecallScorer
+from delphi.explainers import  explanation_loader,random_explanation_loader
 
 
 # Because we are running the explainer and scorer separately, we need to add the explanation and extra examples back to the record
@@ -181,7 +189,7 @@ from sae_auto_interp.explainers import  explanation_loader,random_explanation_lo
 def scorer_preprocess(result):
         record = result.record 
         record.explanation = result.explanation
-        record.extra_examples = record.random_examples
+        record.extra_examples = record.not_active
         return record
 
 def scorer_postprocess(result, score_dir):
@@ -228,27 +236,27 @@ pipeline = Pipeline(
 asyncio.run(pipeline.run())
 ``` 
 
-## Simulation
+### Simulation
 
 To do simulation scoring we forked and modified OpenAIs neuron explainer. The name of the scorer is `OpenAISimulator`, and it can be run with the same setup as described above.
 
-## Surprisal
+### Surprisal
 
 Surprisal scoring computes the loss over some examples and uses a base model. We don't use VLLM but run the model using the `AutoModelForCausalLM` wrapper from HuggingFace. The setup is similar as above but for a example check `surprisal.py` in the experiments folder.
 
-## Embedding
+### Embedding
 
 Embedding scoring uses a small embedding model through `sentence_transformers` to embed the examples do retrival. It also does not use VLLM but run the model directly. The setup is similar as above but for a example check `embedding.py` in the experiments folder.
 
-# Scripts
+## Scripts
 
 Example scripts can be found in `demos`. Some of these scripts can be called from the CLI, as seen in examples found in `scripts`. These baseline scripts should allow anyone to start generating and scoring explanations in any SAE they are interested in. One always needs to first cache the activations of the features of any given SAE, and then generating explanations and scoring them can be done at the same time.
 
-# Experiments
+## Experiments
 
 The experiments discussed in [the blog post](https://blog.eleuther.ai/autointerp/) were mostly run in a legacy version of this code, which can be found in the [Experiments](https://github.com/EleutherAI/delphi/tree/Experiments) branch.
 
-# License
+## License
 
 Copyright 2024 the EleutherAI Institute
 

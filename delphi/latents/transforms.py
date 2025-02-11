@@ -1,13 +1,5 @@
-from typing import Callable, Optional
-
-import torch
-from torchtyping import TensorType
 from dataclasses import dataclass
-from .features import FeatureRecord, prepare_examples
-from .loader import BufferOutput
-
-import json
-
+from .latents import LatentRecord
 
 @dataclass
 class Neighbour:
@@ -15,15 +7,15 @@ class Neighbour:
     feature_index: int
 
 def set_neighbours(
-    record: FeatureRecord,
+    record: LatentRecord,
     neighbours: dict[int, list[tuple[float, int]]],
     threshold: float,
 ):
     """
-    Set the neighbours for the feature record.
+    Set the neighbours for the latent record.
     """
     
-    neighbours = neighbours[str(record.feature.feature_index)]
+    neighbours = neighbours[str(record.latent.latent_index)]
 
     # Each element in neighbours is a tuple of (distance,feature_index)
     # We want to keep only the ones with a distance less than the threshold

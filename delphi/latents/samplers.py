@@ -4,7 +4,7 @@ from typing import Literal, cast
 from torchtyping import TensorType
 
 from ..config import ExperimentConfig
-from .features import Example, FeatureRecord
+from .latents import Example, LatentRecord
 from ..logger import logger
 
             
@@ -134,7 +134,7 @@ def test(
 
 
 def sample(
-    record: FeatureRecord,
+    record: LatentRecord,
     cfg: ExperimentConfig,
 ):
     examples = record.examples

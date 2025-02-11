@@ -2,15 +2,13 @@ from typing import Callable, Optional
 
 import torch
 from torchtyping import TensorType
-
-from .features import FeatureRecord, prepare_examples
+from .latents import LatentRecord, prepare_examples
 from .loader import BufferOutput, AllData
 
 def _top_k_pools(
         max_buffer: TensorType["batch"],
         split_activations: list[TensorType["activations"]], 
         buffer_tokens: TensorType["batch", "ctx_len"], 
-        ctx_len: int, 
         max_examples: int
     ):
     """
@@ -42,10 +40,10 @@ def pool_max_activation_windows(
     max_examples: int,
 ):
     """
-    Pool max activation windows from the buffer output and update the feature record.
+    Pool max activation windows from the buffer output and update the latent record.
 
     Args:
-        record (FeatureRecord): The feature record to update.
+        record (LatentRecord): The latent record to update.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
         tokens (TensorType["batch", "seq"]): The input tokens.
         ctx_len (int): The context length.
@@ -70,32 +68,33 @@ def pool_max_activation_windows(
     buffer_tokens = buffer_tokens[unique_ctx_indices]
 
     token_windows, activation_windows = _top_k_pools(
-        max_buffer, new_tensor, buffer_tokens, ctx_len, max_examples
+        max_buffer, new_tensor, buffer_tokens, max_examples
     )
 
     record.examples = prepare_examples(token_windows, activation_windows)
 
-def random_activation_windows(
-    record: FeatureRecord,
+def random_non_activating_windows(
+    record: LatentRecord,
     tokens: TensorType["batch", "seq"],
     buffer_output: BufferOutput,
     ctx_len: int,
-    n_random: int,
+    n_not_active: int,
 ):
     """
-    Generate random activation windows and update the feature record.
+    Generate random non-activating sequence windows and update the latent record.
 
     Args:
-        record (FeatureRecord): The feature record to update.
+        record (LatentRecord): The latent record to update.
         tokens (TensorType["batch", "seq"]): The input tokens.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
         ctx_len (int): The context length.
-        n_random (int): The number of random examples to generate.
+        n_not_active (int): The number of non activating examples to generate.
     """
     torch.manual_seed(22)
-    if n_random == 0:
+    if n_not_active == 0:
+        record.not_active = []
         return
-
+    
     batch_size = tokens.shape[0]
     unique_batch_pos = buffer_output.locations[:, 0].unique()
 
@@ -105,22 +104,22 @@ def random_activation_windows(
     available_indices = mask.nonzero().squeeze()
 
     # TODO:What to do when the latent is active at least once in each batch?
-    if available_indices.numel() < n_random:
-        print("No available indices")
-        record.random_examples = []
+    if available_indices.numel() < n_not_active:
+        print("No available randomly sampled non-activating sequences")
+        record.not_active = []
         return
     else:
-        selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_random,))]
+        selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_not_active,))]
 
     toks = tokens[selected_indices, 10 : 10 + ctx_len]
 
-    record.random_examples = prepare_examples(
+    record.not_active = prepare_examples(
         toks,
         torch.zeros_like(toks),
     )
 
 def neighbour_random_activation_windows(
-    record: FeatureRecord,
+    record: LatentRecord,
     tokens: TensorType["batch", "seq"],
     buffer_output: BufferOutput,
     all_data: AllData,
@@ -128,10 +127,10 @@ def neighbour_random_activation_windows(
     n_random: int,
 ):
     """
-    Generate random activation windows and update the feature record.
+    Generate random activation windows and update the latent record.
 
     Args:
-        record (FeatureRecord): The feature record to update.
+        record (LatentRecord): The latent record to update.
         tokens (TensorType["batch", "seq"]): The input tokens.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
         ctx_len (int): The context length.
@@ -203,22 +202,22 @@ def neighbour_random_activation_windows(
 
 
 def default_constructor(
-    record: FeatureRecord,
-    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]],
+    record: LatentRecord,
+    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]] | None,
     buffer_output: BufferOutput,
-    n_random: int,
+    n_not_active: int,
     ctx_len: int,
     max_examples: int,
 ):
     """
-    Construct feature examples using pool max activation windows and random activation windows.
+    Construct latent examples using pool max activation windows and random activation windows.
 
     Args:
-        record (FeatureRecord): The feature record to update.
+        record (LatentRecord): The latent record to update.
         token_loader (Optional[Callable[[], TensorType["batch", "seq"]]]):
             An optional function that creates the dataset tokens.
         buffer_output (BufferOutput): The buffer output containing activations and locations.
-        n_random (int): Number of random examples to generate.
+        n_not_active (int): Number of non-activating examples to randomly generate.
         ctx_len (int): Context length for each example.
         max_examples (int): Maximum number of examples to generate.
     """
@@ -236,7 +235,7 @@ def default_constructor(
                 "`    tokens=dataset.tokens`,\n"
                 "pass\n"
                 "`    token_loader=lambda: dataset.load_tokens()`,\n"
-                "(assuming `dataset` is a `FeatureDataset` instance)."
+                "(assuming `dataset` is a `LatentDataset` instance)."
             )
     pool_max_activation_windows(
         record,
@@ -245,16 +244,16 @@ def default_constructor(
         ctx_len=ctx_len,
         max_examples=max_examples,
     )
-    random_activation_windows(
+    random_non_activating_windows(
         record,
         tokens=tokens,
         buffer_output=buffer_output,
-        n_random=n_random,
+        n_not_active=n_not_active,
         ctx_len=ctx_len,
     )
 
 def neighbour_constructor(
-    record: FeatureRecord,
+    record: LatentRecord,
     token_loader: Optional[Callable[[], TensorType["batch", "seq"]]],
     buffer_output: BufferOutput,
     all_data: AllData,

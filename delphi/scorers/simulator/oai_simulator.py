@@ -1,6 +1,6 @@
 from typing import List
 
-from ...features import Example
+from ...latents import Example
 from .oai_autointerp import (
     ActivationRecord,
     ExplanationNeuronSimulator,
@@ -40,8 +40,8 @@ class OpenAISimulator(Scorer):
         )
 
         valid_activation_records = self.to_activation_records(record.test)
-        if len(record.random_examples) > 0:
-            non_activation_records = self.to_activation_records([record.random_examples])
+        if len(record.not_active) > 0:
+            non_activation_records = self.to_activation_records([record.not_active])
         else:
             non_activation_records = []
 
