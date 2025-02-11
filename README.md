@@ -14,13 +14,19 @@ Install this library as a local editable installation. Run the following command
 
 # Getting Started
 
-To run an example pipeline from the command line, use the following command:
+To run the default pipeline from the command line, use the following command:
 
-`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --max_features 100 --hookpoints layers.5 --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]'`
+`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]'` --n_tokens 10_000_000 --max_features 100 --hookpoints layers.5
 
-This will cache the activations of the first 10 million tokens of EleutherAI/rpj-v2-sample, generate explanations for the first 100 features of layer 5 using the explainer model, then score the explanations using fuzzing and detection scorers. Summary metrics including per-scorer F1s and confusion matrices are logged by default.
+This command will:
+1. Cache activations for the first 10 million tokens of EleutherAI/rpj-v2-sample.
+2. Generate explanations for the first 100 features of layer 5 using the specified explainer model.
+3. Score the explanations uses fuzzing and detection scorers.
+4. Log summary metrics including per-scorer F1 scores and confusion matrices.
 
-The pipeline is highly configurable and can be invoked programmatically. For an example, see the [end-to-end test](https://github.com/EleutherAI/delphi/blob/main/delphi/tests/e2e.py).
+The pipeline is highly configurable and can also be called programmatically (see the [end-to-end test](https://github.com/EleutherAI/delphi/blob/main/delphi/tests/e2e.py) for an example).
+
+To use other scorer types, instantiate a custom pipeline.
 
 ## Loading Autoencoders
 
