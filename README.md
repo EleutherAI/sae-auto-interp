@@ -14,7 +14,7 @@ Install this library as a local editable installation. Run the following command
 
 # Getting Started
 
-To run a minimal pipeline from the command line, you can use the following command:
+To run a minimal pipeline from the command line, use the following command:
 
 `python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --max_features 100 --hookpoints layers.5 --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]'`
 
