@@ -81,6 +81,10 @@ class LatentRecord:
         latent (Latent): The latent associated with the record.
         examples: list[Example]: Example sequences where the latent activations,
           assumed to be sorted in descending order by max activation
+        not_active: list[Example]: Some sequences where the latent is not active
+        train: list[list[Example]]: Examples used for the explainer model
+        test: list[list[Example]]: Examples used for the scorer models
+        neighbours: list[int]: The indices of the neighbouring latents
     """
 
     def __init__(
