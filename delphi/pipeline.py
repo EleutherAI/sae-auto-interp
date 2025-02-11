@@ -5,7 +5,7 @@ from typing import Callable, AsyncIterable, Any, List
 from tqdm.asyncio import tqdm
 
 
-def process_wrapper(function: Callable, preprocess: Callable = None, postprocess: Callable = None) -> Callable:
+def process_wrapper(function: Callable, preprocess: Callable | None = None, postprocess: Callable | None = None) -> Callable:
     """
     Wraps a function with optional preprocessing and postprocessing steps.
 

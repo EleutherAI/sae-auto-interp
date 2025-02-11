@@ -1,17 +1,20 @@
 import re
 import asyncio
 
+import faiss
+
 from delphi.explainers.explainer import Explainer, ExplainerResult
 from delphi.explainers.default.prompt_builder import build_single_token_prompt
 from delphi.logger import logger
 
-class SingleTokenExplainer(Explainer):
-    name = "single_token"
+class ContrastiveExplainer(Explainer):
+    name = "contrastive"
 
     def __init__(
         self,
         client,
         tokenizer,
+        index: faiss.IndexFlatL2,
         verbose: bool = False,
         activations: bool = False,
         cot: bool = False,
@@ -21,6 +24,7 @@ class SingleTokenExplainer(Explainer):
     ):
         self.client = client
         self.tokenizer = tokenizer
+        self.index = index
         self.verbose = verbose
 
         self.activations = activations
@@ -29,6 +33,28 @@ class SingleTokenExplainer(Explainer):
         self.temperature = temperature
         self.generation_kwargs = generation_kwargs
 
+    async def __call__(self, record):
+        # Need to change __call__ to use index
+
+        messages = self._build_prompt(record.train)
+        
+        response = await self.client.generate(
+            messages, temperature=self.temperature, **self.generation_kwargs
+        )
+
+        try:
+            explanation = self.parse_explanation(response.text)
+            if self.verbose:
+                return (
+                    messages[-1]["content"],
+                    response,
+                    ExplainerResult(record=record, explanation=explanation),
+                )
+
+            return ExplainerResult(record=record, explanation=explanation)
+        except Exception as e:
+            logger.error(f"Explanation parsing failed: {e}")
+            return ExplainerResult(record=record, explanation="Explanation could not be parsed.")
 
     def _build_prompt(self, examples):
         highlighted_examples = []

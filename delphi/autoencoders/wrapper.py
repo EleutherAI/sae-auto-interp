@@ -43,7 +43,7 @@ class AutoencoderLatents(torch.nn.Module):
         autoencoder_type = config.autoencoder_type
         model_name_or_path = config.model_name_or_path
         if autoencoder_type == "SAE":
-            from sae import Sae
+            from sparsify import Sae
             local = kwargs.get("local",None)
             assert local is not None, "local must be specified for SAE"
             if local:

@@ -169,17 +169,15 @@ class LatentCache:
 
         self.batch_size = batch_size
         self.width = list(submodule_dict.values())[0].ae.width
-
         self.cache = Cache(filters, batch_size=batch_size)
         if filters is not None:
             self.filter_submodules(filters)
-
 
     def load_token_batches(
         self, n_tokens: int, tokens: TensorType["batch", "sequence"]
     ):
         """
-        Load and prepare token batches for processing.
+        Split tokens into a list of token batches.
 
         Args:
             n_tokens (int): Total number of tokens to process.
@@ -215,7 +213,7 @@ class LatentCache:
 
     def run(self, n_tokens: int, tokens: TensorType["batch", "seq"]):
         """
-        Run the latent caching process.
+        Cache latents from the model.
 
         Args:
             n_tokens (int): Total number of tokens to process.
@@ -248,6 +246,7 @@ class LatentCache:
 
         print(f"Total tokens processed: {total_tokens:,}")
         self.cache.save()
+
 
     def save(self, save_dir, save_tokens: bool = True):
         """
