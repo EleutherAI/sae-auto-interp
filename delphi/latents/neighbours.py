@@ -79,7 +79,7 @@ class NeighbourCalculator:
         Compute neighbour lists based on weight similarity in the autoencoder.
         """
         print("Computing similarity neighbours")
-        # We use the encoder vectors to compute the similarity between features
+        # We use the encoder vectors to compute the similarity between latents
         if method == "encoder":
             encoder = self.autoencoder.encoder.cuda()
             weight_matrix_normalized = encoder.weight.data / encoder.weight.data.norm(dim=1, keepdim=True)
@@ -91,16 +91,16 @@ class NeighbourCalculator:
             raise ValueError(f"Unknown method: {method}. Use 'encoder' or 'decoder'")
 
         wT = weight_matrix_normalized.T
-        # Compute the similarity between features
+        # Compute the similarity between latents
         done = False
         batch_size = weight_matrix_normalized.shape[0]
-        number_features = batch_size
+        number_latents = batch_size
 
         neighbour_lists = {}
         while not done:
             try:
                
-                for start in tqdm(range(0,number_features,batch_size)):
+                for start in tqdm(range(0,number_latents,batch_size)):
                     rows = wT[start:start+batch_size]
                     similarity_matrix = weight_matrix_normalized @ rows
                     indices,values = torch.topk(similarity_matrix, self.number_of_neighbours+1, dim=1)
@@ -139,21 +139,21 @@ class NeighbourCalculator:
         # load the encoder
         encoder_matrix = self.autoencoder.encoder.weight.cuda().half()
 
-        covariance_between_features = torch.zeros((encoder_matrix.shape[0],encoder_matrix.shape[0]),device="cpu")
+        covariance_between_latents = torch.zeros((encoder_matrix.shape[0],encoder_matrix.shape[0]),device="cpu")
 
-        # do batches of features
+        # do batches of latents
         batch_size = 1024
         for start in tqdm(range(0,encoder_matrix.shape[0],batch_size)):
             end = min(encoder_matrix.shape[0],start+batch_size)
             encoder_rows = encoder_matrix[start:end]
             
             correlation = encoder_rows @ covariance_matrix @ encoder_matrix.T
-            covariance_between_features[start:end] = correlation.cpu()
+            covariance_between_latents[start:end] = correlation.cpu()
 
         # the correlation is then the covariance divided by the product of the standard deviations
-        diagonal_covariance = torch.diag(covariance_between_features)
+        diagonal_covariance = torch.diag(covariance_between_latents)
         product_of_std = torch.sqrt(torch.outer(diagonal_covariance,diagonal_covariance)+1e-6)
-        correlation_matrix = covariance_between_features / product_of_std
+        correlation_matrix = covariance_between_latents / product_of_std
 
         # get the indices of the top k neighbours for each feature
         indices,values = torch.topk(correlation_matrix, self.number_of_neighbours+1, dim=1)
@@ -188,7 +188,7 @@ class NeighbourCalculator:
             
         # concatenate the locations and activations
         locations = torch.cat(all_locations)
-        n_features = int(torch.max(locations[:,2])) + 1
+        n_latents = int(torch.max(locations[:,2])) + 1
 
         # 1. Get unique values of first 2 dims (i.e. absolute token index) and their counts
         # Trick is to use Cantor pairing function to have a bijective mapping between (batch_id, ctx_pos) and a unique 1D index
@@ -204,9 +204,9 @@ class NeighbourCalculator:
         rows = cp.asarray(locations[:, 2])
         cols = cp.asarray(locations_flat)
         data = cp.ones(len(rows))
-        sparse_matrix = cusparse.coo_matrix((data, (rows, cols)), shape=(n_features, n_tokens))
+        sparse_matrix = cusparse.coo_matrix((data, (rows, cols)), shape=(n_latents, n_tokens))
         token_batch_size = 100_000
-        cooc_matrix = cp.zeros((n_features, n_features), dtype=cp.float32)
+        cooc_matrix = cp.zeros((n_latents, n_latents), dtype=cp.float32)
         
         sparse_matrix_csc = sparse_matrix.tocsc()
         for start in tqdm(range(0, n_tokens, token_batch_size)):
@@ -268,9 +268,9 @@ class NeighbourCalculator:
 
 
 class CovarianceEstimator:
-    def __init__(self, n_features, *, device = None):
-        self.mean = torch.zeros(n_features, device=device)
-        self.cov_ = torch.zeros(n_features, n_features, device=device)
+    def __init__(self, n_latents, *, device = None):
+        self.mean = torch.zeros(n_latents, device=device)
+        self.cov_ = torch.zeros(n_latents, n_latents, device=device)
         self.n = 0
 
     def update(self, x: torch.Tensor):
