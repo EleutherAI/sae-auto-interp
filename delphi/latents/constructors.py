@@ -119,12 +119,11 @@ def constructor(
     activations = buffer_output.activations
 
     # Add activation examples to the record in place 
-    print(activations.shape, reshaped_tokens.shape, ctx_indices.shape, index_within_ctx.shape, max_examples)
-    token_windows, activation_windows = pool_max_activation_windows(record,
-                                                                    activations=activations,
+    token_windows, activation_windows = pool_max_activation_windows(activations=activations,
                                                                     tokens=reshaped_tokens,
                                                                     ctx_indices=ctx_indices,
                                                                     index_within_ctx=index_within_ctx,
+                                                                    ctx_len=ctx_len,
                                                                     max_examples=max_examples)
     record.examples = prepare_examples(token_windows, activation_windows)
 
@@ -182,6 +181,7 @@ def neighbour_non_activation_windows(
     number_examples = 0
     available_features = all_data.features
     all_examples = []
+    used_neighbours = []
     for neighbour in record.neighbours:
         if number_examples >= n_not_active:
             break
@@ -210,17 +210,19 @@ def neighbour_non_activation_windows(
         mask_ctx = torch.isin(ctx_indices, available_indices)
         available_ctx_indices = ctx_indices[mask_ctx]
         available_index_within_ctx = index_within_ctx[mask_ctx]
-        token_windows, activation_windows = pool_max_activation_windows(record,
-                                                                        activations=activations,
+        activations = activations[mask_ctx]
+        token_windows, activation_windows = pool_max_activation_windows(activations=activations,
                                                                         tokens=reshaped_tokens,
                                                                         ctx_indices=available_ctx_indices,
                                                                         index_within_ctx=available_index_within_ctx,
-                                                                        max_examples=n_examples_per_neighbour)
+                                                                        max_examples=n_examples_per_neighbour,
+                                                                        ctx_len=ctx_len)
         # use the first n_examples_per_neighbour examples, which will be the most active examples
         examples_used = len(token_windows)
         all_examples.append(prepare_examples(token_windows, torch.zeros_like(token_windows)))
+        used_neighbours.append(neighbour)
         number_examples += examples_used
-
+    record.neighbours = used_neighbours
     if len(all_examples) == 0:
         print("No examples found")
 
