@@ -18,7 +18,7 @@ To run an example pipeline from the command line, use the following command:
 
 `python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --max_features 100 --hookpoints layers.5 --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]'`
 
-This will cache the activations of the first 10 million tokens of EleutherAI/rpj-v2-sample, generate explanations for the first 100 features of layer 5 using the explainer model, then score the explanations using fuzzing and detection scorers. Summary metrics including F1 and confusion matrices for each scorer are logged by default.
+This will cache the activations of the first 10 million tokens of EleutherAI/rpj-v2-sample, generate explanations for the first 100 features of layer 5 using the explainer model, then score the explanations using fuzzing and detection scorers. Summary metrics including per-scorer F1s and confusion matrices are logged by default.
 
 The pipeline is highly configurable and can be invoked programmatically. For an example, see the [end-to-end test](https://github.com/EleutherAI/delphi/blob/main/delphi/tests/e2e.py).
 
