@@ -32,10 +32,12 @@ def _top_k_pools(
 
     return token_windows, activation_windows
 
+
 def pool_max_activation_windows(
-    record,
-    buffer_output: BufferOutput,
-    tokens: TensorType["batch", "seq"],
+    activations: TensorType["n_examples"],
+    tokens: TensorType["windows", "seq"],
+    ctx_indices: TensorType["n_examples"],
+    index_within_ctx: TensorType["n_examples"],
     ctx_len: int,
     max_examples: int,
 ):
@@ -43,185 +45,45 @@ def pool_max_activation_windows(
     Pool max activation windows from the buffer output and update the latent record.
 
     Args:
-        record (LatentRecord): The latent record to update.
-        buffer_output (BufferOutput): The buffer output containing activations and locations.
-        tokens (TensorType["batch", "seq"]): The input tokens.
+        activations (TensorType["n_examples"]): The activations.
+        tokens (TensorType["windows", "seq"]): The input tokens.
+        ctx_indices (TensorType["n_examples"]): The context indices.
+        index_within_ctx (TensorType["n_examples"]): The index within the context.
         ctx_len (int): The context length.
         max_examples (int): The maximum number of examples.
     """
-    flat_indices = buffer_output.locations[:, 0] * tokens.shape[1] + buffer_output.locations[:, 1]
-    ctx_indices = flat_indices // ctx_len
-    index_within_ctx = flat_indices % ctx_len
-  
-    # unique_ctx_indices: array of distinct context window indices in order of first appearance. i.e. sequential integers from 0 to 3903
+    # unique_ctx_indices: array of distinct context window indices in order of first appearance. i.e. sequential integers from 0 to batch_size * cache_token_length // ctx_len
     # inverses: maps each activation back to its index in unique_ctx_indices (can be used to dereference the context window idx of each activation)
     # lengths: the number of activations per unique context window index
     unique_ctx_indices, inverses, lengths = torch.unique_consecutive(ctx_indices, return_counts=True, return_inverse=True)
+    
     # Get the max activation magnitude within each context window
-    max_buffer = torch.segment_reduce(buffer_output.activations, 'max', lengths=lengths)
+    max_buffer = torch.segment_reduce(activations, 'max', lengths=lengths)
 
     # Deduplicate the context windows
-    new_tensor= torch.zeros(len(unique_ctx_indices), ctx_len, dtype=buffer_output.activations.dtype)
-    new_tensor[inverses, index_within_ctx] = buffer_output.activations
+    new_tensor= torch.zeros(len(unique_ctx_indices), ctx_len, dtype=activations.dtype)
+    new_tensor[inverses, index_within_ctx] = activations
 
-    buffer_tokens = tokens.reshape(-1, ctx_len)
-    buffer_tokens = buffer_tokens[unique_ctx_indices]
+    
+    tokens = tokens[unique_ctx_indices]
 
     token_windows, activation_windows = _top_k_pools(
-        max_buffer, new_tensor, buffer_tokens, max_examples
+        max_buffer, new_tensor, tokens, max_examples
     )
 
-    record.examples = prepare_examples(token_windows, activation_windows)
+    return token_windows, activation_windows
 
-def random_non_activating_windows(
+def constructor(
     record: LatentRecord,
-    tokens: TensorType["batch", "seq"],
-    buffer_output: BufferOutput,
-    ctx_len: int,
-    n_not_active: int,
-):
-    """
-    Generate random non-activating sequence windows and update the latent record.
-
-    Args:
-        record (LatentRecord): The latent record to update.
-        tokens (TensorType["batch", "seq"]): The input tokens.
-        buffer_output (BufferOutput): The buffer output containing activations and locations.
-        ctx_len (int): The context length.
-        n_not_active (int): The number of non activating examples to generate.
-    """
-    torch.manual_seed(22)
-    if n_not_active == 0:
-        record.not_active = []
-        return
-    
-    batch_size = tokens.shape[0]
-    unique_batch_pos = buffer_output.locations[:, 0].unique()
-
-    mask = torch.ones(batch_size, dtype=torch.bool)
-    mask[unique_batch_pos] = False
-
-    available_indices = mask.nonzero().squeeze()
-
-    # TODO:What to do when the latent is active at least once in each batch?
-    if available_indices.numel() < n_not_active:
-        print("No available randomly sampled non-activating sequences")
-        record.not_active = []
-        return
-    else:
-        selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_not_active,))]
-
-    toks = tokens[selected_indices, 10 : 10 + ctx_len]
-
-    record.not_active = prepare_examples(
-        toks,
-        torch.zeros_like(toks),
-    )
-
-def neighbour_random_activation_windows(
-    record: LatentRecord,
-    tokens: TensorType["batch", "seq"],
     buffer_output: BufferOutput,
     all_data: AllData,
-    ctx_len: int,
-    n_random: int,
-):
-    """
-    Generate random activation windows and update the latent record.
-
-    Args:
-        record (LatentRecord): The latent record to update.
-        tokens (TensorType["batch", "seq"]): The input tokens.
-        buffer_output (BufferOutput): The buffer output containing activations and locations.
-        ctx_len (int): The context length.
-        n_random (int): The number of random examples to generate.
-    """
-    torch.manual_seed(22)
-    if n_random == 0:
-        return
-    
-    assert record.neighbours is not None, "Neighbours are not set, add them via a transform"
-
-    batch_size = tokens.shape[0]
-    
-    # Get the unique batch positions where the latent is active
-    unique_batch_pos_active = buffer_output.locations[:, 0].unique_consecutive()
-    
-    mask = torch.zeros(batch_size, dtype=torch.bool)
-
-    # TODO: For now we use at most 10 examples per neighbour, we may want to allow a variable number of examples per neighbour
-    n_examples_per_neighbour = 10
-
-    number_examples = 0
-    available_features = all_data.features
-    all_examples = []
-    for neighbour in record.neighbours:
-        if number_examples >= n_random:
-            break
-        # find indice in all_data.features that matches the neighbour
-        indice = torch.where(available_features == neighbour.feature_index)[0]
-        if len(indice) == 0:
-            continue
-        # get the locations of the neighbour
-        locations = all_data.locations[indice]
-        # get the unique locations
-        unique_locations = locations[:,0].unique_consecutive(dim=0)
-
-        # Set the mask to True for the unique locations
-        mask[unique_locations] = True
-
-        # Set the mask to False for the unique locations where the latent is active
-        # TODO: we probably want to be less strict here, we could use parts of the batch where the latent is not active
-        mask[unique_batch_pos_active] = False
-
-        available_indices = mask.nonzero().flatten()
-
-        if available_indices.numel() == 0:
-            continue
-        size = min(n_examples_per_neighbour, len(available_indices))
-    
-        selected_indices = torch.randint(0, len(unique_locations), size=(size,))
-        selected_positions = torch.randint(0, tokens.shape[1] - ctx_len, size=(size,))
-    
-        range_indices = torch.arange(ctx_len, device=tokens.device).unsqueeze(0)  # Shape: (1, ctx_len)
-    
-        # Each selected_positions gives a unique starting index. We add the range tensor to get indices for each example.
-        positions = selected_positions.unsqueeze(1) + range_indices    
-
-        # Get tokens
-        toks = tokens[selected_indices].gather(dim=1, index=positions)
-
-        examples = prepare_examples(toks, torch.zeros_like(toks))
-        number_examples += len(examples)
-        all_examples.append((examples, neighbour))
-
-    if len(all_examples) == 0:
-        print("No examples found")
-
-    record.random_examples = all_examples
-
-
-def default_constructor(
-    record: LatentRecord,
-    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]] | None,
-    buffer_output: BufferOutput,
     n_not_active: int,
-    ctx_len: int,
     max_examples: int,
+    ctx_len: int,
+    constructor_type: str = "random",
+    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]] | None = None
 ):
-    """
-    Construct latent examples using pool max activation windows and random activation windows.
-
-    Args:
-        record (LatentRecord): The latent record to update.
-        token_loader (Optional[Callable[[], TensorType["batch", "seq"]]]):
-            An optional function that creates the dataset tokens.
-        buffer_output (BufferOutput): The buffer output containing activations and locations.
-        n_not_active (int): Number of non-activating examples to randomly generate.
-        ctx_len (int): Context length for each example.
-        max_examples (int): Maximum number of examples to generate.
-    """
-    tokens = buffer_output.tokens
+    tokens = all_data.tokens
     if tokens is None:
         if token_loader is None:
             raise ValueError("Either tokens or token_loader must be provided")
@@ -237,62 +99,164 @@ def default_constructor(
                 "`    token_loader=lambda: dataset.load_tokens()`,\n"
                 "(assuming `dataset` is a `LatentDataset` instance)."
             )
-    pool_max_activation_windows(
-        record,
-        buffer_output=buffer_output,
-        tokens=tokens,
-        ctx_len=ctx_len,
-        max_examples=max_examples,
-    )
-    random_non_activating_windows(
-        record,
-        tokens=tokens,
-        buffer_output=buffer_output,
-        n_not_active=n_not_active,
-        ctx_len=ctx_len,
-    )
 
-def neighbour_constructor(
+    batch_size = tokens.shape[0]
+    cache_token_length = tokens.shape[1]
+
+    # Get all positions where the latent is active
+    flat_indices = buffer_output.locations[:, 0] * cache_token_length + buffer_output.locations[:, 1]
+    ctx_indices = flat_indices // ctx_len
+    index_within_ctx = flat_indices % ctx_len
+    reshaped_tokens = tokens.reshape(-1, ctx_len)
+    n_windows = reshaped_tokens.shape[0]
+    
+    unique_batch_pos = ctx_indices.unique()
+
+    mask = torch.ones(n_windows, dtype=torch.bool)
+    mask[unique_batch_pos] = False
+    # Indices where the latent is active
+    active_indices = mask.nonzero(as_tuple=False).squeeze()
+    activations = buffer_output.activations
+
+    # Add activation examples to the record in place 
+    print(activations.shape, reshaped_tokens.shape, ctx_indices.shape, index_within_ctx.shape, max_examples)
+    token_windows, activation_windows = pool_max_activation_windows(record,
+                                                                    activations=activations,
+                                                                    tokens=reshaped_tokens,
+                                                                    ctx_indices=ctx_indices,
+                                                                    index_within_ctx=index_within_ctx,
+                                                                    max_examples=max_examples)
+    record.examples = prepare_examples(token_windows, activation_windows)
+
+    if constructor_type == "random":
+        # Add random non-activating examples to the record in place
+        random_non_activating_windows(
+        record,
+        available_indices=active_indices,
+        reshaped_tokens=reshaped_tokens,
+        n_not_active=n_not_active,
+        )
+    elif constructor_type == "neighbour":
+        neighbour_non_activation_windows(
+        record,
+        not_active_mask=mask,
+        tokens=tokens,
+        all_data=all_data,
+        ctx_len=ctx_len,
+        n_not_active=n_not_active,
+        )
+
+
+def neighbour_non_activation_windows(
     record: LatentRecord,
-    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]],
-    buffer_output: BufferOutput,
+    not_active_mask: TensorType["n_windows"],
+    tokens: TensorType["batch", "seq"],
     all_data: AllData,
-    n_random: int,
     ctx_len: int,
-    max_examples: int,
+    n_not_active: int,
 ):
     """
-    Construct feature examples using pool max activation windows and random activation windows from neighbours.
+    Generate random activation windows and update the latent record.
+
+    Args:
+        record (LatentRecord): The latent record to update.
+        not_active_mask (TensorType["n_windows"]): The mask of the non-active windows.
+        tokens (TensorType["batch", "seq"]): The input tokens.
+        all_data (AllData): The all data containing activations and locations.
+        ctx_len (int): The context length.
+        n_random (int): The number of random examples to generate.
     """
-    tokens = all_data.tokens
-    if tokens is None:
-        if token_loader is None:
-            raise ValueError("Either tokens or token_loader must be provided")
-        try:
-            tokens = token_loader()
-        except TypeError:
-            raise ValueError(
-                "Starting with v0.2, `tokens` was renamed to `token_loader`, "
-                "which must be a callable for lazy loading.\n\n"
-                "Instead of passing\n"
-                "`    tokens=dataset.tokens`,\n"
-                "pass\n"
-                "`    token_loader=lambda: dataset.load_tokens()`,\n"
-                "(assuming `dataset` is a `FeatureDataset` instance)."
-            )
-    pool_max_activation_windows(
-        record,
-        buffer_output=buffer_output,
-        tokens=tokens,
-        ctx_len=ctx_len,
-        max_examples=max_examples,
-    )
-    neighbour_random_activation_windows(
-        record,
-        tokens=tokens,
-        buffer_output=buffer_output,
-        all_data=all_data,
-        n_random=n_random,
-        ctx_len=ctx_len,
-    )
+    torch.manual_seed(22)
+    if n_not_active == 0:
+        record.not_active = []
+        return
     
+    assert record.neighbours is not None, "Neighbours are not set, add them via a transform"
+
+    cache_token_length = tokens.shape[1]
+    reshaped_tokens = tokens.reshape(-1, ctx_len)
+    n_windows = reshaped_tokens.shape[0]
+    # TODO: For now we use at most 10 examples per neighbour, we may want to allow a variable number of examples per neighbour
+    n_examples_per_neighbour = 10
+
+    number_examples = 0
+    available_features = all_data.features
+    all_examples = []
+    for neighbour in record.neighbours:
+        if number_examples >= n_not_active:
+            break
+        # find indice in all_data.features that matches the neighbour
+        indice = torch.where(available_features == neighbour.feature_index)[0]
+        if len(indice) == 0:
+            continue
+        # get the locations of the neighbour
+        locations = all_data.locations[indice]
+        activations = all_data.activations[indice]
+        # get the active window indices
+        flat_indices = locations[:, 0] * cache_token_length + locations[:, 1]
+        ctx_indices = flat_indices // ctx_len
+        index_within_ctx = flat_indices % ctx_len
+        # Set the mask to True for the unique locations
+        unique_batch_pos_active = ctx_indices.unique()
+
+        mask = torch.zeros(n_windows, dtype=torch.bool)
+        mask[unique_batch_pos_active] = True
+
+        # Get the indices where mask is True but active_indices is False
+        new_mask = mask & not_active_mask
+
+        available_indices = new_mask.nonzero().flatten()
+
+        mask_ctx = torch.isin(ctx_indices, available_indices)
+        available_ctx_indices = ctx_indices[mask_ctx]
+        available_index_within_ctx = index_within_ctx[mask_ctx]
+        token_windows, activation_windows = pool_max_activation_windows(record,
+                                                                        activations=activations,
+                                                                        tokens=reshaped_tokens,
+                                                                        ctx_indices=available_ctx_indices,
+                                                                        index_within_ctx=available_index_within_ctx,
+                                                                        max_examples=n_examples_per_neighbour)
+        # use the first n_examples_per_neighbour examples, which will be the most active examples
+        examples_used = len(token_windows)
+        all_examples.append(prepare_examples(token_windows, torch.zeros_like(token_windows)))
+        number_examples += examples_used
+
+    if len(all_examples) == 0:
+        print("No examples found")
+
+    record.not_active = all_examples
+
+def random_non_activating_windows(
+    record: LatentRecord,
+    available_indices: TensorType["n_windows"],
+    reshaped_tokens: TensorType["n_windows", "ctx_len"],
+    n_not_active: int,
+):
+    """
+    Generate random non-activating sequence windows and update the latent record.
+
+    Args:
+        record (LatentRecord): The latent record to update.
+        available_indices (TensorType["n_windows"]): The indices of the windows where the latent is not active.
+        reshaped_tokens (TensorType["n_windows", "ctx_len"]): The tokens reshaped to the context length.
+        n_not_active (int): The number of non activating examples to generate.
+    """
+    torch.manual_seed(22)
+    if n_not_active == 0:
+        record.not_active = []
+        return
+    
+    # If this happens it means that the latent is active in every window, so it is a bad latent
+    if available_indices.numel() < n_not_active:
+        print("No available randomly sampled non-activating sequences")
+        record.not_active = []
+        return
+    else:
+        selected_indices = available_indices[torch.randint(0, available_indices.shape[0], size=(n_not_active,))]
+    
+    toks = reshaped_tokens[selected_indices]
+
+    record.not_active = prepare_examples(
+        toks,
+        torch.zeros_like(toks),
+    )
