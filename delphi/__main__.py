@@ -8,7 +8,9 @@ from dataclasses import dataclass
 from multiprocessing import cpu_count
 import asyncio
 import os
+import json
 
+from datasets import Dataset
 from simple_parsing import ArgumentParser, field
 import torch
 from torch import Tensor
@@ -26,7 +28,7 @@ from sparsify.data import chunk_and_tokenize
 from simple_parsing import field, list_field
 
 from delphi.config import ExperimentConfig, LatentConfig
-from delphi.explainers import DefaultExplainer
+from delphi.explainers import DefaultExplainer, ContrastiveExplainer
 from delphi.latents import LatentDataset, LatentLoader
 from delphi.latents.constructors import default_constructor
 from delphi.latents.samplers import sample
@@ -41,6 +43,7 @@ from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
 from delphi.autoencoders.DeepMind import JumpReLUSAE
 from delphi.autoencoders.wrapper import AutoencoderLatents
 from delphi.log.result_analysis import log_results
+from delphi.semantic_index.index import build_or_load_index, load_index
 
 
 @dataclass
@@ -119,6 +122,9 @@ class RunConfig:
     )
     """Number of examples to use for each scorer prompt. Using more than 1 improves scoring speed but can
     leak information to the fuzzing scorer, and increases the scorer LLM task difficulty."""
+
+    semantic_index: bool = False
+    """Whether to build semantic index of token sequences."""
 
 
 def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,int],size:str,type:str, hookpoints):
@@ -206,10 +212,12 @@ def load_artifacts(run_cfg: RunConfig):
 
     return run_cfg.hookpoints, submodule_name_to_submodule, model, model.tokenizer
 
-async def process_cache(
+async def run_pipeline(
+    cache_cfg: CacheConfig,
     latent_cfg: LatentConfig,
     run_cfg: RunConfig,
     experiment_cfg: ExperimentConfig,
+    base_path: Path,
     latents_path: Path,
     explanations_path: Path,
     scores_path: Path,
@@ -245,6 +253,9 @@ async def process_cache(
         latents=latent_dict,
         tokenizer=tokenizer,
     )
+
+    if run_cfg.semantic_index:
+        index = load_index(base_path, cache_cfg)
 
     if run_cfg.explainer_provider == "offline":
         client = Offline(
@@ -284,14 +295,21 @@ async def process_cache(
             f.write(orjson.dumps(result.explanation))
         return result
 
-    explainer_pipe = process_wrapper(
-        DefaultExplainer(
+    if run_cfg.semantic_index:
+        explainer = ContrastiveExplainer(
+            client,
+            tokenizer=dataset.tokenizer,
+            index=index,
+            threshold=0.3,
+        )
+    else:
+        explainer = DefaultExplainer(
             client,
             tokenizer=dataset.tokenizer,
             threshold=0.3,
-        ),
-        postprocess=explainer_postprocess,
-    )
+        )
+    
+    explainer_pipe = process_wrapper(explainer, postprocess=explainer_postprocess)
 
     # Builds the record from result returned by the pipeline
     def scorer_preprocess(result):
@@ -341,24 +359,31 @@ async def process_cache(
     await pipeline.run(run_cfg.pipeline_num_proc)
 
 
-def populate_cache(
+def prepare_data(
     run_cfg: RunConfig,
     cfg: CacheConfig,
     hooked_model: LanguageModel,
     submodule_name_to_submodule: dict[str, nn.Module],
     latents_path: Path,
+    base_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     filter_bos: bool,
 ):
     """
-    Populates an on-disk cache in `latents_path` with SAE latent activations.
+    Populates an on-disk cache in `latents_path` with SAE latent activations. 
+    Optionally builds a semantic index of token sequences.
     """
     latents_path.mkdir(parents=True, exist_ok=True)
 
     data = load_dataset(
         cfg.dataset_repo, name=cfg.dataset_name, split=cfg.dataset_split
     )
+    data = assert_type(Dataset, data)
     data = data.shuffle(run_cfg.seed)
+
+    if run_cfg.semantic_index:
+        build_or_load_index(data, base_path, cfg)
+
     data = chunk_and_tokenize(
         data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row
     )
@@ -420,17 +445,21 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
         not glob(str(latents_path / ".*")) + glob(str(latents_path / "*"))
         or "cache" in run_cfg.overwrite
     ):
-        populate_cache(
+        prepare_data(
             run_cfg,
             cache_cfg,
             hooked_model,
             submodule_name_to_submodule,
             latents_path,
+            base_path,
             tokenizer,
             filter_bos=run_cfg.filter_bos,
         )
     else:
         print(f"Files found in {latents_path}, skipping cache population...")
+
+    if run_cfg.semantic_index:
+        index = load_index(base_path, cache_cfg)
 
     del hooked_model, submodule_name_to_submodule
 
@@ -438,10 +467,13 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
         not glob(str(scores_path / ".*")) + glob(str(scores_path / "*"))
         or "scores" in run_cfg.overwrite
     ):
-        await process_cache(
+
+        await run_pipeline(
+            cache_cfg,
             latent_cfg,
             run_cfg,
             experiment_cfg,
+            base_path,
             latents_path,
             explanations_path,
             scores_path,
