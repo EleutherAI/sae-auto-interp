@@ -25,14 +25,18 @@ class Explainer(ABC):
 
 async def explanation_loader(record: LatentRecord, explanation_dir: str) -> ExplainerResult:
     try:
-        async with aiofiles.open(f'{explanation_dir}/{record.feature}.txt', 'r') as f:
+        async with aiofiles.open(f'{explanation_dir}/{record.latent}.txt', 'r') as f:
             explanation = json.loads(await f.read())
         return ExplainerResult(
             record=record,
             explanation=explanation
         )
     except FileNotFoundError:
-        return None
+        print(f"No explanation found for {record.latent}")
+        return ExplainerResult(
+            record=record,
+            explanation="No explanation found"
+        )
     
   
 
