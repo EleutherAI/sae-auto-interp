@@ -50,23 +50,23 @@ class DetectionScorer(Classifier):
         Prepare and shuffle a list of samples for classification.
         """
 
-        # check if random_examples is a list of lists or a list of examples
-        if isinstance(record.random_examples[0], tuple):
+        # check if not_active is a list of lists or a list of examples
+        if isinstance(record.not_active[0], list):
             # Here we are using neighbours
             samples = []
-            for i, (examples, neighbour) in enumerate(record.random_examples):
+            for i, examples in enumerate(record.not_active):
                 samples.extend(
                     examples_to_samples(
                         examples,
-                        distance=-neighbour.distance,
+                        distance=-record.neighbours[i].distance,
                         ground_truth=False,
                         tokenizer=self.tokenizer,
                     )
                 )
-        elif isinstance(record.random_examples[0], Example):
+        elif isinstance(record.not_active[0], Example):
             # This is if we dont use neighbours
             samples = examples_to_samples(
-                record.random_examples,
+                record.not_active,
                 distance=-1,
                 ground_truth=False,
                 tokenizer=self.tokenizer,
