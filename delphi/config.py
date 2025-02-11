@@ -112,6 +112,9 @@ class RunConfig:
     filter_bos: bool = False
     """Whether to filter out BOS tokens from the cache."""
 
+    semantic_index: bool = False
+    """Whether to build semantic index of token sequences."""
+
     load_in_8bit: bool = False
     """Load the model in 8-bit mode."""
 
