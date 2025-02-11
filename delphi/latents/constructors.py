@@ -211,6 +211,9 @@ def neighbour_non_activation_windows(
         available_ctx_indices = ctx_indices[mask_ctx]
         available_index_within_ctx = index_within_ctx[mask_ctx]
         activations = activations[mask_ctx]
+        # If there are no available indices, skip this neighbour
+        if activations.numel() == 0:
+            continue
         token_windows, activation_windows = pool_max_activation_windows(activations=activations,
                                                                         tokens=reshaped_tokens,
                                                                         ctx_indices=available_ctx_indices,
