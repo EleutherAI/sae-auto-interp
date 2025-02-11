@@ -40,6 +40,79 @@ from delphi.pipeline import Pipe
 from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
 from delphi.autoencoders.DeepMind import JumpReLUSAE
 from delphi.autoencoders.wrapper import AutoencoderLatents
+from delphi.log.result_analysis import log_results
+
+
+@dataclass
+class RunConfig:
+    model: str = field(
+        default="meta-llama/Meta-Llama-3-8B",
+        positional=True,
+    )
+    """Name of the model to explain."""
+
+    sparse_model: str = field(
+        default="EleutherAI/sae-llama-3-8b-32x",
+        positional=True,
+    )
+    """Name of sparse models associated with the model to explain, or path to
+    directory containing their weights. Models must be loadable with sparsify."""
+
+    hookpoints: list[str] = list_field()
+    """List of model hookpoints to attach sparse models to."""
+
+    explainer_model: str = field(
+        default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
+    )
+    """Name of the model to use for explanation and scoring."""
+
+    explainer_model_max_len: int = field(
+        default=5120,
+    )
+    """Maximum length of the explainer model context window."""
+
+    explainer_provider: str = field(
+        default="offline",
+    )
+    """Provider to use for explanation and scoring. Options are 'offline' for local models and 'openrouter' for API calls."""
+
+    name: str = ""
+    """The name of the run. Results are saved in a directory with this name."""
+
+    max_latents: int | None = None
+    """Maximum number of features to explain for each sparse model."""
+
+    filter_bos: bool = False
+    """Whether to filter out BOS tokens from the cache."""
+
+    load_in_8bit: bool = False
+    """Load the model in 8-bit mode."""
+
+    hf_token: str | None = None
+    """Huggingface API token for downloading models."""
+
+    pipeline_num_proc: int = field(
+        default_factory=lambda: cpu_count() // 2,
+    )
+    """Number of processes to use for preprocessing data"""
+
+    num_gpus: int = field(
+        default=1,
+    )
+    """Number of GPUs to use for explanation and scoring."""
+
+    seed: int = field(
+        default=22,
+    )
+    """Seed for the random number generator."""
+
+    log: bool = field(
+        default=True,
+    )
+    """Whether to log summary statistics and results of the run."""
+
+    overwrite: list[str] = list_field()
+    """Whether to overwrite existing parts of the run. Options are 'cache', 'scores', and 'visualize'."""
 
 
 def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,int],size:str,type:str, hookpoints):
@@ -75,73 +148,6 @@ def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,in
             submodule.ae(acts, hook=True)
 
     return submodules, edited
-
-
-@dataclass
-class RunConfig:
-    model: str = field(
-        default="meta-llama/Meta-Llama-3-8B",
-        positional=True,
-    )
-    """Name of the model to explain."""
-
-    sparse_model: str = field(
-        default="EleutherAI/sae-llama-3-8b-32x",
-        positional=True,
-    )
-    """Name of the models associated with the model to explain, or path to
-    directory containing its weights. Models must be loadable with sparsify."""
-
-    hookpoints: list[str] = list_field()
-    """List of hookpoints to load SAEs for."""
-
-    explainer_model: str = field(
-        default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
-    )
-    """Name of the model to use for explanation generation."""
-
-    explainer_model_max_len: int = field(
-        default=5120,
-    )
-    """Maximum length of the explainer model context window."""
-
-    explainer_provider: str = field(
-        default="offline",
-    )
-    """Provider to use for explanation generation. Options are 'offline' for local models and 'openrouter' for API calls."""
-
-    name: str = ""
-    """The name of the run. Results will be saved in a directory with this name."""
-
-    overwrite: list[str] = list_field()
-    """Whether to overwrite existing parts of the run. Options are 'cache', 'scores', and 'visualize'."""
-
-    max_latents: int | None = None
-    """Maximum number of latents to explain for each SAE."""
-
-    load_in_8bit: bool = False
-    """Load the model in 8-bit mode."""
-
-    hf_token: str | None = None
-    """Huggingface API token for downloading models."""
-
-    pipeline_num_proc: int = field(
-        default_factory=lambda: cpu_count() // 2,
-    )
-    """Number of processes to use for preprocessing data"""
-
-    num_gpus: int = field(
-        default=1,
-    )
-    """Number of GPUs to use for explanation generation."""
-
-    seed: int = field(
-        default=22,
-    )
-    """Seed for the random number generator."""
-
-    filter_bos: bool = False
-    """Tokens to filter out from the cache."""
 
 
 def load_artifacts(run_cfg: RunConfig):
@@ -437,6 +443,9 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
         )
     else:
         print(f"Files found in {scores_path}, skipping...")
+
+    if run_cfg.log:
+        log_results(scores_path, run_cfg.hookpoints)
 
 
 if __name__ == "__main__":
