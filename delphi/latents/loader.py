@@ -37,7 +37,6 @@ class BufferOutput(NamedTuple):
     latent: Latent
     locations: TensorType["locations", 2]
     activations: TensorType["locations"]
-    tokens: TensorType["tokens"]
     
 class TensorBuffer:
     """
@@ -86,7 +85,6 @@ class TensorBuffer:
                     Latent(self.module_path, int(latents[i].item())),
                     latent_locations,
                     latent_activations,
-                    tokens
                 )
 
     def load(self):
