@@ -264,7 +264,7 @@ async def process_cache(
     constructor = partial(
         default_constructor,
         token_loader=None,
-        n_random=experiment_cfg.n_random,
+        n_not_active=experiment_cfg.n_non_activating,
         ctx_len=experiment_cfg.example_ctx_len,
         max_examples=latent_cfg.max_examples,
     )
