@@ -20,6 +20,8 @@ To run a minimal pipeline from the command line, you can use the following comma
 
 This will cache the activations of the first 10 million tokens of EleutherAI/rpj-v2-sample, generate explanations for the first 100 features of layer 5 using the explainer model, then score the explanations using fuzzing and detection scorers. Summary metrics including F1 and confusion matrices for each scorer are logged by default.
 
+The pipeline is highly configurable and can be invoked programmatically. For an example, see the [end-to-end test](https://github.com/EleutherAI/delphi/blob/main/delphi/tests/e2e.py).
+
 ## Loading Autoencoders
 
 This library uses NNsight to load and edit a model with sparse auxiliary models. We provide wrappers to load GPT-2 autoencoders trained by [OpenAI](https://github.com/openai/sparse_autoencoder), for the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for SAEs and transcoders trained by EleutherAI using [SAE](https://github.com/EleutherAI/sae). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
