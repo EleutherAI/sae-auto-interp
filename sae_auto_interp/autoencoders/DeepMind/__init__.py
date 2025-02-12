@@ -16,7 +16,7 @@ def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,in
         path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
         sae = JumpReLUSAE.from_pretrained(path,type,"cuda")
         
-        sae.half()
+        #sae.half()
         def _forward(sae, x):
             encoded = sae.encode(x)
             return encoded

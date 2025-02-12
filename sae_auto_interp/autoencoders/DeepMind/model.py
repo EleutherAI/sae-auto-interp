@@ -43,4 +43,5 @@ class JumpReLUSAE(nn.Module):
     model.load_state_dict(pt_params)
     if device == "cuda":
         model.cuda()
+    model.to(torch.bfloat16)
     return model
