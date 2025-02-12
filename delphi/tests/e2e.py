@@ -6,13 +6,14 @@ import time
 
 from delphi.config import ExperimentConfig, LatentConfig, CacheConfig
 from delphi.__main__ import run, RunConfig
-from delphi.log.result_analysis import build_scores_df, feature_balanced_score_metrics
+from delphi.log.result_analysis import build_scores_df, latent_balanced_score_metrics
 
 
 async def test():
     cache_cfg = CacheConfig(
-        dataset_repo="EleutherAI/rpj-v2-sample",
+        dataset_repo="EleutherAI/fineweb-edu-dedup-10b",
         dataset_split="train[:1%]",
+        dataset_row="text",
         batch_size=8,
         ctx_len=256,
         n_splits=5,

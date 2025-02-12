@@ -73,8 +73,8 @@ def parse_score_file(file_path):
     } for example in data])
     
     # Calculate basic counts
-    failed_count = (df['prediction'] == -1).sum()
-    df = df[df['prediction'] != -1]
+    failed_count = (df['prediction'].isna()).sum()
+    df = df[df['prediction'].notna()]
     df.reset_index(drop=True, inplace=True)
     total_examples = len(df)
     total_positives = (df["ground_truth"]).sum()
@@ -98,7 +98,7 @@ def parse_score_file(file_path):
     f1_score = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
     
     # Calculate accuracy
-    accuracy = (true_positives + true_negatives) / total_examples
+    accuracy = (true_positives + true_negatives) / total_examples if total_examples > 0 else 0
     
     # Add metrics to first row
     metrics = {
@@ -117,8 +117,8 @@ def parse_score_file(file_path):
         "total_examples": total_examples,
         "total_positives": total_positives,
         "total_negatives": total_negatives,
-        "positive_class_ratio": total_positives / total_examples,
-        "negative_class_ratio": total_negatives / total_examples,
+        "positive_class_ratio": total_positives / total_examples if total_examples > 0 else 0,
+        "negative_class_ratio": total_negatives / total_examples if total_examples > 0 else 0,
         "failed_count": failed_count,
     }
     
@@ -138,7 +138,7 @@ def build_scores_df(path: Path, target_modules: list[str], range: Tensor | None 
     ]
     df_data = {
         col: [] 
-        for col in ["file_name", "score_type", "feature_idx", "module"] + metrics_cols
+        for col in ["file_name", "score_type", "latent_idx", "module"] + metrics_cols
     }
 
     # Get subdirectories in the scores path
@@ -151,16 +151,19 @@ def build_scores_df(path: Path, target_modules: list[str], range: Tensor | None 
             for score_file in list(score_type_path.glob(f"*{module}*")) + list(
                 score_type_path.glob(f".*{module}*")
             ):
-                feature_idx = int(score_file.stem.split("feature")[-1])
-                if range is not None and feature_idx not in range:
+                if "latent" in score_file.stem:
+                    latent_idx = int(score_file.stem.split("latent")[-1])
+                else:
+                    latent_idx = int(score_file.stem.split("feature")[-1])
+                if range is not None and latent_idx not in range:
                     continue
 
                 df = parse_score_file(score_file)
 
-                # Calculate the accuracy and cross entropy loss for this feature
+                # Calculate the accuracy and cross entropy loss for this latent
                 df_data["file_name"].append(score_file.stem)
                 df_data["score_type"].append(score_type)
-                df_data["feature_idx"].append(feature_idx)
+                df_data["latent_idx"].append(latent_idx)
                 df_data["module"].append(module)
                 for col in metrics_cols: df_data[col].append(df.loc[0, col])
 
