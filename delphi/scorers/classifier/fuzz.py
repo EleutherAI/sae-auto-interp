@@ -81,29 +81,31 @@ class FuzzingScorer(Classifier, Scorer):
             all_examples.extend(examples_chunk)
 
         n_incorrect = self.mean_n_activations_ceil(all_examples)
-        if isinstance(record.not_active[0], list):
-            # Here we are using neighbours
-            samples = []
-            for i, examples in enumerate(record.not_active):
-                samples.extend(
-                    examples_to_samples(
-                        examples,
-                        distance=-record.neighbours[i].distance,
-                        ground_truth=False,
-                        n_incorrect=n_incorrect,
-                        **defaults,
+        if len(record.not_active) > 0:
+            if isinstance(record.not_active[0], list):
+                # Here we are using neighbours
+                samples = []
+                for i, examples in enumerate(record.not_active):
+                    samples.extend(
+                        examples_to_samples(
+                            examples,
+                            distance=-record.neighbours[i].distance,
+                            ground_truth=False,
+                            n_incorrect=n_incorrect,
+                            **defaults,
+                        )
                     )
+            elif isinstance(record.not_active[0], Example):
+                # This is if we dont use neighbours
+                samples = examples_to_samples(
+                    record.not_active,
+                    distance=-1,
+                    ground_truth=False,
+                    n_incorrect=n_incorrect,
+                    **defaults,
                 )
-        elif isinstance(record.not_active[0], Example):
-            # This is if we dont use neighbours
-            samples = examples_to_samples(
-                record.not_active,
-                distance=-1,
-                ground_truth=False,
-                n_incorrect=n_incorrect,
-                **defaults,
-            )
-
+        else:
+            samples = []
 
         for i, examples in enumerate(record.test):
             samples.extend(
