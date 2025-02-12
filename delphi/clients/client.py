@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Union, Dict, Any
+from typing import Dict, List, Union
 
 
 @dataclass
@@ -15,10 +15,11 @@ class Client(ABC):
         self.model = model
 
     @abstractmethod
-    async def generate(self, prompt: Union[str, List[Dict[str, str]]], **kwargs) -> Response:
+    async def generate(
+        self, prompt: Union[str, List[Dict[str, str]]], **kwargs
+    ) -> Response:
         pass
 
     # @abstractmethod
     # async def process_response(self, raw_response: Any) -> Response:
     #     pass
-

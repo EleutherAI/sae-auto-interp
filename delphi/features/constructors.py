@@ -1,18 +1,19 @@
+from typing import Callable, Optional
+
 import torch
 from torchtyping import TensorType
-from typing import Callable, Optional
 
 from .features import FeatureRecord, prepare_examples
 from .loader import BufferOutput
 
 
 def _top_k_pools(
-        max_buffer: TensorType["batch"],
-        split_activations: list[TensorType["activations"]], 
-        buffer_tokens: TensorType["batch", "ctx_len"], 
-        ctx_len: int, 
-        max_examples: int
-    ):
+    max_buffer: TensorType["batch"],
+    split_activations: list[TensorType["activations"]],
+    buffer_tokens: TensorType["batch", "ctx_len"],
+    ctx_len: int,
+    max_examples: int,
+):
     """
     Get the top k activation pools.
 
@@ -34,6 +35,7 @@ def _top_k_pools(
 
     return token_windows, activation_windows
 
+
 def pool_max_activation_windows(
     record,
     buffer_output: BufferOutput,
@@ -51,19 +53,25 @@ def pool_max_activation_windows(
         ctx_len (int): The context length.
         max_examples (int): The maximum number of examples.
     """
-    flat_indices = buffer_output.locations[:, 0] * tokens.shape[1] + buffer_output.locations[:, 1]
+    flat_indices = (
+        buffer_output.locations[:, 0] * tokens.shape[1] + buffer_output.locations[:, 1]
+    )
     ctx_indices = flat_indices // ctx_len
     index_within_ctx = flat_indices % ctx_len
-  
+
     # unique_ctx_indices: array of distinct context window indices in order of first appearance. i.e. sequential integers from 0 to 3903
     # inverses: maps each activation back to its index in unique_ctx_indices (can be used to dereference the context window idx of each activation)
     # lengths: the number of activations per unique context window index
-    unique_ctx_indices, inverses, lengths = torch.unique_consecutive(ctx_indices, return_counts=True, return_inverse=True)
+    unique_ctx_indices, inverses, lengths = torch.unique_consecutive(
+        ctx_indices, return_counts=True, return_inverse=True
+    )
     # Get the max activation magnitude within each context window
-    max_buffer = torch.segment_reduce(buffer_output.activations, 'max', lengths=lengths)
+    max_buffer = torch.segment_reduce(buffer_output.activations, "max", lengths=lengths)
 
     # Deduplicate the context windows
-    new_tensor= torch.zeros(len(unique_ctx_indices), ctx_len, dtype=buffer_output.activations.dtype)
+    new_tensor = torch.zeros(
+        len(unique_ctx_indices), ctx_len, dtype=buffer_output.activations.dtype
+    )
     new_tensor[inverses, index_within_ctx] = buffer_output.activations
 
     buffer_tokens = tokens.reshape(-1, ctx_len)
@@ -74,6 +82,7 @@ def pool_max_activation_windows(
     )
 
     record.examples = prepare_examples(token_windows, activation_windows)
+
 
 def random_non_activating_windows(
     record: FeatureRecord,
@@ -96,7 +105,7 @@ def random_non_activating_windows(
     if n_not_active == 0:
         record.not_active = []
         return
-    
+
     batch_size = tokens.shape[0]
     unique_batch_pos = buffer_output.locations[:, 0].unique()
 
@@ -111,7 +120,9 @@ def random_non_activating_windows(
         record.not_active = []
         return
     else:
-        selected_indices = available_indices[torch.randint(0,len(available_indices),size=(n_not_active,))]
+        selected_indices = available_indices[
+            torch.randint(0, len(available_indices), size=(n_not_active,))
+        ]
 
     toks = tokens[selected_indices, 10 : 10 + ctx_len]
 
@@ -119,6 +130,7 @@ def random_non_activating_windows(
         toks,
         torch.zeros_like(toks),
     )
+
 
 def default_constructor(
     record: FeatureRecord,

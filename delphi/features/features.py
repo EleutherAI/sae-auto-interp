@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
+
 import blobfile as bf
 import orjson
 from torchtyping import TensorType
@@ -16,10 +17,11 @@ class Example:
         activations (TensorType["seq"]): Activation values for the input sequence.
         normalized_activations (TensorType["seq"]): Activations quantized to integers in [0, 10].
     """
+
     tokens: TensorType["seq"]
     activations: TensorType["seq"]
     normalized_activations: Optional[TensorType["seq"]] = None
-    
+
     @property
     def max_activation(self):
         """
@@ -43,13 +45,10 @@ def prepare_examples(tokens, activations):
         List[Example]: A list of prepared examples.
     """
     return [
-        Example(
-            tokens=toks,
-            activations=acts,
-            normalized_activations=None
-        )
+        Example(tokens=toks, activations=acts, normalized_activations=None)
         for toks, acts in zip(tokens, activations)
     ]
+
 
 @dataclass
 class Feature:
@@ -60,6 +59,7 @@ class Feature:
         module_name (str): The module name associated with the feature.
         feature_index (int): The index of the feature within the module.
     """
+
     module_name: str
     feature_index: int
 
@@ -128,7 +128,6 @@ class FeatureRecord:
         serializable.pop("feature")
         with bf.BlobFile(path, "wb") as f:
             f.write(orjson.dumps(serializable))
-    
 
     def display(
         self,
@@ -149,7 +148,9 @@ class FeatureRecord:
         """
         from IPython.core.display import HTML, display
 
-        def _to_string(tokens: TensorType["seq"], activations: TensorType["seq"]) -> str:
+        def _to_string(
+            tokens: TensorType["seq"], activations: TensorType["seq"]
+        ) -> str:
             """
             Convert tokens and activations to a string.
 
@@ -177,7 +178,7 @@ class FeatureRecord:
                     result.append(tokens[i])
                     i += 1
                 return "".join(result)
-        
+
         strings = [
             _to_string(tokenizer.batch_decode(example.tokens), example.activations)
             for example in self.examples[:n]

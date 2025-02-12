@@ -23,13 +23,17 @@ def calculate_max_activation(activation_records: Sequence[ActivationRecord]) -> 
     return max(flattened)
 
 
-def normalize_activations(activation_record: list[float], max_activation: float) -> list[int]:
+def normalize_activations(
+    activation_record: list[float], max_activation: float
+) -> list[int]:
     """Convert raw neuron activations to integers on the range [0, 10]."""
     if max_activation <= 0:
         return [0 for x in activation_record]
     # Relu is used to assume any values less than 0 are indicating the neuron is in the resting
     # state. This is a simplifying assumption that works with relu/gelu.
-    return [min(10, math.floor(10 * relu(x) / max_activation)) for x in activation_record]
+    return [
+        min(10, math.floor(10 * relu(x) / max_activation)) for x in activation_record
+    ]
 
 
 def _format_activation_record(
@@ -41,17 +45,25 @@ def _format_activation_record(
 ) -> str:
     """Format neuron activations into a string, suitable for use in prompts."""
     tokens = activation_record.tokens
-    normalized_activations = normalize_activations(activation_record.activations, max_activation)
+    normalized_activations = normalize_activations(
+        activation_record.activations, max_activation
+    )
     if omit_zeros:
-        assert (not hide_activations) and start_index == 0, "Can't hide activations and omit zeros"
+        assert (
+            not hide_activations
+        ) and start_index == 0, "Can't hide activations and omit zeros"
         tokens = [
-            token for token, activation in zip(tokens, normalized_activations) if activation > 0
+            token
+            for token, activation in zip(tokens, normalized_activations)
+            if activation > 0
         ]
         normalized_activations = [x for x in normalized_activations if x > 0]
 
     entries = []
     assert len(tokens) == len(normalized_activations)
-    for index, token, activation in zip(range(len(tokens)), tokens, normalized_activations):
+    for index, token, activation in zip(
+        range(len(tokens)), tokens, normalized_activations
+    ):
         activation_string = str(int(activation))
         if hide_activations or index < start_index:
             activation_string = UNKNOWN_ACTIVATION_STRING
@@ -125,6 +137,9 @@ def non_zero_activation_proportion(
         for activation_record in activation_records
     ]
     non_zero_activations_count = sum(
-        [len([x for x in activations if x != 0]) for activations in normalized_activations]
+        [
+            len([x for x in activations if x != 0])
+            for activations in normalized_activations
+        ]
     )
     return non_zero_activations_count / total_activations_count

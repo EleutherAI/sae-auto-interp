@@ -1,9 +1,10 @@
-import re
 import asyncio
+import re
 
-from delphi.explainers.explainer import Explainer, ExplainerResult
 from delphi.explainers.default.prompt_builder import build_single_token_prompt
+from delphi.explainers.explainer import Explainer, ExplainerResult
 from delphi.logger import logger
+
 
 class SingleTokenExplainer(Explainer):
     name = "single_token"
@@ -16,7 +17,7 @@ class SingleTokenExplainer(Explainer):
         activations: bool = False,
         cot: bool = False,
         threshold: float = 0.6,
-        temperature: float = 0.,
+        temperature: float = 0.0,
         **generation_kwargs,
     ):
         self.client = client
@@ -30,9 +31,8 @@ class SingleTokenExplainer(Explainer):
         self.generation_kwargs = generation_kwargs
 
     async def __call__(self, record):
-
         messages = self._build_prompt(record.train)
-        
+
         response = await self.client.generate(
             messages, temperature=self.temperature, **self.generation_kwargs
         )
@@ -49,19 +49,23 @@ class SingleTokenExplainer(Explainer):
             return ExplainerResult(record=record, explanation=explanation)
         except Exception as e:
             logger.error(f"Explanation parsing failed: {e}")
-            return ExplainerResult(record=record, explanation="Explanation could not be parsed.")
+            return ExplainerResult(
+                record=record, explanation="Explanation could not be parsed."
+            )
 
     def parse_explanation(self, text: str) -> str:
         try:
             match = re.search(r"\[EXPLANATION\]:\s*(.*)", text, re.DOTALL)
-            return match.group(1).strip() if match else "Explanation could not be parsed."
+            return (
+                match.group(1).strip() if match else "Explanation could not be parsed."
+            )
         except Exception as e:
             logger.error(f"Explanation parsing regex failed: {e}")
             raise
 
     def _highlight(self, index, example):
         # result = f"Example {index}: "
-        result = f""
+        result = ""
         threshold = example.max_activation * self.threshold
         if self.tokenizer is not None:
             str_toks = self.tokenizer.batch_decode(example.tokens)
@@ -94,7 +98,9 @@ class SingleTokenExplainer(Explainer):
 
         for i, activation in enumerate(example.activations):
             if activation > example.max_activation * self.threshold:
-                activations.append((example.str_toks[i], int(example.normalized_activations[i])))
+                activations.append(
+                    (example.str_toks[i], int(example.normalized_activations[i]))
+                )
 
         acts = ", ".join(f'("{item[0]}" : {item[1]})' for item in activations)
 

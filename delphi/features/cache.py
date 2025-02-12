@@ -74,9 +74,7 @@ class Cache:
                 self.feature_activations[module_path], dim=0
             )
 
-            self.tokens[module_path] = torch.cat(
-                self.tokens[module_path], dim=0
-            )
+            self.tokens[module_path] = torch.cat(self.tokens[module_path], dim=0)
 
     def get_nonzeros_batch(self, latents: TensorType["batch", "seq", "feature"]):
         """
@@ -89,22 +87,24 @@ class Cache:
             Tuple[torch.Tensor, torch.Tensor]: Non-zero feature locations and activations.
         """
         # Calculate the maximum batch size that fits within sys.maxsize
-        max_batch_size = torch.iinfo(torch.int32).max // (latents.shape[1] * latents.shape[2])
+        max_batch_size = torch.iinfo(torch.int32).max // (
+            latents.shape[1] * latents.shape[2]
+        )
         nonzero_feature_locations = []
         nonzero_feature_activations = []
-        
+
         for i in range(0, latents.shape[0], max_batch_size):
-            batch = latents[i:i+max_batch_size]
-            
+            batch = latents[i : i + max_batch_size]
+
             # Get nonzero locations and activations
             batch_locations = torch.nonzero(batch.abs() > 1e-5)
             batch_activations = batch[batch.abs() > 1e-5]
-            
+
             # Adjust indices to account for batching
-            batch_locations[:, 0] += i 
+            batch_locations[:, 0] += i
             nonzero_feature_locations.append(batch_locations)
             nonzero_feature_activations.append(batch_activations)
-        
+
         # Concatenate results
         nonzero_feature_locations = torch.cat(nonzero_feature_locations, dim=0)
         nonzero_feature_activations = torch.cat(nonzero_feature_activations, dim=0)
@@ -125,11 +125,14 @@ class Cache:
         """
         size = latents.shape[1] * latents.shape[0] * latents.shape[2]
         if size > torch.iinfo(torch.int32).max:
-            nonzero_feature_locations, nonzero_feature_activations = self.get_nonzeros_batch(latents)
+            (
+                nonzero_feature_locations,
+                nonzero_feature_activations,
+            ) = self.get_nonzeros_batch(latents)
         else:
             nonzero_feature_locations = torch.nonzero(latents.abs() > 1e-5)
             nonzero_feature_activations = latents[latents.abs() > 1e-5]
-        
+
         # Return all nonzero features if no filter is provided
         if self.filters is None:
             return nonzero_feature_locations, nonzero_feature_activations
@@ -173,7 +176,6 @@ class FeatureCache:
         self.cache = Cache(filters, batch_size=batch_size)
         if filters is not None:
             self.filter_submodules(filters)
-
 
     def load_token_batches(
         self, n_tokens: int, tokens: TensorType["batch", "sequence"]
@@ -298,24 +300,27 @@ class FeatureCache:
             feature_locations = self.cache.feature_locations[module_path]
             feature_activations = self.cache.feature_activations[module_path]
             tokens = self.cache.tokens[module_path].numpy()
-            
+
             feature_indices = feature_locations[:, 2]
 
             for start, end in split_indices:
                 mask = (feature_indices >= start) & (feature_indices <= end)
 
                 masked_activations = feature_activations[mask].half().numpy()
-                
-                masked_locations = feature_locations[mask].numpy()
-                
-                # Optimization to reduce the max value to enable a smaller dtype
-                masked_locations[:, 2] = masked_locations[:, 2] - start.item() 
 
-                if masked_locations[:, 2].max() < 2**16 and masked_locations[:, 0].max() < 2**16:
+                masked_locations = feature_locations[mask].numpy()
+
+                # Optimization to reduce the max value to enable a smaller dtype
+                masked_locations[:, 2] = masked_locations[:, 2] - start.item()
+
+                if (
+                    masked_locations[:, 2].max() < 2**16
+                    and masked_locations[:, 0].max() < 2**16
+                ):
                     masked_locations = masked_locations.astype(np.uint16)
                 else:
                     masked_locations = masked_locations.astype(np.uint32)
-                
+
                 module_dir = f"{save_dir}/{module_path}"
                 os.makedirs(module_dir, exist_ok=True)
 

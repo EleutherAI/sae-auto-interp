@@ -30,7 +30,6 @@ def build_prompt(
     activations: bool = False,
     cot: bool = False,
 ):
-    
     messages = system(
         cot=cot,
     )
@@ -53,10 +52,10 @@ def build_prompt(
 
     return messages
 
+
 def build_single_token_prompt(
     examples,
 ):
-    
     messages = system_single_token()
 
     user_start = f"WORDS: {examples}"

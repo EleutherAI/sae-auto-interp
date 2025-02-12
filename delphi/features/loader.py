@@ -28,6 +28,7 @@ class BufferOutput(NamedTuple):
         activations (TensorType["locations"]): Tensor of feature activations.
         tokens (TensorType["tokens"]): Tensor of all tokens.
     """
+
     feature: Feature
     locations: TensorType["locations", 2]
     activations: TensorType["locations"]
@@ -59,7 +60,7 @@ class TensorBuffer:
         self.module_path = module_path
         self.features = features
         self.min_examples = min_examples
-        
+
     def __iter__(self):
         """
         Iterate over the buffer, yielding BufferOutput objects.
@@ -68,7 +69,7 @@ class TensorBuffer:
             Union[BufferOutput, None]: BufferOutput if enough examples, None otherwise.
         """
         features, split_locations, split_activations, tokens = self.load()
-        
+
         for i in range(len(features)):
             feature_locations = split_locations[i]
             feature_activations = split_activations[i]
@@ -79,7 +80,7 @@ class TensorBuffer:
                     Feature(self.module_path, int(features[i].item())),
                     feature_locations,
                     feature_activations,
-                    tokens
+                    tokens,
                 )
 
     def load(self):
@@ -91,26 +92,25 @@ class TensorBuffer:
             tokens = torch.tensor(split_data["tokens"].astype(np.int64))
         else:
             tokens = None
-        
-        locations[:,2] = locations[:,2] + first_feature
-        
+
+        locations[:, 2] = locations[:, 2] + first_feature
+
         if self.features is not None:
-            wanted_locations = torch.isin(locations[:,2], self.features)
+            wanted_locations = torch.isin(locations[:, 2], self.features)
             locations = locations[wanted_locations]
             activations = activations[wanted_locations]
-        
-        indices = torch.argsort(locations[:,2], stable=True)
+
+        indices = torch.argsort(locations[:, 2], stable=True)
         activations = activations[indices]
         locations = locations[indices]
-        unique_features, counts = torch.unique_consecutive(locations[:,2], return_counts=True)
+        unique_features, counts = torch.unique_consecutive(
+            locations[:, 2], return_counts=True
+        )
         features = unique_features
         split_locations = torch.split(locations, counts.tolist())
         split_activations = torch.split(activations, counts.tolist())
 
         return features, split_locations, split_activations, tokens
-
-
-
 
     def reset(self):
         """Reset the buffer state."""
@@ -148,13 +148,15 @@ class FeatureDataset:
             self._build(raw_dir, modules)
         else:
             # TODO fix type error
-            self._build_selected(raw_dir, modules, features) # type: ignore
+            self._build_selected(raw_dir, modules, features)  # type: ignore
 
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:
-            temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
+            temp_model = LanguageModel(
+                cache_config["model_name"], device_map="cpu", dispatch=False
+            )
             self.tokenizer = temp_model.tokenizer
         else:
             self.tokenizer = tokenizer
@@ -164,7 +166,7 @@ class FeatureDataset:
         """
         Load tokenized data for the dataset.
         Caches the tokenized data if not already loaded.
-        
+
         Returns:
             torch.Tensor: The tokenized dataset.
         """
@@ -176,7 +178,8 @@ class FeatureDataset:
                 self.cache_config["dataset_split"],
                 self.cache_config["dataset_name"],
                 column_name=self.cache_config.get(
-                    "dataset_column_name", self.cache_config.get("dataset_row", "raw_content")
+                    "dataset_column_name",
+                    self.cache_config.get("dataset_row", "raw_content"),
                 ),
             )
         return self.tokens
@@ -205,7 +208,10 @@ class FeatureDataset:
                 )
 
     def _build_selected(
-        self, raw_dir: str, modules: List[str], features: Dict[str, Union[int, torch.Tensor]]
+        self,
+        raw_dir: str,
+        modules: List[str],
+        features: Dict[str, Union[int, torch.Tensor]],
     ):
         """
         Build a dataset buffer which loads only selected features.
@@ -221,7 +227,7 @@ class FeatureDataset:
             selected_features = features[module]
             if isinstance(selected_features, int):
                 selected_features = torch.tensor([selected_features])
-            
+
             bucketized = torch.bucketize(selected_features, edges, right=True)
             unique_buckets = torch.unique(bucketized)
 
@@ -233,7 +239,7 @@ class FeatureDataset:
 
                 # Adjust end by one as the path avoids overlap
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
-                
+
                 self.buffers.append(
                     TensorBuffer(
                         path,
@@ -246,7 +252,7 @@ class FeatureDataset:
     def __len__(self):
         """Return the number of buffers in the dataset."""
         return len(self.buffers)
-        
+
     def load(
         self,
         collate: bool = False,
@@ -266,6 +272,7 @@ class FeatureDataset:
         Returns:
             Union[List[FeatureRecord], Generator]: Processed feature records.
         """
+
         def _process(buffer_output: BufferOutput):
             record = FeatureRecord(buffer_output.feature)
             if constructor is not None:
@@ -287,7 +294,7 @@ class FeatureDataset:
             ]
 
         return self._load(collate, _worker)
-    
+
     def _load(self, collate: bool, _worker: Callable):
         """
         Internal method to load feature records.
@@ -307,11 +314,12 @@ class FeatureDataset:
         else:
             for buffer in self.buffers:
                 yield _worker(buffer)
-    
+
     def reset(self):
         """Reset all buffers in the dataset."""
         for buffer in self.buffers:
             buffer.reset()
+
 
 class FeatureLoader:
     """
@@ -320,10 +328,10 @@ class FeatureLoader:
 
     def __init__(
         self,
-        feature_dataset: 'FeatureDataset',
+        feature_dataset: "FeatureDataset",
         constructor: Optional[Callable] = None,
         sampler: Optional[Callable] = None,
-        transform: Optional[Callable] = None
+        transform: Optional[Callable] = None,
     ):
         """
         Initialize a FeatureLoader.

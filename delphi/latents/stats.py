@@ -1,6 +1,5 @@
 from collections import defaultdict
 from math import floor
-from typing import List
 
 import numpy as np
 import torch

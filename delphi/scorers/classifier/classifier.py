@@ -44,8 +44,6 @@ class Classifier(Scorer):
         self.generation_kwargs = generation_kwargs
         self.log_prob = log_prob
 
-
-
     async def __call__(
         self,
         record: LatentRecord,
@@ -58,13 +56,12 @@ class Classifier(Scorer):
             record.explanation,
             samples,
         )
-        
+
         return ScorerResult(record=record, score=results)
 
     @abstractmethod
     def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
         pass
-
 
     async def _query(
         self,
@@ -80,12 +77,11 @@ class Classifier(Scorer):
             async with sem:
                 result = await self._generate(explanation, batch)
                 return result
-    
+
         tasks = [asyncio.create_task(_process(explanation, batch)) for batch in batches]
         results = await asyncio.gather(*tasks)
 
         return sum(results, [])
-    
 
     async def _generate(
         self, explanation: str, batch: list[Sample]
@@ -131,9 +127,8 @@ class Classifier(Scorer):
                 result.text = sample.text
         return results
 
-    
     def _parse(self, string, logprobs=None):
-        """Extract binary predictions and probabilities from a string and 
+        """Extract binary predictions and probabilities from a string and
         optionally its token logprobs."""
         # Matches the first instance of text enclosed in square brackets
         pattern = r"\[.*?\]"
@@ -149,25 +144,25 @@ class Classifier(Scorer):
 
         return predictions, probabilities
 
-
     def _parse_logprobs(self, logprobs: list):
         """
-        Extracts normalized probabilities of '1' vs '0' tokens from the top n log probabilities for each 
-        token in a response string of form '[x, x, x, ...]'. The normalized probability is computed as 
+        Extracts normalized probabilities of '1' vs '0' tokens from the top n log probabilities for each
+        token in a response string of form '[x, x, x, ...]'. The normalized probability is computed as
         P(1)/(P(0) + P(1)), where P(0) and P(1) are summed over all matching tokens in the top 5 candidates.
 
         Args:
             logprobs (list): Contains top n log probabilities for each token in the response.
 
         Returns:
-            list: Normalized probabilities between 0 and 1, where each value represents P(token='1')."""
+            list: Normalized probabilities between 0 and 1, where each value represents P(token='1').
+        """
         binary_probabilities: list[float] = []
-        
+
         for i in range(len(logprobs)):
             if "1" in logprobs[i].token or "0" in logprobs[i].token:
                 top_logprobs = logprobs[i].top_logprobs
-                prob_0 = 0.
-                prob_1 = 0.
+                prob_0 = 0.0
+                prob_1 = 0.0
                 for i in range(len(top_logprobs)):
                     token = top_logprobs[i].token
                     logprob = top_logprobs[i].logprob
@@ -178,11 +173,10 @@ class Classifier(Scorer):
                 if prob_0 + prob_1 > 0:
                     binary_probabilities.append(prob_1 / (prob_0 + prob_1))
                 else:
-                    binary_probabilities.append(0.)
+                    binary_probabilities.append(0.0)
 
         assert len(binary_probabilities) == self.n_examples_shown
         return binary_probabilities
-
 
     def _build_prompt(
         self,
@@ -196,7 +190,7 @@ class Classifier(Scorer):
         examples = "\n".join(
             f"Example {i}: {sample.text}" for i, sample in enumerate(batch)
         )
-        
+
         return self.prompt(explanation=explanation, examples=examples)
 
     def _batch(self, samples):

@@ -21,5 +21,5 @@ __all__ = [
     "sample",
     "get_neighbors",
     "unigram",
-    "FeatureLoader"
+    "FeatureLoader",
 ]

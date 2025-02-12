@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional
+from typing import Optional
 
 from simple_parsing import Serializable
 
@@ -17,15 +17,15 @@ class Example(Serializable):
     explanation: str
     first_revealed_activation_indices: list[int]
     """
-    For each activation record, the index of the first token for which the activation 
+    For each activation record, the index of the first token for which the activation
     value in the prompt should be an actual number rather than "unknown".
 
     Examples all start with the activations rendered as "unknown", then transition to
-    revealing specific normalized activation values. The goal is to lead the model to 
-    predict that activation sequences will eventually transition to predicting specific 
+    revealing specific normalized activation values. The goal is to lead the model to
+    predict that activation sequences will eventually transition to predicting specific
     activation values instead of just "unknown". This lets us cheat and get predictions
-    of activation values for every token in a single round of inference by having the 
-    activations in the sequence we're predicting always be "unknown" in the prompt: the 
+    of activation values for every token in a single round of inference by having the
+    activations in the sequence we're predicting always be "unknown" in the prompt: the
     model will always think that maybe the next token will be a real activation.
     """
     token_index_to_score: Optional[int] = None
@@ -66,7 +66,7 @@ class FewShotExampleSet(Enum):
     def get_single_token_prediction_example(self) -> Example:
         """
         Returns an example suitable for use in a subprompt for predicting a single
-        token's normalized activation, for use with the "one token at a time" 
+        token's normalized activation, for use with the "one token at a time"
         scoring approach.
         """
         if self is FewShotExampleSet.NEWER:
@@ -1031,9 +1031,9 @@ NEWER_SINGLE_TOKEN_EXAMPLE = Example(
                 0,
                 0,
                 0.37,
-                # This fake activation makes the previous token's activation normalize 
-                # to 8, which might help address overconfidence in "10" activations 
-                # for the one-token-at-a-time scoring prompt. This value and the 
+                # This fake activation makes the previous token's activation normalize
+                # to 8, which might help address overconfidence in "10" activations
+                # for the one-token-at-a-time scoring prompt. This value and the
                 # associated token don't actually appear anywhere in the prompt.
                 0.45,
             ],
@@ -1058,19 +1058,11 @@ JL_FINE_TUNED_EXAMPLES = [
                     " laptop",
                     ".",
                 ],
-                activations=[
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
+                activations=[0, 0, 0, 0, 0, 0, 0],
             ),
         ],
         first_revealed_activation_indices=[],
-        explanation="the word \"laptop\" before the word \"cat\"",
+        explanation='the word "laptop" before the word "cat"',
     ),
     Example(
         activation_records=[
@@ -1084,19 +1076,11 @@ JL_FINE_TUNED_EXAMPLES = [
                     " laptop",
                     ".",
                 ],
-                activations=[
-                    0,
-                    10,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
+                activations=[0, 10, 0, 0, 0, 0, 0],
             ),
         ],
         first_revealed_activation_indices=[],
-        explanation="the word \"cat\" before the word \"laptop\"",
+        explanation='the word "cat" before the word "laptop"',
     ),
     Example(
         activation_records=[
@@ -1109,14 +1093,7 @@ JL_FINE_TUNED_EXAMPLES = [
                     " keyboard",
                     ".",
                 ],
-                activations=[
-                    0,
-                    0,
-                    0,
-                    0,
-                    10,
-                    0
-                ],
+                activations=[0, 0, 0, 0, 10, 0],
             ),
         ],
         first_revealed_activation_indices=[],
@@ -1140,21 +1117,7 @@ JL_FINE_TUNED_EXAMPLES = [
                     " weather",
                     "!",
                 ],
-                activations=[
-                    0,
-                    0,
-                    0,
-                    10,
-                    0,
-                    0,
-                    0,
-                    0,
-                    10,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
+                activations=[0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0],
             ),
         ],
         first_revealed_activation_indices=[],
@@ -1207,9 +1170,9 @@ NEWER_SINGLE_TOKEN_EXAMPLE = Example(
                 0,
                 0,
                 0.37,
-                # This fake activation makes the previous token's activation normalize 
-                # to 8, which might help address overconfidence in "10" activations 
-                # for the one-token-at-a-time scoring prompt. This value and the 
+                # This fake activation makes the previous token's activation normalize
+                # to 8, which might help address overconfidence in "10" activations
+                # for the one-token-at-a-time scoring prompt. This value and the
                 # associated token don't actually appear anywhere in the prompt.
                 0.45,
             ],

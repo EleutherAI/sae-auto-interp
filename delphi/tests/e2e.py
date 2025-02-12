@@ -1,11 +1,11 @@
-from pathlib import Path
-import torch
 import asyncio
 import time
+from pathlib import Path
 
+import torch
 
-from delphi.config import ExperimentConfig, LatentConfig, CacheConfig
-from delphi.__main__ import run, RunConfig
+from delphi.__main__ import RunConfig, run
+from delphi.config import CacheConfig, ExperimentConfig, LatentConfig
 from delphi.log.result_analysis import build_scores_df, latent_balanced_score_metrics
 
 
@@ -50,13 +50,17 @@ async def test():
     print(f"Time taken: {end_time - start_time} seconds")
 
     # Performs better than random guessing
-    scores_path =  Path("results") / run_cfg.name / "scores"
+    scores_path = Path("results") / run_cfg.name / "scores"
     df = build_scores_df(scores_path, run_cfg.hookpoints)
     for score_type in df["score_type"].unique():
-        score_df = df[df['score_type'] == score_type]
-        weighted_mean_metrics = latent_balanced_score_metrics(score_df, score_type, log=False)
+        score_df = df[df["score_type"] == score_type]
+        weighted_mean_metrics = latent_balanced_score_metrics(
+            score_df, score_type, log=False
+        )
 
-        assert weighted_mean_metrics['accuracy'] > 0.55, f"Score type {score_type} has an accuracy of {weighted_mean_metrics['accuracy']}"
+        assert (
+            weighted_mean_metrics["accuracy"] > 0.55
+        ), f"Score type {score_type} has an accuracy of {weighted_mean_metrics['accuracy']}"
 
 
 if __name__ == "__main__":

@@ -1,46 +1,41 @@
-from typing import cast, Dict
-from functools import partial
-from pathlib import Path
-from dataclasses import dataclass
-from glob import glob
-import json
-from dataclasses import dataclass
-from multiprocessing import cpu_count
 import asyncio
+import json
 import os
+from dataclasses import dataclass
+from functools import partial
+from glob import glob
+from multiprocessing import cpu_count
+from pathlib import Path
+from typing import Dict, cast
 
-from simple_parsing import ArgumentParser, field
+import orjson
 import torch
-from torch import Tensor
 import torch.nn as nn
+from datasets import load_dataset
+from nnsight import LanguageModel
+from simple_parsing import ArgumentParser, field, list_field
+from sparsify.data import chunk_and_tokenize
+from torch import Tensor
+from torchtyping import TensorType
 from transformers import (
+    BitsAndBytesConfig,
     PreTrainedTokenizer,
     PreTrainedTokenizerFast,
-    BitsAndBytesConfig,
 )
-import orjson
-from torchtyping import TensorType
-from nnsight import LanguageModel
-from datasets import load_dataset
-from sparsify.data import chunk_and_tokenize
-from simple_parsing import field, list_field
 
-from delphi.config import ExperimentConfig, LatentConfig
+from delphi.autoencoders.DeepMind import JumpReLUSAE
+from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
+from delphi.autoencoders.wrapper import AutoencoderLatents
+from delphi.clients import Offline, OpenRouter
+from delphi.config import CacheConfig, ExperimentConfig, LatentConfig
 from delphi.explainers import DefaultExplainer
-from delphi.latents import LatentDataset, LatentLoader
+from delphi.latents import LatentCache, LatentDataset, LatentLoader
 from delphi.latents.constructors import default_constructor
 from delphi.latents.samplers import sample
-from delphi.pipeline import Pipeline, process_wrapper
-from delphi.clients import Offline, OpenRouter
-from delphi.config import CacheConfig
-from delphi.latents import LatentCache
-from delphi.utils import assert_type
-from delphi.scorers import FuzzingScorer, DetectionScorer
-from delphi.pipeline import Pipe
-from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
-from delphi.autoencoders.DeepMind import JumpReLUSAE
-from delphi.autoencoders.wrapper import AutoencoderLatents
 from delphi.log.result_analysis import log_results
+from delphi.pipeline import Pipe, Pipeline, process_wrapper
+from delphi.scorers import DetectionScorer, FuzzingScorer
+from delphi.utils import assert_type
 
 
 @dataclass
@@ -121,18 +116,26 @@ class RunConfig:
     leak information to the fuzzing scorer, and increases the scorer LLM task difficulty."""
 
 
-def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,int],size:str,type:str, hookpoints):
+def load_gemma_autoencoders(
+    model,
+    ae_layers: list[int],
+    average_l0s: Dict[int, int],
+    size: str,
+    type: str,
+    hookpoints,
+):
     submodules = {}
 
     for layer in ae_layers:
-    
         path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
-        sae = JumpReLUSAE.from_pretrained(path,type,"cuda")
-        
+        sae = JumpReLUSAE.from_pretrained(path, type, "cuda")
+
         sae.half()
+
         def _forward(sae, x):
             encoded = sae.encode(x)
             return encoded
+
         if type == "res":
             submodule = model.model.layers[layer]
         elif type == "mlp":
@@ -143,7 +146,9 @@ def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,in
             sae, partial(_forward, sae), width=sae.W_enc.shape[1]
         )
 
-        hookpoint = [hookpoint for hookpoint in hookpoints if f"layers.{layer}" in hookpoint][0]
+        hookpoint = [
+            hookpoint for hookpoint in hookpoints if f"layers.{layer}" in hookpoint
+        ][0]
 
         submodules[hookpoint] = submodule
 
@@ -180,7 +185,7 @@ def load_artifacts(run_cfg: RunConfig):
     )
 
     # Add SAE hooks to the model
-    if 'gemma' not in run_cfg.sparse_model:
+    if "gemma" not in run_cfg.sparse_model:
         submodule_name_to_submodule, model = load_and_hook_sparsify_models(
             model,  # type: ignore
             run_cfg.sparse_model,
@@ -196,15 +201,15 @@ def load_artifacts(run_cfg: RunConfig):
             average_l0s={10: 47},
             size="131k",
             type="res",
-            hookpoints=run_cfg.hookpoints
+            hookpoints=run_cfg.hookpoints,
         )
         for key, value in submodule_name_to_submodule.items():
             submodule_name_to_submodule[key] = value.to(dtype)
 
-        
     model = assert_type(LanguageModel, model)
 
     return run_cfg.hookpoints, submodule_name_to_submodule, model, model.tokenizer
+
 
 async def process_cache(
     latent_cfg: LatentConfig,
@@ -255,7 +260,10 @@ async def process_cache(
             num_gpus=run_cfg.num_gpus,
         )
     elif run_cfg.explainer_provider == "openrouter":
-        if "OPENROUTER_API_KEY" not in os.environ or not os.environ["OPENROUTER_API_KEY"]:
+        if (
+            "OPENROUTER_API_KEY" not in os.environ
+            or not os.environ["OPENROUTER_API_KEY"]
+        ):
             raise ValueError(
                 "OPENROUTER_API_KEY environment variable not set. Set `--explainer-provider offline` to use a local explainer model."
             )
@@ -378,7 +386,6 @@ def populate_cache(
 
     tokens = cast(TensorType["batch", "seq"], tokens)
 
-
     cache = LatentCache(
         hooked_model,
         submodule_name_to_submodule,
@@ -395,7 +402,12 @@ def populate_cache(
     cache.save_config(save_dir=str(latents_path), cfg=cfg, model_name=run_cfg.model)
 
 
-async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_cfg: CacheConfig, run_cfg: RunConfig):
+async def run(
+    experiment_cfg: ExperimentConfig,
+    latent_cfg: LatentConfig,
+    cache_cfg: CacheConfig,
+    run_cfg: RunConfig,
+):
     base_path = Path.cwd() / "results"
     if run_cfg.name:
         base_path = base_path / run_cfg.name
@@ -409,9 +421,7 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
     scores_path = base_path / "scores"
     visualize_path = base_path / "visualize"
 
-    latent_range = (
-        torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
-    )
+    latent_range = torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
 
     hookpoints, submodule_name_to_submodule, hooked_model, tokenizer = load_artifacts(
         run_cfg

@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+from dataclasses import dataclass
 from typing import Callable, Dict, List, NamedTuple, Optional, Union
 
 import numpy as np
@@ -21,56 +22,49 @@ from .latents import Latent, LatentRecord
 class BufferOutput(NamedTuple):
     """
     Represents the output of a TensorBuffer.
-
-    Attributes:
-        latent (Latent): The latent associated with this output.
-        locations (TensorType["locations", 2]): Tensor of latent locations.
-        activations (TensorType["locations"]): Tensor of latent activations.
-        tokens (TensorType["tokens"]): Tensor of all tokens.
     """
+
     latent: Latent
+    """The latent associated with this output."""
+
     locations: TensorType["locations", 2]
+    """Tensor of latent locations."""
+
     activations: TensorType["locations"]
+    """Tensor of latent activations."""
+
     tokens: TensorType["tokens"]
+    """Tensor of all tokens."""
 
 
+@dataclass
 class TensorBuffer:
     """
     Lazy loading buffer for cached splits.
     """
 
-    def __init__(
-        self,
-        path: str,
-        module_path: str,
-        latents: Optional[TensorType["latents"]] = None,
-        min_examples: int = 120,
-    ):
-        """
-        Initialize a TensorBuffer.
+    path: str
+    """Path to the tensor file."""
 
-        Args:
-            path (str): Path to the tensor file.
-            module_path (str): Path of the module.
-            latents (Optional[TensorType["latents"]]): Tensor of latent indices.
-            min_examples (int): Minimum number of examples required. Defaults to 120.
-        """
-        self.tensor_path = path
-        self.module_path = module_path
-        self.latents = latents
-        self.min_examples = min_examples
-        
-   
+    module_path: str
+    """Path of the module."""
+
+    latents: Optional[TensorType["latents"]] = None
+    """Tensor of latent indices."""
+
+    min_examples: int = 120
+    """Minimum number of examples required. Defaults to 120."""
 
     def __iter__(self):
         """
         Iterate over the buffer, yielding BufferOutput objects.
 
         Yields:
-            Union[BufferOutput, None]: BufferOutput if enough examples, None otherwise.
+            Union[BufferOutput, None]: BufferOutput if enough examples,
+                None otherwise.
         """
         latents, split_locations, split_activations, tokens = self.load()
-        
+
         for i in range(len(latents)):
             latent_locations = split_locations[i]
             latent_activations = split_activations[i]
@@ -81,7 +75,7 @@ class TensorBuffer:
                     Latent(self.module_path, int(latents[i].item())),
                     latent_locations,
                     latent_activations,
-                    tokens
+                    tokens,
                 )
 
     def load(self):
@@ -93,26 +87,25 @@ class TensorBuffer:
             tokens = torch.tensor(split_data["tokens"].astype(np.int64))
         else:
             tokens = None
-        
-        locations[:,2] = locations[:,2] + first_latent
-        
+
+        locations[:, 2] = locations[:, 2] + first_latent
+
         if self.latents is not None:
-            wanted_locations = torch.isin(locations[:,2], self.latents)
+            wanted_locations = torch.isin(locations[:, 2], self.latents)
             locations = locations[wanted_locations]
             activations = activations[wanted_locations]
-        
-        indices = torch.argsort(locations[:,2], stable=True)
+
+        indices = torch.argsort(locations[:, 2], stable=True)
         activations = activations[indices]
         locations = locations[indices]
-        unique_latents, counts = torch.unique_consecutive(locations[:,2], return_counts=True)
+        unique_latents, counts = torch.unique_consecutive(
+            locations[:, 2], return_counts=True
+        )
         latents = unique_latents
         split_locations = torch.split(locations, counts.tolist())
         split_activations = torch.split(activations, counts.tolist())
 
         return latents, split_locations, split_activations, tokens
-
-
-
 
     def reset(self):
         """Reset the buffer state."""
@@ -150,13 +143,15 @@ class LatentDataset:
             self._build(raw_dir, modules)
         else:
             # TODO fix type error
-            self._build_selected(raw_dir, modules, latents) # type: ignore
+            self._build_selected(raw_dir, modules, latents)  # type: ignore
 
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:
-            temp_model = LanguageModel(cache_config["model_name"], device_map="cpu", dispatch=False)
+            temp_model = LanguageModel(
+                cache_config["model_name"], device_map="cpu", dispatch=False
+            )
             self.tokenizer = temp_model.tokenizer
         else:
             self.tokenizer = tokenizer
@@ -166,7 +161,7 @@ class LatentDataset:
         """
         Load tokenized data for the dataset.
         Caches the tokenized data if not already loaded.
-        
+
         Returns:
             torch.Tensor: The tokenized dataset.
         """
@@ -178,7 +173,8 @@ class LatentDataset:
                 self.cache_config["dataset_split"],
                 self.cache_config["dataset_name"],
                 column_name=self.cache_config.get(
-                    "dataset_column_name", self.cache_config.get("dataset_row", "raw_content")
+                    "dataset_column_name",
+                    self.cache_config.get("dataset_row", "raw_content"),
                 ),
             )
         return self.tokens
@@ -207,7 +203,10 @@ class LatentDataset:
                 )
 
     def _build_selected(
-        self, raw_dir: str, modules: List[str], latents: Dict[str, Union[int, torch.Tensor]]
+        self,
+        raw_dir: str,
+        modules: List[str],
+        latents: Dict[str, Union[int, torch.Tensor]],
     ):
         """
         Build a dataset buffer which loads only selected latents.
@@ -215,7 +214,8 @@ class LatentDataset:
         Args:
             raw_dir (str): Directory containing raw latent data.
             modules (List[str]): List of module names to include.
-            latents (Dict[str, Union[int, torch.Tensor]]): Dictionary of latents per module.
+            latents (Dict[str, Union[int, torch.Tensor]]): Dictionary of latents
+                per module.
         """
         edges = self._edges()
 
@@ -223,7 +223,7 @@ class LatentDataset:
             selected_latents = latents[module]
             if isinstance(selected_latents, int):
                 selected_latents = torch.tensor([selected_latents])
-            
+
             bucketized = torch.bucketize(selected_latents, edges, right=True)
             unique_buckets = torch.unique(bucketized)
 
@@ -235,7 +235,7 @@ class LatentDataset:
 
                 # Adjust end by one as the path avoids overlap
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
-                
+
                 self.buffers.append(
                     TensorBuffer(
                         path,
@@ -248,7 +248,7 @@ class LatentDataset:
     def __len__(self):
         """Return the number of buffers in the dataset."""
         return len(self.buffers)
-        
+
     def load(
         self,
         collate: bool = False,
@@ -268,6 +268,7 @@ class LatentDataset:
         Returns:
             Union[List[LatentRecord], Generator]: Processed latent records.
         """
+
         def _process(buffer_output: BufferOutput):
             record = LatentRecord(buffer_output.latent)
             if constructor is not None:
@@ -289,7 +290,7 @@ class LatentDataset:
             ]
 
         return self._load(collate, _worker)
-    
+
     def _load(self, collate: bool, _worker: Callable):
         """
         Internal method to load latent records.
@@ -309,11 +310,12 @@ class LatentDataset:
         else:
             for buffer in self.buffers:
                 yield _worker(buffer)
-    
+
     def reset(self):
         """Reset all buffers in the dataset."""
         for buffer in self.buffers:
             buffer.reset()
+
 
 class LatentLoader:
     """
@@ -322,10 +324,10 @@ class LatentLoader:
 
     def __init__(
         self,
-        latent_dataset: 'LatentDataset',
+        latent_dataset: "LatentDataset",
         constructor: Optional[Callable] = None,
         sampler: Optional[Callable] = None,
-        transform: Optional[Callable] = None
+        transform: Optional[Callable] = None,
     ):
         """
         Initialize a LatentLoader.

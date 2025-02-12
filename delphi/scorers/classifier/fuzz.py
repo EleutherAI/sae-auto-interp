@@ -1,12 +1,11 @@
 from math import ceil
-from typing import List
 
 import torch
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
-from ...latents.latents import Example
 from ...latents import LatentRecord
+from ...latents.latents import Example
 from ..scorer import Scorer
 from .classifier import Classifier
 from .prompts.fuzz_prompt import prompt
@@ -24,7 +23,7 @@ class FuzzingScorer(Classifier, Scorer):
         n_examples_shown: int = 10,
         threshold: float = 0.3,
         log_prob: bool = False,
-        temperature: float = 0.,
+        temperature: float = 0.0,
         **generation_kwargs,
     ):
         """
@@ -67,10 +66,7 @@ class FuzzingScorer(Classifier, Scorer):
         """
         Prepare and shuffle a list of samples for classification.
         """
-        assert (
-            len(record.test) > 0 
-            and len(record.test[0]) > 0
-        ), "No test records found"
+        assert len(record.test) > 0 and len(record.test[0]) > 0, "No test records found"
 
         defaults = {
             "highlighted": True,

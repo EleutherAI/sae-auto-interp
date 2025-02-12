@@ -1,25 +1,31 @@
 import asyncio
+import json
 from dataclasses import dataclass
 from functools import partial
-from typing import Any, Dict, List, Union
+from typing import Dict, List, Union
 
 from transformers import AutoTokenizer
 from vllm import LLM, SamplingParams
+from vllm.distributed.parallel_state import (
+    destroy_distributed_environment,
+    destroy_model_parallel,
+)
 
 from ..logger import logger
 from .client import Client, Response
-from vllm.distributed.parallel_state import destroy_model_parallel, destroy_distributed_environment
-import json
+
 
 @dataclass
 class Top_Logprob:
     token: str
     logprob: float
 
+
 @dataclass
 class Logprobs:
     token: str
     top_logprobs: list[Top_Logprob]
+
 
 @dataclass
 class Statistics:
@@ -43,7 +49,8 @@ class Offline(Client):
         statistics: bool = False,
     ):
         """Client for offline generation. Models not already present in the on-disk HuggingFace cache
-        will be downloaded. Note that temperature must be increased for best-of-n sampling."""
+        will be downloaded. Note that temperature must be increased for best-of-n sampling.
+        """
         super().__init__(model)
         self.model = model
         self.queue = asyncio.Queue()
@@ -77,31 +84,56 @@ class Offline(Client):
             if "temperature" in kwarg:
                 self.sampling_params.temperature = kwarg["temperature"]
         loop = asyncio.get_running_loop()
-        prompts=[]
+        prompts = []
         if self.statistics:
-            statistics=[]
+            statistics = []
         for batch in batches:
-            prompt = self.tokenizer.apply_chat_template(batch, add_generation_prompt=True, tokenize=True)
+            prompt = self.tokenizer.apply_chat_template(
+                batch, add_generation_prompt=True, tokenize=True
+            )
             prompts.append(prompt)
             if self.statistics:
-                non_cached_tokens = len(self.tokenizer.apply_chat_template(batch[-1:], add_generation_prompt=True, tokenize=True))
-                statistics.append(Statistics(num_prompt_tokens=len(prompt), num_new_tokens=non_cached_tokens, num_generated_tokens=0))
+                non_cached_tokens = len(
+                    self.tokenizer.apply_chat_template(
+                        batch[-1:], add_generation_prompt=True, tokenize=True
+                    )
+                )
+                statistics.append(
+                    Statistics(
+                        num_prompt_tokens=len(prompt),
+                        num_new_tokens=non_cached_tokens,
+                        num_generated_tokens=0,
+                    )
+                )
         response = await loop.run_in_executor(
-            None, 
-            partial(self.client.generate, prompt_token_ids=prompts, sampling_params=self.sampling_params, use_tqdm=False)
+            None,
+            partial(
+                self.client.generate,
+                prompt_token_ids=prompts,
+                sampling_params=self.sampling_params,
+                use_tqdm=False,
+            ),
         )
 
-        new_response = []   
-        for i,r in enumerate(response):
-            logprobs,prompt_logprobs=self._parse_logprobs(r)
+        new_response = []
+        for i, r in enumerate(response):
+            logprobs, prompt_logprobs = self._parse_logprobs(r)
             if self.statistics:
-                statistics[i].num_generated_tokens = len(r.outputs[0].token_ids )
+                statistics[i].num_generated_tokens = len(r.outputs[0].token_ids)
                 # save the statistics to a file, name is a hash of the prompt
-                statistics[i].prompt = batches[i][-1]['content']
+                statistics[i].prompt = batches[i][-1]["content"]
                 statistics[i].response = r.outputs[0].text
-                with open(f"statistics/{hash(batches[i][-1]['content'][-100:])}.json", "w") as f:
+                with open(
+                    f"statistics/{hash(batches[i][-1]['content'][-100:])}.json", "w"
+                ) as f:
                     json.dump(statistics[i].__dict__, f)
-            new_response.append(Response(text=r.outputs[0].text, logprobs=logprobs, prompt_logprobs=prompt_logprobs))
+            new_response.append(
+                Response(
+                    text=r.outputs[0].text,
+                    logprobs=logprobs,
+                    prompt_logprobs=prompt_logprobs,
+                )
+            )
         return new_response
 
     async def generate(self, prompt: Union[str, List[Dict[str, str]]], **kwargs) -> str:
@@ -115,15 +147,15 @@ class Offline(Client):
         # print(f"Current queue size: {self.queue.qsize()} prompts")
         return await future
 
-    def _parse_logprobs(self,response):
+    def _parse_logprobs(self, response):
         response_tokens = response.outputs[0].token_ids
-        logprobs=response.outputs[0].logprobs
-        prompt_logprobs=response.prompt_logprobs
+        logprobs = response.outputs[0].logprobs
+        prompt_logprobs = response.prompt_logprobs
         if logprobs is None and prompt_logprobs is None:
-            return None,None
-        logprobs_list=None
+            return None, None
+        logprobs_list = None
         if logprobs is not None:
-            logprobs_list=[]
+            logprobs_list = []
             for i in range(len(logprobs)):
                 log_prob_dict = logprobs[i]
                 top_logprobs = []
@@ -131,12 +163,20 @@ class Offline(Client):
                 for token, logprob in log_prob_dict.items():
                     if token == response_tokens[i]:
                         decoded_token = logprob.decoded_token
-                        top_logprobs.append(Top_Logprob(token=decoded_token, logprob=logprob.logprob))
+                        top_logprobs.append(
+                            Top_Logprob(token=decoded_token, logprob=logprob.logprob)
+                        )
                     else:
-                        top_logprobs.append(Top_Logprob(token=logprob.decoded_token, logprob=logprob.logprob))
-                logprobs_list.append(Logprobs(token=decoded_token, top_logprobs=top_logprobs))
+                        top_logprobs.append(
+                            Top_Logprob(
+                                token=logprob.decoded_token, logprob=logprob.logprob
+                            )
+                        )
+                logprobs_list.append(
+                    Logprobs(token=decoded_token, top_logprobs=top_logprobs)
+                )
 
-        return logprobs_list,prompt_logprobs
+        return logprobs_list, prompt_logprobs
 
     async def _process_batches(self):
         """
@@ -161,7 +201,9 @@ class Offline(Client):
                     await asyncio.sleep(0.1)  # Short sleep if queue is empty
                     continue
 
-                if asyncio.get_event_loop().time() - start_time > 1:  # Time-based batch cutoff
+                if (
+                    asyncio.get_event_loop().time() - start_time > 1
+                ):  # Time-based batch cutoff
                     break
 
             if not batch:
@@ -170,7 +212,7 @@ class Offline(Client):
             try:
                 results = await self.process_func(batch, batch_kwargs)
                 batch_count += 1
-                
+
                 for result, future in zip(results, batch_futures):
                     if not future.done():
                         future.set_result(result)

@@ -1,13 +1,11 @@
-import re
 import asyncio
-
-import torch
+import re
 
 from sae_auto_interp.explainers.explainer import Explainer, ExplainerResult
 from sae_auto_interp.explainers.prompt_builder import build_prompt
-import time
+
 from ...logger import logger
-import numpy as np
+
 
 class OutputExplainer(Explainer):
     name = "output"
@@ -28,17 +26,12 @@ class OutputExplainer(Explainer):
         self.logit_lens = logit_lens
         self.generation_kwargs = generation_kwargs
 
-
     async def __call__(self, record):
-       
         examples = self.prepared_examples
         assert len(examples) > 0, "Prepared examples first"
 
-
-
-
         messages = self._build_prompt(record.train)
-        
+
         response = await self.client.generate(messages, **self.generation_kwargs)
 
         try:
@@ -53,29 +46,28 @@ class OutputExplainer(Explainer):
             return ExplainerResult(record=record, explanation=explanation)
         except Exception as e:
             logger.error(f"Explanation parsing failed: {e}")
-            return ExplainerResult(record=record, explanation="Explanation could not be parsed.")
-
-
-
+            return ExplainerResult(
+                record=record, explanation="Explanation could not be parsed."
+            )
 
     def parse_explanation(self, text: str) -> str:
         try:
             match = re.search(r"\[EXPLANATION\]:\s*(.*)", text, re.DOTALL)
-            return match.group(1).strip() if match else "Explanation could not be parsed."
+            return (
+                match.group(1).strip() if match else "Explanation could not be parsed."
+            )
         except Exception as e:
             logger.error(f"Explanation parsing regex failed: {e}")
             raise
-    
-    
-
-
 
     def _join_activations(self, example):
         activations = []
 
         for i, activation in enumerate(example.activations):
             if activation > example.max_activation * self.threshold:
-                activations.append((example.str_toks[i], int(example.normalized_activations[i])))
+                activations.append(
+                    (example.str_toks[i], int(example.normalized_activations[i]))
+                )
 
         acts = ", ".join(f'("{item[0]}" : {item[1]})' for item in activations)
 

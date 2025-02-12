@@ -10,9 +10,11 @@ from .client import Client
 # Change depending on what model you'd like to use.
 PROVIDER = {"order": ["Together", "DeepInfra"]}
 
+
 class Response:
     def __init__(self, response):
         self.text = response
+
 
 class OpenRouter(Client):
     def __init__(

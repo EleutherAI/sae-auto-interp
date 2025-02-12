@@ -70,8 +70,9 @@ class PromptBuilder:
                     4  # every message follows
                     # <|im_start|>{role/name}\n{content}<|im_end|>\n
                 )
-                num_tokens += len(encoding.encode(message["content"],
-                                                   allowed_special="all"))
+                num_tokens += len(
+                    encoding.encode(message["content"], allowed_special="all")
+                )
             num_tokens += 2  # every reply is primed with <|im_start|>assistant
             return num_tokens
         else:

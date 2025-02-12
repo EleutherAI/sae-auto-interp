@@ -17,7 +17,7 @@ class DetectionScorer(Classifier):
         verbose: bool = False,
         n_examples_shown: int = 10,
         log_prob: bool = False,
-        temperature: float = 0.,
+        temperature: float = 0.0,
         **generation_kwargs,
     ):
         """

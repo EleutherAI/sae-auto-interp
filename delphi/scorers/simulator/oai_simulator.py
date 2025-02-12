@@ -1,13 +1,12 @@
-from typing import List
 
 from ...latents import Example
+from ..scorer import Scorer, ScorerResult
 from .oai_autointerp import (
     ActivationRecord,
     ExplanationNeuronSimulator,
     LogprobFreeExplanationTokenSimulator,
     simulate_and_score,
 )
-from ..scorer import Scorer, ScorerResult
 
 
 class OpenAISimulator(Scorer):
@@ -24,7 +23,7 @@ class OpenAISimulator(Scorer):
         all_at_once=True,
     ):
         self.client = client
-        self.tokenizer = tokenizer  
+        self.tokenizer = tokenizer
         self.all_at_once = all_at_once
 
     async def __call__(self, record):
@@ -45,7 +44,9 @@ class OpenAISimulator(Scorer):
         else:
             non_activation_records = []
 
-        result = await simulate_and_score(simulator, valid_activation_records, non_activation_records)
+        result = await simulate_and_score(
+            simulator, valid_activation_records, non_activation_records
+        )
 
         return ScorerResult(
             record=record,
@@ -56,10 +57,10 @@ class OpenAISimulator(Scorer):
         return [
             [
                 ActivationRecord(
-                    self.tokenizer.batch_decode(example.tokens), example.normalized_activations.half()
+                    self.tokenizer.batch_decode(example.tokens),
+                    example.normalized_activations.half(),
                 )
                 for example in quantiles
             ]
             for quantiles in examples
         ]
-        

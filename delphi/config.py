@@ -16,7 +16,7 @@ class ExperimentConfig(Serializable):
     """Number of latent activation quantiles to sample."""
 
     example_ctx_len: int = 32
-    """Length of each sampled example sequence. Longer sequences 
+    """Length of each sampled example sequence. Longer sequences
     reduce detection scoring performance in weak models."""
 
     n_non_activating: int = 50
@@ -35,8 +35,8 @@ class LatentConfig(Serializable):
     """Number of latents in each autoencoder"""
 
     min_examples: int = 200
-    """Minimum number of examples to generate for a single latent. 
-    If the number of activating examples is less than this, the 
+    """Minimum number of examples to generate for a single latent.
+    If the number of activating examples is less than this, the
     latent will not be explained and scored."""
 
     max_examples: int = 10_000
@@ -52,7 +52,7 @@ class CacheConfig(Serializable):
     """Dataset repository to use for generating latent activations."""
 
     dataset_split: str = "train[:1%]"
-    """Dataset split to use for generating latent activations.""" 
+    """Dataset split to use for generating latent activations."""
 
     dataset_name: str = ""
     """Dataset name to use."""

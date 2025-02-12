@@ -104,7 +104,7 @@ cfg = ExperimentConfig(
     n_quantiles=10, # Number of quantiles to divide the data into
     example_ctx_len=32, # Length of each example
     n_random=100, # Number of non-activating examples shown to the scorer model
-    train_type="quantiles", # Type of sampler to use for training 
+    train_type="quantiles", # Type of sampler to use for training
     test_type="even", # Type of sampler to use for testing
 
 
@@ -116,7 +116,7 @@ sampler = partial(sample, cfg=cfg)
 
 ## Generating Explanations
 
-We currently support using OpenRouter's OpenAI compatible API or running locally with VLLM. Define the client you want to use, then create an explainer from the `.explainers` module. 
+We currently support using OpenRouter's OpenAI compatible API or running locally with VLLM. Define the client you want to use, then create an explainer from the `.explainers` module.
 
 ```python
 from delphi.explainers import DefaultExplainer
@@ -187,7 +187,7 @@ from delphi.explainers import  explanation_loader,random_explanation_loader
 # Because we are running the explainer and scorer separately, we need to add the explanation and extra examples back to the record
 
 def scorer_preprocess(result):
-        record = result.record 
+        record = result.record
         record.explanation = result.explanation
         record.extra_examples = record.not_active
         return record
@@ -234,7 +234,7 @@ pipeline = Pipeline(
 )
 
 asyncio.run(pipeline.run())
-``` 
+```
 
 ### Simulation
 
