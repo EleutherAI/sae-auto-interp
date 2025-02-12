@@ -202,10 +202,10 @@ def neighbour_non_activation_windows(
         mask = torch.zeros(n_windows, dtype=torch.bool)
         mask[unique_batch_pos_active] = True
 
-        # Get the indices where mask is True but active_indices is False
-        new_mask = mask & not_active_mask
+        # Get the indices where mask and not_active_mask are True
+        mask = mask & not_active_mask
 
-        available_indices = new_mask.nonzero().flatten()
+        available_indices = mask.nonzero().flatten()
 
         mask_ctx = torch.isin(ctx_indices, available_indices)
         available_ctx_indices = ctx_indices[mask_ctx]
