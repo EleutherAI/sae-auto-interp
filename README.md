@@ -2,9 +2,9 @@
 
 This library provides utilities for generating and scoring text explanations of sparse autoencoder (SAE) features. The explainer and scorer models can be run locally or acessed using API calls via OpenRouter.
 
-This branch contains the code used for the article [link]. Scripts to launch the experiments are in the experiments directory, which also contains the code to reproduce the figures. We also provide the data used to generate the figures. We also provide simple examples to get started with the experiments, in the [examples](examples) directory.
+This branch contains the code used for the article [Automatically Interpreting Millions of Features in Large Language Models](https://arxiv.org/pdf/2410.13928). Scripts to launch the experiments are in the experiments directory, which also contains the code to reproduce the figures. We also provide the data used to generate the figures. We also provide simple examples to get started with the experiments, in the [examples](examples) directory.
 
-The explanations generated can be found in the [explanations](explanations) directory.
+The explanations generated can be found in the [Huggingface](https://huggingface.co/datasets/EleutherAI/auto_interp_interpretations) repository.
 
 Note that we're still actively improving the codebase and that the newest version on the main branch could require slightly different usage.
 
