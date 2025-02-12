@@ -3,12 +3,25 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import torch
+import torch.nn as nn
 from nnsight import LanguageModel
 from sparsify import Sae
 
 from .Custom.openai import ACTIVATIONS_CLASSES, TopK
 from .wrapper import AutoencoderLatents
 
+class GroupMax(nn.Module):
+    def __init__(self, k: int) -> None:
+        super().__init__()
+        self.k = k
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        value,indices = x.unflatten(-1, (self.k, -1)).max(dim=-1)      
+        offset = torch.arange(0, x.shape[-1], x.shape[-1]//self.k, device=x.device)
+        indices = indices + offset
+        result = torch.zeros_like(x)
+        result.scatter_(-1, indices, value)
+        return result
 DEVICE = "cuda:0"
 
 
@@ -20,7 +33,8 @@ def load_eai_autoencoders(
     transcoder: bool = False,
     randomize: bool = False,
     seed: int = 42,
-    k: Optional[int] = None
+    k: Optional[int] = None,
+    groupmax: bool = False
 ) -> Tuple[Dict[str, Any], Any]:
     """
     Load EleutherAI autoencoders for specified layers and module.
@@ -58,13 +72,16 @@ def load_eai_autoencoders(
             sae.encoder.weight.data = sae.encoder.weight.data / torch.norm(sae.encoder.weight.data, dim=0, keepdim=True)
             sae.W_dec = sae.encoder.weight.data.T
         
-        def _forward(sae, k,x):
+        def _forward(sae, k,x,groupmax=False):
             encoded = sae.pre_acts(x)
             if k is not None:
                 trained_k = k
             else:
                 trained_k = sae.cfg.k
-            topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
+            if groupmax:
+                topk = GroupMax(trained_k)
+            else:
+                topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
             return topk(encoded)
         if "pythia" in weight_dir:
             if module == "res":
@@ -81,7 +98,7 @@ def load_eai_autoencoders(
                 submodule = model.model.layers[layer].mlp
             
         submodule.ae = AutoencoderLatents(
-            sae, partial(_forward, sae, k), width=sae.encoder.weight.shape[0],hookpoint=submodule.path
+            sae, partial(_forward, sae, k, groupmax=groupmax), width=sae.encoder.weight.shape[0]
         )
 
         submodules[submodule.path] = submodule
