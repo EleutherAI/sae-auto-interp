@@ -141,7 +141,7 @@ class NeighbourCalculator:
 
         paths = []
         for buffer in self.latent_dataset.buffers:
-            paths.append(buffer.tensor_path)
+            paths.append(buffer.path)
 
         all_locations = []
         all_activations = []

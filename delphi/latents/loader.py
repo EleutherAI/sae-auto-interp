@@ -79,8 +79,8 @@ class TensorBuffer:
                 )
 
     def load(self):
-        split_data = load_file(self.tensor_path)
-        first_latent = int(self.tensor_path.split("/")[-1].split("_")[0])
+        split_data = load_file(self.path)
+        first_latent = int(self.path.split("/")[-1].split("_")[0])
         activations = torch.tensor(split_data["activations"])
         locations = torch.tensor(split_data["locations"].astype(np.int64))
         if "tokens" in split_data:
