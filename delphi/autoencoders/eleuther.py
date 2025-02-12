@@ -10,8 +10,9 @@ from .wrapper import AutoencoderLatents
 
 
 def _sae_forward(sae: Sae, x):
-    acts, indices = sae.encode(x)
-    return torch.zeros_like(x).scatter_(-1, indices, acts)
+    pre_acts = sae.pre_acts(x)
+    acts, indices = sae.select_topk(pre_acts)
+    return torch.zeros_like(pre_acts).scatter_(-1, indices, acts)
 
 
 def resolve_path(model, path_segments: list[str]) -> list[str] | None:
