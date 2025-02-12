@@ -1,3 +1,7 @@
+# Command
+
+`python -m delphi HuggingFaceTB/SmolLM2-135M /mnt/ssd-1/nora/sae-ckpts/smollm-narrow-skip-gm --explainer_model 'hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4' --dataset_repo 'EleutherAI/fineweb-edu-dedup-10b' --dataset_split 'train[:1%]' --n_tokens 10_000_000 --max_examples 100 --hookpoints layers.5.mlp --dataset_row 'text' --width 18432 --num_gpus 4 --max_latents 100`
+
 # Introduction
 
 Delphi was the home of a temple to Phoebus Apollo, which famously had the inscription, 'Know Thyself.' This library lets language models know themselves through automated interpretability.

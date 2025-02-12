@@ -3,6 +3,8 @@ import pandas as pd
 from torch import Tensor
 from pathlib import Path
 import numpy as np
+from scipy import stats
+import plotly.express as px
 
 
 def feature_balanced_score_metrics(df: pd.DataFrame, score_type: str):
@@ -146,7 +148,7 @@ def build_scores_df(path: Path, target_modules: list[str], range: Tensor | None 
             for score_file in list(score_type_path.glob(f"*{module}*")) + list(
                 score_type_path.glob(f".*{module}*")
             ):
-                feature_idx = int(score_file.stem.split("feature")[-1])
+                feature_idx = int(score_file.stem.split("latent")[-1]) # Wrong??
                 if range is not None and feature_idx not in range:
                     continue
 
@@ -164,9 +166,36 @@ def build_scores_df(path: Path, target_modules: list[str], range: Tensor | None 
     assert not df.empty
     return df
 
+def plot_line(df):
+    out_path = Path("images")
+    out_path.mkdir(parents=True, exist_ok=True)
+
+    for score_type in df["score_type"].unique():
+        # Create density curves for accuracies
+        plot_data = []
+        mask = (df["score_type"] == score_type)
+        values = df[mask]["accuracy"]
+        if len(values) > 0:
+            kernel = stats.gaussian_kde(values)
+            x_range = np.linspace(values.min(), values.max(), 200)
+            density = kernel(x_range)
+            plot_data.extend([{"x": x, "density": d} 
+                            for x, d in zip(x_range, density)])
+
+        fig = px.line(
+            plot_data,
+            x="x",
+            y="density",
+            title=f"Accuracy Distribution - {score_type}"
+        )
+        fig.write_image(out_path / f"autointerp_accuracies_{score_type}.pdf", format="pdf")
 
 def log_results(scores_path: Path, target_modules: list[str]):
     df = build_scores_df(scores_path, target_modules)
+    plot_line(df)
     for score_type in df["score_type"].unique():
         score_df = df[df['score_type'] == score_type]
         feature_balanced_score_metrics(score_df, score_type)
+
+if __name__ == "__main__":
+    log_results(Path("results") / "scores", "layers.5.mlp")

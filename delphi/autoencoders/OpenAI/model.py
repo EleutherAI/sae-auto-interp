@@ -186,11 +186,17 @@ class TopK(nn.Module):
         self.postact_fn = postact_fn
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        topk = torch.topk(x, k=self.k, dim=-1)
-        values = self.postact_fn(topk.values)
+        values, indices = x.unflatten(-1, (self.k, -1)).max(dim=-1)
+        # torch.max gives us indices into each group, but we want indices into the
+        # flattened tensor. Add the offsets to get the correct indices.
+        offsets = torch.arange(
+            0, 18432, 18432 // self.k, device=x.device
+        )
+        indices = offsets + indices
+
         # make all other values 0
         result = torch.zeros_like(x)
-        result.scatter_(-1, topk.indices, values)
+        result.scatter_(-1, indices, values)
         return result
 
     def state_dict(self, destination=None, prefix="", keep_vars=False):
