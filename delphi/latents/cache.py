@@ -257,7 +257,7 @@ class LatentCache(BaseCache):
 
     def run(self, n_tokens: int, tokens: TensorType["batch", "seq"]):
         """
-        Run the latent caching process.
+        Cache latents from the model.
 
         Args:
             n_tokens (int): Total number of tokens to process.

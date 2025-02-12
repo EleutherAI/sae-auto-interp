@@ -25,6 +25,8 @@ def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,in
             submodule = model.model.layers[layer]
         elif type == "mlp":
             submodule = model.model.layers[layer].post_feedforward_layernorm
+        else:
+            raise ValueError(f"Invalid autoencoder type: {type}")
         submodule.ae = AutoencoderLatents(
             sae, partial(_forward, sae), width=sae.W_enc.shape[1]
         )
