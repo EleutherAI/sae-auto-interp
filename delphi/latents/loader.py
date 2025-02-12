@@ -321,10 +321,8 @@ class LatentLoader:
         for buffer in self.latent_dataset.buffers:
             for data in buffer:
                 if data is not None:
-                    
                     record = await self._aprocess_latent(data)
                     if record is not None:
-                        print()
                         yield record
             await asyncio.sleep(0)
 
