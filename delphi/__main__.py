@@ -114,6 +114,12 @@ class RunConfig:
     overwrite: list[str] = list_field()
     """Whether to overwrite existing parts of the run. Options are 'cache', 'scores', and 'visualize'."""
 
+    num_examples_per_scorer_prompt: int = field(
+        default=1,
+    )
+    """Number of examples to use for each scorer prompt. Using more than 1 improves scoring speed but can
+    leak information to the fuzzing scorer, and increases the scorer LLM task difficulty."""
+
 
 def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,int],size:str,type:str, hookpoints):
     submodules = {}
@@ -131,6 +137,8 @@ def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,in
             submodule = model.model.layers[layer]
         elif type == "mlp":
             submodule = model.model.layers[layer].post_feedforward_layernorm
+        else:
+            raise ValueError(f"Invalid autoencoder type: {type}")
         submodule.ae = AutoencoderLatents(
             sae, partial(_forward, sae), width=sae.W_enc.shape[1]
         )
@@ -264,7 +272,7 @@ async def process_cache(
     constructor = partial(
         default_constructor,
         token_loader=None,
-        n_random=experiment_cfg.n_random,
+        n_not_active=experiment_cfg.n_non_activating,
         ctx_len=experiment_cfg.example_ctx_len,
         max_examples=latent_cfg.max_examples,
     )
@@ -304,7 +312,7 @@ async def process_cache(
             DetectionScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=10,
+                batch_size=run_cfg.num_examples_per_scorer_prompt,
                 verbose=False,
                 log_prob=False,
             ),
@@ -315,7 +323,7 @@ async def process_cache(
             FuzzingScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=10,
+                batch_size=run_cfg.num_examples_per_scorer_prompt,
                 verbose=False,
                 log_prob=False,
             ),
@@ -363,10 +371,10 @@ def populate_cache(
             flattened_tokens = tokens.flatten()
             mask = ~torch.isin(flattened_tokens, torch.tensor([tokenizer.bos_token_id]))
             masked_tokens = flattened_tokens[mask]
-        truncated_tokens = masked_tokens[
-            : len(masked_tokens) - (len(masked_tokens) % cfg.ctx_len)
-        ]
-        tokens = truncated_tokens.reshape(-1, cfg.ctx_len)
+            truncated_tokens = masked_tokens[
+                : len(masked_tokens) - (len(masked_tokens) % cfg.ctx_len)
+            ]
+            tokens = truncated_tokens.reshape(-1, cfg.ctx_len)
 
     tokens = cast(TensorType["batch", "seq"], tokens)
 
@@ -399,6 +407,7 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
     latents_path = base_path / "latents"
     explanations_path = base_path / "explanations"
     scores_path = base_path / "scores"
+    visualize_path = base_path / "visualize"
 
     latent_range = (
         torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
@@ -445,7 +454,7 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
         print(f"Files found in {scores_path}, skipping...")
 
     if run_cfg.log:
-        log_results(scores_path, run_cfg.hookpoints)
+        log_results(scores_path, visualize_path, run_cfg.hookpoints)
 
 
 if __name__ == "__main__":
