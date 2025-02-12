@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import asyncio
 import json
 import random
@@ -7,21 +8,39 @@ from abc import abstractmethod
 import numpy as np
 from transformers import PreTrainedTokenizer
 
-from ...clients.client import Client
-from ...features import FeatureRecord
-from ...logger import logger
-from ..scorer import Scorer, ScorerResult
-from .sample import ClassifierOutput, Sample
+from sae_auto_interp.clients.client import Client
+from sae_auto_interp.features import FeatureRecord,Example
+from sae_auto_interp.logger import logger
+from sae_auto_interp.scorers.scorer import Scorer, ScorerResult
+from sae_auto_interp.scorers.classifier.sample import  Sample,ClassifierOutput
+from prompting import simulation_prompt
+L = "<<"
+R = ">>"
 
 
-class Classifier(Scorer):
+@dataclass
+class SimulatorOutput:
+    text: str
+    """Text"""
+
+    activation: float = 0
+    """The activation of the example"""
+
+    predicted_quantile: int = 0
+    """The predicted quantiles of the example"""
+
+    expected_quantile: float = 0
+    """The expected quantiles of the example"""
+
+    
+class Simulator(Scorer):
     def __init__(
         self,
         client: Client,
         tokenizer: PreTrainedTokenizer,
-        verbose: bool,
-        batch_size: int,
-        log_prob: bool,
+        verbose: bool = False,
+        batch_size: int = 1,
+        log_prob: bool = False,
         **generation_kwargs,
     ):
         self.client = client
@@ -32,8 +51,7 @@ class Classifier(Scorer):
         self.generation_kwargs = generation_kwargs
         self.log_prob = log_prob
 
-
-
+        self.prompt = simulation_prompt
     async def __call__(
         self,
         record: FeatureRecord,
@@ -45,12 +63,19 @@ class Classifier(Scorer):
             record.explanation,
             samples,
         )
-        #print(results)
         return ScorerResult(record=record, score=results)
 
-    @abstractmethod
     def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
-        pass
+        """
+        Prepare and shuffle a list of samples for classification.
+        """
+
+        samples = examples_to_samples(
+                record.test[0],
+                tokenizer=self.tokenizer,
+            )
+    
+        return samples
 
     async def _query(
         self,
@@ -65,6 +90,7 @@ class Classifier(Scorer):
         async def _process(explanation, batch):
             async with sem:
                 result = await self._generate(explanation, batch)
+                
                 return result
     
         tasks = [asyncio.create_task(_process(explanation, batch)) for batch in batches]
@@ -85,36 +111,28 @@ class Classifier(Scorer):
             self.generation_kwargs["logprobs"] = True
             self.generation_kwargs["top_logprobs"] = 10
         response = await self.client.generate(prompt, **self.generation_kwargs)
-        #print(response)
+        #print(prompt,response)
         if response is None:
             array = [-1] * self.batch_size
-            conditional_probabilities = [-1] * self.batch_size
             probabilities = [-1] * self.batch_size
             
         else:
             selections = response.text
             logprobs = response.logprobs if self.log_prob else None
             try:
-                array,conditional_probabilities, probabilities = self._parse(selections, logprobs)
+                array, probabilities = self._parse(selections, logprobs)
             except Exception as e:
                 logger.error(f"Parsing selections failed: {e}")
                 array = [-1] * self.batch_size
-                conditional_probabilities = [-1] * self.batch_size
                 probabilities = [-1] * self.batch_size
-
+    
         results = []
-        correct = []
-        response = []
         for i, sample in enumerate(batch):
             result = sample.data
             prediction = array[i] 
-            result.prediction = prediction
-            result.correct = prediction == result.ground_truth
-            correct.append(result.ground_truth)
-            response.append(prediction)
+            result.predicted_quantile = prediction
             if self.log_prob:
-                result.probability = probabilities[i]
-                result.conditional_probability = conditional_probabilities[i]
+                result.expected_quantile = probabilities[i]
             results.append(result)
 
             if self.verbose:
@@ -123,49 +141,42 @@ class Classifier(Scorer):
 
     def _parse(self, string, logprobs=None):
         pattern = r"\[.*?\]"
+        
         match = re.search(pattern, string)
-
         try:
             array = json.loads(match.group(0))
             assert len(array) == self.batch_size
             if self.log_prob:
-                conditional_probabilities,probabilities = self._parse_logprobs(logprobs)
-                assert len(conditional_probabilities) == self.batch_size
-                return array, conditional_probabilities, probabilities
-            conditional_probabilities = None
+                probabilities = self._parse_logprobs(logprobs)
+                assert len(probabilities) == self.batch_size
+                return array, probabilities
             probabilities = None
-            return array, conditional_probabilities, probabilities
+            return array, probabilities
         except (json.JSONDecodeError, AssertionError, AttributeError) as e:
             logger.error(f"Parsing array failed: {e}")
-            return [-1] * self.batch_size, [-1] * self.batch_size, [-1] * self.batch_size
+            return [-1] * self.batch_size, [-1] * self.batch_size
 
     def _parse_logprobs(self, logprobs):
-        #Logprobs will be a list of 5 probabilites for each token in the response
+        #Logprobs will be a list of 10 probabilites for each token in the response
         # The response will be in the form of [x, x, x, ...] for each position we
-        # need to get the probability of 1 or 0 
-        conditional_probabilities = []
+        # need to get the probability of each of the 10 integer and compute the expected value
         probabilities = []
         
         for i in range(len(logprobs)):
-            if "1" in logprobs[i].token or "0" in logprobs[i].token:
+            if logprobs[i].token in ["0","1","2","3","4","5","6","7","8","9"]:
+                cumulative_number = 0
                 top_logprobs = logprobs[i].top_logprobs
-                prob_0 = 0
-                prob_1 = 0
                 for i in range(len(top_logprobs)):
                     token = top_logprobs[i].token
                     logprob = top_logprobs[i].logprob
-                    if "0" in token:
-                        prob_0 += np.exp(logprob).item()
-                    elif "1" in token:
-                        prob_1 += np.exp(logprob).item()
-                if prob_0+prob_1>0:
-                    conditional_probabilities.append(prob_1/(prob_0+prob_1))
-                    probabilities.append(prob_1)
-                else:
-                    conditional_probabilities.append(0)
-                    probabilities.append(0)
-        return conditional_probabilities,probabilities
-
+                    probability = np.exp(logprob).item()
+                    try:
+                        integer = int(token)
+                        cumulative_number += probability*integer
+                    except:
+                        pass
+                probabilities.append(cumulative_number)
+        return probabilities
 
 
 
@@ -177,11 +188,10 @@ class Classifier(Scorer):
         """
         Prepare prompt for generation.
         """
-
-        examples = "\n".join(
-            f"Example {i}: {sample.text}" for i, sample in enumerate(batch)
-        )
         
+        examples ="Example 1: "+"".join(
+                f"{sample.text}" for i, sample in enumerate(batch)
+        )
         return self.prompt(explanation=explanation, examples=examples)
 
     def _batch(self, samples):
@@ -190,5 +200,31 @@ class Classifier(Scorer):
             for i in range(0, len(samples), self.batch_size)
         ]
 
-    def call_sync(self, record: FeatureRecord) -> list[ClassifierOutput]:
-        return asyncio.run(self.__call__(record))
+def examples_to_samples(
+    example: Example,
+    tokenizer: PreTrainedTokenizer,
+) -> Sample:
+    
+    text,clean = highlight_last_token(example, tokenizer)
+    activation = example.activations[-1]
+    sample = Sample(
+                text=text,
+                data=SimulatorOutput(
+                    text=clean,
+                    activation=activation
+            ),
+        )
+    return [sample]
+
+def highlight_last_token(example: Example, tokenizer: PreTrainedTokenizer) -> str:
+    tokens = example.tokens
+    decoded_tokens = [tokenizer.decode([token]) for token in tokens]
+    clean = "".join(decoded_tokens)
+    highlighted = ""
+    for i, token in enumerate(decoded_tokens):
+        if i == len(tokens) - 1:
+            highlighted += L + token + R
+        else:
+            highlighted += token
+
+    return highlighted,clean

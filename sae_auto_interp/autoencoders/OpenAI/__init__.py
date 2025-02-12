@@ -5,8 +5,7 @@ from typing import List, Any, Callable, Dict, Tuple
 import torch
 
 from ..wrapper import AutoencoderLatents
-from .model import ACTIVATIONS_CLASSES, Autoencoder
-
+from ..Custom.openai import Autoencoder,ACTIVATIONS_CLASSES
 
 DEVICE = "cuda:0"
 

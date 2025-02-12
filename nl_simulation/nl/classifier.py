@@ -7,11 +7,11 @@ from abc import abstractmethod
 import numpy as np
 from transformers import PreTrainedTokenizer
 
-from ...clients.client import Client
-from ...features import FeatureRecord
-from ...logger import logger
-from ..scorer import Scorer, ScorerResult
-from .sample import ClassifierOutput, Sample
+from sae_auto_interp.clients.client import Client
+from sae_auto_interp.features import FeatureRecord
+from sae_auto_interp.logger import logger
+from sae_auto_interp.scorers.scorer import Scorer, ScorerResult
+from sae_auto_interp.scorers.classifier.sample import ClassifierOutput, Sample
 
 
 class Classifier(Scorer):
@@ -22,6 +22,8 @@ class Classifier(Scorer):
         verbose: bool,
         batch_size: int,
         log_prob: bool,
+        contexts:bool = False,
+        score:bool=False,
         **generation_kwargs,
     ):
         self.client = client
@@ -31,9 +33,9 @@ class Classifier(Scorer):
         self.batch_size = batch_size
         self.generation_kwargs = generation_kwargs
         self.log_prob = log_prob
-
-
-
+        self.contexts = contexts
+        self.score = score
+        
     async def __call__(
         self,
         record: FeatureRecord,
@@ -45,7 +47,6 @@ class Classifier(Scorer):
             record.explanation,
             samples,
         )
-        #print(results)
         return ScorerResult(record=record, score=results)
 
     @abstractmethod
@@ -65,6 +66,7 @@ class Classifier(Scorer):
         async def _process(explanation, batch):
             async with sem:
                 result = await self._generate(explanation, batch)
+                
                 return result
     
         tasks = [asyncio.create_task(_process(explanation, batch)) for batch in batches]
@@ -85,7 +87,6 @@ class Classifier(Scorer):
             self.generation_kwargs["logprobs"] = True
             self.generation_kwargs["top_logprobs"] = 10
         response = await self.client.generate(prompt, **self.generation_kwargs)
-        #print(response)
         if response is None:
             array = [-1] * self.batch_size
             conditional_probabilities = [-1] * self.batch_size
@@ -101,7 +102,7 @@ class Classifier(Scorer):
                 array = [-1] * self.batch_size
                 conditional_probabilities = [-1] * self.batch_size
                 probabilities = [-1] * self.batch_size
-
+    
         results = []
         correct = []
         response = []
@@ -123,6 +124,9 @@ class Classifier(Scorer):
 
     def _parse(self, string, logprobs=None):
         pattern = r"\[.*?\]"
+        if self.finetuned:
+           string = "["+string+"]"
+        
         match = re.search(pattern, string)
 
         try:
@@ -168,7 +172,6 @@ class Classifier(Scorer):
 
 
 
-
     def _build_prompt(
         self,
         explanation: str,
@@ -177,18 +180,16 @@ class Classifier(Scorer):
         """
         Prepare prompt for generation.
         """
-
-        examples = "\n".join(
-            f"Example {i}: {sample.text}" for i, sample in enumerate(batch)
+        if self.finetuned:
+            examples = "".join(sample.text for sample in batch)
+        else:
+            examples = "\n".join(
+                f"{sample.text}" for i, sample in enumerate(batch)
         )
-        
-        return self.prompt(explanation=explanation, examples=examples)
+        return self.prompt(explanation=explanation, examples=examples, contexts=self.contexts,score=self.score)
 
     def _batch(self, samples):
         return [
             samples[i : i + self.batch_size]
             for i in range(0, len(samples), self.batch_size)
         ]
-
-    def call_sync(self, record: FeatureRecord) -> list[ClassifierOutput]:
-        return asyncio.run(self.__call__(record))

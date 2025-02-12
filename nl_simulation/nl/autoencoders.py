@@ -5,12 +5,63 @@ from typing import Any, Callable, Dict, List, Literal, Optional, Tuple
 import torch
 from simple_parsing import Serializable
 
+import numpy as np
+import torch
+import torch.nn as nn
+from huggingface_hub import hf_hub_download
+
+
+# This is from the GemmaScope tutorial
+class JumpReLUSAE(nn.Module):
+  def __init__(self, d_model, d_sae):
+    super().__init__()
+    self.W_enc = nn.Parameter(torch.zeros(d_model, d_sae))
+    self.W_dec = nn.Parameter(torch.zeros(d_sae, d_model))
+    self.threshold = nn.Parameter(torch.zeros(d_sae))
+    self.b_enc = nn.Parameter(torch.zeros(d_sae))
+    self.b_dec = nn.Parameter(torch.zeros(d_model))
+
+  def encode(self, input_acts):
+    pre_acts = input_acts @ self.W_enc + self.b_enc
+    mask = (pre_acts > self.threshold)
+    #print(pre_acts.shape)
+    #print(torch.nonzero(mask).shape)
+    acts = mask * torch.nn.functional.relu(pre_acts)
+    return acts
+
+  def decode(self, acts):
+    return acts @ self.W_dec + self.b_dec
+
+  def forward(self, acts):
+    acts = self.encode(acts)
+    recon = self.decode(acts)
+    return recon
+  
+  @classmethod
+  def from_pretrained(cls, model_name_or_path,position,device):
+    path_to_params = hf_hub_download(
+    repo_id=model_name_or_path,
+    filename=f"{position}/params.npz",
+    force_download=False,
+    )
+    params = np.load(path_to_params)
+    pt_params = {k: torch.from_numpy(v) for k, v in params.items()}
+    model = cls(params['W_enc'].shape[0], params['W_enc'].shape[1])
+    model.load_state_dict(pt_params)
+    if device == "cuda":
+        model.cuda()
+    model.half()
+    
+    return model
+
+
 
 @dataclass
 class AutoencoderConfig(Serializable):
     model_name_or_path: str = "model"
     autoencoder_type: Literal["SAE", "SAE_LENS", "NEURONS", "CUSTOM"] = "SAE"
     device: Optional[str] = None
+    hookpoints: Optional[List[str]] = None
     kwargs: Dict[str, Any] = field(default_factory=dict)
 
 class AutoencoderLatents(torch.nn.Module):
@@ -45,7 +96,7 @@ class AutoencoderLatents(torch.nn.Module):
 
         if autoencoder_type == "SAE":
             from sae import Sae
-            local = kwargs.get("local",None)
+            local = kwargs.pop("local",None)
             assert local is not None, "local must be specified for SAE"
             if local:
                 sae = Sae.load_from_disk(model_name_or_path+"/"+hookpoint, device=device, **kwargs)
@@ -74,7 +125,6 @@ class AutoencoderLatents(torch.nn.Module):
             if custom_name is None:
                 raise ValueError("custom_name must be specified for CUSTOM autoencoder")
             if custom_name == "gemmascope":
-                from .Custom.gemmascope import JumpReLUSAE
                 sae = JumpReLUSAE.from_pretrained(model_name_or_path,hookpoint,device)
                 forward_function = choose_forward_function(config, sae)
                 width = sae.W_enc.data.shape[1]
@@ -95,7 +145,7 @@ class AutoencoderLatents(torch.nn.Module):
 
 def choose_forward_function(autoencoder_config: AutoencoderConfig, autoencoder: Any):
     if autoencoder_config.autoencoder_type == "SAE":
-        from .Custom.openai import ACTIVATIONS_CLASSES, TopK
+        from sae_auto_interp.autoencoders.Custom.openai import ACTIVATIONS_CLASSES, TopK
 
         def _forward(sae, k,x):
             encoded = sae.pre_acts(x)
@@ -155,7 +205,6 @@ def hook_submodule( submodule: Any, model: Any,module_path:str,autoencoder_confi
 def load_autoencoder_into_model(
     model: Any,
     autoencoder_config: AutoencoderConfig,
-    hookpoints: List[str],
     **kwargs
 ) -> Tuple[Dict[str,Any], Any]:
     """
@@ -171,6 +220,7 @@ def load_autoencoder_into_model(
 
     submodules = {}
     edited_model = model
+    hookpoints = autoencoder_config.hookpoints
     assert hookpoints is not None, "Hookpoints must be specified in autoencoder_config"
     for module_path in hookpoints:
         autoencoder = AutoencoderLatents.from_pretrained(

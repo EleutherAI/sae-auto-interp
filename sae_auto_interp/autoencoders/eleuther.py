@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 from sae import Sae, SaeConfig
 from pathlib import Path
-from .OpenAI.model import ACTIVATIONS_CLASSES, TopK
+from .Custom.openai import ACTIVATIONS_CLASSES, TopK
 from .wrapper import AutoencoderLatents
 
 DEVICE = "cuda:0"
