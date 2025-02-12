@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, List, Union
+from typing import Union
 
 
 @dataclass
 class Response:
     text: str
-    logprobs: List[float] = None
-    prompt_logprobs: List[float] = None
+    logprobs: list[float] = None
+    prompt_logprobs: list[float] = None
 
 
 class Client(ABC):
@@ -16,7 +16,7 @@ class Client(ABC):
 
     @abstractmethod
     async def generate(
-        self, prompt: Union[str, List[Dict[str, str]]], **kwargs
+        self, prompt: Union[str, list[dict[str, str]]], **kwargs
     ) -> Response:
         pass
 

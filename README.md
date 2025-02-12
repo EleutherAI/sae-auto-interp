@@ -52,7 +52,7 @@ cache = FeatureCache(
 cache.run(n_tokens = 10_000_000, tokens=tokens)
 ```
 
-Caching saves `.safetensors` of `Dict["activations", "locations"]`.
+Caching saves `.safetensors` of `dict["activations", "locations"]`.
 
 ```python
 cache.save_splits(

@@ -1,6 +1,6 @@
 import asyncio
 from functools import wraps
-from typing import Any, AsyncIterable, Callable, List
+from typing import Any, AsyncIterable, Callable, list
 
 from tqdm.asyncio import tqdm
 
@@ -15,8 +15,10 @@ def process_wrapper(
 
     Args:
         function (Callable): The main function to be wrapped.
-        preprocess (Callable, optional): A function to preprocess the input. Defaults to None.
-        postprocess (Callable, optional): A function to postprocess the output. Defaults to None.
+        preprocess (Callable, optional): A function to preprocess the input.
+            Defaults to None.
+        postprocess (Callable, optional): A function to postprocess the output.
+            Defaults to None.
 
     Returns:
         Callable: The wrapped function.
@@ -47,11 +49,11 @@ class Pipe:
         Initialize the Pipe with a list of functions.
 
         Args:
-            *functions (List[Callable]): Functions to be executed in the pipe.
+            *functions (list[Callable]): Functions to be executed in the pipe.
         """
         self.functions = functions
 
-    async def __call__(self, input: Any) -> List[Any]:
+    async def __call__(self, input: Any) -> list[Any]:
         """
         Execute all functions in the pipe with the given input.
 
@@ -59,7 +61,7 @@ class Pipe:
             input (Any): The input to be processed by all functions.
 
         Returns:
-            List[Any]: The results of all functions.
+            list[Any]: The results of all functions.
         """
         tasks = [function(input) for function in self.functions]
 
@@ -77,19 +79,19 @@ class Pipeline:
 
         Args:
             loader (Callable): The loader to be executed first.
-            *pipes (List[Pipe]): Pipes to be executed in the pipeline.
+            *pipes (list[Pipe]): Pipes to be executed in the pipeline.
         """
         self.pipes = [loader] + list(pipes)
 
-    async def run(self, max_concurrent: int = 10) -> List[Any]:
+    async def run(self, max_concurrent: int = 10) -> list[Any]:
         """
         Run the pipeline with a maximum number of concurrent tasks.
 
         Args:
-            max_concurrent (int, optional): Maximum number of concurrent tasks. Defaults to 10.
+            max_concurrent: Maximum number of concurrent tasks. Defaults to 10.
 
         Returns:
-            List[Any]: The results of all processed items.
+            list[Any]: The results of all processed items.
         """
         results = []
         semaphore = asyncio.Semaphore(max_concurrent)
@@ -126,7 +128,7 @@ class Pipeline:
 
     async def generate_items(self) -> AsyncIterable[Any]:
         """
-        Generates items from the first pipe, which can be an async iterable or a callable.
+        Generates items from the first pipe, which can be an async iterable or callable
 
         Yields:
             Any: Items generated from the first pipe.

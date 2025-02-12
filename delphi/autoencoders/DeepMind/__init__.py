@@ -1,5 +1,4 @@
 from functools import partial
-from typing import Dict
 
 from ..Custom.gemmascope import JumpReluSae
 from ..wrapper import AutoencoderLatents
@@ -8,7 +7,7 @@ DEVICE = "cuda:0"
 
 
 def load_gemma_autoencoders(
-    model, ae_layers: list[int], average_l0s: Dict[int, int], size: str, type: str
+    model, ae_layers: list[int], average_l0s: dict[int, int], size: str, type: str
 ):
     submodules = {}
 

@@ -599,7 +599,7 @@ class LogprobFreeExplanationTokenSimulator(NeuronSimulator):
             # Since the predicted activation is just a sampled token, we don't have a distribution.
             distribution_values=[],
             distribution_probabilities=[],
-            tokens=list(tokens),  # SequenceSimulation expects List type
+            tokens=list(tokens),  # SequenceSimulation expects list type
         )
         logger.debug("result in score_explanation_by_activations is %s", result)
         return result

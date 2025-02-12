@@ -2,7 +2,7 @@ import asyncio
 import json
 from dataclasses import dataclass
 from functools import partial
-from typing import Dict, List, Union
+from typing import Union
 
 from transformers import AutoTokenizer
 from vllm import LLM, SamplingParams
@@ -48,8 +48,9 @@ class Offline(Client):
         enforce_eager: bool = False,
         statistics: bool = False,
     ):
-        """Client for offline generation. Models not already present in the on-disk HuggingFace cache
-        will be downloaded. Note that temperature must be increased for best-of-n sampling.
+        """Client for offline generation. Models not already present in the on-disk
+        HuggingFace cache will be downloaded. Note that temperature must be increased
+        for best-of-n sampling.
         """
         super().__init__(model)
         self.model = model
@@ -68,7 +69,7 @@ class Offline(Client):
         self.batch_size = batch_size
         self.statistics = statistics
 
-    async def process_func(self, batches: Union[str, List[Dict[str, str]]], kwargs):
+    async def process_func(self, batches: Union[str, list[dict[str, str]]], kwargs):
         """
         Process a single request.
         """
@@ -136,7 +137,7 @@ class Offline(Client):
             )
         return new_response
 
-    async def generate(self, prompt: Union[str, List[Dict[str, str]]], **kwargs) -> str:
+    async def generate(self, prompt: Union[str, list[dict[str, str]]], **kwargs) -> str:
         """
         Enqueue a request and wait for the result.
         """

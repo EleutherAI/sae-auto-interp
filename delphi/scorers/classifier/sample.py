@@ -18,10 +18,10 @@ DEFAULT_MESSAGE = (
 @dataclass
 class ClassifierOutput:
     str_tokens: list[str]
-    """List of strings"""
+    """list of strings"""
 
     activations: list[float]
-    """List of floats"""
+    """list of floats"""
 
     distance: float | int
     """Quantile or neighbor distance"""

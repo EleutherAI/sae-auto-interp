@@ -2,7 +2,7 @@ import asyncio
 import json
 import os
 from dataclasses import dataclass
-from typing import Callable, Dict, List, NamedTuple, Optional, Union
+from typing import Callable, NamedTuple, Optional, Union
 
 import numpy as np
 import torch
@@ -124,17 +124,17 @@ class LatentDataset:
         raw_dir: str,
         cfg: LatentConfig,
         tokenizer: Optional[Callable] = None,
-        modules: Optional[List[str]] = None,
-        latents: Optional[Dict[str, Union[int, torch.Tensor]]] = None,
+        modules: Optional[list[str]] = None,
+        latents: Optional[dict[str, Union[int, torch.Tensor]]] = None,
     ):
         """
         Initialize a LatentDataset.
 
         Args:
-            raw_dir (str): Directory containing raw latent data.
-            cfg (LatentConfig): Configuration for latent processing.
-            modules (Optional[List[str]]): List of module names to include.
-            latents (Optional[Dict[str, Union[int, torch.Tensor]]]): Dictionary of latents per module.
+            raw_dir: Directory containing raw latent data.
+            cfg: Configuration for latent processing.
+            modules: list of module names to include.
+            latents: Dictionary of latents per module.
         """
         self.cfg = cfg
         self.buffers = []
@@ -183,13 +183,13 @@ class LatentDataset:
         """Generate edge indices for latent splits."""
         return torch.linspace(0, self.cfg.width, steps=self.cfg.n_splits + 1).long()
 
-    def _build(self, raw_dir: str, modules: Optional[List[str]] = None):
+    def _build(self, raw_dir: str, modules: Optional[list[str]] = None):
         """
         Build dataset buffers which load all cached latents.
 
         Args:
             raw_dir (str): Directory containing raw latent data.
-            modules (Optional[List[str]]): List of module names to include.
+            modules (Optional[list[str]]): list of module names to include.
         """
         edges = self._edges()
         modules = os.listdir(raw_dir) if modules is None else modules
@@ -205,16 +205,16 @@ class LatentDataset:
     def _build_selected(
         self,
         raw_dir: str,
-        modules: List[str],
-        latents: Dict[str, Union[int, torch.Tensor]],
+        modules: list[str],
+        latents: dict[str, Union[int, torch.Tensor]],
     ):
         """
         Build a dataset buffer which loads only selected latents.
 
         Args:
             raw_dir (str): Directory containing raw latent data.
-            modules (List[str]): List of module names to include.
-            latents (Dict[str, Union[int, torch.Tensor]]): Dictionary of latents
+            modules (list[str]): list of module names to include.
+            latents (dict[str, Union[int, torch.Tensor]]): Dictionary of latents
                 per module.
         """
         edges = self._edges()
@@ -266,7 +266,7 @@ class LatentDataset:
             transform (Optional[Callable]): Function to transform latent records.
 
         Returns:
-            Union[List[LatentRecord], Generator]: Processed latent records.
+            Union[list[LatentRecord], Generator]: Processed latent records.
         """
 
         def _process(buffer_output: BufferOutput):
@@ -300,7 +300,7 @@ class LatentDataset:
             _worker (Callable): Function to process each buffer.
 
         Returns:
-            Union[List[LatentRecord], Generator]: Processed latent records.
+            Union[list[LatentRecord], Generator]: Processed latent records.
         """
         if collate:
             all_records = []

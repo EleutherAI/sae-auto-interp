@@ -1,5 +1,5 @@
 import json
-from typing import Dict, List, Optional
+from typing import Optional
 
 import cupy as cp
 import cupyx.scipy.sparse as cusparse
@@ -22,7 +22,7 @@ class NeighbourCalculator:
         autoencoder: Optional["Autoencoder"] = None,
         pre_activation_record: Optional["PreActivationRecord"] = None,
         number_of_neighbours: int = 10,
-        neighbour_cache: Optional[Dict[str, Dict[int, List[int]]]] = None,
+        neighbour_cache: Optional[dict[str, dict[int, list[int]]]] = None,
     ):
         """
         Initialize a NeighbourCalculator.
@@ -43,7 +43,7 @@ class NeighbourCalculator:
             self.neighbour_cache = neighbour_cache
         else:
             # Dictionary to cache computed neighbour lists
-            self.neighbour_cache: Dict[str, Dict[int, List[int]]] = {}
+            self.neighbour_cache: dict[str, dict[int, list[int]]] = {}
 
     def _compute_neighbour_list(self, method: str) -> None:
         """
@@ -62,7 +62,8 @@ class NeighbourCalculator:
         elif method == "correlation":
             if self.autoencoder is None or self.pre_activation_record is None:
                 raise ValueError(
-                    "Autoencoder and pre-activation record are required for correlation-based neighbours"
+                    "Autoencoder and pre-activation record are required for "
+                    "correlation-based neighbours"
                 )
             self.neighbour_cache[method] = self._compute_correlation_neighbours()
 
@@ -74,11 +75,9 @@ class NeighbourCalculator:
             self.neighbour_cache[method] = self._compute_cooccurrence_neighbours()
 
         else:
-            raise ValueError(
-                f"Unknown method: {method}. Use 'similarity', 'correlation', or 'co-occurrence'"
-            )
+            raise ValueError(f"Unknown method: {method}")
 
-    def _compute_similarity_neighbours(self) -> Dict[int, List[int]]:
+    def _compute_similarity_neighbours(self) -> dict[int, list[int]]:
         """
         Compute neighbour lists based on weight similarity in the autoencoder.
         """
@@ -101,7 +100,7 @@ class NeighbourCalculator:
         # Return the neighbour lists
         return {i: top_k_indices[i].tolist() for i in range(len(top_k_indices))}
 
-    def _compute_correlation_neighbours(self) -> Dict[int, List[int]]:
+    def _compute_correlation_neighbours(self) -> dict[int, list[int]]:
         """
         Compute neighbour lists based on activation correlation patterns.
         """
@@ -120,7 +119,7 @@ class NeighbourCalculator:
             encoder_matrix.T @ covariance_matrix @ encoder_matrix
         )
 
-        # the correlation is then the covariance devided by the product of the standard deviations
+        # the correlation is then the covariance devided by the product of stddevs
 
         product_of_std = torch.diag(covariance_matrix) ** 2
 
@@ -134,7 +133,7 @@ class NeighbourCalculator:
         # return the neighbour lists
         return {i: top_k_indices[i].tolist() for i in range(len(top_k_indices))}
 
-    def _compute_cooccurrence_neighbours(self) -> Dict[int, List[int]]:
+    def _compute_cooccurrence_neighbours(self) -> dict[int, list[int]]:
         """
         Compute neighbour lists based on latent co-occurrence in the dataset.
         """
@@ -160,8 +159,9 @@ class NeighbourCalculator:
         activations = torch.cat(all_activations).cuda()
         n_latents = int(torch.max(locations[:, 2])) + 1
 
-        # 1. Get unique values of first 2 dims (i.e. absolute token index) and their counts
-        # Trick is to use Cantor pairing function to have a bijective mapping between (batch_id, ctx_pos) and a unique 1D index
+        # 1. Get unique values of first 2 dims (i.e. absolute token index) and counts
+        # Trick is to use Cantor pairing function to have a bijective mapping between
+        # (batch_id, ctx_pos) and a unique 1D index
         # Faster than running `torch.unique_consecutive` on the first 2 dims
         idx_cantor = (locations[:, 0] + locations[:, 1]) * (
             locations[:, 0] + locations[:, 1] + 1
@@ -171,7 +171,7 @@ class NeighbourCalculator:
         )
         n_tokens = len(unique_idx)
 
-        # 2. The Cantor indices are not consecutive, so we create sorted ones from the counts
+        # 2. The Cantor indices are not consecutive, so create sorted ones from counts
         locations_flat = torch.repeat_interleave(
             torch.arange(n_tokens, device=locations.device), idx_counts
         )
@@ -205,7 +205,7 @@ class NeighbourCalculator:
         # return the neighbour lists
         return {i: top_k_indices[i].tolist() for i in range(len(top_k_indices))}
 
-    def populate_neighbour_cache(self, methods: List[str]) -> None:
+    def populate_neighbour_cache(self, methods: list[str]) -> None:
         """
         Populate the neighbour cache with the computed neighbour lists
         """
@@ -219,7 +219,7 @@ class NeighbourCalculator:
         with open(self.path, "w") as f:
             json.dump(self.neighbour_cache, f)
 
-    def load_neighbour_cache(self) -> Dict[str, Dict[int, List[int]]]:
+    def load_neighbour_cache(self) -> dict[str, dict[int, list[int]]]:
         """
         Load the neighbour cache from the path as a json file
         """

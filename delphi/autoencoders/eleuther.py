@@ -53,7 +53,7 @@ def load_and_hook_sparsify_models(
         model (Any): The model to load autoencoders for.
         name (str): The name of the sparse model to load. If the model is on-disk
             this is the path to the directory containing the sparse model weights.
-        hookpoints (list[str]): List of hookpoints to load autoencoders for.
+        hookpoints (list[str]): list of hookpoints to load autoencoders for.
         k (int | None, optional): Number of top activations to keep. Defaults
             to None.
         device (str | torch.device | None, optional): The device to load the

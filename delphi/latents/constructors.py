@@ -18,14 +18,15 @@ def _top_k_pools(
     Get the top k activation pools.
 
     Args:
-        max_buffer (TensorType["batch"]): The maximum buffer values.
-        split_activations (list[TensorType["activations"]]): The split activations.
-        buffer_tokens (TensorType["batch", "ctx_len"]): The buffer tokens.
-        ctx_len (int): The context length.
-        max_examples (int): The maximum number of examples.
+        max_buffer: The maximum buffer values.
+        split_activations: The split activations.
+        buffer_tokens: The buffer tokens.
+        ctx_len: The context length.
+        max_examples: The maximum number of examples.
 
     Returns:
-        Tuple[TensorType["examples", "ctx_len"], TensorType["examples", "ctx_len"]]: The token windows and activation windows.
+        tuple[TensorType["examples", "ctx_len"], TensorType["examples", "ctx_len"]]:
+        The token windows and activation windows.
     """
     k = min(max_examples, len(max_buffer))
     top_values, top_indices = torch.topk(max_buffer, k, sorted=True)
@@ -47,11 +48,11 @@ def pool_max_activation_windows(
     Pool max activation windows from the buffer output and update the latent record.
 
     Args:
-        record (LatentRecord): The latent record to update.
-        buffer_output (BufferOutput): The buffer output containing activations and locations.
-        tokens (TensorType["batch", "seq"]): The input tokens.
-        ctx_len (int): The context length.
-        max_examples (int): The maximum number of examples.
+        record: The latent record to update.
+        buffer_output: The buffer output containing activations and locations.
+        tokens: The input tokens.
+        ctx_len: The context length.
+        max_examples: The maximum number of examples.
     """
     flat_indices = (
         buffer_output.locations[:, 0] * tokens.shape[1] + buffer_output.locations[:, 1]
@@ -59,8 +60,10 @@ def pool_max_activation_windows(
     ctx_indices = flat_indices // ctx_len
     index_within_ctx = flat_indices % ctx_len
 
-    # unique_ctx_indices: array of distinct context window indices in order of first appearance. i.e. sequential integers from 0 to 3903
-    # inverses: maps each activation back to its index in unique_ctx_indices (can be used to dereference the context window idx of each activation)
+    # unique_ctx_indices: array of distinct context window indices in order of first
+    # appearance. i.e. sequential integers from 0 to 3903
+    # inverses: maps each activation back to its index in unique_ctx_indices (can be
+    # used to dereference the context window idx of each activation)
     # lengths: the number of activations per unique context window index
     unique_ctx_indices, inverses, lengths = torch.unique_consecutive(
         ctx_indices, return_counts=True, return_inverse=True
@@ -95,11 +98,12 @@ def random_non_activating_windows(
     Generate random non-activating sequence windows and update the latent record.
 
     Args:
-        record (LatentRecord): The latent record to update.
-        tokens (TensorType["batch", "seq"]): The input tokens.
-        buffer_output (BufferOutput): The buffer output containing activations and locations.
-        ctx_len (int): The context length.
-        n_not_active (int): The number of non activating examples to generate.
+        record: The latent record to update.
+        tokens: The input tokens.
+        buffer_output: The buffer output containing activations and
+        locations.
+        ctx_len: The context length.
+        n_not_active: The number of non activating examples to generate.
     """
     torch.manual_seed(22)
     if n_not_active == 0:
@@ -141,16 +145,15 @@ def default_constructor(
     max_examples: int,
 ):
     """
-    Construct latent examples using pool max activation windows and random activation windows.
+    Construct latent examples using pool max windows and random windows.
 
     Args:
-        record (LatentRecord): The latent record to update.
-        token_loader (Optional[Callable[[], TensorType["batch", "seq"]]]):
-            An optional function that creates the dataset tokens.
-        buffer_output (BufferOutput): The buffer output containing activations and locations.
-        n_not_active (int): Number of non-activating examples to randomly generate.
-        ctx_len (int): Context length for each example.
-        max_examples (int): Maximum number of examples to generate.
+        record: The latent record to update.
+        token_loader: An optional function that creates the dataset tokens.
+        buffer_output: The buffer output containing activations and locations.
+        n_not_active: Number of non-activating examples to randomly generate.
+        ctx_len: Context length for each example.
+        max_examples: Maximum number of examples to generate.
     """
     tokens = buffer_output.tokens
     if tokens is None:

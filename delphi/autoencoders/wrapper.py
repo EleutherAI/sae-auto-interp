@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from functools import partial
-from typing import Any, Callable, Dict, List, Literal, Optional, Tuple
+from typing import Any, Callable, Literal, Optional
 
 import torch
 from simple_parsing import Serializable
@@ -11,7 +11,7 @@ class AutoencoderConfig(Serializable):
     model_name_or_path: str = "model"
     autoencoder_type: Literal["SAE", "SAE_LENS", "NEURONS", "CUSTOM"] = "SAE"
     device: Optional[str] = None
-    kwargs: Dict[str, Any] = field(default_factory=dict)
+    kwargs: dict[str, Any] = field(default_factory=dict)
 
 
 class AutoencoderLatents(torch.nn.Module):
@@ -149,7 +149,7 @@ def get_submodule(
 
 def hook_submodule(
     submodule: Any, model: Any, module_path: str, autoencoder_config: AutoencoderConfig
-) -> Tuple[Any, Any]:
+) -> tuple[Any, Any]:
     # TODO: This should take into account the autoencoder config, but for now I think
     # this is valid for all
     with model.edit("") as edited:
@@ -162,8 +162,8 @@ def hook_submodule(
 
 
 def load_autoencoder_into_model(
-    model: Any, autoencoder_config: AutoencoderConfig, hookpoints: List[str], **kwargs
-) -> Tuple[Dict[str, Any], Any]:
+    model: Any, autoencoder_config: AutoencoderConfig, hookpoints: list[str], **kwargs
+) -> tuple[dict[str, Any], Any]:
     """
     Load an autoencoder and hook it into the model using nnsight.
 
@@ -172,7 +172,7 @@ def load_autoencoder_into_model(
         autoencoder_config (AutoencoderConfig): Configuration for the autoencoder.
 
     Returns:
-        Tuple[List[Any], Any]: The list of submodules with the autoencoder attached
+        tuple[list[Any], Any]: The list of submodules with the autoencoder attached
         Model with the autoencoder hooked in
     """
 

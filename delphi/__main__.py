@@ -6,7 +6,7 @@ from functools import partial
 from glob import glob
 from multiprocessing import cpu_count
 from pathlib import Path
-from typing import Dict, cast
+from typing import cast
 
 import orjson
 import torch
@@ -54,7 +54,7 @@ class RunConfig:
     directory containing their weights. Models must be loadable with sparsify."""
 
     hookpoints: list[str] = list_field()
-    """List of model hookpoints to attach sparse models to."""
+    """list of model hookpoints to attach sparse models to."""
 
     explainer_model: str = field(
         default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
@@ -122,7 +122,7 @@ class RunConfig:
 def load_gemma_autoencoders(
     model,
     ae_layers: list[int],
-    average_l0s: Dict[int, int],
+    average_l0s: dict[int, int],
     size: str,
     type: str,
     hookpoints,

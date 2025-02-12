@@ -4,3 +4,10 @@ from .explanations import (
     LogprobFreeExplanationTokenSimulator,
     simulate_and_score,
 )
+
+__all__ = [
+    "ActivationRecord",
+    "ExplanationNeuronSimulator",
+    "LogprobFreeExplanationTokenSimulator",
+    "simulate_and_score",
+]

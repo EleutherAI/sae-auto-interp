@@ -1,11 +1,11 @@
 import json
 import os
 from collections import defaultdict
-from typing import Dict
 
 import numpy as np
 import torch
 from safetensors.numpy import save_file
+from torch import Tensor, nn
 from torchtyping import TensorType
 from tqdm import tqdm
 
@@ -19,14 +19,14 @@ class Cache:
     """
 
     def __init__(
-        self, filters: Dict[str, TensorType["indices"]] = None, batch_size: int = 64
+        self, filters: dict[str, TensorType["indices"]] = None, batch_size: int = 64
     ):
         """
         Initialize the Cache.
 
         Args:
-            filters (Dict[str, TensorType["indices"]], optional): Filters for selecting specific latents.
-            batch_size (int): Size of batches for processing. Defaults to 64.
+            filters: Filters for selecting specific latents.
+            batch_size: Size of batches for processing. Defaults to 64.
         """
         self.latent_locations = defaultdict(list)
         self.latent_activations = defaultdict(list)
@@ -45,10 +45,10 @@ class Cache:
         Add the latents from a module to the cache.
 
         Args:
-            latents (TensorType["batch", "sequence", "latent"]): Latent activations.
-            tokens (TensorType["batch", "sequence"]): Input tokens.
-            batch_number (int): Current batch number.
-            module_path (str): Path of the module.
+            latents: Latent activations.
+            tokens: Input tokens.
+            batch_number: Current batch number.
+            module_path: Path of the module.
         """
         latent_locations, latent_activations = self.get_nonzeros(latents, module_path)
         latent_locations = latent_locations.cpu()
@@ -76,15 +76,17 @@ class Cache:
 
             self.tokens[module_path] = torch.cat(self.tokens[module_path], dim=0)
 
-    def get_nonzeros_batch(self, latents: TensorType["batch", "seq", "latent"]):
+    def get_nonzeros_batch(
+        self, latents: TensorType["batch", "seq", "latent"]
+    ) -> tuple[Tensor, Tensor]:
         """
         Get non-zero activations for large batches that exceed int32 max value.
 
         Args:
-            latents (TensorType["batch", "seq", "latent"]): Input latent activations.
+            latents: Input latent activations.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor]: Non-zero latent locations and activations.
+            tuple[Tensor, Tensor]: Non-zero latent locations and activations.
         """
         # Calculate the maximum batch size that fits within sys.maxsize
         max_batch_size = torch.iinfo(torch.int32).max // (
@@ -112,16 +114,16 @@ class Cache:
 
     def get_nonzeros(
         self, latents: TensorType["batch", "seq", "latent"], module_path: str
-    ):
+    ) -> tuple[Tensor, Tensor]:
         """
         Get the nonzero latent locations and activations.
 
         Args:
-            latents (TensorType["batch", "seq", "latent"]): Input latent activations.
-            module_path (str): Path of the module.
+            latents: Input latent activations.
+            module_path: Path of the module.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor]: Non-zero latent locations and activations.
+            tuple[Tensor, Tensor]: Non-zero latent locations and activations.
         """
         size = latents.shape[1] * latents.shape[0] * latents.shape[2]
         if size > torch.iinfo(torch.int32).max:
@@ -148,24 +150,24 @@ class Cache:
 class LatentCache:
     """
     LatentCache manages the caching of latent activations for a model.
-    It handles the process of running the model, storing activations, and saving them to disk.
+    Handles the process of running the model, storing activations, and saving to disk
     """
 
     def __init__(
         self,
         model,
-        submodule_dict: Dict,
+        submodule_dict: dict[str, nn.Module],
         batch_size: int,
-        filters: Dict[str, TensorType["indices"]] = None,
+        filters: dict[str, TensorType["indices"]] = None,
     ):
         """
         Initialize the LatentCache.
 
         Args:
             model: The model to cache latents for.
-            submodule_dict (Dict): Dictionary of submodules to cache.
-            batch_size (int): Size of batches for processing.
-            filters (Dict[str, TensorType["indices"]], optional): Filters for selecting specific latents.
+            submodule_dict: Dictionary of submodules to cache.
+            batch_size: Size of batches for processing.
+            filters: Filters for selecting specific latents.
         """
         self.model = model
         self.submodule_dict = submodule_dict
@@ -179,16 +181,16 @@ class LatentCache:
 
     def load_token_batches(
         self, n_tokens: int, tokens: TensorType["batch", "sequence"]
-    ):
+    ) -> list[Tensor]:
         """
         Load and prepare token batches for processing.
 
         Args:
-            n_tokens (int): Total number of tokens to process.
-            tokens (TensorType["batch", "sequence"]): Input tokens.
+            n_tokens: Total number of tokens to process.
+            tokens: Input tokens.
 
         Returns:
-            List[torch.Tensor]: List of token batches.
+            list[Tensor]: list of token batches.
         """
         max_batches = n_tokens // tokens.shape[1]
         tokens = tokens[:max_batches]
@@ -202,12 +204,12 @@ class LatentCache:
 
         return token_batches
 
-    def filter_submodules(self, filters: Dict[str, TensorType["indices"]]):
+    def filter_submodules(self, filters: dict[str, TensorType["indices"]]):
         """
         Filter submodules based on the provided filters.
 
         Args:
-            filters (Dict[str, TensorType["indices"]]): Filters for selecting specific latents.
+            filters: Filters for selecting specific latents.
         """
         filtered_submodules = {}
         for module_path in self.submodule_dict.keys():
@@ -220,8 +222,8 @@ class LatentCache:
         Run the latent caching process.
 
         Args:
-            n_tokens (int): Total number of tokens to process.
-            tokens (TensorType["batch", "seq"]): Input tokens.
+            n_tokens: Total number of tokens to process.
+            tokens: Input tokens.
         """
         token_batches = self.load_token_batches(n_tokens, tokens)
 
@@ -251,13 +253,14 @@ class LatentCache:
         print(f"Total tokens processed: {total_tokens:,}")
         self.cache.save()
 
-    def save(self, save_dir, save_tokens: bool = True):
+    def save(self, save_dir: str, save_tokens: bool = True):
         """
         Save the cached latents to disk.
 
         Args:
-            save_dir (str): Directory to save the latents.
-            save_tokens (bool): Whether to save the dataset tokens used to generate the cache. Defaults to True.
+            save_dir: Directory to save the latents.
+            save_tokens: Whether to save the dataset tokens used to generate the cache.
+            Defaults to True.
         """
         for module_path in self.cache.latent_locations.keys():
             output_file = f"{save_dir}/{module_path}.safetensors"
@@ -271,29 +274,30 @@ class LatentCache:
 
             save_file(data, output_file)
 
-    def _generate_split_indices(self, n_splits):
+    def _generate_split_indices(self, n_splits: int) -> list[tuple[int, int]]:
         """
         Generate indices for splitting the latent space.
 
         Args:
-            n_splits (int): Number of splits to generate.
+            n_splits: Number of splits to generate.
 
         Returns:
-            List[Tuple[int, int]]: List of start and end indices for each split.
+            list[tuple[int, int]]: list of start and end indices for each split.
         """
         boundaries = torch.linspace(0, self.width, steps=n_splits + 1).long()
 
         # Adjust end by one
         return list(zip(boundaries[:-1], boundaries[1:] - 1))
 
-    def save_splits(self, n_splits: int, save_dir, save_tokens: bool = True):
+    def save_splits(self, n_splits: int, save_dir: str, save_tokens: bool = True):
         """
         Save the cached non-zero latent activations and locations in splits.
 
         Args:
-            n_splits (int): Number of splits to generate.
-            save_dir (str): Directory to save the splits.
-            save_tokens (bool): Whether to save the dataset tokens used to generate the cache. Defaults to True.
+            n_splits: Number of splits to generate.
+            save_dir: Directory to save the splits.
+            save_tokens: Whether to save the dataset tokens used to generate the cache.
+            Defaults to True.
         """
         split_indices = self._generate_split_indices(n_splits)
         for module_path in self.cache.latent_locations.keys():
@@ -340,9 +344,9 @@ class LatentCache:
         Save the configuration for the cached latents.
 
         Args:
-            save_dir (str): Directory to save the configuration.
-            cfg (CacheConfig): Configuration object.
-            model_name (str): Name of the model.
+            save_dir: Directory to save the configuration.
+            cfg: Configuration object.
+            model_name: Name of the model.
         """
         for module_path in self.cache.latent_locations.keys():
             config_file = f"{save_dir}/{module_path}/config.json"
