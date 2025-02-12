@@ -23,7 +23,7 @@ from transformers import (
     PreTrainedTokenizerFast,
 )
 
-from delphi.autoencoders.DeepMind import JumpReLUSAE
+from delphi.autoencoders.DeepMind import JumpReluSae
 from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
 from delphi.autoencoders.wrapper import AutoencoderLatents
 from delphi.clients import Offline, OpenRouter
@@ -69,7 +69,8 @@ class RunConfig:
     explainer_provider: str = field(
         default="offline",
     )
-    """Provider to use for explanation and scoring. Options are 'offline' for local models and 'openrouter' for API calls."""
+    """Provider to use for explanation and scoring. Options are 'offline' for local
+    models and 'openrouter' for API calls."""
 
     name: str = ""
     """The name of the run. Results are saved in a directory with this name."""
@@ -107,13 +108,15 @@ class RunConfig:
     """Whether to log summary statistics and results of the run."""
 
     overwrite: list[str] = list_field()
-    """Whether to overwrite existing parts of the run. Options are 'cache', 'scores', and 'visualize'."""
+    """Whether to overwrite existing parts of the run. Options are 'cache', 'scores',
+    and 'visualize'."""
 
     num_examples_per_scorer_prompt: int = field(
         default=1,
     )
-    """Number of examples to use for each scorer prompt. Using more than 1 improves scoring speed but can
-    leak information to the fuzzing scorer, and increases the scorer LLM task difficulty."""
+    """Number of examples to use for each scorer prompt. Using more than 1 improves
+    scoring speed but can leak information to the fuzzing scorer, and increases the
+    scorer LLM task difficulty."""
 
 
 def load_gemma_autoencoders(
@@ -128,7 +131,7 @@ def load_gemma_autoencoders(
 
     for layer in ae_layers:
         path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
-        sae = JumpReLUSAE.from_pretrained(path, type, "cuda")
+        sae = JumpReluSae.from_pretrained(path, type, "cuda")
 
         sae.half()
 
@@ -255,7 +258,8 @@ async def process_cache(
         client = Offline(
             run_cfg.explainer_model,
             max_memory=0.8,
-            # Explainer models context length - must be able to accomodate the longest set of examples
+            # Explainer models context length - must be able to accommodate the longest
+            # set of examples
             max_model_len=run_cfg.explainer_model_max_len,
             num_gpus=run_cfg.num_gpus,
         )
@@ -265,7 +269,8 @@ async def process_cache(
             or not os.environ["OPENROUTER_API_KEY"]
         ):
             raise ValueError(
-                "OPENROUTER_API_KEY environment variable not set. Set `--explainer-provider offline` to use a local explainer model."
+                "OPENROUTER_API_KEY environment variable not set. Set "
+                "`--explainer-provider offline` to use a local explainer model."
             )
 
         client = OpenRouter(
@@ -394,7 +399,8 @@ def populate_cache(
     cache.run(cfg.n_tokens, tokens)
 
     cache.save_splits(
-        # Split the activation and location indices into different files to make loading faster
+        # Split the activation and location indices into different files to make
+        # loading faster
         n_splits=cfg.n_splits,
         save_dir=latents_path,
     )

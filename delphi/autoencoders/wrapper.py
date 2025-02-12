@@ -58,7 +58,8 @@ class AutoencoderLatents(torch.nn.Module):
             from sae_lens import SAE
 
             sae, cfg_dict, sparsity = SAE.from_pretrained(
-                release=model_name_or_path,  # see other options in sae_lens/pretrained_saes.yaml
+                # see other options in sae_lens/pretrained_saes.yaml
+                release=model_name_or_path,
                 sae_id=hookpoint,
                 device=device,
             )
@@ -69,24 +70,18 @@ class AutoencoderLatents(torch.nn.Module):
             raise NotImplementedError("Neurons autoencoder not implemented yet")
 
         elif autoencoder_type == "CUSTOM":
-            # to use a custom autoencoder, you must make own custom autoencoder class and implement the forward function
+            # to use a custom autoencoder, you must make own custom autoencoder class
+            # and implement the forward function
             # it should have a specific name that you use here
             custom_name = config.kwargs.get("custom_name", None)
             if custom_name is None:
                 raise ValueError("custom_name must be specified for CUSTOM autoencoder")
             if custom_name == "gemmascope":
-                from .Custom.gemmascope import JumpReLUSAE
+                from .Custom.gemmascope import JumpReluSae
 
-                sae = JumpReLUSAE.from_pretrained(model_name_or_path, hookpoint, device)
+                sae = JumpReluSae.from_pretrained(model_name_or_path, hookpoint, device)
                 forward_function = choose_forward_function(config, sae)
                 width = sae.W_enc.data.shape[1]
-            if custom_name == "openai":
-                raise NotImplementedError("OpenAI autoencoder not implemented yet")
-                from Custom.openai import Autoencoder
-
-                path = f"{model_name_or_path}/{hookpoint}.pt"
-                state_dict = torch.load(path)
-                Autoencoder.from_state_dict(state_dict=state_dict)
 
         else:
             raise ValueError(f"Unsupported autoencoder type: {autoencoder_type}")
@@ -98,8 +93,8 @@ class AutoencoderLatents(torch.nn.Module):
         pass
 
 
-def choose_forward_function(autoencoder_config: AutoencoderConfig, autoencoder: Any):
-    if autoencoder_config.autoencoder_type == "SAE":
+def choose_forward_function(cfg: AutoencoderConfig, autoencoder: Any):
+    if cfg.autoencoder_type == "SAE":
         from .Custom.openai import ACTIVATIONS_CLASSES, TopK
 
         def _forward(sae, k, x):
@@ -111,18 +106,18 @@ def choose_forward_function(autoencoder_config: AutoencoderConfig, autoencoder: 
             topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
             return topk(encoded)
 
-        k = autoencoder_config.kwargs.get("k", None)
+        k = cfg.kwargs.get("k", None)
         return partial(_forward, autoencoder, k)
 
-    elif autoencoder_config.autoencoder_type == "SAE_LENS":
+    elif cfg.autoencoder_type == "SAE_LENS":
         return autoencoder.encode
 
-    elif autoencoder_config.autoencoder_type == "CUSTOM":
-        if autoencoder_config.kwargs.get("custom_name", None) == "gemmascope":
+    elif cfg.autoencoder_type == "CUSTOM":
+        if cfg.kwargs.get("custom_name", None) == "gemmascope":
             return autoencoder.encode
         else:
             raise ValueError(
-                f"Unsupported custom autoencoder: {autoencoder_config.kwargs.get('custom_name', None)}"
+                f"Unsupported custom autoencoder {cfg.kwargs.get('custom_name', None)}"
             )
 
 
@@ -155,7 +150,8 @@ def get_submodule(
 def hook_submodule(
     submodule: Any, model: Any, module_path: str, autoencoder_config: AutoencoderConfig
 ) -> Tuple[Any, Any]:
-    # TODO: This should take into account the autoencoder config, but for now I think this is valid for all
+    # TODO: This should take into account the autoencoder config, but for now I think
+    # this is valid for all
     with model.edit("") as edited:
         if "embed" not in module_path and "mlp" not in module_path:
             acts = submodule.output[0]

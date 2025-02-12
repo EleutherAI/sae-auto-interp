@@ -1,4 +1,3 @@
-
 from ...latents import Example
 from ..scorer import Scorer, ScorerResult
 from .oai_autointerp import (

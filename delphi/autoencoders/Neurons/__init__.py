@@ -1,6 +1,3 @@
-from functools import partial
-from typing import List
-
 import torch
 
 from ..Custom.openai import ACTIVATIONS_CLASSES, TopK

@@ -1,4 +1,3 @@
-
 import pandas as pd
 import torch
 from flask import Flask, jsonify, request
@@ -75,11 +74,13 @@ def generate_explanation():
     """
     Generate an explanation for a given set of activations. This endpoint expects
     a JSON object with the following fields:
-    - activations: A list of dictionaries, each containing a 'tokens' key with a list of token strings and a 'values' key with a list of activation values.
+    - activations: A list of dictionaries, each containing a 'tokens' key with a list
+      of token strings and a 'values' key with a list of activation values.
     - api_key: The API key to use for the request.
     - model: The model to use for the request.
 
-    We could potentially allow for more options, eg we have a threshold that is set "in stone", we don't do COT and always show activations.
+    We could potentially allow for more options, eg we have a threshold that is set
+    "in stone", we don't do COT and always show activations.
     We don't currently support that, but we could allow for custom prompts as well.
     """
 
@@ -114,17 +115,18 @@ def generate_explanation():
 @app.route("/generate_score_fuzz_detection", methods=["POST"])
 def generate_score_fuzz_detection():
     """
-    Generate a score for a given set of activations and explanation. This endpoint expects
-    a JSON object with the following fields:
-    - activations: A list of dictionaries, each containing a 'tokens' key with a list of token strings and a 'values' key with a list of activation values.
+    Generate a score for a given set of activations and explanation. This endpoint
+    expects a JSON object with the following fields:
+    - activations: A list of dictionaries, each containing a 'tokens' key with a list
+      of token strings and a 'values' key with a list of activation values.
     - explanation: The explanation to use for the score.
     - type: Whether to do detection or fuzzing.
     - api_key: The API key to use for the request.
     - model: The model to use for the request.
 
-    We could potentially allow for more options, eg we hardcode showing 5 examples at a time.
-    We don't currently support that, but we could allow for custom prompts as well.
-    OpenRouter doesn't support log_prob, so we can't use that.
+    We could potentially allow for more options, eg we hardcode showing 5 examples at
+    a time. We don't currently support that, but we could allow for custom prompts as
+    well. OpenRouter doesn't support log_prob, so we can't use that.
     """
 
     data = request.json
@@ -186,9 +188,10 @@ def generate_score_fuzz_detection():
 @app.route("/generate_score_embedding", methods=["POST"])
 def generate_score_embedding():
     """
-    Generate a score for a given set of activations and explanation. This endpoint expects
-    a JSON object with the following fields:
-    - activations: A list of dictionaries, each containing a 'tokens' key with a list of token strings and a 'values' key with a list of activation values.
+    Generate a score for a given set of activations and explanation. This endpoint
+    expects a JSON object with the following fields:
+    - activations: A list of dictionaries, each containing a 'tokens' key with a list
+      of token strings and a 'values' key with a list of activation values.
     - explanation: The explanation to use for the score.
     """
     global model

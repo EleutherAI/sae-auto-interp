@@ -1,9 +1,7 @@
 from functools import partial
-from typing import Dict, List
+from typing import Dict
 
-import torch
-
-from ..Custom.gemmascope import JumpReLUSAE
+from ..Custom.gemmascope import JumpReluSae
 from ..wrapper import AutoencoderLatents
 
 DEVICE = "cuda:0"
@@ -18,7 +16,7 @@ def load_gemma_autoencoders(
         model_name = f"google/gemma-scope-9b-pt-{type}"
 
         path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
-        sae = JumpReLUSAE.from_pretrained(model_name, path, "cuda")
+        sae = JumpReluSae.from_pretrained(model_name, path, "cuda")
 
         sae.half()
 

@@ -1,6 +1,6 @@
 from functools import partial, reduce
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any
 
 import torch
 from nnsight import LanguageModel
@@ -12,72 +12,6 @@ from .wrapper import AutoencoderLatents
 def _sae_forward(sae: Sae, x):
     acts, indices = sae.encode(x)
     return torch.zeros_like(x).scatter_(-1, indices, acts)
-
-def load_eai_autoencoders(
-    model: Any,
-    ae_layers: list[int],
-    weight_dir: str,
-    module: Literal["mlp", "res"],
-) -> tuple[dict[str, Any], Any]:
-    """
-    Load EleutherAI autoencoders for specified layers and module.
-
-    Args:
-        model (Any): The model to load autoencoders for.
-        ae_layers (list[int]): List of layer indices to load autoencoders for.
-        weight_dir (str): Directory containing the autoencoder weights.
-        module (str): Module name ('mlp' or 'res').
-
-    Returns:
-        tuple[dict[str, Any], Any]: A tuple containing the submodules dictionary
-            and the edited model.
-    """
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    submodules = {}
-
-    for layer in ae_layers:
-        if module == "mlp":
-            submodule = f"layers.{layer}.{module}"
-        elif module == "res":
-            submodule = f"layers.{layer}"
-        else:
-            raise ValueError(f"Unknown module: {module}")
-
-        if "mnt" in weight_dir:
-            sae = Sae.load_from_disk(weight_dir + "/" + submodule, device=device).to(
-                dtype=model.dtype
-            )
-        else:
-            sae = Sae.load_from_hub(weight_dir, hookpoint=submodule, device=device).to(
-                dtype=model.dtype
-            )
-
-        if "llama" in weight_dir:
-            if module == "res":
-                submodule = model.model.layers[layer]
-            else:
-                submodule = model.model.layers[layer].mlp
-        elif "gpt2" in weight_dir:
-            submodule = model.transformer.h[layer]
-        else:
-            if module == "res":
-                submodule = model.gpt_neox.layers[layer]
-            else:
-                submodule = model.gpt_neox.layers[layer].mlp
-        submodule.ae = AutoencoderLatents(
-            sae, partial(_sae_forward, sae), width=sae.encoder.weight.shape[0]
-        )
-        submodules[submodule.path] = submodule
-
-    with model.edit("") as edited:
-        for path, submodule in submodules.items():
-            if "embed" not in path and "mlp" not in path:
-                acts = submodule.output[0]
-            else:
-                acts = submodule.output
-            submodule.ae(acts, hook=True)
-
-    return submodules, edited
 
 
 def resolve_path(model, path_segments: list[str]) -> list[str] | None:

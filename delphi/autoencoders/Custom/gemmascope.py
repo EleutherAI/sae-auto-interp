@@ -6,7 +6,7 @@ from huggingface_hub import hf_hub_download
 
 # This is from the GemmaScope tutorial
 # https://colab.research.google.com/drive/17dQFYUYnuKnP6OwQPH9v_GSYUW5aj-Rp#scrollTo=WYfvS97fAFzq
-class JumpReLUSAE(nn.Module):
+class JumpReluSae(nn.Module):
     def __init__(self, d_model, d_sae):
         super().__init__()
         self.W_enc = nn.Parameter(torch.zeros(d_model, d_sae))
