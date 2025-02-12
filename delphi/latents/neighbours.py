@@ -5,7 +5,7 @@ from tqdm import tqdm
 import numpy as np
 import torch
 from safetensors.numpy import load_file
-
+from delphi.latents.latent_dataset import LatentDataset
 
 class NeighbourCalculator:
     """
