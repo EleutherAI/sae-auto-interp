@@ -3,9 +3,13 @@ import pandas as pd
 from torch import Tensor
 from pathlib import Path
 import numpy as np
+import plotly.express as px
+import plotly.io as pio
+
+pio.kaleido.scope.mathjax = None  # https://github.com/plotly/plotly.py/issues/3469
 
 
-def feature_balanced_score_metrics(df: pd.DataFrame, score_type: str):
+def latent_balanced_score_metrics(df: pd.DataFrame, score_type: str, log: bool = True):
     # Calculate weights based on non-errored examples
     valid_examples = df['total_examples']
     weights = valid_examples / valid_examples.sum()
@@ -29,25 +33,26 @@ def feature_balanced_score_metrics(df: pd.DataFrame, score_type: str):
         'false_negative_rate': np.average(df['false_negative_rate'], weights=weights),
     }
 
-    print(f"\n--- {score_type.title()} Metrics ---")
-    print(f"Accuracy: {weighted_mean_metrics['accuracy']:.3f}")
-    print(f"F1 Score: {weighted_mean_metrics['f1_score']:.3f}")
-    print(f"Precision: {weighted_mean_metrics['precision']:.3f}")
-    print(f"Recall: {weighted_mean_metrics['recall']:.3f}")
+    if log:
+        print(f"\n--- {score_type.title()} Metrics ---")
+        print(f"Accuracy: {weighted_mean_metrics['accuracy']:.3f}")
+        print(f"F1 Score: {weighted_mean_metrics['f1_score']:.3f}")
+        print(f"Precision: {weighted_mean_metrics['precision']:.3f}")
+        print(f"Recall: {weighted_mean_metrics['recall']:.3f}")
 
-    fractions_failed = [failed_count / total_examples for failed_count, total_examples in zip(df['failed_count'], df['total_examples'])]
-    print(f"Average fraction of failed examples: {sum(fractions_failed) / len(fractions_failed):.3f}")
+        fractions_failed = [failed_count / (total_examples + failed_count) for failed_count, total_examples in zip(df['failed_count'], df['total_examples'])]
+        print(f"Average fraction of failed examples: {sum(fractions_failed) / len(fractions_failed):.3f}")
 
-    print("\nConfusion Matrix:")
-    print(f"True Positive Rate:  {weighted_mean_metrics['true_positive_rate']:.3f}")
-    print(f"True Negative Rate:  {weighted_mean_metrics['true_negative_rate']:.3f}")
-    print(f"False Positive Rate: {weighted_mean_metrics['false_positive_rate']:.3f}")
-    print(f"False Negative Rate: {weighted_mean_metrics['false_negative_rate']:.3f}")
-    
-    print(f"\nClass Distribution:")
-    print(f"Positives: {df['total_positives'].sum():.0f} ({weighted_mean_metrics['positive_class_ratio']:.1%})")
-    print(f"Negatives: {df['total_negatives'].sum():.0f} ({weighted_mean_metrics['negative_class_ratio']:.1%})")
-    print(f"Total: {df['total_examples'].sum():.0f}")
+        print("\nConfusion Matrix:")
+        print(f"True Positive Rate:  {weighted_mean_metrics['true_positive_rate']:.3f}")
+        print(f"True Negative Rate:  {weighted_mean_metrics['true_negative_rate']:.3f}")
+        print(f"False Positive Rate: {weighted_mean_metrics['false_positive_rate']:.3f}")
+        print(f"False Negative Rate: {weighted_mean_metrics['false_negative_rate']:.3f}")
+        
+        print(f"\nClass Distribution:")
+        print(f"Positives: {df['total_positives'].sum():.0f} ({weighted_mean_metrics['positive_class_ratio']:.1%})")
+        print(f"Negatives: {df['total_negatives'].sum():.0f} ({weighted_mean_metrics['negative_class_ratio']:.1%})")
+        print(f"Total: {df['total_examples'].sum():.0f}")
 
     return weighted_mean_metrics
 
@@ -165,8 +170,27 @@ def build_scores_df(path: Path, target_modules: list[str], range: Tensor | None 
     return df
 
 
-def log_results(scores_path: Path, target_modules: list[str]):
+def plot_line(df: pd.DataFrame, visualize_path: Path):
+    visualize_path.mkdir(parents=True, exist_ok=True)
+
+    for score_type in df["score_type"].unique():
+        mask = (df["score_type"] == score_type)
+        
+        fig = px.histogram(
+            df[mask],
+            x="accuracy",
+            title=f"Latent explanation accuracies for {score_type} scorer",
+            nbins=100
+        )
+        
+        fig.write_image(visualize_path / f"{score_type}_accuracies.pdf", format="pdf")
+
+
+def log_results(scores_path: Path, visualize_path: Path, target_modules: list[str]):
     df = build_scores_df(scores_path, target_modules)
+    plot_line(df, visualize_path)
+
     for score_type in df["score_type"].unique():
         score_df = df[df['score_type'] == score_type]
-        feature_balanced_score_metrics(score_df, score_type)
+        latent_balanced_score_metrics(score_df, score_type)
+    

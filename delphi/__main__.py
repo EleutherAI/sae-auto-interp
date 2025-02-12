@@ -407,6 +407,7 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
     latents_path = base_path / "latents"
     explanations_path = base_path / "explanations"
     scores_path = base_path / "scores"
+    visualize_path = base_path / "visualize"
 
     latent_range = (
         torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
@@ -453,7 +454,7 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
         print(f"Files found in {scores_path}, skipping...")
 
     if run_cfg.log:
-        log_results(scores_path, run_cfg.hookpoints)
+        log_results(scores_path, visualize_path, run_cfg.hookpoints)
 
 
 if __name__ == "__main__":
