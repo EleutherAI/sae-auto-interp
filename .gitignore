@@ -4,8 +4,12 @@
 *.safetensors
 *.log
 *workspace
-
+latents/*
+results/*
 extras/*
+temp/*
+tests/*
+saved*
 .nfs*
 
 

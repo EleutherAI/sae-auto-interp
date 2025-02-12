@@ -8,7 +8,7 @@ import numpy as np
 from transformers import PreTrainedTokenizer
 
 from ...clients.client import Client
-from ...features import FeatureRecord
+from ...latents import LatentRecord
 from ...logger import logger
 from ..scorer import Scorer, ScorerResult
 from .sample import ClassifierOutput, Sample
@@ -20,15 +20,27 @@ class Classifier(Scorer):
         client: Client,
         tokenizer: PreTrainedTokenizer,
         verbose: bool,
-        batch_size: int,
+        n_examples_shown: int,
         log_prob: bool,
         **generation_kwargs,
     ):
+        """
+        Initialize a Classifier.
+
+        Args:
+            client: The client to use for generation
+            tokenizer: The tokenizer used to cache the tokens
+            verbose: Whether to print verbose output
+            n_examples_shown: The number of examples to show in the prompt,
+                        a larger number can both leak information and make
+                        it harder for models to generate anwers in the correct format
+            log_prob: Whether to use log probabilities to allow for AUC calculation
+            generation_kwargs: Additional generation kwargs
+        """
         self.client = client
         self.tokenizer = tokenizer
         self.verbose = verbose
-
-        self.batch_size = batch_size
+        self.n_examples_shown = n_examples_shown
         self.generation_kwargs = generation_kwargs
         self.log_prob = log_prob
 
@@ -36,7 +48,7 @@ class Classifier(Scorer):
 
     async def __call__(
         self,
-        record: FeatureRecord,
+        record: LatentRecord,
     ) -> list[ClassifierOutput]:
         samples = self._prepare(record)
 
@@ -50,7 +62,7 @@ class Classifier(Scorer):
         return ScorerResult(record=record, score=results)
 
     @abstractmethod
-    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
         pass
 
 
@@ -92,8 +104,8 @@ class Classifier(Scorer):
             logger.error(f"Error generating text: {e}")
             response = None
         if response is None:
-            predictions = [-1] * self.batch_size
-            probabilities = [-1] * self.batch_size
+            predictions = [None] * self.n_examples_shown
+            probabilities = [None] * self.n_examples_shown
         else:
             selections = response.text
             logprobs = response.logprobs if self.log_prob else None
@@ -101,21 +113,18 @@ class Classifier(Scorer):
                 predictions, probabilities = self._parse(selections, logprobs)
             except Exception as e:
                 logger.error(f"Parsing selections failed: {e}")
-                predictions = [-1] * self.batch_size
-                probabilities = [-1] * self.batch_size
+                predictions = [None] * self.n_examples_shown
+                probabilities = [None] * self.n_examples_shown
 
         results = []
-        correct = []
-        response = []
-
         for sample, prediction, probability in zip(batch, predictions, probabilities):
             result = sample.data
             result.prediction = prediction
-            result.correct = prediction == result.ground_truth
-            correct.append(result.ground_truth)
-            response.append(prediction)
-            if probability is not None:
-                result.probability = probability
+            if prediction is not None:
+                result.correct = prediction == result.ground_truth
+            else:
+                result.correct = None
+            result.probability = probability
             results.append(result)
 
             if self.verbose:
@@ -131,11 +140,11 @@ class Classifier(Scorer):
         match = re.search(pattern, string)
 
         predictions: list[int] = json.loads(match.group(0))
-        assert len(predictions) == self.batch_size
+        assert len(predictions) == self.n_examples_shown
         probabilities = (
             self._parse_logprobs(logprobs)
             if logprobs is not None
-            else [None] * self.batch_size
+            else [None] * self.n_examples_shown
         )
 
         return predictions, probabilities
@@ -171,7 +180,7 @@ class Classifier(Scorer):
                 else:
                     binary_probabilities.append(0.)
 
-        assert len(binary_probabilities) == self.batch_size
+        assert len(binary_probabilities) == self.n_examples_shown
         return binary_probabilities
 
 
@@ -192,9 +201,9 @@ class Classifier(Scorer):
 
     def _batch(self, samples):
         return [
-            samples[i : i + self.batch_size]
-            for i in range(0, len(samples), self.batch_size)
+            samples[i : i + self.n_examples_shown]
+            for i in range(0, len(samples), self.n_examples_shown)
         ]
 
-    def call_sync(self, record: FeatureRecord) -> list[ClassifierOutput]:
+    def call_sync(self, record: LatentRecord) -> list[ClassifierOutput]:
         return asyncio.run(self.__call__(record))

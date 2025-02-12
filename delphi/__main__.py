@@ -25,21 +25,94 @@ from datasets import load_dataset
 from sparsify.data import chunk_and_tokenize
 from simple_parsing import field, list_field
 
-from delphi.config import ExperimentConfig, FeatureConfig
+from delphi.config import ExperimentConfig, LatentConfig
 from delphi.explainers import DefaultExplainer
-from delphi.features import FeatureDataset, FeatureLoader
-from delphi.features.constructors import default_constructor
-from delphi.features.samplers import sample
+from delphi.latents import LatentDataset, LatentLoader
+from delphi.latents.constructors import default_constructor
+from delphi.latents.samplers import sample
 from delphi.pipeline import Pipeline, process_wrapper
 from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig
-from delphi.features import FeatureCache
+from delphi.latents import LatentCache
 from delphi.utils import assert_type
 from delphi.scorers import FuzzingScorer, DetectionScorer
 from delphi.pipeline import Pipe
 from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
 from delphi.autoencoders.DeepMind import JumpReLUSAE
 from delphi.autoencoders.wrapper import AutoencoderLatents
+from delphi.log.result_analysis import log_results
+
+
+@dataclass
+class RunConfig:
+    model: str = field(
+        default="meta-llama/Meta-Llama-3-8B",
+        positional=True,
+    )
+    """Name of the model to explain."""
+
+    sparse_model: str = field(
+        default="EleutherAI/sae-llama-3-8b-32x",
+        positional=True,
+    )
+    """Name of sparse models associated with the model to explain, or path to
+    directory containing their weights. Models must be loadable with sparsify."""
+
+    hookpoints: list[str] = list_field()
+    """List of model hookpoints to attach sparse models to."""
+
+    explainer_model: str = field(
+        default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
+    )
+    """Name of the model to use for explanation and scoring."""
+
+    explainer_model_max_len: int = field(
+        default=5120,
+    )
+    """Maximum length of the explainer model context window."""
+
+    explainer_provider: str = field(
+        default="offline",
+    )
+    """Provider to use for explanation and scoring. Options are 'offline' for local models and 'openrouter' for API calls."""
+
+    name: str = ""
+    """The name of the run. Results are saved in a directory with this name."""
+
+    max_latents: int | None = None
+    """Maximum number of features to explain for each sparse model."""
+
+    filter_bos: bool = False
+    """Whether to filter out BOS tokens from the cache."""
+
+    load_in_8bit: bool = False
+    """Load the model in 8-bit mode."""
+
+    hf_token: str | None = None
+    """Huggingface API token for downloading models."""
+
+    pipeline_num_proc: int = field(
+        default_factory=lambda: cpu_count() // 2,
+    )
+    """Number of processes to use for preprocessing data"""
+
+    num_gpus: int = field(
+        default=1,
+    )
+    """Number of GPUs to use for explanation and scoring."""
+
+    seed: int = field(
+        default=22,
+    )
+    """Seed for the random number generator."""
+
+    log: bool = field(
+        default=True,
+    )
+    """Whether to log summary statistics and results of the run."""
+
+    overwrite: list[str] = list_field()
+    """Whether to overwrite existing parts of the run. Options are 'cache', 'scores', and 'visualize'."""
 
 
 def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,int],size:str,type:str, hookpoints):
@@ -77,73 +150,6 @@ def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,in
     return submodules, edited
 
 
-@dataclass
-class RunConfig:
-    model: str = field(
-        default="meta-llama/Meta-Llama-3-8B",
-        positional=True,
-    )
-    """Name of the model to explain."""
-
-    sparse_model: str = field(
-        default="EleutherAI/sae-llama-3-8b-32x",
-        positional=True,
-    )
-    """Name of the models associated with the model to explain, or path to
-    directory containing its weights. Models must be loadable with sparsify."""
-
-    hookpoints: list[str] = list_field()
-    """List of hookpoints to load SAEs for."""
-
-    explainer_model: str = field(
-        default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
-    )
-    """Name of the model to use for explanation generation."""
-
-    explainer_model_max_len: int = field(
-        default=5120,
-    )
-    """Maximum length of the explainer model context window."""
-
-    explainer_provider: str = field(
-        default="offline",
-    )
-    """Provider to use for explanation generation. Options are 'offline' for local models and 'openrouter' for API calls."""
-
-    name: str = ""
-    """The name of the run. Results will be saved in a directory with this name."""
-
-    overwrite: list[str] = list_field()
-    """Whether to overwrite existing parts of the run. Options are 'cache', 'scores', and 'visualize'."""
-
-    max_features: int | None = None
-    """Maximum number of features to explain for each SAE."""
-
-    load_in_8bit: bool = False
-    """Load the model in 8-bit mode."""
-
-    hf_token: str | None = None
-    """Huggingface API token for downloading models."""
-
-    pipeline_num_proc: int = field(
-        default_factory=lambda: cpu_count() // 2,
-    )
-    """Number of processes to use for preprocessing data"""
-
-    num_gpus: int = field(
-        default=1,
-    )
-    """Number of GPUs to use for explanation generation."""
-
-    seed: int = field(
-        default=22,
-    )
-    """Seed for the random number generator."""
-
-    filter_bos: bool = False
-    """Tokens to filter out from the cache."""
-
-
 def load_artifacts(run_cfg: RunConfig):
     if run_cfg.load_in_8bit:
         dtype = torch.float16
@@ -171,7 +177,7 @@ def load_artifacts(run_cfg: RunConfig):
             model,  # type: ignore
             run_cfg.sparse_model,
             run_cfg.hookpoints,
-            k=run_cfg.max_features,
+            k=run_cfg.max_latents,
         )
     else:
         # Doing a hack
@@ -193,7 +199,7 @@ def load_artifacts(run_cfg: RunConfig):
     return run_cfg.hookpoints, submodule_name_to_submodule, model, model.tokenizer
 
 async def process_cache(
-    feature_cfg: FeatureConfig,
+    latent_cfg: LatentConfig,
     run_cfg: RunConfig,
     experiment_cfg: ExperimentConfig,
     latents_path: Path,
@@ -202,11 +208,11 @@ async def process_cache(
     # The layers to explain
     hookpoints: list[str],
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
-    feature_range: Tensor | None,
+    latent_range: Tensor | None,
 ):
     """
-    Converts SAE feature activations in on-disk cache in the `latents_path` directory
-    to feature explanations in the `explanations_path` directory and explanation
+    Converts SAE latent activations in on-disk cache in the `latents_path` directory
+    to latent explanations in the `explanations_path` directory and explanation
     scores in the `fuzz_scores_path` directory.
     """
     explanations_path.mkdir(parents=True, exist_ok=True)
@@ -216,19 +222,19 @@ async def process_cache(
     fuzz_scores_path.mkdir(parents=True, exist_ok=True)
     detection_scores_path.mkdir(parents=True, exist_ok=True)
 
-    if feature_range is None:
-        feature_dict = None
+    if latent_range is None:
+        latent_dict = None
     else:
-        feature_dict = {
-            hook: feature_range for hook in hookpoints
+        latent_dict = {
+            hook: latent_range for hook in hookpoints
         }  # The latent range to explain
-        feature_dict = cast(dict[str, int | Tensor], feature_dict)
+        latent_dict = cast(dict[str, int | Tensor], latent_dict)
 
-    dataset = FeatureDataset(
+    dataset = LatentDataset(
         raw_dir=str(latents_path),
-        cfg=feature_cfg,
+        cfg=latent_cfg,
         modules=hookpoints,
-        features=feature_dict,
+        latents=latent_dict,
         tokenizer=tokenizer,
     )
 
@@ -260,13 +266,13 @@ async def process_cache(
         token_loader=None,
         n_random=experiment_cfg.n_random,
         ctx_len=experiment_cfg.example_ctx_len,
-        max_examples=feature_cfg.max_examples,
+        max_examples=latent_cfg.max_examples,
     )
     sampler = partial(sample, cfg=experiment_cfg)
-    loader = FeatureLoader(dataset, constructor=constructor, sampler=sampler)
+    loader = LatentLoader(dataset, constructor=constructor, sampler=sampler)
 
     def explainer_postprocess(result):
-        with open(explanations_path / f"{result.record.feature}.txt", "wb") as f:
+        with open(explanations_path / f"{result.record.latent}.txt", "wb") as f:
             f.write(orjson.dumps(result.explanation))
         return result
 
@@ -288,9 +294,9 @@ async def process_cache(
 
     # Saves the score to a file
     def scorer_postprocess(result, score_dir):
-        safe_feature_name = str(result.record.feature).replace("/", "--")
+        safe_latent_name = str(result.record.latent).replace("/", "--")
 
-        with open(score_dir / f"{safe_feature_name}.txt", "wb") as f:
+        with open(score_dir / f"{safe_latent_name}.txt", "wb") as f:
             f.write(orjson.dumps(result.score))
 
     scorer_pipe = Pipe(
@@ -337,7 +343,7 @@ def populate_cache(
     filter_bos: bool,
 ):
     """
-    Populates an on-disk cache in `latents_path` with SAE feature activations.
+    Populates an on-disk cache in `latents_path` with SAE latent activations.
     """
     latents_path.mkdir(parents=True, exist_ok=True)
 
@@ -365,7 +371,7 @@ def populate_cache(
     tokens = cast(TensorType["batch", "seq"], tokens)
 
 
-    cache = FeatureCache(
+    cache = LatentCache(
         hooked_model,
         submodule_name_to_submodule,
         batch_size=cfg.batch_size,
@@ -381,7 +387,7 @@ def populate_cache(
     cache.save_config(save_dir=str(latents_path), cfg=cfg, model_name=run_cfg.model)
 
 
-async def run(experiment_cfg: ExperimentConfig, feature_cfg: FeatureConfig, cache_cfg: CacheConfig, run_cfg: RunConfig):
+async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_cfg: CacheConfig, run_cfg: RunConfig):
     base_path = Path.cwd() / "results"
     if run_cfg.name:
         base_path = base_path / run_cfg.name
@@ -394,8 +400,8 @@ async def run(experiment_cfg: ExperimentConfig, feature_cfg: FeatureConfig, cach
     explanations_path = base_path / "explanations"
     scores_path = base_path / "scores"
 
-    feature_range = (
-        torch.arange(run_cfg.max_features) if run_cfg.max_features else None
+    latent_range = (
+        torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
     )
 
     hookpoints, submodule_name_to_submodule, hooked_model, tokenizer = load_artifacts(
@@ -425,7 +431,7 @@ async def run(experiment_cfg: ExperimentConfig, feature_cfg: FeatureConfig, cach
         or "scores" in run_cfg.overwrite
     ):
         await process_cache(
-            feature_cfg,
+            latent_cfg,
             run_cfg,
             experiment_cfg,
             latents_path,
@@ -433,18 +439,21 @@ async def run(experiment_cfg: ExperimentConfig, feature_cfg: FeatureConfig, cach
             scores_path,
             hookpoints,
             tokenizer,
-            feature_range,
+            latent_range,
         )
     else:
         print(f"Files found in {scores_path}, skipping...")
+
+    if run_cfg.log:
+        log_results(scores_path, run_cfg.hookpoints)
 
 
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_arguments(ExperimentConfig, dest="experiment_cfg")
-    parser.add_arguments(FeatureConfig, dest="feature_cfg")
+    parser.add_arguments(LatentConfig, dest="latent_cfg")
     parser.add_arguments(CacheConfig, dest="cache_cfg")
     parser.add_arguments(RunConfig, dest="run_cfg")
     args = parser.parse_args()
 
-    asyncio.run(run(args.experiment_cfg, args.feature_cfg, args.cache_cfg, args.run_cfg))
+    asyncio.run(run(args.experiment_cfg, args.latent_cfg, args.cache_cfg, args.run_cfg))
