@@ -5,19 +5,19 @@ from transformers import PreTrainedModel
 from delphi.config import RunConfig
 
 from .custom.gemmascope import load_gemma_autoencoders
-from .load_sparsify import load_sparsify_autoencoders
+from .load_sparsify import load_sparsify_sparse_coders
 
-__all__ = ["load_autoencoders"]
+__all__ = ["load_sparse_coders"]
 
 
-def load_autoencoders(
+def load_sparse_coders(
     model: PreTrainedModel,
     run_cfg: RunConfig,
     compile: bool = False,
 ) -> dict[str, Callable]:
     # Add SAE hooks to the model
     if "gemma" not in run_cfg.sparse_model:
-        hookpoint_to_sae_encode = load_sparsify_autoencoders(
+        hookpoint_to_sae_encode = load_sparsify_sparse_coders(
             model,
             run_cfg.sparse_model,
             run_cfg.hookpoints,

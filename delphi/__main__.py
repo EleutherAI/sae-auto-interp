@@ -22,7 +22,6 @@ from transformers import (
     PreTrainedTokenizerFast,
 )
 
-from delphi.autoencoders import load_autoencoders
 from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
 from delphi.explainers import DefaultExplainer
@@ -32,6 +31,7 @@ from delphi.latents.samplers import sample
 from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
+from delphi.sparse_coders import load_sparse_coders
 
 
 def load_artifacts(run_cfg: RunConfig):
@@ -54,7 +54,7 @@ def load_artifacts(run_cfg: RunConfig):
         token=run_cfg.hf_token,
     )
 
-    hookpoint_to_sae_encode = load_autoencoders(model,run_cfg, compile=True)
+    hookpoint_to_sae_encode = load_sparse_coders(model,run_cfg, compile=True)
 
     return run_cfg.hookpoints, hookpoint_to_sae_encode, model
 

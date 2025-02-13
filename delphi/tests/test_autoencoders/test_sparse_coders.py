@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 
 # Import the function to be tested
-from delphi.autoencoders import load_autoencoders
+from delphi.sparse_coders import load_sparse_coders
 
 
 # A simple dummy run configuration for testing.
@@ -69,9 +69,9 @@ def run_cfg_gemma():
 
 def test_retrieve_autoencoders_from_sparsify(dummy_model, run_cfg_sparsify):
     """
-    Tests that load_autoencoders retrieves autoencoders from Sparsify.
+    Tests that load_sparse_coders retrieves autoencoders from Sparsify.
     """
-    submodules = load_autoencoders(dummy_model, run_cfg_sparsify)
+    submodules = load_sparse_coders(dummy_model, run_cfg_sparsify)
     # Verify that we received a dictionary of autoencoders.
     assert (
         isinstance(submodules, dict) and len(submodules) > 0
@@ -91,9 +91,9 @@ def test_retrieve_autoencoders_from_sparsify(dummy_model, run_cfg_sparsify):
 
 def test_retrieve_autoencoders_from_gemma(dummy_model, run_cfg_gemma):
     """
-    Tests that load_autoencoders retrieves autoencoders from Gemma.
+    Tests that load_sparse_coders retrieves autoencoders from Gemma.
     """
-    submodules = load_autoencoders(dummy_model, run_cfg_gemma)
+    submodules = load_sparse_coders(dummy_model, run_cfg_gemma)
     # Verify that we received a dictionary of autoencoders.
     assert (
         isinstance(submodules, dict) and len(submodules) > 0
