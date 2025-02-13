@@ -1,7 +1,45 @@
+from functools import partial
+
 import numpy as np
 import torch
 import torch.nn as nn
 from huggingface_hub import hf_hub_download
+
+
+def load_gemma_autoencoders(
+    model_path: str,
+    ae_layers: list[int],
+    average_l0s: list[int],
+    sizes: list[str],
+    type: str,
+    dtype: torch.dtype = torch.bfloat16,
+    device: torch.device = torch.device("cuda"),
+):
+    submodules = {}
+
+    for layer, size, l0 in zip(ae_layers, sizes, average_l0s):
+        path = f"layer_{layer}/width_{size}/average_l0_{l0}"
+        sae = JumpReluSae.from_pretrained(model_path, path, device)
+
+        sae.to(dtype)
+
+        def _forward(sae, x):
+            encoded = sae.encode(x)
+            return encoded
+
+        assert type in [
+            "res",
+            "mlp",
+        ], "Only res and mlp are supported for gemma autoencoders"
+        hookpoint = (
+            f"layers.{layer}"
+            if type == "res"
+            else f"layers.{layer}.post_feedforward_layernorm"
+        )
+
+        submodules[hookpoint] = partial(_forward, sae)
+
+    return submodules
 
 
 # This is from the GemmaScope tutorial
@@ -18,8 +56,6 @@ class JumpReluSae(nn.Module):
     def encode(self, input_acts):
         pre_acts = input_acts @ self.W_enc + self.b_enc
         mask = pre_acts > self.threshold
-        # print(pre_acts.shape)
-        # print(torch.nonzero(mask).shape)
         acts = mask * torch.nn.functional.relu(pre_acts)
         return acts
 
@@ -32,10 +68,10 @@ class JumpReluSae(nn.Module):
         return recon
 
     @classmethod
-    def from_pretrained(cls, path: str, type: str, device: str) -> nn.Module:
+    def from_pretrained(cls, model_name_or_path, position, device):
         path_to_params = hf_hub_download(
-            repo_id="google/gemma-scope-9b-pt-" + type,
-            filename=f"{path}/params.npz",
+            repo_id=model_name_or_path,
+            filename=f"{position}/params.npz",
             force_download=False,
         )
         params = np.load(path_to_params)
