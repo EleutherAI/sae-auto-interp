@@ -146,15 +146,18 @@ class Classifier(Scorer):
 
     def _parse_logprobs(self, logprobs: list):
         """
-        Extracts normalized probabilities of '1' vs '0' tokens from the top n log probabilities for each
-        token in a response string of form '[x, x, x, ...]'. The normalized probability is computed as
-        P(1)/(P(0) + P(1)), where P(0) and P(1) are summed over all matching tokens in the top 5 candidates.
+        Extracts normalized probabilities of '1' vs '0' tokens from the top n
+        log probabilities for each token in a response string of form '[x, x, x, ...]'.
+        The normalized probability is computed as P(1)/(P(0) + P(1)), where P(0) and
+        P(1) are summed over all matching tokens in the top 5 candidates.
 
         Args:
-            logprobs (list): Contains top n log probabilities for each token in the response.
+            logprobs (list): Contains top n log probabilities for each token in the
+            response.
 
         Returns:
-            list: Normalized probabilities between 0 and 1, where each value represents P(token='1').
+            list: Normalized probabilities between 0 and 1 where each value represents
+            P(token='1').
         """
         binary_probabilities: list[float] = []
 

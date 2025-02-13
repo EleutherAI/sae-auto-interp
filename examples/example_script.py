@@ -17,7 +17,8 @@ from delphi.latents.samplers import sample
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
 
-# run with python examples/example_script.py --model gemma/16k --module .model.layers.10 --latents 100 --experiment_name test
+# run with python examples/example_script.py --model gemma/16k --module
+# .model.layers.10 --latents 100 --experiment_name test
 
 
 def main(args):

@@ -13,10 +13,11 @@ def relu(x: float) -> float:
 
 
 def calculate_max_activation(activation_records: Sequence[ActivationRecord]) -> float:
-    """Return the maximum activation value of the neuron across all the activation records."""
+    """Return the maximum activation value of the neuron across all the activation
+    records."""
     flattened = [
-        # Relu is used to assume any values less than 0 are indicating the neuron is in the resting
-        # state. This is a simplifying assumption that works with relu/gelu.
+        # Relu is used to assume any values less than 0 are indicating the neuron is in
+        # the resting state. This is a simplifying assumption that works with relu/gelu.
         max(relu(x) for x in activation_record.activations)
         for activation_record in activation_records
     ]
@@ -29,8 +30,8 @@ def normalize_activations(
     """Convert raw neuron activations to integers on the range [0, 10]."""
     if max_activation <= 0:
         return [0 for x in activation_record]
-    # Relu is used to assume any values less than 0 are indicating the neuron is in the resting
-    # state. This is a simplifying assumption that works with relu/gelu.
+    # Relu is used to assume any values less than 0 are indicating the neuron is in the
+    # resting state. This is a simplifying assumption that works with relu/gelu.
     return [
         min(10, math.floor(10 * relu(x) / max_activation)) for x in activation_record
     ]
@@ -100,7 +101,7 @@ def format_activation_records(
 
 def _format_tokens_for_simulation(tokens: Sequence[str]) -> str:
     """
-    Format tokens into a string with each token marked as having an "unknown" activation, suitable
+    Format tokens into a string with each token marked as having an "unknown" activation
     for use in prompts.
     """
     entries = []
@@ -113,8 +114,8 @@ def format_sequences_for_simulation(
     all_tokens: Sequence[Sequence[str]],
 ) -> str:
     """
-    Format a list of lists of tokens into a string with each token marked as having an "unknown"
-    activation, suitable for use in prompts.
+    Format a list of lists of tokens into a string with each token marked as having
+    an "unknown" activation, suitable for use in prompts.
     """
     return (
         "\n<start>\n"

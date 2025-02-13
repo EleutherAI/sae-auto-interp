@@ -147,7 +147,7 @@ class SurprisalScorer(Scorer):
                 loss = cross_entropy(
                     logit[:-1], labels[j][1:], reduction="none"
                 ).tolist()
-                # Remove the trailing zeros from the loss, by looking at the attention mask
+                # Remove the trailing zeros from the loss
                 loss = loss[: attention_mask[j].sum().item()]
 
                 # print(len(loss))
