@@ -16,7 +16,9 @@ def load_gemma_autoencoders(
 
     for layer in ae_layers:
         path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
-        sae = JumpReluSae.from_pretrained(f'google/gemma-scope-9b-pt-{type}', path, "cuda")
+        sae = JumpReluSae.from_pretrained(
+            f"google/gemma-scope-9b-pt-{type}", path, "cuda"
+        )
 
         sae.to(dtype)
 
@@ -24,8 +26,15 @@ def load_gemma_autoencoders(
             encoded = sae.encode(x)
             return encoded
 
-        assert type in ["res", "mlp"], "Only res and mlp are supported for gemma autoencoders"
-        hookpoint = f"layers.{layer}" if type == "res" else f"layers.{layer}.post_feedforward_layernorm"
+        assert type in [
+            "res",
+            "mlp",
+        ], "Only res and mlp are supported for gemma autoencoders"
+        hookpoint = (
+            f"layers.{layer}"
+            if type == "res"
+            else f"layers.{layer}.post_feedforward_layernorm"
+        )
 
         submodules[hookpoint] = partial(_forward, sae)
 

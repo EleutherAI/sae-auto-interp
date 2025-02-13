@@ -6,10 +6,10 @@ from typing import Callable, NamedTuple, Optional, Union
 
 import numpy as np
 import torch
-from transformers import AutoModel
 from safetensors.numpy import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
+from transformers import AutoModel
 
 from delphi.utils import (
     load_tokenized_data,
@@ -149,7 +149,9 @@ class LatentDataset:
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:
-            temp_model = AutoModel.from_pretrained(cache_config["model_name"], device_map="cpu")
+            temp_model = AutoModel.from_pretrained(
+                cache_config["model_name"], device_map="cpu"
+            )
             self.tokenizer = temp_model.tokenizer
         else:
             self.tokenizer = tokenizer

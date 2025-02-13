@@ -1,6 +1,7 @@
 import json
 from collections import defaultdict
 from pathlib import Path
+
 import numpy as np
 import torch
 from safetensors.numpy import save_file
@@ -160,7 +161,6 @@ class LatentCache:
         width: int,
         batch_size: int,
         filters: dict[str, TensorType["indices"]] | None = None,
-        
     ):
         """
         Initialize the LatentCache.
@@ -239,11 +239,15 @@ class LatentCache:
                 total_tokens += tokens_per_batch
 
                 with torch.no_grad():
-                    with collect_activations(self.model, list(self.hookpoint_to_sae_encode.keys())) as activations:
+                    with collect_activations(
+                        self.model, list(self.hookpoint_to_sae_encode.keys())
+                    ) as activations:
                         self.model(batch.to(self.model.device))
-                    
+
                         for hookpoint, latents in activations.items():
-                            sae_latents = self.hookpoint_to_sae_encode[hookpoint](latents[0])
+                            sae_latents = self.hookpoint_to_sae_encode[hookpoint](
+                                latents[0]
+                            )
                             self.cache.add(sae_latents, batch, batch_number, hookpoint)
 
                 # Update the progress bar
