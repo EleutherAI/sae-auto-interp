@@ -10,15 +10,16 @@ def load_gemma_autoencoders(
     model_path: str,
     ae_layers: list[int],
     average_l0s: list[int],
-    sizes: list[int],
+    sizes: list[str],
     type: str,
     dtype: torch.dtype = torch.bfloat16,
+    device: torch.device = torch.device("cuda"),
 ):
     submodules = {}
 
     for layer, size, l0 in zip(ae_layers, sizes, average_l0s):
         path = f"layer_{layer}/width_{size}/average_l0_{l0}"
-        sae = JumpReluSae.from_pretrained(model_path, path, "cuda")
+        sae = JumpReluSae.from_pretrained(model_path, path, device)
 
         sae.to(dtype)
 
