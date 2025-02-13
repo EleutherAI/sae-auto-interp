@@ -97,19 +97,9 @@ class AutoencoderLatents(torch.nn.Module):
 
 def choose_forward_function(cfg: AutoencoderConfig, autoencoder: Any):
     if cfg.autoencoder_type == "SAE":
-        from .Custom.openai import ACTIVATIONS_CLASSES, TopK
+        from .eleuther import sae_dense_latents
 
-        def _forward(sae, k, x):
-            encoded = sae.pre_acts(x)
-            if k is not None:
-                trained_k = k
-            else:
-                trained_k = sae.cfg.k
-            topk = TopK(trained_k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
-            return topk(encoded)
-
-        k = cfg.kwargs.get("k", None)
-        return partial(_forward, autoencoder, k)
+        return partial(sae_dense_latents, autoencoder)
 
     elif cfg.autoencoder_type == "SAE_LENS":
         return autoencoder.encode

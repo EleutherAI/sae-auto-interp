@@ -1,8 +1,6 @@
 import torch
 
-from ..Custom.openai import ACTIVATIONS_CLASSES, TopK
-
-DEVICE = "cuda:0"
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 class TopKNeurons(torch.nn.Module):
@@ -33,13 +31,11 @@ class TopKNeurons(torch.nn.Module):
     def forward(self, x):
         if self.rotate:
             # Apply the random rotation
-            x_rotated = x @ self.rotation_matrix
-        else:
-            x_rotated = x
+            x = x @ self.rotation_matrix
 
         # Apply TopK
-        topk = TopK(self.k, postact_fn=ACTIVATIONS_CLASSES["Identity"]())
-        return topk(x_rotated)
+        acts, indices = x.topk(self.k, dim=-1)
+        return torch.zeros_like(x).scatter_(-1, indices, acts)
 
 
 def load_llama3_neurons(
