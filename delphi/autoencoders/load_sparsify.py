@@ -4,10 +4,12 @@ from typing import Callable
 
 import torch
 from sparsify import Sae
+from torch import Tensor
 from transformers import PreTrainedModel
 
 
-def _sae_forward(sae: Sae, x):
+def sae_dense_latents(sae: Sae, x: Tensor) -> Tensor:
+    """Run `sae` on `x`, yielding the dense activations."""
     pre_acts = sae.pre_acts(x)
     acts, indices = sae.select_topk(pre_acts)
     return torch.zeros_like(pre_acts).scatter_(-1, indices, acts)
@@ -86,6 +88,6 @@ def load_sparsify(
         if path_segments is None:
             raise ValueError(f"Could not find valid path for hookpoint: {hookpoint}")
 
-        submodules[".".join(path_segments)] = partial(_sae_forward, sparse_model)
+        submodules[".".join(path_segments)] = partial(sae_dense_latents, sparse_model)
 
     return submodules
