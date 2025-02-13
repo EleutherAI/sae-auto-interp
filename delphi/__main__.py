@@ -239,7 +239,6 @@ def populate_cache(
     cache = LatentCache(
         model,
         hookpoint_to_sae_encode,
-        width=latent_cfg.width,
         batch_size=cfg.batch_size,
     )
     cache.run(cfg.n_tokens, tokens)
