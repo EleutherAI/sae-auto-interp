@@ -9,7 +9,6 @@ import numpy as np
 import torch
 from safetensors.numpy import load_file
 from torchtyping import TensorType
-from tqdm import tqdm
 from transformers import AutoModel
 
 from delphi.utils import (
@@ -186,6 +185,7 @@ class LatentDataset:
         for file in safetensor_files:
             start, end = file.stem.split("_")
             edges.append((int(start), int(end)))
+        edges.sort(key=lambda x: x[0])
         return edges
 
     def _build(self, raw_dir: str, modules: Optional[list[str]] = None):
@@ -221,22 +221,24 @@ class LatentDataset:
             latents (dict[str, Union[int, torch.Tensor]]): Dictionary of latents
                 per module.
         """
-        edges = self._edges()
 
         for module in modules:
+            edges = self._edges(raw_dir, module)
             selected_latents = latents[module]
             if isinstance(selected_latents, int):
                 selected_latents = torch.tensor([selected_latents])
+            boundaries = [edges[0][0]] + [edge[1] + 1 for edge in edges]
 
-            bucketized = torch.bucketize(selected_latents, edges, right=True)
+            bucketized = torch.bucketize(
+                selected_latents, torch.tensor(boundaries), right=True
+            )
             unique_buckets = torch.unique(bucketized)
 
             for bucket in unique_buckets:
                 mask = bucketized == bucket
                 _selected_latents = selected_latents[mask]
 
-                start, end = edges[bucket.item() - 1], edges[bucket.item()]
-
+                start, end = boundaries[bucket.item() - 1], boundaries[bucket.item()]
                 # Adjust end by one as the path avoids overlap
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
 
@@ -253,112 +255,44 @@ class LatentDataset:
         """Return the number of buffers in the dataset."""
         return len(self.buffers)
 
-    def load(
-        self,
-        collate: bool = False,
-        constructor: Optional[Callable] = None,
-        sampler: Optional[Callable] = None,
-        transform: Optional[Callable] = None,
-    ):
-        """
-        Load and process latent records from the dataset.
-
-        Args:
-            collate (bool): Whether to collate all records into a single list.
-            constructor (Optional[Callable]): Function to construct latent records.
-            sampler (Optional[Callable]): Function to sample from latent records.
-            transform (Optional[Callable]): Function to transform latent records.
-
-        Returns:
-            Union[list[LatentRecord], Generator]: Processed latent records.
-        """
-
-        def _process(buffer_output: BufferOutput):
-            record = LatentRecord(buffer_output.latent)
-            if constructor is not None:
-                constructor(record=record, buffer_output=buffer_output)
-
-            if sampler is not None:
-                sampler(record)
-
-            if transform is not None:
-                transform(record)
-
-            return record
-
-        def _worker(buffer):
-            return [
-                _process(data)
-                for data in tqdm(buffer, desc=f"Loading {buffer.module_path}")
-                if data is not None
-            ]
-
-        return self._load(collate, _worker)
-
-    def _load(self, collate: bool, _worker: Callable):
-        """
-        Internal method to load latent records.
-
-        Args:
-            collate (bool): Whether to collate all records into a single list.
-            _worker (Callable): Function to process each buffer.
-
-        Returns:
-            Union[list[LatentRecord], Generator]: Processed latent records.
-        """
-        if collate:
-            all_records = []
-            for buffer in self.buffers:
-                all_records.extend(_worker(buffer))
-            return all_records
-        else:
-            for buffer in self.buffers:
-                yield _worker(buffer)
-
     def reset(self):
         """Reset all buffers in the dataset."""
         for buffer in self.buffers:
             buffer.reset()
 
-
-class LatentLoader:
-    """
-    Loader class for processing latent records from a LatentDataset.
-    """
-
-    def __init__(
-        self,
-        latent_dataset: "LatentDataset",
-        constructor: Optional[Callable] = None,
-        sampler: Optional[Callable] = None,
-        transform: Optional[Callable] = None,
+    def build_iterator(
+        self, constructor: Callable, sampler: Callable, transform: Callable
     ):
-        """
-        Initialize a LatentLoader.
-
-        Args:
-            latent_dataset (LatentDataset): The dataset to load latents from.
-            constructor (Optional[Callable]): Function to construct latent records.
-            sampler (Optional[Callable]): Function to sample from latent records.
-            transform (Optional[Callable]): Function to transform latent records.
-        """
-        self.latent_dataset = latent_dataset
+        """Build an iterator for the dataset."""
         self.constructor = constructor
         self.sampler = sampler
         self.transform = transform
 
-    async def __aiter__(self):
+    def __iter__(self):
         """
-        Asynchronous iterator for processing latent records.
+        Synchronous iterator that wraps the asynchronous iterator.
+        Creates a new event loop to drive the async generator.
+        """
+        # Create a new event loop.
+        loop = asyncio.new_event_loop()
+        async_gen = self.__aiter__()
+        try:
+            while True:
+                # Retrieve the next item from the asynchronous iterator
+                record = loop.run_until_complete(anext(async_gen))
+                yield record
+        except StopAsyncIteration:
+            return
+        finally:
+            loop.close()
 
-        Yields:
-            LatentRecord: Processed latent records.
-        """
-        for buffer in self.latent_dataset.buffers:
+    async def __aiter__(self):
+        """Asynchronously iterate over the dataset."""
+        for buffer in self.buffers:
             async for record in self._aprocess_buffer(buffer):
                 yield record
 
-    async def _aprocess_buffer(self, buffer):
+    async def _aprocess_buffer(self, buffer: TensorBuffer):
         """
         Asynchronously process a buffer.
 
@@ -375,55 +309,9 @@ class LatentLoader:
                     yield record
             await asyncio.sleep(0)  # Allow other coroutines to run
 
-    async def _aprocess_latent(self, buffer_output: BufferOutput):
+    async def _aprocess_latent(self, buffer_output: BufferOutput) -> LatentRecord:
         """
         Asynchronously process a single latent.
-
-        Args:
-            buffer_output (BufferOutput): Latent data to process.
-
-        Returns:
-            Optional[LatentRecord]: Processed latent record or None.
-        """
-        record = LatentRecord(buffer_output.latent)
-        if self.constructor is not None:
-            self.constructor(record=record, buffer_output=buffer_output)
-        if self.sampler is not None:
-            self.sampler(record)
-        if self.transform is not None:
-            self.transform(record)
-        return record
-
-    def __iter__(self):
-        """
-        Synchronous iterator for processing latent records.
-
-        Yields:
-            LatentRecord: Processed latent records.
-        """
-        for buffer in self.latent_dataset.buffers:
-            for record in self._process_buffer(buffer):
-                yield record
-
-    def _process_buffer(self, buffer):
-        """
-        Process a buffer synchronously.
-
-        Args:
-            buffer (TensorBuffer): Buffer to process.
-
-        Yields:
-            Optional[LatentRecord]: Processed latent record or None.
-        """
-        for data in buffer:
-            if data is not None:
-                record = self._process_latent(data)
-                if record is not None:
-                    yield record
-
-    def _process_latent(self, buffer_output: BufferOutput):
-        """
-        Process a single latent synchronously.
 
         Args:
             buffer_output (BufferOutput): Latent data to process.
