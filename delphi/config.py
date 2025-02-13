@@ -87,7 +87,8 @@ class RunConfig:
         positional=True,
     )
     """Name of sparse models associated with the model to explain, or path to
-    directory containing their weights. Models must be loadable with sparsify."""
+    directory containing their weights. Models must be loadable with sparsify
+    or gemmascope."""
 
     hookpoints: list[str] = list_field()
     """list of model hookpoints to attach sparse models to."""
