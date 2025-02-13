@@ -7,19 +7,18 @@ from huggingface_hub import hf_hub_download
 
 
 def load_gemma_autoencoders(
+    model_path: str,
     ae_layers: list[int],
-    average_l0s: dict[int, int],
-    size: str,
+    average_l0s: list[int],
+    sizes: list[int],
     type: str,
     dtype: torch.dtype = torch.bfloat16,
 ):
     submodules = {}
 
-    for layer in ae_layers:
-        path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
-        sae = JumpReluSae.from_pretrained(
-            f"google/gemma-scope-9b-pt-{type}", path, "cuda"
-        )
+    for layer, size, l0 in zip(ae_layers, sizes, average_l0s):
+        path = f"layer_{layer}/width_{size}/average_l0_{l0}"
+        sae = JumpReluSae.from_pretrained(model_path, path, "cuda")
 
         sae.to(dtype)
 
