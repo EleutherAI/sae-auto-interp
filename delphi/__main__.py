@@ -55,7 +55,7 @@ def load_artifacts(run_cfg: RunConfig):
         token=run_cfg.hf_token,
     )
 
-    hookpoint_to_sae_encode = load_autoencoders(model,run_cfg)
+    hookpoint_to_sae_encode = load_autoencoders(model, run_cfg)
 
     return run_cfg.hookpoints, hookpoint_to_sae_encode, model
 
