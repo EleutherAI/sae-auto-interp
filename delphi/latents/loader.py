@@ -6,7 +6,7 @@ from typing import Callable, NamedTuple, Optional, Union
 
 import numpy as np
 import torch
-from nnsight import LanguageModel
+from transformers import AutoModel
 from safetensors.numpy import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
@@ -149,9 +149,7 @@ class LatentDataset:
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:
-            temp_model = LanguageModel(
-                cache_config["model_name"], device_map="cpu", dispatch=False
-            )
+            temp_model = AutoModel.from_pretrained(cache_config["model_name"], device_map="cpu")
             self.tokenizer = temp_model.tokenizer
         else:
             self.tokenizer = tokenizer

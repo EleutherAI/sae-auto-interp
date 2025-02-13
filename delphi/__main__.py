@@ -12,20 +12,20 @@ import orjson
 import torch
 import torch.nn as nn
 from datasets import load_dataset
-from nnsight import LanguageModel
 from simple_parsing import ArgumentParser, field, list_field
 from sparsify.data import chunk_and_tokenize
 from torch import Tensor
 from torchtyping import TensorType
 from transformers import (
+    AutoModel,
+    AutoTokenizer,
     BitsAndBytesConfig,
     PreTrainedTokenizer,
     PreTrainedTokenizerFast,
 )
 
-from delphi.autoencoders.DeepMind import JumpReluSae
-from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
-from delphi.autoencoders.wrapper import AutoencoderLatents
+from delphi.autoencoders.DeepMind import load_gemma_autoencoders
+from delphi.autoencoders.eleuther import load_sparsify
 from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig, ExperimentConfig, LatentConfig
 from delphi.explainers import DefaultExplainer
@@ -119,53 +119,6 @@ class RunConfig:
     scorer LLM task difficulty."""
 
 
-def load_gemma_autoencoders(
-    model,
-    ae_layers: list[int],
-    average_l0s: dict[int, int],
-    size: str,
-    type: str,
-    hookpoints,
-):
-    submodules = {}
-
-    for layer in ae_layers:
-        path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
-        sae = JumpReluSae.from_pretrained(path, type, "cuda")
-
-        sae.half()
-
-        def _forward(sae, x):
-            encoded = sae.encode(x)
-            return encoded
-
-        if type == "res":
-            submodule = model.model.layers[layer]
-        elif type == "mlp":
-            submodule = model.model.layers[layer].post_feedforward_layernorm
-        else:
-            raise ValueError(f"Invalid autoencoder type: {type}")
-        submodule.ae = AutoencoderLatents(
-            sae, partial(_forward, sae), width=sae.W_enc.shape[1]
-        )
-
-        hookpoint = [
-            hookpoint for hookpoint in hookpoints if f"layers.{layer}" in hookpoint
-        ][0]
-
-        submodules[hookpoint] = submodule
-
-    with model.edit(" ") as edited:
-        for _, submodule in submodules.items():
-            if type == "res":
-                acts = submodule.output[0]
-            else:
-                acts = submodule.output
-            submodule.ae(acts, hook=True)
-
-    return submodules, edited
-
-
 def load_artifacts(run_cfg: RunConfig):
     if run_cfg.load_in_8bit:
         dtype = torch.float16
@@ -174,7 +127,7 @@ def load_artifacts(run_cfg: RunConfig):
     else:
         dtype = "auto"
 
-    model = LanguageModel(
+    model = AutoModel.from_pretrained(
         run_cfg.model,
         device_map={"": "cuda"},
         quantization_config=(
@@ -184,34 +137,37 @@ def load_artifacts(run_cfg: RunConfig):
         ),
         torch_dtype=dtype,
         token=run_cfg.hf_token,
-        dispatch=True,
     )
 
     # Add SAE hooks to the model
     if "gemma" not in run_cfg.sparse_model:
-        submodule_name_to_submodule, model = load_and_hook_sparsify_models(
+        hookpoint_to_sae_encode = load_sparsify(
             model,  # type: ignore
             run_cfg.sparse_model,
             run_cfg.hookpoints,
-            k=run_cfg.max_latents,
         )
     else:
-        # Doing a hack
-        print("Loading 131k l0=47 residual gemma autoencoders")
-        submodule_name_to_submodule, model = load_gemma_autoencoders(
-            model,
-            ae_layers=[10],
-            average_l0s={10: 47},
+        # Doing a hack here to enable gemma autoencoders
+        layers = [int(n.split(".")[1]) for n in run_cfg.hookpoints]
+
+        first_hookpoint_len = len(run_cfg.hookpoints[0].split("."))
+
+        type = "res" if first_hookpoint_len == 2 else "mlp"
+
+        for hookpoint in run_cfg.hookpoints:
+            assert len(hookpoint.split(".")) == first_hookpoint_len, "All hookpoints must be of the same type for Gemma SAEs"
+
+        print(f"Loading {type} gemma SAEs for L0 = 47, W=131K...")
+
+        hookpoint_to_sae_encode = load_gemma_autoencoders(
+            ae_layers=layers,
+            average_l0s={layer: 47 for layer in layers},
             size="131k",
-            type="res",
-            hookpoints=run_cfg.hookpoints,
+            type=type,
+            dtype=model.dtype
         )
-        for key, value in submodule_name_to_submodule.items():
-            submodule_name_to_submodule[key] = value.to(dtype)
 
-    model = assert_type(LanguageModel, model)
-
-    return run_cfg.hookpoints, submodule_name_to_submodule, model, model.tokenizer
+    return run_cfg.hookpoints, hookpoint_to_sae_encode, model
 
 
 async def process_cache(
@@ -356,9 +312,10 @@ async def process_cache(
 
 def populate_cache(
     run_cfg: RunConfig,
+    latent_cfg: LatentConfig,
     cfg: CacheConfig,
-    hooked_model: LanguageModel,
-    submodule_name_to_submodule: dict[str, nn.Module],
+    model,
+    hookpoint_to_sae_encode: dict[str, nn.Module],
     latents_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     filter_bos: bool,
@@ -392,8 +349,9 @@ def populate_cache(
     tokens = cast(TensorType["batch", "seq"], tokens)
 
     cache = LatentCache(
-        hooked_model,
-        submodule_name_to_submodule,
+        model,
+        hookpoint_to_sae_encode,
+        width=latent_cfg.width,
         batch_size=cfg.batch_size,
     )
     cache.run(cfg.n_tokens, tokens)
@@ -405,7 +363,7 @@ def populate_cache(
         save_dir=latents_path,
     )
 
-    cache.save_config(save_dir=str(latents_path), cfg=cfg, model_name=run_cfg.model)
+    cache.save_config(save_dir=latents_path, cfg=cfg, model_name=run_cfg.model)
 
 
 async def run(
@@ -429,9 +387,10 @@ async def run(
 
     latent_range = torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
 
-    hookpoints, submodule_name_to_submodule, hooked_model, tokenizer = load_artifacts(
+    hookpoints, hookpoint_to_sae_encode, hooked_model = load_artifacts(
         run_cfg
     )
+    tokenizer = AutoTokenizer.from_pretrained(run_cfg.model, token=run_cfg.hf_token)
 
     if (
         not glob(str(latents_path / ".*")) + glob(str(latents_path / "*"))
@@ -439,9 +398,10 @@ async def run(
     ):
         populate_cache(
             run_cfg,
+            latent_cfg,
             cache_cfg,
             hooked_model,
-            submodule_name_to_submodule,
+            hookpoint_to_sae_encode,
             latents_path,
             tokenizer,
             filter_bos=run_cfg.filter_bos,
@@ -449,7 +409,7 @@ async def run(
     else:
         print(f"Files found in {latents_path}, skipping cache population...")
 
-    del hooked_model, submodule_name_to_submodule
+    del hooked_model, hookpoint_to_sae_encode
 
     if (
         not glob(str(scores_path / ".*")) + glob(str(scores_path / "*"))

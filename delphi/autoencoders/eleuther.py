@@ -1,12 +1,9 @@
-from functools import partial, reduce
+from functools import partial
 from pathlib import Path
-from typing import Any
+from typing import Callable
 
 import torch
-from nnsight import LanguageModel
 from sparsify import Sae
-
-from .wrapper import AutoencoderLatents
 
 
 def _sae_forward(sae: Sae, x):
@@ -24,7 +21,7 @@ def resolve_path(model, path_segments: list[str]) -> list[str] | None:
 
     # Look for the first actual model inside potential wrappers
     for attr_name, attr in model.named_children():
-        if isinstance(attr, (torch.nn.Module, LanguageModel)):
+        if isinstance(attr, torch.nn.Module):
             print(f"Checking wrapper model attribute: {attr_name}")
             if hasattr(attr, path_segments[0]):
                 print(
@@ -40,13 +37,12 @@ def resolve_path(model, path_segments: list[str]) -> list[str] | None:
     return None
 
 
-def load_and_hook_sparsify_models(
-    model: LanguageModel,
+def load_sparsify(
+    model,
     name: str,
     hookpoints: list[str],
-    k: int | None = None,
     device: str | torch.device | None = None,
-) -> tuple[dict[str, Any], Any]:
+) -> dict[str, Callable]:
     """
     Load sparsify autoencoders for specified hookpoints.
 
@@ -89,23 +85,6 @@ def load_and_hook_sparsify_models(
         if path_segments is None:
             raise ValueError(f"Could not find valid path for hookpoint: {hookpoint}")
 
-        submodule = reduce(getattr, path_segments, model)
+        submodules[".".join(path_segments)] = partial(_sae_forward, sparse_model)
 
-        submodule.ae = AutoencoderLatents(
-            sparse_model,
-            partial(_sae_forward, sparse_model),
-            width=sparse_model.encoder.weight.shape[0],
-        )
-        submodules[hookpoint] = submodule
-
-    # Edit base model to collect sparse model activations
-    with model.edit("") as edited:
-        for path, submodule in submodules.items():
-            acts = (
-                submodule.output[0]
-                if "embed" not in path and "mlp" not in path
-                else submodule.output
-            )
-            submodule.ae(acts, hook=True)
-
-    return submodules, edited
+    return submodules

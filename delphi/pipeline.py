@@ -1,6 +1,6 @@
 import asyncio
 from functools import wraps
-from typing import Any, AsyncIterable, Callable, list
+from typing import Any, AsyncIterable, Callable
 
 from tqdm.asyncio import tqdm
 
