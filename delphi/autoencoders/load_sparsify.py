@@ -40,7 +40,7 @@ def resolve_path(model: PreTrainedModel, path_segments: list[str]) -> list[str] 
     return None
 
 
-def load_sparsify(
+def load_sparsify_autoencoders(
     model: PreTrainedModel,
     name: str,
     hookpoints: list[str],
