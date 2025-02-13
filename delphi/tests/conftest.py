@@ -6,19 +6,22 @@ from delphi.config import CacheConfig, RunConfig
 from delphi.latents import LatentCache
 from delphi.sparse_coders import load_sparse_coders
 
-random_text = ["Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                "Suspendisse dapibus elementum tellus, ut efficitur lorem fringilla",
-                "consequat. Curabitur luctus iaculis cursus. Aliquam erat volutpat.",
-                "Nam porttitor vulputate arcu, nec rutrum magna malesuada eget.",
-                "Vivamus ultrices lacus quam, quis malesuada augue iaculis et.",
-                "Proin a egestas urna, ac sollicitudin orci. Suspendisse sem mi,",
-                "vulputate vitae egestas sed, ullamcorper vel arcu.",
-                "Phasellus in ornare tellus.Fusce bibendum purus dolor,",
-                "quis ornare sem congue eget.",
-                "Aenean et lectus nibh. Nunc ac sapien a mauris facilisis",
-                "aliquam sed vitae velit. Sed porttitor a diam id rhoncus.",
-                "Mauris viverra laoreet ex, vitae pulvinar diam pellentesque nec.",
-                "Vivamus quis maximus tellus, vel consectetur lorem."]
+random_text = [
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "Suspendisse dapibus elementum tellus, ut efficitur lorem fringilla",
+    "consequat. Curabitur luctus iaculis cursus. Aliquam erat volutpat.",
+    "Nam porttitor vulputate arcu, nec rutrum magna malesuada eget.",
+    "Vivamus ultrices lacus quam, quis malesuada augue iaculis et.",
+    "Proin a egestas urna, ac sollicitudin orci. Suspendisse sem mi,",
+    "vulputate vitae egestas sed, ullamcorper vel arcu.",
+    "Phasellus in ornare tellus.Fusce bibendum purus dolor,",
+    "quis ornare sem congue eget.",
+    "Aenean et lectus nibh. Nunc ac sapien a mauris facilisis",
+    "aliquam sed vitae velit. Sed porttitor a diam id rhoncus.",
+    "Mauris viverra laoreet ex, vitae pulvinar diam pellentesque nec.",
+    "Vivamus quis maximus tellus, vel consectetur lorem.",
+]
+
 
 @pytest.fixture(scope="module")
 def tokenizer():
@@ -26,18 +29,25 @@ def tokenizer():
     tokenizer.pad_token = tokenizer.eos_token
     return tokenizer
 
+
 @pytest.fixture(scope="module")
 def model():
     model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-70m")
     return model
 
-@pytest.fixture(scope="module")
-def mock_dataset(tokenizer: AutoTokenizer) -> torch.Tensor:
-    tokens = tokenizer(random_text, return_tensors="pt",truncation=True,max_length=16,padding=True)["input_ids"]
-    return tokens
 
 @pytest.fixture(scope="module")
-def cache_setup(tmp_path_factory, mock_dataset: torch.Tensor, model: AutoModelForCausalLM):
+def mock_dataset(tokenizer: AutoTokenizer) -> torch.Tensor:
+    tokens = tokenizer(
+        random_text, return_tensors="pt", truncation=True, max_length=16, padding=True
+    )["input_ids"]
+    return tokens
+
+
+@pytest.fixture(scope="module")
+def cache_setup(
+    tmp_path_factory, mock_dataset: torch.Tensor, model: AutoModelForCausalLM
+):
     """
     This fixture creates a temporary directory, loads the model,
     initializes the cache, runs the cache once, saves the cache splits
