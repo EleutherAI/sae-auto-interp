@@ -15,9 +15,9 @@ def test_latent_locations(cache_setup):
     locations = cache.cache.latent_locations["gpt_neox.layers.1"]
     max_values, _ = locations.max(axis=0)
     # Expected values based on the cache run
-    assert max_values[0] == 2, "Expected first dimension max value to be 2"
-    assert max_values[1] == 255, "Expected token ids to go up to 255"
-    assert max_values[2] > 32760, "Expected latent dimension around 32768"
+    assert max_values[0] == 5, "Expected first dimension max value to be 5"
+    assert max_values[1] == 15, "Expected token ids to go up to 15"
+    assert max_values[2] > 32700, "Expected latent dimension around 32768"
 
 
 def test_split_files_created(cache_setup):
@@ -37,7 +37,7 @@ def test_split_file_contents(cache_setup):
     - latent max values are as expected.
     """
     save_dir = cache_setup["temp_dir"] / "gpt_neox.layers.1"
-    mock_tokens = cache_setup["mock_tokens"]
+    tokens = cache_setup["tokens"]
     # Choose one file to verify
     cache_files = os.listdir(save_dir)
     file_path = Path(save_dir) / cache_files[0]
@@ -53,13 +53,13 @@ def test_split_file_contents(cache_setup):
 
     np.testing.assert_array_equal(
         tokens,
-        mock_tokens[:3, :].cpu().numpy(),
+        tokens[:12, :],
         err_msg="Tokens saved do not match the input tokens",
     )
     max_values = locations.max(axis=0)
-    assert max_values[0] == 2, "Max batch index mismatch in saved file"
-    assert max_values[1] == 255, "Max token value mismatch in saved file"
-    assert max_values[2] > 6520, "Latent dimension mismatch in saved file"
+    assert max_values[0] == 5, "Max batch index mismatch in saved file"
+    assert max_values[1] == 15, "Max token value mismatch in saved file"
+    assert max_values[2] > 6500, "Latent dimension mismatch in saved file"
 
 
 def test_config_file(cache_setup):

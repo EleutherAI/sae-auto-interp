@@ -1,14 +1,43 @@
 import pytest
 import torch
-from transformers import AutoModelForCausalLM
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from delphi.config import CacheConfig, RunConfig
 from delphi.latents import LatentCache
 from delphi.sparse_coders import load_sparse_coders
 
+random_text = ["Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "Suspendisse dapibus elementum tellus, ut efficitur lorem fringilla",
+                "consequat. Curabitur luctus iaculis cursus. Aliquam erat volutpat.",
+                "Nam porttitor vulputate arcu, nec rutrum magna malesuada eget.",
+                "Vivamus ultrices lacus quam, quis malesuada augue iaculis et.",
+                "Proin a egestas urna, ac sollicitudin orci. Suspendisse sem mi,",
+                "vulputate vitae egestas sed, ullamcorper vel arcu.",
+                "Phasellus in ornare tellus.Fusce bibendum purus dolor,",
+                "quis ornare sem congue eget.",
+                "Aenean et lectus nibh. Nunc ac sapien a mauris facilisis",
+                "aliquam sed vitae velit. Sed porttitor a diam id rhoncus.",
+                "Mauris viverra laoreet ex, vitae pulvinar diam pellentesque nec.",
+                "Vivamus quis maximus tellus, vel consectetur lorem."]
 
 @pytest.fixture(scope="module")
-def cache_setup(tmp_path_factory):
+def tokenizer():
+    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-70m")
+    tokenizer.pad_token = tokenizer.eos_token
+    return tokenizer
+
+@pytest.fixture(scope="module")
+def model():
+    model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-70m")
+    return model
+
+@pytest.fixture(scope="module")
+def mock_dataset(tokenizer: AutoTokenizer) -> torch.Tensor:
+    tokens = tokenizer(random_text, return_tensors="pt",truncation=True,max_length=16,padding=True)["input_ids"]
+    return tokens
+
+@pytest.fixture(scope="module")
+def cache_setup(tmp_path_factory, mock_dataset: torch.Tensor, model: AutoModelForCausalLM):
     """
     This fixture creates a temporary directory, loads the model,
     initializes the cache, runs the cache once, saves the cache splits
@@ -18,7 +47,6 @@ def cache_setup(tmp_path_factory):
     temp_dir = tmp_path_factory.mktemp("test_cache")
 
     # Load model and set run configuration
-    model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-70m")
     run_cfg_gemma = RunConfig(
         model="EleutherAI/pythia-70m",
         sparse_model="EleutherAI/sae-pythia-70m-32k",
@@ -27,12 +55,12 @@ def cache_setup(tmp_path_factory):
     hookpoint_to_sae_encode = load_sparse_coders(model, run_cfg_gemma)
 
     # Define cache config and initialize cache
-    cache_cfg = CacheConfig(batch_size=1, ctx_len=256, n_tokens=1000)
+    cache_cfg = CacheConfig(batch_size=1, ctx_len=16, n_tokens=100)
     cache = LatentCache(model, hookpoint_to_sae_encode, batch_size=cache_cfg.batch_size)
 
     # Generate mock tokens and run the cache
-    mock_tokens = torch.randint(0, 1000, (4, cache_cfg.ctx_len))
-    cache.run(cache_cfg.n_tokens, mock_tokens)
+    tokens = mock_dataset
+    cache.run(cache_cfg.n_tokens, tokens)
 
     # Save splits to temporary directory (the layer key is "gpt_neox.layers.1")
 
@@ -44,10 +72,9 @@ def cache_setup(tmp_path_factory):
 
     dict_to_return = {
         "cache": cache,
-        "mock_tokens": mock_tokens,
+        "tokens": tokens,
         "cache_cfg": cache_cfg,
         "temp_dir": temp_dir,
     }
 
-    yield dict_to_return
-    dict_to_return.clear()
+    return dict_to_return
