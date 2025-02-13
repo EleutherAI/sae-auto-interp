@@ -73,6 +73,7 @@ class CacheConfig(Serializable):
     n_splits: int = 5
     """Number of splits to divide .safetensors into."""
 
+
 @dataclass
 class RunConfig:
     model: str = field(
@@ -150,5 +151,5 @@ class RunConfig:
         default=1,
     )
     """Number of examples to use for each scorer prompt. Using more than 1 improves
-    scoring speed but can leak information to the fuzzing and detection scorer, 
+    scoring speed but can leak information to the fuzzing and detection scorer,
     as well as increasing the scorer LLM task difficulty."""
