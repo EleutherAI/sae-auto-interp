@@ -15,6 +15,17 @@ def load_sparse_coders(
     run_cfg: RunConfig,
     compile: bool = False,
 ) -> dict[str, Callable]:
+    """
+    Load sparse coders for specified hookpoints.
+
+    Args:
+        model (PreTrainedModel): The model to load sparse coders for.
+        run_cfg (RunConfig): The run configuration.
+
+    Returns:
+        dict[str, Callable]: A dictionary mapping hookpoints to sparse coders.
+    """
+
     # Add SAE hooks to the model
     if "gemma" not in run_cfg.sparse_model:
         hookpoint_to_sae_encode = load_sparsify_sparse_coders(
