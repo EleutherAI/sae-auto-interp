@@ -32,9 +32,6 @@ class ExperimentConfig(Serializable):
 
 @dataclass
 class LatentConfig(Serializable):
-    width: int = 131_072
-    """Number of latents in each autoencoder"""
-
     min_examples: int = 200
     """Minimum number of examples to generate for a single latent.
     If the number of activating examples is less than this, the
@@ -42,9 +39,6 @@ class LatentConfig(Serializable):
 
     max_examples: int = 10_000
     """Maximum number of examples to generate for a single latent."""
-
-    n_splits: int = 5
-    """Number of splits that latents will be divided into."""
 
 
 @dataclass

@@ -158,7 +158,6 @@ class LatentCache:
         self,
         model,
         hookpoint_to_sae_encode: dict[str, nn.Module],
-        width: int,
         batch_size: int,
         filters: dict[str, TensorType["indices"]] | None = None,
     ):
@@ -168,7 +167,6 @@ class LatentCache:
         Args:
             model: The model to cache latents for.
             hookpoint_to_sae_encode: Dictionary of submodules to cache.
-            width: Width of the model.
             batch_size: Size of batches for processing.
             filters: Filters for selecting specific latents.
         """
@@ -176,8 +174,7 @@ class LatentCache:
         self.hookpoint_to_sae_encode = hookpoint_to_sae_encode
 
         self.batch_size = batch_size
-        self.width = width
-
+        self.width = None
         self.cache = Cache(filters, batch_size=batch_size)
         if filters is not None:
             self.filter_submodules(filters)
@@ -249,6 +246,8 @@ class LatentCache:
                                 latents[0]
                             )
                             self.cache.add(sae_latents, batch, batch_number, hookpoint)
+                            if self.width is None:
+                                self.width = sae_latents.shape[2]
 
                 # Update the progress bar
                 pbar.update(1)
@@ -329,6 +328,10 @@ class LatentCache:
                     masked_locations = masked_locations.astype(np.uint16)
                 else:
                     masked_locations = masked_locations.astype(np.uint32)
+                    print(
+                        "Warning: Increasing the number of splits might reduce the"
+                        "memory usage of the cache."
+                    )
 
                 module_dir = save_dir / module_path
                 module_dir.mkdir(parents=True, exist_ok=True)

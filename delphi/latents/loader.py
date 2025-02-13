@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable, NamedTuple, Optional, Union
 
 import numpy as np
@@ -142,9 +143,8 @@ class LatentDataset:
         if latents is None:
             self._build(raw_dir, modules)
         else:
-            # TODO fix type error
-            self._build_selected(raw_dir, modules, latents)  # type: ignore
-
+            self._build_selected(raw_dir, modules, latents)
+        # TODO: this assumes that all modules have the same config
         cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
@@ -179,9 +179,14 @@ class LatentDataset:
             )
         return self.tokens
 
-    def _edges(self):
-        """Generate edge indices for latent splits."""
-        return torch.linspace(0, self.cfg.width, steps=self.cfg.n_splits + 1).long()
+    def _edges(self, raw_dir: str, module: str) -> list[tuple[int, int]]:
+        module_dir = Path(raw_dir) / module
+        safetensor_files = [f for f in module_dir.glob("*.safetensors")]
+        edges = []
+        for file in safetensor_files:
+            start, end = file.stem.split("_")
+            edges.append((int(start), int(end)))
+        return edges
 
     def _build(self, raw_dir: str, modules: Optional[list[str]] = None):
         """
@@ -191,13 +196,12 @@ class LatentDataset:
             raw_dir (str): Directory containing raw latent data.
             modules (Optional[list[str]]): list of module names to include.
         """
-        edges = self._edges()
         modules = os.listdir(raw_dir) if modules is None else modules
 
         for module in modules:
-            for start, end in zip(edges[:-1], edges[1:]):
-                # Adjust end by one as the path avoids overlap
-                path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
+            edges = self._edges(raw_dir, module)
+            for start, end in edges:
+                path = f"{raw_dir}/{module}/{start}_{end}.safetensors"
                 self.buffers.append(
                     TensorBuffer(path, module, min_examples=self.cfg.min_examples)
                 )
