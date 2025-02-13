@@ -25,7 +25,7 @@ from transformers import (
 )
 
 from delphi.autoencoders.DeepMind import load_gemma_autoencoders
-from delphi.autoencoders.eleuther import load_sparsify
+from delphi.autoencoders.load_sparsify import load_sparsify
 from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig, ExperimentConfig, LatentConfig
 from delphi.explainers import DefaultExplainer
@@ -35,7 +35,6 @@ from delphi.latents.samplers import sample
 from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
-from delphi.utils import assert_type
 
 
 @dataclass
@@ -155,7 +154,9 @@ def load_artifacts(run_cfg: RunConfig):
         type = "res" if first_hookpoint_len == 2 else "mlp"
 
         for hookpoint in run_cfg.hookpoints:
-            assert len(hookpoint.split(".")) == first_hookpoint_len, "All hookpoints must be of the same type for Gemma SAEs"
+            assert (
+                len(hookpoint.split(".")) == first_hookpoint_len
+            ), "All hookpoints must be of the same type for Gemma SAEs"
 
         print(f"Loading {type} gemma SAEs for L0 = 47, W=131K...")
 
@@ -164,7 +165,7 @@ def load_artifacts(run_cfg: RunConfig):
             average_l0s={layer: 47 for layer in layers},
             size="131k",
             type=type,
-            dtype=model.dtype
+            dtype=model.dtype,
         )
 
     return run_cfg.hookpoints, hookpoint_to_sae_encode, model
@@ -387,9 +388,7 @@ async def run(
 
     latent_range = torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
 
-    hookpoints, hookpoint_to_sae_encode, hooked_model = load_artifacts(
-        run_cfg
-    )
+    hookpoints, hookpoint_to_sae_encode, hooked_model = load_artifacts(run_cfg)
     tokenizer = AutoTokenizer.from_pretrained(run_cfg.model, token=run_cfg.hf_token)
 
     if (
