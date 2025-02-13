@@ -3,8 +3,8 @@ from pathlib import Path
 from typing import Callable
 
 import torch
-from torch import Tensor
 from sparsify import Sae
+from torch import Tensor
 from transformers import PreTrainedModel
 
 
