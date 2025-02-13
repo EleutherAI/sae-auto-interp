@@ -4,6 +4,7 @@ from typing import Callable
 
 import torch
 from sparsify import Sae
+from transformers import PreTrainedModel
 
 
 def _sae_forward(sae: Sae, x):
@@ -12,7 +13,7 @@ def _sae_forward(sae: Sae, x):
     return torch.zeros_like(pre_acts).scatter_(-1, indices, acts)
 
 
-def resolve_path(model, path_segments: list[str]) -> list[str] | None:
+def resolve_path(model: PreTrainedModel, path_segments: list[str]) -> list[str] | None:
     """Attempt to resolve the path segments to the model in the case where it
     has been wrapped (e.g. by a LanguageModel, causal model, or classifier)."""
     # If the first segment is a valid attribute, return the path segments
@@ -38,7 +39,7 @@ def resolve_path(model, path_segments: list[str]) -> list[str] | None:
 
 
 def load_sparsify(
-    model,
+    model: PreTrainedModel,
     name: str,
     hookpoints: list[str],
     device: str | torch.device | None = None,

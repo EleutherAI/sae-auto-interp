@@ -20,6 +20,7 @@ from transformers import (
     AutoModel,
     AutoTokenizer,
     BitsAndBytesConfig,
+    PreTrainedModel,
     PreTrainedTokenizer,
     PreTrainedTokenizerFast,
 )
@@ -178,7 +179,6 @@ async def process_cache(
     latents_path: Path,
     explanations_path: Path,
     scores_path: Path,
-    # The layers to explain
     hookpoints: list[str],
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     latent_range: Tensor | None,
@@ -315,7 +315,7 @@ def populate_cache(
     run_cfg: RunConfig,
     latent_cfg: LatentConfig,
     cfg: CacheConfig,
-    model,
+    model: PreTrainedModel,
     hookpoint_to_sae_encode: dict[str, nn.Module],
     latents_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
@@ -388,7 +388,7 @@ async def run(
 
     latent_range = torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
 
-    hookpoints, hookpoint_to_sae_encode, hooked_model = load_artifacts(run_cfg)
+    hookpoints, hookpoint_to_sae_encode, model = load_artifacts(run_cfg)
     tokenizer = AutoTokenizer.from_pretrained(run_cfg.model, token=run_cfg.hf_token)
 
     if (
@@ -399,7 +399,7 @@ async def run(
             run_cfg,
             latent_cfg,
             cache_cfg,
-            hooked_model,
+            model,
             hookpoint_to_sae_encode,
             latents_path,
             tokenizer,
@@ -408,7 +408,7 @@ async def run(
     else:
         print(f"Files found in {latents_path}, skipping cache population...")
 
-    del hooked_model, hookpoint_to_sae_encode
+    del model, hookpoint_to_sae_encode
 
     if (
         not glob(str(scores_path / ".*")) + glob(str(scores_path / "*"))

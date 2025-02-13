@@ -4,14 +4,15 @@ from typing import Any
 
 import torch
 from torch import Tensor, nn
+from transformers import PreTrainedModel
 
 
 @contextmanager
-def collect_activations(model: nn.Module, hookpoints: list[str]):
+def collect_activations(model: PreTrainedModel, hookpoints: list[str]):
     """
     Context manager that temporarily hooks models and collects their activations.
-    An activation tensor is produced for each batch processed and stored in a list for that hookpoint
-    in the activations dictionary.
+    An activation tensor is produced for each batch processed and stored in a list
+    for that hookpoint in the activations dictionary.
 
     Args:
         model: The transformer model to hook
