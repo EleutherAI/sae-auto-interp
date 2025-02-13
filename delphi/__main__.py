@@ -26,7 +26,7 @@ from transformers import (
 from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
 from delphi.explainers import DefaultExplainer
-from delphi.latents import LatentCache, LatentDataset, LatentLoader
+from delphi.latents import LatentCache, LatentDataset
 from delphi.latents.constructors import default_constructor
 from delphi.latents.samplers import sample
 from delphi.log.result_analysis import log_results
@@ -135,7 +135,7 @@ async def process_cache(
         max_examples=latent_cfg.max_examples,
     )
     sampler = partial(sample, cfg=experiment_cfg)
-    loader = LatentLoader(dataset, constructor=constructor, sampler=sampler)
+    dataset.build_iterator(constructor, sampler, None)
 
     def explainer_postprocess(result):
         with open(explanations_path / f"{result.record.latent}.txt", "wb") as f:
@@ -191,7 +191,7 @@ async def process_cache(
     )
 
     pipeline = Pipeline(
-        loader,
+        dataset,
         explainer_pipe,
         scorer_pipe,
     )
