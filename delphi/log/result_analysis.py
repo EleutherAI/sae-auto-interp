@@ -15,7 +15,7 @@ def latent_balanced_score_metrics(df: pd.DataFrame, score_type: str, log: bool =
     valid_examples = df["total_examples"]
     weights = valid_examples / valid_examples.sum()
 
-    weighted_mean_metrics = {
+    metrics = {
         "accuracy": np.average(df["accuracy"], weights=weights),
         "f1_score": np.average(df["f1_score"], weights=weights),
         "precision": np.average(df["precision"], weights=weights),
@@ -36,10 +36,10 @@ def latent_balanced_score_metrics(df: pd.DataFrame, score_type: str, log: bool =
 
     if log:
         print(f"\n--- {score_type.title()} Metrics ---")
-        print(f"Accuracy: {weighted_mean_metrics['accuracy']:.3f}")
-        print(f"F1 Score: {weighted_mean_metrics['f1_score']:.3f}")
-        print(f"Precision: {weighted_mean_metrics['precision']:.3f}")
-        print(f"Recall: {weighted_mean_metrics['recall']:.3f}")
+        print(f"Accuracy: {metrics['accuracy']:.3f}")
+        print(f"F1 Score: {metrics['f1_score']:.3f}")
+        print(f"Precision: {metrics['precision']:.3f}")
+        print(f"Recall: {metrics['recall']:.3f}")
 
         fractions_failed = [
             failed_count / (total_examples + failed_count)
@@ -48,29 +48,28 @@ def latent_balanced_score_metrics(df: pd.DataFrame, score_type: str, log: bool =
             )
         ]
         print(
-            f"Average fraction of failed examples: {sum(fractions_failed) / len(fractions_failed):.3f}"
+            f"""Average fraction of failed examples: \
+{sum(fractions_failed) / len(fractions_failed):.3f}"""
         )
 
         print("\nConfusion Matrix:")
-        print(f"True Positive Rate:  {weighted_mean_metrics['true_positive_rate']:.3f}")
-        print(f"True Negative Rate:  {weighted_mean_metrics['true_negative_rate']:.3f}")
-        print(
-            f"False Positive Rate: {weighted_mean_metrics['false_positive_rate']:.3f}"
-        )
-        print(
-            f"False Negative Rate: {weighted_mean_metrics['false_negative_rate']:.3f}"
-        )
+        print(f"True Positive Rate:  {metrics['true_positive_rate']:.3f}")
+        print(f"True Negative Rate:  {metrics['true_negative_rate']:.3f}")
+        print(f"False Positive Rate: {metrics['false_positive_rate']:.3f}")
+        print(f"False Negative Rate: {metrics['false_negative_rate']:.3f}")
 
         print("\nClass Distribution:")
         print(
-            f"Positives: {df['total_positives'].sum():.0f} ({weighted_mean_metrics['positive_class_ratio']:.1%})"
+            f"""Positives: {df['total_positives'].sum():.0f} \
+({metrics['positive_class_ratio']:.1%})"""
         )
         print(
-            f"Negatives: {df['total_negatives'].sum():.0f} ({weighted_mean_metrics['negative_class_ratio']:.1%})"
+            f"""Negatives: {df['total_negatives'].sum():.0f} \
+({metrics['negative_class_ratio']:.1%})"""
         )
         print(f"Total: {df['total_examples'].sum():.0f}")
 
-    return weighted_mean_metrics
+    return metrics
 
 
 def parse_score_file(file_path):

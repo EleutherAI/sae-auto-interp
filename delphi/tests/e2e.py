@@ -27,8 +27,8 @@ async def test():
     )
     latent_cfg = LatentConfig(
         width=32_768,
-        min_examples=200,  # The minimum number of examples to consider for the latent to be explained
-        max_examples=10_000,  # The maximum number of examples a latent may activate on before being excluded from explanation
+        min_examples=200,
+        max_examples=10_000,
     )
     run_cfg = RunConfig(
         name="test",
@@ -58,9 +58,8 @@ async def test():
             score_df, score_type, log=False
         )
 
-        assert (
-            weighted_mean_metrics["accuracy"] > 0.55
-        ), f"Score type {score_type} has an accuracy of {weighted_mean_metrics['accuracy']}"
+        accuracy = weighted_mean_metrics["accuracy"]
+        assert accuracy > 0.55, f"Score type {score_type} has an accuracy of {accuracy}"
 
 
 if __name__ == "__main__":

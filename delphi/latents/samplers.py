@@ -13,18 +13,21 @@ def split_activation_quantiles(
     examples: list[Example], n_quantiles: int, n_samples: int, seed: int = 22
 ):
     """
-    TODO review this, there is a possible bug here: `examples[0].max_activation < threshold`
+    TODO review this, there is a possible bug here:
+    `examples[0].max_activation < threshold`
 
     Split the examples into n_quantiles and sample n_samples from each quantile.
 
     Args:
-        examples: list of Examples, assumed to be in descending sorted order by max_activation
+        examples: list of Examples, assumed to be in descending sorted order
+            by max_activation
         n_quantiles: number of quantiles to split the examples into
         n_samples: number of samples to sample from each quantile
         seed: seed for the random number generator
 
     Returns:
-        list of lists of Examples, each inner list contains n_samples from a unique quantile
+        list of lists of Examples.
+            Each inner list contains n_samples from a unique quantile.
     """
     random.seed(seed)
 
@@ -62,14 +65,14 @@ def split_quantiles(
     samples_per_quantile = n_samples // n_quantiles
     samples: list[list[Example]] = []
     for i in range(n_quantiles):
-        # Take an evenly spaced slice of the examples for the quantile
+        # Take an evenly spaced slice of the examples for the quantile.
         quantile = examples[i * quantile_size : (i + 1) * quantile_size]
 
-        # Take a random sample of the examples. If there are less than samples_per_quantile, use all samples
+        # Take a random sample of the examples.
         if len(quantile) < samples_per_quantile:
             sample = quantile
             logger.info(
-                f"Quantile {i} has less than {samples_per_quantile} samples, using all samples"
+                f"Quantile {i} has fewer than {samples_per_quantile} samples, using all"
             )
         else:
             sample = random.sample(quantile, samples_per_quantile)

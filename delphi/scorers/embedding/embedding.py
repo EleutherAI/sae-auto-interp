@@ -86,7 +86,8 @@ class EmbeddingScorer(Scorer):
 
     def _query(self, explanation: str, samples: list[Sample]) -> list[EmbeddingOutput]:
         explanation_prompt = (
-            "Instruct: Retrieve sentences that could be related to the explanation.\nQuery:"
+            """Instruct: Retrieve sentences that could be related to the explanation.\n\
+Query:"""
             + explanation
         )
         query_embeding = self.model.encode(explanation_prompt)
