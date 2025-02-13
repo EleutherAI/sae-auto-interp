@@ -1,12 +1,13 @@
 import json
 import os
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 from safetensors.numpy import load_file
 
 
-def test_latent_locations(cache_setup):
+def test_latent_locations(cache_setup: dict[str, Any]):
     """
     Test that the latent locations generated in memory have the expected
     shape and values.
@@ -20,7 +21,7 @@ def test_latent_locations(cache_setup):
     assert max_values[2] > 32700, "Expected latent dimension around 32768"
 
 
-def test_split_files_created(cache_setup):
+def test_split_files_created(cache_setup: dict[str, Any]):
     """
     Test that exactly 5 cache split files have been created.
     """
@@ -29,7 +30,7 @@ def test_split_files_created(cache_setup):
     assert len(cache_files) == 5, "Expected 5 split files in the cache directory"
 
 
-def test_split_file_contents(cache_setup):
+def test_split_file_contents(cache_setup: dict[str, Any]):
     """
     Test that one of the split files (loaded via safetensors) holds convincing data:
     - latent locations and activations have the same number of entries,
@@ -62,7 +63,7 @@ def test_split_file_contents(cache_setup):
     assert max_values[2] > 6500, "Latent dimension mismatch in saved file"
 
 
-def test_config_file(cache_setup):
+def test_config_file(cache_setup: dict[str, Any]):
     """
     Test that the saved configuration file contains the correct parameters.
     """
