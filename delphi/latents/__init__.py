@@ -5,7 +5,7 @@ from .constructors import (
     random_non_activating_windows,
 )
 from .latents import Example, Latent, LatentRecord
-from .loader import LatentDataset, LatentLoader
+from .loader import LatentDataset
 from .samplers import sample
 from .stats import get_neighbors, unigram
 
@@ -21,5 +21,4 @@ __all__ = [
     "sample",
     "get_neighbors",
     "unigram",
-    "LatentLoader",
 ]

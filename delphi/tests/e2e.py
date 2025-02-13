@@ -26,7 +26,6 @@ async def test():
         n_examples_test=50,
     )
     latent_cfg = LatentConfig(
-        width=32_768,
         min_examples=200,
         max_examples=10_000,
     )
