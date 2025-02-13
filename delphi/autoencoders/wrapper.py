@@ -5,6 +5,8 @@ from typing import Any, Callable, Literal, Optional
 import torch
 from simple_parsing import Serializable
 
+from delphi.autoencoders.load_sparsify import resolve_path
+
 
 @dataclass
 class AutoencoderConfig(Serializable):
@@ -121,75 +123,33 @@ def choose_forward_function(cfg: AutoencoderConfig, autoencoder: Any):
             )
 
 
-def get_submodule(
-    model: Any, autoencoder_config: AutoencoderConfig, hookpoint: str
-) -> Any:
-    if autoencoder_config.autoencoder_type == "SAE":
-        if "res" in hookpoint:
-            submodule = model.model.get_submodule(hookpoint)
-        elif "mlp" in hookpoint:
-            layer = int(hookpoint.split(".")[-1])
-            submodule = model.model.layers[layer].mlp
-        else:
-            raise ValueError(f"Unsupported hookpoint: {hookpoint}")
-        return submodule
-    elif autoencoder_config.autoencoder_type == "SAE_LENS":
-        raise NotImplementedError("SAE_LENS not implemented yet")
-        # return model.get_submodule(hookpoint)
-    elif autoencoder_config.autoencoder_type == "CUSTOM":
-        if autoencoder_config.kwargs.get("custom_name", None) == "gemmascope":
-            layer = int(hookpoint.split("/")[0].split("_")[-1])
-            model_name = autoencoder_config.model_name_or_path
-            if "res" in model_name:
-                submodule = model.model.layers[layer]
-            if "mlp" in model_name:
-                submodule = model.model.layers[layer].post_feedforward_layernorm
-            return submodule
-
-
-def hook_submodule(
-    submodule: Any, model: Any, module_path: str, autoencoder_config: AutoencoderConfig
-) -> tuple[Any, Any]:
-    # TODO: This should take into account the autoencoder config, but for now I think
-    # this is valid for all
-    with model.edit("") as edited:
-        if "embed" not in module_path and "mlp" not in module_path:
-            acts = submodule.output[0]
-        else:
-            acts = submodule.output
-        submodule.ae(acts, hook=True)
-    return submodule, edited
-
-
 def load_autoencoder_into_model(
     model: Any, autoencoder_config: AutoencoderConfig, hookpoints: list[str], **kwargs
-) -> tuple[dict[str, Any], Any]:
+) -> dict[str, Any]:
     """
-    Load an autoencoder and hook it into the model using nnsight.
+    Load autoencoders and add them to a dict keyed by hookpoint.
 
     Args:
         model (Any): The main model to hook the autoencoder into.
         autoencoder_config (AutoencoderConfig): Configuration for the autoencoder.
 
     Returns:
-        tuple[list[Any], Any]: The list of submodules with the autoencoder attached
-        Model with the autoencoder hooked in
+        dict[str, Any]: A dict of hookpoints with the autoencoders attached.
     """
 
     submodules = {}
-    edited_model = model
     assert hookpoints is not None, "Hookpoints must be specified in autoencoder_config"
-    for module_path in hookpoints:
+    for hookpoint in hookpoints:
+        path_segments = resolve_path(model, hookpoint.split("."))
+        if path_segments is None:
+            raise ValueError(f"Could not find valid path for hookpoint: {hookpoint}")
+        resolved_hookpoint = ".".join(path_segments)
+
         autoencoder = AutoencoderLatents.from_pretrained(
             autoencoder_config,
-            module_path,
-        )
-        submodule = get_submodule(edited_model, autoencoder_config, module_path)
-        submodule.ae = autoencoder
-        submodule, edited_model = hook_submodule(
-            submodule, edited_model, module_path, autoencoder_config
+            hookpoint,
         )
 
-        submodules[submodule.path] = submodule
+        submodules[resolved_hookpoint] = autoencoder.forward
 
-    return submodules, edited_model
+    return submodules

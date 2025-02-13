@@ -30,7 +30,7 @@ To use other scorer types, instantiate a custom pipeline.
 
 ## Loading Autoencoders
 
-This library uses NNsight to load and edit a model with sparse auxiliary models. We provide wrappers to load the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for SAEs and transcoders trained by EleutherAI using [SAE](https://github.com/EleutherAI/sae). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
+We provide wrappers to load the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for SAEs and transcoders trained using [Sparsify](https://github.com/EleutherAI/sparsify). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
 
 ## Caching
 

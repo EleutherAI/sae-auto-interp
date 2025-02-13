@@ -1,6 +1,6 @@
 import json
-import os
 from collections import defaultdict
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -10,6 +10,7 @@ from torchtyping import TensorType
 from tqdm import tqdm
 
 from delphi.config import CacheConfig
+from delphi.latents.collect_activations import collect_activations
 
 
 class Cache:
@@ -156,24 +157,26 @@ class LatentCache:
     def __init__(
         self,
         model,
-        submodule_dict: dict[str, nn.Module],
+        hookpoint_to_sae_encode: dict[str, nn.Module],
+        width: int,
         batch_size: int,
-        filters: dict[str, TensorType["indices"]] = None,
+        filters: dict[str, TensorType["indices"]] | None = None,
     ):
         """
         Initialize the LatentCache.
 
         Args:
             model: The model to cache latents for.
-            submodule_dict: Dictionary of submodules to cache.
+            hookpoint_to_sae_encode: Dictionary of submodules to cache.
+            width: Width of the model.
             batch_size: Size of batches for processing.
             filters: Filters for selecting specific latents.
         """
         self.model = model
-        self.submodule_dict = submodule_dict
+        self.hookpoint_to_sae_encode = hookpoint_to_sae_encode
 
         self.batch_size = batch_size
-        self.width = list(submodule_dict.values())[0].ae.width
+        self.width = width
 
         self.cache = Cache(filters, batch_size=batch_size)
         if filters is not None:
@@ -212,10 +215,10 @@ class LatentCache:
             filters: Filters for selecting specific latents.
         """
         filtered_submodules = {}
-        for module_path in self.submodule_dict.keys():
-            if module_path in filters:
-                filtered_submodules[module_path] = self.submodule_dict[module_path]
-        self.submodule_dict = filtered_submodules
+        for hookpoint in self.hookpoint_to_sae.keys():
+            if hookpoint in filters:
+                filtered_submodules[hookpoint] = self.hookpoint_to_sae[hookpoint]
+        self.hookpoint_to_sae = filtered_submodules
 
     def run(self, n_tokens: int, tokens: TensorType["batch", "seq"]):
         """
@@ -236,15 +239,16 @@ class LatentCache:
                 total_tokens += tokens_per_batch
 
                 with torch.no_grad():
-                    buffer = {}
-                    with self.model.trace(batch):
-                        for module_path, submodule in self.submodule_dict.items():
-                            buffer[module_path] = submodule.ae.output.save()
-                    for module_path, latents in buffer.items():
-                        self.cache.add(latents, batch, batch_number, module_path)
+                    with collect_activations(
+                        self.model, list(self.hookpoint_to_sae_encode.keys())
+                    ) as activations:
+                        self.model(batch.to(self.model.device))
 
-                    del buffer
-                torch.cuda.empty_cache()
+                        for hookpoint, latents in activations.items():
+                            sae_latents = self.hookpoint_to_sae_encode[hookpoint](
+                                latents[0]
+                            )
+                            self.cache.add(sae_latents, batch, batch_number, hookpoint)
 
                 # Update the progress bar
                 pbar.update(1)
@@ -252,8 +256,9 @@ class LatentCache:
 
         print(f"Total tokens processed: {total_tokens:,}")
         self.cache.save()
+        del sae_latents
 
-    def save(self, save_dir: str, save_tokens: bool = True):
+    def save(self, save_dir: Path, save_tokens: bool = True):
         """
         Save the cached latents to disk.
 
@@ -263,7 +268,7 @@ class LatentCache:
             Defaults to True.
         """
         for module_path in self.cache.latent_locations.keys():
-            output_file = f"{save_dir}/{module_path}.safetensors"
+            output_file = save_dir / f"{module_path}.safetensors"
 
             data = {
                 "locations": self.cache.latent_locations[module_path],
@@ -289,7 +294,7 @@ class LatentCache:
         # Adjust end by one
         return list(zip(boundaries[:-1], boundaries[1:] - 1))
 
-    def save_splits(self, n_splits: int, save_dir: str, save_tokens: bool = True):
+    def save_splits(self, n_splits: int, save_dir: Path, save_tokens: bool = True):
         """
         Save the cached non-zero latent activations and locations in splits.
 
@@ -325,10 +330,10 @@ class LatentCache:
                 else:
                     masked_locations = masked_locations.astype(np.uint32)
 
-                module_dir = f"{save_dir}/{module_path}"
-                os.makedirs(module_dir, exist_ok=True)
+                module_dir = save_dir / module_path
+                module_dir.mkdir(parents=True, exist_ok=True)
 
-                output_file = f"{module_dir}/{start}_{end}.safetensors"
+                output_file = module_dir / f"{start}_{end}.safetensors"
 
                 split_data = {
                     "locations": masked_locations,
@@ -339,7 +344,7 @@ class LatentCache:
 
                 save_file(split_data, output_file)
 
-    def save_config(self, save_dir: str, cfg: CacheConfig, model_name: str):
+    def save_config(self, save_dir: Path, cfg: CacheConfig, model_name: str):
         """
         Save the configuration for the cached latents.
 
@@ -349,7 +354,7 @@ class LatentCache:
             model_name: Name of the model.
         """
         for module_path in self.cache.latent_locations.keys():
-            config_file = f"{save_dir}/{module_path}/config.json"
+            config_file = save_dir / module_path / "config.json"
             with open(config_file, "w") as f:
                 config_dict = cfg.to_dict()
                 config_dict["model_name"] = model_name
