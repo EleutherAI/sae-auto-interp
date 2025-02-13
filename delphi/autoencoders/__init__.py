@@ -12,6 +12,7 @@ __all__ = ["load_autoencoders"]
 def load_autoencoders(
     model: PreTrainedModel,
     run_cfg: RunConfig,
+    compile: bool = False,
 ) -> dict[str, Callable]:
     # Add SAE hooks to the model
     if "gemma" not in run_cfg.sparse_model:
@@ -19,6 +20,7 @@ def load_autoencoders(
             model,  # type: ignore
             run_cfg.sparse_model,
             run_cfg.hookpoints,
+            compile=compile,
         )
     else:
         # Doing a hack here to enable gemma autoencoders
