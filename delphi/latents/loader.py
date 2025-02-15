@@ -126,6 +126,9 @@ class LatentDataset:
         tokenizer: Optional[Callable] = None,
         modules: Optional[list[str]] = None,
         latents: Optional[dict[str, Union[int, torch.Tensor]]] = None,
+        constructor: Optional[Callable] = None,
+        sampler: Optional[Callable] = None,
+        transform: Optional[Callable] = None,
     ):
         """
         Initialize a LatentDataset.
@@ -155,6 +158,9 @@ class LatentDataset:
         else:
             self.tokenizer = tokenizer
         self.cache_config = cache_config
+        self.constructor = constructor
+        self.sampler = sampler
+        self.transform = transform
 
     def load_tokens(self):
         """
@@ -259,14 +265,6 @@ class LatentDataset:
         """Reset all buffers in the dataset."""
         for buffer in self.buffers:
             buffer.reset()
-
-    def build_iterator(
-        self, constructor: Callable, sampler: Callable, transform: Callable
-    ):
-        """Build an iterator for the dataset."""
-        self.constructor = constructor
-        self.sampler = sampler
-        self.transform = transform
 
     def __iter__(self):
         """

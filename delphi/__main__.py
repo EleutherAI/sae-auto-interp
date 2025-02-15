@@ -91,12 +91,23 @@ async def process_cache(
         }  # The latent range to explain
         latent_dict = cast(dict[str, int | Tensor], latent_dict)
 
+    constructor = partial(
+        default_constructor,
+        token_loader=None,
+        n_not_active=experiment_cfg.n_non_activating,
+        ctx_len=experiment_cfg.example_ctx_len,
+        max_examples=latent_cfg.max_examples,
+    )
+    sampler = partial(sample, cfg=experiment_cfg)
+
     dataset = LatentDataset(
         raw_dir=str(latents_path),
         cfg=latent_cfg,
         modules=hookpoints,
         latents=latent_dict,
         tokenizer=tokenizer,
+        constructor=constructor,
+        sampler=sampler,
     )
 
     if run_cfg.explainer_provider == "offline":
@@ -126,16 +137,6 @@ async def process_cache(
         raise ValueError(
             f"Explainer provider {run_cfg.explainer_provider} not supported"
         )
-
-    constructor = partial(
-        default_constructor,
-        token_loader=None,
-        n_not_active=experiment_cfg.n_non_activating,
-        ctx_len=experiment_cfg.example_ctx_len,
-        max_examples=latent_cfg.max_examples,
-    )
-    sampler = partial(sample, cfg=experiment_cfg)
-    dataset.build_iterator(constructor, sampler, None)
 
     def explainer_postprocess(result):
         with open(explanations_path / f"{result.record.latent}.txt", "wb") as f:
