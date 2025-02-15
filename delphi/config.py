@@ -143,7 +143,7 @@ class RunConfig:
     and 'visualize'."""
 
     num_examples_per_scorer_prompt: int = field(
-        default=1,
+        default=5,
     )
     """Number of examples to use for each scorer prompt. Using more than 1 improves
     scoring speed but can leak information to the fuzzing and detection scorer,
