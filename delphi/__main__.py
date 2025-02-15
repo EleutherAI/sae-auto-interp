@@ -220,7 +220,7 @@ def populate_cache(
     )
     data = data.shuffle(run_cfg.seed)
     data = chunk_and_tokenize(
-        data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row
+        data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_column_name
     )
     tokens = data["input_ids"]
 
