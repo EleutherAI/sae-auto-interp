@@ -10,7 +10,7 @@ def load_tokenized_data(
     dataset_repo: str,
     dataset_split: str,
     dataset_name: str = "",
-    dataset_row: str = "raw_content",
+    column_name: str = "text",
     seed: int = 22,
     add_bos_token: bool = True,
 ):
@@ -24,7 +24,7 @@ def load_tokenized_data(
 
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
     tokens_ds = chunk_and_tokenize(
-        data, tokenizer, max_seq_len=ctx_len, text_key=dataset_row
+        data, tokenizer, max_seq_len=ctx_len, text_key=column_name
     )
     tokens_ds = tokens_ds.shuffle(seed)
 

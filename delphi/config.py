@@ -52,7 +52,7 @@ class CacheConfig(Serializable):
     dataset_name: str = ""
     """Dataset name to use."""
 
-    dataset_row: str = "text"
+    dataset_column: str = "text"
     """Dataset row to use."""
 
     batch_size: int = 32

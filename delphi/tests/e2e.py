@@ -13,7 +13,7 @@ async def test():
     cache_cfg = CacheConfig(
         dataset_repo="EleutherAI/fineweb-edu-dedup-10b",
         dataset_split="train[:1%]",
-        dataset_row="text",
+        dataset_column="text",
         batch_size=8,
         ctx_len=256,
         n_splits=5,
