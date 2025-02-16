@@ -80,11 +80,9 @@ def cache_setup(
 
     cache.save_config(temp_dir, cache_cfg, "EleutherAI/pythia-70m")
 
-    dict_to_return = {
+    return {
         "cache": cache,
         "tokens": tokens,
         "cache_cfg": cache_cfg,
         "temp_dir": temp_dir,
     }
-
-    return dict_to_return
