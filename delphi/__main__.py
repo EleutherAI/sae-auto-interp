@@ -6,11 +6,10 @@ from functools import partial
 from glob import glob
 from multiprocessing import cpu_count
 from pathlib import Path
-from typing import cast
+from typing import Callable, cast
 
 import orjson
 import torch
-import torch.nn as nn
 from datasets import load_dataset
 from simple_parsing import ArgumentParser, field, list_field
 from sparsify.data import chunk_and_tokenize
@@ -108,8 +107,8 @@ class RunConfig:
     """Whether to log summary statistics and results of the run."""
 
     overwrite: list[str] = list_field()
-    """Whether to overwrite existing parts of the run. Options are 'cache', 'scores',
-    and 'visualize'."""
+    """Whether to overwrite existing parts of the run. Options are 'cache'
+    and 'scores'."""
 
     num_examples_per_scorer_prompt: int = field(
         default=1,
@@ -145,6 +144,7 @@ def load_artifacts(run_cfg: RunConfig):
             model,  # type: ignore
             run_cfg.sparse_model,
             run_cfg.hookpoints,
+            compile=True,
         )
     else:
         # Doing a hack here to enable gemma autoencoders
@@ -214,7 +214,7 @@ async def process_cache(
     if run_cfg.explainer_provider == "offline":
         client = Offline(
             run_cfg.explainer_model,
-            max_memory=0.8,
+            max_memory=0.9,
             # Explainer models context length - must be able to accommodate the longest
             # set of examples
             max_model_len=run_cfg.explainer_model_max_len,
@@ -316,7 +316,7 @@ def populate_cache(
     latent_cfg: LatentConfig,
     cfg: CacheConfig,
     model: PreTrainedModel,
-    hookpoint_to_sae_encode: dict[str, nn.Module],
+    hookpoint_to_sae_encode: dict[str, Callable],
     latents_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     filter_bos: bool,

@@ -8,7 +8,7 @@ from torch import Tensor
 from transformers import PreTrainedModel
 
 
-def sae_dense_latents(sae: Sae, x: Tensor) -> Tensor:
+def sae_dense_latents(x: Tensor, sae: Sae) -> Tensor:
     """Run `sae` on `x`, yielding the dense activations."""
     pre_acts = sae.pre_acts(x)
     acts, indices = sae.select_topk(pre_acts)
@@ -45,6 +45,7 @@ def load_sparsify(
     name: str,
     hookpoints: list[str],
     device: str | torch.device | None = None,
+    compile: bool = False,
 ) -> dict[str, Callable]:
     """
     Load sparsify autoencoders for specified hookpoints.
@@ -75,11 +76,19 @@ def load_sparsify(
             hookpoint_to_sparse[hookpoint] = Sae.load_from_disk(
                 name_path / hookpoint, device=device
             )
+            if compile:
+                hookpoint_to_sparse[hookpoint] = torch.compile(
+                    hookpoint_to_sparse[hookpoint]
+                )
     else:
         sparse_models = Sae.load_many(name, device=device)
-        hookpoint_to_sparse.update(
-            {hookpoint: sparse_models[hookpoint] for hookpoint in hookpoints}
-        )
+        for hookpoint in hookpoints:
+            hookpoint_to_sparse[hookpoint] = sparse_models[hookpoint]
+            if compile:
+                hookpoint_to_sparse[hookpoint] = torch.compile(
+                    hookpoint_to_sparse[hookpoint]
+                )
+
         del sparse_models
 
     submodules = {}
@@ -88,6 +97,8 @@ def load_sparsify(
         if path_segments is None:
             raise ValueError(f"Could not find valid path for hookpoint: {hookpoint}")
 
-        submodules[".".join(path_segments)] = partial(sae_dense_latents, sparse_model)
+        submodules[".".join(path_segments)] = partial(
+            sae_dense_latents, sae=sparse_model
+        )
 
     return submodules

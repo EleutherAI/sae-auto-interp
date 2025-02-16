@@ -36,7 +36,7 @@ async def test():
         model="EleutherAI/pythia-160m",
         sparse_model="EleutherAI/sae-pythia-160m-32k",
         hookpoints=["layers.3"],
-        explainer_model="ibnzterrell/Meta-Llama-3.3-70B-Instruct-AWQ-INT4",
+        explainer_model="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         explainer_model_max_len=4208,
         max_latents=100,
         seed=22,

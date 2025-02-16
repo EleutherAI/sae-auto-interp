@@ -246,7 +246,7 @@ class LatentCache:
 
                         for hookpoint, latents in activations.items():
                             sae_latents = self.hookpoint_to_sae_encode[hookpoint](
-                                latents[0]
+                                latents
                             )
                             self.cache.add(sae_latents, batch, batch_number, hookpoint)
 
