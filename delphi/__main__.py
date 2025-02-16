@@ -54,7 +54,7 @@ def load_artifacts(run_cfg: RunConfig):
         token=run_cfg.hf_token,
     )
 
-    hookpoint_to_sae_encode = load_sparse_coders(model,run_cfg, compile=True)
+    hookpoint_to_sae_encode = load_sparse_coders(model, run_cfg, compile=True)
 
     return run_cfg.hookpoints, hookpoint_to_sae_encode, model
 
