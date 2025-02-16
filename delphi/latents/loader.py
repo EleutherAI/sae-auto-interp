@@ -43,7 +43,7 @@ class TensorBuffer:
     Lazy loading buffer for cached splits.
     """
 
-    path: Path | str
+    path: str
     """Path to the tensor file."""
 
     module_path: str
@@ -80,12 +80,7 @@ class TensorBuffer:
 
     def load(self):
         split_data = load_file(self.path)
-
-        first_latent = (
-            int(self.path.stem.split("_")[0])
-            if isinstance(self.path, Path)
-            else int(self.path.split("/")[-1].split("_")[0])
-        )
+        first_latent = int(self.path.split("/")[-1].split("_")[0])
         activations = torch.tensor(split_data["activations"])
         locations = torch.tensor(split_data["locations"].astype(np.int64))
         if "tokens" in split_data:
@@ -126,7 +121,7 @@ class LatentDataset:
 
     def __init__(
         self,
-        raw_dir: Path,
+        raw_dir: str,
         cfg: LatentConfig,
         tokenizer: Optional[Callable] = None,
         modules: Optional[list[str]] = None,
@@ -152,7 +147,7 @@ class LatentDataset:
         else:
             self._build_selected(raw_dir, modules, latents)
         # TODO: this assumes that all modules have the same config
-        cache_config_dir = raw_dir / modules[0] / "config.json"
+        cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:
@@ -186,8 +181,8 @@ class LatentDataset:
             )
         return self.tokens
 
-    def _edges(self, raw_dir: Path, module: str) -> list[tuple[int, int]]:
-        module_dir = raw_dir / module
+    def _edges(self, raw_dir: str, module: str) -> list[tuple[int, int]]:
+        module_dir = Path(raw_dir) / module
         safetensor_files = [f for f in module_dir.glob("*.safetensors")]
         edges = []
         for file in safetensor_files:
@@ -196,27 +191,27 @@ class LatentDataset:
         edges.sort(key=lambda x: x[0])
         return edges
 
-    def _build(self, raw_dir: Path, modules: Optional[list[str]] = None):
+    def _build(self, raw_dir: str, modules: Optional[list[str]] = None):
         """
         Build dataset buffers which load all cached latents.
 
         Args:
-            raw_dir (Path): Directory containing raw latent data.
+            raw_dir (str): Directory containing raw latent data.
             modules (Optional[list[str]]): list of module names to include.
         """
-        modules = os.listdir(str(raw_dir)) if modules is None else modules
+        modules = os.listdir(raw_dir) if modules is None else modules
 
         for module in modules:
             edges = self._edges(raw_dir, module)
             for start, end in edges:
-                path = raw_dir / module / f"{start}_{end}.safetensors"
+                path = f"{raw_dir}/{module}/{start}_{end}.safetensors"
                 self.buffers.append(
                     TensorBuffer(path, module, min_examples=self.cfg.min_examples)
                 )
 
     def _build_selected(
         self,
-        raw_dir: Path,
+        raw_dir: str,
         modules: list[str],
         latents: dict[str, Union[int, torch.Tensor]],
     ):
