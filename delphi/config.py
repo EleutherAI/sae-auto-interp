@@ -1,7 +1,8 @@
 from dataclasses import dataclass
+from multiprocessing import cpu_count
 from typing import Literal
 
-from simple_parsing import Serializable
+from simple_parsing import Serializable, field, list_field
 
 
 @dataclass
@@ -31,9 +32,6 @@ class ExperimentConfig(Serializable):
 
 @dataclass
 class LatentConfig(Serializable):
-    width: int = 131_072
-    """Number of latents in each autoencoder"""
-
     min_examples: int = 200
     """Minimum number of examples to generate for a single latent.
     If the number of activating examples is less than this, the
@@ -41,9 +39,6 @@ class LatentConfig(Serializable):
 
     max_examples: int = 10_000
     """Maximum number of examples to generate for a single latent."""
-
-    n_splits: int = 5
-    """Number of splits that latents will be divided into."""
 
 
 @dataclass
@@ -57,7 +52,7 @@ class CacheConfig(Serializable):
     dataset_name: str = ""
     """Dataset name to use."""
 
-    dataset_row: str = "text"
+    dataset_column: str = "text"
     """Dataset row to use."""
 
     batch_size: int = 32
@@ -71,3 +66,85 @@ class CacheConfig(Serializable):
 
     n_splits: int = 5
     """Number of splits to divide .safetensors into."""
+
+
+@dataclass
+class RunConfig:
+    model: str = field(
+        default="meta-llama/Meta-Llama-3-8B",
+        positional=True,
+    )
+    """Name of the model to explain."""
+
+    sparse_model: str = field(
+        default="EleutherAI/sae-llama-3-8b-32x",
+        positional=True,
+    )
+    """Name of sparse models associated with the model to explain, or path to
+    directory containing their weights. Models must be loadable with sparsify
+    or gemmascope."""
+
+    hookpoints: list[str] = list_field()
+    """list of model hookpoints to attach sparse models to."""
+
+    explainer_model: str = field(
+        default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
+    )
+    """Name of the model to use for explanation and scoring."""
+
+    explainer_model_max_len: int = field(
+        default=5120,
+    )
+    """Maximum length of the explainer model context window."""
+
+    explainer_provider: str = field(
+        default="offline",
+    )
+    """Provider to use for explanation and scoring. Options are 'offline' for local
+    models and 'openrouter' for API calls."""
+
+    name: str = ""
+    """The name of the run. Results are saved in a directory with this name."""
+
+    max_latents: int | None = None
+    """Maximum number of features to explain for each sparse model."""
+
+    filter_bos: bool = False
+    """Whether to filter out BOS tokens from the cache."""
+
+    load_in_8bit: bool = False
+    """Load the model in 8-bit mode."""
+
+    hf_token: str | None = None
+    """Huggingface API token for downloading models."""
+
+    pipeline_num_proc: int = field(
+        default_factory=lambda: cpu_count() // 2,
+    )
+    """Number of processes to use for preprocessing data"""
+
+    num_gpus: int = field(
+        default=1,
+    )
+    """Number of GPUs to use for explanation and scoring."""
+
+    seed: int = field(
+        default=22,
+    )
+    """Seed for the random number generator."""
+
+    log: bool = field(
+        default=True,
+    )
+    """Whether to log summary statistics and results of the run."""
+
+    overwrite: list[str] = list_field()
+    """Whether to overwrite existing parts of the run. Options are 'cache', 'scores',
+    and 'visualize'."""
+
+    num_examples_per_scorer_prompt: int = field(
+        default=5,
+    )
+    """Number of examples to use for each scorer prompt. Using more than 1 improves
+    scoring speed but can leak information to the fuzzing and detection scorer,
+    as well as increasing the scorer LLM task difficulty."""

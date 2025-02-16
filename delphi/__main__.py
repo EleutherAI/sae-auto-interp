@@ -1,17 +1,15 @@
 import asyncio
 import json
 import os
-from dataclasses import dataclass
 from functools import partial
 from glob import glob
-from multiprocessing import cpu_count
 from pathlib import Path
 from typing import Callable, cast
 
 import orjson
 import torch
 from datasets import load_dataset
-from simple_parsing import ArgumentParser, field, list_field
+from simple_parsing import ArgumentParser
 from sparsify.data import chunk_and_tokenize
 from torch import Tensor
 from torchtyping import TensorType
@@ -24,98 +22,16 @@ from transformers import (
     PreTrainedTokenizerFast,
 )
 
-from delphi.autoencoders.DeepMind import load_gemma_autoencoders
-from delphi.autoencoders.load_sparsify import load_sparsify
 from delphi.clients import Offline, OpenRouter
-from delphi.config import CacheConfig, ExperimentConfig, LatentConfig
+from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
 from delphi.explainers import DefaultExplainer
-from delphi.latents import LatentCache, LatentDataset, LatentLoader
+from delphi.latents import LatentCache, LatentDataset
 from delphi.latents.constructors import default_constructor
 from delphi.latents.samplers import sample
 from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
-
-
-@dataclass
-class RunConfig:
-    model: str = field(
-        default="meta-llama/Meta-Llama-3-8B",
-        positional=True,
-    )
-    """Name of the model to explain."""
-
-    sparse_model: str = field(
-        default="EleutherAI/sae-llama-3-8b-32x",
-        positional=True,
-    )
-    """Name of sparse models associated with the model to explain, or path to
-    directory containing their weights. Models must be loadable with sparsify."""
-
-    hookpoints: list[str] = list_field()
-    """list of model hookpoints to attach sparse models to."""
-
-    explainer_model: str = field(
-        default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
-    )
-    """Name of the model to use for explanation and scoring."""
-
-    explainer_model_max_len: int = field(
-        default=5120,
-    )
-    """Maximum length of the explainer model context window."""
-
-    explainer_provider: str = field(
-        default="offline",
-    )
-    """Provider to use for explanation and scoring. Options are 'offline' for local
-    models and 'openrouter' for API calls."""
-
-    name: str = ""
-    """The name of the run. Results are saved in a directory with this name."""
-
-    max_latents: int | None = None
-    """Maximum number of features to explain for each sparse model."""
-
-    filter_bos: bool = False
-    """Whether to filter out BOS tokens from the cache."""
-
-    load_in_8bit: bool = False
-    """Load the model in 8-bit mode."""
-
-    hf_token: str | None = None
-    """Huggingface API token for downloading models."""
-
-    pipeline_num_proc: int = field(
-        default_factory=lambda: cpu_count() // 2,
-    )
-    """Number of processes to use for preprocessing data"""
-
-    num_gpus: int = field(
-        default=1,
-    )
-    """Number of GPUs to use for explanation and scoring."""
-
-    seed: int = field(
-        default=22,
-    )
-    """Seed for the random number generator."""
-
-    log: bool = field(
-        default=True,
-    )
-    """Whether to log summary statistics and results of the run."""
-
-    overwrite: list[str] = list_field()
-    """Whether to overwrite existing parts of the run. Options are 'cache'
-    and 'scores'."""
-
-    num_examples_per_scorer_prompt: int = field(
-        default=1,
-    )
-    """Number of examples to use for each scorer prompt. Using more than 1 improves
-    scoring speed but can leak information to the fuzzing scorer, and increases the
-    scorer LLM task difficulty."""
+from delphi.sparse_coders import load_sparse_coders
 
 
 def load_artifacts(run_cfg: RunConfig):
@@ -138,36 +54,7 @@ def load_artifacts(run_cfg: RunConfig):
         token=run_cfg.hf_token,
     )
 
-    # Add SAE hooks to the model
-    if "gemma" not in run_cfg.sparse_model:
-        hookpoint_to_sae_encode = load_sparsify(
-            model,  # type: ignore
-            run_cfg.sparse_model,
-            run_cfg.hookpoints,
-            compile=True,
-        )
-    else:
-        # Doing a hack here to enable gemma autoencoders
-        layers = [int(n.split(".")[1]) for n in run_cfg.hookpoints]
-
-        first_hookpoint_len = len(run_cfg.hookpoints[0].split("."))
-
-        type = "res" if first_hookpoint_len == 2 else "mlp"
-
-        for hookpoint in run_cfg.hookpoints:
-            assert (
-                len(hookpoint.split(".")) == first_hookpoint_len
-            ), "All hookpoints must be of the same type for Gemma SAEs"
-
-        print(f"Loading {type} gemma SAEs for L0 = 47, W=131K...")
-
-        hookpoint_to_sae_encode = load_gemma_autoencoders(
-            ae_layers=layers,
-            average_l0s={layer: 47 for layer in layers},
-            size="131k",
-            type=type,
-            dtype=model.dtype,
-        )
+    hookpoint_to_sae_encode = load_sparse_coders(model, run_cfg, compile=True)
 
     return run_cfg.hookpoints, hookpoint_to_sae_encode, model
 
@@ -203,12 +90,23 @@ async def process_cache(
         }  # The latent range to explain
         latent_dict = cast(dict[str, int | Tensor], latent_dict)
 
+    constructor = partial(
+        default_constructor,
+        token_loader=None,
+        n_not_active=experiment_cfg.n_non_activating,
+        ctx_len=experiment_cfg.example_ctx_len,
+        max_examples=latent_cfg.max_examples,
+    )
+    sampler = partial(sample, cfg=experiment_cfg)
+
     dataset = LatentDataset(
         raw_dir=str(latents_path),
         cfg=latent_cfg,
         modules=hookpoints,
         latents=latent_dict,
         tokenizer=tokenizer,
+        constructor=constructor,
+        sampler=sampler,
     )
 
     if run_cfg.explainer_provider == "offline":
@@ -238,16 +136,6 @@ async def process_cache(
         raise ValueError(
             f"Explainer provider {run_cfg.explainer_provider} not supported"
         )
-
-    constructor = partial(
-        default_constructor,
-        token_loader=None,
-        n_not_active=experiment_cfg.n_non_activating,
-        ctx_len=experiment_cfg.example_ctx_len,
-        max_examples=latent_cfg.max_examples,
-    )
-    sampler = partial(sample, cfg=experiment_cfg)
-    loader = LatentLoader(dataset, constructor=constructor, sampler=sampler)
 
     def explainer_postprocess(result):
         with open(explanations_path / f"{result.record.latent}.txt", "wb") as f:
@@ -303,7 +191,7 @@ async def process_cache(
     )
 
     pipeline = Pipeline(
-        loader,
+        dataset,
         explainer_pipe,
         scorer_pipe,
     )
@@ -331,7 +219,7 @@ def populate_cache(
     )
     data = data.shuffle(run_cfg.seed)
     data = chunk_and_tokenize(
-        data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row
+        data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_column
     )
     tokens = data["input_ids"]
 
@@ -352,7 +240,6 @@ def populate_cache(
     cache = LatentCache(
         model,
         hookpoint_to_sae_encode,
-        width=latent_cfg.width,
         batch_size=cfg.batch_size,
     )
     cache.run(cfg.n_tokens, tokens)

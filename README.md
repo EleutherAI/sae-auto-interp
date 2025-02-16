@@ -28,10 +28,6 @@ The pipeline is highly configurable and can also be called programmatically (see
 
 To use other scorer types, instantiate a custom pipeline.
 
-## Loading Autoencoders
-
-We provide wrappers to load the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for SAEs and transcoders trained using [Sparsify](https://github.com/EleutherAI/sparsify). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
-
 ## Caching
 
 The first step to generate explanations is to cache sparse model activations. To do so, load your sparse models into the base model, load the tokens you want to cache the activations from, create a `FeatureCache` object and run it. We recommend caching over at least 10M tokens.
@@ -106,8 +102,6 @@ cfg = ExperimentConfig(
     n_random=100, # Number of non-activating examples shown to the scorer model
     train_type="quantiles", # Type of sampler to use for training
     test_type="even", # Type of sampler to use for testing
-
-
 )
 
 constructor = partial(default_constructor, tokens=dataset.tokens, n_random=cfg.n_random, ctx_len=cfg.example_ctx_len, max_examples=cfg.max_examples)

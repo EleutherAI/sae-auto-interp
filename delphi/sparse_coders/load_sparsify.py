@@ -40,7 +40,7 @@ def resolve_path(model: PreTrainedModel, path_segments: list[str]) -> list[str] 
     return None
 
 
-def load_sparsify(
+def load_sparsify_sparse_coders(
     model: PreTrainedModel,
     name: str,
     hookpoints: list[str],
@@ -48,15 +48,13 @@ def load_sparsify(
     compile: bool = False,
 ) -> dict[str, Callable]:
     """
-    Load sparsify autoencoders for specified hookpoints.
+    Load sparsify sparse coders for specified hookpoints.
 
     Args:
         model (Any): The model to load autoencoders for.
         name (str): The name of the sparse model to load. If the model is on-disk
             this is the path to the directory containing the sparse model weights.
         hookpoints (list[str]): list of hookpoints to load autoencoders for.
-        k (int | None, optional): Number of top activations to keep. Defaults
-            to None.
         device (str | torch.device | None, optional): The device to load the
             sparse models on. If not specified the sparse models will be loaded
             on the same device as the base model.
