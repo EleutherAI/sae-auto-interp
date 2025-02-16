@@ -43,7 +43,7 @@ class TensorBuffer:
     Lazy loading buffer for cached splits.
     """
 
-    path: str
+    path: Path | str
     """Path to the tensor file."""
 
     module_path: str
@@ -80,7 +80,12 @@ class TensorBuffer:
 
     def load(self):
         split_data = load_file(self.path)
-        first_latent = int(self.path.split("/")[-1].split("_")[0])
+
+        first_latent = (
+            int(self.path.stem.split("_")[0])
+            if isinstance(self.path, Path)
+            else int(self.path.split("/")[-1].split("_")[0])
+        )
         activations = torch.tensor(split_data["activations"])
         locations = torch.tensor(split_data["locations"].astype(np.int64))
         if "tokens" in split_data:
@@ -121,7 +126,7 @@ class LatentDataset:
 
     def __init__(
         self,
-        raw_dir: str,
+        raw_dir: Path,
         cfg: LatentConfig,
         tokenizer: Optional[Callable] = None,
         modules: Optional[list[str]] = None,
@@ -147,7 +152,7 @@ class LatentDataset:
         else:
             self._build_selected(raw_dir, modules, latents)
         # TODO: this assumes that all modules have the same config
-        cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
+        cache_config_dir = raw_dir / modules[0] / "config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:
@@ -181,8 +186,8 @@ class LatentDataset:
             )
         return self.tokens
 
-    def _edges(self, raw_dir: str, module: str) -> list[tuple[int, int]]:
-        module_dir = Path(raw_dir) / module
+    def _edges(self, raw_dir: Path, module: str) -> list[tuple[int, int]]:
+        module_dir = raw_dir / module
         safetensor_files = [f for f in module_dir.glob("*.safetensors")]
         edges = []
         for file in safetensor_files:
@@ -191,27 +196,27 @@ class LatentDataset:
         edges.sort(key=lambda x: x[0])
         return edges
 
-    def _build(self, raw_dir: str, modules: Optional[list[str]] = None):
+    def _build(self, raw_dir: Path, modules: Optional[list[str]] = None):
         """
         Build dataset buffers which load all cached latents.
 
         Args:
-            raw_dir (str): Directory containing raw latent data.
+            raw_dir (Path): Directory containing raw latent data.
             modules (Optional[list[str]]): list of module names to include.
         """
-        modules = os.listdir(raw_dir) if modules is None else modules
+        modules = os.listdir(str(raw_dir)) if modules is None else modules
 
         for module in modules:
             edges = self._edges(raw_dir, module)
             for start, end in edges:
-                path = f"{raw_dir}/{module}/{start}_{end}.safetensors"
+                path = raw_dir / module / f"{start}_{end}.safetensors"
                 self.buffers.append(
                     TensorBuffer(path, module, min_examples=self.cfg.min_examples)
                 )
 
     def _build_selected(
         self,
-        raw_dir: str,
+        raw_dir: Path,
         modules: list[str],
         latents: dict[str, Union[int, torch.Tensor]],
     ):
@@ -307,6 +312,126 @@ class LatentDataset:
     async def _aprocess_latent(self, buffer_output: BufferOutput) -> LatentRecord:
         """
         Asynchronously process a single latent.
+
+        Args:
+            buffer_output (BufferOutput): Latent data to process.
+
+        Returns:
+            Optional[LatentRecord]: Processed latent record or None.
+        """
+        record = LatentRecord(buffer_output.latent)
+        if self.constructor is not None:
+            self.constructor(record=record, buffer_output=buffer_output)
+        if self.sampler is not None:
+            self.sampler(record)
+        if self.transform is not None:
+            self.transform(record)
+        return record
+
+
+class LatentLoader:
+    """
+    Loader class for processing latent records from a LatentDataset.
+    """
+
+    def __init__(
+        self,
+        latent_dataset: "LatentDataset",
+        constructor: Optional[Callable] = None,
+        sampler: Optional[Callable] = None,
+        transform: Optional[Callable] = None,
+    ):
+        """
+        Initialize a LatentLoader.
+
+        Args:
+            latent_dataset (LatentDataset): The dataset to load latents from.
+            constructor (Optional[Callable]): Function to construct latent records.
+            sampler (Optional[Callable]): Function to sample from latent records.
+            transform (Optional[Callable]): Function to transform latent records.
+        """
+        self.latent_dataset = latent_dataset
+        self.constructor = constructor
+        self.sampler = sampler
+        self.transform = transform
+
+    async def __aiter__(self):
+        """
+        Asynchronous iterator for processing latent records.
+
+        Yields:
+            LatentRecord: Processed latent records.
+        """
+        for buffer in self.latent_dataset.buffers:
+            async for record in self._aprocess_buffer(buffer):
+                yield record
+
+    async def _aprocess_buffer(self, buffer):
+        """
+        Asynchronously process a buffer.
+
+        Args:
+            buffer (TensorBuffer): Buffer to process.
+
+        Yields:
+            Optional[LatentRecord]: Processed latent record or None.
+        """
+        for data in buffer:
+            if data is not None:
+                record = await self._aprocess_latent(data)
+                if record is not None:
+                    yield record
+            await asyncio.sleep(0)  # Allow other coroutines to run
+
+    async def _aprocess_latent(self, buffer_output):
+        """
+        Asynchronously process a single latent.
+
+        Args:
+            buffer_output (BufferOutput): Latent data to process.
+
+        Returns:
+            Optional[LatentRecord]: Processed latent record or None.
+        """
+        record = LatentRecord(buffer_output.latent)
+        if self.constructor is not None:
+            self.constructor(record=record, buffer_output=buffer_output)
+        if self.sampler is not None:
+            self.sampler(record)
+        if self.transform is not None:
+            self.transform(record)
+        return record
+
+    def __iter__(self):
+        """
+        Synchronous iterator for processing latent records.
+
+        Yields:
+            LatentRecord: Processed latent records.
+        """
+        for buffer in self.latent_dataset.buffers:
+            for record in self._process_buffer(buffer):
+                yield record
+
+    def _process_buffer(self, buffer):
+        """
+        Process a buffer synchronously.
+
+        Args:
+            buffer (TensorBuffer): Buffer to process.
+
+        Yields:
+            Optional[LatentRecord]: Processed latent record or None.
+        """
+        for data in buffer:
+            if data is not None:
+                record = self._process_latent(data)
+                if record is not None:
+                    yield record
+
+    def _process_latent(self, buffer_output):
+        """
+        Process a single latent synchronously.
 
         Args:
             buffer_output (BufferOutput): Latent data to process.
