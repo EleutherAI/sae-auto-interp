@@ -48,7 +48,7 @@ class LatentConfig(Serializable):
 
 @dataclass
 class CacheConfig(Serializable):
-    dataset_repo: str = "EleutherAI/rpj-v2-sample"
+    dataset_repo: str = "EleutherAI/fineweb-edu-dedup-10b"
     """Dataset repository to use for generating latent activations."""
 
     dataset_split: str = "train[:1%]"
@@ -57,7 +57,7 @@ class CacheConfig(Serializable):
     dataset_name: str = ""
     """Dataset name to use."""
 
-    dataset_row: str = "raw_content"
+    dataset_row: str = "text"
     """Dataset row to use."""
 
     batch_size: int = 32

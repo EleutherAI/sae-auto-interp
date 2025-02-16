@@ -1,8 +1,6 @@
-from collections import defaultdict
 from contextlib import contextmanager
 from typing import Any
 
-import torch
 from torch import Tensor, nn
 from transformers import PreTrainedModel
 
@@ -21,16 +19,16 @@ def collect_activations(model: PreTrainedModel, hookpoints: list[str]):
     Yields:
         Dictionary mapping hookpoints to their collected activations
     """
-    activations = defaultdict(list)
+    activations = {}
     handles = []
 
     def create_hook(hookpoint: str):
         def hook_fn(module: nn.Module, input: Any, output: Tensor) -> Tensor:
             # If output is a tuple (like in some transformer layers), take first element
             if isinstance(output, tuple):
-                activations[hookpoint].append(output[0])
+                activations[hookpoint] = output[0]
             else:
-                activations[hookpoint].append(output)
+                activations[hookpoint] = output
 
         return hook_fn
 
@@ -41,14 +39,6 @@ def collect_activations(model: PreTrainedModel, hookpoints: list[str]):
 
     try:
         yield activations
-    except Exception as e:
-        for handle in handles:
-            handle.remove()
-        raise e
     finally:
         for handle in handles:
             handle.remove()
-
-        for hookpoint in activations:
-            if activations[hookpoint]:
-                activations[hookpoint] = torch.stack(activations[hookpoint])
