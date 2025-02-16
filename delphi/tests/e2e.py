@@ -54,7 +54,7 @@ async def test():
     for score_type in df["score_type"].unique():
         score_df = df[df["score_type"] == score_type]
         weighted_mean_metrics = latent_balanced_score_metrics(
-            score_df, score_type, log=False
+            score_df, score_type, verbose=False
         )
 
         accuracy = weighted_mean_metrics["accuracy"]

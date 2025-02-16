@@ -315,7 +315,7 @@ async def run(
     else:
         print(f"Files found in {scores_path}, skipping...")
 
-    if run_cfg.log:
+    if run_cfg.verbose:
         log_results(scores_path, visualize_path, run_cfg.hookpoints)
 
 
