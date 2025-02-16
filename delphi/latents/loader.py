@@ -9,7 +9,7 @@ import torch
 from safetensors.numpy import load_file
 from torchtyping import TensorType
 from tqdm import tqdm
-from transformers import AutoModel
+from transformers import AutoTokenizer
 
 from delphi.utils import (
     load_tokenized_data,
@@ -149,10 +149,7 @@ class LatentDataset:
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:
-            temp_model = AutoModel.from_pretrained(
-                cache_config["model_name"], device_map="cpu"
-            )
-            self.tokenizer = temp_model.tokenizer
+            self.tokenizer = AutoTokenizer.from_pretrained(cache_config["model_name"])
         else:
             self.tokenizer = tokenizer
         self.cache_config = cache_config
