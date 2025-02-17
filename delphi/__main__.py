@@ -208,7 +208,6 @@ def populate_cache(
     hookpoint_to_sae_encode: dict[str, Callable],
     latents_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
-    filter_bos: bool,
 ):
     """
     Populates an on-disk cache in `latents_path` with SAE latent activations.
@@ -224,7 +223,7 @@ def populate_cache(
     )
     tokens = data["input_ids"]
 
-    if filter_bos:
+    if run_cfg.filter_bos:
         if tokenizer.bos_token_id is None:
             print("Tokenizer does not have a BOS token, skipping BOS filtering")
         else:
@@ -290,7 +289,6 @@ async def run(
             hookpoint_to_sae_encode,
             latents_path,
             tokenizer,
-            filter_bos=run_cfg.filter_bos,
         )
     else:
         print(f"Files found in {latents_path}, skipping cache population...")
