@@ -8,6 +8,11 @@ from transformers import AutoTokenizer
 
 
 @dataclass
+class Neighbour:
+    distance: float
+    latent_index: int
+
+@dataclass
 class Example:
     """
     A single example of latent data.
@@ -96,6 +101,9 @@ class LatentRecord:
 
     test: list[list[Example]] = field(default_factory=list)
     """Test examples."""
+
+    neighbours: list[Neighbour] = field(default_factory=list)
+    """Neighbours of the latent."""
 
     @property
     def max_activation(self) -> float:
