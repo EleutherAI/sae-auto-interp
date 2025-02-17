@@ -1,167 +1,37 @@
-from typing import cast, Dict
-from functools import partial
-from pathlib import Path
-from dataclasses import dataclass
-from glob import glob
-import json
-from dataclasses import dataclass
-from multiprocessing import cpu_count
 import asyncio
-import os
 import json
+import os
+from functools import partial
+from glob import glob
+from pathlib import Path
+from typing import Callable, cast
 
-from datasets import Dataset
-from simple_parsing import ArgumentParser, field
+import orjson
 import torch
+from datasets import load_dataset
+from simple_parsing import ArgumentParser
+from sparsify.data import chunk_and_tokenize
 from torch import Tensor
-import torch.nn as nn
+from torchtyping import TensorType
 from transformers import (
+    AutoModel,
+    AutoTokenizer,
+    BitsAndBytesConfig,
+    PreTrainedModel,
     PreTrainedTokenizer,
     PreTrainedTokenizerFast,
-    BitsAndBytesConfig,
 )
-import orjson
-from torchtyping import TensorType
-from nnsight import LanguageModel
-from datasets import load_dataset
-from sparsify.data import chunk_and_tokenize
-from simple_parsing import field, list_field
 
-from delphi.config import ExperimentConfig, LatentConfig
-from delphi.explainers import DefaultExplainer, ContrastiveExplainer
-from delphi.latents import LatentDataset, LatentLoader
+from delphi.clients import Offline, OpenRouter
+from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
+from delphi.explainers import DefaultExplainer
+from delphi.latents import LatentCache, LatentDataset
 from delphi.latents.constructors import default_constructor
 from delphi.latents.samplers import sample
-from delphi.pipeline import Pipeline, process_wrapper
-from delphi.clients import Offline, OpenRouter
-from delphi.config import CacheConfig
-from delphi.latents import LatentCache
-from delphi.utils import assert_type
-from delphi.scorers import FuzzingScorer, DetectionScorer
-from delphi.pipeline import Pipe
-from delphi.autoencoders.eleuther import load_and_hook_sparsify_models
-from delphi.autoencoders.DeepMind import JumpReLUSAE
-from delphi.autoencoders.wrapper import AutoencoderLatents
 from delphi.log.result_analysis import log_results
-from delphi.semantic_index.index import build_or_load_index, load_index
-
-
-@dataclass
-class RunConfig:
-    model: str = field(
-        default="meta-llama/Meta-Llama-3-8B",
-        positional=True,
-    )
-    """Name of the model to explain."""
-
-    sparse_model: str = field(
-        default="EleutherAI/sae-llama-3-8b-32x",
-        positional=True,
-    )
-    """Name of sparse models associated with the model to explain, or path to
-    directory containing their weights. Models must be loadable with sparsify."""
-
-    hookpoints: list[str] = list_field()
-    """List of model hookpoints to attach sparse models to."""
-
-    explainer_model: str = field(
-        default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
-    )
-    """Name of the model to use for explanation and scoring."""
-
-    explainer_model_max_len: int = field(
-        default=5120,
-    )
-    """Maximum length of the explainer model context window."""
-
-    explainer_provider: str = field(
-        default="offline",
-    )
-    """Provider to use for explanation and scoring. Options are 'offline' for local models and 'openrouter' for API calls."""
-
-    name: str = ""
-    """The name of the run. Results are saved in a directory with this name."""
-
-    max_latents: int | None = None
-    """Maximum number of features to explain for each sparse model."""
-
-    filter_bos: bool = False
-    """Whether to filter out BOS tokens from the cache."""
-
-    load_in_8bit: bool = False
-    """Load the model in 8-bit mode."""
-
-    hf_token: str | None = None
-    """Huggingface API token for downloading models."""
-
-    pipeline_num_proc: int = field(
-        default_factory=lambda: cpu_count() // 2,
-    )
-    """Number of processes to use for preprocessing data"""
-
-    num_gpus: int = field(
-        default=1,
-    )
-    """Number of GPUs to use for explanation and scoring."""
-
-    seed: int = field(
-        default=22,
-    )
-    """Seed for the random number generator."""
-
-    log: bool = field(
-        default=True,
-    )
-    """Whether to log summary statistics and results of the run."""
-
-    overwrite: list[str] = list_field()
-    """Whether to overwrite existing parts of the run. Options are 'cache', 'scores', and 'visualize'."""
-
-    num_examples_per_scorer_prompt: int = field(
-        default=1,
-    )
-    """Number of examples to use for each scorer prompt. Using more than 1 improves scoring speed but can
-    leak information to the fuzzing scorer, and increases the scorer LLM task difficulty."""
-
-    semantic_index: bool = False
-    """Whether to build semantic index of token sequences."""
-
-
-def load_gemma_autoencoders(model, ae_layers: list[int],average_l0s: Dict[int,int],size:str,type:str, hookpoints):
-    submodules = {}
-
-    for layer in ae_layers:
-    
-        path = f"layer_{layer}/width_{size}/average_l0_{average_l0s[layer]}"
-        sae = JumpReLUSAE.from_pretrained(path,type,"cuda")
-        
-        sae.half()
-        def _forward(sae, x):
-            encoded = sae.encode(x)
-            return encoded
-        if type == "res":
-            submodule = model.model.layers[layer]
-        elif type == "mlp":
-            submodule = model.model.layers[layer].post_feedforward_layernorm
-        else:
-            raise ValueError(f"Invalid autoencoder type: {type}")
-        submodule.ae = AutoencoderLatents(
-            sae, partial(_forward, sae), width=sae.W_enc.shape[1]
-        )
-
-        hookpoint = [hookpoint for hookpoint in hookpoints if f"layers.{layer}" in hookpoint][0]
-
-        submodules[hookpoint] = submodule
-
-    with model.edit(" ") as edited:
-        for _, submodule in submodules.items():
-            if type == "res":
-                acts = submodule.output[0]
-            else:
-                acts = submodule.output
-            submodule.ae(acts, hook=True)
-
-    return submodules, edited
+from delphi.pipeline import Pipe, Pipeline, process_wrapper
+from delphi.scorers import DetectionScorer, FuzzingScorer
+from delphi.sparse_coders import load_sparse_coders
 
 
 def load_artifacts(run_cfg: RunConfig):
@@ -172,7 +42,7 @@ def load_artifacts(run_cfg: RunConfig):
     else:
         dtype = "auto"
 
-    model = LanguageModel(
+    model = AutoModel.from_pretrained(
         run_cfg.model,
         device_map={"": "cuda"},
         quantization_config=(
@@ -182,38 +52,14 @@ def load_artifacts(run_cfg: RunConfig):
         ),
         torch_dtype=dtype,
         token=run_cfg.hf_token,
-        dispatch=True,
     )
 
-    # Add SAE hooks to the model
-    if 'gemma' not in run_cfg.sparse_model:
-        submodule_name_to_submodule, model = load_and_hook_sparsify_models(
-            model,  # type: ignore
-            run_cfg.sparse_model,
-            run_cfg.hookpoints,
-            k=run_cfg.max_latents,
-        )
-    else:
-        # Doing a hack
-        print("Loading 131k l0=47 residual gemma autoencoders")
-        submodule_name_to_submodule, model = load_gemma_autoencoders(
-            model,
-            ae_layers=[10],
-            average_l0s={10: 47},
-            size="131k",
-            type="res",
-            hookpoints=run_cfg.hookpoints
-        )
-        for key, value in submodule_name_to_submodule.items():
-            submodule_name_to_submodule[key] = value.to(dtype)
+    hookpoint_to_sparse_encode = load_sparse_coders(model, run_cfg, compile=True)
 
-        
-    model = assert_type(LanguageModel, model)
+    return run_cfg.hookpoints, hookpoint_to_sparse_encode, model
 
-    return run_cfg.hookpoints, submodule_name_to_submodule, model, model.tokenizer
 
-async def run_pipeline(
-    cache_cfg: CacheConfig,
+async def process_cache(
     latent_cfg: LatentConfig,
     run_cfg: RunConfig,
     experiment_cfg: ExperimentConfig,
@@ -221,7 +67,6 @@ async def run_pipeline(
     latents_path: Path,
     explanations_path: Path,
     scores_path: Path,
-    # The layers to explain
     hookpoints: list[str],
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     latent_range: Tensor | None,
@@ -246,12 +91,23 @@ async def run_pipeline(
         }  # The latent range to explain
         latent_dict = cast(dict[str, int | Tensor], latent_dict)
 
+    constructor = partial(
+        default_constructor,
+        token_loader=None,
+        n_not_active=experiment_cfg.n_non_activating,
+        ctx_len=experiment_cfg.example_ctx_len,
+        max_examples=latent_cfg.max_examples,
+    )
+    sampler = partial(sample, cfg=experiment_cfg)
+
     dataset = LatentDataset(
         raw_dir=str(latents_path),
         cfg=latent_cfg,
         modules=hookpoints,
         latents=latent_dict,
         tokenizer=tokenizer,
+        constructor=constructor,
+        sampler=sampler,
     )
 
     if run_cfg.semantic_index:
@@ -260,15 +116,21 @@ async def run_pipeline(
     if run_cfg.explainer_provider == "offline":
         client = Offline(
             run_cfg.explainer_model,
-            max_memory=0.8,
-            # Explainer models context length - must be able to accomodate the longest set of examples
+            max_memory=0.9,
+            # Explainer models context length - must be able to accommodate the longest
+            # set of examples
             max_model_len=run_cfg.explainer_model_max_len,
             num_gpus=run_cfg.num_gpus,
+            statistics=run_cfg.verbose,
         )
     elif run_cfg.explainer_provider == "openrouter":
-        if "OPENROUTER_API_KEY" not in os.environ or not os.environ["OPENROUTER_API_KEY"]:
+        if (
+            "OPENROUTER_API_KEY" not in os.environ
+            or not os.environ["OPENROUTER_API_KEY"]
+        ):
             raise ValueError(
-                "OPENROUTER_API_KEY environment variable not set. Set `--explainer-provider offline` to use a local explainer model."
+                "OPENROUTER_API_KEY environment variable not set. Set "
+                "`--explainer-provider offline` to use a local explainer model."
             )
 
         client = OpenRouter(
@@ -279,16 +141,6 @@ async def run_pipeline(
         raise ValueError(
             f"Explainer provider {run_cfg.explainer_provider} not supported"
         )
-
-    constructor = partial(
-        default_constructor,
-        token_loader=None,
-        n_not_active=experiment_cfg.n_non_activating,
-        ctx_len=experiment_cfg.example_ctx_len,
-        max_examples=latent_cfg.max_examples,
-    )
-    sampler = partial(sample, cfg=experiment_cfg)
-    loader = LatentLoader(dataset, constructor=constructor, sampler=sampler)
 
     def explainer_postprocess(result):
         with open(explanations_path / f"{result.record.latent}.txt", "wb") as f:
@@ -307,9 +159,10 @@ async def run_pipeline(
             client,
             tokenizer=dataset.tokenizer,
             threshold=0.3,
-        )
-    
-    explainer_pipe = process_wrapper(explainer, postprocess=explainer_postprocess)
+            verbose=run_cfg.verbose,
+        ),
+        postprocess=explainer_postprocess,
+    )
 
     # Builds the record from result returned by the pipeline
     def scorer_preprocess(result):
@@ -330,8 +183,8 @@ async def run_pipeline(
             DetectionScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=run_cfg.num_examples_per_scorer_prompt,
-                verbose=False,
+                n_examples_shown=run_cfg.num_examples_per_scorer_prompt,
+                verbose=run_cfg.verbose,
                 log_prob=False,
             ),
             preprocess=scorer_preprocess,
@@ -341,8 +194,8 @@ async def run_pipeline(
             FuzzingScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=run_cfg.num_examples_per_scorer_prompt,
-                verbose=False,
+                n_examples_shown=run_cfg.num_examples_per_scorer_prompt,
+                verbose=run_cfg.verbose,
                 log_prob=False,
             ),
             preprocess=scorer_preprocess,
@@ -351,7 +204,7 @@ async def run_pipeline(
     )
 
     pipeline = Pipeline(
-        loader,
+        dataset,
         explainer_pipe,
         scorer_pipe,
     )
@@ -362,16 +215,14 @@ async def run_pipeline(
 def prepare_data(
     run_cfg: RunConfig,
     cfg: CacheConfig,
-    hooked_model: LanguageModel,
-    submodule_name_to_submodule: dict[str, nn.Module],
+    model: PreTrainedModel,
+    hookpoint_to_sparse_encode: dict[str, Callable],
     latents_path: Path,
     base_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
-    filter_bos: bool,
 ):
     """
-    Populates an on-disk cache in `latents_path` with SAE latent activations. 
-    Optionally builds a semantic index of token sequences.
+    Populates an on-disk cache in `latents_path` with SAE latent activations.
     """
     latents_path.mkdir(parents=True, exist_ok=True)
 
@@ -385,11 +236,11 @@ def prepare_data(
         build_or_load_index(data, base_path, cfg)
 
     data = chunk_and_tokenize(
-        data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_row
+        data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_column
     )
     tokens = data["input_ids"]
 
-    if filter_bos:
+    if run_cfg.filter_bos:
         if tokenizer.bos_token_id is None:
             print("Tokenizer does not have a BOS token, skipping BOS filtering")
         else:
@@ -403,24 +254,29 @@ def prepare_data(
 
     tokens = cast(TensorType["batch", "seq"], tokens)
 
-
     cache = LatentCache(
-        hooked_model,
-        submodule_name_to_submodule,
+        model,
+        hookpoint_to_sparse_encode,
         batch_size=cfg.batch_size,
     )
     cache.run(cfg.n_tokens, tokens)
 
     cache.save_splits(
-        # Split the activation and location indices into different files to make loading faster
+        # Split the activation and location indices into different files to make
+        # loading faster
         n_splits=cfg.n_splits,
         save_dir=latents_path,
     )
 
-    cache.save_config(save_dir=str(latents_path), cfg=cfg, model_name=run_cfg.model)
+    cache.save_config(save_dir=latents_path, cfg=cfg, model_name=run_cfg.model)
 
 
-async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_cfg: CacheConfig, run_cfg: RunConfig):
+async def run(
+    experiment_cfg: ExperimentConfig,
+    latent_cfg: LatentConfig,
+    cache_cfg: CacheConfig,
+    run_cfg: RunConfig,
+):
     base_path = Path.cwd() / "results"
     if run_cfg.name:
         base_path = base_path / run_cfg.name
@@ -432,14 +288,12 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
     latents_path = base_path / "latents"
     explanations_path = base_path / "explanations"
     scores_path = base_path / "scores"
+    visualize_path = base_path / "visualize"
 
-    latent_range = (
-        torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
-    )
+    latent_range = torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
 
-    hookpoints, submodule_name_to_submodule, hooked_model, tokenizer = load_artifacts(
-        run_cfg
-    )
+    hookpoints, hookpoint_to_sparse_encode, model = load_artifacts(run_cfg)
+    tokenizer = AutoTokenizer.from_pretrained(run_cfg.model, token=run_cfg.hf_token)
 
     if (
         not glob(str(latents_path / ".*")) + glob(str(latents_path / "*"))
@@ -448,28 +302,22 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
         prepare_data(
             run_cfg,
             cache_cfg,
-            hooked_model,
-            submodule_name_to_submodule,
+            model,
+            hookpoint_to_sparse_encode,
             latents_path,
             base_path,
             tokenizer,
-            filter_bos=run_cfg.filter_bos,
         )
     else:
         print(f"Files found in {latents_path}, skipping cache population...")
 
-    if run_cfg.semantic_index:
-        index = load_index(base_path, cache_cfg)
-
-    del hooked_model, submodule_name_to_submodule
+    del model, hookpoint_to_sparse_encode
 
     if (
         not glob(str(scores_path / ".*")) + glob(str(scores_path / "*"))
         or "scores" in run_cfg.overwrite
     ):
-
-        await run_pipeline(
-            cache_cfg,
+        await process_cache(
             latent_cfg,
             run_cfg,
             experiment_cfg,
@@ -484,8 +332,8 @@ async def run(experiment_cfg: ExperimentConfig, latent_cfg: LatentConfig, cache_
     else:
         print(f"Files found in {scores_path}, skipping...")
 
-    if run_cfg.log:
-        log_results(scores_path, run_cfg.hookpoints)
+    if run_cfg.verbose:
+        log_results(scores_path, visualize_path, run_cfg.hookpoints)
 
 
 if __name__ == "__main__":

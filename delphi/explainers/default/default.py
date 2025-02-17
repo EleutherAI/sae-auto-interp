@@ -1,9 +1,10 @@
-import re
 import asyncio
+import re
 
+from ...logger import logger
 from ..explainer import Explainer, ExplainerResult
 from .prompt_builder import build_prompt
-from ...logger import logger
+
 
 class DefaultExplainer(Explainer):
     name = "default"
@@ -16,7 +17,7 @@ class DefaultExplainer(Explainer):
         activations: bool = False,
         cot: bool = False,
         threshold: float = 0.6,
-        temperature: float = 0.,
+        temperature: float = 0.0,
         **generation_kwargs,
     ):
         self.client = client
@@ -49,4 +50,3 @@ class DefaultExplainer(Explainer):
 
     def call_sync(self, record):
         return asyncio.run(self.__call__(record))
-    

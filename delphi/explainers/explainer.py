@@ -6,9 +6,8 @@ from typing import NamedTuple
 import re
 
 import aiofiles
-
-from ..latents.latents import LatentRecord
 from ..logger import logger
+from ..latents.latents import LatentRecord
 
 class ExplainerResult(NamedTuple):
     record: LatentRecord
@@ -113,10 +112,7 @@ async def random_explanation_loader(record: LatentRecord, explanation_dir: str) 
     if str(record.latent) in explanations:
         explanations.remove(str(record.latent))
     random_explanation = random.choice(explanations)
-    async with aiofiles.open(f'{explanation_dir}/{random_explanation}', 'r') as f:
+    async with aiofiles.open(f"{explanation_dir}/{random_explanation}", "r") as f:
         explanation = json.loads(await f.read())
-    
-    return ExplainerResult(
-        record=record,
-        explanation=explanation
-    )
+
+    return ExplainerResult(record=record, explanation=explanation)

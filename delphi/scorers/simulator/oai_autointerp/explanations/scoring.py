@@ -5,8 +5,8 @@ import logging
 from typing import Any, Callable, Sequence
 
 import numpy as np
-from ..activations.activations import ActivationRecord
 
+from ..activations.activations import ActivationRecord
 from ..explanations.explanations import (
     ScoredSequenceSimulation,
     ScoredSimulation,
@@ -29,10 +29,14 @@ def correlation_score(
 def score_from_simulation(
     real_activations: ActivationRecord,
     simulation: SequenceSimulation,
-    score_function: Callable[[Sequence[float] | np.ndarray, Sequence[float] | np.ndarray], float],
+    score_function: Callable[
+        [Sequence[float] | np.ndarray, Sequence[float] | np.ndarray], float
+    ],
 ) -> float:
     if len(simulation.expected_activations) > 0:
-        return score_function(real_activations.activations, simulation.expected_activations)
+        return score_function(
+            real_activations.activations, simulation.expected_activations
+        )
     else:
         return 0
 
@@ -43,7 +47,9 @@ def rsquared_score_from_sequences(
 ) -> float:
     return float(
         1
-        - np.mean(np.square(np.array(real_activations) - np.array(predicted_activations)))
+        - np.mean(
+            np.square(np.array(real_activations) - np.array(predicted_activations))
+        )
         / np.mean(np.square(np.array(real_activations)))
     )
 
@@ -60,27 +66,27 @@ def absolute_dev_explained_score_from_sequences(
 
 
 async def _simulate_and_score_sequence(
-    simulator: NeuronSimulator, activations: ActivationRecord,quantile:int
+    simulator: NeuronSimulator, activations: ActivationRecord, quantile: int
 ) -> ScoredSequenceSimulation:
-    """Score an explanation of a neuron by how well it predicts activations on a sentence."""
-    
+    """Score an explanation of a neuron by how well it predicts activations
+    on a sentence."""
+
     simulation = await simulator.simulate(activations.tokens)
     logging.debug(simulation)
-    #rsquared_score = score_from_simulation(activations, simulation, rsquared_score_from_sequences)
-    #absolute_dev_explained_score = score_from_simulation(
-    #    activations, simulation, absolute_dev_explained_score_from_sequences
-    #)
     rsquared_score = 0
     absolute_dev_explained_score = 0
     scored_sequence_simulation = ScoredSequenceSimulation(
         distance=quantile,
         simulation=simulation,
         true_activations=activations.activations.tolist(),
-        ev_correlation_score=score_from_simulation(activations, simulation, correlation_score),
+        ev_correlation_score=score_from_simulation(
+            activations, simulation, correlation_score
+        ),
         rsquared_score=rsquared_score,
         absolute_dev_explained_score=absolute_dev_explained_score,
     )
     return scored_sequence_simulation
+
 
 def fix_nan(val):
     if np.isnan(val):
@@ -88,14 +94,14 @@ def fix_nan(val):
     else:
         return float(val)
 
-def default(scored_simulation):
 
+def default(scored_simulation):
     ev_correlation_score = scored_simulation.ev_correlation_score
 
     ev_correlation_score = fix_nan(ev_correlation_score)
 
     return {
-        "tokens" : scored_simulation.simulation.tokens,
+        "tokens": scored_simulation.simulation.tokens,
         "true_activations": scored_simulation.true_activations,
         "predicted_activations": scored_simulation.simulation.expected_activations,
         "ev_correlation_score": ev_correlation_score,
@@ -103,29 +109,29 @@ def default(scored_simulation):
         "absolute_dev_explained_score": scored_simulation.absolute_dev_explained_score,
     }
 
+
 def aggregate_scored_sequence_simulations(
     scored_sequence_simulations: list[ScoredSequenceSimulation],
     distance: int,
 ) -> ScoredSimulation:
     """
-    Aggregate a list of scored sequence simulations. The logic for doing this is non-trivial for EV
-    scores, since we want to calculate the correlation over all activations from all sequences at
-    once rather than simply averaging per-sequence correlations.
+    Aggregate a list of scored sequence simulations. The logic for doing this is
+    non-trivial for EV scores, since we want to calculate the correlation over all
+    activations from all sequences at once rather than simply averaging
+    per-sequence correlations.
     """
     all_true_activations: list[float] = []
     all_expected_values: list[float] = []
     for scored_sequence_simulation in scored_sequence_simulations:
         all_true_activations.extend(scored_sequence_simulation.true_activations or [])
-        all_expected_values.extend(scored_sequence_simulation.simulation.expected_activations)
+        all_expected_values.extend(
+            scored_sequence_simulation.simulation.expected_activations
+        )
     ev_correlation_score = (
         correlation_score(all_true_activations, all_expected_values)
         if (len(all_true_activations) > 0 and len(all_expected_values) > 0)
         else 0
     )
-    #rsquared_score = rsquared_score_from_sequences(all_true_activations, all_expected_values)
-    #absolute_dev_explained_score = absolute_dev_explained_score_from_sequences(
-    #    all_true_activations, all_expected_values
-    #)
     rsquared_score = 0
     absolute_dev_explained_score = 0
 
@@ -148,17 +154,15 @@ async def simulate_and_score(
     non_activation_records: Sequence[ActivationRecord],
 ) -> ScoredSimulation:
     """
-    Score an explanation of a neuron by how well it predicts activations on the given text
-    sequences.
+    Score an explanation of a neuron by how well it predicts activations
+    on the given text sequences.
     """
     scored_sequence_simulations = await asyncio.gather(
         *[
             asyncio.gather(
                 *[
                     _simulate_and_score_sequence(
-                        simulator,
-                        activation_record,
-                        quantile+1
+                        simulator, activation_record, quantile + 1
                     )
                     for activation_record in activation_quantile
                 ]
@@ -167,13 +171,9 @@ async def simulate_and_score(
         ]
     )
     if len(non_activation_records) > 0:
-        non_activation_scored_sequence_simulations = await asyncio.gather(
+        non_activating_scored_seq_simulations = await asyncio.gather(
             *[
-                _simulate_and_score_sequence(
-                    simulator,
-                    non_activation_record[0],
-                    -1
-                )
+                _simulate_and_score_sequence(simulator, non_activation_record[0], -1)
                 for non_activation_record in non_activation_records
             ]
         )
@@ -184,16 +184,16 @@ async def simulate_and_score(
 
     values = []
     all_activated = []
-    for distance,sequence in enumerate(scored_sequence_simulations):
+    for distance, sequence in enumerate(scored_sequence_simulations):
         without_errors = []
         for s in sequence:
             if len(s.simulation.expected_activations) > 0:
                 without_errors.append(s)
-        values.append(aggregate_scored_sequence_simulations(without_errors,distance+1))
+        values.append(
+            aggregate_scored_sequence_simulations(without_errors, distance + 1)
+        )
         all_activated.extend(without_errors)
     if len(non_activation_records) > 0:
-        #values.append(aggregate_scored_sequence_simulations(non_activation_scored_sequence_simulations,-1))
-        all_data = all_activated+non_activation_scored_sequence_simulations
-        values.append(aggregate_scored_sequence_simulations(all_data,0))
+        all_data = all_activated + non_activating_scored_seq_simulations
+        values.append(aggregate_scored_sequence_simulations(all_data, 0))
     return values
-

@@ -50,7 +50,6 @@ To better find the explanation for the language patterns go through the followin
 """
 
 
-
 ### EXAMPLE 1 ###
 
 EXAMPLE_1 = """
@@ -196,15 +195,11 @@ def _prompt(n, activations=False, **kwargs):
     return "".join(prompt_atoms)
 
 
-def _response(
-    n,
-    cot=False,
-    **kwargs
-):
+def _response(n, cot=False, **kwargs):
     response_atoms = []
     if cot:
         response_atoms.append(get(f"EXAMPLE_{n}_COT_ACTIVATION_RESPONSE"))
-        
+
     response_atoms.append(get(f"EXAMPLE_{n}_EXPLANATION"))
 
     return "".join(response_atoms)
@@ -230,10 +225,6 @@ def system(cot=False):
         }
     ]
 
+
 def system_single_token():
-    return [    
-        {
-            "role": "system",
-            "content": SYSTEM_SINGLE_TOKEN
-        }
-    ]
+    return [{"role": "system", "content": SYSTEM_SINGLE_TOKEN}]

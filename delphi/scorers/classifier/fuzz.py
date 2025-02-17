@@ -1,5 +1,4 @@
 from math import ceil
-from typing import List
 
 import torch
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
@@ -21,10 +20,10 @@ class FuzzingScorer(Classifier, Scorer):
         client: Client,
         tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
         verbose: bool = False,
-        n_examples_shown: int = 10,
+        n_examples_shown: int = 1,
         threshold: float = 0.3,
         log_prob: bool = False,
-        temperature: float = 0.,
+        temperature: float = 0.0,
         **generation_kwargs,
     ):
         """
@@ -36,9 +35,9 @@ class FuzzingScorer(Classifier, Scorer):
             verbose: Whether to print verbose output.
             n_examples_shown: The number of examples to show in the prompt,
                         a larger number can both leak information and make
-                        it harder for models to generate anwers in the correct format
-            log_prob: Whether to use log probabilities to allow for AUC calculation
-            generation_kwargs: Additional generation kwargs
+                        it harder for models to generate anwers in the correct format.
+            log_prob: Whether to use log probabilities to allow for AUC calculation.
+            generation_kwargs: Additional generation kwargs.
         """
         super().__init__(
             client=client,
@@ -67,10 +66,7 @@ class FuzzingScorer(Classifier, Scorer):
         """
         Prepare and shuffle a list of samples for classification.
         """
-        assert (
-            len(record.test) > 0 
-            and len(record.test[0]) > 0
-        ), "No test records found"
+        assert len(record.test) > 0 and len(record.test[0]) > 0, "No test records found"
 
         defaults = {
             "highlighted": True,

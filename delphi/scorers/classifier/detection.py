@@ -1,7 +1,7 @@
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
-from ...latents import LatentRecord,Example
+from ...latents import LatentRecord, Example
 from .classifier import Classifier
 from .prompts.detection_prompt import prompt
 from .sample import Sample, examples_to_samples
@@ -15,9 +15,9 @@ class DetectionScorer(Classifier):
         client: Client,
         tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
         verbose: bool = False,
-        n_examples_shown: int = 10,
+        n_examples_shown: int = 1,
         log_prob: bool = False,
-        temperature: float = 0.,
+        temperature: float = 0.0,
         **generation_kwargs,
     ):
         """

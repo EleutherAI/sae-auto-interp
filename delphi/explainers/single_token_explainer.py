@@ -1,9 +1,10 @@
-import re
 import asyncio
+import re
 
-from delphi.explainers.explainer import Explainer, ExplainerResult
 from delphi.explainers.default.prompt_builder import build_single_token_prompt
+from delphi.explainers.explainer import Explainer, ExplainerResult
 from delphi.logger import logger
+
 
 class SingleTokenExplainer(Explainer):
     name = "single_token"
@@ -16,7 +17,7 @@ class SingleTokenExplainer(Explainer):
         activations: bool = False,
         cot: bool = False,
         threshold: float = 0.6,
-        temperature: float = 0.,
+        temperature: float = 0.0,
         **generation_kwargs,
     ):
         self.client = client

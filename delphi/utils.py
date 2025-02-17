@@ -1,7 +1,8 @@
-from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast
-from typing import cast
-from torchtyping import TensorType
 from typing import Any, Type, TypeVar, cast
+
+from torchtyping import TensorType
+from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast
+
 
 def load_tokenized_data(
     ctx_len: int,
@@ -9,7 +10,7 @@ def load_tokenized_data(
     dataset_repo: str,
     dataset_split: str,
     dataset_name: str = "",
-    dataset_column_name: str = "raw_content",
+    column_name: str = "text",
     seed: int = 22,
     add_bos_token: bool = True,
 ):
@@ -18,13 +19,15 @@ def load_tokenized_data(
     """
     from datasets import load_dataset
     from sparsify.data import chunk_and_tokenize
-    
+
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
-    tokens_ds = chunk_and_tokenize(data, tokenizer, max_seq_len=ctx_len, text_key=dataset_column_name)
+    tokens_ds = chunk_and_tokenize(
+        data, tokenizer, max_seq_len=ctx_len, text_key=column_name
+    )
     tokens_ds = tokens_ds.shuffle(seed)
 
     tokens = cast(TensorType["batch", "seq"], tokens_ds["input_ids"])
-    
+
     return tokens
 
 
@@ -37,7 +40,6 @@ def load_filter(path: str, device: str = "cuda:0"):
         filter = json.load(f)
 
     return {key: torch.tensor(value, device=device) for key, value in filter.items()}
-
 
 
 T = TypeVar("T")

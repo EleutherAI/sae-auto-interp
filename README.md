@@ -16,7 +16,7 @@ Install this library as a local editable installation. Run the following command
 
 To run the default pipeline from the command line, use the following command:
 
-`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]' --n_tokens 10_000_000 --max_features 100 --hookpoints layers.5`
+`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]' --n_tokens 10_000_000 --max_features 100 --hookpoints layers.5 --filter_bos`
 
 This command will:
 1. Cache activations for the first 10 million tokens of EleutherAI/rpj-v2-sample.
@@ -27,10 +27,6 @@ This command will:
 The pipeline is highly configurable and can also be called programmatically (see the [end-to-end test](https://github.com/EleutherAI/delphi/blob/main/delphi/tests/e2e.py) for an example).
 
 To use other scorer types, instantiate a custom pipeline.
-
-## Loading Autoencoders
-
-This library uses NNsight to load and edit a model with sparse auxiliary models. We provide wrappers to load GPT-2 autoencoders trained by [OpenAI](https://github.com/openai/sparse_autoencoder), for the [GemmaScope SAEs](https://arxiv.org/abs/2408.05147) and for SAEs and transcoders trained by EleutherAI using [SAE](https://github.com/EleutherAI/sae). See the [examples](examples/loading_saes.ipynb) directory for specific examples.
 
 ## Caching
 
@@ -52,7 +48,7 @@ cache = FeatureCache(
 cache.run(n_tokens = 10_000_000, tokens=tokens)
 ```
 
-Caching saves `.safetensors` of `Dict["activations", "locations"]`.
+Caching saves `.safetensors` of `dict["activations", "locations"]`.
 
 ```python
 cache.save_splits(
@@ -103,20 +99,18 @@ cfg = ExperimentConfig(
     n_examples_test=100, # Number of examples shown to the scorer models
     n_quantiles=10, # Number of quantiles to divide the data into
     example_ctx_len=32, # Length of each example
-    n_random=100, # Number of non-activating examples shown to the scorer model
-    train_type="quantiles", # Type of sampler to use for training 
+    n_non_activating=100, # Number of non-activating examples shown to the scorer model
+    train_type="quantiles", # Type of sampler to use for training
     test_type="even", # Type of sampler to use for testing
-
-
 )
 
-constructor = partial(default_constructor, tokens=dataset.tokens, n_random=cfg.n_random, ctx_len=cfg.example_ctx_len, max_examples=cfg.max_examples)
+constructor = partial(default_constructor, tokens=dataset.tokens, n_not_active=cfg.n_non_activating, ctx_len=cfg.example_ctx_len, max_examples=cfg.max_examples)
 sampler = partial(sample, cfg=cfg)
 ```
 
 ## Generating Explanations
 
-We currently support using OpenRouter's OpenAI compatible API or running locally with VLLM. Define the client you want to use, then create an explainer from the `.explainers` module. 
+We currently support using OpenRouter's OpenAI compatible API or running locally with VLLM. Define the client you want to use, then create an explainer from the `.explainers` module.
 
 ```python
 from delphi.explainers import DefaultExplainer
@@ -187,7 +181,7 @@ from delphi.explainers import  explanation_loader,random_explanation_loader
 # Because we are running the explainer and scorer separately, we need to add the explanation and extra examples back to the record
 
 def scorer_preprocess(result):
-        record = result.record 
+        record = result.record
         record.explanation = result.explanation
         record.extra_examples = record.not_active
         return record
@@ -234,7 +228,7 @@ pipeline = Pipeline(
 )
 
 asyncio.run(pipeline.run())
-``` 
+```
 
 ### Simulation
 
