@@ -99,12 +99,12 @@ cfg = ExperimentConfig(
     n_examples_test=100, # Number of examples shown to the scorer models
     n_quantiles=10, # Number of quantiles to divide the data into
     example_ctx_len=32, # Length of each example
-    n_random=100, # Number of non-activating examples shown to the scorer model
+    n_non_activating=100, # Number of non-activating examples shown to the scorer model
     train_type="quantiles", # Type of sampler to use for training
     test_type="even", # Type of sampler to use for testing
 )
 
-constructor = partial(default_constructor, tokens=dataset.tokens, n_random=cfg.n_random, ctx_len=cfg.example_ctx_len, max_examples=cfg.max_examples)
+constructor = partial(default_constructor, tokens=dataset.tokens, n_not_active=cfg.n_non_activating, ctx_len=cfg.example_ctx_len, max_examples=cfg.max_examples)
 sampler = partial(sample, cfg=cfg)
 ```
 
