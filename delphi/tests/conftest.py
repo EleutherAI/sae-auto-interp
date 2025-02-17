@@ -62,11 +62,13 @@ def cache_setup(
         sparse_model="EleutherAI/sae-pythia-70m-32k",
         hookpoints=["layers.1"],
     )
-    hookpoint_to_sae_encode = load_sparse_coders(model, run_cfg_gemma)
+    hookpoint_to_sparse_encode = load_sparse_coders(model, run_cfg_gemma)
 
     # Define cache config and initialize cache
     cache_cfg = CacheConfig(batch_size=1, ctx_len=16, n_tokens=100)
-    cache = LatentCache(model, hookpoint_to_sae_encode, batch_size=cache_cfg.batch_size)
+    cache = LatentCache(
+        model, hookpoint_to_sparse_encode, batch_size=cache_cfg.batch_size
+    )
 
     # Generate mock tokens and run the cache
     tokens = mock_dataset
