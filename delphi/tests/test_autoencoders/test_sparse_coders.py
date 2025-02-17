@@ -7,14 +7,11 @@ from delphi.sparse_coders import load_sparse_coders
 
 
 # A simple dummy run configuration for testing.
-class DummyRunConfig:
+class DummySparseCoderConfig:
     def __init__(self, sparse_model, hookpoints):
         self.sparse_model = sparse_model
         self.hookpoints = hookpoints
-        # Additional required fields can be added here if needed.
-        self.model = "dummy_model"
-        self.hf_token = ""
-
+        
 
 class DummyLayer(nn.Module):
     def __init__(self):
@@ -48,7 +45,7 @@ def dummy_model():
 def run_cfg_sparsify():
     # The 'sparse_model' string should NOT contain "gemma" in order
     # to trigger the sparsify branch.
-    return DummyRunConfig(
+    return DummySparseCoderConfig(
         sparse_model="EleutherAI/sae-pythia-70m-32k",
         hookpoints=["layers.4.mlp", "layers.0"],
     )
@@ -58,7 +55,7 @@ def run_cfg_sparsify():
 def run_cfg_gemma():
     # The 'sparse_model' string here contains "gemma" to trigger the gemma branch.
     # The hookpoint must be in the format "layers_{layer}/width_{size}/average_l0_{l0}"
-    return DummyRunConfig(
+    return DummySparseCoderConfig(
         sparse_model="google/gemma-scope-2b-pt-res/",
         hookpoints=[
             "layer_12/width_131k/average_l0_67",
