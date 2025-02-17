@@ -203,7 +203,6 @@ async def process_cache(
 
 def populate_cache(
     run_cfg: RunConfig,
-    latent_cfg: LatentConfig,
     cfg: CacheConfig,
     model: PreTrainedModel,
     hookpoint_to_sae_encode: dict[str, Callable],
@@ -286,7 +285,6 @@ async def run(
     ):
         populate_cache(
             run_cfg,
-            latent_cfg,
             cache_cfg,
             model,
             hookpoint_to_sae_encode,

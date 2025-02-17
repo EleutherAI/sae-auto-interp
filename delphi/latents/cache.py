@@ -1,11 +1,12 @@
 import json
 from collections import defaultdict
 from pathlib import Path
+from typing import Callable
 
 import numpy as np
 import torch
 from safetensors.numpy import save_file
-from torch import Tensor, nn
+from torch import Tensor
 from torchtyping import TensorType
 from tqdm import tqdm
 
@@ -157,7 +158,7 @@ class LatentCache:
     def __init__(
         self,
         model,
-        hookpoint_to_sae_encode: dict[str, nn.Module],
+        hookpoint_to_sparse_encode: dict[str, Callable],
         batch_size: int,
         filters: dict[str, TensorType["indices"]] | None = None,
     ):
@@ -166,12 +167,12 @@ class LatentCache:
 
         Args:
             model: The model to cache latents for.
-            hookpoint_to_sae_encode: Dictionary of submodules to cache.
+            hookpoint_to_sparse_encode: Dictionary of sparse encoding functions.
             batch_size: Size of batches for processing.
             filters: Filters for selecting specific latents.
         """
         self.model = model
-        self.hookpoint_to_sae_encode = hookpoint_to_sae_encode
+        self.hookpoint_to_sparse_encode = hookpoint_to_sparse_encode
 
         self.batch_size = batch_size
         self.width = None
@@ -237,12 +238,12 @@ class LatentCache:
 
                 with torch.no_grad():
                     with collect_activations(
-                        self.model, list(self.hookpoint_to_sae_encode.keys())
+                        self.model, list(self.hookpoint_to_sparse_encode.keys())
                     ) as activations:
                         self.model(batch.to(self.model.device))
 
                         for hookpoint, latents in activations.items():
-                            sae_latents = self.hookpoint_to_sae_encode[hookpoint](
+                            sae_latents = self.hookpoint_to_sparse_encode[hookpoint](
                                 latents
                             )
                             self.cache.add(sae_latents, batch, batch_number, hookpoint)
