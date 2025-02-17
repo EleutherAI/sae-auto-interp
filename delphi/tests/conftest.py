@@ -47,9 +47,7 @@ def mock_dataset(tokenizer: AutoTokenizer) -> torch.Tensor:
 
 
 @pytest.fixture(scope="module")
-def latent_cache(
-    tmp_path_factory, mock_dataset: torch.Tensor, model: AutoModel
-):
+def latent_cache(tmp_path_factory, mock_dataset: torch.Tensor, model: AutoModel):
     """
     This fixture creates a temporary directory, loads the model,
     initializes the cache, runs the cache once, saves the cache splits
@@ -90,14 +88,13 @@ def latent_cache(
         "temp_dir": temp_dir,
     }
 
+
 @pytest.fixture(scope="module")
-def latent_dataset(cache_setup: dict[str, Any], tokenizer: AutoTokenizer):
+def latent_dataset(latent_cache: dict[str, Any], tokenizer: AutoTokenizer):
     latent_cfg = LatentConfig(min_examples=0, max_examples=100)
-    temp_dir = cache_setup["temp_dir"] 
+    temp_dir = latent_cache["temp_dir"]
     hookpoints = ["layers.1"]
-    latent_dict = {
-        "layers.1": torch.tensor([0, 7000,14000,21000,28000])
-    }
+    latent_dict = {"layers.1": torch.tensor([0, 7000, 14000, 21000, 28000])}
     dataset = LatentDataset(
         raw_dir=str(temp_dir),
         cfg=latent_cfg,
