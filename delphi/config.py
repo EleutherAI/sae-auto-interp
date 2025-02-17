@@ -46,6 +46,14 @@ class CacheConfig(Serializable):
     dataset_repo: str = "EleutherAI/fineweb-edu-dedup-10b"
     """Dataset repository to use for generating latent activations."""
 
+    faiss_index_type: Literal["flat", "hnsw"] = "hnsw"
+
+    faiss_hnsw_config: dict[str, int] = field(
+        default_factory=lambda: {"M": 32, "efConstruction": 200, "efSearch": 128}
+    )
+
+    faiss_embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+
     dataset_split: str = "train[:1%]"
     """Dataset split to use for generating latent activations."""
 
@@ -111,6 +119,9 @@ class RunConfig:
 
     filter_bos: bool = False
     """Whether to filter out BOS tokens from the cache."""
+
+    semantic_index: bool = False
+    """Whether to build semantic index of token sequences."""
 
     load_in_8bit: bool = False
     """Load the model in 8-bit mode."""

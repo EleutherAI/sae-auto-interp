@@ -8,8 +8,8 @@ from typing import Callable, cast
 
 import orjson
 import torch
-from datasets import load_dataset
-from simple_parsing import ArgumentParser
+from datasets import Dataset, load_dataset
+from simple_parsing import ArgumentParser, field, list_field
 from sparsify.data import chunk_and_tokenize
 from torch import Tensor
 from torchtyping import TensorType
@@ -24,14 +24,17 @@ from transformers import (
 
 from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
-from delphi.explainers import DefaultExplainer
+from delphi.explainers import ContrastiveExplainer, DefaultExplainer
 from delphi.latents import LatentCache, LatentDataset
+from delphi.latents.loader import LatentLoader
 from delphi.latents.constructors import default_constructor
 from delphi.latents.samplers import sample
 from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
 from delphi.sparse_coders import load_sparse_coders
+from delphi.semantic_index.index import build_or_load_index, load_index
+from delphi.utils import assert_type
 
 
 def load_artifacts(run_cfg: RunConfig):
@@ -60,9 +63,11 @@ def load_artifacts(run_cfg: RunConfig):
 
 
 async def process_cache(
+    cache_cfg: CacheConfig,
     latent_cfg: LatentConfig,
     run_cfg: RunConfig,
     experiment_cfg: ExperimentConfig,
+    base_path: Path,
     latents_path: Path,
     explanations_path: Path,
     scores_path: Path,
@@ -109,6 +114,9 @@ async def process_cache(
         sampler=sampler,
     )
 
+    if run_cfg.semantic_index:
+        index = load_index(base_path, cache_cfg)
+
     if run_cfg.explainer_provider == "offline":
         client = Offline(
             run_cfg.explainer_model,
@@ -143,8 +151,16 @@ async def process_cache(
             f.write(orjson.dumps(result.explanation))
         return result
 
-    explainer_pipe = process_wrapper(
-        DefaultExplainer(
+    if run_cfg.semantic_index:
+        explainer = ContrastiveExplainer(
+            client,
+            tokenizer=dataset.tokenizer,
+            index=index,
+            threshold=0.3,
+            verbose=run_cfg.verbose,
+        )
+    else:
+        explainer = DefaultExplainer(
             client,
             tokenizer=dataset.tokenizer,
             threshold=0.3,
@@ -207,17 +223,24 @@ def populate_cache(
     model: PreTrainedModel,
     hookpoint_to_sparse_encode: dict[str, Callable],
     latents_path: Path,
+    base_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
 ):
     """
     Populates an on-disk cache in `latents_path` with SAE latent activations.
+    Optionally builds a semantic index of token sequences.
     """
     latents_path.mkdir(parents=True, exist_ok=True)
 
     data = load_dataset(
         cfg.dataset_repo, name=cfg.dataset_name, split=cfg.dataset_split
     )
+    data = assert_type(Dataset, data)
     data = data.shuffle(run_cfg.seed)
+
+    if run_cfg.semantic_index:
+        build_or_load_index(data, base_path, cfg)
+
     data = chunk_and_tokenize(
         data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_column
     )
@@ -288,10 +311,14 @@ async def run(
             model,
             hookpoint_to_sparse_encode,
             latents_path,
+            base_path,
             tokenizer,
         )
     else:
         print(f"Files found in {latents_path}, skipping cache population...")
+
+    if run_cfg.semantic_index:
+        load_index(base_path, cache_cfg)
 
     del model, hookpoint_to_sparse_encode
 
@@ -300,9 +327,11 @@ async def run(
         or "scores" in run_cfg.overwrite
     ):
         await process_cache(
+            cache_cfg,
             latent_cfg,
             run_cfg,
             experiment_cfg,
+            base_path,
             latents_path,
             explanations_path,
             scores_path,
