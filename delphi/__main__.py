@@ -106,9 +106,6 @@ async def process_cache(
         max_examples=latent_cfg.max_examples,
     )
     sampler = partial(sample, cfg=experiment_cfg)
-    print(latents_path)
-    print(hookpoints)
-    print(latent_dict)
     dataset = LatentDataset(
         raw_dir=str(latents_path),
         cfg=latent_cfg,
