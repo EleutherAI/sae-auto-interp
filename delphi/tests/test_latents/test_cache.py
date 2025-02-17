@@ -7,13 +7,13 @@ import numpy as np
 from safetensors.numpy import load_file
 
 
-def test_latent_locations(cache_setup: dict[str, Any]):
+def test_latent_locations(latent_cache: dict[str, Any]):
     """
     Test that the latent locations generated in memory have the expected
     shape and values.
     """
-    cache = cache_setup["cache"]
-    locations = cache.cache.latent_locations["gpt_neox.layers.1"]
+    cache = latent_cache["cache"]
+    locations = cache.cache.latent_locations["layers.1"]
     max_values, _ = locations.max(axis=0)
     # Expected values based on the cache run
     assert max_values[0] == 5, "Expected first dimension max value to be 5"
@@ -21,24 +21,24 @@ def test_latent_locations(cache_setup: dict[str, Any]):
     assert max_values[2] > 32700, "Expected latent dimension around 32768"
 
 
-def test_split_files_created(cache_setup: dict[str, Any]):
+def test_split_files_created(latent_cache: dict[str, Any]):
     """
     Test that exactly 5 cache split files have been created.
     """
-    save_dir = cache_setup["temp_dir"] / "gpt_neox.layers.1"
+    save_dir = latent_cache["temp_dir"] / "layers.1"
     cache_files = [f for f in os.listdir(save_dir) if f.endswith(".safetensors")]
     assert len(cache_files) == 5, "Expected 5 split files in the cache directory"
 
 
-def test_split_file_contents(cache_setup: dict[str, Any]):
+def test_split_file_contents(latent_cache: dict[str, Any]):
     """
     Test that one of the split files (loaded via safetensors) holds convincing data:
     - latent locations and activations have the same number of entries,
     - tokens were correctly stored and match the input tokens.
     - latent max values are as expected.
     """
-    save_dir = cache_setup["temp_dir"] / "gpt_neox.layers.1"
-    tokens = cache_setup["tokens"]
+    save_dir = latent_cache["temp_dir"] / "layers.1"
+    tokens = latent_cache["tokens"]
     # Choose one file to verify
     cache_files = os.listdir(save_dir)
     file_path = Path(save_dir) / cache_files[0]
@@ -63,14 +63,14 @@ def test_split_file_contents(cache_setup: dict[str, Any]):
     assert max_values[2] > 6500, "Latent dimension mismatch in saved file"
 
 
-def test_config_file(cache_setup: dict[str, Any]):
+def test_config_file(latent_cache: dict[str, Any]):
     """
     Test that the saved configuration file contains the correct parameters.
     """
-    config_path = cache_setup["temp_dir"] / "gpt_neox.layers.1" / "config.json"
+    config_path = latent_cache["temp_dir"] / "layers.1" / "config.json"
     with open(config_path, "r") as f:
         config = json.load(f)
-    cache_cfg = cache_setup["cache_cfg"]
+    cache_cfg = latent_cache["cache_cfg"]
 
     assert config["batch_size"] == cache_cfg.batch_size, "Config batch_size mismatch"
     assert config["ctx_len"] == cache_cfg.ctx_len, "Config ctx_len mismatch"
