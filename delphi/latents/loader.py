@@ -224,7 +224,7 @@ class LatentDataset:
             latents (dict[str, Union[int, torch.Tensor]]): Dictionary of latents
                 per module.
         """
-
+        modules = os.listdir(raw_dir) if modules is None else modules
         for module in modules:
             edges = self._edges(raw_dir, module)
             selected_latents = latents[module]
