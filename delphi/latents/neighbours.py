@@ -7,6 +7,8 @@ import numpy as np
 import torch
 from safetensors.numpy import load_file
 
+from delphi.latents.loader import LatentDataset
+
 
 class NeighbourCalculator:
     """
@@ -217,7 +219,7 @@ class NeighbourCalculator:
         Save the neighbour cache to the path as a json file
         """
         with open(self.path, "w") as f:
-            json.dump(self.neighbour_cache, f)
+            json.dump(self.neighbour_cache, f, indent=4)
 
     def load_neighbour_cache(self) -> dict[str, dict[int, list[int]]]:
         """

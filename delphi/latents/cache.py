@@ -361,4 +361,4 @@ class LatentCache:
             with open(config_file, "w") as f:
                 config_dict = cfg.to_dict()
                 config_dict["model_name"] = model_name
-                json.dump(config_dict, f)
+                json.dump(config_dict, f, indent=4)
