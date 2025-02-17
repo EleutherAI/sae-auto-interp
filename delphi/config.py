@@ -151,6 +151,6 @@ class RunConfig:
     scoring speed but can leak information to the fuzzing and detection scorer,
     as well as increasing the scorer LLM task difficulty."""
 
-    overwrite: list[Literal["cache", "scores"]] = list_field()
+    overwrite: list[Literal["cache", "neighbours", "scores"]] = list_field()
     """List of run stages to recompute. This is a debugging tool
     and may be removed in the future."""
