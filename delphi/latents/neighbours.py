@@ -29,10 +29,10 @@ class NeighbourCalculator:
         Initialize a NeighbourCalculator.
 
         Args:
-            latent_dataset (Optional[LatentDataset]): Dataset 
+            latent_dataset (Optional[LatentDataset]): Dataset
                 containing latent activations
             autoencoder (Optional[Autoencoder]): The trained autoencoder model
-            residual_stream_record (Optional[ResidualStreamRecord]): Record of 
+            residual_stream_record (Optional[ResidualStreamRecord]): Record of
                 residual stream values
         """
         self.latent_dataset = latent_dataset
@@ -184,7 +184,7 @@ class NeighbourCalculator:
             correlation = encoder_rows @ covariance_matrix @ encoder_matrix.T
             covariance_between_latents[start:end] = correlation.cpu()
 
-        # the correlation is then the covariance divided 
+        # the correlation is then the covariance divided
         # by the product of the standard deviations
         diagonal_covariance = torch.diag(covariance_between_latents)
         product_of_std = torch.sqrt(
@@ -244,7 +244,7 @@ class NeighbourCalculator:
         )
         n_tokens = len(unique_idx)
 
-        # 2. The Cantor indices are not consecutive, 
+        # 2. The Cantor indices are not consecutive,
         # so we create sorted ones from the counts
         locations_flat = torch.repeat_interleave(
             torch.arange(n_tokens, device=locations.device), idx_counts
