@@ -216,7 +216,7 @@ class NeighbourCalculator:
         print("Computing co-occurrence neighbours")
         paths = []
         for buffer in self.latent_dataset.buffers:
-            paths.append(buffer.tensor_path)
+            paths.append(buffer.path)
 
         all_locations = []
         for path in paths:
