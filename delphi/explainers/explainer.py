@@ -29,12 +29,10 @@ class Explainer(ABC):
         try:
             explanation = self.parse_explanation(response.text)
             if self.verbose:
-                return (
-                    messages[-1]["content"],
-                    response,
-                    ExplainerResult(record=record, explanation=explanation),
-                )
-
+                logger.info(f"Explanation: {explanation}")
+                logger.info(f"Messages: {messages[-1]['content']}")
+                logger.info(f"Response: {response}")
+    
             return ExplainerResult(record=record, explanation=explanation)
         except Exception as e:
             logger.error(f"Explanation parsing failed: {e}")
