@@ -64,7 +64,7 @@ def load_artifacts(run_cfg: RunConfig, sparse_coder_cfg: SparseCoderConfig):
         model, sparse_coder_cfg, compile=True
     )
 
-    return run_cfg.hookpoints, hookpoint_to_sparse_encode, model
+    return sparse_coder_cfg.hookpoints, hookpoint_to_sparse_encode, model
 
 
 async def process_cache(
@@ -106,7 +106,9 @@ async def process_cache(
         max_examples=latent_cfg.max_examples,
     )
     sampler = partial(sample, cfg=experiment_cfg)
-
+    print(latents_path)
+    print(hookpoints)
+    print(latent_dict)
     dataset = LatentDataset(
         raw_dir=str(latents_path),
         cfg=latent_cfg,
