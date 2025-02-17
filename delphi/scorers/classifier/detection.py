@@ -72,7 +72,7 @@ class DetectionScorer(Classifier):
                     ground_truth=False,
                     tokenizer=self.tokenizer,
                 )
-            else:
+        else:
                 samples = []
 
         for i, examples in enumerate(record.test):
