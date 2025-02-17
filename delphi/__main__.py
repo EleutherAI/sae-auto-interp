@@ -26,7 +26,7 @@ from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
 from delphi.explainers import DefaultExplainer
 from delphi.latents import LatentCache, LatentDataset
-from delphi.latents.constructors import default_constructor
+from delphi.latents.constructors import constructor
 from delphi.latents.samplers import sample
 from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
@@ -63,7 +63,6 @@ async def process_cache(
     latent_cfg: LatentConfig,
     run_cfg: RunConfig,
     experiment_cfg: ExperimentConfig,
-    base_path: Path,
     latents_path: Path,
     explanations_path: Path,
     scores_path: Path,
@@ -91,10 +90,11 @@ async def process_cache(
         }  # The latent range to explain
         latent_dict = cast(dict[str, int | Tensor], latent_dict)
 
-    constructor = partial(
-        default_constructor,
+    example_constructor = partial(
+        constructor,
         token_loader=None,
         n_not_active=experiment_cfg.n_non_activating,
+        constructor_type="random",
         ctx_len=experiment_cfg.example_ctx_len,
         max_examples=latent_cfg.max_examples,
     )
@@ -106,12 +106,9 @@ async def process_cache(
         modules=hookpoints,
         latents=latent_dict,
         tokenizer=tokenizer,
-        constructor=constructor,
+        constructor=example_constructor,
         sampler=sampler,
     )
-
-    if run_cfg.semantic_index:
-        index = load_index(base_path, cache_cfg)
 
     if run_cfg.explainer_provider == "offline":
         client = Offline(
@@ -147,15 +144,8 @@ async def process_cache(
             f.write(orjson.dumps(result.explanation))
         return result
 
-    if run_cfg.semantic_index:
-        explainer = ContrastiveExplainer(
-            client,
-            tokenizer=dataset.tokenizer,
-            index=index,
-            threshold=0.3,
-        )
-    else:
-        explainer = DefaultExplainer(
+    explainer_pipe = process_wrapper(
+        DefaultExplainer(
             client,
             tokenizer=dataset.tokenizer,
             threshold=0.3,
@@ -212,13 +202,12 @@ async def process_cache(
     await pipeline.run(run_cfg.pipeline_num_proc)
 
 
-def prepare_data(
+def populate_cache(
     run_cfg: RunConfig,
     cfg: CacheConfig,
     model: PreTrainedModel,
     hookpoint_to_sparse_encode: dict[str, Callable],
     latents_path: Path,
-    base_path: Path,
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
 ):
     """
@@ -229,12 +218,7 @@ def prepare_data(
     data = load_dataset(
         cfg.dataset_repo, name=cfg.dataset_name, split=cfg.dataset_split
     )
-    data = assert_type(Dataset, data)
     data = data.shuffle(run_cfg.seed)
-
-    if run_cfg.semantic_index:
-        build_or_load_index(data, base_path, cfg)
-
     data = chunk_and_tokenize(
         data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_column
     )
@@ -299,13 +283,12 @@ async def run(
         not glob(str(latents_path / ".*")) + glob(str(latents_path / "*"))
         or "cache" in run_cfg.overwrite
     ):
-        prepare_data(
+        populate_cache(
             run_cfg,
             cache_cfg,
             model,
             hookpoint_to_sparse_encode,
             latents_path,
-            base_path,
             tokenizer,
         )
     else:
@@ -321,7 +304,6 @@ async def run(
             latent_cfg,
             run_cfg,
             experiment_cfg,
-            base_path,
             latents_path,
             explanations_path,
             scores_path,
