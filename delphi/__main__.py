@@ -117,6 +117,7 @@ async def process_cache(
             # set of examples
             max_model_len=run_cfg.explainer_model_max_len,
             num_gpus=run_cfg.num_gpus,
+            statistics=run_cfg.verbose,
         )
     elif run_cfg.explainer_provider == "openrouter":
         if (
@@ -171,7 +172,7 @@ async def process_cache(
             DetectionScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=run_cfg.num_examples_per_scorer_prompt,
+                n_examples_shown=run_cfg.num_examples_per_scorer_prompt,
                 verbose=run_cfg.verbose,
                 log_prob=False,
             ),
@@ -182,7 +183,7 @@ async def process_cache(
             FuzzingScorer(
                 client,
                 tokenizer=dataset.tokenizer,  # type: ignore
-                batch_size=run_cfg.num_examples_per_scorer_prompt,
+                n_examples_shown=run_cfg.num_examples_per_scorer_prompt,
                 verbose=run_cfg.verbose,
                 log_prob=False,
             ),

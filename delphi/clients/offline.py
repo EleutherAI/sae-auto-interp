@@ -2,6 +2,7 @@ import asyncio
 import json
 from dataclasses import dataclass
 from functools import partial
+from pathlib import Path
 from typing import Union
 
 from transformers import AutoTokenizer
@@ -69,6 +70,10 @@ class Offline(Client):
         self.batch_size = batch_size
         self.statistics = statistics
 
+        if self.statistics:
+            self.statistics_path = Path("statistics")
+            self.statistics_path.mkdir(parents=True, exist_ok=True)
+
     async def process_func(self, batches: Union[str, list[dict[str, str]]], kwargs):
         """
         Process a single request.
@@ -127,7 +132,7 @@ class Offline(Client):
                 with open(
                     f"statistics/{hash(batches[i][-1]['content'][-100:])}.json", "w"
                 ) as f:
-                    json.dump(statistics[i].__dict__, f)
+                    json.dump(statistics[i].__dict__, f, indent=4)
             new_response.append(
                 Response(
                     text=r.outputs[0].text,

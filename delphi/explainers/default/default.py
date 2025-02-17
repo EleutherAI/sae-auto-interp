@@ -40,11 +40,9 @@ class DefaultExplainer(Explainer):
         try:
             explanation = self.parse_explanation(response.text)
             if self.verbose:
-                return (
-                    messages[-1]["content"],
-                    response,
-                    ExplainerResult(record=record, explanation=explanation),
-                )
+                logger.info(f"Explanation: {explanation}")
+                logger.info(f"Final message to explainer: {messages[-1]['content']}")
+                logger.info(f"Response from explainer: {response.text}")
 
             return ExplainerResult(record=record, explanation=explanation)
         except Exception as e:
