@@ -1,4 +1,4 @@
-from typing import Callable, Literal, Optional
+from typing import Literal, Optional
 
 import torch
 from torchtyping import TensorType
@@ -87,27 +87,9 @@ def constructor(
     max_examples: int,
     ctx_len: int,
     constructor_type: Literal["random", "neighbour"],
-    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]] | None = None,
+    tokens: TensorType["tokens"],
     all_data: Optional[ActivationData] = None,
 ):
-    tokens = activation_data.tokens
-    if tokens is None:
-        if token_loader is None:
-            raise ValueError("Either tokens or token_loader must be provided")
-        try:
-            tokens = token_loader()
-        except TypeError:
-            raise ValueError(
-                "Starting with v0.2, `tokens` was renamed to `token_loader`, "
-                "which must be a callable for lazy loading.\n\n"
-                "Instead of passing\n"
-                "`    tokens=dataset.tokens`,\n"
-                "pass\n"
-                "`    token_loader=lambda: dataset.load_tokens()`,\n"
-                "(assuming `dataset` is a `LatentDataset` instance)."
-            )
-
-    tokens.shape[0]
     cache_token_length = tokens.shape[1]
 
     # Get all positions where the latent is active
@@ -194,19 +176,17 @@ def neighbour_non_activation_windows(
     n_examples_per_neighbour = 10
 
     number_examples = 0
-    available_features = all_data.features
     all_examples = []
     used_neighbours = []
     for neighbour in record.neighbours:
         if number_examples >= n_not_active:
             break
-        # find indice in all_data.features that matches the neighbour
-        indice = torch.where(available_features == neighbour.feature_index)[0]
-        if len(indice) == 0:
-            continue
         # get the locations of the neighbour
-        locations = all_data.locations[indice]
-        activations = all_data.activations[indice]
+        if neighbour.latent_index not in all_data:
+            print(f"Neighbour {neighbour.latent_index} not found in all_data")
+            continue
+        locations = all_data[neighbour.latent_index].locations
+        activations = all_data[neighbour.latent_index].activations
         # get the active window indices
         flat_indices = locations[:, 0] * cache_token_length + locations[:, 1]
         ctx_indices = flat_indices // ctx_len
@@ -228,6 +208,7 @@ def neighbour_non_activation_windows(
         activations = activations[mask_ctx]
         # If there are no available indices, skip this neighbour
         if activations.numel() == 0:
+            print(f"No available indices for neighbour {neighbour.latent_index}")
             continue
         token_windows, act_windows = pool_max_activation_windows(
             activations=activations,
@@ -245,10 +226,10 @@ def neighbour_non_activation_windows(
         )
         used_neighbours.append(neighbour)
         number_examples += examples_used
+    # We change neighbours in place to be the list of neighbours used
     record.neighbours = used_neighbours
     if len(all_examples) == 0:
         print("No examples found")
-
     record.not_active = all_examples
 
 

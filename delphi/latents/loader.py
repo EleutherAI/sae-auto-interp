@@ -27,11 +27,8 @@ class ActivationData(NamedTuple):
     locations: TensorType["locations", 2]
     """Tensor of latent locations."""
 
-    activations: TensorType["locations"]
+    activations: TensorType["activations"]
     """Tensor of latent activations."""
-
-    tokens: Optional[TensorType["tokens"]] = None
-    """Tensor of tokens."""
 
 
 class LatentData(NamedTuple):
@@ -67,7 +64,7 @@ class TensorBuffer:
     min_examples: int = 120
     """Minimum number of examples required. Defaults to 120."""
 
-    tokens: Optional[TensorType["tokens"]] = None
+    _tokens: Optional[TensorType["tokens"]] = None
     """Tensor of tokens."""
 
     def __iter__(self):
@@ -89,13 +86,17 @@ class TensorBuffer:
                 yield LatentData(
                     Latent(self.module_path, int(latents[i].item())),
                     self.module_path,
-                    ActivationData(latent_locations, latent_activations, self.tokens),
+                    ActivationData(latent_locations, latent_activations),
                 )
 
+    @property
+    def tokens(self) -> TensorType["tokens"]:
+        if self._tokens is None:
+            self._tokens = self.load_tokens()
+        return self._tokens
+
     def load_data_per_latent(self):
-        locations, activations, tokens = self.load()
-        if tokens is not None:
-            self.tokens = tokens
+        locations, activations, _ = self.load()
         indices = torch.argsort(locations[:, 2], stable=True)
         activations = activations[indices]
         locations = locations[indices]
@@ -127,6 +128,10 @@ class TensorBuffer:
 
         return locations, activations, tokens
 
+    def load_tokens(self):
+        _, _, tokens = self.load()
+        return tokens
+
 
 class LatentDataset:
     """
@@ -155,7 +160,8 @@ class LatentDataset:
         """
         self.cfg = cfg
         self.buffers: list[TensorBuffer] = []
-        self.all_data: dict[str, ActivationData | None] = {}
+        self.all_data: dict[str, dict[int, ActivationData] | None] = {}
+        self.tokens = None
 
         if latents is None:
             self._build(raw_dir, modules)
@@ -178,6 +184,8 @@ class LatentDataset:
         if self.constructor is not None:
             if self.constructor.keywords["constructor_type"] == "neighbour":
                 self.all_data = self._load_all_data(raw_dir, modules)
+
+        self.load_tokens()
 
     def load_tokens(self):
         """
@@ -225,9 +233,13 @@ class LatentDataset:
             edges = self._edges(raw_dir, module)
             for start, end in edges:
                 path = f"{raw_dir}/{module}/{start}_{end}.safetensors"
-                self.buffers.append(
-                    TensorBuffer(path, module, min_examples=self.cfg.min_examples)
+                tensor_buffer = TensorBuffer(
+                    path, module, min_examples=self.cfg.min_examples
                 )
+                if self.tokens is None:
+                    self.tokens = tensor_buffer.tokens
+                self.buffers.append(tensor_buffer)
+                self.all_data[module] = None
             self.all_data[module] = None
 
     def _build_selected(
@@ -265,15 +277,12 @@ class LatentDataset:
                 start, end = boundaries[bucket.item() - 1], boundaries[bucket.item()]
                 # Adjust end by one as the path avoids overlap
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
-
-                self.buffers.append(
-                    TensorBuffer(
-                        path,
-                        module,
-                        _selected_latents,
-                        min_examples=self.cfg.min_examples,
-                    )
+                tensor_buffer = TensorBuffer(
+                    path, module, _selected_latents, min_examples=self.cfg.min_examples
                 )
+                if self.tokens is None:
+                    self.tokens = tensor_buffer.tokens
+                self.buffers.append(tensor_buffer)
             self.all_data[module] = None
 
     def __len__(self):
@@ -282,24 +291,19 @@ class LatentDataset:
 
     def _load_all_data(self, raw_dir: str, modules: list[str]):
         """For each module, load all locations and activations"""
-        all_locations = {}
-        all_activations = {}
         all_data = {}
-        tokens = None
         for buffer in self.buffers:
             module = buffer.module_path
-            if module not in all_locations:
-                all_locations[module] = []
-                all_activations[module] = []
-            activations, locations, tokens = buffer.load()
-            all_locations[module].append(locations)
-            all_activations[module].append(activations)
-        for module in all_locations:
-            all_data[module] = ActivationData(
-                torch.cat(all_locations[module]),
-                torch.cat(all_activations[module]),
-                tokens,
-            )
+            if module not in all_data:
+                all_data[module] = {}
+            temp_latents = buffer.latents
+            # we remove the filter on latents
+            buffer.latents = None
+            latents, locations, activations = buffer.load_data_per_latent()
+            # we restore the filter on latents
+            buffer.latents = temp_latents
+            for latent, location, activation in zip(latents, locations, activations):
+                all_data[module][latent.item()] = ActivationData(location, activation)
         return all_data
 
     def __iter__(self):
@@ -361,6 +365,7 @@ class LatentDataset:
                 record=record,
                 activation_data=latent_data.activation_data,
                 all_data=self.all_data[latent_data.module],
+                tokens=self.tokens,
             )
         if self.sampler is not None:
             self.sampler(record)
