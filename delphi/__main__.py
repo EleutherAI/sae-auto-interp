@@ -23,7 +23,13 @@ from transformers import (
 )
 
 from delphi.clients import Offline, OpenRouter
-from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
+from delphi.config import (
+    CacheConfig,
+    ExperimentConfig,
+    LatentConfig,
+    RunConfig,
+    SparseCoderConfig,
+)
 from delphi.explainers import DefaultExplainer
 from delphi.latents import LatentCache, LatentDataset
 from delphi.latents.constructors import default_constructor
@@ -34,7 +40,7 @@ from delphi.scorers import DetectionScorer, FuzzingScorer
 from delphi.sparse_coders import load_sparse_coders
 
 
-def load_artifacts(run_cfg: RunConfig):
+def load_artifacts(run_cfg: RunConfig, sparse_coder_cfg: SparseCoderConfig):
     if run_cfg.load_in_8bit:
         dtype = torch.float16
     elif torch.cuda.is_bf16_supported():
@@ -54,7 +60,9 @@ def load_artifacts(run_cfg: RunConfig):
         token=run_cfg.hf_token,
     )
 
-    hookpoint_to_sparse_encode = load_sparse_coders(model, run_cfg, compile=True)
+    hookpoint_to_sparse_encode = load_sparse_coders(
+        model, sparse_coder_cfg, compile=True
+    )
 
     return run_cfg.hookpoints, hookpoint_to_sparse_encode, model
 
@@ -259,6 +267,7 @@ async def run(
     latent_cfg: LatentConfig,
     cache_cfg: CacheConfig,
     run_cfg: RunConfig,
+    sparse_coder_cfg: SparseCoderConfig,
 ):
     base_path = Path.cwd() / "results"
     if run_cfg.name:
@@ -275,7 +284,9 @@ async def run(
 
     latent_range = torch.arange(run_cfg.max_latents) if run_cfg.max_latents else None
 
-    hookpoints, hookpoint_to_sparse_encode, model = load_artifacts(run_cfg)
+    hookpoints, hookpoint_to_sparse_encode, model = load_artifacts(
+        run_cfg, sparse_coder_cfg
+    )
     tokenizer = AutoTokenizer.from_pretrained(run_cfg.model, token=run_cfg.hf_token)
 
     if (
@@ -323,6 +334,15 @@ if __name__ == "__main__":
     parser.add_arguments(LatentConfig, dest="latent_cfg")
     parser.add_arguments(CacheConfig, dest="cache_cfg")
     parser.add_arguments(RunConfig, dest="run_cfg")
+    parser.add_arguments(SparseCoderConfig, dest="sparse_coder_cfg")
     args = parser.parse_args()
 
-    asyncio.run(run(args.experiment_cfg, args.latent_cfg, args.cache_cfg, args.run_cfg))
+    asyncio.run(
+        run(
+            args.experiment_cfg,
+            args.latent_cfg,
+            args.cache_cfg,
+            args.run_cfg,
+            args.sparse_coder_cfg,
+        )
+    )

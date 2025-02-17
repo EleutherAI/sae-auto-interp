@@ -28,6 +28,29 @@ The pipeline is highly configurable and can also be called programmatically (see
 
 To use other scorer types, instantiate a custom pipeline.
 
+## Loading sparse coders
+
+We currently support loading sparse coders from two sources:
+
+1. [Sparsify](https://github.com/EleutherAI/sparsify)
+2. [Gemmascope](https://huggingface.co/google/gemma-scope)
+
+We create a `SparseCoderConfig` object to specify the sparse coder source and the hookpoints to load. In the case of sparsify models, `hookpoints` is a list of strings, each corresponding to the hookpoint name used to train the sparse coder. In the case of gemmascope models, each hookpoint should have the form `layer_{layer}/width_{width}/average_l0_{l0}`.
+
+```python
+from delphi.config import SparseCoderConfig
+from delphi.sparse_coders import load_sparse_coders
+
+sparse_coder_cfg = SparseCoderConfig(
+    sparse_model="EleutherAI/sae-pythia-160m-32k",
+    hookpoints=["layers.3"],
+)
+
+hookpoint_to_sparse_encode = load_sparse_coders(model, sparse_coder_cfg, compile=True)
+```
+
+
+
 ## Caching
 
 The first step to generate explanations is to cache sparse model activations. To do so, load your sparse models into the base model, load the tokens you want to cache the activations from, create a `FeatureCache` object and run it. We recommend caching over at least 10M tokens.

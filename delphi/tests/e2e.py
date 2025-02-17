@@ -4,8 +4,14 @@ from pathlib import Path
 
 import torch
 
-from delphi.__main__ import RunConfig, run
-from delphi.config import CacheConfig, ExperimentConfig, LatentConfig
+from delphi.__main__ import run
+from delphi.config import (
+    CacheConfig,
+    ExperimentConfig,
+    LatentConfig,
+    RunConfig,
+    SparseCoderConfig,
+)
 from delphi.log.result_analysis import build_scores_df, latent_balanced_score_metrics
 
 
@@ -29,12 +35,14 @@ async def test():
         min_examples=200,
         max_examples=10_000,
     )
+    sparse_coder_cfg = SparseCoderConfig(
+        sparse_model="EleutherAI/sae-pythia-160m-32k",
+        hookpoints=["layers.3"],
+    )
     run_cfg = RunConfig(
         name="test",
         overwrite=["cache", "scores"],
         model="EleutherAI/pythia-160m",
-        sparse_model="EleutherAI/sae-pythia-160m-32k",
-        hookpoints=["layers.3"],
         explainer_model="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         explainer_model_max_len=4208,
         max_latents=100,
@@ -45,7 +53,7 @@ async def test():
     )
 
     start_time = time.time()
-    await run(experiment_cfg, latent_cfg, cache_cfg, run_cfg)
+    await run(experiment_cfg, latent_cfg, cache_cfg, run_cfg, sparse_coder_cfg)
     end_time = time.time()
     print(f"Time taken: {end_time - start_time} seconds")
 

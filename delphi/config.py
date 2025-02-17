@@ -69,13 +69,7 @@ class CacheConfig(Serializable):
 
 
 @dataclass
-class RunConfig:
-    model: str = field(
-        default="meta-llama/Meta-Llama-3-8B",
-        positional=True,
-    )
-    """Name of the model to explain."""
-
+class SparseCoderConfig(Serializable):
     sparse_model: str = field(
         default="EleutherAI/sae-llama-3-8b-32x",
         positional=True,
@@ -86,6 +80,15 @@ class RunConfig:
 
     hookpoints: list[str] = list_field()
     """list of model hookpoints to attach sparse models to."""
+
+
+@dataclass
+class RunConfig:
+    model: str = field(
+        default="meta-llama/Meta-Llama-3-8B",
+        positional=True,
+    )
+    """Name of the model to explain."""
 
     explainer_model: str = field(
         default="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",

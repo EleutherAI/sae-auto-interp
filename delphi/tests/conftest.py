@@ -2,7 +2,7 @@ import pytest
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from delphi.config import CacheConfig, RunConfig
+from delphi.config import CacheConfig, SparseCoderConfig
 from delphi.latents import LatentCache
 from delphi.sparse_coders import load_sparse_coders
 
@@ -57,12 +57,11 @@ def cache_setup(
     temp_dir = tmp_path_factory.mktemp("test_cache")
 
     # Load model and set run configuration
-    run_cfg_gemma = RunConfig(
-        model="EleutherAI/pythia-70m",
+    sparse_coder_cfg = SparseCoderConfig(
         sparse_model="EleutherAI/sae-pythia-70m-32k",
         hookpoints=["layers.1"],
     )
-    hookpoint_to_sparse_encode = load_sparse_coders(model, run_cfg_gemma)
+    hookpoint_to_sparse_encode = load_sparse_coders(model, sparse_coder_cfg)
 
     # Define cache config and initialize cache
     cache_cfg = CacheConfig(batch_size=1, ctx_len=16, n_tokens=100)
