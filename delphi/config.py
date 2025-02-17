@@ -29,6 +29,12 @@ class ExperimentConfig(Serializable):
     test_type: Literal["quantiles", "activation"] = "quantiles"
     """Type of sampler to use for latent explanation testing."""
 
+    non_activating_source: Literal["random", "neighbours"] = "random"
+    """Source of non-activating examples. Random uses non-activating contexts
+    sampled from any non activating window. Neighbours uses actvating contexts
+    from pre-computed latent neighbours. They are still non-activating but
+    have a higher chance of being similar to the activating examples."""
+
 
 @dataclass
 class LatentConfig(Serializable):

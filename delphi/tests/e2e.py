@@ -24,6 +24,7 @@ async def test():
         test_type="quantiles",
         n_examples_train=40,
         n_examples_test=50,
+        non_activating_source="random",
     )
     latent_cfg = LatentConfig(
         min_examples=200,
