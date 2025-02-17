@@ -25,6 +25,9 @@ dependencies = [
     "sentence_transformers"
 ]
 
+[project.optional-dependencies]
+dev = ["pytest"]
+
 [tool.pyright]
 include = ["delphi*"]
 reportPrivateImportUsage = false

@@ -28,7 +28,7 @@ def load_sparse_coders(
 
     # Add SAE hooks to the model
     if "gemma" not in run_cfg.sparse_model:
-        hookpoint_to_sae_encode = load_sparsify_sparse_coders(
+        hookpoint_to_sparse_encode = load_sparsify_sparse_coders(
             model,
             run_cfg.sparse_model,
             run_cfg.hookpoints,
@@ -54,7 +54,7 @@ def load_sparse_coders(
             sae_sizes.append(sae_size)
             l0s.append(l0)
 
-        hookpoint_to_sae_encode = load_gemma_autoencoders(
+        hookpoint_to_sparse_encode = load_gemma_autoencoders(
             model_path=model_path,
             ae_layers=layers,
             average_l0s=l0s,
@@ -64,4 +64,4 @@ def load_sparse_coders(
             device=model.device,
         )
 
-    return hookpoint_to_sae_encode
+    return hookpoint_to_sparse_encode
