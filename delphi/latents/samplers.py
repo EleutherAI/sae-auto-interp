@@ -7,8 +7,8 @@ from .latents import ActivatingExample, LatentRecord
 
 
 def normalize_activations(
-        examples: list[ActivatingExample], max_activation: float
-    ) -> list[ActivatingExample]:
+    examples: list[ActivatingExample], max_activation: float
+) -> list[ActivatingExample]:
     for example in examples:
         example.normalized_activations = (
             example.activations * 10 / max_activation
@@ -67,14 +67,12 @@ def train(
                 logger.warning(
                     "n_train is greater than the number of examples, using all examples"
                 )
-            
+
             selected_examples = random.sample(examples, n_train)
             selected_examples = normalize_activations(selected_examples, max_activation)
             return selected_examples
         case "quantiles":
-            selected_examples = split_quantiles(
-                examples, n_quantiles, n_train
-            )
+            selected_examples = split_quantiles(examples, n_quantiles, n_train)
             selected_examples = normalize_activations(selected_examples, max_activation)
             return selected_examples
 

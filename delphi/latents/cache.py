@@ -39,9 +39,9 @@ class Cache:
         self.latent_activations_batches: dict[
             str, list[Float[Tensor, "batch sequence num_latents"]]
         ] = defaultdict(list)
-        self.tokens_batches: dict[
-            str, list[Float[Tensor, "batch sequence"]]
-        ] = defaultdict(list)
+        self.tokens_batches: dict[str, list[Float[Tensor, "batch sequence"]]] = (
+            defaultdict(list)
+        )
 
         self.latent_locations: dict[
             str, Float[Tensor, "batch sequence num_latents"]
