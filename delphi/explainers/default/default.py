@@ -1,6 +1,6 @@
 import asyncio
 
-from ..explainer import Example, Explainer
+from ..explainer import ActivatingExample, Explainer
 from .prompt_builder import build_prompt
 
 
@@ -29,7 +29,7 @@ class DefaultExplainer(Explainer):
             **generation_kwargs,
         )
 
-    def _build_prompt(self, examples: list[Example]) -> list[dict]:
+    def _build_prompt(self, examples: list[ActivatingExample]) -> list[dict]:
         highlighted_examples = []
 
         for i, example in enumerate(examples):

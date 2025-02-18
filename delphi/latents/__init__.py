@@ -5,7 +5,13 @@ from .constructors import (
     pool_max_activation_windows,
     random_non_activating_windows,
 )
-from .latents import Example, Latent, LatentRecord
+from .latents import (
+    ActivatingExample,
+    Example,
+    Latent,
+    LatentRecord,
+    NonActivatingExample,
+)
 from .loader import LatentDataset
 from .samplers import sample
 from .stats import unigram
@@ -16,6 +22,8 @@ __all__ = [
     "Latent",
     "LatentRecord",
     "Example",
+    "ActivatingExample",
+    "NonActivatingExample",
     "pool_max_activation_windows",
     "random_non_activating_windows",
     "neighbour_non_activation_windows",

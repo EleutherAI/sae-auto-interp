@@ -4,13 +4,10 @@ import random
 import re
 from abc import ABC, abstractmethod
 from typing import NamedTuple
-import re
 
 import aiofiles
-from ..logger import logger
-from ..latents.latents import LatentRecord
 
-from ..latents.latents import Example, LatentRecord
+from ..latents.latents import ActivatingExample, LatentRecord
 from ..logger import logger
 
 
@@ -123,7 +120,7 @@ class Explainer(ABC):
         return "Activations: " + acts
 
     @abstractmethod
-    def _build_prompt(self, examples: list[Example]) -> list[dict]:
+    def _build_prompt(self, examples: list[ActivatingExample]) -> list[dict]:
         pass
 
 

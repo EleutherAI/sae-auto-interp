@@ -4,8 +4,50 @@ import torch
 from jaxtyping import Float
 from torch import Tensor
 
-from .latents import LatentRecord, prepare_examples
+from .latents import ActivatingExample, LatentRecord, NonActivatingExample
 from .loader import ActivationData
+
+
+def prepare_activating_examples(
+    tokens: Float[Tensor, "examples ctx_len"],
+    activations: Float[Tensor, "examples ctx_len"],
+) -> list[ActivatingExample]:
+    """
+    Prepare a list of examples from input tokens and activations.
+
+    Args:
+        tokens: Tokenized input sequences.
+        activations: Activation values for the input sequences.
+
+    Returns:
+        list[Example]: A list of prepared examples.
+    """
+    return [
+        ActivatingExample(tokens=toks, activations=acts, normalized_activations=None)
+        for toks, acts in zip(tokens, activations)
+    ]
+
+
+def prepare_non_activating_examples(
+    tokens: Float[Tensor, "examples ctx_len"],
+    distance: float,
+) -> list[NonActivatingExample]:
+    """
+    Prepare a list of non-activating examples from input tokens and distance.
+
+    Args:
+        tokens: Tokenized input sequences.
+        distance: The distance from the neighbouring latent.
+    """
+    return [
+        NonActivatingExample(
+            tokens=toks,
+            activations=torch.zeros_like(toks),
+            normalized_activations=None,
+            distance=distance,
+        )
+        for toks in tokens
+    ]
 
 
 def _top_k_pools(
@@ -118,7 +160,7 @@ def constructor(
         ctx_len=ctx_len,
         max_examples=max_examples,
     )
-    record.examples = prepare_examples(token_windows, act_windows)
+    record.examples = prepare_activating_examples(token_windows, act_windows)
 
     if constructor_type == "random":
         # Add random non-activating examples to the record in place
@@ -177,7 +219,6 @@ def neighbour_non_activation_windows(
 
     number_examples = 0
     all_examples = []
-    used_neighbours = []
     for neighbour in record.neighbours:
         if number_examples >= n_not_active:
             break
@@ -221,13 +262,10 @@ def neighbour_non_activation_windows(
         # use the first n_examples_per_neighbour examples,
         # which will be the most active examples
         examples_used = len(token_windows)
-        all_examples.append(
-            prepare_examples(token_windows, torch.zeros_like(token_windows))
+        all_examples.extend(
+            prepare_non_activating_examples(token_windows, neighbour.distance)
         )
-        used_neighbours.append(neighbour)
         number_examples += examples_used
-    # We change neighbours in place to be the list of neighbours used
-    record.neighbours = used_neighbours
     if len(all_examples) == 0:
         print("No examples found")
     record.not_active = all_examples
@@ -269,7 +307,7 @@ def random_non_activating_windows(
 
     toks = reshaped_tokens[selected_indices]
 
-    record.not_active = prepare_examples(
+    record.not_active = prepare_non_activating_examples(
         toks,
-        torch.zeros_like(toks),
+        -1.0,
     )
