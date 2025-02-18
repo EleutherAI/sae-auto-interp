@@ -1,7 +1,7 @@
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
-from ...latents import LatentRecord, Example
+from ...latents import LatentRecord
 from .classifier import Classifier
 from .prompts.detection_prompt import prompt
 from .sample import Sample, examples_to_samples
@@ -43,46 +43,29 @@ class DetectionScorer(Classifier):
             **generation_kwargs,
         )
 
-        self.prompt = prompt
+    def prompt(self, examples: str, explanation: str) -> list[dict]:
+        return prompt(examples, explanation)
 
-    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[Sample]:
         """
         Prepare and shuffle a list of samples for classification.
         """
 
         # check if not_active is a list of lists or a list of examples
         if len(record.not_active) > 0:
-            if isinstance(record.not_active[0], list):
-                # Here we are using neighbours
-                samples = []
-                for i, examples in enumerate(record.not_active):
-                    samples.extend(
-                        examples_to_samples(
-                            examples,
-                            distance=-record.neighbours[i].distance,
-                            ground_truth=False,
-                            tokenizer=self.tokenizer,
-                        )
-                    )
-            elif isinstance(record.not_active[0], Example):
-                # This is if we dont use neighbours
-                samples = examples_to_samples(
-                    record.not_active,
-                    distance=-1,
-                    ground_truth=False,
-                    tokenizer=self.tokenizer,
-                )
-        else:
-                samples = []
-
-        for i, examples in enumerate(record.test):
-            samples.extend(
-                examples_to_samples(
-                    examples,
-                    distance=i + 1,
-                    ground_truth=True,
-                    tokenizer=self.tokenizer,
-                )
+            samples = examples_to_samples(
+                record.not_active,
+                tokenizer=self.tokenizer,
             )
+
+        else:
+            samples = []
+
+        samples.extend(
+            examples_to_samples(
+                record.test,
+                tokenizer=self.tokenizer,
+            )
+        )
 
         return samples

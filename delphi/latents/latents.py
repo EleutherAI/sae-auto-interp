@@ -40,24 +40,27 @@ class Example:
         return float(self.activations.max())
 
 
-def prepare_examples(
-    tokens: Float[Tensor, "examples ctx_len"],
-    activations: Float[Tensor, "examples ctx_len"],
-) -> list[Example]:
+@dataclass
+class ActivatingExample(Example):
     """
-    Prepare a list of examples from input tokens and activations.
-
-    Args:
-        tokens: Tokenized input sequences.
-        activations: Activation values for the input sequences.
-
-    Returns:
-        list[Example]: A list of prepared examples.
+    An example of a latent that activates a model.
     """
-    return [
-        Example(tokens=toks, activations=acts, normalized_activations=None)
-        for toks, acts in zip(tokens, activations)
-    ]
+
+    quantile: int = 0
+    """The quantile of the activating example."""
+
+
+@dataclass
+class NonActivatingExample(Example):
+    """
+    An example of a latent that does not activate a model.
+    """
+
+    distance: float = 0.0
+    """
+    The distance from the neighbouring latent.
+    Defaults to -1.0 if not using neighbours.
+    """
 
 
 @dataclass
@@ -91,17 +94,17 @@ class LatentRecord:
     latent: Latent
     """The latent associated with the record."""
 
-    examples: list[Example] = field(default_factory=list)
+    examples: list[ActivatingExample] = field(default_factory=list)
     """Example sequences where the latent activations, assumed to be sorted in
     descending order by max activation."""
 
-    not_active: list[Example] = field(default_factory=list)
+    not_active: list[NonActivatingExample] = field(default_factory=list)
     """Non-activating examples."""
 
-    train: list[Example] = field(default_factory=list)
+    train: list[ActivatingExample] = field(default_factory=list)
     """Training examples."""
 
-    test: list[list[Example]] = field(default_factory=list)
+    test: list[ActivatingExample] = field(default_factory=list)
     """Test examples."""
 
     neighbours: list[Neighbour] = field(default_factory=list)

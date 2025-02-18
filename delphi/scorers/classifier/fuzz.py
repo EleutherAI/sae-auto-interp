@@ -4,8 +4,8 @@ import torch
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
-from ...latents.latents import Example
 from ...latents import LatentRecord
+from ...latents.latents import ActivatingExample
 from ..scorer import Scorer
 from .classifier import Classifier
 from .prompts.fuzz_prompt import prompt
@@ -50,9 +50,11 @@ class FuzzingScorer(Classifier, Scorer):
         )
 
         self.threshold = threshold
-        self.prompt = prompt
 
-    def mean_n_activations_ceil(self, examples: list[Example]):
+    def prompt(self, examples: str, explanation: str) -> list[dict]:
+        return prompt(examples, explanation)
+
+    def mean_n_activations_ceil(self, examples: list[ActivatingExample]):
         """
         Calculate the ceiling of the average number of activations in each example.
         """
@@ -62,56 +64,31 @@ class FuzzingScorer(Classifier, Scorer):
 
         return ceil(avg)
 
-    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[Sample]:
         """
         Prepare and shuffle a list of samples for classification.
         """
-        assert len(record.test) > 0 and len(record.test[0]) > 0, "No test records found"
+        assert len(record.test) > 0, "No test records found"
 
-        defaults = {
-            "highlighted": True,
-            "tokenizer": self.tokenizer,
-        }
-        all_examples = []
-        for examples_chunk in record.test:
-            all_examples.extend(examples_chunk)
+        n_incorrect = self.mean_n_activations_ceil(record.test)
 
-        n_incorrect = self.mean_n_activations_ceil(all_examples)
         if len(record.not_active) > 0:
-            if isinstance(record.not_active[0], list):
-                # Here we are using neighbours
-                samples = []
-                for i, examples in enumerate(record.not_active):
-                    samples.extend(
-                        examples_to_samples(
-                            examples,
-                            distance=-record.neighbours[i].distance,
-                            ground_truth=False,
-                            n_incorrect=n_incorrect,
-                            **defaults,
-                        )
-                    )
-            elif isinstance(record.not_active[0], Example):
-                # This is if we dont use neighbours
-                samples = examples_to_samples(
-                    record.not_active,
-                    distance=-1,
-                    ground_truth=False,
-                    n_incorrect=n_incorrect,
-                    **defaults,
-                )
+            samples = examples_to_samples(
+                record.not_active,
+                tokenizer=self.tokenizer,
+                n_incorrect=n_incorrect,
+                highlighted=True,
+            )
+
         else:
             samples = []
 
-        for i, examples in enumerate(record.test):
-            samples.extend(
-                examples_to_samples(
-                    examples,
-                    distance=i + 1,
-                    ground_truth=True,
-                    n_incorrect=0,
-                    **defaults,
-                )
+        samples.extend(
+            examples_to_samples(
+                record.test,
+                tokenizer=self.tokenizer,
+                n_incorrect=0,
+                highlighted=True,
             )
-
+        )
         return samples
