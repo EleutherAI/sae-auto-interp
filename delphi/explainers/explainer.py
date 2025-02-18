@@ -1,12 +1,14 @@
 import json
 import os
 import random
+import re
 from abc import ABC, abstractmethod
 from typing import NamedTuple
 
 import aiofiles
 
-from ..latents.latents import LatentRecord
+from ..latents.latents import Example, LatentRecord
+from ..logger import logger
 
 
 class ExplainerResult(NamedTuple):
@@ -18,18 +20,120 @@ class ExplainerResult(NamedTuple):
 
 
 class Explainer(ABC):
+    """
+    Abstract base class for explainers.
+    """
+
+    def __init__(
+        self,
+        client,
+        tokenizer,
+        verbose: bool = False,
+        activations: bool = False,
+        cot: bool = False,
+        threshold: float = 0.6,
+        temperature: float = 0.0,
+        **generation_kwargs,
+    ):
+        self.client = client
+        self.tokenizer = tokenizer
+        self.verbose = verbose
+        self.activations = activations
+        self.cot = cot
+        self.threshold = threshold
+        self.temperature = temperature
+        self.generation_kwargs = generation_kwargs
+
+    async def __call__(self, record: LatentRecord) -> ExplainerResult:
+        messages = self._build_prompt(record.train)
+
+        response = await self.client.generate(
+            messages, temperature=self.temperature, **self.generation_kwargs
+        )
+
+        try:
+            explanation = self.parse_explanation(response.text)
+            if self.verbose:
+                logger.info(f"Explanation: {explanation}")
+                logger.info(f"Messages: {messages[-1]['content']}")
+                logger.info(f"Response: {response}")
+
+            return ExplainerResult(record=record, explanation=explanation)
+        except Exception as e:
+            logger.error(f"Explanation parsing failed: {e}")
+            return ExplainerResult(
+                record=record, explanation="Explanation could not be parsed."
+            )
+
+    def parse_explanation(self, text: str) -> str:
+        try:
+            match = re.search(r"\[EXPLANATION\]:\s*(.*)", text, re.DOTALL)
+            if match:
+                return match.group(1).strip()
+            else:
+                return "Explanation could not be parsed."
+        except Exception as e:
+            logger.error(f"Explanation parsing regex failed: {e}")
+            raise
+
+    def _highlight(self, str_toks: list[str], activations: list[float]) -> str:
+        result = ""
+        threshold = max(activations) * self.threshold
+
+        def check(i):
+            return activations[i] > threshold
+
+        i = 0
+        while i < len(str_toks):
+            if check(i):
+                result += "<<"
+
+                while i < len(str_toks) and check(i):
+                    result += str_toks[i]
+                    i += 1
+                result += ">>"
+            else:
+                result += str_toks[i]
+                i += 1
+
+        return "".join(result)
+
+    def _join_activations(
+        self,
+        str_toks: list[str],
+        token_activations: list[float],
+        normalized_activations: list[float],
+    ) -> str:
+        acts = ""
+        activation_count = 0
+        for str_tok, token_activation, normalized_activation in zip(
+            str_toks, token_activations, normalized_activations
+        ):
+            if token_activation > max(token_activations) * self.threshold:
+                # TODO: for each example, we only show the first 10 activations
+                # decide on the best way to do this
+                if activation_count > 10:
+                    break
+                acts += f'("{str_tok}" : {int(normalized_activation)}), '
+                activation_count += 1
+
+        return "Activations: " + acts
+
     @abstractmethod
-    def __call__(self, record: LatentRecord) -> ExplainerResult:
+    def _build_prompt(self, examples: list[Example]) -> list[dict]:
         pass
 
 
 async def explanation_loader(
     record: LatentRecord, explanation_dir: str
 ) -> ExplainerResult:
-    async with aiofiles.open(f"{explanation_dir}/{record.latent}.txt", "r") as f:
-        explanation = json.loads(await f.read())
-
-    return ExplainerResult(record=record, explanation=explanation)
+    try:
+        async with aiofiles.open(f"{explanation_dir}/{record.latent}.txt", "r") as f:
+            explanation = json.loads(await f.read())
+        return ExplainerResult(record=record, explanation=explanation)
+    except FileNotFoundError:
+        print(f"No explanation found for {record.latent}")
+        return ExplainerResult(record=record, explanation="No explanation found")
 
 
 async def random_explanation_loader(

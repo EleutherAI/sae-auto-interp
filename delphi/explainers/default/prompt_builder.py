@@ -26,10 +26,10 @@ def build_examples(
 
 
 def build_prompt(
-    examples,
+    examples: str,
     activations: bool = False,
     cot: bool = False,
-):
+) -> list[dict]:
     messages = system(
         cot=cot,
     )
@@ -49,7 +49,6 @@ def build_prompt(
             "content": user_start,
         }
     )
-    print(messages)
 
     return messages
 

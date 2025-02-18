@@ -141,13 +141,16 @@ class LatentDataset:
         """
         self.cfg = cfg
         self.buffers = []
-
-        if latents is None:
-            self._build(raw_dir, modules)
+        if modules is None:
+            self.modules = os.listdir(raw_dir)
         else:
-            self._build_selected(raw_dir, modules, latents)
+            self.modules = modules
+        if latents is None:
+            self._build(raw_dir)
+        else:
+            self._build_selected(raw_dir, latents)
         # TODO: this assumes that all modules have the same config
-        cache_config_dir = f"{raw_dir}/{modules[0]}/config.json"
+        cache_config_dir = f"{raw_dir}/{self.modules[0]}/config.json"
         with open(cache_config_dir, "r") as f:
             cache_config = json.load(f)
         if tokenizer is None:
@@ -170,7 +173,7 @@ class LatentDataset:
         if not hasattr(self, "tokens"):
             self.tokens = load_tokenized_data(
                 self.cache_config["ctx_len"],
-                self.tokenizer,
+                self.tokenizer,  # type: ignore
                 self.cache_config["dataset_repo"],
                 self.cache_config["dataset_split"],
                 self.cache_config["dataset_name"],
@@ -191,7 +194,7 @@ class LatentDataset:
         edges.sort(key=lambda x: x[0])
         return edges
 
-    def _build(self, raw_dir: str, modules: Optional[list[str]] = None):
+    def _build(self, raw_dir: str):
         """
         Build dataset buffers which load all cached latents.
 
@@ -199,9 +202,8 @@ class LatentDataset:
             raw_dir (str): Directory containing raw latent data.
             modules (Optional[list[str]]): list of module names to include.
         """
-        modules = os.listdir(raw_dir) if modules is None else modules
 
-        for module in modules:
+        for module in self.modules:
             edges = self._edges(raw_dir, module)
             for start, end in edges:
                 path = f"{raw_dir}/{module}/{start}_{end}.safetensors"
@@ -212,7 +214,6 @@ class LatentDataset:
     def _build_selected(
         self,
         raw_dir: str,
-        modules: list[str],
         latents: dict[str, Union[int, torch.Tensor]],
     ):
         """
@@ -220,12 +221,11 @@ class LatentDataset:
 
         Args:
             raw_dir (str): Directory containing raw latent data.
-            modules (list[str]): list of module names to include.
             latents (dict[str, Union[int, torch.Tensor]]): Dictionary of latents
                 per module.
         """
 
-        for module in modules:
+        for module in self.modules:
             edges = self._edges(raw_dir, module)
             selected_latents = latents[module]
             if isinstance(selected_latents, int):

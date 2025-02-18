@@ -11,7 +11,6 @@ def _top_k_pools(
     max_buffer: TensorType["batch"],
     split_activations: list[TensorType["activations"]],
     buffer_tokens: TensorType["batch", "ctx_len"],
-    ctx_len: int,
     max_examples: int,
 ):
     """
@@ -21,7 +20,6 @@ def _top_k_pools(
         max_buffer: The maximum buffer values.
         split_activations: The split activations.
         buffer_tokens: The buffer tokens.
-        ctx_len: The context length.
         max_examples: The maximum number of examples.
 
     Returns:
@@ -81,7 +79,7 @@ def pool_max_activation_windows(
     buffer_tokens = buffer_tokens[unique_ctx_indices]
 
     token_windows, activation_windows = _top_k_pools(
-        max_buffer, new_tensor, buffer_tokens, ctx_len, max_examples
+        max_buffer, new_tensor, buffer_tokens, max_examples
     )
 
     record.examples = prepare_examples(token_windows, activation_windows)

@@ -91,7 +91,7 @@ class LatentRecord:
     not_active: list[Example] = field(default_factory=list)
     """Non-activating examples."""
 
-    train: list[list[Example]] = field(default_factory=list)
+    train: list[Example] = field(default_factory=list)
     """Training examples."""
 
     test: list[list[Example]] = field(default_factory=list)
@@ -132,7 +132,7 @@ class LatentRecord:
         tokenizer: AutoTokenizer,
         threshold: float = 0.0,
         n: int = 10,
-    ) -> str:
+    ):
         """
         Display the latent record in a formatted string.
 
@@ -147,9 +147,7 @@ class LatentRecord:
         """
         from IPython.core.display import HTML, display
 
-        def _to_string(
-            tokens: TensorType["seq"], activations: TensorType["seq"]
-        ) -> str:
+        def _to_string(tokens: list[str], activations: TensorType["seq"]) -> str:
             """
             Convert tokens and activations to a string.
 
@@ -177,6 +175,7 @@ class LatentRecord:
                     result.append(tokens[i])
                     i += 1
                 return "".join(result)
+            return ""
 
         strings = [
             _to_string(tokenizer.batch_decode(example.tokens), example.activations)

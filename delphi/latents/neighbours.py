@@ -39,6 +39,7 @@ class NeighbourCalculator:
         self.latent_dataset = latent_dataset
         self.autoencoder = autoencoder
         self.pre_activation_record = pre_activation_record
+        self.number_of_neighbours = number_of_neighbours
 
         # load the neighbour cache from the path
         if neighbour_cache is not None:
@@ -139,7 +140,6 @@ class NeighbourCalculator:
         """
         Compute neighbour lists based on latent co-occurrence in the dataset.
         """
-        # To be implemented
 
         paths = []
         for buffer in self.latent_dataset.buffers:
@@ -214,16 +214,16 @@ class NeighbourCalculator:
         for method in methods:
             self._compute_neighbour_list(method)
 
-    def save_neighbour_cache(self) -> None:
+    def save_neighbour_cache(self, path: str) -> None:
         """
         Save the neighbour cache to the path as a json file
         """
-        with open(self.path, "w") as f:
+        with open(path, "w") as f:
             json.dump(self.neighbour_cache, f, indent=4)
 
-    def load_neighbour_cache(self) -> dict[str, dict[int, list[int]]]:
+    def load_neighbour_cache(self, path: str) -> dict[str, dict[int, list[int]]]:
         """
         Load the neighbour cache from the path as a json file
         """
-        with open(self.path, "r") as f:
+        with open(path, "r") as f:
             return json.load(f)
