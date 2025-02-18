@@ -1,8 +1,6 @@
 import random
 from collections import deque
-from typing import Literal, cast
-
-from torchtyping import TensorType
+from typing import Literal
 
 from ..config import ExperimentConfig
 from ..logger import logger
@@ -121,10 +119,9 @@ def train(
             selected_examples = []
             for quantile in selected_examples_quantiles:
                 for example in quantile:
-                    example.normalized_activations = cast(
-                        TensorType["seq"],
-                        (example.activations * 10 / max_activation).floor(),
-                    )
+                    example.normalized_activations = (
+                        example.activations * 10 / max_activation
+                    ).floor()
                 selected_examples.extend(quantile)
             return selected_examples
 
