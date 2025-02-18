@@ -1,9 +1,7 @@
 import asyncio
-import re
 
 from delphi.explainers.default.prompt_builder import build_single_token_prompt
-from delphi.explainers.explainer import Explainer, ExplainerResult
-from delphi.logger import logger
+from delphi.explainers.explainer import Explainer
 
 
 class SingleTokenExplainer(Explainer):
@@ -29,7 +27,6 @@ class SingleTokenExplainer(Explainer):
         self.threshold = threshold
         self.temperature = temperature
         self.generation_kwargs = generation_kwargs
-
 
     def _build_prompt(self, examples):
         highlighted_examples = []

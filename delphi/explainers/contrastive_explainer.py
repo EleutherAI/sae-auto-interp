@@ -1,11 +1,11 @@
-import re
 import asyncio
 
 import faiss
 
-from delphi.explainers.explainer import Explainer, ExplainerResult
 from delphi.explainers.default.prompt_builder import build_single_token_prompt
+from delphi.explainers.explainer import Explainer, ExplainerResult
 from delphi.logger import logger
+
 
 class ContrastiveExplainer(Explainer):
     name = "contrastive"
@@ -19,7 +19,7 @@ class ContrastiveExplainer(Explainer):
         activations: bool = False,
         cot: bool = False,
         threshold: float = 0.6,
-        temperature: float = 0.,
+        temperature: float = 0.0,
         **generation_kwargs,
     ):
         self.client = client
@@ -37,7 +37,7 @@ class ContrastiveExplainer(Explainer):
         # Need to change __call__ to use index
 
         messages = self._build_prompt(record.train)
-        
+
         response = await self.client.generate(
             messages, temperature=self.temperature, **self.generation_kwargs
         )
@@ -54,7 +54,9 @@ class ContrastiveExplainer(Explainer):
             return ExplainerResult(record=record, explanation=explanation)
         except Exception as e:
             logger.error(f"Explanation parsing failed: {e}")
-            return ExplainerResult(record=record, explanation="Explanation could not be parsed.")
+            return ExplainerResult(
+                record=record, explanation="Explanation could not be parsed."
+            )
 
     def _build_prompt(self, examples):
         highlighted_examples = []

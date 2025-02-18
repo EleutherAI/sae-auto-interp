@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import NamedTuple
 
 from transformers import PreTrainedTokenizer
+
 from ...latents import Example, LatentRecord
 from ..scorer import Scorer, ScorerResult
 
