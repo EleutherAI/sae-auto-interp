@@ -54,49 +54,79 @@ def load_sparsify_sparse_coders(
         model (Any): The model to load autoencoders for.
         name (str): The name of the sparse model to load. If the model is on-disk
             this is the path to the directory containing the sparse model weights.
-        hookpoints (list[str]): list of hookpoints to load autoencoders for.
+        hookpoints (list[str]): list of hookpoints to identify the sparse models.
         device (str | torch.device | None, optional): The device to load the
             sparse models on. If not specified the sparse models will be loaded
             on the same device as the base model.
 
     Returns:
-        tuple[dict[str, Any], Any]: A tuple containing the submodules dictionary
-            and the edited model.
+        dict[str, Any]: A dictionary mapping hookpoints to sparse models.
     """
     if device is None:
         device = model.device or "cpu"
 
     # Load the sparse models
-    hookpoint_to_sparse = {}
+    sparse_model_dict = {}
     name_path = Path(name)
     if name_path.exists():
         for hookpoint in hookpoints:
-            hookpoint_to_sparse[hookpoint] = Sae.load_from_disk(
+            sparse_model_dict[hookpoint] = Sae.load_from_disk(
                 name_path / hookpoint, device=device
             )
             if compile:
-                hookpoint_to_sparse[hookpoint] = torch.compile(
-                    hookpoint_to_sparse[hookpoint]
+                sparse_model_dict[hookpoint] = torch.compile(
+                    sparse_model_dict[hookpoint]
                 )
     else:
         sparse_models = Sae.load_many(name, device=device)
         for hookpoint in hookpoints:
-            hookpoint_to_sparse[hookpoint] = sparse_models[hookpoint]
+            sparse_model_dict[hookpoint] = sparse_models[hookpoint]
             if compile:
-                hookpoint_to_sparse[hookpoint] = torch.compile(
-                    hookpoint_to_sparse[hookpoint]
+                sparse_model_dict[hookpoint] = torch.compile(
+                    sparse_model_dict[hookpoint]
                 )
 
         del sparse_models
+    return sparse_model_dict
 
-    submodules = {}
-    for hookpoint, sparse_model in hookpoint_to_sparse.items():
+
+def load_sparsify_hooks(
+    model: PreTrainedModel,
+    name: str,
+    hookpoints: list[str],
+    device: str | torch.device | None = None,
+    compile: bool = False,
+) -> dict[str, Callable]:
+    """
+    Load the encode functions for sparsify sparse coders on specified hookpoints.
+
+    Args:
+        model (Any): The model to load autoencoders for.
+        name (str): The name of the sparse model to load. If the model is on-disk
+            this is the path to the directory containing the sparse model weights.
+        hookpoints (list[str]): list of hookpoints to identify the sparse models.
+        device (str | torch.device | None, optional): The device to load the
+            sparse models on. If not specified the sparse models will be loaded
+            on the same device as the base model.
+
+    Returns:
+        dict[str, Callable]: A dictionary mapping hookpoints to encode functions.
+    """
+    sparse_model_dict = load_sparsify_sparse_coders(
+        model,
+        name,
+        hookpoints,
+        device,
+        compile,
+    )
+    hookpoint_to_sparse_encode = {}
+    for hookpoint, sparse_model in sparse_model_dict.items():
         path_segments = resolve_path(model, hookpoint.split("."))
         if path_segments is None:
             raise ValueError(f"Could not find valid path for hookpoint: {hookpoint}")
 
-        submodules[".".join(path_segments)] = partial(
+        hookpoint_to_sparse_encode[".".join(path_segments)] = partial(
             sae_dense_latents, sae=sparse_model
         )
 
-    return submodules
+    return hookpoint_to_sparse_encode

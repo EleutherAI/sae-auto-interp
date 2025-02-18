@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 
 # Import the function to be tested
-from delphi.sparse_coders import load_sparse_coders
+from delphi.sparse_coders import load_hooks_sparse_coders
 
 
 # A simple dummy run configuration for testing.
@@ -69,16 +69,17 @@ def run_cfg_gemma():
 
 def test_retrieve_autoencoders_from_sparsify(dummy_model, run_cfg_sparsify):
     """
-    Tests that load_sparse_coders retrieves autoencoders from Sparsify.
+    Tests that load_hooks_sparse_coders retrieves autoencoders from Sparsify.
     """
-    submodules = load_sparse_coders(dummy_model, run_cfg_sparsify)
+    hookpoint_to_sparse_encode = load_hooks_sparse_coders(dummy_model, run_cfg_sparsify)
     # Verify that we received a dictionary of autoencoders.
     assert (
-        isinstance(submodules, dict) and len(submodules) > 0
+        isinstance(hookpoint_to_sparse_encode, dict)
+        and len(hookpoint_to_sparse_encode) > 0
     ), "No autoencoders retrieved from the Sparsify branch."
 
     # Validate that at least one autoencoder is callable.
-    for key, autoencoder in submodules.items():
+    for key, autoencoder in hookpoint_to_sparse_encode.items():
         dummy_input = torch.randn(2, 512)
         try:
             _ = autoencoder(dummy_input)
@@ -91,16 +92,17 @@ def test_retrieve_autoencoders_from_sparsify(dummy_model, run_cfg_sparsify):
 
 def test_retrieve_autoencoders_from_gemma(dummy_model, run_cfg_gemma):
     """
-    Tests that load_sparse_coders retrieves autoencoders from Gemma.
+    Tests that load_hooks_sparse_coders retrieves autoencoders from Gemma.
     """
-    submodules = load_sparse_coders(dummy_model, run_cfg_gemma)
+    hookpoint_to_sparse_encode = load_hooks_sparse_coders(dummy_model, run_cfg_gemma)
     # Verify that we received a dictionary of autoencoders.
     assert (
-        isinstance(submodules, dict) and len(submodules) > 0
+        isinstance(hookpoint_to_sparse_encode, dict)
+        and len(hookpoint_to_sparse_encode) > 0
     ), "No autoencoders retrieved from the Gemma branch."
 
     # Validate that at least one autoencoder is callable.
-    for key, autoencoder in submodules.items():
+    for key, autoencoder in hookpoint_to_sparse_encode.items():
         dummy_input = torch.randn(2, 2304)
         try:
             _ = autoencoder(dummy_input)
