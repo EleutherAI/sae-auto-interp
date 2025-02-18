@@ -147,8 +147,8 @@ def constructor(
 
     mask = torch.ones(n_windows, dtype=torch.bool)
     mask[unique_batch_pos] = False
-    # Indices where the latent is active
-    active_indices = mask.nonzero(as_tuple=False).squeeze()
+    # Indices where the latent is not active
+    non_active_indices = mask.nonzero(as_tuple=False).squeeze()
     activations = activation_data.activations
 
     # Add activation examples to the record in place
@@ -166,7 +166,7 @@ def constructor(
         # Add random non-activating examples to the record in place
         random_non_activating_windows(
             record,
-            available_indices=active_indices,
+            available_indices=non_active_indices,
             reshaped_tokens=reshaped_tokens,
             n_not_active=n_not_active,
         )
@@ -251,7 +251,7 @@ def neighbour_non_activation_windows(
         if activations.numel() == 0:
             print(f"No available indices for neighbour {neighbour.latent_index}")
             continue
-        token_windows, act_windows = pool_max_activation_windows(
+        token_windows, _ = pool_max_activation_windows(
             activations=activations,
             tokens=reshaped_tokens,
             ctx_indices=available_ctx_indices,
