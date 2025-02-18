@@ -13,6 +13,7 @@ class Neighbour:
     distance: float
     latent_index: int
 
+
 @dataclass
 class Example:
     """
@@ -105,6 +106,9 @@ class LatentRecord:
 
     neighbours: list[Neighbour] = field(default_factory=list)
     """Neighbours of the latent."""
+
+    explanation: str = ""
+    """Explanation of the latent."""
 
     @property
     def max_activation(self) -> float:

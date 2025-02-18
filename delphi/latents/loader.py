@@ -25,10 +25,10 @@ class ActivationData(NamedTuple):
     Represents the activation data for a latent.
     """
 
-    locations: TensorType["locations", 2]
+    locations: Float[Tensor, "locations 2"]
     """Tensor of latent locations."""
 
-    activations: TensorType["activations"]
+    activations: Float[Tensor, "activations"]
     """Tensor of latent activations."""
 
 
@@ -65,7 +65,7 @@ class TensorBuffer:
     min_examples: int = 120
     """Minimum number of examples required. Defaults to 120."""
 
-    _tokens: Optional[TensorType["tokens"]] = None
+    _tokens: Optional[Float[Tensor, "batch seq"]] = None
     """Tensor of tokens."""
 
     def __iter__(self):
@@ -91,7 +91,7 @@ class TensorBuffer:
                 )
 
     @property
-    def tokens(self) -> TensorType["tokens"]:
+    def tokens(self) -> Float[Tensor, "batch seq"] | None:
         if self._tokens is None:
             self._tokens = self.load_tokens()
         return self._tokens
@@ -110,7 +110,13 @@ class TensorBuffer:
 
         return latents, split_locations, split_activations
 
-    def load(self):
+    def load(
+        self,
+    ) -> tuple[
+        Float[Tensor, "locations 2"],
+        Float[Tensor, "activations"],
+        Float[Tensor, "batch seq"] | None,
+    ]:
         split_data = load_file(self.path)
         first_latent = int(self.path.split("/")[-1].split("_")[0])
         activations = torch.tensor(split_data["activations"])
@@ -129,7 +135,7 @@ class TensorBuffer:
 
         return locations, activations, tokens
 
-    def load_tokens(self):
+    def load_tokens(self) -> Float[Tensor, "batch seq"] | None:
         _, _, tokens = self.load()
         return tokens
 

@@ -61,45 +61,14 @@ def load_artifacts(run_cfg: RunConfig):
 
 
 async def create_neighbours(
-    latent_cfg: LatentConfig,
-    experiment_cfg: ExperimentConfig,
-    hookpoints: list[str],
     latents_path: Path,
     neighbours_path: Path,
-    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
-    latent_range: Tensor | None,
 ):
     """
     Creates a neighbours file for the given hookpoints.
     """
-    if latent_range is None:
-        latent_dict = None
-    else:
-        latent_dict = {
-            hook: latent_range for hook in hookpoints
-        }  # The latent range to explain
-        latent_dict = cast(dict[str, int | Tensor], latent_dict)
-    example_constructor = partial(
-        constructor,
-        n_not_active=experiment_cfg.n_non_activating,
-        constructor_type=experiment_cfg.non_activating_source,
-        ctx_len=experiment_cfg.example_ctx_len,
-        max_examples=latent_cfg.max_examples,
-    )
-    sampler = partial(sample, cfg=experiment_cfg)
-
-    dataset = LatentDataset(
-        raw_dir=str(latents_path),
-        cfg=latent_cfg,
-        modules=hookpoints,
-        latents=latent_dict,
-        tokenizer=tokenizer,
-        constructor=example_constructor,
-        sampler=sampler,
-    )
-
     neighbour_calculator = NeighbourCalculator(
-        latent_dataset=dataset, number_of_neighbours=100
+        cache_dir=latents_path, number_of_neighbours=100
     )
 
     neighbour_calculator.populate_neighbour_cache(["co-occurrence"])
@@ -357,16 +326,9 @@ async def run(
         not glob(str(neighbours_path / ".*")) + glob(str(neighbours_path / "*"))
         or "neighbours" in run_cfg.overwrite
     ):
-        # TODO: we probably want to use less arguments and load the latent dataset
-        # only once?
         await create_neighbours(
-            latent_cfg,
-            experiment_cfg,
-            hookpoints,
             latents_path,
             neighbours_path,
-            tokenizer,
-            latent_range,
         )
     else:
         print(f"Files found in {neighbours_path}, skipping...")

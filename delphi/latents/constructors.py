@@ -24,7 +24,6 @@ def _top_k_pools(
         max_examples: The maximum number of examples.
 
     Returns:
-        Tuple[TensorType["examples", "ctx_len"], TensorType["examples", "ctx_len"]]:
         The token windows and activation windows.
     """
     k = min(max_examples, len(max_buffer))
@@ -37,23 +36,23 @@ def _top_k_pools(
 
 
 def pool_max_activation_windows(
-    activations: TensorType["n_examples"],
-    tokens: TensorType["windows", "seq"],
-    ctx_indices: TensorType["n_examples"],
-    index_within_ctx: TensorType["n_examples"],
+    activations: Float[Tensor, "examples"],
+    tokens: Float[Tensor, "windows seq"],
+    ctx_indices: Float[Tensor, "examples"],
+    index_within_ctx: Float[Tensor, "examples"],
     ctx_len: int,
     max_examples: int,
-):
+) -> tuple[Float[Tensor, "examples ctx_len"], Float[Tensor, "examples ctx_len"]]:
     """
     Pool max activation windows from the buffer output and update the latent record.
 
     Args:
-        activations (TensorType["n_examples"]): The activations.
-        tokens (TensorType["windows", "seq"]): The input tokens.
-        ctx_indices (TensorType["n_examples"]): The context indices.
-        index_within_ctx (TensorType["n_examples"]): The index within the context.
-        ctx_len (int): The context length.
-        max_examples (int): The maximum number of examples.
+        activations : The activations.
+        tokens : The input tokens.
+        ctx_indices : The context indices.
+        index_within_ctx : The index within the context.
+        ctx_len : The context length.
+        max_examples : The maximum number of examples.
     """
     # unique_ctx_indices: array of distinct context window indices in order of first
     # appearance. sequential integers from 0 to batch_size * cache_token_length//ctx_len
@@ -86,8 +85,8 @@ def constructor(
     n_not_active: int,
     max_examples: int,
     ctx_len: int,
-    constructor_type: Literal["random", "neighbour"],
-    tokens: TensorType["tokens"],
+    constructor_type: Literal["random", "neighbours"],
+    tokens: Float[Tensor, "batch seq"],
     all_data: Optional[dict[int, ActivationData]] = None,
 ):
     cache_token_length = tokens.shape[1]
@@ -129,7 +128,7 @@ def constructor(
             reshaped_tokens=reshaped_tokens,
             n_not_active=n_not_active,
         )
-    elif constructor_type == "neighbour":
+    elif constructor_type == "neighbours":
         assert all_data is not None, "All data is required for neighbour constructor"
         neighbour_non_activation_windows(
             record,
@@ -143,8 +142,8 @@ def constructor(
 
 def neighbour_non_activation_windows(
     record: LatentRecord,
-    not_active_mask: TensorType["n_windows"],
-    tokens: TensorType["batch", "seq"],
+    not_active_mask: Float[Tensor, "windows"],
+    tokens: Float[Tensor, "batch seq"],
     all_data: dict[int, ActivationData],
     ctx_len: int,
     n_not_active: int,
@@ -236,8 +235,8 @@ def neighbour_non_activation_windows(
 
 def random_non_activating_windows(
     record: LatentRecord,
-    available_indices: TensorType["n_windows"],
-    reshaped_tokens: TensorType["n_windows", "ctx_len"],
+    available_indices: Float[Tensor, "windows"],
+    reshaped_tokens: Float[Tensor, "windows ctx_len"],
     n_not_active: int,
 ):
     """
