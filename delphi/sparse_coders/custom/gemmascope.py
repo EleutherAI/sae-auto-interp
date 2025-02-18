@@ -15,17 +15,13 @@ def load_gemma_autoencoders(
     dtype: torch.dtype = torch.bfloat16,
     device: torch.device = torch.device("cuda"),
 ):
-    submodules = {}
+    saes = {}
 
     for layer, size, l0 in zip(ae_layers, sizes, average_l0s):
         path = f"layer_{layer}/width_{size}/average_l0_{l0}"
         sae = JumpReluSae.from_pretrained(model_path, path, device)
 
         sae.to(dtype)
-
-        def _forward(sae, x):
-            encoded = sae.encode(x)
-            return encoded
 
         assert type in [
             "res",
@@ -37,9 +33,39 @@ def load_gemma_autoencoders(
             else f"layers.{layer}.post_feedforward_layernorm"
         )
 
-        submodules[hookpoint] = partial(_forward, sae)
+        saes[hookpoint] = sae
 
-    return submodules
+    return saes
+
+
+def load_gemma_hooks(
+    model_path: str,
+    ae_layers: list[int],
+    average_l0s: list[int],
+    sizes: list[str],
+    type: str,
+    dtype: torch.dtype = torch.bfloat16,
+    device: torch.device = torch.device("cuda"),
+):
+    saes = load_gemma_autoencoders(
+        model_path,
+        ae_layers,
+        average_l0s,
+        sizes,
+        type,
+        dtype,
+        device,
+    )
+    hookpoint_to_sparse_encode = {}
+    for hookpoint, sae in saes.items():
+
+        def _forward(sae, x):
+            encoded = sae.encode(x)
+            return encoded
+
+        hookpoint_to_sparse_encode[hookpoint] = partial(_forward, sae)
+
+    return hookpoint_to_sparse_encode
 
 
 # This is from the GemmaScope tutorial
