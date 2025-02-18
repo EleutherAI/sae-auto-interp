@@ -25,10 +25,10 @@ class ActivationData(NamedTuple):
     Represents the activation data for a latent.
     """
 
-    locations: Float[Tensor, "locations 2"]
+    locations: Float[Tensor, "n_examples 2"]
     """Tensor of latent locations."""
 
-    activations: Float[Tensor, "activations"]
+    activations: Float[Tensor, "n_examples"]
     """Tensor of latent activations."""
 
 
@@ -193,7 +193,7 @@ class LatentDataset:
 
         # TODO: is it possible to do this without loading all data?
         if self.constructor is not None:
-            if self.constructor.keywords["constructor_type"] == "neighbour":
+            if self.constructor.keywords["constructor_type"] == "neighbours":
                 self.all_data = self._load_all_data(raw_dir, self.modules)
 
         self.load_tokens()

@@ -5,7 +5,7 @@ import re
 from abc import abstractmethod
 
 import numpy as np
-from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
 from ...latents import LatentRecord
@@ -13,11 +13,12 @@ from ...logger import logger
 from ..scorer import Scorer, ScorerResult
 from .sample import ClassifierOutput, Sample
 
+
 class Classifier(Scorer):
     def __init__(
         self,
         client: Client,
-        tokenizer: PreTrainedTokenizer,
+        tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
         verbose: bool,
         n_examples_shown: int,
         log_prob: bool,
@@ -46,10 +47,10 @@ class Classifier(Scorer):
     async def __call__(
         self,
         record: LatentRecord,
-    ) -> list[ClassifierOutput]:
+    ) -> ScorerResult:
         samples = self._prepare(record)
         random.shuffle(samples)
-        
+
         samples = self._batch(samples)
         results = await self._query(
             record.explanation,
@@ -116,14 +117,18 @@ class Classifier(Scorer):
             result = sample.data
             result.prediction = prediction
             if prediction is not None:
-                result.correct = prediction == result.ground_truth
+                result.correct = prediction == result.activating
             else:
                 result.correct = None
             result.probability = probability
             results.append(result)
 
             if self.verbose:
-                result.text = sample.text
+                logger.info(
+                    f"Example {sample.text}, "
+                    f"Prediction: {prediction}, "
+                    f"Probability: {probability}"
+                )
         return results
 
     def _parse(self, string, logprobs=None):
@@ -132,8 +137,9 @@ class Classifier(Scorer):
         # Matches the first instance of text enclosed in square brackets
         pattern = r"\[.*?\]"
         match = re.search(pattern, string)
-
-        predictions: list[int] = json.loads(match.group(0))
+        if match is None:
+            raise ValueError("No match found in string")
+        predictions: list[bool] = json.loads(match.group(0))
         assert len(predictions) == self.n_examples_shown
         probabilities = (
             self._parse_logprobs(logprobs)
@@ -184,7 +190,7 @@ class Classifier(Scorer):
         self,
         explanation: str,
         batch: list[Sample],
-    ) -> str:
+    ) -> list[dict]:
         """
         Prepare prompt for generation.
         """
@@ -195,11 +201,15 @@ class Classifier(Scorer):
 
         return self.prompt(explanation=explanation, examples=examples)
 
+    @abstractmethod
+    def prompt(self, examples: str, explanation: str) -> list[dict]:
+        pass
+
     def _batch(self, samples):
         return [
             samples[i : i + self.n_examples_shown]
             for i in range(0, len(samples), self.n_examples_shown)
         ]
 
-    def call_sync(self, record: LatentRecord) -> list[ClassifierOutput]:
+    def call_sync(self, record: LatentRecord) -> ScorerResult:
         return asyncio.run(self.__call__(record))
