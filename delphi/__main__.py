@@ -8,9 +8,7 @@ from typing import Callable, cast
 
 import orjson
 import torch
-from datasets import load_dataset
 from simple_parsing import ArgumentParser
-from sparsify.data import chunk_and_tokenize
 from torch import Tensor
 from transformers import (
     AutoModel,
@@ -33,6 +31,7 @@ from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
 from delphi.sparse_coders import load_hooks_sparse_coders
+from delphi.utils import load_tokenized_data
 
 
 def load_artifacts(run_cfg: RunConfig):
@@ -243,14 +242,15 @@ def populate_cache(
     """
     latents_path.mkdir(parents=True, exist_ok=True)
 
-    data = load_dataset(
-        cfg.dataset_repo, name=cfg.dataset_name, split=cfg.dataset_split
+    tokens = load_tokenized_data(
+        cfg.ctx_len,
+        tokenizer,
+        cfg.dataset_repo,
+        cfg.dataset_split,
+        cfg.dataset_name,
+        cfg.dataset_column,
+        run_cfg.seed,
     )
-    data = data.shuffle(run_cfg.seed)
-    data = chunk_and_tokenize(
-        data, tokenizer, max_seq_len=cfg.ctx_len, text_key=cfg.dataset_column
-    )
-    tokens = data["input_ids"]
 
     if run_cfg.filter_bos:
         if tokenizer.bos_token_id is None:
