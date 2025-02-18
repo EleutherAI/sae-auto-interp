@@ -1,13 +1,14 @@
 import json
-from typing import Optional
+import os
+from pathlib import Path
+from typing import Literal, Optional
 
 import numpy as np
 import torch
 from safetensors.numpy import load_file
+from sparsify import Sae
 from torch import nn
-
-from delphi.latents.latents import PreActivationRecord
-from delphi.latents.loader import LatentDataset
+from tqdm import tqdm
 
 
 class NeighbourCalculator:
@@ -20,9 +21,9 @@ class NeighbourCalculator:
 
     def __init__(
         self,
-        latent_dataset: Optional["LatentDataset"] = None,
-        autoencoder: Optional["nn.Module"] = None,
-        pre_activation_record: Optional["PreActivationRecord"] = None,
+        cache_dir: Optional[Path] = None,
+        autoencoder: Optional[nn.Module | Sae] = None,
+        # pre_activation_record: Optional["PreActivationRecord"] = None,
         number_of_neighbours: int = 10,
         neighbour_cache: Optional[dict[str, dict[int, list[tuple[int, float]]]]] = None,
     ):
@@ -36,9 +37,9 @@ class NeighbourCalculator:
             residual_stream_record (Optional[ResidualStreamRecord]): Record of
                 residual stream values
         """
-        self.latent_dataset = latent_dataset
+        self.cache_dir = cache_dir
         self.autoencoder = autoencoder
-        self.residual_stream_record = residual_stream_record
+        # self.residual_stream_record = residual_stream_record
         self.number_of_neighbours = number_of_neighbours
 
         # load the neighbour cache from the path
@@ -46,9 +47,12 @@ class NeighbourCalculator:
             self.neighbour_cache = neighbour_cache
         else:
             # dictionary to cache computed neighbour lists
-            self.neighbour_cache: dict[str, dict[int, list[int]]] = {}
+            self.neighbour_cache: dict[str, dict[int, list[tuple[int, float]]]] = {}
 
-    def _compute_neighbour_list(self, method: str) -> None:
+    def _compute_neighbour_list(
+        self,
+        method: Literal["similarity_encoder", "similarity_decoder", "co-occurrence"],
+    ) -> None:
         """
         Compute complete neighbour lists using specified method.
 
@@ -56,59 +60,53 @@ class NeighbourCalculator:
             method (str): One of 'similarity', 'correlation', or 'co-occurrence'
         """
         if method == "similarity_encoder":
-            if self.autoencoder is None:
-                raise ValueError(
-                    "Autoencoder is required for similarity-based neighbours"
-                )
             self.neighbour_cache[method] = self._compute_similarity_neighbours(
                 "encoder"
             )
         elif method == "similarity_decoder":
-            if self.autoencoder is None:
-                raise ValueError(
-                    "Autoencoder is required for similarity-based neighbours"
-                )
             self.neighbour_cache[method] = self._compute_similarity_neighbours(
                 "decoder"
             )
-        elif method == "correlation":
-            if self.autoencoder is None or self.residual_stream_record is None:
-                raise ValueError(
-                    "Autoencoder and residual stream record are required "
-                    "for correlation-based neighbours"
-                )
-            self.neighbour_cache[method] = self._compute_correlation_neighbours()
+        # elif method == "correlation":
+        #     if self.autoencoder is None or self.residual_stream_record is None:
+        #         raise ValueError(
+        #             "Autoencoder and residual stream record are required "
+        #             "for correlation-based neighbours"
+        #         )
+        #     self.neighbour_cache[method] = self._compute_correlation_neighbours()
 
         elif method == "co-occurrence":
-            if self.latent_dataset is None:
-                raise ValueError(
-                    "Latent dataset is required for co-occurrence-based neighbours"
-                )
             self.neighbour_cache[method] = self._compute_cooccurrence_neighbours()
 
         else:
             raise ValueError(
-                f"Unknown method: {method}. Use 'similarity', 'correlation', "
-                "or 'co-occurrence'"
+                f"Unknown method: {method}. Use 'similarity_encoder',"
+                "'similarity_decoder', or 'co-occurrence'"
             )
 
-    def _compute_similarity_neighbours(self, method: str) -> dict[int, list[int]]:
+    def _compute_similarity_neighbours(
+        self, method: Literal["encoder", "decoder"]
+    ) -> dict[int, list[tuple[int, float]]]:
         """
         Compute neighbour lists based on weight similarity in the autoencoder.
         """
+        assert (
+            self.autoencoder is not None
+        ), "Autoencoder is required for similarity-based neighbours"
         print("Computing similarity neighbours")
         # We use the encoder vectors to compute the similarity between latents
         if method == "encoder":
-            encoder = self.autoencoder.encoder.cuda()
-            weight_matrix_normalized = encoder.weight.data / encoder.weight.data.norm(
-                dim=1, keepdim=True
-            )
+            encoder = self.autoencoder.encoder.weight.data.cuda()
+            weight_matrix_normalized = encoder / encoder.norm(dim=1, keepdim=True)
 
         elif method == "decoder":
-            decoder = self.autoencoder.W_dec.cuda()
-            weight_matrix_normalized = decoder.data / decoder.data.norm(
-                dim=1, keepdim=True
-            )
+            # TODO: we would probably go around this by
+            # having a autoencoder wrapper
+            assert isinstance(
+                self.autoencoder, Sae
+            ), "Autoencoder must be a sparsify.Sae for decoder similarity"
+            decoder = self.autoencoder.W_dec.data.cuda()  # type: ignore
+            weight_matrix_normalized = decoder / decoder.norm(dim=1, keepdim=True)
         else:
             raise ValueError(f"Unknown method: {method}. Use 'encoder' or 'decoder'")
 
@@ -149,62 +147,7 @@ class NeighbourCalculator:
 
         return neighbour_lists
 
-    def _compute_correlation_neighbours(self) -> dict[int, list[int]]:
-        """
-        Compute neighbour lists based on activation correlation patterns.
-        """
-        print("Computing correlation neighbours")
-
-        # the activation_matrix has the shape (number_of_samples,hidden_dimension)
-
-        activations = torch.tensor(
-            load_file(self.residual_stream_record + ".safetensors")["activations"]
-        )
-
-        estimator = CovarianceEstimator(activations.shape[1])
-        # batch the activations
-        batch_size = 10000
-        for i in tqdm(range(0, activations.shape[0], batch_size)):
-            estimator.update(activations[i : i + batch_size])
-
-        covariance_matrix = estimator.cov().cuda().half()
-
-        # load the encoder
-        encoder_matrix = self.autoencoder.encoder.weight.cuda().half()
-
-        covariance_between_latents = torch.zeros(
-            (encoder_matrix.shape[0], encoder_matrix.shape[0]), device="cpu"
-        )
-
-        # do batches of latents
-        batch_size = 1024
-        for start in tqdm(range(0, encoder_matrix.shape[0], batch_size)):
-            end = min(encoder_matrix.shape[0], start + batch_size)
-            encoder_rows = encoder_matrix[start:end]
-
-            correlation = encoder_rows @ covariance_matrix @ encoder_matrix.T
-            covariance_between_latents[start:end] = correlation.cpu()
-
-        # the correlation is then the covariance divided
-        # by the product of the standard deviations
-        diagonal_covariance = torch.diag(covariance_between_latents)
-        product_of_std = torch.sqrt(
-            torch.outer(diagonal_covariance, diagonal_covariance) + 1e-6
-        )
-        correlation_matrix = covariance_between_latents / product_of_std
-
-        # get the indices of the top k neighbours for each feature
-        indices, values = torch.topk(
-            correlation_matrix, self.number_of_neighbours + 1, dim=1
-        )
-
-        # return the neighbour lists
-        return {
-            i: list(zip(indices[i].tolist()[1:], values[i].tolist()[1:]))
-            for i in range(len(indices))
-        }
-
-    def _compute_cooccurrence_neighbours(self) -> dict[int, list[int]]:
+    def _compute_cooccurrence_neighbours(self) -> dict[int, list[tuple[int, float]]]:
         """
         Compute neighbour lists based on feature co-occurrence in the dataset.
         If you run out of memory try reducing the token_batch_size
@@ -215,9 +158,10 @@ class NeighbourCalculator:
         import cupyx.scipy.sparse as cusparse
 
         print("Computing co-occurrence neighbours")
-        paths = []
-        for buffer in self.latent_dataset.buffers:
-            paths.append(buffer.path)
+        assert (
+            self.cache_dir is not None
+        ), "Cache directory is required for co-occurrence-based neighbours"
+        paths = os.listdir(self.cache_dir)
 
         all_locations = []
         for path in paths:
@@ -299,7 +243,12 @@ class NeighbourCalculator:
             for i in range(len(top_k_indices))
         }
 
-    def populate_neighbour_cache(self, methods: list[str]) -> None:
+    def populate_neighbour_cache(
+        self,
+        methods: list[
+            Literal["similarity_encoder", "similarity_decoder", "co-occurrence"]
+        ],
+    ) -> None:
         """
         Populate the neighbour cache with the computed neighbour lists
         """
@@ -321,25 +270,80 @@ class NeighbourCalculator:
             return json.load(f)
 
 
-class CovarianceEstimator:
-    def __init__(self, n_latents, *, device=None):
-        self.mean = torch.zeros(n_latents, device=device)
-        self.cov_ = torch.zeros(n_latents, n_latents, device=device)
-        self.n = 0
+# TODO: add correlation neighbours, by re-adding activation records
+# def _compute_correlation_neighbours(self) -> dict[int, list[int]]:
+#     """
+#     Compute neighbour lists based on activation correlation patterns.
+#     """
+#     print("Computing correlation neighbours")
 
-    def update(self, x: torch.Tensor):
-        n, d = x.shape
-        assert d == len(self.mean)
+#     # the activation_matrix has the shape (number_of_samples,hidden_dimension)
 
-        self.n += n
+#     activations = torch.tensor(
+#         load_file(self.residual_stream_record + ".safetensors")["activations"]
+#     )
 
-        # Welford's online algorithm
-        delta = x - self.mean
-        self.mean.add_(delta.sum(dim=0), alpha=1 / self.n)
-        delta2 = x - self.mean
+#     estimator = CovarianceEstimator(activations.shape[1])
+#     # batch the activations
+#     batch_size = 10000
+#     for i in tqdm(range(0, activations.shape[0], batch_size)):
+#         estimator.update(activations[i : i + batch_size])
 
-        self.cov_.addmm_(delta.mH, delta2)
+#     covariance_matrix = estimator.cov().cuda().half()
 
-    def cov(self):
-        """Return the estimated covariance matrix."""
-        return self.cov_ / self.n
+#     # load the encoder
+#     encoder_matrix = self.autoencoder.encoder.weight.cuda().half()
+
+#     covariance_between_latents = torch.zeros(
+#         (encoder_matrix.shape[0], encoder_matrix.shape[0]), device="cpu"
+#     )
+
+#     # do batches of latents
+#     batch_size = 1024
+#     for start in tqdm(range(0, encoder_matrix.shape[0], batch_size)):
+#         end = min(encoder_matrix.shape[0], start + batch_size)
+#         encoder_rows = encoder_matrix[start:end]
+
+#         correlation = encoder_rows @ covariance_matrix @ encoder_matrix.T
+#         covariance_between_latents[start:end] = correlation.cpu()
+
+#     # the correlation is then the covariance divided
+#     # by the product of the standard deviations
+#     diagonal_covariance = torch.diag(covariance_between_latents)
+#     product_of_std = torch.sqrt(
+#         torch.outer(diagonal_covariance, diagonal_covariance) + 1e-6
+#     )
+#     correlation_matrix = covariance_between_latents / product_of_std
+
+#     # get the indices of the top k neighbours for each feature
+#     indices, values = torch.topk(
+#         correlation_matrix, self.number_of_neighbours + 1, dim=1
+#     )
+
+#     # return the neighbour lists
+#     return {
+#         i: list(zip(indices[i].tolist()[1:], values[i].tolist()[1:]))
+#         for i in range(len(indices))
+#     }
+# class CovarianceEstimator:
+#     def __init__(self, n_latents, *, device=None):
+#         self.mean = torch.zeros(n_latents, device=device)
+#         self.cov_ = torch.zeros(n_latents, n_latents, device=device)
+#         self.n = 0
+
+#     def update(self, x: torch.Tensor):
+#         n, d = x.shape
+#         assert d == len(self.mean)
+
+#         self.n += n
+
+#         # Welford's online algorithm
+#         delta = x - self.mean
+#         self.mean.add_(delta.sum(dim=0), alpha=1 / self.n)
+#         delta2 = x - self.mean
+
+#         self.cov_.addmm_(delta.mH, delta2)
+
+#     def cov(self):
+#         """Return the estimated covariance matrix."""
+#         return self.cov_ / self.n
