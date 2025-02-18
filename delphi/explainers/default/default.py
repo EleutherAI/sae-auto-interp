@@ -1,8 +1,6 @@
 import asyncio
-import re
 
-from ...logger import logger
-from ..explainer import Explainer, ExplainerResult
+from ..explainer import Example, Explainer
 from .prompt_builder import build_prompt
 
 
@@ -20,25 +18,35 @@ class DefaultExplainer(Explainer):
         temperature: float = 0.0,
         **generation_kwargs,
     ):
-        self.client = client
-        self.tokenizer = tokenizer
-        self.verbose = verbose
+        super().__init__(
+            client,
+            tokenizer,
+            verbose,
+            activations,
+            cot,
+            threshold,
+            temperature,
+            **generation_kwargs,
+        )
 
-        self.activations = activations
-        self.cot = cot
-        self.threshold = threshold
-        self.temperature = temperature
-        self.generation_kwargs = generation_kwargs
-
-
-    def _build_prompt(self, examples):
+    def _build_prompt(self, examples: list[Example]) -> list[dict]:
         highlighted_examples = []
 
         for i, example in enumerate(examples):
-            highlighted_examples.append(self._highlight(i + 1, example))
+            str_toks = self.tokenizer.batch_decode(example.tokens)
+            activations = example.activations.tolist()
+            highlighted_examples.append(self._highlight(str_toks, activations))
 
             if self.activations:
-                highlighted_examples.append(self._join_activations(example))
+                assert (
+                    example.normalized_activations is not None
+                ), "Normalized activations are required for activations in explainer"
+                normalized_activations = example.normalized_activations.tolist()
+                highlighted_examples.append(
+                    self._join_activations(
+                        str_toks, activations, normalized_activations
+                    )
+                )
 
         highlighted_examples = "\n".join(highlighted_examples)
 

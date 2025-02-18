@@ -31,7 +31,7 @@ def split_activation_quantiles(
     """
     random.seed(seed)
 
-    examples = deque(examples)
+    queue_examples = deque(examples)
     max_activation = examples[0].max_activation
 
     # For 4 quantiles, thresholds are 0.25, 0.5, 0.75
@@ -41,8 +41,8 @@ def split_activation_quantiles(
     for threshold in thresholds:
         # Get all examples in quantile
         quantile = []
-        while examples and examples[0].max_activation < threshold:
-            quantile.append(examples.popleft())
+        while queue_examples and queue_examples[0].max_activation < threshold:
+            quantile.append(queue_examples.popleft())
 
         sample = random.sample(quantile, n_samples)
         samples.append(sample)

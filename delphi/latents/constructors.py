@@ -17,11 +17,10 @@ def _top_k_pools(
     Get the top k activation pools.
 
     Args:
-        max_buffer (TensorType["batch"]): The maximum buffer values.
-        split_activations (list[TensorType["activations"]]): The split activations.
-        buffer_tokens (TensorType["batch", "ctx_len"]): The buffer tokens.
-        ctx_len (int): The context length.
-        max_examples (int): The maximum number of examples.
+        max_buffer: The maximum buffer values.
+        split_activations: The split activations.
+        buffer_tokens: The buffer tokens.
+        max_examples: The maximum number of examples.
 
     Returns:
         Tuple[TensorType["examples", "ctx_len"], TensorType["examples", "ctx_len"]]:
@@ -88,7 +87,7 @@ def constructor(
     ctx_len: int,
     constructor_type: Literal["random", "neighbour"],
     tokens: TensorType["tokens"],
-    all_data: Optional[ActivationData] = None,
+    all_data: Optional[dict[int, ActivationData]] = None,
 ):
     cache_token_length = tokens.shape[1]
 
@@ -130,6 +129,7 @@ def constructor(
             n_not_active=n_not_active,
         )
     elif constructor_type == "neighbour":
+        assert all_data is not None, "All data is required for neighbour constructor"
         neighbour_non_activation_windows(
             record,
             not_active_mask=mask,
@@ -144,7 +144,7 @@ def neighbour_non_activation_windows(
     record: LatentRecord,
     not_active_mask: TensorType["n_windows"],
     tokens: TensorType["batch", "seq"],
-    all_data: ActivationData,
+    all_data: dict[int, ActivationData],
     ctx_len: int,
     n_not_active: int,
 ):
