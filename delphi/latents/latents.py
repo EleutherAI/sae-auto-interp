@@ -1,10 +1,11 @@
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import Optional
 
 import blobfile as bf
 import orjson
-from torchtyping import TensorType
-from transformers import AutoTokenizer
+from jaxtyping import Float
+from torch import Tensor
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 
 @dataclass
@@ -13,13 +14,13 @@ class Example:
     A single example of latent data.
     """
 
-    tokens: TensorType["seq"]
+    tokens: Float[Tensor, "ctx_len"]
     """Tokenized input sequence."""
 
-    activations: TensorType["seq"]
+    activations: Float[Tensor, "ctx_len"]
     """Activation values for the input sequence."""
 
-    normalized_activations: Optional[TensorType["seq"]] = None
+    normalized_activations: Optional[Float[Tensor, "ctx_len"]] = None
     """Activations quantized to integers in [0, 10]."""
 
     @property
@@ -34,9 +35,9 @@ class Example:
 
 
 def prepare_examples(
-    tokens: List[TensorType["seq"]],
-    activations: List[TensorType["seq"]],
-) -> List[Example]:
+    tokens: Float[Tensor, "examples ctx_len"],
+    activations: Float[Tensor, "examples ctx_len"],
+) -> list[Example]:
     """
     Prepare a list of examples from input tokens and activations.
 
@@ -129,7 +130,7 @@ class LatentRecord:
 
     def display(
         self,
-        tokenizer: AutoTokenizer,
+        tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
         threshold: float = 0.0,
         n: int = 10,
     ):
@@ -147,7 +148,7 @@ class LatentRecord:
         """
         from IPython.core.display import HTML, display
 
-        def _to_string(tokens: list[str], activations: TensorType["seq"]) -> str:
+        def _to_string(tokens: list[str], activations: Float[Tensor, "ctx_len"]) -> str:
             """
             Convert tokens and activations to a string.
 

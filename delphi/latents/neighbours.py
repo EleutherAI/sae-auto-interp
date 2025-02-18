@@ -6,7 +6,9 @@ import cupyx.scipy.sparse as cusparse
 import numpy as np
 import torch
 from safetensors.numpy import load_file
+from torch import nn
 
+from delphi.latents.latents import PreActivationRecord
 from delphi.latents.loader import LatentDataset
 
 
@@ -21,7 +23,7 @@ class NeighbourCalculator:
     def __init__(
         self,
         latent_dataset: Optional["LatentDataset"] = None,
-        autoencoder: Optional["Autoencoder"] = None,
+        autoencoder: Optional["nn.Module"] = None,
         pre_activation_record: Optional["PreActivationRecord"] = None,
         number_of_neighbours: int = 10,
         neighbour_cache: Optional[dict[str, dict[int, list[int]]]] = None,

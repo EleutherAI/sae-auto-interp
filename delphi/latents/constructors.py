@@ -1,18 +1,19 @@
 from typing import Callable, Optional
 
 import torch
-from torchtyping import TensorType
+from jaxtyping import Float
+from torch import Tensor
 
 from .latents import LatentRecord, prepare_examples
 from .loader import BufferOutput
 
 
 def _top_k_pools(
-    max_buffer: TensorType["batch"],
-    split_activations: list[TensorType["activations"]],
-    buffer_tokens: TensorType["batch", "ctx_len"],
+    max_buffer: Float[Tensor, "batch"],
+    split_activations: Float[Tensor, "activations ctx_len"],
+    buffer_tokens: Float[Tensor, "batch ctx_len"],
     max_examples: int,
-):
+) -> tuple[Float[Tensor, "examples ctx_len"], Float[Tensor, "examples ctx_len"]]:
     """
     Get the top k activation pools.
 
@@ -23,7 +24,7 @@ def _top_k_pools(
         max_examples: The maximum number of examples.
 
     Returns:
-        tuple[TensorType["examples", "ctx_len"], TensorType["examples", "ctx_len"]]:
+        tuple[Float[Tensor, "examples ctx_len"], Float[Tensor, "examples ctx_len"]]:
         The token windows and activation windows.
     """
     k = min(max_examples, len(max_buffer))
@@ -38,7 +39,7 @@ def _top_k_pools(
 def pool_max_activation_windows(
     record,
     buffer_output: BufferOutput,
-    tokens: TensorType["batch", "seq"],
+    tokens: Float[Tensor, "batch sequence"],
     ctx_len: int,
     max_examples: int,
 ):
@@ -87,7 +88,7 @@ def pool_max_activation_windows(
 
 def random_non_activating_windows(
     record: LatentRecord,
-    tokens: TensorType["batch", "seq"],
+    tokens: Float[Tensor, "batch sequence"],
     buffer_output: BufferOutput,
     ctx_len: int,
     n_not_active: int,
@@ -136,7 +137,7 @@ def random_non_activating_windows(
 
 def default_constructor(
     record: LatentRecord,
-    token_loader: Optional[Callable[[], TensorType["batch", "seq"]]] | None,
+    token_loader: Optional[Callable[[], Float[Tensor, "batch sequence"]]] | None,
     buffer_output: BufferOutput,
     n_not_active: int,
     ctx_len: int,

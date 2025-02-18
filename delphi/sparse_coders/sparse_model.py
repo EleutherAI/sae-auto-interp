@@ -6,7 +6,7 @@ from transformers import PreTrainedModel
 from delphi.config import RunConfig
 
 from .custom.gemmascope import load_gemma_autoencoders
-from .load_sparsify import load_sparsify_hooks, load_sparsify_sparse_coders
+from .load_sparsify import Sae, load_sparsify_hooks, load_sparsify_sparse_coders
 
 
 def load_hooks_sparse_coders(
@@ -62,7 +62,9 @@ def load_hooks_sparse_coders(
             dtype=model.dtype,
             device=model.device,
         )
-
+    # throw an error if the dictionary is empty
+    if not hookpoint_to_sparse_encode:
+        raise ValueError("No sparse coders loaded")
     return hookpoint_to_sparse_encode
 
 
@@ -70,7 +72,7 @@ def load_sparse_coders(
     model: PreTrainedModel,
     run_cfg: RunConfig,
     compile: bool = False,
-) -> dict[str, nn.Module]:
+) -> dict[str, nn.Module] | dict[str, Sae]:
     """
     Load sparse coders for specified hookpoints.
 
@@ -79,7 +81,7 @@ def load_sparse_coders(
         run_cfg (RunConfig): The run configuration.
 
     Returns:
-        dict[str, Callable]: A dictionary mapping hookpoints to sparse coders.
+        dict[str, nn.Module]: A dictionary mapping hookpoints to sparse coders.
     """
 
     # Add SAE hooks to the model

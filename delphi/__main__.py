@@ -12,7 +12,6 @@ from datasets import load_dataset
 from simple_parsing import ArgumentParser
 from sparsify.data import chunk_and_tokenize
 from torch import Tensor
-from torchtyping import TensorType
 from transformers import (
     AutoModel,
     AutoTokenizer,
@@ -88,7 +87,7 @@ async def process_cache(
         latent_dict = {
             hook: latent_range for hook in hookpoints
         }  # The latent range to explain
-        latent_dict = cast(dict[str, int | Tensor], latent_dict)
+        latent_dict = cast(dict[str, Tensor], latent_dict)
 
     constructor = partial(
         default_constructor,
@@ -234,8 +233,6 @@ def populate_cache(
                 : len(masked_tokens) - (len(masked_tokens) % cfg.ctx_len)
             ]
             tokens = truncated_tokens.reshape(-1, cfg.ctx_len)
-
-    tokens = cast(TensorType["batch", "seq"], tokens)
 
     cache = LatentCache(
         model,

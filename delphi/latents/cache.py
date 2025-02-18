@@ -5,10 +5,11 @@ from typing import Callable
 
 import numpy as np
 import torch
+from jaxtyping import Float
 from safetensors.numpy import save_file
 from torch import Tensor
-from torchtyping import TensorType
 from tqdm import tqdm
+from transformers import PreTrainedModel
 
 from delphi.config import CacheConfig
 from delphi.latents.collect_activations import collect_activations
@@ -21,7 +22,9 @@ class Cache:
     """
 
     def __init__(
-        self, filters: dict[str, TensorType["indices"]] = None, batch_size: int = 64
+        self,
+        filters: dict[str, Float[Tensor, "indices"]] | None = None,
+        batch_size: int = 64,
     ):
         """
         Initialize the Cache.
@@ -30,16 +33,31 @@ class Cache:
             filters: Filters for selecting specific latents.
             batch_size: Size of batches for processing. Defaults to 64.
         """
-        self.latent_locations = defaultdict(list)
-        self.latent_activations = defaultdict(list)
-        self.tokens = defaultdict(list)
+        self.latent_locations_batches: dict[
+            str, list[Float[Tensor, "batch sequence num_latents"]]
+        ] = defaultdict(list)
+        self.latent_activations_batches: dict[
+            str, list[Float[Tensor, "batch sequence num_latents"]]
+        ] = defaultdict(list)
+        self.tokens_batches: dict[
+            str, list[Float[Tensor, "batch sequence"]]
+        ] = defaultdict(list)
+
+        self.latent_locations: dict[
+            str, Float[Tensor, "batch sequence num_latents"]
+        ] = {}
+        self.latent_activations: dict[
+            str, Float[Tensor, "batch sequence num_latents"]
+        ] = {}
+        self.tokens: dict[str, Float[Tensor, "batch sequence"]] = {}
+
         self.filters = filters
         self.batch_size = batch_size
 
     def add(
         self,
-        latents: TensorType["batch", "sequence", "latent"],
-        tokens: TensorType["batch", "sequence"],
+        latents: Float[Tensor, "mini_batch sequence num_latents"],
+        tokens: Float[Tensor, "mini_batch sequence"],
         batch_number: int,
         module_path: str,
     ):
@@ -59,28 +77,32 @@ class Cache:
 
         # Adjust batch indices
         latent_locations[:, 0] += batch_number * self.batch_size
-        self.latent_locations[module_path].append(latent_locations)
-        self.latent_activations[module_path].append(latent_activations)
-        self.tokens[module_path].append(tokens)
+        self.latent_locations_batches[module_path].append(latent_locations)
+        self.latent_activations_batches[module_path].append(latent_activations)
+        self.tokens_batches[module_path].append(tokens)
 
     def save(self):
         """
         Concatenate the latent locations and activations for all modules.
         """
-        for module_path in self.latent_locations.keys():
+        for module_path in self.latent_locations_batches.keys():
             self.latent_locations[module_path] = torch.cat(
-                self.latent_locations[module_path], dim=0
+                self.latent_locations_batches[module_path], dim=0
             )
 
             self.latent_activations[module_path] = torch.cat(
-                self.latent_activations[module_path], dim=0
+                self.latent_activations_batches[module_path], dim=0
             )
 
-            self.tokens[module_path] = torch.cat(self.tokens[module_path], dim=0)
+            self.tokens[module_path] = torch.cat(
+                self.tokens_batches[module_path], dim=0
+            )
 
     def get_nonzeros_batch(
-        self, latents: TensorType["batch", "seq", "latent"]
-    ) -> tuple[Tensor, Tensor]:
+        self, latents: Float[Tensor, "batch sequence num_latents"]
+    ) -> tuple[
+        Float[Tensor, "batch sequence num_latents"], Float[Tensor, "batch sequence "]
+    ]:
         """
         Get non-zero activations for large batches that exceed int32 max value.
 
@@ -115,8 +137,11 @@ class Cache:
         return nonzero_latent_locations, nonzero_latent_activations
 
     def get_nonzeros(
-        self, latents: TensorType["batch", "seq", "latent"], module_path: str
-    ) -> tuple[Tensor, Tensor]:
+        self, latents: Float[Tensor, "batch sequence num_latents"], module_path: str
+    ) -> tuple[
+        Float[Tensor, "batch sequence num_latents"],
+        Float[Tensor, "batch sequence num_latents"],
+    ]:
         """
         Get the nonzero latent locations and activations.
 
@@ -157,10 +182,10 @@ class LatentCache:
 
     def __init__(
         self,
-        model,
+        model: PreTrainedModel,
         hookpoint_to_sparse_encode: dict[str, Callable],
         batch_size: int,
-        filters: dict[str, TensorType["indices"]] | None = None,
+        filters: dict[str, Float[Tensor, "indices"]] | None = None,
     ):
         """
         Initialize the LatentCache.
@@ -181,8 +206,8 @@ class LatentCache:
             self.filter_submodules(filters)
 
     def load_token_batches(
-        self, n_tokens: int, tokens: TensorType["batch", "sequence"]
-    ) -> list[Tensor]:
+        self, n_tokens: int, tokens: Float[Tensor, "batch sequence"]
+    ) -> list[Float[Tensor, "batch sequence"]]:
         """
         Load and prepare token batches for processing.
 
@@ -205,7 +230,7 @@ class LatentCache:
 
         return token_batches
 
-    def filter_submodules(self, filters: dict[str, TensorType["indices"]]):
+    def filter_submodules(self, filters: dict[str, Float[Tensor, "indices"]]):
         """
         Filter submodules based on the provided filters.
 
@@ -218,7 +243,7 @@ class LatentCache:
                 filtered_submodules[hookpoint] = self.hookpoint_to_sae[hookpoint]
         self.hookpoint_to_sae = filtered_submodules
 
-    def run(self, n_tokens: int, tokens: TensorType["batch", "seq"]):
+    def run(self, n_tokens: int, tokens: Float[Tensor, "batch sequence"]):
         """
         Run the latent caching process.
 
@@ -277,9 +302,9 @@ class LatentCache:
             if save_tokens:
                 data["tokens"] = self.cache.tokens[module_path]
 
-            save_file(data, output_file)
+            save_file(data, output_file)  # type: ignore
 
-    def _generate_split_indices(self, n_splits: int) -> list[tuple[int, int]]:
+    def _generate_split_indices(self, n_splits: int) -> list[tuple[Tensor, Tensor]]:
         """
         Generate indices for splitting the latent space.
 
@@ -289,6 +314,7 @@ class LatentCache:
         Returns:
             list[tuple[int, int]]: list of start and end indices for each split.
         """
+        assert self.width is not None, "Width must be set before generating splits"
         boundaries = torch.linspace(0, self.width, steps=n_splits + 1).long()
 
         # Adjust end by one

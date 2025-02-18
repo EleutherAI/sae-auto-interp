@@ -3,12 +3,13 @@ import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, NamedTuple, Optional, Union
+from typing import Callable, NamedTuple, Optional
 
 import numpy as np
 import torch
+from jaxtyping import Float
 from safetensors.numpy import load_file
-from torchtyping import TensorType
+from torch import Tensor
 from transformers import AutoTokenizer
 
 from delphi.utils import (
@@ -27,13 +28,13 @@ class BufferOutput(NamedTuple):
     latent: Latent
     """The latent associated with this output."""
 
-    locations: TensorType["locations", 2]
+    locations: Float[Tensor, "locations 2"]
     """Tensor of latent locations."""
 
-    activations: TensorType["locations"]
+    activations: Float[Tensor, "locations"]
     """Tensor of latent activations."""
 
-    tokens: TensorType["tokens"]
+    tokens: Float[Tensor, "tokens"]
     """Tensor of all tokens."""
 
 
@@ -49,11 +50,14 @@ class TensorBuffer:
     module_path: str
     """Path of the module."""
 
-    latents: Optional[TensorType["latents"]] = None
+    latents: Optional[Float[Tensor, "num_latents"]] = None
     """Tensor of latent indices."""
 
     min_examples: int = 120
     """Minimum number of examples required. Defaults to 120."""
+
+    tokens: Optional[Float[Tensor, "batch sequence"]] = None
+    """Tensor of all tokens."""
 
     def __iter__(self):
         """
@@ -64,7 +68,10 @@ class TensorBuffer:
                 None otherwise.
         """
         latents, split_locations, split_activations, tokens = self.load()
-
+        if tokens is None:
+            tokens = self.tokens
+            if tokens is None:
+                raise ValueError("No tokens found")
         for i in range(len(latents)):
             latent_locations = split_locations[i]
             latent_activations = split_activations[i]
@@ -125,7 +132,7 @@ class LatentDataset:
         cfg: LatentConfig,
         tokenizer: Optional[Callable] = None,
         modules: Optional[list[str]] = None,
-        latents: Optional[dict[str, Union[int, torch.Tensor]]] = None,
+        latents: Optional[dict[str, torch.Tensor]] = None,
         constructor: Optional[Callable] = None,
         sampler: Optional[Callable] = None,
         transform: Optional[Callable] = None,
@@ -214,7 +221,7 @@ class LatentDataset:
     def _build_selected(
         self,
         raw_dir: str,
-        latents: dict[str, Union[int, torch.Tensor]],
+        latents: dict[str, torch.Tensor],
     ):
         """
         Build a dataset buffer which loads only selected latents.
@@ -228,8 +235,6 @@ class LatentDataset:
         for module in self.modules:
             edges = self._edges(raw_dir, module)
             selected_latents = latents[module]
-            if isinstance(selected_latents, int):
-                selected_latents = torch.tensor([selected_latents])
             boundaries = [edges[0][0]] + [edge[1] + 1 for edge in edges]
 
             bucketized = torch.bucketize(

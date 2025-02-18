@@ -14,7 +14,7 @@ def load_gemma_autoencoders(
     type: str,
     dtype: torch.dtype = torch.bfloat16,
     device: torch.device = torch.device("cuda"),
-):
+) -> dict[str, nn.Module]:
     saes = {}
 
     for layer, size, l0 in zip(ae_layers, sizes, average_l0s):
