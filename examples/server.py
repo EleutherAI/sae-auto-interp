@@ -17,18 +17,16 @@ model = None
 
 def calculate_balanced_accuracy(dataframe):
     tp = len(
-        dataframe[(dataframe["ground_truth"] is True) & (dataframe["correct"] is True)]
+        dataframe[(dataframe["activating"] is True) & (dataframe["correct"] is True)]
     )
     tn = len(
-        dataframe[(dataframe["ground_truth"] is False) & (dataframe["correct"] is True)]
+        dataframe[(dataframe["activating"] is False) & (dataframe["correct"] is True)]
     )
     fp = len(
-        dataframe[
-            (dataframe["ground_truth"] is False) & (dataframe["correct"] is False)
-        ]
+        dataframe[(dataframe["activating"] is False) & (dataframe["correct"] is False)]
     )
     fn = len(
-        dataframe[(dataframe["ground_truth"] is True) & (dataframe["correct"] is False)]
+        dataframe[(dataframe["activating"] is True) & (dataframe["correct"] is False)]
     )
     if tp + fn == 0:
         recall = 0
@@ -52,9 +50,9 @@ def per_latent_scores_fuzz_detection(score_data):
 
 def per_latent_scores_embedding(score_data):
     data_df = pd.DataFrame(score_data)
-    data_df["ground_truth"] = data_df["distance"] > 0
+    data_df["activating"] = data_df["distance"] > 0
     print(data_df)
-    auc_score = roc_auc_score(data_df["ground_truth"], data_df["similarity"])
+    auc_score = roc_auc_score(data_df["activating"], data_df["similarity"])
     return auc_score
 
 
