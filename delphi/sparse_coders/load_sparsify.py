@@ -46,7 +46,7 @@ def load_sparsify_sparse_coders(
     hookpoints: list[str],
     device: str | torch.device | None = None,
     compile: bool = False,
-) -> dict[str, Callable]:
+) -> dict[str, Sae]:
     """
     Load sparsify sparse coders for specified hookpoints.
 

@@ -4,9 +4,10 @@ from typing import Optional
 import numpy as np
 import torch
 from safetensors.numpy import load_file
-from tqdm import tqdm
+from torch import nn
 
-from delphi.latents import LatentDataset
+from delphi.latents.latents import PreActivationRecord
+from delphi.latents.loader import LatentDataset
 
 
 class NeighbourCalculator:
@@ -20,8 +21,8 @@ class NeighbourCalculator:
     def __init__(
         self,
         latent_dataset: Optional["LatentDataset"] = None,
-        autoencoder: Optional["Autoencoder"] = None,
-        residual_stream_record: Optional["ResidualStreamRecord"] = None,
+        autoencoder: Optional["nn.Module"] = None,
+        pre_activation_record: Optional["PreActivationRecord"] = None,
         number_of_neighbours: int = 10,
         neighbour_cache: Optional[dict[str, dict[int, list[tuple[int, float]]]]] = None,
     ):

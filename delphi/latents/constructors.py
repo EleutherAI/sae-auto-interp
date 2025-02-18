@@ -1,18 +1,19 @@
 from typing import Literal, Optional
 
 import torch
-from torchtyping import TensorType
+from jaxtyping import Float
+from torch import Tensor
 
 from .latents import LatentRecord, prepare_examples
 from .loader import ActivationData
 
 
 def _top_k_pools(
-    max_buffer: TensorType["batch"],
-    split_activations: list[TensorType["activations"]],
-    buffer_tokens: TensorType["batch", "ctx_len"],
+    max_buffer: Float[Tensor, "batch"],
+    split_activations: Float[Tensor, "activations ctx_len"],
+    buffer_tokens: Float[Tensor, "batch ctx_len"],
     max_examples: int,
-):
+) -> tuple[Float[Tensor, "examples ctx_len"], Float[Tensor, "examples ctx_len"]]:
     """
     Get the top k activation pools.
 
