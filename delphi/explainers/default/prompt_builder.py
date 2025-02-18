@@ -41,7 +41,7 @@ def build_prompt(
 
     messages.extend(few_shot_examples)
 
-    user_start = f"WORDS: {examples}"
+    user_start = f"\n{examples}\n"
 
     messages.append(
         {
@@ -49,6 +49,7 @@ def build_prompt(
             "content": user_start,
         }
     )
+    print(messages)
 
     return messages
 
