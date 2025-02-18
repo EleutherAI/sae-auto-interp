@@ -1,6 +1,7 @@
 from typing import Any, Type, TypeVar, cast
 
-from torchtyping import TensorType
+from jaxtyping import Float
+from torch import Tensor
 from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast
 
 
@@ -28,7 +29,7 @@ def load_tokenized_data(
     )
     tokens_ds = tokens_ds.shuffle(seed)
 
-    tokens = cast(TensorType["batch", "seq"], tokens_ds["input_ids"])
+    tokens = cast(Float[Tensor, "batch seq"], tokens_ds["input_ids"])
 
     return tokens
 
