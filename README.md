@@ -16,7 +16,7 @@ Install this library as a local editable installation. Run the following command
 
 To run the default pipeline from the command line, use the following command:
 
-`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --dataset_repo 'EleutherAI/rpj-v2-sample' --dataset_split 'train[:1%]' --n_tokens 10_000_000 --max_features 100 --hookpoints layers.5 --filter_bos`
+`python -m delphi meta-llama/Meta-Llama-3-8B EleutherAI/sae-llama-3-8b-32x --explainer_model 'hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4' --dataset_repo 'EleutherAI/fineweb-edu-dedup-10b' --dataset_split 'train[:1%]' --n_tokens 10_000_000 --max_latents 100 --hookpoints layers.5 --filter_bos`
 
 This command will:
 1. Cache activations for the first 10 million tokens of EleutherAI/rpj-v2-sample.
