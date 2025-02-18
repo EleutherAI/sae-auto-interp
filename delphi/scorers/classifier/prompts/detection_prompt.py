@@ -66,7 +66,7 @@ default = [
 ]
 
 
-def prompt(examples, explanation):
+def prompt(examples: str, explanation: str) -> list[dict]:
     generation_prompt = GENERATION_PROMPT.format(
         explanation=explanation, examples=examples
     )

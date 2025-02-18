@@ -1,59 +1,24 @@
 import random
-from collections import deque
 from typing import Literal
 
 from ..config import ExperimentConfig
 from ..logger import logger
-from .latents import Example, LatentRecord
+from .latents import ActivatingExample, LatentRecord
 
 
-def split_activation_quantiles(
-    examples: list[Example], n_quantiles: int, n_samples: int, seed: int = 22
-):
-    """
-    TODO review this, there is a possible bug here:
-    `examples[0].max_activation < threshold`
-
-    Split the examples into n_quantiles and sample n_samples from each quantile.
-
-    Args:
-        examples: list of Examples, assumed to be in descending sorted order
-            by max_activation
-        n_quantiles: number of quantiles to split the examples into
-        n_samples: number of samples to sample from each quantile
-        seed: seed for the random number generator
-
-    Returns:
-        list of lists of Examples.
-            Each inner list contains n_samples from a unique quantile.
-    """
-    random.seed(seed)
-
-    queue_examples = deque(examples)
-    max_activation = examples[0].max_activation
-
-    # For 4 quantiles, thresholds are 0.25, 0.5, 0.75
-    thresholds = [max_activation * i / n_quantiles for i in range(1, n_quantiles)]
-
-    samples: list[list[Example]] = []
-    for threshold in thresholds:
-        # Get all examples in quantile
-        quantile = []
-        while queue_examples and queue_examples[0].max_activation < threshold:
-            quantile.append(queue_examples.popleft())
-
-        sample = random.sample(quantile, n_samples)
-        samples.append(sample)
-
-    sample = random.sample(examples, n_samples)
-    samples.append(sample)
-
-    return samples
+def normalize_activations(
+        examples: list[ActivatingExample], max_activation: float
+    ) -> list[ActivatingExample]:
+    for example in examples:
+        example.normalized_activations = (
+            example.activations * 10 / max_activation
+        ).floor()
+    return examples
 
 
 def split_quantiles(
-    examples: list[Example], n_quantiles: int, n_samples: int, seed: int = 22
-):
+    examples: list[ActivatingExample], n_quantiles: int, n_samples: int, seed: int = 22
+) -> list[ActivatingExample]:
     """
     Randomly select (n_samples // n_quantiles) samples from each quantile.
     """
@@ -61,7 +26,7 @@ def split_quantiles(
 
     quantile_size = len(examples) // n_quantiles
     samples_per_quantile = n_samples // n_quantiles
-    samples: list[list[Example]] = []
+    samples: list[ActivatingExample] = []
     for i in range(n_quantiles):
         # Take an evenly spaced slice of the examples for the quantile.
         quantile = examples[i * quantile_size : (i + 1) * quantile_size]
@@ -74,13 +39,16 @@ def split_quantiles(
             )
         else:
             sample = random.sample(quantile, samples_per_quantile)
-        samples.append(sample)
+        # set the quantile index
+        for example in sample:
+            example.quantile = i
+        samples.extend(sample)
 
     return samples
 
 
 def train(
-    examples: list[Example],
+    examples: list[ActivatingExample],
     max_activation: float,
     n_train: int,
     train_type: Literal["top", "random", "quantiles"],
@@ -90,44 +58,29 @@ def train(
     match train_type:
         case "top":
             selected_examples = examples[:n_train]
-            for example in selected_examples:
-                example.normalized_activations = (
-                    example.activations * 10 / max_activation
-                ).floor()
+            selected_examples = normalize_activations(selected_examples, max_activation)
             return selected_examples
         case "random":
             random.seed(seed)
-            if n_train > len(examples):
+            n_sample = min(n_train, len(examples))
+            if n_sample < n_train:
                 logger.warning(
                     "n_train is greater than the number of examples, using all examples"
                 )
-                for example in examples:
-                    example.normalized_activations = (
-                        example.activations * 10 / max_activation
-                    ).floor()
-                return examples
+            
             selected_examples = random.sample(examples, n_train)
-            for example in selected_examples:
-                example.normalized_activations = (
-                    example.activations * 10 / max_activation
-                ).floor()
+            selected_examples = normalize_activations(selected_examples, max_activation)
             return selected_examples
         case "quantiles":
-            selected_examples_quantiles = split_quantiles(
+            selected_examples = split_quantiles(
                 examples, n_quantiles, n_train
             )
-            selected_examples = []
-            for quantile in selected_examples_quantiles:
-                for example in quantile:
-                    example.normalized_activations = (
-                        example.activations * 10 / max_activation
-                    ).floor()
-                selected_examples.extend(quantile)
+            selected_examples = normalize_activations(selected_examples, max_activation)
             return selected_examples
 
 
 def test(
-    examples: list[Example],
+    examples: list[ActivatingExample],
     max_activation: float,
     n_test: int,
     n_quantiles: int,
@@ -136,22 +89,10 @@ def test(
     match test_type:
         case "quantiles":
             selected_examples = split_quantiles(examples, n_quantiles, n_test)
-            for quantile in selected_examples:
-                for example in quantile:
-                    example.normalized_activations = (
-                        example.activations * 10 / max_activation
-                    ).floor()
+            selected_examples = normalize_activations(selected_examples, max_activation)
             return selected_examples
         case "activation":
-            selected_examples = split_activation_quantiles(
-                examples, n_quantiles, n_test
-            )
-            for quantile in selected_examples:
-                for example in quantile:
-                    example.normalized_activations = (
-                        example.activations * 10 / max_activation
-                    ).floor()
-            return selected_examples
+            raise NotImplementedError("Activation sampling not implemented")
 
 
 def sample(

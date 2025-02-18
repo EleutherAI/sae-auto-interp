@@ -20,7 +20,12 @@ def load_tokenized_data(
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
     data = data.shuffle(seed)
     tokens_ds = chunk_and_tokenize(
-        data, tokenizer, max_seq_len=ctx_len, text_key=column_name
+        data,  # type: ignore
+        tokenizer,
+        max_seq_len=ctx_len,
+        text_key=column_name,
     )
 
-    return tokens_ds
+    tokens = tokens_ds["input_ids"]
+
+    return tokens
