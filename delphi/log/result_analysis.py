@@ -153,12 +153,12 @@ def parse_score_file(file_path):
         "total_examples": total_examples,
         "total_positives": total_positives,
         "total_negatives": total_negatives,
-        "positive_class_ratio": total_positives / total_examples
-        if total_examples > 0
-        else 0,
-        "negative_class_ratio": total_negatives / total_examples
-        if total_examples > 0
-        else 0,
+        "positive_class_ratio": (
+            total_positives / total_examples if total_examples > 0 else 0
+        ),
+        "negative_class_ratio": (
+            total_negatives / total_examples if total_examples > 0 else 0
+        ),
         "failed_count": failed_count,
     }
 

@@ -87,7 +87,7 @@ class SimulationType(str, Enum):
 
 
 def compute_expected_value(
-    norm_probabilities_by_distribution_value: OrderedDict[int, float]
+    norm_probabilities_by_distribution_value: OrderedDict[int, float],
 ) -> float:
     """
     Given a map from distribution values (integers on the range [0, 10]) to normalized
