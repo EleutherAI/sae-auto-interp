@@ -235,7 +235,6 @@ def neighbour_non_activation_windows(
         activations = activations[mask_ctx]
         # If there are no available indices, skip this neighbour
         if activations.numel() == 0:
-            print(f"No available indices for neighbour {neighbour.latent_index}")
             continue
         token_windows, _ = pool_max_activation_windows(
             activations=activations,
