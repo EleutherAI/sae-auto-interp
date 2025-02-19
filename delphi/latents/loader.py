@@ -154,7 +154,7 @@ class LatentDataset:
         latents: Optional[dict[str, torch.Tensor]] = None,
         constructor: Optional[Callable] = None,
         sampler: Optional[Callable] = None,
-        transform: Optional[Callable] = None,
+        neighbours: Optional[dict[str, dict[str, list[tuple[float, int]]]]] = None,
     ):
         """
         Initialize a LatentDataset.
@@ -189,7 +189,7 @@ class LatentDataset:
         self.cache_config = cache_config
         self.constructor = constructor
         self.sampler = sampler
-        self.transform = transform
+        self.neighbours = neighbours
 
         # TODO: is it possible to do this without loading all data?
         if self.constructor is not None:
@@ -364,8 +364,12 @@ class LatentDataset:
             Optional[LatentRecord]: Processed latent record or None.
         """
         record = LatentRecord(latent_data.latent)
-        if self.transform is not None:
-            self.transform(record)
+        if self.neighbours is not None:
+            record.set_neighbours(
+                self.neighbours[latent_data.module][
+                    str(latent_data.latent.latent_index)
+                ],
+            )
         if self.constructor is not None:
             self.constructor(
                 record=record,

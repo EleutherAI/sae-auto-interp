@@ -143,6 +143,18 @@ class LatentRecord:
         with bf.BlobFile(path, "wb") as f:
             f.write(orjson.dumps(serializable))
 
+    def set_neighbours(
+        self,
+        neighbours: list[tuple[float, int]],
+    ):
+        """
+        Set the neighbours for the latent record.
+        """
+        self.neighbours = [
+            Neighbour(distance=neighbour[0], latent_index=neighbour[1])
+            for neighbour in neighbours
+        ]
+
     def display(
         self,
         tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
