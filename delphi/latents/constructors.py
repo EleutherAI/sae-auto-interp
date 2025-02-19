@@ -214,7 +214,6 @@ def neighbour_non_activation_windows(
             break
         # get the locations of the neighbour
         if neighbour.latent_index not in all_data:
-            print(f"Neighbour {neighbour.latent_index} not found in all_data")
             continue
         locations = all_data[neighbour.latent_index].locations
         activations = all_data[neighbour.latent_index].activations

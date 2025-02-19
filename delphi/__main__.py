@@ -27,7 +27,7 @@ from delphi.latents.neighbours import NeighbourCalculator
 from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
-from delphi.sparse_coders import load_hooks_sparse_coders
+from delphi.sparse_coders import load_hooks_sparse_coders, load_sparse_coders
 from delphi.utils import load_tokenized_data
 
 
@@ -57,23 +57,39 @@ def load_artifacts(run_cfg: RunConfig):
 
 
 async def create_neighbours(
+    run_cfg: RunConfig,
     latents_path: Path,
     neighbours_path: Path,
     hookpoints: list[str],
+    experiment_cfg: ExperimentConfig,
 ):
     """
     Creates a neighbours file for the given hookpoints.
     """
     neighbours_path.mkdir(parents=True, exist_ok=True)
 
+    if experiment_cfg.neighbours_type != "co-occurrence":
+        saes = load_sparse_coders(run_cfg, device="cuda")
+
     for hookpoint in hookpoints:
-        neighbour_calculator = NeighbourCalculator(
-            cache_dir=latents_path / hookpoint, number_of_neighbours=100
-        )
 
-        neighbour_calculator.populate_neighbour_cache(["co-occurrence"])
+        if experiment_cfg.neighbours_type == "co-occurrence":
+            neighbour_calculator = NeighbourCalculator(
+                cache_dir=latents_path / hookpoint, number_of_neighbours=100
+            )
 
-        neighbour_calculator.save_neighbour_cache(f"{neighbours_path}/{hookpoint}.json")
+        elif experiment_cfg.neighbours_type == "decoder_similarity":
+
+            neighbour_calculator = NeighbourCalculator(
+                autoencoder=saes[hookpoint], number_of_neighbours=100
+            )
+
+        elif experiment_cfg.neighbours_type == "encoder_similarity":
+            neighbour_calculator = NeighbourCalculator(
+                autoencoder=saes[hookpoint], number_of_neighbours=100
+            )
+        neighbour_calculator.populate_neighbour_cache(experiment_cfg.neighbours_type)
+        neighbour_calculator.save_neighbour_cache(f"{neighbours_path}/{hookpoint}")
 
 
 async def process_cache(
@@ -304,7 +320,13 @@ async def run(
         not glob(str(neighbours_path / ".*")) + glob(str(neighbours_path / "*"))
         or "neighbours" in run_cfg.overwrite
     ):
-        await create_neighbours(latents_path, neighbours_path, hookpoints)
+        await create_neighbours(
+            run_cfg,
+            latents_path,
+            neighbours_path,
+            hookpoints,
+            experiment_cfg,
+        )
     else:
         print(f"Files found in {neighbours_path}, skipping...")
 
