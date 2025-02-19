@@ -113,6 +113,11 @@ class LatentRecord:
     explanation: str = ""
     """Explanation of the latent."""
 
+    extra_examples: list[ActivatingExample | NonActivatingExample] = field(
+        default_factory=list
+    )
+    """Extra examples that may be used for contrastive explanations."""
+
     @property
     def max_activation(self) -> float:
         """
