@@ -3,7 +3,7 @@ import os
 import random
 import re
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import NamedTuple
 
 import aiofiles
@@ -32,13 +32,13 @@ class Explainer(ABC):
     """Client to use for explanation generation. """
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast
     """The tokenizer used to collect activations."""
-    verbose: bool
+    verbose: bool = False
     """Whether to print verbose output."""
-    threshold: float
+    threshold: float = 0.3
     """The activation threshold to select tokens to highlight."""
-    temperature: float
+    temperature: float = 0.0
     """The temperature for explanation generation."""
-    generation_kwargs: dict
+    generation_kwargs: dict = field(default_factory=dict)
     """Additional keyword arguments for the generation client."""
 
     async def __call__(self, record: LatentRecord) -> ExplainerResult:
