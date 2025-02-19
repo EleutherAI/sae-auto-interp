@@ -14,6 +14,8 @@ from transformers import PreTrainedModel
 from delphi.config import CacheConfig
 from delphi.latents.collect_activations import collect_activations
 
+location_tensor_shape = Float[Tensor, "batch sequence num_latents"]
+token_tensor_shape = Float[Tensor, "batch sequence"]
 
 class Cache:
     """
@@ -34,30 +36,30 @@ class Cache:
             batch_size: Size of batches for processing. Defaults to 64.
         """
         self.latent_locations_batches: dict[
-            str, list[Float[Tensor, "batch sequence num_latents"]]
+            str, list[location_tensor_shape]
         ] = defaultdict(list)
         self.latent_activations_batches: dict[
-            str, list[Float[Tensor, "batch sequence num_latents"]]
+            str, list[location_tensor_shape]
         ] = defaultdict(list)
-        self.tokens_batches: dict[str, list[Float[Tensor, "batch sequence"]]] = (
+        self.tokens_batches: dict[str, list[token_tensor_shape]] = (
             defaultdict(list)
         )
 
         self.latent_locations: dict[
-            str, Float[Tensor, "batch sequence num_latents"]
+            str, location_tensor_shape
         ] = {}
         self.latent_activations: dict[
-            str, Float[Tensor, "batch sequence num_latents"]
+            str, location_tensor_shape
         ] = {}
-        self.tokens: dict[str, Float[Tensor, "batch sequence"]] = {}
+        self.tokens: dict[str, token_tensor_shape] = {}
 
         self.filters = filters
         self.batch_size = batch_size
 
     def add(
         self,
-        latents: Float[Tensor, "mini_batch sequence num_latents"],
-        tokens: Float[Tensor, "mini_batch sequence"],
+        latents: location_tensor_shape,
+        tokens: token_tensor_shape,
         batch_number: int,
         module_path: str,
     ):
@@ -99,7 +101,7 @@ class Cache:
             )
 
     def get_nonzeros_batch(
-        self, latents: Float[Tensor, "batch sequence num_latents"]
+        self, latents: location_tensor_shape
     ) -> tuple[
         Float[Tensor, "batch sequence num_latents"], Float[Tensor, "batch sequence "]
     ]:
@@ -137,10 +139,10 @@ class Cache:
         return nonzero_latent_locations, nonzero_latent_activations
 
     def get_nonzeros(
-        self, latents: Float[Tensor, "batch sequence num_latents"], module_path: str
+        self, latents: location_tensor_shape, module_path: str
     ) -> tuple[
-        Float[Tensor, "batch sequence num_latents"],
-        Float[Tensor, "batch sequence num_latents"],
+        location_tensor_shape,
+        location_tensor_shape,
     ]:
         """
         Get the nonzero latent locations and activations.
@@ -206,8 +208,8 @@ class LatentCache:
             self.filter_submodules(filters)
 
     def load_token_batches(
-        self, n_tokens: int, tokens: Float[Tensor, "batch sequence"]
-    ) -> list[Float[Tensor, "batch sequence"]]:
+        self, n_tokens: int, tokens: token_tensor_shape
+    ) -> list[token_tensor_shape]:
         """
         Load and prepare token batches for processing.
 
@@ -243,7 +245,7 @@ class LatentCache:
                 filtered_submodules[hookpoint] = self.hookpoint_to_sae[hookpoint]
         self.hookpoint_to_sae = filtered_submodules
 
-    def run(self, n_tokens: int, tokens: Float[Tensor, "batch sequence"]):
+    def run(self, n_tokens: int, tokens: token_tensor_shape):
         """
         Run the latent caching process.
 
@@ -296,13 +298,13 @@ class LatentCache:
             output_file = save_dir / f"{module_path}.safetensors"
 
             data = {
-                "locations": self.cache.latent_locations[module_path],
-                "activations": self.cache.latent_activations[module_path],
+                "locations": self.cache.latent_locations[module_path].numpy(),
+                "activations": self.cache.latent_activations[module_path].numpy(),
             }
             if save_tokens:
-                data["tokens"] = self.cache.tokens[module_path]
+                data["tokens"] = self.cache.tokens[module_path].numpy()
 
-            save_file(data, output_file)  # type: ignore
+            save_file(data, output_file)  
 
     def _generate_split_indices(self, n_splits: int) -> list[tuple[Tensor, Tensor]]:
         """
