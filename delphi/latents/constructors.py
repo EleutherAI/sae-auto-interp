@@ -8,26 +8,6 @@ from .latents import ActivatingExample, LatentRecord, NonActivatingExample
 from .loader import ActivationData
 
 
-def prepare_activating_examples(
-    tokens: Float[Tensor, "examples ctx_len"],
-    activations: Float[Tensor, "examples ctx_len"],
-) -> list[ActivatingExample]:
-    """
-    Prepare a list of examples from input tokens and activations.
-
-    Args:
-        tokens: Tokenized input sequences.
-        activations: Activation values for the input sequences.
-
-    Returns:
-        list[Example]: A list of prepared examples.
-    """
-    return [
-        ActivatingExample(tokens=toks, activations=acts, normalized_activations=None)
-        for toks, acts in zip(tokens, activations)
-    ]
-
-
 def prepare_non_activating_examples(
     tokens: Float[Tensor, "examples ctx_len"],
     distance: float,
@@ -130,6 +110,7 @@ def constructor(
     constructor_type: Literal["random", "neighbours"],
     tokens: Float[Tensor, "batch seq"],
     all_data: Optional[dict[int, ActivationData]] = None,
+    seed: int = 42,
 ):
     cache_token_length = tokens.shape[1]
 
@@ -138,7 +119,7 @@ def constructor(
         activation_data.locations[:, 0] * cache_token_length
         + activation_data.locations[:, 1]
     )
-    ctx_indices = flat_indices // ctx_len
+    ctx_indices, index_within_ctx = flat_indices // ctx_len, flat_indices % ctx_len
     index_within_ctx = flat_indices % ctx_len
     reshaped_tokens = tokens.reshape(-1, ctx_len)
     n_windows = reshaped_tokens.shape[0]
@@ -160,8 +141,10 @@ def constructor(
         ctx_len=ctx_len,
         max_examples=max_examples,
     )
-    record.examples = prepare_activating_examples(token_windows, act_windows)
-
+    record.examples = [
+        ActivatingExample(tokens=toks, activations=acts, normalized_activations=None)
+        for toks, acts in zip(token_windows, act_windows)
+    ]
     if constructor_type == "random":
         # Add random non-activating examples to the record in place
         random_non_activating_windows(
@@ -169,6 +152,7 @@ def constructor(
             available_indices=non_active_indices,
             reshaped_tokens=reshaped_tokens,
             n_not_active=n_not_active,
+            seed=seed,
         )
     elif constructor_type == "neighbours":
         assert all_data is not None, "All data is required for neighbour constructor"
@@ -179,6 +163,7 @@ def constructor(
             all_data=all_data,
             ctx_len=ctx_len,
             n_not_active=n_not_active,
+            seed=seed,
         )
 
 
@@ -189,6 +174,7 @@ def neighbour_non_activation_windows(
     all_data: dict[int, ActivationData],
     ctx_len: int,
     n_not_active: int,
+    seed: int = 42,
 ):
     """
     Generate random activation windows and update the latent record.
@@ -201,7 +187,7 @@ def neighbour_non_activation_windows(
         ctx_len (int): The context length.
         n_random (int): The number of random examples to generate.
     """
-    torch.manual_seed(22)
+    torch.manual_seed(seed)
     if n_not_active == 0:
         record.not_active = []
         return
@@ -276,6 +262,7 @@ def random_non_activating_windows(
     available_indices: Float[Tensor, "windows"],
     reshaped_tokens: Float[Tensor, "windows ctx_len"],
     n_not_active: int,
+    seed: int = 42,
 ):
     """
     Generate random non-activating sequence windows and update the latent record.
@@ -288,7 +275,7 @@ def random_non_activating_windows(
         to the context length.
         n_not_active (int): The number of non activating examples to generate.
     """
-    torch.manual_seed(22)
+    torch.manual_seed(seed)
     if n_not_active == 0:
         record.not_active = []
         return
