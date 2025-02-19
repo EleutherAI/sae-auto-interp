@@ -56,7 +56,7 @@ def load_artifacts(run_cfg: RunConfig):
     return run_cfg.hookpoints, hookpoint_to_sparse_encode, model
 
 
-async def create_neighbours(
+def create_neighbours(
     run_cfg: RunConfig,
     latents_path: Path,
     neighbours_path: Path,
@@ -69,7 +69,7 @@ async def create_neighbours(
     neighbours_path.mkdir(parents=True, exist_ok=True)
 
     if experiment_cfg.neighbours_type != "co-occurrence":
-        saes = load_sparse_coders(run_cfg, device="cuda")
+        saes = load_sparse_coders(run_cfg, device="cpu")
 
     for hookpoint in hookpoints:
 
@@ -81,12 +81,12 @@ async def create_neighbours(
         elif experiment_cfg.neighbours_type == "decoder_similarity":
 
             neighbour_calculator = NeighbourCalculator(
-                autoencoder=saes[hookpoint], number_of_neighbours=100
+                autoencoder=saes[hookpoint].cuda(), number_of_neighbours=100
             )
 
         elif experiment_cfg.neighbours_type == "encoder_similarity":
             neighbour_calculator = NeighbourCalculator(
-                autoencoder=saes[hookpoint], number_of_neighbours=100
+                autoencoder=saes[hookpoint].cuda(), number_of_neighbours=100
             )
         neighbour_calculator.populate_neighbour_cache(experiment_cfg.neighbours_type)
         neighbour_calculator.save_neighbour_cache(f"{neighbours_path}/{hookpoint}")
@@ -317,10 +317,11 @@ async def run(
 
     del model, hookpoint_to_sparse_encode
     if (
-        not glob(str(neighbours_path / ".*")) + glob(str(neighbours_path / "*"))
+        experiment_cfg.non_activating_source == "neighbours"
+        and not glob(str(neighbours_path / ".*")) + glob(str(neighbours_path / "*"))
         or "neighbours" in run_cfg.overwrite
     ):
-        await create_neighbours(
+        create_neighbours(
             run_cfg,
             latents_path,
             neighbours_path,
