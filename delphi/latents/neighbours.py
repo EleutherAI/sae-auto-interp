@@ -153,62 +153,61 @@ class NeighbourCalculator:
 
         all_locations = []
         for path in paths:
-            split_data = load_file(self.cache_dir / path)
-            first_feature = int(path.split("/")[-1].split("_")[0])
-            locations = torch.tensor(split_data["locations"].astype(np.int64))
-            locations[:, 2] = locations[:, 2] + first_feature
-            # compute number of tokens
-            all_locations.append(locations)
+            if path.endswith(".safetensors"):
+                split_data = load_file(self.cache_dir / path)
+                first_feature = int(path.split("/")[-1].split("_")[0])
+                locations = torch.tensor(split_data["locations"].astype(np.int64))
+                locations[:, 2] = locations[:, 2] + first_feature
+
+                all_locations.append(locations)
 
         # concatenate the locations and activations
         locations = torch.cat(all_locations)
-        latent_index = locations[:, 2]
+        
         batch_index = locations[:, 0]
         ctx_index = locations[:, 1]
-
+        latent_index = locations[:, 2]
+        
         n_latents = int(torch.max(latent_index)) + 1
 
-        # 1. Get unique values of first 2 dims (i.e. absolute token index)
-        # and their counts
-        # Trick is to use Cantor pairing function to have a bijective mapping between
-        # (batch_id, ctx_pos) and a unique 1D index
-        # Faster than running `torch.unique_consecutive` on the first 2 dims
-        idx_cantor = (batch_index + ctx_index) * (
-            batch_index + ctx_index + 1
-        ) // 2 + ctx_index
-        unique_idx, idx_counts = torch.unique_consecutive(
-            idx_cantor, return_counts=True
-        )
-        n_tokens = len(unique_idx)
+        # Convert from (batch_id, ctx_pos) to a unique 1D index
+       
+        idx_cantor = batch_index * ctx_index + ctx_index
 
-        # 2. The Cantor indices are not consecutive,
-        # so we create sorted ones from the counts
-        locations_flat = torch.repeat_interleave(
-            torch.arange(n_tokens, device=locations.device), idx_counts
-        )
-        del idx_cantor, unique_idx, idx_counts
+        # Sort the indices, because they are not sorted after concatenation
+        idx_cantor, idx_cantor_sorted_idx = idx_cantor.sort(dim=0,stable=True)
+        latent_index = latent_index[idx_cantor_sorted_idx]
+        
+        n_tokens = int(idx_cantor.max().item())
+        
+        token_batch_size = 20_000
 
-        # rows = cp.asarray(locations[:, 2])
-        # cols = cp.asarray(locations_flat)
-        # data = cp.ones(len(rows))
-        sparse_matrix_indices = torch.stack([locations_flat, latent_index])
-        sparse_matrix = torch.sparse_coo_tensor(
-            sparse_matrix_indices, torch.ones(len(latent_index)), (n_latents, n_tokens)
-        )
-        token_batch_size = 100_000
-        cooc_matrix = torch.zeros((n_latents, n_latents), dtype=torch.float32)
+        # Find indices where idx_cantor crosses each batch boundary
+        bounday_values = torch.arange(token_batch_size,n_tokens,token_batch_size)
+        
+        batch_boundaries_tensor = torch.searchsorted(idx_cantor,bounday_values)
+        batch_boundaries = [0] + batch_boundaries_tensor.tolist()
 
-        sparse_matrix_csc = sparse_matrix.to_sparse_csr()
-        for start in tqdm(range(0, n_tokens, token_batch_size)):
-            end = min(n_tokens, start + token_batch_size)
-            # Slice the sparse matrix to get a batch of tokens.
-            sub_matrix = sparse_matrix_csc[:, start:end]
-            # Compute the partial co-occurrence matrix for this batch.
-            partial_cooc = (sub_matrix @ sub_matrix.T).to_dense()
-            cooc_matrix += partial_cooc
+        if batch_boundaries[-1] != len(idx_cantor):
+            batch_boundaries.append(len(idx_cantor))
 
-        # Free temporary variables.
-        del sparse_matrix, sparse_matrix_csc
+        co_occurrence_matrix = torch.zeros((n_latents, n_latents), dtype=torch.int32).cuda()
+
+        for start,end in tqdm(zip(batch_boundaries[:-1],batch_boundaries[1:])):
+            # get all ind_cantor values between start and start + token_batch_size
+            selected_idx_cantor = idx_cantor[start:end]
+            selected_latent_index = latent_index[start:end]
+            
+            # create a sparse matrix of the selected indices
+            sparse_matrix_indices = torch.stack([selected_latent_index,selected_idx_cantor],dim=0)
+            sparse_matrix = torch.sparse_coo_tensor(
+                sparse_matrix_indices, torch.ones(len(selected_latent_index)), (n_latents, token_batch_size)
+            )
+            sparse_matrix = sparse_matrix.cuda()
+            partial_cooc = (sparse_matrix @ sparse_matrix.T).to_dense()
+            co_occurrence_matrix += partial_cooc.int()
+            del sparse_matrix,partial_cooc
+
 
         # Compute Jaccard similarity
         def compute_jaccard(cooc_matrix):
@@ -220,13 +219,13 @@ class NeighbourCalculator:
             return jaccard_matrix
 
         # Compute Jaccard similarity matrix
-        jaccard_matrix = compute_jaccard(cooc_matrix)
+        jaccard_matrix = compute_jaccard(co_occurrence_matrix)
 
         # get the indices of the top k neighbours for each feature
         top_k_indices, values = torch.topk(
             jaccard_matrix, self.number_of_neighbours + 1, dim=1
         )
-        del jaccard_matrix, cooc_matrix
+        del jaccard_matrix, co_occurrence_matrix
         torch.cuda.empty_cache()
 
         # return the neighbour lists
