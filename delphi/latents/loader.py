@@ -204,7 +204,9 @@ class LatentDataset:
     def load_neighbours(self, neighbours_path: str, neighbours_type: str):
         neighbours = {}
         for hookpoint in self.modules:
-            with open(neighbours_path + f"/{hookpoint}-{neighbours_type}.json", "r") as f:
+            with open(
+                neighbours_path + f"/{hookpoint}-{neighbours_type}.json", "r"
+            ) as f:
                 neighbours[hookpoint] = json.load(f)
         return neighbours
 
