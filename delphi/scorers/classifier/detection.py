@@ -51,7 +51,6 @@ class DetectionScorer(Classifier):
         Prepare and shuffle a list of samples for classification.
         """
 
-        # check if not_active is a list of lists or a list of examples
         if len(record.not_active) > 0:
             samples = examples_to_samples(
                 record.not_active,
