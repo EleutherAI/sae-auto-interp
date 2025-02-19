@@ -42,6 +42,7 @@ async def test():
         num_gpus=torch.cuda.device_count(),
         filter_bos=True,
         verbose=True,
+        semantic_index=True,
     )
 
     start_time = time.time()

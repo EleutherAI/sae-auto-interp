@@ -15,7 +15,7 @@ class ContrastiveExplainer(Explainer):
         self,
         client,
         tokenizer,
-        index: faiss.IndexFlatL2,
+        index: faiss.Index,
         verbose: bool = False,
         activations: bool = False,
         cot: bool = False,
@@ -35,6 +35,7 @@ class ContrastiveExplainer(Explainer):
         self.generation_kwargs = generation_kwargs
 
     async def __call__(self, record):
+        breakpoint()
         messages = self._build_prompt(record.train)
 
         response = await self.client.generate(

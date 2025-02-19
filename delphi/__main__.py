@@ -9,7 +9,7 @@ from typing import Callable, cast
 import orjson
 import torch
 from datasets import Dataset, load_dataset
-from simple_parsing import ArgumentParser, field, list_field
+from simple_parsing import ArgumentParser
 from sparsify.data import chunk_and_tokenize
 from torch import Tensor
 from torchtyping import TensorType
@@ -26,14 +26,13 @@ from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
 from delphi.explainers import ContrastiveExplainer, DefaultExplainer
 from delphi.latents import LatentCache, LatentDataset
-from delphi.latents.loader import LatentLoader
 from delphi.latents.constructors import default_constructor
 from delphi.latents.samplers import sample
 from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
-from delphi.sparse_coders import load_sparse_coders
 from delphi.semantic_index.index import build_or_load_index, load_index
+from delphi.sparse_coders import load_sparse_coders
 from delphi.utils import assert_type
 
 
@@ -165,8 +164,13 @@ async def process_cache(
             tokenizer=dataset.tokenizer,
             threshold=0.3,
             verbose=run_cfg.verbose,
+        )
+
+    explainer_pipe = Pipe(
+        process_wrapper(
+            explainer,
+            postprocess=explainer_postprocess,
         ),
-        postprocess=explainer_postprocess,
     )
 
     # Builds the record from result returned by the pipeline
