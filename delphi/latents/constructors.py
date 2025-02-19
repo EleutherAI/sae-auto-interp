@@ -171,6 +171,7 @@ def constructor(
         )
     return record
 
+
 def neighbour_non_activation_windows(
     record: LatentRecord,
     not_active_mask: Float[Tensor, "windows"],

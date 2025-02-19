@@ -56,6 +56,7 @@ class LatentData(NamedTuple):
     activation_data: ActivationData
     """The activation data for this latent."""
 
+
 @dataclass
 class Neighbour:
     distance: float
