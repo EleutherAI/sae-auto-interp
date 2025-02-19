@@ -1,33 +1,16 @@
 import asyncio
+from dataclasses import dataclass
 
 from ..explainer import ActivatingExample, Explainer
 from .prompt_builder import build_prompt
 
 
+@dataclass
 class DefaultExplainer(Explainer):
-    name = "default"
-
-    def __init__(
-        self,
-        client,
-        tokenizer,
-        verbose: bool = False,
-        activations: bool = False,
-        cot: bool = False,
-        threshold: float = 0.6,
-        temperature: float = 0.0,
-        **generation_kwargs,
-    ):
-        super().__init__(
-            client,
-            tokenizer,
-            verbose,
-            activations,
-            cot,
-            threshold,
-            temperature,
-            **generation_kwargs,
-        )
+    activations: bool
+    """Whether to show activations to the explainer."""
+    cot: bool
+    """Whether to use chain of thought reasoning."""
 
     def _build_prompt(self, examples: list[ActivatingExample]) -> list[dict]:
         highlighted_examples = []
