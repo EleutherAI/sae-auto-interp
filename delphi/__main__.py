@@ -331,9 +331,7 @@ async def run(
         not glob(str(neighbours_path / ".*")) + glob(str(neighbours_path / "*"))
         or "neighbours" in run_cfg.overwrite
     ):
-        await create_neighbours(
-            latents_path, neighbours_path, hookpoints
-        )
+        await create_neighbours(latents_path, neighbours_path, hookpoints)
     else:
         print(f"Files found in {neighbours_path}, skipping...")
 

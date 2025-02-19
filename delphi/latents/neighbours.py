@@ -163,29 +163,29 @@ class NeighbourCalculator:
 
         # concatenate the locations and activations
         locations = torch.cat(all_locations)
-        
+
         batch_index = locations[:, 0]
         ctx_index = locations[:, 1]
         latent_index = locations[:, 2]
-        
+
         n_latents = int(torch.max(latent_index)) + 1
 
         # Convert from (batch_id, ctx_pos) to a unique 1D index
-       
+
         idx_cantor = batch_index * ctx_index + ctx_index
 
         # Sort the indices, because they are not sorted after concatenation
-        idx_cantor, idx_cantor_sorted_idx = idx_cantor.sort(dim=0,stable=True)
+        idx_cantor, idx_cantor_sorted_idx = idx_cantor.sort(dim=0, stable=True)
         latent_index = latent_index[idx_cantor_sorted_idx]
-        
+
         n_tokens = int(idx_cantor.max().item())
-        
+
         token_batch_size = 20_000
 
         # Find indices where idx_cantor crosses each batch boundary
-        bounday_values = torch.arange(token_batch_size,n_tokens,token_batch_size)
-        
-        batch_boundaries_tensor = torch.searchsorted(idx_cantor,bounday_values)
+        bounday_values = torch.arange(token_batch_size, n_tokens, token_batch_size)
+
+        batch_boundaries_tensor = torch.searchsorted(idx_cantor, bounday_values)
         batch_boundaries = [0] + batch_boundaries_tensor.tolist()
 
         if batch_boundaries[-1] != len(idx_cantor):
@@ -194,14 +194,15 @@ class NeighbourCalculator:
         co_occurrence_matrix = torch.zeros((n_latents, n_latents), dtype=torch.int32)
         co_occurrence_matrix = co_occurrence_matrix.cuda()
 
-        for start,end in tqdm(zip(batch_boundaries[:-1],batch_boundaries[1:])):
+        for start, end in tqdm(zip(batch_boundaries[:-1], batch_boundaries[1:])):
             # get all ind_cantor values between start and start + token_batch_size
             selected_idx_cantor = idx_cantor[start:end]
             selected_latent_index = latent_index[start:end]
-            
+
             # create a sparse matrix of the selected indices
             sparse_matrix_indices = torch.stack(
-                [selected_latent_index,selected_idx_cantor],dim=0)
+                [selected_latent_index, selected_idx_cantor], dim=0
+            )
             sparse_matrix = torch.sparse_coo_tensor(
                 sparse_matrix_indices,
                 torch.ones(len(selected_latent_index)),
@@ -211,7 +212,6 @@ class NeighbourCalculator:
             partial_cooc = (sparse_matrix @ sparse_matrix.T).to_dense()
             co_occurrence_matrix += partial_cooc.int()
             del sparse_matrix, partial_cooc
-
 
         # Compute Jaccard similarity
         def compute_jaccard(cooc_matrix):

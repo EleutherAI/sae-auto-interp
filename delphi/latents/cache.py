@@ -17,6 +17,7 @@ from delphi.latents.collect_activations import collect_activations
 location_tensor_shape = Float[Tensor, "batch sequence num_latents"]
 token_tensor_shape = Float[Tensor, "batch sequence"]
 
+
 class Cache:
     """
     The Cache class stores latent locations and activations for modules.
@@ -35,22 +36,16 @@ class Cache:
             filters: Filters for selecting specific latents.
             batch_size: Size of batches for processing. Defaults to 64.
         """
-        self.latent_locations_batches: dict[
-            str, list[location_tensor_shape]
-        ] = defaultdict(list)
-        self.latent_activations_batches: dict[
-            str, list[location_tensor_shape]
-        ] = defaultdict(list)
-        self.tokens_batches: dict[str, list[token_tensor_shape]] = (
+        self.latent_locations_batches: dict[str, list[location_tensor_shape]] = (
             defaultdict(list)
         )
+        self.latent_activations_batches: dict[str, list[location_tensor_shape]] = (
+            defaultdict(list)
+        )
+        self.tokens_batches: dict[str, list[token_tensor_shape]] = defaultdict(list)
 
-        self.latent_locations: dict[
-            str, location_tensor_shape
-        ] = {}
-        self.latent_activations: dict[
-            str, location_tensor_shape
-        ] = {}
+        self.latent_locations: dict[str, location_tensor_shape] = {}
+        self.latent_activations: dict[str, location_tensor_shape] = {}
         self.tokens: dict[str, token_tensor_shape] = {}
 
         self.filters = filters
@@ -138,9 +133,7 @@ class Cache:
         nonzero_latent_activations = torch.cat(nonzero_latent_activations, dim=0)
         return nonzero_latent_locations, nonzero_latent_activations
 
-    def get_nonzeros(
-        self, latents: location_tensor_shape, module_path: str
-    ) -> tuple[
+    def get_nonzeros(self, latents: location_tensor_shape, module_path: str) -> tuple[
         location_tensor_shape,
         location_tensor_shape,
     ]:
@@ -304,7 +297,7 @@ class LatentCache:
             if save_tokens:
                 data["tokens"] = self.cache.tokens[module_path].numpy()
 
-            save_file(data, output_file)  
+            save_file(data, output_file)
 
     def _generate_split_indices(self, n_splits: int) -> list[tuple[Tensor, Tensor]]:
         """
