@@ -179,7 +179,6 @@ async def process_cache(
     explainer_pipe = process_wrapper(
         DefaultExplainer(
             client,
-            tokenizer=dataset.tokenizer,
             threshold=0.3,
             verbose=run_cfg.verbose,
         ),
@@ -204,7 +203,6 @@ async def process_cache(
         process_wrapper(
             DetectionScorer(
                 client,
-                tokenizer=dataset.tokenizer,  # type: ignore
                 n_examples_shown=run_cfg.num_examples_per_scorer_prompt,
                 verbose=run_cfg.verbose,
                 log_prob=False,
@@ -215,7 +213,6 @@ async def process_cache(
         process_wrapper(
             FuzzingScorer(
                 client,
-                tokenizer=dataset.tokenizer,  # type: ignore
                 n_examples_shown=run_cfg.num_examples_per_scorer_prompt,
                 verbose=run_cfg.verbose,
                 log_prob=False,

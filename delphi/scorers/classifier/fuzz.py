@@ -1,7 +1,6 @@
 from math import ceil
 
 import torch
-from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
 from ...latents import LatentRecord
@@ -18,7 +17,6 @@ class FuzzingScorer(Classifier, Scorer):
     def __init__(
         self,
         client: Client,
-        tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
         verbose: bool = False,
         n_examples_shown: int = 1,
         threshold: float = 0.3,
@@ -41,7 +39,6 @@ class FuzzingScorer(Classifier, Scorer):
         """
         super().__init__(
             client=client,
-            tokenizer=tokenizer,
             verbose=verbose,
             n_examples_shown=n_examples_shown,
             log_prob=log_prob,
@@ -75,7 +72,6 @@ class FuzzingScorer(Classifier, Scorer):
         if len(record.not_active) > 0:
             samples = examples_to_samples(
                 record.not_active,
-                tokenizer=self.tokenizer,
                 n_incorrect=n_incorrect,
                 highlighted=True,
             )
@@ -86,7 +82,6 @@ class FuzzingScorer(Classifier, Scorer):
         samples.extend(
             examples_to_samples(
                 record.test,
-                tokenizer=self.tokenizer,
                 n_incorrect=0,
                 highlighted=True,
             )

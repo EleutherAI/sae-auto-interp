@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from typing import NamedTuple
 
 import torch
-from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...latents import ActivatingExample, NonActivatingExample
 from ...logger import logger
@@ -46,7 +45,6 @@ class Sample(NamedTuple):
 
 def examples_to_samples(
     examples: list[ActivatingExample] | list[NonActivatingExample],
-    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     n_incorrect: int = 0,
     threshold: float = 0.3,
     highlighted: bool = False,
@@ -55,9 +53,7 @@ def examples_to_samples(
     samples = []
 
     for example in examples:
-        text, str_toks = _prepare_text(
-            example, tokenizer, n_incorrect, threshold, highlighted
-        )
+        text, str_toks = _prepare_text(example, n_incorrect, threshold, highlighted)
         match example:
             case ActivatingExample():
                 activating = True
@@ -87,17 +83,11 @@ def examples_to_samples(
 
 def _prepare_text(
     example,
-    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     n_incorrect: int,
     threshold: float,
     highlighted: bool,
 ) -> tuple[str, list[str]]:
-    if (
-        tokenizer is None
-    ):  # If we don't have a tokenizer, we assume the tokens are already strings
-        str_toks = example.tokens
-    else:
-        str_toks = tokenizer.batch_decode(example.tokens)
+    str_toks = example.str_tokens
     clean = "".join(str_toks)
     # Just return text if there's no highlighting
     if not highlighted:

@@ -1,6 +1,8 @@
 import random
 from typing import Literal
 
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
+
 from ..config import ExperimentConfig
 from ..logger import logger
 from .latents import ActivatingExample, LatentRecord
@@ -96,6 +98,7 @@ def test(
 def sample(
     record: LatentRecord,
     cfg: ExperimentConfig,
+    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
 ):
     examples = record.examples
     max_activation = record.max_activation

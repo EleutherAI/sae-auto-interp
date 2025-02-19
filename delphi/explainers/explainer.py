@@ -7,7 +7,6 @@ from dataclasses import dataclass, field
 from typing import NamedTuple
 
 import aiofiles
-from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ..clients.client import Client
 from ..latents.latents import ActivatingExample, LatentRecord
@@ -30,8 +29,6 @@ class Explainer(ABC):
 
     client: Client
     """Client to use for explanation generation. """
-    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast
-    """The tokenizer used to collect activations."""
     verbose: bool = False
     """Whether to print verbose output."""
     threshold: float = 0.3

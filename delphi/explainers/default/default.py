@@ -7,16 +7,16 @@ from .prompt_builder import build_prompt
 
 @dataclass
 class DefaultExplainer(Explainer):
-    activations: bool
+    activations: bool = True
     """Whether to show activations to the explainer."""
-    cot: bool
+    cot: bool = False
     """Whether to use chain of thought reasoning."""
 
     def _build_prompt(self, examples: list[ActivatingExample]) -> list[dict]:
         highlighted_examples = []
 
         for i, example in enumerate(examples):
-            str_toks = self.tokenizer.batch_decode(example.tokens)
+            str_toks = example.str_tokens
             activations = example.activations.tolist()
             highlighted_examples.append(self._highlight(str_toks, activations))
 

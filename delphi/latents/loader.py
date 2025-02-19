@@ -372,7 +372,8 @@ class LatentDataset:
                 activation_data=latent_data.activation_data,
                 all_data=self.all_data[latent_data.module],
                 tokens=self.tokens,
+                tokenizer=self.tokenizer,
             )
         if self.sampler is not None:
-            self.sampler(record)
+            self.sampler(record, tokenizer=self.tokenizer)
         return record
