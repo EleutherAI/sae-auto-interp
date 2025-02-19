@@ -43,28 +43,28 @@ class DetectionScorer(Classifier):
             **generation_kwargs,
         )
 
-        self.prompt = prompt
+    def prompt(self, examples: str, explanation: str) -> list[dict]:
+        return prompt(examples, explanation)
 
-    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[Sample]:
         """
         Prepare and shuffle a list of samples for classification.
         """
 
-        samples = examples_to_samples(
-            record.not_active,
-            distance=-1,
-            ground_truth=False,
-            tokenizer=self.tokenizer,
-        )
-
-        for i, examples in enumerate(record.test):
-            samples.extend(
-                examples_to_samples(
-                    examples,
-                    distance=i + 1,
-                    ground_truth=True,
-                    tokenizer=self.tokenizer,
-                )
+        if len(record.not_active) > 0:
+            samples = examples_to_samples(
+                record.not_active,
+                tokenizer=self.tokenizer,
             )
+
+        else:
+            samples = []
+
+        samples.extend(
+            examples_to_samples(
+                record.test,
+                tokenizer=self.tokenizer,
+            )
+        )
 
         return samples

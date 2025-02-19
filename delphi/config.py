@@ -29,6 +29,17 @@ class ExperimentConfig(Serializable):
     test_type: Literal["quantiles", "activation"] = "quantiles"
     """Type of sampler to use for latent explanation testing."""
 
+    non_activating_source: Literal["random", "neighbours"] = "random"
+    """Source of non-activating examples. Random uses non-activating contexts
+    sampled from any non activating window. Neighbours uses actvating contexts
+    from pre-computed latent neighbours. They are still non-activating but
+    have a higher chance of being similar to the activating examples."""
+
+    neighbours_type: Literal[
+        "co-occurrence", "decoder_similarity", "encoder_similarity"
+    ] = "co-occurrence"
+    """Type of neighbours to use. Only used if non_activating_source is 'neighbours'."""
+
 
 @dataclass
 class LatentConfig(Serializable):
@@ -145,6 +156,6 @@ class RunConfig:
     scoring speed but can leak information to the fuzzing and detection scorer,
     as well as increasing the scorer LLM task difficulty."""
 
-    overwrite: list[Literal["cache", "scores"]] = list_field()
+    overwrite: list[Literal["cache", "neighbours", "scores"]] = list_field()
     """List of run stages to recompute. This is a debugging tool
     and may be removed in the future."""

@@ -3,9 +3,9 @@ from dataclasses import dataclass
 from typing import NamedTuple
 
 import torch
-from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
-from ...latents import Example
+from ...latents import ActivatingExample, NonActivatingExample
 from ...logger import logger
 
 L = "<<"
@@ -26,14 +26,11 @@ class ClassifierOutput:
     distance: float | int
     """Quantile or neighbor distance"""
 
-    ground_truth: bool
+    activating: bool
     """Whether the example is activating or not"""
 
     prediction: bool | None = False
     """Whether the model predicted the example activating or not"""
-
-    highlighted: bool = False
-    """Whether the sample is highlighted"""
 
     probability: float | None = 0.0
     """The probability of the example activating"""
@@ -48,8 +45,8 @@ class Sample(NamedTuple):
 
 
 def examples_to_samples(
-    examples: list[Example],
-    tokenizer: PreTrainedTokenizer,
+    examples: list[ActivatingExample] | list[NonActivatingExample],
+    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     n_incorrect: int = 0,
     threshold: float = 0.3,
     highlighted: bool = False,
@@ -61,6 +58,13 @@ def examples_to_samples(
         text, str_toks = _prepare_text(
             example, tokenizer, n_incorrect, threshold, highlighted
         )
+        match example:
+            case ActivatingExample():
+                activating = True
+                distance = example.quantile
+            case NonActivatingExample():
+                activating = False
+                distance = example.distance
 
         samples.append(
             Sample(
@@ -68,7 +72,8 @@ def examples_to_samples(
                 data=ClassifierOutput(
                     str_tokens=str_toks,
                     activations=example.activations.tolist(),
-                    highlighted=highlighted,
+                    activating=activating,
+                    distance=distance,
                     **sample_kwargs,
                 ),
             )
@@ -82,11 +87,11 @@ def examples_to_samples(
 
 def _prepare_text(
     example,
-    tokenizer: PreTrainedTokenizer,
+    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     n_incorrect: int,
     threshold: float,
     highlighted: bool,
-):
+) -> tuple[str, list[str]]:
     if (
         tokenizer is None
     ):  # If we don't have a tokenizer, we assume the tokens are already strings
@@ -104,10 +109,10 @@ def _prepare_text(
     # if correct example
     if n_incorrect == 0:
 
-        def check(i):
+        def threshold_check(i):
             return example.activations[i] >= threshold
 
-        return _highlight(str_toks, check), str_toks
+        return _highlight(str_toks, threshold_check), str_toks
 
     # Highlight n_incorrect tokens with activations
     # below threshold if incorrect example

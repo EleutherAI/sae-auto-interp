@@ -70,7 +70,6 @@ def test_generate_score(score_type):
             "model": MODEL,
             "type": score_type,
         }
-
     # Send the request
     response = requests.post(url, json=data)
 

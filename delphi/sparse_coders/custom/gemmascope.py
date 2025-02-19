@@ -13,8 +13,8 @@ def load_gemma_autoencoders(
     sizes: list[str],
     type: str,
     dtype: torch.dtype = torch.bfloat16,
-    device: torch.device = torch.device("cuda"),
-):
+    device: str | torch.device = torch.device("cuda"),
+) -> dict[str, nn.Module]:
     saes = {}
 
     for layer, size, l0 in zip(ae_layers, sizes, average_l0s):
@@ -45,7 +45,7 @@ def load_gemma_hooks(
     sizes: list[str],
     type: str,
     dtype: torch.dtype = torch.bfloat16,
-    device: torch.device = torch.device("cuda"),
+    device: str | torch.device = torch.device("cuda"),
 ):
     saes = load_gemma_autoencoders(
         model_path,

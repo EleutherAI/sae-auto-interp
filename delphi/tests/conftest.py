@@ -1,6 +1,15 @@
+from typing import cast
+
 import pytest
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from torch import Tensor
+from transformers import (
+    AutoModel,
+    AutoTokenizer,
+    PreTrainedModel,
+    PreTrainedTokenizer,
+    PreTrainedTokenizerFast,
+)
 
 from delphi.config import CacheConfig, RunConfig
 from delphi.latents import LatentCache
@@ -24,30 +33,31 @@ random_text = [
 
 
 @pytest.fixture(scope="module")
-def tokenizer():
-    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-70m")
+def tokenizer() -> PreTrainedTokenizer | PreTrainedTokenizerFast:
+    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-160m")
     tokenizer.pad_token = tokenizer.eos_token
     return tokenizer
 
 
 @pytest.fixture(scope="module")
-def model():
-    model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-70m")
+def model() -> PreTrainedModel:
+    model = AutoModel.from_pretrained("EleutherAI/pythia-160m")
     return model
 
 
 @pytest.fixture(scope="module")
-def mock_dataset(tokenizer: AutoTokenizer) -> torch.Tensor:
+def mock_dataset(tokenizer: PreTrainedTokenizer) -> torch.Tensor:
     tokens = tokenizer(
         random_text, return_tensors="pt", truncation=True, max_length=16, padding=True
     )["input_ids"]
+    tokens = cast(Tensor, tokens)
+    print(tokens)
+    print(tokens.shape)
     return tokens
 
 
 @pytest.fixture(scope="module")
-def cache_setup(
-    tmp_path_factory, mock_dataset: torch.Tensor, model: AutoModelForCausalLM
-):
+def cache_setup(tmp_path_factory, mock_dataset: torch.Tensor, model: PreTrainedModel):
     """
     This fixture creates a temporary directory, loads the model,
     initializes the cache, runs the cache once, saves the cache splits
@@ -58,12 +68,12 @@ def cache_setup(
 
     # Load model and set run configuration
     run_cfg_gemma = RunConfig(
-        model="EleutherAI/pythia-70m",
-        sparse_model="EleutherAI/sae-pythia-70m-32k",
+        model="EleutherAI/pythia-160m",
+        sparse_model="EleutherAI/sae-pythia-160m-32k",
         hookpoints=["layers.1"],
     )
     hookpoint_to_sparse_encode = load_hooks_sparse_coders(model, run_cfg_gemma)
-
+    print(hookpoint_to_sparse_encode)
     # Define cache config and initialize cache
     cache_cfg = CacheConfig(batch_size=1, ctx_len=16, n_tokens=100)
     cache = LatentCache(
@@ -81,7 +91,6 @@ def cache_setup(
     # Save the cache config
 
     cache.save_config(temp_dir, cache_cfg, "EleutherAI/pythia-70m")
-
     return {
         "cache": cache,
         "tokens": tokens,

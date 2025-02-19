@@ -23,7 +23,7 @@ def collect_activations(model: PreTrainedModel, hookpoints: list[str]):
     handles = []
 
     def create_hook(hookpoint: str):
-        def hook_fn(module: nn.Module, input: Any, output: Tensor) -> Tensor:
+        def hook_fn(module: nn.Module, input: Any, output: Tensor) -> Tensor | None:
             # If output is a tuple (like in some transformer layers), take first element
             if isinstance(output, tuple):
                 activations[hookpoint] = output[0]

@@ -1,117 +1,35 @@
 import asyncio
-import re
+from dataclasses import dataclass
 
-from ...logger import logger
-from ..explainer import Explainer, ExplainerResult
+from ..explainer import ActivatingExample, Explainer
 from .prompt_builder import build_prompt
 
 
+@dataclass
 class DefaultExplainer(Explainer):
-    name = "default"
+    activations: bool = True
+    """Whether to show activations to the explainer."""
+    cot: bool = False
+    """Whether to use chain of thought reasoning."""
 
-    def __init__(
-        self,
-        client,
-        tokenizer,
-        verbose: bool = False,
-        activations: bool = False,
-        cot: bool = False,
-        threshold: float = 0.6,
-        temperature: float = 0.0,
-        **generation_kwargs,
-    ):
-        self.client = client
-        self.tokenizer = tokenizer
-        self.verbose = verbose
-
-        self.activations = activations
-        self.cot = cot
-        self.threshold = threshold
-        self.temperature = temperature
-        self.generation_kwargs = generation_kwargs
-
-    async def __call__(self, record):
-        messages = self._build_prompt(record.train)
-
-        response = await self.client.generate(
-            messages, temperature=self.temperature, **self.generation_kwargs
-        )
-
-        try:
-            explanation = self.parse_explanation(response.text)
-            if self.verbose:
-                logger.info(f"Explanation: {explanation}")
-                logger.info(f"Final message to explainer: {messages[-1]['content']}")
-                logger.info(f"Response from explainer: {response.text}")
-
-            return ExplainerResult(record=record, explanation=explanation)
-        except Exception as e:
-            logger.error(f"Explanation parsing failed: {e}")
-            return ExplainerResult(
-                record=record, explanation="Explanation could not be parsed."
-            )
-
-    def parse_explanation(self, text: str) -> str:
-        try:
-            match = re.search(r"\[EXPLANATION\]:\s*(.*)", text, re.DOTALL)
-            return (
-                match.group(1).strip() if match else "Explanation could not be parsed."
-            )
-        except Exception as e:
-            logger.error(f"Explanation parsing regex failed: {e}")
-            raise
-
-    def _highlight(self, index, example):
-        result = f"Example {index}: "
-
-        threshold = example.max_activation * self.threshold
-        if self.tokenizer is not None:
-            str_toks = self.tokenizer.batch_decode(example.tokens)
-            example.str_toks = str_toks
-        else:
-            str_toks = example.tokens
-            example.str_toks = str_toks
-        activations = example.activations
-
-        def check(i):
-            return activations[i] > threshold
-
-        i = 0
-        while i < len(str_toks):
-            if check(i):
-                result += "<<"
-
-                while i < len(str_toks) and check(i):
-                    result += str_toks[i]
-                    i += 1
-                result += ">>"
-            else:
-                result += str_toks[i]
-                i += 1
-
-        return "".join(result)
-
-    def _join_activations(self, example):
-        activations = []
-
-        for i, activation in enumerate(example.activations):
-            if activation > example.max_activation * self.threshold:
-                activations.append(
-                    (example.str_toks[i], int(example.normalized_activations[i]))
-                )
-
-        acts = ", ".join(f'("{item[0]}" : {item[1]})' for item in activations)
-
-        return "Activations: " + acts
-
-    def _build_prompt(self, examples):
+    def _build_prompt(self, examples: list[ActivatingExample]) -> list[dict]:
         highlighted_examples = []
 
         for i, example in enumerate(examples):
-            highlighted_examples.append(self._highlight(i + 1, example))
+            str_toks = self.tokenizer.batch_decode(example.tokens)
+            activations = example.activations.tolist()
+            highlighted_examples.append(self._highlight(str_toks, activations))
 
             if self.activations:
-                highlighted_examples.append(self._join_activations(example))
+                assert (
+                    example.normalized_activations is not None
+                ), "Normalized activations are required for activations in explainer"
+                normalized_activations = example.normalized_activations.tolist()
+                highlighted_examples.append(
+                    self._join_activations(
+                        str_toks, activations, normalized_activations
+                    )
+                )
 
         highlighted_examples = "\n".join(highlighted_examples)
 

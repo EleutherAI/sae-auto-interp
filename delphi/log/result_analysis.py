@@ -77,18 +77,16 @@ def latent_balanced_score_metrics(
 def parse_score_file(file_path):
     with open(file_path, "rb") as f:
         data = orjson.loads(f.read())
-
     df = pd.DataFrame(
         [
             {
                 "text": "".join(example["str_tokens"]),
                 "distance": example["distance"],
-                "ground_truth": example["ground_truth"],
+                "activating": example["activating"],
                 "prediction": example["prediction"],
                 "probability": example["probability"],
                 "correct": example["correct"],
                 "activations": example["activations"],
-                "highlighted": example["highlighted"],
             }
             for example in data
         ]
@@ -99,14 +97,14 @@ def parse_score_file(file_path):
     df = df[df["prediction"].notna()]
     df.reset_index(drop=True, inplace=True)
     total_examples = len(df)
-    total_positives = (df["ground_truth"]).sum()
-    total_negatives = (~df["ground_truth"]).sum()
+    total_positives = (df["activating"]).sum()
+    total_negatives = (~df["activating"]).sum()
 
     # Calculate confusion matrix elements
-    true_positives = ((df["prediction"] == 1) & (df["ground_truth"])).sum()
-    true_negatives = ((df["prediction"] == 0) & (~df["ground_truth"])).sum()
-    false_positives = ((df["prediction"] == 1) & (~df["ground_truth"])).sum()
-    false_negatives = ((df["prediction"] == 0) & (df["ground_truth"])).sum()
+    true_positives = ((df["prediction"] == 1) & (df["activating"])).sum()
+    true_negatives = ((df["prediction"] == 0) & (~df["activating"])).sum()
+    false_positives = ((df["prediction"] == 1) & (~df["activating"])).sum()
+    false_negatives = ((df["prediction"] == 0) & (df["activating"])).sum()
 
     # Calculate rates
     true_positive_rate = true_positives / total_positives if total_positives > 0 else 0

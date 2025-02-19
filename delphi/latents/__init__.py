@@ -1,13 +1,19 @@
 from .cache import LatentCache
 from .constructors import (
-    default_constructor,
+    constructor,
+    neighbour_non_activation_windows,
     pool_max_activation_windows,
     random_non_activating_windows,
 )
-from .latents import Example, Latent, LatentRecord
+from .latents import (
+    ActivatingExample,
+    Example,
+    Latent,
+    LatentRecord,
+    NonActivatingExample,
+)
 from .loader import LatentDataset
-from .samplers import sample
-from .stats import get_neighbors, unigram
+from .samplers import sampler
 
 __all__ = [
     "LatentCache",
@@ -15,10 +21,11 @@ __all__ = [
     "Latent",
     "LatentRecord",
     "Example",
+    "ActivatingExample",
+    "NonActivatingExample",
     "pool_max_activation_windows",
     "random_non_activating_windows",
-    "default_constructor",
-    "sample",
-    "get_neighbors",
-    "unigram",
+    "neighbour_non_activation_windows",
+    "constructor",
+    "sampler",
 ]

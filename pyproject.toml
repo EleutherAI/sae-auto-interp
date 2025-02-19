@@ -15,7 +15,7 @@ dependencies = [
     "sparsify@git+https://github.com/EleutherAI/sparsify",
     "safetensors",
     "simple_parsing",
-    "torchtyping",
+    "jaxtyping",
     "fire",
     "blobfile",
     "bitsandbytes",
