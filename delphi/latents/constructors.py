@@ -4,8 +4,12 @@ import torch
 from jaxtyping import Float
 from torch import Tensor
 
-from .latents import ActivatingExample, LatentRecord, NonActivatingExample
-from .loader import ActivationData
+from .latents import (
+    ActivatingExample,
+    ActivationData,
+    LatentRecord,
+    NonActivatingExample,
+)
 
 
 def prepare_non_activating_examples(

@@ -3,7 +3,7 @@ import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, NamedTuple, Optional
+from typing import Callable, Optional
 
 import numpy as np
 import torch
@@ -18,35 +18,8 @@ from delphi.utils import (
 
 from ..config import ExperimentConfig, LatentConfig
 from .constructors import constructor
-from .latents import Latent, LatentRecord
+from .latents import ActivationData, Latent, LatentData, LatentRecord
 from .samplers import sampler
-
-
-class ActivationData(NamedTuple):
-    """
-    Represents the activation data for a latent.
-    """
-
-    locations: Float[Tensor, "n_examples 2"]
-    """Tensor of latent locations."""
-
-    activations: Float[Tensor, "n_examples"]
-    """Tensor of latent activations."""
-
-
-class LatentData(NamedTuple):
-    """
-    Represents the output of a TensorBuffer.
-    """
-
-    latent: Latent
-    """The latent associated with this output."""
-
-    module: str
-    """The module associated with this output."""
-
-    activation_data: ActivationData
-    """The activation data for this latent."""
 
 
 @dataclass
