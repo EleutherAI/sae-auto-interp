@@ -93,10 +93,10 @@ def test(
             raise NotImplementedError("Activation sampling not implemented")
 
 
-def sample(
+def sampler(
     record: LatentRecord,
     cfg: ExperimentConfig,
-):
+) -> LatentRecord:
     examples = record.examples
     max_activation = record.max_activation
     _train = train(
@@ -116,3 +116,4 @@ def sample(
             cfg.test_type,
         )
         record.test = _test
+    return record

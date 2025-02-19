@@ -111,7 +111,7 @@ def constructor(
     tokens: Float[Tensor, "batch seq"],
     all_data: Optional[dict[int, ActivationData]] = None,
     seed: int = 42,
-):
+) -> LatentRecord:
     cache_token_length = tokens.shape[1]
 
     # Get all positions where the latent is active
@@ -165,7 +165,7 @@ def constructor(
             n_not_active=n_not_active,
             seed=seed,
         )
-
+    return record
 
 def neighbour_non_activation_windows(
     record: LatentRecord,
