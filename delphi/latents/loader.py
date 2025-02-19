@@ -16,8 +16,10 @@ from delphi.utils import (
     load_tokenized_data,
 )
 
-from ..config import LatentConfig
+from ..config import ExperimentConfig, LatentConfig
+from .constructors import constructor
 from .latents import Latent, LatentRecord
+from .samplers import sampler
 
 
 class ActivationData(NamedTuple):
@@ -148,24 +150,26 @@ class LatentDataset:
     def __init__(
         self,
         raw_dir: str,
-        cfg: LatentConfig,
+        latent_cfg: LatentConfig,
+        experiment_cfg: ExperimentConfig,
         tokenizer: Optional[Callable] = None,
         modules: Optional[list[str]] = None,
         latents: Optional[dict[str, torch.Tensor]] = None,
-        constructor: Optional[Callable] = None,
-        sampler: Optional[Callable] = None,
-        neighbours: Optional[dict[str, dict[str, list[tuple[float, int]]]]] = None,
     ):
         """
         Initialize a LatentDataset.
 
         Args:
             raw_dir: Directory containing raw latent data.
-            cfg: Configuration for latent processing.
+            latent_cfg: Configuration for latent processing.
+            experiment_cfg: Configuration for example creation
+            and sampling.
+            tokenizer: Tokenizer used to tokenize the data.
             modules: list of module names to include.
             latents: Dictionary of latents per module.
         """
-        self.cfg = cfg
+        self.latent_config = latent_cfg
+        self.experiment_config = experiment_cfg
         self.buffers: list[TensorBuffer] = []
         self.all_data: dict[str, dict[int, ActivationData] | None] = {}
         self.tokens = None
@@ -187,14 +191,18 @@ class LatentDataset:
         else:
             self.tokenizer = tokenizer
         self.cache_config = cache_config
-        self.constructor = constructor
-        self.sampler = sampler
-        self.neighbours = neighbours
 
-        # TODO: is it possible to do this without loading all data?
-        if self.constructor is not None:
-            if self.constructor.keywords["constructor_type"] == "neighbours":
-                self.all_data = self._load_all_data(raw_dir, self.modules)
+        if self.experiment_config.non_activating_source == "neighbours":
+            # path is always going to end with /latents
+            split_path = raw_dir.split("/")[:-1]
+            neighbours_path = "/".join(split_path) + "/neighbours"
+            self.neighbours = self.load_neighbours(
+                neighbours_path, self.experiment_config.neighbours_type
+            )
+            # TODO: is it possible to do this without loading all data?
+            self.all_data = self._load_all_data(raw_dir, self.modules)
+        else:
+            self.neighbours = None
 
         self.load_tokens()
 
@@ -220,6 +228,13 @@ class LatentDataset:
             )
         return self.tokens
 
+    def load_neighbours(self, neighbours_path: str, neighbours_type: str):
+        neighbours = {}
+        for hookpoint in self.modules:
+            with open(neighbours_path + f"{hookpoint}.json", "r") as f:
+                neighbours[hookpoint] = json.load(f)[neighbours_type]
+        return neighbours
+
     def _edges(self, raw_dir: str, module: str) -> list[tuple[int, int]]:
         module_dir = Path(raw_dir) / module
         safetensor_files = [f for f in module_dir.glob("*.safetensors")]
@@ -244,7 +259,7 @@ class LatentDataset:
             for start, end in edges:
                 path = f"{raw_dir}/{module}/{start}_{end}.safetensors"
                 tensor_buffer = TensorBuffer(
-                    path, module, min_examples=self.cfg.min_examples
+                    path, module, min_examples=self.latent_config.min_examples
                 )
                 if self.tokens is None:
                     self.tokens = tensor_buffer.tokens
@@ -284,7 +299,10 @@ class LatentDataset:
                 # Adjust end by one as the path avoids overlap
                 path = f"{raw_dir}/{module}/{start}_{end-1}.safetensors"
                 tensor_buffer = TensorBuffer(
-                    path, module, _selected_latents, min_examples=self.cfg.min_examples
+                    path,
+                    module,
+                    _selected_latents,
+                    min_examples=self.latent_config.min_examples,
                 )
                 if self.tokens is None:
                     self.tokens = tensor_buffer.tokens
@@ -363,6 +381,8 @@ class LatentDataset:
         Returns:
             Optional[LatentRecord]: Processed latent record or None.
         """
+        if self.tokens is None:
+            raise ValueError("Tokens are not loaded")
         record = LatentRecord(latent_data.latent)
         if self.neighbours is not None:
             record.set_neighbours(
@@ -370,13 +390,15 @@ class LatentDataset:
                     str(latent_data.latent.latent_index)
                 ],
             )
-        if self.constructor is not None:
-            self.constructor(
-                record=record,
-                activation_data=latent_data.activation_data,
-                all_data=self.all_data[latent_data.module],
-                tokens=self.tokens,
-            )
-        if self.sampler is not None:
-            self.sampler(record)
+        record = constructor(
+            record=record,
+            activation_data=latent_data.activation_data,
+            n_not_active=self.experiment_config.n_non_activating,
+            constructor_type=self.experiment_config.non_activating_source,
+            ctx_len=self.experiment_config.example_ctx_len,
+            max_examples=self.latent_config.max_examples,
+            tokens=self.tokens,
+            all_data=self.all_data[latent_data.module],
+        )
+        record = sampler(record, self.experiment_config)
         return record

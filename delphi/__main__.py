@@ -4,7 +4,7 @@ import os
 from functools import partial
 from glob import glob
 from pathlib import Path
-from typing import Callable, cast
+from typing import Callable
 
 import orjson
 import torch
@@ -23,10 +23,7 @@ from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
 from delphi.explainers import DefaultExplainer
 from delphi.latents import LatentCache, LatentDataset
-from delphi.latents.constructors import constructor
 from delphi.latents.neighbours import NeighbourCalculator
-from delphi.latents.samplers import sample
-from delphi.latents.transforms import set_neighbours
 from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
@@ -84,7 +81,6 @@ async def process_cache(
     run_cfg: RunConfig,
     experiment_cfg: ExperimentConfig,
     latents_path: Path,
-    neighbours_path: Path,
     explanations_path: Path,
     scores_path: Path,
     hookpoints: list[str],
@@ -109,37 +105,14 @@ async def process_cache(
         latent_dict = {
             hook: latent_range for hook in hookpoints
         }  # The latent range to explain
-        latent_dict = cast(dict[str, Tensor], latent_dict)
 
-    example_constructor = partial(
-        constructor,
-        n_not_active=experiment_cfg.n_non_activating,
-        constructor_type=experiment_cfg.non_activating_source,
-        ctx_len=experiment_cfg.example_ctx_len,
-        max_examples=latent_cfg.max_examples,
-    )
-    sampler = partial(sample, cfg=experiment_cfg)
-    if experiment_cfg.non_activating_source == "neighbours":
-        neighbours = {}
-        for hookpoint in hookpoints:
-            with open(neighbours_path / f"{hookpoint}.json", "r") as f:
-                neighbours[hookpoint] = json.load(f)["co-occurrence"]
-        transform = partial(
-            set_neighbours,
-            neighbours=neighbours,
-            threshold=0.0,
-        )
-    else:
-        transform = None
     dataset = LatentDataset(
         raw_dir=str(latents_path),
-        cfg=latent_cfg,
+        latent_cfg=latent_cfg,
+        experiment_cfg=experiment_cfg,
         modules=hookpoints,
         latents=latent_dict,
         tokenizer=tokenizer,
-        constructor=example_constructor,
-        sampler=sampler,
-        transform=transform,
     )
 
     if run_cfg.explainer_provider == "offline":
@@ -344,7 +317,6 @@ async def run(
             run_cfg,
             experiment_cfg,
             latents_path,
-            neighbours_path,
             explanations_path,
             scores_path,
             hookpoints,
