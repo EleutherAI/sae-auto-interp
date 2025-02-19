@@ -49,8 +49,7 @@ def build_prompt(
             "content": user_start,
         }
     )
-    print(messages)
-
+    
     return messages
 
 
