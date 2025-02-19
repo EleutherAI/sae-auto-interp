@@ -191,7 +191,8 @@ class NeighbourCalculator:
         if batch_boundaries[-1] != len(idx_cantor):
             batch_boundaries.append(len(idx_cantor))
 
-        co_occurrence_matrix = torch.zeros((n_latents, n_latents), dtype=torch.int32).cuda()
+        co_occurrence_matrix = torch.zeros((n_latents, n_latents), dtype=torch.int32)
+        co_occurrence_matrix = co_occurrence_matrix.cuda()
 
         for start,end in tqdm(zip(batch_boundaries[:-1],batch_boundaries[1:])):
             # get all ind_cantor values between start and start + token_batch_size
@@ -199,14 +200,17 @@ class NeighbourCalculator:
             selected_latent_index = latent_index[start:end]
             
             # create a sparse matrix of the selected indices
-            sparse_matrix_indices = torch.stack([selected_latent_index,selected_idx_cantor],dim=0)
+            sparse_matrix_indices = torch.stack(
+                [selected_latent_index,selected_idx_cantor],dim=0)
             sparse_matrix = torch.sparse_coo_tensor(
-                sparse_matrix_indices, torch.ones(len(selected_latent_index)), (n_latents, token_batch_size)
+                sparse_matrix_indices,
+                torch.ones(len(selected_latent_index)),
+                (n_latents, token_batch_size),
             )
             sparse_matrix = sparse_matrix.cuda()
             partial_cooc = (sparse_matrix @ sparse_matrix.T).to_dense()
             co_occurrence_matrix += partial_cooc.int()
-            del sparse_matrix,partial_cooc
+            del sparse_matrix, partial_cooc
 
 
         # Compute Jaccard similarity

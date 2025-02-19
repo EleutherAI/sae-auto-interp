@@ -62,18 +62,21 @@ def load_artifacts(run_cfg: RunConfig):
 async def create_neighbours(
     latents_path: Path,
     neighbours_path: Path,
+    hookpoints: list[str],
 ):
     """
     Creates a neighbours file for the given hookpoints.
     """
-    neighbour_calculator = NeighbourCalculator(
-        cache_dir=latents_path, number_of_neighbours=100
-    )
-
-    neighbour_calculator.populate_neighbour_cache(["co-occurrence"])
     neighbours_path.mkdir(parents=True, exist_ok=True)
 
-    neighbour_calculator.save_neighbour_cache(f"{neighbours_path}/neighbours.json")
+    for hookpoint in hookpoints:
+        neighbour_calculator = NeighbourCalculator(
+            cache_dir=latents_path / hookpoint, number_of_neighbours=100
+        )
+
+        neighbour_calculator.populate_neighbour_cache(["co-occurrence"])
+
+        neighbour_calculator.save_neighbour_cache(f"{neighbours_path}/{hookpoint}.json")
 
 
 async def process_cache(
@@ -117,8 +120,10 @@ async def process_cache(
     )
     sampler = partial(sample, cfg=experiment_cfg)
     if experiment_cfg.non_activating_source == "neighbours":
-        with open(neighbours_path / "neighbours.json", "r") as f:
-            neighbours = json.load(f)["co-occurrence"]
+        neighbours = {}
+        for hookpoint in hookpoints:
+            with open(neighbours_path / f"{hookpoint}.json", "r") as f:
+                neighbours[hookpoint] = json.load(f)["co-occurrence"]
         transform = partial(
             set_neighbours,
             neighbours=neighbours,
@@ -327,8 +332,7 @@ async def run(
         or "neighbours" in run_cfg.overwrite
     ):
         await create_neighbours(
-            latents_path,
-            neighbours_path,
+            latents_path, neighbours_path, hookpoints
         )
     else:
         print(f"Files found in {neighbours_path}, skipping...")
