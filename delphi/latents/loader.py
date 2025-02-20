@@ -356,7 +356,7 @@ class LatentDataset:
         Returns:
             Optional[LatentRecord]: Processed latent record or None.
         """
-        #This should never happen but we need to type check
+        # This should never happen but we need to type check
         if self.tokens is None:
             raise ValueError("Tokens are not loaded")
         record = LatentRecord(latent_data.latent)
