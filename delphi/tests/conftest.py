@@ -11,7 +11,7 @@ from transformers import (
     PreTrainedTokenizerFast,
 )
 
-from delphi.config import CacheConfig, RunConfig, ConstructorConfig, SamplerConfig
+from delphi.config import CacheConfig, ConstructorConfig, RunConfig, SamplerConfig
 from delphi.latents import LatentCache
 from delphi.sparse_coders import load_hooks_sparse_coders
 
@@ -68,7 +68,7 @@ def cache_setup(tmp_path_factory, mock_dataset: torch.Tensor, model: PreTrainedM
 
     # Load model and set run configuration
     cache_cfg = CacheConfig(batch_size=1, cache_ctx_len=16, n_tokens=100)
-    
+
     run_cfg_gemma = RunConfig(
         constructor_cfg=ConstructorConfig(),
         sampler_cfg=SamplerConfig(),
