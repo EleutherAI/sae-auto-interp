@@ -3,6 +3,7 @@ from typing import Literal, Optional
 import torch
 from jaxtyping import Float
 from torch import Tensor
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from .latents import (
     ActivatingExample,
@@ -15,6 +16,7 @@ from .latents import (
 def prepare_non_activating_examples(
     tokens: Float[Tensor, "examples ctx_len"],
     distance: float,
+    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
 ) -> list[NonActivatingExample]:
     """
     Prepare a list of non-activating examples from input tokens and distance.
@@ -29,6 +31,7 @@ def prepare_non_activating_examples(
             activations=torch.zeros_like(toks),
             normalized_activations=None,
             distance=distance,
+            str_tokens=tokenizer.batch_decode(toks),
         )
         for toks in tokens
     ]
@@ -113,6 +116,7 @@ def constructor(
     ctx_len: int,
     constructor_type: Literal["random", "neighbours"],
     tokens: Float[Tensor, "batch seq"],
+    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     all_data: Optional[dict[int, ActivationData]] = None,
     seed: int = 42,
 ) -> LatentRecord:
@@ -145,8 +149,15 @@ def constructor(
         ctx_len=ctx_len,
         max_examples=max_examples,
     )
+    # TODO: We might want to do this in the sampler
+    # we are tokenizing examples that are not going to be used
     record.examples = [
-        ActivatingExample(tokens=toks, activations=acts, normalized_activations=None)
+        ActivatingExample(
+            tokens=toks,
+            activations=acts,
+            normalized_activations=None,
+            str_tokens=tokenizer.batch_decode(toks),
+        )
         for toks, acts in zip(token_windows, act_windows)
     ]
     if constructor_type == "random":
@@ -157,6 +168,7 @@ def constructor(
             reshaped_tokens=reshaped_tokens,
             n_not_active=n_not_active,
             seed=seed,
+            tokenizer=tokenizer,
         )
     elif constructor_type == "neighbours":
         assert all_data is not None, "All data is required for neighbour constructor"
@@ -168,6 +180,7 @@ def constructor(
             ctx_len=ctx_len,
             n_not_active=n_not_active,
             seed=seed,
+            tokenizer=tokenizer,
         )
     return record
 
@@ -179,6 +192,7 @@ def neighbour_non_activation_windows(
     all_data: dict[int, ActivationData],
     ctx_len: int,
     n_not_active: int,
+    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     seed: int = 42,
 ):
     """
@@ -252,7 +266,9 @@ def neighbour_non_activation_windows(
         # which will be the most active examples
         examples_used = len(token_windows)
         all_examples.extend(
-            prepare_non_activating_examples(token_windows, neighbour.distance)
+            prepare_non_activating_examples(
+                token_windows, neighbour.distance, tokenizer
+            )
         )
         number_examples += examples_used
     if len(all_examples) == 0:
@@ -265,6 +281,7 @@ def random_non_activating_windows(
     available_indices: Float[Tensor, "windows"],
     reshaped_tokens: Float[Tensor, "windows ctx_len"],
     n_not_active: int,
+    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     seed: int = 42,
 ):
     """
@@ -300,4 +317,5 @@ def random_non_activating_windows(
     record.not_active = prepare_non_activating_examples(
         toks,
         -1.0,
+        tokenizer,
     )

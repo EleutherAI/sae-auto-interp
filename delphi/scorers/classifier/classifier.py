@@ -5,7 +5,6 @@ import re
 from abc import abstractmethod
 
 import numpy as np
-from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from ...clients.client import Client
 from ...latents import LatentRecord
@@ -18,7 +17,6 @@ class Classifier(Scorer):
     def __init__(
         self,
         client: Client,
-        tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
         verbose: bool,
         n_examples_shown: int,
         log_prob: bool,
@@ -38,7 +36,6 @@ class Classifier(Scorer):
             generation_kwargs: Additional generation kwargs
         """
         self.client = client
-        self.tokenizer = tokenizer
         self.verbose = verbose
         self.n_examples_shown = n_examples_shown
         self.generation_kwargs = generation_kwargs

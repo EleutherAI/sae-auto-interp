@@ -3,14 +3,14 @@ import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Optional
+from typing import Optional
 
 import numpy as np
 import torch
 from jaxtyping import Float
 from safetensors.numpy import load_file
 from torch import Tensor
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from delphi.utils import (
     load_tokenized_data,
@@ -125,7 +125,7 @@ class LatentDataset:
         raw_dir: str,
         latent_cfg: LatentConfig,
         experiment_cfg: ExperimentConfig,
-        tokenizer: Optional[Callable] = None,
+        tokenizer: Optional[PreTrainedTokenizer | PreTrainedTokenizerFast] = None,
         modules: Optional[list[str]] = None,
         latents: Optional[dict[str, torch.Tensor]] = None,
     ):
@@ -356,6 +356,7 @@ class LatentDataset:
         Returns:
             Optional[LatentRecord]: Processed latent record or None.
         """
+        # This should never happen but we need to type check
         if self.tokens is None:
             raise ValueError("Tokens are not loaded")
         record = LatentRecord(latent_data.latent)
@@ -371,6 +372,7 @@ class LatentDataset:
             n_not_active=self.experiment_config.n_non_activating,
             constructor_type=self.experiment_config.non_activating_source,
             ctx_len=self.experiment_config.example_ctx_len,
+            tokenizer=self.tokenizer,
             max_examples=self.latent_config.max_examples,
             tokens=self.tokens,
             all_data=self.all_data[latent_data.module],

@@ -96,7 +96,7 @@ def test(
 def sampler(
     record: LatentRecord,
     cfg: ExperimentConfig,
-) -> LatentRecord:
+):
     examples = record.examples
     max_activation = record.max_activation
     _train = train(

@@ -16,7 +16,7 @@ class DefaultExplainer(Explainer):
         highlighted_examples = []
 
         for i, example in enumerate(examples):
-            str_toks = self.tokenizer.batch_decode(example.tokens)
+            str_toks = example.str_tokens
             activations = example.activations.tolist()
             highlighted_examples.append(self._highlight(str_toks, activations))
 
