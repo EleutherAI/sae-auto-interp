@@ -41,10 +41,9 @@ def resolve_path(model: PreTrainedModel, path_segments: list[str]) -> list[str] 
 
 
 def load_sparsify_sparse_coders(
-    model: PreTrainedModel,
     name: str,
     hookpoints: list[str],
-    device: str | torch.device | None = None,
+    device: str | torch.device,
     compile: bool = False,
 ) -> dict[str, Sae]:
     """
@@ -62,8 +61,6 @@ def load_sparsify_sparse_coders(
     Returns:
         dict[str, Any]: A dictionary mapping hookpoints to sparse models.
     """
-    if device is None:
-        device = model.device or "cpu"
 
     # Load the sparse models
     sparse_model_dict = {}
@@ -112,8 +109,8 @@ def load_sparsify_hooks(
     Returns:
         dict[str, Callable]: A dictionary mapping hookpoints to encode functions.
     """
+    device = model.device or "cpu"
     sparse_model_dict = load_sparsify_sparse_coders(
-        model,
         name,
         hookpoints,
         device,

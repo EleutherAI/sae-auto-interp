@@ -35,6 +35,11 @@ class ExperimentConfig(Serializable):
     from pre-computed latent neighbours. They are still non-activating but
     have a higher chance of being similar to the activating examples."""
 
+    neighbours_type: Literal[
+        "co-occurrence", "decoder_similarity", "encoder_similarity"
+    ] = "co-occurrence"
+    """Type of neighbours to use. Only used if non_activating_source is 'neighbours'."""
+
 
 @dataclass
 class LatentConfig(Serializable):

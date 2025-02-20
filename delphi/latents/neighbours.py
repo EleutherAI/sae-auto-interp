@@ -24,7 +24,7 @@ class NeighbourCalculator:
         cache_dir: Optional[Path] = None,
         autoencoder: Optional[nn.Module] = None,
         number_of_neighbours: int = 10,
-        neighbour_cache: Optional[dict[str, dict[int, list[tuple[int, float]]]]] = None,
+        neighbour_cache: Optional[dict[int, list[tuple[int, float]]]] = None,
     ):
         """
         Initialize a NeighbourCalculator.
@@ -40,17 +40,16 @@ class NeighbourCalculator:
         self.autoencoder = autoencoder
         # self.residual_stream_record = residual_stream_record
         self.number_of_neighbours = number_of_neighbours
-
         # load the neighbour cache from the path
         if neighbour_cache is not None:
             self.neighbour_cache = neighbour_cache
         else:
             # dictionary to cache computed neighbour lists
-            self.neighbour_cache: dict[str, dict[int, list[tuple[int, float]]]] = {}
+            self.neighbour_cache: dict[int, list[tuple[int, float]]] = {}
 
     def _compute_neighbour_list(
         self,
-        method: Literal["similarity_encoder", "similarity_decoder", "co-occurrence"],
+        method: Literal["encoder_similarity", "decoder_similarity", "co-occurrence"],
     ) -> None:
         """
         Compute complete neighbour lists using specified method.
@@ -58,21 +57,20 @@ class NeighbourCalculator:
         Args:
             method (str): One of 'similarity', 'correlation', or 'co-occurrence'
         """
-        if method == "similarity_encoder":
-            self.neighbour_cache[method] = self._compute_similarity_neighbours(
-                "encoder"
-            )
-        elif method == "similarity_decoder":
-            self.neighbour_cache[method] = self._compute_similarity_neighbours(
-                "decoder"
-            )
+        if method == "encoder_similarity":
+            self.method = "encoder_similarity"
+            self.neighbour_cache = self._compute_similarity_neighbours("encoder")
+        elif method == "decoder_similarity":
+            self.method = "decoder_similarity"
+            self.neighbour_cache = self._compute_similarity_neighbours("decoder")
         elif method == "co-occurrence":
-            self.neighbour_cache[method] = self._compute_cooccurrence_neighbours()
+            self.method = "co-occurrence"
+            self.neighbour_cache = self._compute_cooccurrence_neighbours()
 
         else:
             raise ValueError(
-                f"Unknown method: {method}. Use 'similarity_encoder',"
-                "'similarity_decoder', or 'co-occurrence'"
+                f"Unknown method: {method}. Use 'encoder similarity',"
+                "'decoder similarity', or 'co-occurrence'"
             )
 
     def _compute_similarity_neighbours(
@@ -240,21 +238,18 @@ class NeighbourCalculator:
 
     def populate_neighbour_cache(
         self,
-        methods: list[
-            Literal["similarity_encoder", "similarity_decoder", "co-occurrence"]
-        ],
+        method: Literal["encoder_similarity", "decoder_similarity", "co-occurrence"],
     ) -> None:
         """
         Populate the neighbour cache with the computed neighbour lists
         """
-        for method in methods:
-            self._compute_neighbour_list(method)
+        self._compute_neighbour_list(method)
 
     def save_neighbour_cache(self, path: str) -> None:
         """
         Save the neighbour cache to the path as a json file
         """
-        with open(path, "w") as f:
+        with open(path + f"-{self.method}.json", "w") as f:
             json.dump(self.neighbour_cache, f)
 
     def load_neighbour_cache(self, path: str) -> dict[str, dict[int, list[int]]]:

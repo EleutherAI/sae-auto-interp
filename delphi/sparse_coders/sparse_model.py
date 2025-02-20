@@ -1,5 +1,6 @@
 from typing import Callable
 
+import torch
 import torch.nn as nn
 from transformers import PreTrainedModel
 
@@ -69,8 +70,8 @@ def load_hooks_sparse_coders(
 
 
 def load_sparse_coders(
-    model: PreTrainedModel,
     run_cfg: RunConfig,
+    device: str | torch.device,
     compile: bool = False,
 ) -> dict[str, nn.Module] | dict[str, Sae]:
     """
@@ -87,10 +88,10 @@ def load_sparse_coders(
     # Add SAE hooks to the model
     if "gemma" not in run_cfg.sparse_model:
         hookpoint_to_sparse_model = load_sparsify_sparse_coders(
-            model,
             run_cfg.sparse_model,
             run_cfg.hookpoints,
-            compile=compile,
+            device,
+            compile,
         )
     else:
         # model path will always be of the form google/gemma-scope-<size>-pt-<type>/
@@ -118,8 +119,7 @@ def load_sparse_coders(
             average_l0s=l0s,
             sizes=sae_sizes,
             type=type,
-            dtype=model.dtype,
-            device=model.device,
+            device=device,
         )
 
     return hookpoint_to_sparse_model

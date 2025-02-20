@@ -5,8 +5,12 @@ from jaxtyping import Float
 from torch import Tensor
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 
-from .latents import ActivatingExample, LatentRecord, NonActivatingExample
-from .loader import ActivationData
+from .latents import (
+    ActivatingExample,
+    ActivationData,
+    LatentRecord,
+    NonActivatingExample,
+)
 
 
 def prepare_non_activating_examples(
@@ -115,7 +119,7 @@ def constructor(
     tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     all_data: Optional[dict[int, ActivationData]] = None,
     seed: int = 42,
-):
+) -> LatentRecord:
     cache_token_length = tokens.shape[1]
 
     # Get all positions where the latent is active
@@ -178,6 +182,7 @@ def constructor(
             seed=seed,
             tokenizer=tokenizer,
         )
+    return record
 
 
 def neighbour_non_activation_windows(
@@ -224,7 +229,6 @@ def neighbour_non_activation_windows(
             break
         # get the locations of the neighbour
         if neighbour.latent_index not in all_data:
-            print(f"Neighbour {neighbour.latent_index} not found in all_data")
             continue
         locations = all_data[neighbour.latent_index].locations
         activations = all_data[neighbour.latent_index].activations

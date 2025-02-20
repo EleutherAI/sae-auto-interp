@@ -4,7 +4,7 @@ import os
 from functools import partial
 from glob import glob
 from pathlib import Path
-from typing import Callable, cast
+from typing import Callable
 
 import orjson
 import torch
@@ -23,14 +23,11 @@ from delphi.clients import Offline, OpenRouter
 from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
 from delphi.explainers import DefaultExplainer
 from delphi.latents import LatentCache, LatentDataset
-from delphi.latents.constructors import constructor
 from delphi.latents.neighbours import NeighbourCalculator
-from delphi.latents.samplers import sample
-from delphi.latents.transforms import set_neighbours
 from delphi.log.result_analysis import log_results
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
-from delphi.sparse_coders import load_hooks_sparse_coders
+from delphi.sparse_coders import load_hooks_sparse_coders, load_sparse_coders
 from delphi.utils import load_tokenized_data
 
 
@@ -59,24 +56,40 @@ def load_artifacts(run_cfg: RunConfig):
     return run_cfg.hookpoints, hookpoint_to_sparse_encode, model
 
 
-async def create_neighbours(
+def create_neighbours(
+    run_cfg: RunConfig,
     latents_path: Path,
     neighbours_path: Path,
     hookpoints: list[str],
+    experiment_cfg: ExperimentConfig,
 ):
     """
     Creates a neighbours file for the given hookpoints.
     """
     neighbours_path.mkdir(parents=True, exist_ok=True)
 
+    if experiment_cfg.neighbours_type != "co-occurrence":
+        saes = load_sparse_coders(run_cfg, device="cpu")
+
     for hookpoint in hookpoints:
-        neighbour_calculator = NeighbourCalculator(
-            cache_dir=latents_path / hookpoint, number_of_neighbours=100
-        )
 
-        neighbour_calculator.populate_neighbour_cache(["co-occurrence"])
+        if experiment_cfg.neighbours_type == "co-occurrence":
+            neighbour_calculator = NeighbourCalculator(
+                cache_dir=latents_path / hookpoint, number_of_neighbours=100
+            )
 
-        neighbour_calculator.save_neighbour_cache(f"{neighbours_path}/{hookpoint}.json")
+        elif experiment_cfg.neighbours_type == "decoder_similarity":
+
+            neighbour_calculator = NeighbourCalculator(
+                autoencoder=saes[hookpoint].cuda(), number_of_neighbours=100
+            )
+
+        elif experiment_cfg.neighbours_type == "encoder_similarity":
+            neighbour_calculator = NeighbourCalculator(
+                autoencoder=saes[hookpoint].cuda(), number_of_neighbours=100
+            )
+        neighbour_calculator.populate_neighbour_cache(experiment_cfg.neighbours_type)
+        neighbour_calculator.save_neighbour_cache(f"{neighbours_path}/{hookpoint}")
 
 
 async def process_cache(
@@ -84,7 +97,6 @@ async def process_cache(
     run_cfg: RunConfig,
     experiment_cfg: ExperimentConfig,
     latents_path: Path,
-    neighbours_path: Path,
     explanations_path: Path,
     scores_path: Path,
     hookpoints: list[str],
@@ -109,37 +121,14 @@ async def process_cache(
         latent_dict = {
             hook: latent_range for hook in hookpoints
         }  # The latent range to explain
-        latent_dict = cast(dict[str, Tensor], latent_dict)
 
-    example_constructor = partial(
-        constructor,
-        n_not_active=experiment_cfg.n_non_activating,
-        constructor_type=experiment_cfg.non_activating_source,
-        ctx_len=experiment_cfg.example_ctx_len,
-        max_examples=latent_cfg.max_examples,
-    )
-    sampler = partial(sample, cfg=experiment_cfg)
-    if experiment_cfg.non_activating_source == "neighbours":
-        neighbours = {}
-        for hookpoint in hookpoints:
-            with open(neighbours_path / f"{hookpoint}.json", "r") as f:
-                neighbours[hookpoint] = json.load(f)["co-occurrence"]
-        transform = partial(
-            set_neighbours,
-            neighbours=neighbours,
-            threshold=0.0,
-        )
-    else:
-        transform = None
     dataset = LatentDataset(
         raw_dir=str(latents_path),
-        cfg=latent_cfg,
+        latent_cfg=latent_cfg,
+        experiment_cfg=experiment_cfg,
         modules=hookpoints,
         latents=latent_dict,
         tokenizer=tokenizer,
-        constructor=example_constructor,
-        sampler=sampler,
-        transform=transform,
     )
 
     if run_cfg.explainer_provider == "offline":
@@ -325,10 +314,17 @@ async def run(
 
     del model, hookpoint_to_sparse_encode
     if (
-        not glob(str(neighbours_path / ".*")) + glob(str(neighbours_path / "*"))
+        experiment_cfg.non_activating_source == "neighbours"
+        and not glob(str(neighbours_path / ".*")) + glob(str(neighbours_path / "*"))
         or "neighbours" in run_cfg.overwrite
     ):
-        await create_neighbours(latents_path, neighbours_path, hookpoints)
+        create_neighbours(
+            run_cfg,
+            latents_path,
+            neighbours_path,
+            hookpoints,
+            experiment_cfg,
+        )
     else:
         print(f"Files found in {neighbours_path}, skipping...")
 
@@ -341,7 +337,6 @@ async def run(
             run_cfg,
             experiment_cfg,
             latents_path,
-            neighbours_path,
             explanations_path,
             scores_path,
             hookpoints,

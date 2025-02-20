@@ -1,8 +1,6 @@
 import random
 from typing import Literal
 
-from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
-
 from ..config import ExperimentConfig
 from ..logger import logger
 from .latents import ActivatingExample, LatentRecord
@@ -95,10 +93,9 @@ def test(
             raise NotImplementedError("Activation sampling not implemented")
 
 
-def sample(
+def sampler(
     record: LatentRecord,
     cfg: ExperimentConfig,
-    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
 ):
     examples = record.examples
     max_activation = record.max_activation
@@ -119,3 +116,4 @@ def sample(
             cfg.test_type,
         )
         record.test = _test
+    return record

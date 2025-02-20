@@ -13,8 +13,7 @@ from .latents import (
     NonActivatingExample,
 )
 from .loader import LatentDataset
-from .samplers import sample
-from .stats import unigram
+from .samplers import sampler
 
 __all__ = [
     "LatentCache",
@@ -28,6 +27,5 @@ __all__ = [
     "random_non_activating_windows",
     "neighbour_non_activation_windows",
     "constructor",
-    "sample",
-    "unigram",
+    "sampler",
 ]
