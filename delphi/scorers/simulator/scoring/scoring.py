@@ -59,11 +59,14 @@ def absolute_dev_explained_score_from_lists(
 
 async def _simulate_and_score_list(
     simulator: NeuronSimulator, example: ActivatingExample | NonActivatingExample
-) -> ScoredSequenceSimulation:
+) -> ScoredSequenceSimulation | None:
     """Score an explanation of a neuron by how well it predicts activations
     on a sentence."""
 
     simulation = await simulator.simulate(example.str_tokens)
+    # if simulation.expected_activations is empty, return None
+    if len(simulation.expected_activations) == 0:
+        return None
     logging.debug(simulation)
     rsquared_score = 0
     absolute_dev_explained_score = 0
@@ -170,6 +173,14 @@ async def simulate_and_score(
                 for non_activation_record in non_activation_records
             ]
         )
+
+    # validate predictions, remove those that are None
+    scored_sequence_simulations = [
+        sequence
+        for sequence in scored_sequence_simulations
+        if sequence is not None
+    ]
+
     values = []
     scores_per_distance = {}
     for sequence in scored_sequence_simulations:

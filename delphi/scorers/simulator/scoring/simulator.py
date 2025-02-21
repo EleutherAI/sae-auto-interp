@@ -303,11 +303,12 @@ def _parse_no_logprobs_completion_json(
         return predicted_activations
 
     except json.JSONDecodeError:
+        # Json error -> return empty list so that the simulation is discarded
         logger.warning(
             "Failed to parse completion JSON:\n%s",
             completion,
         )
-        return zero_prediction
+        return []
 
 
 class LogprobFreeExplanationTokenSimulator(NeuronSimulator):
