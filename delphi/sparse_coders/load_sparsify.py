@@ -75,9 +75,10 @@ def load_sparsify_sparse_coders(
                     sparse_model_dict[hookpoint]
                 )
     else:
-        sparse_models = Sae.load_many(name, device=device)
+        # Load on CPU first to not run out of memory
+        sparse_models = Sae.load_many(name, device="cpu")
         for hookpoint in hookpoints:
-            sparse_model_dict[hookpoint] = sparse_models[hookpoint]
+            sparse_model_dict[hookpoint] = sparse_models[hookpoint].to(device)
             if compile:
                 sparse_model_dict[hookpoint] = torch.compile(
                     sparse_model_dict[hookpoint]
@@ -118,6 +119,7 @@ def load_sparsify_hooks(
     )
     hookpoint_to_sparse_encode = {}
     for hookpoint, sparse_model in sparse_model_dict.items():
+        print(f"Resolving path for hookpoint: {hookpoint}")
         path_segments = resolve_path(model, hookpoint.split("."))
         if path_segments is None:
             raise ValueError(f"Could not find valid path for hookpoint: {hookpoint}")
