@@ -176,9 +176,7 @@ async def simulate_and_score(
 
     # validate predictions, remove those that are None
     scored_sequence_simulations = [
-        sequence
-        for sequence in scored_sequence_simulations
-        if sequence is not None
+        sequence for sequence in scored_sequence_simulations if sequence is not None
     ]
 
     values = []
