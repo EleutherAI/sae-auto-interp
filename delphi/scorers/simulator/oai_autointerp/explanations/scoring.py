@@ -6,7 +6,9 @@ from typing import Any, Callable, Sequence
 
 import numpy as np
 
-from ..activations.activations import ActivationRecord
+from delphi.latents import ActivatingExample, NonActivatingExample
+
+from ..activations.activation_records import ActivationRecord
 from ..explanations.explanations import (
     ScoredSequenceSimulation,
     ScoredSimulation,
@@ -66,22 +68,35 @@ def absolute_dev_explained_score_from_sequences(
 
 
 async def _simulate_and_score_sequence(
-    simulator: NeuronSimulator, activations: ActivationRecord, quantile: int
+    simulator: NeuronSimulator, example: ActivatingExample | NonActivatingExample
 ) -> ScoredSequenceSimulation:
     """Score an explanation of a neuron by how well it predicts activations
     on a sentence."""
 
-    simulation = await simulator.simulate(activations.tokens)
+    simulation = await simulator.simulate(example.str_tokens)
     logging.debug(simulation)
     rsquared_score = 0
     absolute_dev_explained_score = 0
+
+    match example:
+        case ActivatingExample():
+            distance = example.quantile
+            activating = True
+        case NonActivatingExample():
+            distance = example.distance
+            activating = False
+    activation_record = ActivationRecord(
+        example.str_tokens, example.activations.tolist()
+    )
     scored_sequence_simulation = ScoredSequenceSimulation(
-        distance=quantile,
+        distance=distance,
         simulation=simulation,
-        true_activations=activations.activations.tolist(),
-        ev_correlation_score=score_from_simulation(
-            activations, simulation, correlation_score
-        ),
+        true_activations=activation_record.activations,
+        ev_correlation_score=(
+            score_from_simulation(activation_record, simulation, correlation_score)
+            if activating
+            else 0
+        ),  # can't do EV when truth is 0
         rsquared_score=rsquared_score,
         absolute_dev_explained_score=absolute_dev_explained_score,
     )
@@ -150,8 +165,8 @@ def aggregate_scored_sequence_simulations(
 
 async def simulate_and_score(
     simulator: NeuronSimulator,
-    activation_records: Sequence[ActivationRecord],
-    non_activation_records: Sequence[ActivationRecord],
+    activation_records: list[ActivatingExample],
+    non_activation_records: list[NonActivatingExample],
 ) -> ScoredSimulation:
     """
     Score an explanation of a neuron by how well it predicts activations
@@ -159,21 +174,14 @@ async def simulate_and_score(
     """
     scored_sequence_simulations = await asyncio.gather(
         *[
-            asyncio.gather(
-                *[
-                    _simulate_and_score_sequence(
-                        simulator, activation_record, quantile + 1
-                    )
-                    for activation_record in activation_quantile
-                ]
-            )
-            for quantile, activation_quantile in enumerate(activation_records)
+            _simulate_and_score_sequence(simulator, activation_record)
+            for activation_record in activation_records
         ]
     )
     if len(non_activation_records) > 0:
         non_activating_scored_seq_simulations = await asyncio.gather(
             *[
-                _simulate_and_score_sequence(simulator, non_activation_record[0], -1)
+                _simulate_and_score_sequence(simulator, non_activation_record)
                 for non_activation_record in non_activation_records
             ]
         )
@@ -181,9 +189,10 @@ async def simulate_and_score(
     # with open('test.txt', 'w') as f:
     #     f.write(str(scored_sequence_simulations))
     # return scored_sequence_simulations
-
+    breakpoint()
     values = []
     all_activated = []
+
     for distance, sequence in enumerate(scored_sequence_simulations):
         without_errors = []
         for s in sequence:
@@ -196,4 +205,5 @@ async def simulate_and_score(
     if len(non_activation_records) > 0:
         all_data = all_activated + non_activating_scored_seq_simulations
         values.append(aggregate_scored_sequence_simulations(all_data, 0))
+    breakpoint()
     return values

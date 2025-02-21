@@ -1,4 +1,4 @@
-from .activations.activations import ActivationRecord
+from .activations import ActivationRecord
 from .explanations import (
     ExplanationNeuronSimulator,
     LogprobFreeExplanationTokenSimulator,

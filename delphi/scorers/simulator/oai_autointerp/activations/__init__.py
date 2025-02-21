@@ -1,4 +1,3 @@
-from .activation_records import calculate_max_activation
-from .activations import ActivationRecordSliceParams
+from .activation_records import ActivationRecord, calculate_max_activation
 
-__all__ = ["calculate_max_activation", "ActivationRecordSliceParams"]
+__all__ = ["calculate_max_activation", "ActivationRecord"]

@@ -1,11 +1,22 @@
 """Utilities for formatting activation records into prompts."""
 
 import math
+from dataclasses import dataclass
 from typing import Optional, Sequence
 
-from .activations import ActivationRecord
+from simple_parsing import Serializable
 
 UNKNOWN_ACTIVATION_STRING = "unknown"
+
+
+@dataclass
+class ActivationRecord(Serializable):
+    """Collated lists of tokens and their activations for a single neuron."""
+
+    tokens: list[str]
+    """Tokens in the text sequence, represented as strings."""
+    activations: list[float]
+    """Raw activation values for the neuron on each token in the text sequence."""
 
 
 def relu(x: float) -> float:

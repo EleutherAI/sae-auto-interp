@@ -4,30 +4,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
 from typing import Optional
 
 from simple_parsing import Serializable
-
-
-class ActivationScale(str, Enum):
-    """
-    Which "units" are stored in the expected_activations/distribution_values fields of
-    a SequenceSimulation.
-
-    This enum identifies whether the values represent real activations of the neuron or
-    something else. Different scales are not necessarily related by a linear
-    transformation.
-    """
-
-    NEURON_ACTIVATIONS = "neuron_activations"
-    """Values represent real activations of the neuron."""
-    SIMULATED_NORMALIZED_ACTIVATIONS = "simulated_normalized_activations"
-    """
-    Values represent simulated activations of the neuron, normalized to the range
-    [0, 10].
-    This scale is arbitrary and should not be interpreted as a neuron activation.
-    """
 
 
 @dataclass
@@ -39,8 +18,6 @@ class SequenceSimulation(Serializable):
     expected_activations: list[float]
     """Expected value of the possibly-normalized activation for
     each token in the sequence."""
-    activation_scale: ActivationScale
-    """What scale is used for values in the expected_activations field."""
     distribution_values: list[list[float]]
     """
     For each token in the sequence, a list of values from the discrete
@@ -77,8 +54,8 @@ class ScoredSequenceSimulation(Serializable):
     activations.
     """
 
-    distance: int
-
+    distance: float | int
+    """Quantile or neighbor distance"""
     simulation: SequenceSimulation
     """The result of a simulation of neuron activations."""
     true_activations: list[float]
