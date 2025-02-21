@@ -8,9 +8,8 @@ import numpy as np
 
 from delphi.clients.client import Client
 
-from .scoring import (
-    SequenceSimulation,
-)
+from .dataclasses import SequenceSimulation
+
 from ..prompts import (
     build_prompt_all_at_once,
     build_simulation_prompt_json,
