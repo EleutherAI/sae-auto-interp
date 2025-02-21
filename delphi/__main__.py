@@ -1,5 +1,4 @@
 import asyncio
-import json
 import os
 from functools import partial
 from glob import glob
@@ -20,7 +19,7 @@ from transformers import (
 )
 
 from delphi.clients import Offline, OpenRouter
-from delphi.config import CacheConfig, ExperimentConfig, LatentConfig, RunConfig
+from delphi.config import RunConfig
 from delphi.explainers import DefaultExplainer
 from delphi.latents import LatentCache, LatentDataset
 from delphi.latents.neighbours import NeighbourCalculator
@@ -61,41 +60,39 @@ def create_neighbours(
     latents_path: Path,
     neighbours_path: Path,
     hookpoints: list[str],
-    experiment_cfg: ExperimentConfig,
 ):
     """
     Creates a neighbours file for the given hookpoints.
     """
     neighbours_path.mkdir(parents=True, exist_ok=True)
 
-    if experiment_cfg.neighbours_type != "co-occurrence":
+    constructor_cfg = run_cfg.constructor_cfg
+    if constructor_cfg.neighbours_type != "co-occurrence":
         saes = load_sparse_coders(run_cfg, device="cpu")
 
     for hookpoint in hookpoints:
 
-        if experiment_cfg.neighbours_type == "co-occurrence":
+        if constructor_cfg.neighbours_type == "co-occurrence":
             neighbour_calculator = NeighbourCalculator(
                 cache_dir=latents_path / hookpoint, number_of_neighbours=100
             )
 
-        elif experiment_cfg.neighbours_type == "decoder_similarity":
+        elif constructor_cfg.neighbours_type == "decoder_similarity":
 
             neighbour_calculator = NeighbourCalculator(
                 autoencoder=saes[hookpoint].cuda(), number_of_neighbours=100
             )
 
-        elif experiment_cfg.neighbours_type == "encoder_similarity":
+        elif constructor_cfg.neighbours_type == "encoder_similarity":
             neighbour_calculator = NeighbourCalculator(
                 autoencoder=saes[hookpoint].cuda(), number_of_neighbours=100
             )
-        neighbour_calculator.populate_neighbour_cache(experiment_cfg.neighbours_type)
+        neighbour_calculator.populate_neighbour_cache(constructor_cfg.neighbours_type)
         neighbour_calculator.save_neighbour_cache(f"{neighbours_path}/{hookpoint}")
 
 
 async def process_cache(
-    latent_cfg: LatentConfig,
     run_cfg: RunConfig,
-    experiment_cfg: ExperimentConfig,
     latents_path: Path,
     explanations_path: Path,
     scores_path: Path,
@@ -124,8 +121,8 @@ async def process_cache(
 
     dataset = LatentDataset(
         raw_dir=str(latents_path),
-        latent_cfg=latent_cfg,
-        experiment_cfg=experiment_cfg,
+        sampler_cfg=run_cfg.sampler_cfg,
+        constructor_cfg=run_cfg.constructor_cfg,
         modules=hookpoints,
         latents=latent_dict,
         tokenizer=tokenizer,
@@ -222,7 +219,6 @@ async def process_cache(
 
 def populate_cache(
     run_cfg: RunConfig,
-    cfg: CacheConfig,
     model: PreTrainedModel,
     hookpoint_to_sparse_encode: dict[str, Callable],
     latents_path: Path,
@@ -232,14 +228,14 @@ def populate_cache(
     Populates an on-disk cache in `latents_path` with SAE latent activations.
     """
     latents_path.mkdir(parents=True, exist_ok=True)
-
+    cache_cfg = run_cfg.cache_cfg
     tokens = load_tokenized_data(
-        cfg.ctx_len,
+        cache_cfg.cache_ctx_len,
         tokenizer,
-        cfg.dataset_repo,
-        cfg.dataset_split,
-        cfg.dataset_name,
-        cfg.dataset_column,
+        cache_cfg.dataset_repo,
+        cache_cfg.dataset_split,
+        cache_cfg.dataset_name,
+        cache_cfg.dataset_column,
         run_cfg.seed,
     )
 
@@ -251,31 +247,28 @@ def populate_cache(
             mask = ~torch.isin(flattened_tokens, torch.tensor([tokenizer.bos_token_id]))
             masked_tokens = flattened_tokens[mask]
             truncated_tokens = masked_tokens[
-                : len(masked_tokens) - (len(masked_tokens) % cfg.ctx_len)
+                : len(masked_tokens) - (len(masked_tokens) % cache_cfg.cache_ctx_len)
             ]
-            tokens = truncated_tokens.reshape(-1, cfg.ctx_len)
+            tokens = truncated_tokens.reshape(-1, cache_cfg.cache_ctx_len)
 
     cache = LatentCache(
         model,
         hookpoint_to_sparse_encode,
-        batch_size=cfg.batch_size,
+        batch_size=cache_cfg.batch_size,
     )
-    cache.run(cfg.n_tokens, tokens)
+    cache.run(cache_cfg.n_tokens, tokens)
 
     cache.save_splits(
         # Split the activation and location indices into different files to make
         # loading faster
-        n_splits=cfg.n_splits,
+        n_splits=cache_cfg.n_splits,
         save_dir=latents_path,
     )
 
-    cache.save_config(save_dir=latents_path, cfg=cfg, model_name=run_cfg.model)
+    cache.save_config(save_dir=latents_path, cfg=cache_cfg, model_name=run_cfg.model)
 
 
 async def run(
-    experiment_cfg: ExperimentConfig,
-    latent_cfg: LatentConfig,
-    cache_cfg: CacheConfig,
     run_cfg: RunConfig,
 ):
     base_path = Path.cwd() / "results"
@@ -283,8 +276,8 @@ async def run(
         base_path = base_path / run_cfg.name
 
     base_path.mkdir(parents=True, exist_ok=True)
-    with open(base_path / "run_config.json", "w") as f:
-        json.dump(run_cfg.__dict__, f, indent=4)
+
+    run_cfg.save_json(base_path / "run_config.json", indent=4)
 
     latents_path = base_path / "latents"
     explanations_path = base_path / "explanations"
@@ -303,7 +296,6 @@ async def run(
     ):
         populate_cache(
             run_cfg,
-            cache_cfg,
             model,
             hookpoint_to_sparse_encode,
             latents_path,
@@ -314,7 +306,7 @@ async def run(
 
     del model, hookpoint_to_sparse_encode
     if (
-        experiment_cfg.non_activating_source == "neighbours"
+        run_cfg.constructor_cfg.non_activating_source == "neighbours"
         and not glob(str(neighbours_path / ".*")) + glob(str(neighbours_path / "*"))
         or "neighbours" in run_cfg.overwrite
     ):
@@ -323,7 +315,6 @@ async def run(
             latents_path,
             neighbours_path,
             hookpoints,
-            experiment_cfg,
         )
     else:
         print(f"Files found in {neighbours_path}, skipping...")
@@ -333,9 +324,7 @@ async def run(
         or "scores" in run_cfg.overwrite
     ):
         await process_cache(
-            latent_cfg,
             run_cfg,
-            experiment_cfg,
             latents_path,
             explanations_path,
             scores_path,
@@ -352,10 +341,7 @@ async def run(
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_arguments(ExperimentConfig, dest="experiment_cfg")
-    parser.add_arguments(LatentConfig, dest="latent_cfg")
-    parser.add_arguments(CacheConfig, dest="cache_cfg")
     parser.add_arguments(RunConfig, dest="run_cfg")
     args = parser.parse_args()
 
-    asyncio.run(run(args.experiment_cfg, args.latent_cfg, args.cache_cfg, args.run_cfg))
+    asyncio.run(run(args.run_cfg))

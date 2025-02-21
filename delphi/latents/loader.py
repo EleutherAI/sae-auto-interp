@@ -16,7 +16,7 @@ from delphi.utils import (
     load_tokenized_data,
 )
 
-from ..config import ExperimentConfig, LatentConfig
+from ..config import ConstructorConfig, SamplerConfig
 from .constructors import constructor
 from .latents import ActivationData, Latent, LatentData, LatentRecord
 from .samplers import sampler
@@ -37,9 +37,6 @@ class TensorBuffer:
     latents: Optional[Float[Tensor, "num_latents"]] = None
     """Tensor of latent indices."""
 
-    min_examples: int = 120
-    """Minimum number of examples required. Defaults to 120."""
-
     _tokens: Optional[Float[Tensor, "batch seq"]] = None
     """Tensor of tokens."""
 
@@ -56,14 +53,11 @@ class TensorBuffer:
         for i in range(len(latents)):
             latent_locations = split_locations[i]
             latent_activations = split_activations[i]
-            if len(latent_locations) < self.min_examples:
-                yield None
-            else:
-                yield LatentData(
-                    Latent(self.module_path, int(latents[i].item())),
-                    self.module_path,
-                    ActivationData(latent_locations, latent_activations),
-                )
+            yield LatentData(
+                Latent(self.module_path, int(latents[i].item())),
+                self.module_path,
+                ActivationData(latent_locations, latent_activations),
+            )
 
     @property
     def tokens(self) -> Float[Tensor, "batch seq"] | None:
@@ -123,8 +117,8 @@ class LatentDataset:
     def __init__(
         self,
         raw_dir: str,
-        latent_cfg: LatentConfig,
-        experiment_cfg: ExperimentConfig,
+        sampler_cfg: SamplerConfig,
+        constructor_cfg: ConstructorConfig,
         tokenizer: Optional[PreTrainedTokenizer | PreTrainedTokenizerFast] = None,
         modules: Optional[list[str]] = None,
         latents: Optional[dict[str, torch.Tensor]] = None,
@@ -141,8 +135,8 @@ class LatentDataset:
             modules: list of module names to include.
             latents: Dictionary of latents per module.
         """
-        self.latent_config = latent_cfg
-        self.experiment_config = experiment_cfg
+        self.constructor_cfg = constructor_cfg
+        self.sampler_cfg = sampler_cfg
         self.buffers: list[TensorBuffer] = []
         self.all_data: dict[str, dict[int, ActivationData] | None] = {}
         self.tokens = None
@@ -165,12 +159,12 @@ class LatentDataset:
             self.tokenizer = tokenizer
         self.cache_config = cache_config
 
-        if self.experiment_config.non_activating_source == "neighbours":
+        if self.constructor_cfg.non_activating_source == "neighbours":
             # path is always going to end with /latents
             split_path = raw_dir.split("/")[:-1]
             neighbours_path = "/".join(split_path) + "/neighbours"
             self.neighbours = self.load_neighbours(
-                neighbours_path, self.experiment_config.neighbours_type
+                neighbours_path, self.constructor_cfg.neighbours_type
             )
             # TODO: is it possible to do this without loading all data?
             self.all_data = self._load_all_data(raw_dir, self.modules)
@@ -233,9 +227,7 @@ class LatentDataset:
             edges = self._edges(raw_dir, module)
             for start, end in edges:
                 path = f"{raw_dir}/{module}/{start}_{end}.safetensors"
-                tensor_buffer = TensorBuffer(
-                    path, module, min_examples=self.latent_config.min_examples
-                )
+                tensor_buffer = TensorBuffer(path, module)
                 if self.tokens is None:
                     self.tokens = tensor_buffer.tokens
                 self.buffers.append(tensor_buffer)
@@ -277,7 +269,6 @@ class LatentDataset:
                     path,
                     module,
                     _selected_latents,
-                    min_examples=self.latent_config.min_examples,
                 )
                 if self.tokens is None:
                     self.tokens = tensor_buffer.tokens
@@ -346,7 +337,7 @@ class LatentDataset:
                     yield record
             await asyncio.sleep(0)  # Allow other coroutines to run
 
-    async def _aprocess_latent(self, latent_data: LatentData) -> LatentRecord:
+    async def _aprocess_latent(self, latent_data: LatentData) -> LatentRecord | None:
         """
         Asynchronously process a single latent.
 
@@ -369,13 +360,13 @@ class LatentDataset:
         record = constructor(
             record=record,
             activation_data=latent_data.activation_data,
-            n_not_active=self.experiment_config.n_non_activating,
-            constructor_type=self.experiment_config.non_activating_source,
-            ctx_len=self.experiment_config.example_ctx_len,
-            tokenizer=self.tokenizer,
-            max_examples=self.latent_config.max_examples,
+            constructor_cfg=self.constructor_cfg,
             tokens=self.tokens,
             all_data=self.all_data[latent_data.module],
+            tokenizer=self.tokenizer,
         )
-        record = sampler(record, self.experiment_config)
+        # Not enough examples to explain the latent
+        if record is None:
+            return None
+        record = sampler(record, self.sampler_cfg)
         return record

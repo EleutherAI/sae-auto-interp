@@ -1,7 +1,7 @@
 import random
 from typing import Literal
 
-from ..config import ExperimentConfig
+from ..config import SamplerConfig
 from ..logger import logger
 from .latents import ActivatingExample, LatentRecord
 
@@ -95,7 +95,7 @@ def test(
 
 def sampler(
     record: LatentRecord,
-    cfg: ExperimentConfig,
+    cfg: SamplerConfig,
 ):
     examples = record.examples
     max_activation = record.max_activation

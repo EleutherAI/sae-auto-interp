@@ -5,7 +5,7 @@ from pathlib import Path
 import torch
 
 from delphi.__main__ import RunConfig, run
-from delphi.config import CacheConfig, ExperimentConfig, LatentConfig
+from delphi.config import CacheConfig, ConstructorConfig, SamplerConfig
 from delphi.log.result_analysis import build_scores_df, latent_balanced_score_metrics
 
 
@@ -15,27 +15,30 @@ async def test():
         dataset_split="train[:1%]",
         dataset_column="text",
         batch_size=8,
-        ctx_len=256,
+        cache_ctx_len=256,
         n_splits=5,
         n_tokens=200_000,
     )
-    experiment_cfg = ExperimentConfig(
+    sampler_cfg = SamplerConfig(
         train_type="quantiles",
         test_type="quantiles",
         n_examples_train=40,
         n_examples_test=50,
-        non_activating_source="random",
+        n_quantiles=10,
     )
-    latent_cfg = LatentConfig(
+    constructor_cfg = ConstructorConfig(
         min_examples=200,
         max_examples=10_000,
+        example_ctx_len=32,
+        n_non_activating=50,
+        non_activating_source="random",
     )
     run_cfg = RunConfig(
         name="test",
         overwrite=["cache", "scores"],
         model="EleutherAI/pythia-160m",
         sparse_model="EleutherAI/sae-pythia-160m-32k",
-        hookpoints=["layers.3"],
+        hookpoints=["layers.3.mlp"],
         explainer_model="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
         explainer_model_max_len=4208,
         max_latents=100,
@@ -43,10 +46,13 @@ async def test():
         num_gpus=torch.cuda.device_count(),
         filter_bos=True,
         verbose=True,
+        sampler_cfg=sampler_cfg,
+        constructor_cfg=constructor_cfg,
+        cache_cfg=cache_cfg,
     )
 
     start_time = time.time()
-    await run(experiment_cfg, latent_cfg, cache_cfg, run_cfg)
+    await run(run_cfg)
     end_time = time.time()
     print(f"Time taken: {end_time - start_time} seconds")
 

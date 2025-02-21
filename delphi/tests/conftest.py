@@ -11,7 +11,7 @@ from transformers import (
     PreTrainedTokenizerFast,
 )
 
-from delphi.config import CacheConfig, RunConfig
+from delphi.config import CacheConfig, ConstructorConfig, RunConfig, SamplerConfig
 from delphi.latents import LatentCache
 from delphi.sparse_coders import load_hooks_sparse_coders
 
@@ -67,7 +67,12 @@ def cache_setup(tmp_path_factory, mock_dataset: torch.Tensor, model: PreTrainedM
     temp_dir = tmp_path_factory.mktemp("test_cache")
 
     # Load model and set run configuration
+    cache_cfg = CacheConfig(batch_size=1, cache_ctx_len=16, n_tokens=100)
+
     run_cfg_gemma = RunConfig(
+        constructor_cfg=ConstructorConfig(),
+        sampler_cfg=SamplerConfig(),
+        cache_cfg=cache_cfg,
         model="EleutherAI/pythia-160m",
         sparse_model="EleutherAI/sae-pythia-160m-32k",
         hookpoints=["layers.1"],
@@ -75,7 +80,6 @@ def cache_setup(tmp_path_factory, mock_dataset: torch.Tensor, model: PreTrainedM
     hookpoint_to_sparse_encode = load_hooks_sparse_coders(model, run_cfg_gemma)
     print(hookpoint_to_sparse_encode)
     # Define cache config and initialize cache
-    cache_cfg = CacheConfig(batch_size=1, ctx_len=16, n_tokens=100)
     cache = LatentCache(
         model, hookpoint_to_sparse_encode, batch_size=cache_cfg.batch_size
     )
