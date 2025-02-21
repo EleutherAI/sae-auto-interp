@@ -40,7 +40,6 @@ class FewShotExampleSet(Enum):
 
     ORIGINAL = "original"
     NEWER = "newer"
-    TEST = "test"
 
     @classmethod
     def from_string(cls, string: str) -> FewShotExampleSet:

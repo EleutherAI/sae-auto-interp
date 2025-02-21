@@ -1,5 +1,5 @@
 from ..scorer import Scorer, ScorerResult
-from .oai_autointerp import (
+from .scoring import (
     ExplanationNeuronSimulator,
     LogprobFreeExplanationTokenSimulator,
     simulate_and_score,
@@ -8,7 +8,11 @@ from .oai_autointerp import (
 
 class OpenAISimulator(Scorer):
     """
-    Simple wrapper for the LogProbFreeExplanationTokenSimulator.
+    Simple wrapper for the the different simulators.
+    LogprobFreeExplanationTokenSimulator heavily inspired by
+    https://github.com/hijohnnylin/automated-interpretability,
+    which in turn is a fork of https://github.com/openai/automated-interpretability,
+    from which the ExplanationNeuronSimulator is also inspired.
     """
 
     name = "simulator"
