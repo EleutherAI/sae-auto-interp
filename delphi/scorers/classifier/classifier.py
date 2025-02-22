@@ -5,10 +5,9 @@ import re
 from abc import abstractmethod
 
 import numpy as np
-from transformers import PreTrainedTokenizer
 
 from ...clients.client import Client
-from ...features import FeatureRecord
+from ...latents import LatentRecord
 from ...logger import logger
 from ..scorer import Scorer, ScorerResult
 from .sample import ClassifierOutput, Sample
@@ -18,47 +17,54 @@ class Classifier(Scorer):
     def __init__(
         self,
         client: Client,
-        tokenizer: PreTrainedTokenizer,
         verbose: bool,
-        batch_size: int,
+        n_examples_shown: int,
         log_prob: bool,
         **generation_kwargs,
     ):
-        self.client = client
-        self.tokenizer = tokenizer
-        self.verbose = verbose
+        """
+        Initialize a Classifier.
 
-        self.batch_size = batch_size
+        Args:
+            client: The client to use for generation
+            tokenizer: The tokenizer used to cache the tokens
+            verbose: Whether to print verbose output
+            n_examples_shown: The number of examples to show in the prompt,
+                        a larger number can both leak information and make
+                        it harder for models to generate anwers in the correct format
+            log_prob: Whether to use log probabilities to allow for AUC calculation
+            generation_kwargs: Additional generation kwargs
+        """
+        self.client = client
+        self.verbose = verbose
+        self.n_examples_shown = n_examples_shown
         self.generation_kwargs = generation_kwargs
         self.log_prob = log_prob
 
-
-
     async def __call__(
         self,
-        record: FeatureRecord,
-    ) -> list[ClassifierOutput]:
+        record: LatentRecord,
+    ) -> ScorerResult:
         samples = self._prepare(record)
-
         random.shuffle(samples)
+
         samples = self._batch(samples)
         results = await self._query(
             record.explanation,
             samples,
         )
-        
+
         return ScorerResult(record=record, score=results)
 
     @abstractmethod
-    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
         pass
-
 
     async def _query(
         self,
         explanation: str,
         batches: list[list[Sample]],
-    ) -> list[Sample]:
+    ) -> list[ClassifierOutput]:
         """
         Send and gather batches of samples to the model.
         """
@@ -68,12 +74,11 @@ class Classifier(Scorer):
             async with sem:
                 result = await self._generate(explanation, batch)
                 return result
-    
+
         tasks = [asyncio.create_task(_process(explanation, batch)) for batch in batches]
         results = await asyncio.gather(*tasks)
 
         return sum(results, [])
-    
 
     async def _generate(
         self, explanation: str, batch: list[Sample]
@@ -92,67 +97,77 @@ class Classifier(Scorer):
             logger.error(f"Error generating text: {e}")
             response = None
         if response is None:
-            array = [-1] * self.batch_size
-            probabilities = [-1] * self.batch_size
+            predictions = [None] * self.n_examples_shown
+            probabilities = [None] * self.n_examples_shown
         else:
             selections = response.text
             logprobs = response.logprobs if self.log_prob else None
             try:
-                array, probabilities = self._parse(selections, logprobs)
+                predictions, probabilities = self._parse(selections, logprobs)
             except Exception as e:
                 logger.error(f"Parsing selections failed: {e}")
-                array = [-1] * self.batch_size
-                probabilities = [-1] * self.batch_size
+                predictions = [None] * self.n_examples_shown
+                probabilities = [None] * self.n_examples_shown
 
         results = []
-        correct = []
-        response = []
-        for i, sample in enumerate(batch):
+        for sample, prediction, probability in zip(batch, predictions, probabilities):
             result = sample.data
-            prediction = array[i] 
             result.prediction = prediction
-            result.correct = prediction == result.ground_truth
-            correct.append(result.ground_truth)
-            response.append(prediction)
-            if self.log_prob:
-                result.probability = probabilities[i]
+            if prediction is not None:
+                result.correct = prediction == result.activating
+            else:
+                result.correct = None
+            result.probability = probability
             results.append(result)
 
             if self.verbose:
-                result.text = sample.text
+                logger.info(
+                    f"Example {sample.text}, "
+                    f"Prediction: {prediction}, "
+                    f"Probability: {probability}"
+                )
         return results
 
-    
     def _parse(self, string, logprobs=None):
+        """Extract binary predictions and probabilities from a string and
+        optionally its token logprobs."""
+        # Matches the first instance of text enclosed in square brackets
         pattern = r"\[.*?\]"
         match = re.search(pattern, string)
+        if match is None:
+            raise ValueError("No match found in string")
+        predictions: list[bool] = json.loads(match.group(0))
+        assert len(predictions) == self.n_examples_shown
+        probabilities = (
+            self._parse_logprobs(logprobs)
+            if logprobs is not None
+            else [None] * self.n_examples_shown
+        )
 
-        try:
-            array = json.loads(match.group(0))
-            assert len(array) == self.batch_size
-            if self.log_prob:
-                probabilities = self._parse_logprobs(logprobs)
-                assert len(probabilities) == self.batch_size
-                return array, probabilities
-            probabilities = None
-            return array, probabilities
-        except (json.JSONDecodeError, AssertionError, AttributeError) as e:
-            logger.error(f"Parsing array failed: {e}")
-            if self.log_prob:
-                return [-1] * self.batch_size, [-1] * self.batch_size
-            return [-1] * self.batch_size
+        return predictions, probabilities
 
-    def _parse_logprobs(self, logprobs):
-        #Logprobs will be a list of 5 probabilites for each token in the response
-        # The response will be in the form of [x, x, x, ...] for each position we
-        # need to get the probability of 1 or 0 
-        probabilities = []
-        
+    def _parse_logprobs(self, logprobs: list):
+        """
+        Extracts normalized probabilities of '1' vs '0' tokens from the top n
+        log probabilities for each token in a response string of form '[x, x, x, ...]'.
+        The normalized probability is computed as P(1)/(P(0) + P(1)), where P(0) and
+        P(1) are summed over all matching tokens in the top 5 candidates.
+
+        Args:
+            logprobs (list): Contains top n log probabilities for each token in the
+            response.
+
+        Returns:
+            list: Normalized probabilities between 0 and 1 where each value represents
+            P(token='1').
+        """
+        binary_probabilities: list[float] = []
+
         for i in range(len(logprobs)):
             if "1" in logprobs[i].token or "0" in logprobs[i].token:
                 top_logprobs = logprobs[i].top_logprobs
-                prob_0 = 0
-                prob_1 = 0
+                prob_0 = 0.0
+                prob_1 = 0.0
                 for i in range(len(top_logprobs)):
                     token = top_logprobs[i].token
                     logprob = top_logprobs[i].logprob
@@ -160,18 +175,19 @@ class Classifier(Scorer):
                         prob_0 += np.exp(logprob).item()
                     elif "1" in token:
                         prob_1 += np.exp(logprob).item()
-                if prob_0+prob_1>0:
-                    probabilities.append(prob_1/(prob_0+prob_1))
+                if prob_0 + prob_1 > 0:
+                    binary_probabilities.append(prob_1 / (prob_0 + prob_1))
                 else:
-                    probabilities.append(0)
-        return probabilities
+                    binary_probabilities.append(0.0)
 
+        assert len(binary_probabilities) == self.n_examples_shown
+        return binary_probabilities
 
     def _build_prompt(
         self,
         explanation: str,
         batch: list[Sample],
-    ) -> str:
+    ) -> list[dict]:
         """
         Prepare prompt for generation.
         """
@@ -179,14 +195,18 @@ class Classifier(Scorer):
         examples = "\n".join(
             f"Example {i}: {sample.text}" for i, sample in enumerate(batch)
         )
-        
+
         return self.prompt(explanation=explanation, examples=examples)
+
+    @abstractmethod
+    def prompt(self, examples: str, explanation: str) -> list[dict]:
+        pass
 
     def _batch(self, samples):
         return [
-            samples[i : i + self.batch_size]
-            for i in range(0, len(samples), self.batch_size)
+            samples[i : i + self.n_examples_shown]
+            for i in range(0, len(samples), self.n_examples_shown)
         ]
 
-    def call_sync(self, record: FeatureRecord) -> list[ClassifierOutput]:
+    def call_sync(self, record: LatentRecord) -> ScorerResult:
         return asyncio.run(self.__call__(record))

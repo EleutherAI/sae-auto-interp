@@ -1,9 +1,13 @@
+from .activations.activations import ActivationRecord
 from .explanations import (
-    simulate_and_score, 
-    LogprobFreeExplanationTokenSimulator,
     ExplanationNeuronSimulator,
+    LogprobFreeExplanationTokenSimulator,
+    simulate_and_score,
 )
 
-from .activations.activations import (
-    ActivationRecord
-)
+__all__ = [
+    "ActivationRecord",
+    "ExplanationNeuronSimulator",
+    "LogprobFreeExplanationTokenSimulator",
+    "simulate_and_score",
+]

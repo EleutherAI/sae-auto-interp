@@ -1,11 +1,34 @@
 ### SYSTEM PROMPT ###
 
+SYSTEM_SINGLE_TOKEN = """Your job is to look for patterns in text. You will be given a list of WORDS, your task is to provide an explanation for what pattern best describes them. Here are some guidelines:
+- Produce a specific final description for the latents common in the examples, and what patterns you found.
+- Don't focus on giving examples of important tokens, if the examples are uninformative, you don't need to mention them.
+- Do not make lists of possible explanations. Keep your explanations short and concise.
+- The last line of your response must be the formatted explanation, using [EXPLANATION]:
+
+Here are some example:
+
+WORDS: ['Thomas Edison', 'Steve Jobs', 'Alexander Graham Bell']
+[EXPLANATION]: Names of people who are inventors of technical fields
+
+WORDS: ['over the moon', 'till the cows come home', 'than meets the eye']
+[EXPLANATION]: Common idioms in text conveying positive sentiment.
+
+WORDS: ['er', 'er', 'er']
+[EXPLANATION]: The token "er".
+
+WORDS: ['house', 'a box', 'smoking area', 'way']
+[EXPLANATION]: Nouns representing a distinct objects that contains something, sometimes preciding a quotation mark.
+
+{prompt}
+"""
+
 SYSTEM = """You are a meticulous AI researcher conducting an important investigation into patterns found in language. Your task is to analyze text and provide an explanation that thoroughly encapsulates possible patterns found in it.
 Guidelines:
 
 You will be given a list of text examples on which special words are selected and between delimiters like <<this>>. If a sequence of consecutive tokens all are important, the entire sequence of tokens will be contained between delimiters <<just like this>>. How important each token is for the behavior is listed after each example in parentheses.
 
-- Try to produce a concise final description. Simply describe the text features that are common in the examples, and what patterns you found.
+- Try to produce a concise final description. Simply describe the text latents that are common in the examples, and what patterns you found.
 - If the examples are uninformative, you don't need to mention them. Don't focus on giving examples of important tokens, but try to summarize the patterns found in the examples.
 - Do not mention the marker tokens (<< >>) in your explanation.
 - Do not make lists of possible explanations. Keep your explanations short and concise.
@@ -20,12 +43,11 @@ To better find the explanation for the language patterns go through the followin
 
 1.Find the special words that are selected in the examples and list a couple of them. Search for patterns in these words, if there are any. Don't list more than 5 words.
 
-2. Write down general shared features of the text examples. This could be related to the full sentence or to the words surrounding the marked words.
+2. Write down general shared latents of the text examples. This could be related to the full sentence or to the words surrounding the marked words.
 
 3. Formulate an hypothesis and write down the final explanation using [EXPLANATION]:.
 
 """
-
 
 
 ### EXAMPLE 1 ###
@@ -173,15 +195,11 @@ def _prompt(n, activations=False, **kwargs):
     return "".join(prompt_atoms)
 
 
-def _response(
-    n,
-    cot=False,
-    **kwargs
-):
+def _response(n, cot=False, **kwargs):
     response_atoms = []
     if cot:
         response_atoms.append(get(f"EXAMPLE_{n}_COT_ACTIVATION_RESPONSE"))
-        
+
     response_atoms.append(get(f"EXAMPLE_{n}_EXPLANATION"))
 
     return "".join(response_atoms)
@@ -206,3 +224,7 @@ def system(cot=False):
             "content": SYSTEM.format(prompt=prompt),
         }
     ]
+
+
+def system_single_token():
+    return [{"role": "system", "content": SYSTEM_SINGLE_TOKEN}]

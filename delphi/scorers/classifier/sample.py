@@ -1,11 +1,10 @@
 import random
 from dataclasses import dataclass
-from typing import List, NamedTuple
+from typing import NamedTuple
 
 import torch
-from transformers import PreTrainedTokenizer
 
-from ...features import Example
+from ...latents import ActivatingExample, NonActivatingExample
 from ...logger import logger
 
 L = "<<"
@@ -18,27 +17,24 @@ DEFAULT_MESSAGE = (
 @dataclass
 class ClassifierOutput:
     str_tokens: list[str]
-    """List of strings"""
+    """list of strings"""
 
     activations: list[float]
-    """List of floats"""
+    """list of floats"""
 
     distance: float | int
     """Quantile or neighbor distance"""
 
-    ground_truth: bool
+    activating: bool
     """Whether the example is activating or not"""
 
-    prediction: bool = False
+    prediction: bool | None = False
     """Whether the model predicted the example activating or not"""
 
-    highlighted: bool = False
-    """Whether the sample is highlighted"""
-
-    probability: float = 0.0
+    probability: float | None = 0.0
     """The probability of the example activating"""
 
-    correct: bool = False
+    correct: bool | None = False
     """Whether the prediction is correct"""
 
 
@@ -48,8 +44,7 @@ class Sample(NamedTuple):
 
 
 def examples_to_samples(
-    examples: list[Example],
-    tokenizer: PreTrainedTokenizer,
+    examples: list[ActivatingExample] | list[NonActivatingExample],
     n_incorrect: int = 0,
     threshold: float = 0.3,
     highlighted: bool = False,
@@ -58,7 +53,14 @@ def examples_to_samples(
     samples = []
 
     for example in examples:
-        text,str_toks = _prepare_text(example, tokenizer, n_incorrect, threshold, highlighted)
+        text, str_toks = _prepare_text(example, n_incorrect, threshold, highlighted)
+        match example:
+            case ActivatingExample():
+                activating = True
+                distance = example.quantile
+            case NonActivatingExample():
+                activating = False
+                distance = example.distance
 
         samples.append(
             Sample(
@@ -66,32 +68,30 @@ def examples_to_samples(
                 data=ClassifierOutput(
                     str_tokens=str_toks,
                     activations=example.activations.tolist(),
-                    highlighted=highlighted, **sample_kwargs
+                    activating=activating,
+                    distance=distance,
+                    **sample_kwargs,
                 ),
             )
         )
-
 
     return samples
 
 
 # NOTE: Should reorganize below, it's a little confusing
 
+
 def _prepare_text(
     example,
-    tokenizer: PreTrainedTokenizer,
     n_incorrect: int,
     threshold: float,
     highlighted: bool,
-):
-    if tokenizer is None: # If we don't have a tokenizer, we assume the tokens are already strings
-        str_toks = example.tokens
-    else:
-        str_toks = tokenizer.batch_decode(example.tokens)
+) -> tuple[str, list[str]]:
+    str_toks = example.str_tokens
     clean = "".join(str_toks)
     # Just return text if there's no highlighting
     if not highlighted:
-        return clean,str_toks
+        return clean, str_toks
 
     threshold = threshold * example.max_activation
 
@@ -99,10 +99,10 @@ def _prepare_text(
     # if correct example
     if n_incorrect == 0:
 
-        def check(i):
+        def threshold_check(i):
             return example.activations[i] >= threshold
 
-        return _highlight(str_toks, check),str_toks
+        return _highlight(str_toks, threshold_check), str_toks
 
     # Highlight n_incorrect tokens with activations
     # below threshold if incorrect example
@@ -111,7 +111,7 @@ def _prepare_text(
     # Rare case where there are no tokens below threshold
     if below_threshold.dim() == 0:
         logger.error("Failed to prepare example.")
-        return DEFAULT_MESSAGE,str_toks
+        return DEFAULT_MESSAGE, str_toks
 
     random.seed(22)
 
@@ -122,7 +122,7 @@ def _prepare_text(
     def check(i):
         return i in random_indices
 
-    return _highlight(str_toks, check),str_toks
+    return _highlight(str_toks, check), str_toks
 
 
 def _highlight(tokens, check):

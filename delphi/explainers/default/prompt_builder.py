@@ -1,6 +1,4 @@
-from typing import List
-
-from .prompts import example, system
+from .prompts import example, system, system_single_token
 
 
 def build_examples(
@@ -28,11 +26,10 @@ def build_examples(
 
 
 def build_prompt(
-    examples,
+    examples: str,
     activations: bool = False,
     cot: bool = False,
-):
-    
+) -> list[dict]:
     messages = system(
         cot=cot,
     )
@@ -45,6 +42,23 @@ def build_prompt(
     messages.extend(few_shot_examples)
 
     user_start = f"\n{examples}\n"
+
+    messages.append(
+        {
+            "role": "user",
+            "content": user_start,
+        }
+    )
+
+    return messages
+
+
+def build_single_token_prompt(
+    examples,
+):
+    messages = system_single_token()
+
+    user_start = f"WORDS: {examples}"
 
     messages.append(
         {

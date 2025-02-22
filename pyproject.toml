@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sae_auto_interp"
+name = "delphi"
 version = "0.2.0"
 description = "Automated Interpretability"
 readme = "README.md"
@@ -11,7 +11,6 @@ requires-python = ">=3.10"
 keywords = ["interpretability", "explainable-ai"]
 dependencies = [
     "datasets",
-    "nnsight",
     "orjson",
     # "sparsify@git+https://github.com/EleutherAI/sparsify",
     # "sparsify @ file:./../halutsae",
@@ -19,7 +18,7 @@ dependencies = [
     "transformers<4.48.0", # necessary for monet
     "safetensors",
     "simple_parsing",
-    "torchtyping",
+    "jaxtyping",
     "fire",
     "blobfile",
     "bitsandbytes",
@@ -39,12 +38,15 @@ dependencies = [
     "seaborn>=0.13.2",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest"]
+
 [tool.pyright]
-include = ["sae_auto_interp*"]
+include = ["delphi*"]
 reportPrivateImportUsage = false
 
 [tool.setuptools.packages.find]
-include = ["sae_auto_interp*"]
+include = ["delphi*"]
 
 [tool.uv.sources]
 sparsify = { path = "../halutsae", editable=true }

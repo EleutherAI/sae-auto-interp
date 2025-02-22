@@ -1,18 +1,11 @@
 import asyncio
-import json
 import random
-import re
-import time
-from abc import abstractmethod
 from dataclasses import dataclass
-from typing import List, NamedTuple
+from typing import NamedTuple
 
-import numpy as np
-import torch
-from sentence_transformers import SentenceTransformer
 from transformers import PreTrainedTokenizer
-from ...clients.client import Client
-from ...features import Example, FeatureRecord
+
+from ...latents import Example, LatentRecord
 from ..scorer import Scorer, ScorerResult
 
 
@@ -48,12 +41,10 @@ class EmbeddingScorer(Scorer):
         self.verbose = verbose
         self.tokenizer = tokenizer
         self.generation_kwargs = generation_kwargs
-    
 
- 
     async def __call__(
         self,
-        record: FeatureRecord,
+        record: LatentRecord,
     ) -> list[EmbeddingOutput]:
         samples = self._prepare(record)
 
@@ -62,14 +53,13 @@ class EmbeddingScorer(Scorer):
             record.explanation,
             samples,
         )
-        
+
         return ScorerResult(record=record, score=results)
 
-    def call_sync(self, record: FeatureRecord) -> list[EmbeddingOutput]:
+    def call_sync(self, record: LatentRecord) -> list[EmbeddingOutput]:
         return asyncio.run(self.__call__(record))
 
-
-    def _prepare(self, record: FeatureRecord) -> list[list[Sample]]:
+    def _prepare(self, record: LatentRecord) -> list[list[Sample]]:
         """
         Prepare and shuffle a list of samples for classification.
         """
@@ -94,29 +84,28 @@ class EmbeddingScorer(Scorer):
 
         return samples
 
-
-
     def _query(self, explanation: str, samples: list[Sample]) -> list[EmbeddingOutput]:
-
-        explanation_prompt = "Instruct: Retrieve sentences that could be related to the explanation.\nQuery:" + explanation 
+        explanation_string = (
+            "Instruct: Retrieve sentences that could be related to the explanation."
+            "\nQuery:"
+        )
+        explanation_prompt = explanation_string + explanation
         query_embeding = self.model.encode(explanation_prompt)
         samples_text = [sample.text for sample in samples]
-    
+
         # # Temporary batching
         # sample_embedings = []
         # for i in range(0, len(samples_text), 10):
         #     sample_embedings.extend(self.model.encode(samples_text[i:i+10]))
         sample_embedings = self.model.encode(samples_text)
-        similarity = self.model.similarity(query_embeding,sample_embedings)[0]
-        
+        similarity = self.model.similarity(query_embeding, sample_embedings)[0]
+
         results = []
         for i in range(len(samples)):
-            #print(i)
+            # print(i)
             samples[i].data.similarity = similarity[i].item()
             results.append(samples[i].data)
         return results
-        
-
 
 
 def examples_to_samples(
@@ -124,7 +113,7 @@ def examples_to_samples(
     tokenizer: PreTrainedTokenizer,
     **sample_kwargs,
 ) -> list[Sample]:
-    samples = []    
+    samples = []
     for example in examples:
         if tokenizer is not None:
             text = "".join(tokenizer.batch_decode(example.tokens))
@@ -135,12 +124,8 @@ def examples_to_samples(
             Sample(
                 text=text,
                 activations=activations,
-                data=EmbeddingOutput(
-                    text=text,
-                    **sample_kwargs
-                ),
+                data=EmbeddingOutput(text=text, **sample_kwargs),
             )
         )
 
     return samples
-    

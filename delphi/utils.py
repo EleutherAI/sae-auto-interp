@@ -6,16 +6,16 @@ import numpy as np
 
 def load_tokenized_data(
     ctx_len: int,
-    tokenizer: AutoTokenizer | PreTrainedTokenizer | PreTrainedTokenizerFast,
+    tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast,
     dataset_repo: str,
     dataset_split: str,
     dataset_name: str = "",
-    dataset_row: str = "raw_content",
+    column_name: str = "text",
     seed: int = 22,
-    add_bos_token: bool = True,
 ):
     """
     Load a huggingface dataset, tokenize it, and shuffle.
+    Using this function ensures we are using the same tokens everywhere.
     """
     from datasets import load_dataset
     from sparsify.data import chunk_and_tokenize
@@ -23,11 +23,16 @@ def load_tokenized_data(
     print(dataset_repo,dataset_name,dataset_split)
 
     data = load_dataset(dataset_repo, name=dataset_name, split=dataset_split)
-    tokens_ds = chunk_and_tokenize(data, tokenizer, max_seq_len=ctx_len, text_key=dataset_row)
-    tokens_ds = tokens_ds.shuffle(seed)
+    data = data.shuffle(seed)
+    tokens_ds = chunk_and_tokenize(
+        data,  # type: ignore
+        tokenizer,
+        max_seq_len=ctx_len,
+        text_key=column_name,
+    )
 
-    tokens = cast(TensorType["batch", "seq"], tokens_ds["input_ids"])
-    
+    tokens = tokens_ds["input_ids"]
+
     return tokens
 
 

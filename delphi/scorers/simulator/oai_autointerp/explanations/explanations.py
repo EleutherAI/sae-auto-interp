@@ -1,11 +1,11 @@
 # Dataclasses and enums for storing neuron explanations, their scores, and related data.
-#Also, related helper functions.
+# Also, related helper functions.
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional
+from typing import Optional
 
 from simple_parsing import Serializable
 
@@ -15,7 +15,7 @@ class ActivationScale(str, Enum):
     Which "units" are stored in the expected_activations/distribution_values fields of
     a SequenceSimulation.
 
-    This enum identifies whether the values represent real activations of the neuron or 
+    This enum identifies whether the values represent real activations of the neuron or
     something else. Different scales are not necessarily related by a linear
     transformation.
     """
@@ -24,7 +24,7 @@ class ActivationScale(str, Enum):
     """Values represent real activations of the neuron."""
     SIMULATED_NORMALIZED_ACTIVATIONS = "simulated_normalized_activations"
     """
-    Values represent simulated activations of the neuron, normalized to the range 
+    Values represent simulated activations of the neuron, normalized to the range
     [0, 10].
     This scale is arbitrary and should not be interpreted as a neuron activation.
     """
@@ -37,19 +37,19 @@ class SequenceSimulation(Serializable):
     tokens: list[str]
     """The sequence of tokens that was simulated."""
     expected_activations: list[float]
-    """Expected value of the possibly-normalized activation for 
+    """Expected value of the possibly-normalized activation for
     each token in the sequence."""
     activation_scale: ActivationScale
     """What scale is used for values in the expected_activations field."""
     distribution_values: list[list[float]]
     """
-    For each token in the sequence, a list of values from the discrete 
-    distribution of activations produced from simulation. 
+    For each token in the sequence, a list of values from the discrete
+    distribution of activations produced from simulation.
     Tokens will be included here if and only if they are in the top K=15
     tokens predicted by the simulator, and excluded otherwise.
-    
+
     May be transformed to another unit by calibration. When we simulate a neuron,
-    we produce a discrete distribution with values in the arbitrary discretized space 
+    we produce a discrete distribution with values in the arbitrary discretized space
     of the neuron, e.g. 10% chance of 0, 70% chance of 1, 20% chance of 2.
     Which we store as distribution_values = [0, 1, 2],
     distribution_probabilities = [0.1, 0.7, 0.2]. When we transform the distribution to
@@ -58,7 +58,7 @@ class SequenceSimulation(Serializable):
     from the discretized space to the real activation unit of the neuron is f(x) = x/2,
     then the distribution becomes 10% chance of 0, 70% chance of 0.5, 20% chance of 1.
     Which we store as distribution_values = [0, 0.5, 1], distribution_probabilities =
-    [0.1, 0.7, 0.2].  
+    [0.1, 0.7, 0.2].
     """
     distribution_probabilities: list[list[float]]
     """
@@ -68,7 +68,6 @@ class SequenceSimulation(Serializable):
 
     uncalibrated_simulation: Optional["SequenceSimulation"] = None
     """The result of the simulation before calibration."""
-
 
 
 @dataclass
@@ -103,10 +102,9 @@ class ScoredSequenceSimulation(Serializable):
 class ScoredSimulation(Serializable):
     """Result of scoring a neuron simulation on multiple sequences."""
 
-
     distance: int
     """Distance of the sequence from the original sequence."""
-    
+
     scored_sequence_simulations: list[ScoredSequenceSimulation]
     """ScoredSequenceSimulation for each sequence"""
     ev_correlation_score: Optional[float] = None
@@ -149,5 +147,3 @@ class ScoredExplanation(Serializable):
         of NaN.
         """
         return self.scored_simulation.get_preferred_score()
-
-
