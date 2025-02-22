@@ -20,7 +20,8 @@ pkm_score_dir = Path("results/scores/sae_pkm")
 for config_group in [
     # ("with_pkm_sae", "without_pkm_sae"),
     # ("with_pkm_transcoder", "without_pkm_transcoder"),
-    ("baseline", "ef64-k64", "pkm-x32")
+    # ("baseline", "ef64-k64", "pkm-x32")
+    ("pkm-x32",)
 ]:
     for layer in range(24):
         fuzz_accs = {}
@@ -43,7 +44,7 @@ for config_group in [
                         continue
                     corrects = []
                     for text in data:
-                        corrects.append(int(text["correct"]))
+                        corrects.append(int(text["correct"] == True))
                     feature_accs.append(sum(corrects)/len(corrects))
                 if not feature_accs:
                     raise FileNotFoundError

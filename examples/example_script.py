@@ -12,9 +12,10 @@ from simple_parsing import ArgumentParser
 from delphi.clients import Offline, OpenRouter
 from delphi.config import ExperimentConfig, LatentConfig
 from delphi.explainers import DefaultExplainer
-from delphi.latents import LatentDataset, LatentLoader
-from delphi.latents.constructors import default_constructor
-from delphi.latents.samplers import sample
+from delphi.explainers.explainer import ExplainerResult
+from delphi.latents import LatentDataset
+from delphi.latents.constructors import constructor
+from delphi.latents.samplers import sampler
 from delphi.pipeline import Pipe, Pipeline, process_wrapper
 from delphi.scorers import DetectionScorer, FuzzingScorer
 
@@ -35,11 +36,15 @@ async def main(args):
     experiment_cfg = args.experiment_options
     shown_examples = args.shown_examples
     n_latents = args.latents
-    start_latent = args.start_latent
+    experiment_name = args.experiment_name
+    start_latent = 0
     sae_model = args.model
+    if args.neighbors:
+        experiment_cfg.non_activating_source = "neighbors"
+        experiment_name += "_neighbors"
 
     raw_dir = f"results/{args.model}"
-    features = torch.arange(start_latent,start_latent+n_latents)
+    latents = torch.arange(start_latent,start_latent+n_latents)
     cache_config_dir = f"{raw_dir}/{module}/config.json"
     with open(cache_config_dir, "r") as f:
         cache_config = json.load(f)
@@ -55,25 +60,25 @@ async def main(args):
     
     if args.random_subset:
         torch.manual_seed(0)
-        features = torch.randperm(latent_cfg.width)[:n_latents]
-    latent_dict = {f"{module}": features}
+        latents = torch.randperm(latent_cfg.width)[:n_latents]
+    latent_dict = {f"{module}": latents}
 
+    # example_constructor = partial(
+    #     constructor,
+    #     token_loader=lambda: dataset.load_tokens(),
+    #     n_non_activating=experiment_cfg.n_non_activating,
+    #     ctx_len=experiment_cfg.example_ctx_len,
+    #     max_examples=latent_cfg.max_examples,
+    # )
+    # example_sampler = partial(sampler, cfg=experiment_cfg)
     dataset = LatentDataset(
         raw_dir=raw_dir,
-        cfg=latent_cfg,
+        latent_cfg=latent_cfg,
+        experiment_cfg=experiment_cfg,
         modules=[module],
         latents=latent_dict,
     )
 
-    constructor = partial(
-        default_constructor,
-        token_loader=lambda: dataset.load_tokens(),
-        n_random=experiment_cfg.n_random,
-        ctx_len=experiment_cfg.example_ctx_len,
-        max_examples=latent_cfg.max_examples,
-    )
-    sampler = partial(sample, cfg=experiment_cfg)
-    loader = LatentLoader(dataset, constructor=constructor, sampler=sampler)
     ### Load client ###
     
     # client = Offline("hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",max_memory=0.8,max_model_len=5120)
@@ -82,7 +87,7 @@ async def main(args):
     
     ### Build Explainer pipe ###
     def explainer_preprocess(record):
-        explanation_path = f"results/explanations/{sae_model}/{experiment_name}/{record.feature}.txt"
+        explanation_path = f"results/explanations/{sae_model}/{experiment_name}/{record.latent}.txt"
         if os.path.exists(explanation_path):
             return ExplainerResult(record=record,
                                    explanation=orjson.loads(open(explanation_path, "rb").read()))
@@ -103,7 +108,6 @@ async def main(args):
     explainer_pipe = process_wrapper(
         DefaultExplainer(
             client,
-            tokenizer=dataset.tokenizer,
             threshold=0.3,
         ),
         preprocess=explainer_preprocess,
@@ -119,7 +123,7 @@ async def main(args):
         f.write(json.dumps(experiment_cfg.to_dict()))
 
     pipeline = Pipeline(
-        loader,
+        dataset,
         explainer_pipe,
     )
     explanations = await pipeline.run(100)
@@ -185,12 +189,15 @@ async def main(args):
 
     ### Build the pipeline ###
 
+    def iterate_explanations():
+        for record in explanations:
+            yield record
     pipeline = Pipeline(
-        explanations,
+        iterate_explanations,
         scorer_pipe,
     )
     start_time = time.time()
-    asyncio.run(pipeline.run(50))
+    await pipeline.run(50)
     end_time = time.time()
     print(f"Time taken: {end_time - start_time} seconds")
 
@@ -208,8 +215,4 @@ if __name__ == "__main__":
     parser.add_arguments(ExperimentConfig, dest="experiment_options")
     parser.add_arguments(LatentConfig, dest="latent_options")
     args = parser.parse_args()
-    experiment_name = args.experiment_name
-    
-
-
     asyncio.run(main(args))

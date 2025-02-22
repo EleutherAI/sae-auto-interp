@@ -36,6 +36,7 @@ dependencies = [
     "torchao>=0.8.0",
     "matplotlib>=3.10.0",
     "seaborn>=0.13.2",
+    "anyio>=4.8.0",
 ]
 
 [project.optional-dependencies]

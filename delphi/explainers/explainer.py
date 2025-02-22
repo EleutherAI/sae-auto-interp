@@ -38,7 +38,10 @@ class Explainer(ABC):
     generation_kwargs: dict = field(default_factory=dict)
     """Additional keyword arguments for the generation client."""
 
-    async def __call__(self, record: LatentRecord) -> ExplainerResult:
+    async def __call__(self, record: LatentRecord | ExplainerResult) -> ExplainerResult:
+        if isinstance(record, ExplainerResult):
+            return record
+        
         messages = self._build_prompt(record.train)
 
         response = await self.client.generate(
