@@ -8,6 +8,7 @@ from functools import partial
 import orjson
 import torch
 from simple_parsing import ArgumentParser
+from delphi.explainers.explainer import ExplainerResult
 
 from delphi.clients import Offline, OpenRouter
 from delphi.config import ExperimentConfig, FeatureConfig
@@ -21,12 +22,13 @@ from delphi.scorers import DetectionScorer, FuzzingScorer
 """
 uv run python -m examples.example_script --model monet_cache_converted/850m --module .model.layers.4.router --features 6144  --width 262144
 uv run python -m sglang_router.launch_server --model-path "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" --port 8000 --host 0.0.0.0 --tensor-parallel-size=2 --mem-fraction-static=0.8 --dp-size 2 
-
 uv run python -m examples.example_script --model itda_cache/pythia-l9_mlp-transcoder-mean-skip-k32 --module gpt_neox.layers.9.mlp --features 500 --width 50142 --random_subset
+uv run python -m examples.example_script --model pkm_saes/baseline --module model.layers.9 --features 500 --random_subset
+
 """
 # run with python examples/example_script.py --model gemma/16k --module .model.layers.10 --features 100 --experiment_name test
 
-def main(args):
+async def main(args):
     module = args.module
     feature_cfg = args.feature_options
     experiment_cfg = args.experiment_options
@@ -51,6 +53,7 @@ def main(args):
         feature_cfg.width = max_feat + 1
     
     if args.random_subset:
+        torch.manual_seed(0)
         features = torch.randperm(feature_cfg.width)[:n_features]
     feature_dict = {f"{module}": features}
 
@@ -78,6 +81,13 @@ def main(args):
                         base_url="http://localhost:8000/v1/chat/completions")
     
     ### Build Explainer pipe ###
+    def explainer_preprocess(record):
+        explanation_path = f"results/explanations/{sae_model}/{experiment_name}/{record.feature}.txt"
+        if os.path.exists(explanation_path):
+            return ExplainerResult(record=record,
+                                   explanation=orjson.loads(open(explanation_path, "rb").read()))
+        return record
+    
     def explainer_postprocess(result):
 
         with open(f"results/explanations/{sae_model}/{experiment_name}/{result.record.feature}.txt", "wb") as f:
@@ -93,6 +103,7 @@ def main(args):
             tokenizer=dataset.tokenizer,
             threshold=0.3,
         ),
+        preprocess=explainer_preprocess,
         postprocess=explainer_postprocess,
     )
 
@@ -100,6 +111,12 @@ def main(args):
     with open(f"results/explanations/{sae_model}/{experiment_name}/experiment_config.json", "w") as f:
         print(experiment_cfg.to_dict())
         f.write(json.dumps(experiment_cfg.to_dict()))
+
+    pipeline = Pipeline(
+        loader,
+        explainer_pipe,
+    )
+    explanations = await pipeline.run(100)
 
     ### Build Scorer pipe ###
 
@@ -142,8 +159,7 @@ def main(args):
     ### Build the pipeline ###
 
     pipeline = Pipeline(
-        loader,
-        explainer_pipe,
+        explanations,
         scorer_pipe,
     )
     start_time = time.time()
@@ -160,6 +176,8 @@ if __name__ == "__main__":
     parser.add_argument("--features", type=int, default=100)
     parser.add_argument("--experiment_name", type=str, default="default")
     parser.add_argument("--random_subset", action="store_true")
+    parser.add_argument("--neighbors", action="store_true")
+    parser.add_argument("--substitute_within_group_explanations", action="store_true")
     parser.add_arguments(ExperimentConfig, dest="experiment_options")
     parser.add_arguments(FeatureConfig, dest="feature_options")
     args = parser.parse_args()
@@ -167,4 +185,4 @@ if __name__ == "__main__":
     
 
 
-    main(args)
+    asyncio.run(main(args))

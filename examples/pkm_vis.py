@@ -11,10 +11,18 @@ python -m examples.cache_saes --pkm=True
 python -m examples.example_script --model sae_pkm/with_pkm_sae --module gpt_neox.layers.8 --features 500
 """
 
+def hist(x, *, ax, label):
+    # sns.histplot(x, bins=20, alpha=0.5, ax=ax, label=label)
+    sns.kdeplot(x, ax=ax, label=label)
+
 sns.set_theme()
 pkm_score_dir = Path("results/scores/sae_pkm")
-for config_group in [("with_pkm_sae", "without_pkm_sae")]:
-    for layer in (0, 4, 8, 12, 16, 20):
+for config_group in [
+    # ("with_pkm_sae", "without_pkm_sae"),
+    # ("with_pkm_transcoder", "without_pkm_transcoder"),
+    ("baseline", "ef64-k64", "pkm-x32")
+]:
+    for layer in range(24):
         fuzz_accs = {}
         detect_accs = {}
         group_name = "-".join(config_group)
@@ -51,9 +59,10 @@ for config_group in [("with_pkm_sae", "without_pkm_sae")]:
             axs[0].set(xlabel="Accuracy", xlim=(0, 1), ylabel="Number of features", title="Fuzz")
             axs[1].set(xlabel="Accuracy", xlim=(0, 1), ylabel="Number of features", title="Detect")
             for config_name in config_group:
-                sns.histplot(fuzz_accs[config_name], bins=20, alpha=0.5, ax=axs[0])
-                sns.histplot(detect_accs[config_name], bins=20, alpha=0.5, ax=axs[1])
+                hist(fuzz_accs[config_name], ax=axs[0], label=config_name)
+                hist(detect_accs[config_name], ax=axs[1], label=config_name)
 
+            axs[0].legend()
             fig.suptitle(f"{group_name} Layer {layer}, both routers")
             save_dir = f"results/pkm_autointerp/{group_name}"
             os.makedirs(save_dir, exist_ok=True)

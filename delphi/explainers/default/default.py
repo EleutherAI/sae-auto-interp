@@ -31,6 +31,9 @@ class DefaultExplainer(Explainer):
 
 
     async def __call__(self, record):
+        
+        if isinstance(record, ExplainerResult):
+            return record
        
         messages = self._build_prompt(record.train)
         

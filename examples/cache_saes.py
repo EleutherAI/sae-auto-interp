@@ -14,6 +14,9 @@ from pathlib import Path
 import json
 import os
 
+import torch._dynamo
+torch._dynamo.config.suppress_errors = True
+
 
 def main(cfg: CacheConfig, args): 
     k = args.k
@@ -32,6 +35,8 @@ def main(cfg: CacheConfig, args):
             continue
         if config["sae"]["encoder_pkm"] != pkm:
             continue        
+        if config["sae"]["encoder_kron"] != args.kron:
+            continue
         if config["transcode"] != transcode:
             continue
         if config["sae"]["k"] != k:
@@ -148,9 +153,10 @@ if __name__ == "__main__":
                         # default="pythia-160m"
                         default="SmolLM"
                         )
-    parser.add_argument("--expansion", type=int, default=64)
+    parser.add_argument("--expansion", type=int, default=32)
     parser.add_argument("--transcode", action="store_true")
     parser.add_argument("--pkm", action="store_true")
+    parser.add_argument("--kron", action="store_true")
     parser.add_argument("--monet", action="store_true")
     parser.add_argument("--k", type=int, default=32)
     args = parser.parse_args()
