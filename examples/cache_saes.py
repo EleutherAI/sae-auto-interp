@@ -31,10 +31,12 @@ def main(cfg: CacheConfig, args):
         if config["sae"]["expansion_factor"] != expansion:
             continue
         if config["sae"]["encoder_pkm"] != pkm:
-            continue
+            continue        
         if config["transcode"] != transcode:
             continue
         if config["sae"]["k"] != k:
+            continue
+        if config["sae"]["monet"] != args.monet:
             continue
         if model_name not in config["model"]:
             continue
@@ -42,6 +44,7 @@ def main(cfg: CacheConfig, args):
         break
     else:
         raise FileNotFoundError("No matching SAE found")
+    print("Using config", sae_dir.name)
 
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
@@ -140,11 +143,15 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     #ctx len 256
     parser.add_arguments(CacheConfig, dest="options")
-    parser.add_argument("--sae_dir", type=str, default="../halutsae/pkm_saes")
-    parser.add_argument("--model_name", type=str, default="pythia-160m")
+    parser.add_argument("--sae_dir", type=str, default="../halutsae/sae-pkm/smollm")
+    parser.add_argument("--model_name", type=str,
+                        # default="pythia-160m"
+                        default="SmolLM"
+                        )
     parser.add_argument("--expansion", type=int, default=64)
-    parser.add_argument("--transcode", type=bool, default=False)
-    parser.add_argument("--pkm", type=bool, required=True)
+    parser.add_argument("--transcode", action="store_true")
+    parser.add_argument("--pkm", action="store_true")
+    parser.add_argument("--monet", action="store_true")
     parser.add_argument("--k", type=int, default=32)
     args = parser.parse_args()
     cfg = args.options

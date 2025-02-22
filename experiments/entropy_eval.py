@@ -14,6 +14,9 @@ from pathlib import Path
 import numpy as np
 import json
 import os
+from matplotlib import pyplot as plt
+import seaborn as sns
+import traceback
 #%%
 def compute_entropy(cache_dir, module):
     feature_cfg = FeatureConfig()
@@ -22,10 +25,13 @@ def compute_entropy(cache_dir, module):
     start_feature = 0
     
     max_feat = 0
+    n_splits = 0
     for st_file in (Path(cache_dir) / module).glob(f"*.safetensors"):
         start, end = map(int, st_file.stem.split("_"))
         max_feat = max(max_feat, end)
+        n_splits += 1
     feature_cfg.width = max_feat + 1
+    feature_cfg.n_splits = n_splits
 
     features = torch.arange(start_feature,start_feature+n_features)
     feature_dict = {f"{module}": features}
@@ -79,9 +85,28 @@ for model_dir in caches_dir.glob("*"):
             layer_dir = sae_type_dir / module_name
             if not layer_dir.exists():
                 continue
-            entropy = compute_entropy(sae_type_dir, module_name)
+            try:
+                entropy = compute_entropy(sae_type_dir, module_name)
+            except Exception as e:
+                traceback.print_exc()
+                continue
             type_layer_entropies[sae_type][layer] = entropy
             if layer == model_info[model_name]["layer"]:
                 across_type_entropies[sae_type] = entropy
-    break
-#%%
+    sns.set_theme()
+    for sae_type, entropies in type_layer_entropies.items():
+        plt.plot(entropies.keys(), list(map(np.mean, entropies.values())), label=sae_type)
+    plt.legend()
+    plt.xlabel("Layer")
+    plt.title(f"{model_name} Entropy by Layer")
+    plt.savefig(model_plots_dir / "type_layer.png")
+    plt.show()
+    plt.clf()
+    for sae_type, entropy in across_type_entropies.items():
+        sns.kdeplot(entropy, bw_method=0.25, label=sae_type)
+    plt.legend()
+    plt.xlabel("Entropy")
+    plt.title(f"{model_name} Entropy at Layer {model_info[model_name]['layer']}")
+    plt.savefig(model_plots_dir / "across_type.png")
+    plt.show()
+# %%

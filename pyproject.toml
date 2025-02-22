@@ -13,8 +13,10 @@ dependencies = [
     "datasets",
     "nnsight",
     "orjson",
-    "sparsify@git+https://github.com/EleutherAI/sparsify",
-    "transformers<4.48.0",  # necessary for monet
+    # "sparsify@git+https://github.com/EleutherAI/sparsify",
+    # "sparsify @ file:./../halutsae",
+    "sparsify",
+    "transformers<4.48.0", # necessary for monet
     "safetensors",
     "simple_parsing",
     "torchtyping",
@@ -24,7 +26,17 @@ dependencies = [
     "flask",
     "vllm",
     "aiofiles",
-    "sentence_transformers"
+    "sentence_transformers",
+    "outlines==0.0.44",
+    "sglang-router>=0.1.4",
+    "sglang>=0.4.3.post2",
+    "sgl-kernel>=0.0.3.post6",
+    "flashinfer-python>=0.2.1.post2",
+    "decord>=0.6.0",
+    "python-multipart>=0.0.20",
+    "torchao>=0.8.0",
+    "matplotlib>=3.10.0",
+    "seaborn>=0.13.2",
 ]
 
 [tool.pyright]
@@ -33,6 +45,12 @@ reportPrivateImportUsage = false
 
 [tool.setuptools.packages.find]
 include = ["sae_auto_interp*"]
+
+[tool.uv.sources]
+sparsify = { path = "../halutsae", editable=true }
+
+[[tool.uv.index]]
+url = "https://flashinfer.ai/whl/cu124/torch2.5/flashinfer-python"
 
 [tool.ruff]
 # TODO: Clean up or remove experiments folder.

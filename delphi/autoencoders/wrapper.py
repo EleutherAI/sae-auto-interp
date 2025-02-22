@@ -5,6 +5,8 @@ from typing import Any, Callable, Dict, List, Literal, Optional, Tuple
 import torch
 from simple_parsing import Serializable
 
+import torch._dynamo
+torch._dynamo.config.suppress_errors = True
 
 @dataclass
 class AutoencoderConfig(Serializable):
@@ -30,6 +32,7 @@ class AutoencoderLatents(torch.nn.Module):
         self._forward = forward_function
         self.width = width
         self.hookpoint = hookpoint
+
     def forward(self, x: torch.Tensor, hook=False) -> torch.Tensor:
         return self._forward(x)
 
