@@ -16,9 +16,8 @@ class ScorerResult(NamedTuple):
         return {
             **asdict(self.record),
             "score": self.score,
-            "is_single_token": self.record.is_single_token
+            "is_single_token": self.record.is_single_token,
         }
-
 
 
 class Scorer(ABC):

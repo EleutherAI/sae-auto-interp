@@ -34,9 +34,10 @@ def latent_balanced_score_metrics(
         "true_negative_rate": np.average(df["true_negative_rate"], weights=weights),
         "false_positive_rate": np.average(df["false_positive_rate"], weights=weights),
         "false_negative_rate": np.average(df["false_negative_rate"], weights=weights),
-        "single_token_ratio": df["is_single_token"].mean() if "is_single_token" in df.columns else None
+        "single_token_ratio": (
+            df["is_single_token"].mean() if "is_single_token" in df.columns else None
+        ),
     }
-
 
     if verbose:
         print(f"\n--- {score_type.title()} Metrics ---")
@@ -57,9 +58,10 @@ def latent_balanced_score_metrics(
         )
 
         if metrics["single_token_ratio"] is not None:
-            print(f"\nSingle Token Features:")
-            print(f"Ratio of single token features: {metrics['single_token_ratio']:.3f}")
-            
+            print("\nSingle Token Features:")
+            print(
+                f"Ratio of single token features: {metrics['single_token_ratio']:.3f}"
+            )
 
         print("\nConfusion Matrix:")
         print(f"True Positive Rate:  {metrics['true_positive_rate']:.3f}")
@@ -197,7 +199,7 @@ def build_scores_df(path: Path, target_modules: list[str], range: Tensor | None 
         "positive_class_ratio",
         "negative_class_ratio",
         "failed_count",
-        "is_single_token", 
+        "is_single_token",
     ]
     df_data = {
         col: []
