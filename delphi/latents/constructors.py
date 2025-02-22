@@ -108,6 +108,40 @@ def pool_max_activation_windows(
 
     return token_windows, activation_windows
 
+def is_single_token_feature(
+    activations: Float[Tensor, "examples ctx_len"],
+    quantile_threshold: float = 0.5,
+    activation_ratio_threshold: float = 0.8
+) -> bool:
+    """
+    Determine if a feature is primarily activated by single tokens.
+    
+    Args:
+        activations: Activation values across context windows
+        quantile_threshold: Threshold for considering top activations (0.5 means top 50%)
+        activation_ratio_threshold: Ratio of single-token activations needed (0.8 means 80%)
+        
+    Returns:
+        bool: True if the feature is primarily single-token activated
+    """
+    # For each example, check if activation is concentrated in a single position
+    max_activations = activations.max(dim=1).values
+    top_k = int(len(max_activations) * quantile_threshold)
+    top_indices = max_activations.topk(top_k).indices
+    
+    # For top activating examples, check if activation is concentrated in single token
+    top_examples = activations[top_indices]
+    
+    # Count positions where activation is significant
+    threshold = top_examples.max(dim=1).values.unsqueeze(1) * 0.5
+    significant_activations = (top_examples > threshold).sum(dim=1)
+    
+    # Calculate ratio of single token activations
+    single_token_ratio = (significant_activations == 1).float().mean().item()
+    
+    return single_token_ratio >= activation_ratio_threshold
+
+
 
 def constructor(
     record: LatentRecord,
@@ -124,6 +158,17 @@ def constructor(
     n_not_active = constructor_cfg.n_non_activating
     max_examples = constructor_cfg.max_examples
     min_examples = constructor_cfg.min_examples
+
+    token_windows, act_windows = pool_max_activation_windows(
+        activations=activations,
+        tokens=reshaped_tokens,
+        ctx_indices=ctx_indices,
+        index_within_ctx=index_within_ctx,
+        ctx_len=example_ctx_len,
+        max_examples=max_examples,
+    )
+    
+    record.is_single_token = is_single_token_feature(act_windows)
 
     # Get all positions where the latent is active
     flat_indices = (

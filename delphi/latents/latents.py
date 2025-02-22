@@ -143,6 +143,9 @@ class LatentRecord:
     explanation: str = ""
     """Explanation of the latent."""
 
+    is_single_token: bool = False
+    """Whether this latent primarily activates on single tokens."""
+
     @property
     def max_activation(self) -> float:
         """

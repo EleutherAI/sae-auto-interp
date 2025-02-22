@@ -34,7 +34,9 @@ def latent_balanced_score_metrics(
         "true_negative_rate": np.average(df["true_negative_rate"], weights=weights),
         "false_positive_rate": np.average(df["false_positive_rate"], weights=weights),
         "false_negative_rate": np.average(df["false_negative_rate"], weights=weights),
+        "single_token_ratio": df["is_single_token"].mean() if "is_single_token" in df.columns else None
     }
+
 
     if verbose:
         print(f"\n--- {score_type.title()} Metrics ---")
@@ -53,6 +55,11 @@ def latent_balanced_score_metrics(
             f"""Average fraction of failed examples: \
 {sum(fractions_failed) / len(fractions_failed):.3f}"""
         )
+
+        if metrics["single_token_ratio"] is not None:
+            print(f"\nSingle Token Features:")
+            print(f"Ratio of single token features: {metrics['single_token_ratio']:.3f}")
+            
 
         print("\nConfusion Matrix:")
         print(f"True Positive Rate:  {metrics['true_positive_rate']:.3f}")
@@ -77,6 +84,7 @@ def latent_balanced_score_metrics(
 def parse_score_file(file_path):
     with open(file_path, "rb") as f:
         data = orjson.loads(f.read())
+    is_single_token = data.get("is_single_token", False)
     df = pd.DataFrame(
         [
             {
@@ -87,6 +95,7 @@ def parse_score_file(file_path):
                 "probability": example["probability"],
                 "correct": example["correct"],
                 "activations": example["activations"],
+                "is_single_token": is_single_token,
             }
             for example in data
         ]
@@ -158,6 +167,7 @@ def parse_score_file(file_path):
             total_negatives / total_examples if total_examples > 0 else 0
         ),
         "failed_count": failed_count,
+        "is_single_token": is_single_token,
     }
 
     for key, value in metrics.items():
@@ -187,6 +197,7 @@ def build_scores_df(path: Path, target_modules: list[str], range: Tensor | None 
         "positive_class_ratio",
         "negative_class_ratio",
         "failed_count",
+        "is_single_token", 
     ]
     df_data = {
         col: []
