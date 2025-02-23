@@ -11,6 +11,14 @@ class ScorerResult(NamedTuple):
     score: Any
     """Generated score for latent."""
 
+    def to_dict(self):
+        """Convert the scorer result to a dictionary for serialization."""
+        return {
+            **asdict(self.record),
+            "score": self.score,
+            "is_single_token": self.record.is_single_token,
+        }
+
 
 class Scorer(ABC):
     @abstractmethod
