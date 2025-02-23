@@ -111,13 +111,13 @@ class Pipeline:
                 process_and_update(item, semaphore, number_of_items)
             )
             tasks.add(task)
-            task.add_done_callback(tasks.discard)
 
             if len(tasks) >= max_concurrent:
                 done, pending = await asyncio.wait(
                     tasks, return_when=asyncio.FIRST_COMPLETED
                 )
                 results.extend(task.result() for task in done)
+                tasks = pending
 
         if tasks:
             done, _ = await asyncio.wait(tasks)

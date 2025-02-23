@@ -22,7 +22,8 @@ dependencies = [
     "flask",
     "vllm",
     "aiofiles",
-    "sentence_transformers"
+    "sentence_transformers",
+    "anyio>=4.8.0"
 ]
 
 [project.optional-dependencies]

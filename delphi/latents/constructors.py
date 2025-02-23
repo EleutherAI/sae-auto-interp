@@ -212,7 +212,9 @@ def neighbour_non_activation_windows(
         tokens (TensorType["batch", "seq"]): The input tokens.
         all_data (AllData): The all data containing activations and locations.
         ctx_len (int): The context length.
-        n_random (int): The number of random examples to generate.
+        n_not_active (int): The number of non-activating examples per latent.
+        tokenizer (PreTrainedTokenizer | PreTrainedTokenizerFast): The tokenizer.
+        seed (int): The random seed.
     """
     torch.manual_seed(seed)
     if n_not_active == 0:

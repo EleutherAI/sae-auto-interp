@@ -30,16 +30,16 @@ To use other scorer types, instantiate a custom pipeline.
 
 ## Caching
 
-The first step to generate explanations is to cache sparse model activations. To do so, load your sparse models into the base model, load the tokens you want to cache the activations from, create a `FeatureCache` object and run it. We recommend caching over at least 10M tokens.
+The first step to generate explanations is to cache sparse model activations. To do so, load your sparse models into the base model, load the tokens you want to cache the activations from, create a `LatentCache` object and run it. We recommend caching over at least 10M tokens.
 
 ```python
 from sparsify.data import chunk_and_tokenize
-from delphi.features import FeatureCache
+from delphi.latents import LatentCache
 
 data = load_dataset("EleutherAI/rpj-v2-sample", split="train[:1%]")
 tokens = chunk_and_tokenize(data, tokenizer, max_seq_len=256, text_key="raw_content")["input_ids"]
 
-cache = FeatureCache(
+cache = LatentCache(
     model,
     submodule_dict,
     batch_size = 8
@@ -48,7 +48,9 @@ cache = FeatureCache(
 cache.run(n_tokens = 10_000_000, tokens=tokens)
 ```
 
-Caching saves `.safetensors` of `dict["activations", "locations"]`.
+(See `populate_cache` in `delphi.__main__` for a full example.)
+
+Caching saves `.safetensors` of `dict["activations", "locations", "tokens"]`.
 
 ```python
 cache.save_splits(
@@ -59,53 +61,29 @@ cache.save_splits(
 
 Safetensors are split into shards over the width of the autoencoder.
 
-## Loading Feature Records
+## Loading Latent Records
 
-The `.features` module provides utilities for reconstructing and sampling various statistics for sparse features. In this version of the code you needed to specify the width of the autoencoder, the minimum number examples for a feature to be included and the maximum number of examples to include, as well as the number of splits to divide the features into.
+The `.latents` module provides utilities for reconstructing and sampling various statistics for sparse features. The `LatentDataset` will construct lazy loaded buffers that load activations into memory when called as an iterator object. For ease of use with the autointerp pipeline, we have a *constructor* and *sampler*: the constructor defines builds the context windows from the cached activations and tokens, and the sampler divides these contexts into a training and testing set, used to generate explanations and evaluate them.
 
 ```python
-from delphi.features import FeatureLoader, FeatureDataset
-from delphi.config import FeatureConfig
+from delphi.latents import LatentDataset
+from delphi.config import SamplerConfig, ConstructorConfig
 
-#
-cfg = FeatureConfig(width=131072, min_examples=200, max_examples=10000, n_splits=5)
 
-dataset = FeatureDataset(
+latent_dict = {
+    ".model.layer.0": torch.arange(0, 131072)
+}
+sampler_cfg = SamplerConfig()
+constructor_cfg = ConstructorConfig()
+
+dataset = LatentDataset(
     raw_dir="feature_folder",
     modules=[".model.layer.0"], # This a list of the different caches to load from
-    cfg=cfg,
+    sampler_cfg=sampler_cfg,
+    constructor_cfg=constructor_cfg,
+    latents=latent_dict,
+    tokenizer=tokenizer
 )
-```
-
-The feature dataset will construct lazy loaded buffers that load activations into memory when called as an iterator object. You can iterate through the dataset using the `FeatureLoader` object. The feature loader will take in the feature dataset, a constructor and a sampler.
-
-```python
-loader = FeatureLoader(
-    dataset=dataset,
-    constructor = constructor,
-    sampler = sampler,
-)
-```
-
-We have a simple sampler and constructor that take arguments from the `ExperimentConfig` object. The constructor defines builds the context windows from the cached activations and tokens, and the sampler divides these contexts into a training and testing set, used to generate explanations and evaluate them.
-
-```python
-from delphi.features.constructors import default_constructor
-from delphi.features.samplers import sample
-from delphi.config import ExperimentConfig
-
-cfg = ExperimentConfig(
-    n_examples_train=40, # Number of examples shown to the explainer model
-    n_examples_test=100, # Number of examples shown to the scorer models
-    n_quantiles=10, # Number of quantiles to divide the data into
-    example_ctx_len=32, # Length of each example
-    n_non_activating=100, # Number of non-activating examples shown to the scorer model
-    train_type="quantiles", # Type of sampler to use for training
-    test_type="even", # Type of sampler to use for testing
-)
-
-constructor = partial(default_constructor, tokens=dataset.tokens, n_not_active=cfg.n_non_activating, ctx_len=cfg.example_ctx_len, max_examples=cfg.max_examples)
-sampler = partial(sample, cfg=cfg)
 ```
 
 ## Generating Explanations
@@ -117,10 +95,10 @@ from delphi.explainers import DefaultExplainer
 from delphi.clients import Offline,OpenRouter
 
 # Run locally with VLLM
-client = Offline("meta-llama/Meta-Llama-3.1-8B-Instruct",max_memory=0.8,max_model_len=5120,num_gpus=1)
+client = Offline("meta-llama/Meta-Llama-3.1-8B-Instruct", max_memory=0.8, max_model_len=5120, num_gpus=1)
 
 # Run with OpenRouter
-client = OpenRouter("meta-llama/Meta-Llama-3.1-8B-Instruct",api_key=key)
+client = OpenRouter("meta-llama/Meta-Llama-3.1-8B-Instruct", api_key=key)
 
 
 explainer = DefaultExplainer(
@@ -136,7 +114,7 @@ from delphi.pipeline import process_wrapper
 
 def explainer_postprocess(result):
 
-    with open(f"{explanation_dir}/{result.record.feature}.txt", "wb") as f:
+    with open(f"{explanation_dir}/{result.record.latent}.txt", "wb") as f:
         f.write(orjson.dumps(result.explanation))
 
     return result
@@ -181,10 +159,10 @@ from delphi.explainers import  explanation_loader,random_explanation_loader
 # Because we are running the explainer and scorer separately, we need to add the explanation and extra examples back to the record
 
 def scorer_preprocess(result):
-        record = result.record
-        record.explanation = result.explanation
-        record.extra_examples = record.not_active
-        return record
+    record = result.record
+    record.explanation = result.explanation
+    record.extra_examples = record.not_active
+    return record
 
 def scorer_postprocess(result, score_dir):
     with open(f"{score_dir}/{result.record.feature}.txt", "wb") as f:
