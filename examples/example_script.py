@@ -1,3 +1,6 @@
+# WARNING: This script is out of date and doesn't run.
+# `delphi.__main__` is more complete and demonstrates correct usage of `delphi`.
+
 import asyncio
 import json
 import os
