@@ -1,6 +1,5 @@
 #%%
 from glob import glob
-import json
 is_monet = False
 if is_monet:
     model_size = "1.4b"
@@ -38,21 +37,42 @@ import numpy as np
 idces = list(feature_descs.keys())
 embed_array = [embeds[feature_descs[i]] for i in idces]
 embed_array = np.array(embed_array)
-sims = st.similarity(embed_array, embed_array)
-#%%
+sims = st.similarity(embed_array, embed_array).numpy()
 from math import ceil
 root = int(ceil(n_features ** 0.5))
-n_groups = n_features // root
+n_features_padded = n_features + root - n_features % root
 idx_roots = np.floor(np.array(idces, dtype=np.float64) / float(root))
 same_group = idx_roots[:, None] == idx_roots[None, :]
-same = np.eye(sims.shape[0], dtype=np.bool_)
-not_same = (sims * (~same & ~same_group)).topk(n_groups, dim=-1)[0][:, -1]
-same = (sims * (~same & same_group)).max(-1)[0]
+same_latent = np.eye(sims.shape[0], dtype=np.bool_)
+def pad_group(i):
+    a = np.zeros((n_features_padded, n_features_padded), dtype=i.dtype)
+    idx = np.array(idces)
+    idx0 = idx[:, None] + idx[None, :] * 0
+    idx1 = idx[:, None] * 0 + idx[None, :]
+    a[idx0, idx1] = i
+    a = a.reshape(n_features_padded, root, root)
+    return a
+sims, same_group, same_latent = map(pad_group, (sims, same_group, same_latent))
+not_same = sims * (~same_latent & ~same_group)
+not_same = not_same.max(-1)
+n_samples = 16
+if n_samples == 0:
+    not_same = not_same.sum(-1) / (not_same != 0).sum(-1)
+else:
+    index = np.random.randint(0, root, size=(n_features_padded, n_samples))
+    not_same = np.take_along_axis(not_same, index, axis=-1)
+not_same = not_same.flatten()
+not_same = not_same[not_same != 0]
+same = sims * (~same_latent & same_group)
+same = same.max(-1).flatten()
 same = same[same != 0]
+# not_same = (sims * (~same_latent & ~same_group)).topk(n_groups, dim=-1)[0][:, -1]
+# same = (sims * (~same_latent & same_group)).max(-1)[0]
+# same = same[same != 0]
 from matplotlib import pyplot as plt
 import seaborn as sns
 sns.set_theme()
-bins = np.linspace(0, 1, 100)
+bins = np.linspace(0, 1, 25)
 plt.hist(same, bins=bins, alpha=0.5, label="Same group", density=True)
 plt.hist(not_same, bins=bins, alpha=0.5, label="Not same group", density=True)
 plt.ylabel("Density")

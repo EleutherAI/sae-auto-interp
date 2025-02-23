@@ -13,7 +13,8 @@ from ..latents.latents import ActivatingExample, LatentRecord
 from ..logger import logger
 
 
-class ExplainerResult(NamedTuple):
+@dataclass
+class ExplainerResult:
     record: LatentRecord
     """Latent record passed through to scorer."""
 

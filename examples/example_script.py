@@ -2,12 +2,18 @@ import asyncio
 import json
 import os
 import time
+import random
+from enum import Enum
+from math import ceil
 from pathlib import Path
 from functools import partial
+from dataclasses import replace
+from collections import defaultdict
 
 import orjson
 import torch
 from simple_parsing import ArgumentParser
+from sentence_transformers import SentenceTransformer
 
 from delphi.clients import Offline, OpenRouter
 from delphi.config import ExperimentConfig, LatentConfig
@@ -30,6 +36,12 @@ uv run python -m examples.example_script --model pkm_saes/baseline --module mode
 # .model.layers.10 --latents 100 --experiment_name test
 
 
+class Substitution(Enum):
+    NONE = "none"
+    SELF = "self"
+    OTHER = "other"
+
+
 async def main(args):
     module = args.module
     latent_cfg = args.latent_options
@@ -42,6 +54,11 @@ async def main(args):
     if args.neighbors:
         experiment_cfg.non_activating_source = "neighbors"
         experiment_name += "_neighbors"
+    experiment_name_scores = experiment_name
+    substitute = args.substitute
+    if substitute != Substitution.NONE:
+        experiment_name_scores += "_substitute_" + substitute.value
+        embedding_model = SentenceTransformer("NovaSearch/stella_en_400M_v5", trust_remote_code=True).cuda()
 
     raw_dir = f"results/{args.model}"
     latents = torch.arange(start_latent,start_latent+n_latents)
@@ -126,7 +143,47 @@ async def main(args):
         dataset,
         explainer_pipe,
     )
-    explanations = await pipeline.run(100)
+    explanations = await pipeline.run(50)
+    og_explanations = explanations.copy()
+    to_delete = []
+    if substitute != Substitution.NONE:
+        group_size = ceil(latent_cfg.width ** 0.5)
+        assert isinstance(embedding_model, SentenceTransformer)
+        explanation_dict = {r.record.latent.latent_index: r.explanation for r in explanations}
+        explained_features = list(explanation_dict.keys())
+        explanation_list = list(explanation_dict.values())
+        embeds = embedding_model.encode(explanation_list)
+        similarity_matrix = embedding_model.similarity(embeds, embeds)
+        for i, k in enumerate(explained_features):
+            similarities_for_this_feature = defaultdict(list)
+            for j, sim in enumerate(similarity_matrix[i]):
+                sim = float(sim)
+                v = explained_features[j]
+                v_group = v // group_size
+                similarities_for_this_feature[v_group].append((sim, j))
+            most_similar = {k: max(v) for k, v in similarities_for_this_feature.items()}
+            if substitute == Substitution.SELF:
+                k_group = k // group_size
+                try:
+                    explanation = sorted(similarities_for_this_feature[k_group])[-2][1]
+                except IndexError:
+                    to_delete.append(i)
+                    explanations[i] = replace(
+                        explanations[i],
+                        explanation=""
+                    )
+                    continue
+            else:
+                explanation = random.choice(list(most_similar.values()))[1]
+            explanation = og_explanations[explanation].explanation
+            print("Substituting",
+                  explanations[i].explanation,
+                  "with",
+                  explanation)
+            explanations[i] = replace(
+                explanations[i],
+                explanation=explanation
+            )
 
     ### Build Scorer pipe ###
 
@@ -140,25 +197,25 @@ async def main(args):
     def scorer_postprocess(result, score_dir):
         record = result.record
         with open(
-            f"results/scores/{sae_model}/{experiment_name}/{score_dir}/{record.latent}.txt",
+            f"results/scores/{sae_model}/{experiment_name_scores}/{score_dir}/{record.latent}.txt",
             "wb",
         ) as f:
             f.write(orjson.dumps(result.score))
 
     os.makedirs(
-        f"results/scores/{sae_model}/{experiment_name}/detection", exist_ok=True
+        f"results/scores/{sae_model}/{experiment_name_scores}/detection", exist_ok=True
     )
-    os.makedirs(f"results/scores/{sae_model}/{experiment_name}/fuzz", exist_ok=True)
+    os.makedirs(f"results/scores/{sae_model}/{experiment_name_scores}/fuzz", exist_ok=True)
 
     # save the experiment config
     with open(
-        f"results/scores/{sae_model}/{experiment_name}/detection/experiment_config.json",
+        f"results/scores/{sae_model}/{experiment_name_scores}/detection/experiment_config.json",
         "w",
     ) as f:
         f.write(json.dumps(experiment_cfg.to_dict()))
 
     with open(
-        f"results/scores/{sae_model}/{experiment_name}/fuzz/experiment_config.json", "w"
+        f"results/scores/{sae_model}/{experiment_name_scores}/fuzz/experiment_config.json", "w"
     ) as f:
         f.write(json.dumps(experiment_cfg.to_dict()))
 
@@ -211,7 +268,7 @@ if __name__ == "__main__":
     parser.add_argument("--experiment_name", type=str, default="default")
     parser.add_argument("--random_subset", action="store_true")
     parser.add_argument("--neighbors", action="store_true")
-    parser.add_argument("--substitute_within_group_explanations", action="store_true")
+    parser.add_argument("--substitute", type=Substitution, default=Substitution.NONE)
     parser.add_arguments(ExperimentConfig, dest="experiment_options")
     parser.add_arguments(LatentConfig, dest="latent_options")
     args = parser.parse_args()
