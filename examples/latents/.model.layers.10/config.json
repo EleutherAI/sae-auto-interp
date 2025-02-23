@@ -1,1 +1,0 @@
-{"dataset_repo": "EleutherAI/rpj-v2-sample", "dataset_split": "train[:1%]", "dataset_name": "", "dataset_column": "raw_content", "batch_size": 8, "ctx_len": 256, "n_tokens": 1000000, "n_splits": 5, "model_name": "google/gemma-2-9b"}
